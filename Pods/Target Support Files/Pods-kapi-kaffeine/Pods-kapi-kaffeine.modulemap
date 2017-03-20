@@ -1,0 +1,6 @@
+framework module Pods_kapi_kaffeine {
+  umbrella header "Pods-kapi-kaffeine-umbrella.h"
+
+  export *
+  module * { export * }
+}

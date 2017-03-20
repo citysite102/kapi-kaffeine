@@ -1,0 +1,609 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4EEB682CBA070A438BA23B29 /* Pods_kapi_kaffeine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 693D5C21ACB83D68DF6CDE6C /* Pods_kapi_kaffeine.framework */; };
+		C02AFE451E7D260D008FFB33 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02AFE441E7D260D008FFB33 /* AppDelegate.swift */; };
+		C02AFE471E7D260D008FFB33 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02AFE461E7D260D008FFB33 /* ViewController.swift */; };
+		C02AFE4A1E7D260D008FFB33 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C02AFE481E7D260D008FFB33 /* Main.storyboard */; };
+		C02AFE4C1E7D260D008FFB33 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C02AFE4B1E7D260D008FFB33 /* Assets.xcassets */; };
+		C02AFE4F1E7D260D008FFB33 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C02AFE4D1E7D260D008FFB33 /* LaunchScreen.storyboard */; };
+		C02AFE5A1E7D260D008FFB33 /* kapi_kaffeineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02AFE591E7D260D008FFB33 /* kapi_kaffeineTests.swift */; };
+		C02AFE651E7D260D008FFB33 /* kapi_kaffeineUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02AFE641E7D260D008FFB33 /* kapi_kaffeineUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C02AFE561E7D260D008FFB33 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C02AFE391E7D260D008FFB33 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C02AFE401E7D260D008FFB33;
+			remoteInfo = "kapi-kaffeine";
+		};
+		C02AFE611E7D260D008FFB33 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C02AFE391E7D260D008FFB33 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C02AFE401E7D260D008FFB33;
+			remoteInfo = "kapi-kaffeine";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		5C9A071EB11610BEDE083D59 /* Pods_kapi_kaffeineUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_kapi_kaffeineUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		605CB2E5F236FDDFFE502CB5 /* Pods-kapi-kaffeine.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kapi-kaffeine.release.xcconfig"; path = "../Pods/Target Support Files/Pods-kapi-kaffeine/Pods-kapi-kaffeine.release.xcconfig"; sourceTree = "<group>"; };
+		693D5C21ACB83D68DF6CDE6C /* Pods_kapi_kaffeine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_kapi_kaffeine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C02AFE411E7D260D008FFB33 /* kapi-kaffeine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "kapi-kaffeine.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C02AFE441E7D260D008FFB33 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		C02AFE461E7D260D008FFB33 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		C02AFE491E7D260D008FFB33 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		C02AFE4B1E7D260D008FFB33 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C02AFE4E1E7D260D008FFB33 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		C02AFE501E7D260D008FFB33 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C02AFE551E7D260D008FFB33 /* kapi-kaffeineTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "kapi-kaffeineTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C02AFE591E7D260D008FFB33 /* kapi_kaffeineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = kapi_kaffeineTests.swift; sourceTree = "<group>"; };
+		C02AFE5B1E7D260D008FFB33 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C02AFE601E7D260D008FFB33 /* kapi-kaffeineUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "kapi-kaffeineUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C02AFE641E7D260D008FFB33 /* kapi_kaffeineUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = kapi_kaffeineUITests.swift; sourceTree = "<group>"; };
+		C02AFE661E7D260D008FFB33 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CA73E4544076455C6DC0C065 /* Pods-kapi-kaffeine.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kapi-kaffeine.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-kapi-kaffeine/Pods-kapi-kaffeine.debug.xcconfig"; sourceTree = "<group>"; };
+		FA9A4A083D5D704A746B1C9A /* Pods_kapi_kaffeineTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_kapi_kaffeineTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C02AFE3E1E7D260D008FFB33 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4EEB682CBA070A438BA23B29 /* Pods_kapi_kaffeine.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C02AFE521E7D260D008FFB33 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C02AFE5D1E7D260D008FFB33 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		528BE283388423B3C39986B2 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				CA73E4544076455C6DC0C065 /* Pods-kapi-kaffeine.debug.xcconfig */,
+				605CB2E5F236FDDFFE502CB5 /* Pods-kapi-kaffeine.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		54FAC649B6938A296E79D067 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				693D5C21ACB83D68DF6CDE6C /* Pods_kapi_kaffeine.framework */,
+				FA9A4A083D5D704A746B1C9A /* Pods_kapi_kaffeineTests.framework */,
+				5C9A071EB11610BEDE083D59 /* Pods_kapi_kaffeineUITests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C02AFE381E7D260D008FFB33 = {
+			isa = PBXGroup;
+			children = (
+				C02AFE431E7D260D008FFB33 /* kapi-kaffeine */,
+				C02AFE581E7D260D008FFB33 /* kapi-kaffeineTests */,
+				C02AFE631E7D260D008FFB33 /* kapi-kaffeineUITests */,
+				C02AFE421E7D260D008FFB33 /* Products */,
+				528BE283388423B3C39986B2 /* Pods */,
+				54FAC649B6938A296E79D067 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		C02AFE421E7D260D008FFB33 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C02AFE411E7D260D008FFB33 /* kapi-kaffeine.app */,
+				C02AFE551E7D260D008FFB33 /* kapi-kaffeineTests.xctest */,
+				C02AFE601E7D260D008FFB33 /* kapi-kaffeineUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C02AFE431E7D260D008FFB33 /* kapi-kaffeine */ = {
+			isa = PBXGroup;
+			children = (
+				C02AFE441E7D260D008FFB33 /* AppDelegate.swift */,
+				C02AFE461E7D260D008FFB33 /* ViewController.swift */,
+				C02AFE481E7D260D008FFB33 /* Main.storyboard */,
+				C02AFE4B1E7D260D008FFB33 /* Assets.xcassets */,
+				C02AFE4D1E7D260D008FFB33 /* LaunchScreen.storyboard */,
+				C02AFE501E7D260D008FFB33 /* Info.plist */,
+			);
+			path = "kapi-kaffeine";
+			sourceTree = "<group>";
+		};
+		C02AFE581E7D260D008FFB33 /* kapi-kaffeineTests */ = {
+			isa = PBXGroup;
+			children = (
+				C02AFE591E7D260D008FFB33 /* kapi_kaffeineTests.swift */,
+				C02AFE5B1E7D260D008FFB33 /* Info.plist */,
+			);
+			path = "kapi-kaffeineTests";
+			sourceTree = "<group>";
+		};
+		C02AFE631E7D260D008FFB33 /* kapi-kaffeineUITests */ = {
+			isa = PBXGroup;
+			children = (
+				C02AFE641E7D260D008FFB33 /* kapi_kaffeineUITests.swift */,
+				C02AFE661E7D260D008FFB33 /* Info.plist */,
+			);
+			path = "kapi-kaffeineUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C02AFE401E7D260D008FFB33 /* kapi-kaffeine */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C02AFE691E7D260D008FFB33 /* Build configuration list for PBXNativeTarget "kapi-kaffeine" */;
+			buildPhases = (
+				58F90679B69E9D32C74F8BAF /* [CP] Check Pods Manifest.lock */,
+				C02AFE3D1E7D260D008FFB33 /* Sources */,
+				C02AFE3E1E7D260D008FFB33 /* Frameworks */,
+				C02AFE3F1E7D260D008FFB33 /* Resources */,
+				5C7BF539A61DEDBAA160731E /* [CP] Embed Pods Frameworks */,
+				1C2519745C54F46C9A5A4965 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "kapi-kaffeine";
+			productName = "kapi-kaffeine";
+			productReference = C02AFE411E7D260D008FFB33 /* kapi-kaffeine.app */;
+			productType = "com.apple.product-type.application";
+		};
+		C02AFE541E7D260D008FFB33 /* kapi-kaffeineTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C02AFE6C1E7D260D008FFB33 /* Build configuration list for PBXNativeTarget "kapi-kaffeineTests" */;
+			buildPhases = (
+				C02AFE511E7D260D008FFB33 /* Sources */,
+				C02AFE521E7D260D008FFB33 /* Frameworks */,
+				C02AFE531E7D260D008FFB33 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C02AFE571E7D260D008FFB33 /* PBXTargetDependency */,
+			);
+			name = "kapi-kaffeineTests";
+			productName = "kapi-kaffeineTests";
+			productReference = C02AFE551E7D260D008FFB33 /* kapi-kaffeineTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		C02AFE5F1E7D260D008FFB33 /* kapi-kaffeineUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C02AFE6F1E7D260D008FFB33 /* Build configuration list for PBXNativeTarget "kapi-kaffeineUITests" */;
+			buildPhases = (
+				C02AFE5C1E7D260D008FFB33 /* Sources */,
+				C02AFE5D1E7D260D008FFB33 /* Frameworks */,
+				C02AFE5E1E7D260D008FFB33 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C02AFE621E7D260D008FFB33 /* PBXTargetDependency */,
+			);
+			name = "kapi-kaffeineUITests";
+			productName = "kapi-kaffeineUITests";
+			productReference = C02AFE601E7D260D008FFB33 /* kapi-kaffeineUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C02AFE391E7D260D008FFB33 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0820;
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = "kapi-kaffeine";
+				TargetAttributes = {
+					C02AFE401E7D260D008FFB33 = {
+						CreatedOnToolsVersion = 8.2.1;
+						ProvisioningStyle = Automatic;
+					};
+					C02AFE541E7D260D008FFB33 = {
+						CreatedOnToolsVersion = 8.2.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = C02AFE401E7D260D008FFB33;
+					};
+					C02AFE5F1E7D260D008FFB33 = {
+						CreatedOnToolsVersion = 8.2.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = C02AFE401E7D260D008FFB33;
+					};
+				};
+			};
+			buildConfigurationList = C02AFE3C1E7D260D008FFB33 /* Build configuration list for PBXProject "kapi-kaffeine" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = C02AFE381E7D260D008FFB33;
+			productRefGroup = C02AFE421E7D260D008FFB33 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C02AFE401E7D260D008FFB33 /* kapi-kaffeine */,
+				C02AFE541E7D260D008FFB33 /* kapi-kaffeineTests */,
+				C02AFE5F1E7D260D008FFB33 /* kapi-kaffeineUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C02AFE3F1E7D260D008FFB33 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C02AFE4F1E7D260D008FFB33 /* LaunchScreen.storyboard in Resources */,
+				C02AFE4C1E7D260D008FFB33 /* Assets.xcassets in Resources */,
+				C02AFE4A1E7D260D008FFB33 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C02AFE531E7D260D008FFB33 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C02AFE5E1E7D260D008FFB33 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		1C2519745C54F46C9A5A4965 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-kapi-kaffeine/Pods-kapi-kaffeine-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		58F90679B69E9D32C74F8BAF /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		5C7BF539A61DEDBAA160731E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-kapi-kaffeine/Pods-kapi-kaffeine-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C02AFE3D1E7D260D008FFB33 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C02AFE471E7D260D008FFB33 /* ViewController.swift in Sources */,
+				C02AFE451E7D260D008FFB33 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C02AFE511E7D260D008FFB33 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C02AFE5A1E7D260D008FFB33 /* kapi_kaffeineTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C02AFE5C1E7D260D008FFB33 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C02AFE651E7D260D008FFB33 /* kapi_kaffeineUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C02AFE571E7D260D008FFB33 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C02AFE401E7D260D008FFB33 /* kapi-kaffeine */;
+			targetProxy = C02AFE561E7D260D008FFB33 /* PBXContainerItemProxy */;
+		};
+		C02AFE621E7D260D008FFB33 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C02AFE401E7D260D008FFB33 /* kapi-kaffeine */;
+			targetProxy = C02AFE611E7D260D008FFB33 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		C02AFE481E7D260D008FFB33 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C02AFE491E7D260D008FFB33 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		C02AFE4D1E7D260D008FFB33 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C02AFE4E1E7D260D008FFB33 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C02AFE671E7D260D008FFB33 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C02AFE681E7D260D008FFB33 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C02AFE6A1E7D260D008FFB33 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = CA73E4544076455C6DC0C065 /* Pods-kapi-kaffeine.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = "kapi-kaffeine/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.kapi-kaffeine.kapi-kaffeine";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		C02AFE6B1E7D260D008FFB33 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 605CB2E5F236FDDFFE502CB5 /* Pods-kapi-kaffeine.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = "kapi-kaffeine/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.kapi-kaffeine.kapi-kaffeine";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+		C02AFE6D1E7D260D008FFB33 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = "kapi-kaffeineTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.kapi-kaffeine.kapi-kaffeineTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/kapi-kaffeine.app/kapi-kaffeine";
+			};
+			name = Debug;
+		};
+		C02AFE6E1E7D260D008FFB33 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = "kapi-kaffeineTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.kapi-kaffeine.kapi-kaffeineTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/kapi-kaffeine.app/kapi-kaffeine";
+			};
+			name = Release;
+		};
+		C02AFE701E7D260D008FFB33 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				INFOPLIST_FILE = "kapi-kaffeineUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.kapi-kaffeine.kapi-kaffeineUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = "kapi-kaffeine";
+			};
+			name = Debug;
+		};
+		C02AFE711E7D260D008FFB33 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				INFOPLIST_FILE = "kapi-kaffeineUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.kapi-kaffeine.kapi-kaffeineUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = "kapi-kaffeine";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C02AFE3C1E7D260D008FFB33 /* Build configuration list for PBXProject "kapi-kaffeine" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C02AFE671E7D260D008FFB33 /* Debug */,
+				C02AFE681E7D260D008FFB33 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C02AFE691E7D260D008FFB33 /* Build configuration list for PBXNativeTarget "kapi-kaffeine" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C02AFE6A1E7D260D008FFB33 /* Debug */,
+				C02AFE6B1E7D260D008FFB33 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		C02AFE6C1E7D260D008FFB33 /* Build configuration list for PBXNativeTarget "kapi-kaffeineTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C02AFE6D1E7D260D008FFB33 /* Debug */,
+				C02AFE6E1E7D260D008FFB33 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		C02AFE6F1E7D260D008FFB33 /* Build configuration list for PBXNativeTarget "kapi-kaffeineUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C02AFE701E7D260D008FFB33 /* Debug */,
+				C02AFE711E7D260D008FFB33 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C02AFE391E7D260D008FFB33 /* Project object */;
+}
