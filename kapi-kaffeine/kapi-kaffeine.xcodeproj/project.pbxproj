@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		4EEB682CBA070A438BA23B29 /* Pods_kapi_kaffeine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 693D5C21ACB83D68DF6CDE6C /* Pods_kapi_kaffeine.framework */; };
 		77FB63961E9AA7BB00FFC3DC /* KPDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77FB63951E9AA7BB00FFC3DC /* KPDataModel.swift */; };
+		C00CD5321E9521A600A3CB6F /* KKMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00CD5311E9521A600A3CB6F /* KKMapViewController.swift */; };
+		C00CD5341E95234A00A3CB6F /* style.json in Resources */ = {isa = PBXBuildFile; fileRef = C00CD5331E95234A00A3CB6F /* style.json */; };
 		C02AFE451E7D260D008FFB33 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02AFE441E7D260D008FFB33 /* AppDelegate.swift */; };
 		C02AFE471E7D260D008FFB33 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02AFE461E7D260D008FFB33 /* ViewController.swift */; };
 		C02AFE4A1E7D260D008FFB33 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C02AFE481E7D260D008FFB33 /* Main.storyboard */; };
@@ -40,6 +42,8 @@
 		605CB2E5F236FDDFFE502CB5 /* Pods-kapi-kaffeine.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kapi-kaffeine.release.xcconfig"; path = "../Pods/Target Support Files/Pods-kapi-kaffeine/Pods-kapi-kaffeine.release.xcconfig"; sourceTree = "<group>"; };
 		693D5C21ACB83D68DF6CDE6C /* Pods_kapi_kaffeine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_kapi_kaffeine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		77FB63951E9AA7BB00FFC3DC /* KPDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPDataModel.swift; sourceTree = "<group>"; };
+		C00CD5311E9521A600A3CB6F /* KKMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KKMapViewController.swift; sourceTree = "<group>"; };
+		C00CD5331E95234A00A3CB6F /* style.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = style.json; sourceTree = "<group>"; };
 		C02AFE411E7D260D008FFB33 /* kapi-kaffeine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "kapi-kaffeine.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C02AFE441E7D260D008FFB33 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C02AFE461E7D260D008FFB33 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -142,6 +146,8 @@
 				C02AFE4B1E7D260D008FFB33 /* Assets.xcassets */,
 				C02AFE4D1E7D260D008FFB33 /* LaunchScreen.storyboard */,
 				C02AFE501E7D260D008FFB33 /* Info.plist */,
+				C00CD5311E9521A600A3CB6F /* KKMapViewController.swift */,
+				C00CD5331E95234A00A3CB6F /* style.json */,
 			);
 			path = "kapi-kaffeine";
 			sourceTree = "<group>";
@@ -277,6 +283,7 @@
 				C02AFE4F1E7D260D008FFB33 /* LaunchScreen.storyboard in Resources */,
 				C02AFE4C1E7D260D008FFB33 /* Assets.xcassets in Resources */,
 				C02AFE4A1E7D260D008FFB33 /* Main.storyboard in Resources */,
+				C00CD5341E95234A00A3CB6F /* style.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -349,6 +356,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C00CD5321E9521A600A3CB6F /* KKMapViewController.swift in Sources */,
 				C02AFE471E7D260D008FFB33 /* ViewController.swift in Sources */,
 				C02AFE451E7D260D008FFB33 /* AppDelegate.swift in Sources */,
 				77FB63961E9AA7BB00FFC3DC /* KPDataModel.swift in Sources */,
