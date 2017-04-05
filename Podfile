@@ -10,6 +10,9 @@ target 'kapi-kaffeine' do
   # Pods for kapi-kaffeine
   pod 'BenzeneFoundation'
 
+  pod 'GoogleMaps'
+  pod 'GooglePlaces'
+
   # target 'kapi-kaffeineTests' do
   #   inherit! :search_paths
   #   # Pods for testing

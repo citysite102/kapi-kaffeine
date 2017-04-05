@@ -1,6 +1,0 @@
-framework module BenzeneFoundation {
-  umbrella header "BenzeneFoundation-umbrella.h"
-
-  export *
-  module * { export * }
-}

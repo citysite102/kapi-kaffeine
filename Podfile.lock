@@ -7,6 +7,13 @@ PODS:
   - BenzeneFoundation/UIKit (0.5.42):
     - BenzeneFoundation/Foundation
     - libextobjc (~> 0.4)
+  - GoogleMaps (2.2.0):
+    - GoogleMaps/Maps (= 2.2.0)
+  - GoogleMaps/Base (2.2.0)
+  - GoogleMaps/Maps (2.2.0):
+    - GoogleMaps/Base
+  - GooglePlaces (2.2.0):
+    - GoogleMaps/Base (= 2.2.0)
   - libextobjc (0.4.1):
     - libextobjc/EXTADT (= 0.4.1)
     - libextobjc/EXTConcreteProtocol (= 0.4.1)
@@ -45,11 +52,15 @@ PODS:
 
 DEPENDENCIES:
   - BenzeneFoundation
+  - GoogleMaps
+  - GooglePlaces
 
 SPEC CHECKSUMS:
   BenzeneFoundation: 7a44807ff32cd32d8776deccf2b7fd2f92ed8159
+  GoogleMaps: 104c418d61ab8a05dff06ed0784c25ea9d37da45
+  GooglePlaces: bca867d5e9da15384c794b945e4226848bc6e9d9
   libextobjc: a650fc1bf489a3d3a9bc2e621efa3e1006fc5471
 
-PODFILE CHECKSUM: 470349eff7db555649135ca138cbe1b3ce4e3ca5
+PODFILE CHECKSUM: 4f0e9ba061a5988fcb1cb648e1ff48ca75f60b97
 
 COCOAPODS: 1.1.1
