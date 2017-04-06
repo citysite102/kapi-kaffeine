@@ -18,6 +18,7 @@
 		C02AFE4F1E7D260D008FFB33 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C02AFE4D1E7D260D008FFB33 /* LaunchScreen.storyboard */; };
 		C02AFE5A1E7D260D008FFB33 /* kapi_kaffeineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02AFE591E7D260D008FFB33 /* kapi_kaffeineTests.swift */; };
 		C02AFE651E7D260D008FFB33 /* kapi_kaffeineUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02AFE641E7D260D008FFB33 /* kapi_kaffeineUITests.swift */; };
+		C0409E1F1E954F1A00C302FF /* cafes.json in Resources */ = {isa = PBXBuildFile; fileRef = C0409E1E1E954F1A00C302FF /* cafes.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,7 @@
 		C02AFE601E7D260D008FFB33 /* kapi-kaffeineUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "kapi-kaffeineUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C02AFE641E7D260D008FFB33 /* kapi_kaffeineUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = kapi_kaffeineUITests.swift; sourceTree = "<group>"; };
 		C02AFE661E7D260D008FFB33 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C0409E1E1E954F1A00C302FF /* cafes.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cafes.json; sourceTree = "<group>"; };
 		CA73E4544076455C6DC0C065 /* Pods-kapi-kaffeine.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kapi-kaffeine.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-kapi-kaffeine/Pods-kapi-kaffeine.debug.xcconfig"; sourceTree = "<group>"; };
 		FA9A4A083D5D704A746B1C9A /* Pods_kapi_kaffeineTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_kapi_kaffeineTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -148,6 +150,7 @@
 				C02AFE501E7D260D008FFB33 /* Info.plist */,
 				C00CD5311E9521A600A3CB6F /* KKMapViewController.swift */,
 				C00CD5331E95234A00A3CB6F /* style.json */,
+				C0409E1E1E954F1A00C302FF /* cafes.json */,
 			);
 			path = "kapi-kaffeine";
 			sourceTree = "<group>";
@@ -284,6 +287,7 @@
 				C02AFE4C1E7D260D008FFB33 /* Assets.xcassets in Resources */,
 				C02AFE4A1E7D260D008FFB33 /* Main.storyboard in Resources */,
 				C00CD5341E95234A00A3CB6F /* style.json in Resources */,
+				C0409E1F1E954F1A00C302FF /* cafes.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
