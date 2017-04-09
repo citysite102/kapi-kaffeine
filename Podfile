@@ -13,14 +13,11 @@ target 'kapi-kaffeine' do
   pod 'GoogleMaps'
   pod 'GooglePlaces'
 
-  # target 'kapi-kaffeineTests' do
-  #   inherit! :search_paths
-  #   # Pods for testing
-  # end
 
-  # target 'kapi-kaffeineUITests' do
-  #   inherit! :search_paths
-  #   # Pods for testing
-  # end
+  # Model
+  pod 'ObjectMapper', '~> 2.2'
+
+  # Network
+  pod 'Alamofire', '~> 4.4'
 
 end

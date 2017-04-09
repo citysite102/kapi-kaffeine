@@ -1,4 +1,5 @@
 PODS:
+  - Alamofire (4.4.0)
   - BenzeneFoundation (0.5.42):
     - BenzeneFoundation/Foundation (= 0.5.42)
     - BenzeneFoundation/UIKit (= 0.5.42)
@@ -49,18 +50,23 @@ PODS:
     - libextobjc/RuntimeExtensions
   - libextobjc/RuntimeExtensions (0.4.1)
   - libextobjc/UmbrellaHeader (0.4.1)
+  - ObjectMapper (2.2.5)
 
 DEPENDENCIES:
+  - Alamofire (~> 4.4)
   - BenzeneFoundation
   - GoogleMaps
   - GooglePlaces
+  - ObjectMapper (~> 2.2)
 
 SPEC CHECKSUMS:
+  Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
   BenzeneFoundation: 7a44807ff32cd32d8776deccf2b7fd2f92ed8159
   GoogleMaps: 104c418d61ab8a05dff06ed0784c25ea9d37da45
   GooglePlaces: bca867d5e9da15384c794b945e4226848bc6e9d9
   libextobjc: a650fc1bf489a3d3a9bc2e621efa3e1006fc5471
+  ObjectMapper: fb30f71e08470d1e5a20b199fafe1246281db898
 
-PODFILE CHECKSUM: 4f0e9ba061a5988fcb1cb648e1ff48ca75f60b97
+PODFILE CHECKSUM: 2675959ce49beb19543c2b5726246f549a88b12e
 
 COCOAPODS: 1.1.1
