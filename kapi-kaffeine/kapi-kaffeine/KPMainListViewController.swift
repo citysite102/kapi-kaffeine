@@ -12,6 +12,7 @@ class KPMainListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = UIColor(hexString: "#CCCCCC");
         // Do any additional setup after loading the view.
     }
 

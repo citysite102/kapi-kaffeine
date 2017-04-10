@@ -10,14 +10,37 @@ import UIKit
 
 class KPMainViewController: UIViewController {
 
-    var searchHeaderView:KPSearchHeaderView!
-    var searchFooterView:KPSearchFooterView!
+    var searchHeaderView: KPSearchHeaderView!
+    var searchFooterView: KPSearchFooterView!
+    
+    var currentController: UIViewController! {
+        didSet {
+            
+            if oldValue != nil {
+                oldValue?.willMove(toParentViewController: nil);
+                oldValue?.view.removeFromSuperview();
+                oldValue?.removeFromParentViewController();
+            }
+            
+            self.addChildViewController(currentController!);
+            self.view.addSubview((self.currentController?.view)!);
+            currentController.didMove(toParentViewController: self);
+            currentController.view.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"]);
+            
+        }
+    }
+    
+    var mainListViewController:KPMainListViewController!
+    var mainMapViewController:KPMainMapViewController!
     
     override func viewDidLoad() {
-        super.viewDidLoad()
-
-        
+        super.viewDidLoad();
         UIApplication.shared.statusBarStyle = .lightContent;
+        
+        self.mainListViewController = KPMainListViewController();
+        self.mainMapViewController = KPMainMapViewController();
+        
+        self.currentController = self.mainListViewController;
         
         self.searchHeaderView = KPSearchHeaderView();
         self.view.addSubview(searchHeaderView);
@@ -26,7 +49,6 @@ class KPMainViewController: UIViewController {
         self.searchFooterView = KPSearchFooterView();
         self.view.addSubview(searchFooterView);
         self.searchFooterView.addConstraints(fromStringArray: ["V:[$self(40)]|", "H:|[$self]|"])
-        
     }
 
     override func didReceiveMemoryWarning() {
