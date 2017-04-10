@@ -9,10 +9,11 @@
 import UIKit
 import GoogleMaps
 import BenzeneFoundation
+import ObjectMapper
 
 class KKMapViewController: UIViewController, GMSMapViewDelegate {
     
-    var cafeData: Array<NSDictionary> = []
+    var cafeData: Array<KPDataModel> = []
     
     override func loadView() {
         let camera = GMSCameraPosition.camera(withLatitude: 25.018744, longitude: 121.532785, zoom: 18.0)
@@ -45,20 +46,20 @@ class KKMapViewController: UIViewController, GMSMapViewDelegate {
         
         if let dataURL = Bundle.main.url(forResource: "cafes", withExtension: "json") {
             do {
-                let data = try Data(contentsOf: dataURL)
-                self.cafeData = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as! Array<NSDictionary>
-                (self.view as! GMSMapView).clear()
+                let data = try String(contentsOf: dataURL)
+                self.cafeData = Mapper<KPDataModel>().mapArray(JSONString: data) ?? []
                 
-                for cafe in self.cafeData {
-                    let position = CLLocationCoordinate2DMake(Double(cafe.object(forKey: "latitude") as! String)!,
-                                                              Double(cafe.object(forKey: "longitude") as! String)!)
+                (self.view as! GMSMapView).clear()
+
+                for datamodel in self.cafeData  {
+                    let position = CLLocationCoordinate2DMake(Double(datamodel.latitude  ?? "0") ?? 0,
+                                                              Double(datamodel.longitude ?? "0") ?? 0)
                     let marker = GMSMarker(position: position)
-                    
-                    marker.title = cafe.object(forKey: "name") as? String
+
+                    marker.title = datamodel.name
                     marker.icon = UIImage(named: "icon_mapMarker")
                     marker.map = self.view as? GMSMapView
-                    marker.userData = cafe
-                    
+                    marker.userData = datamodel
                 }
                 
             } catch {
@@ -72,23 +73,7 @@ class KKMapViewController: UIViewController, GMSMapViewDelegate {
     
     func mapView(_ mapView: GMSMapView, markerInfoWindow marker: GMSMarker) -> UIView? {
         marker.icon = UIImage(named: "icon_mapMarkerSelected")
-//        let infoWindow = UIView(frame: CGRect(x: 0, y: 0, width: 117, height: 29.7))
-//        infoWindow.backgroundColor = UIColor.white
-//        let imageView = UIImageView(image: UIImage(named: "icon_house"))
-//        imageView.contentMode = .scaleAspectFit
-//        let titleLabel = UILabel()
-//        titleLabel.font = UIFont.systemFont(ofSize: 12)
-//        titleLabel.text = marker.title
-//        
-//        infoWindow.addSubview(imageView)
-//        infoWindow.addSubview(titleLabel)
-//
-//        imageView.addConstraints(fromStringArray: ["H:|-[$self]-[$view0]", "V:|-2-[$self]-2-|", "V:|-[$view0]-|"], views: [titleLabel])
-        let infoWindow = KKMapMarkerInfoWindow(data: marker.userData as! NSDictionary)
-        infoWindow.invalidateIntrinsicContentSize()
-        
-        print(infoWindow.intrinsicContentSize)
-//        infoWindow.frameSize = infoWindow.intrinsicContentSize
+        let infoWindow = KKMapMarkerInfoWindow(dataModel: marker.userData as! KPDataModel)
         
         return infoWindow
     }
@@ -99,7 +84,6 @@ class KKMapViewController: UIViewController, GMSMapViewDelegate {
     
     func mapView(_ mapView: GMSMapView, didTapInfoWindowOf marker: GMSMarker) {
         // Tap info window
-        print(marker.title)
     }
     
 }
