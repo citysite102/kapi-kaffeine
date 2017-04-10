@@ -10,12 +10,20 @@ import UIKit
 
 class KPSearchHeaderView: UIView {
 
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
+    var searchTagView: KPSearchTagView!
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame);
+        self.backgroundColor = KPColorPalette.KPMainColor.MainColor;
+        
+        self.searchTagView = KPSearchTagView();
+        self.addSubview(self.searchTagView);
+        self.searchTagView.addConstraints(fromStringArray: ["V:[$self(40)]|", "H:|[$self]|"]);
+        
     }
-    */
-
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
 }

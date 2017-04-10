@@ -1,5 +1,5 @@
 //
-//  KPMainListViewController.swift
+//  KPMainViewController.swift
 //  kapi-kaffeine
 //
 //  Created by YU CHONKAO on 2017/4/10.
@@ -8,11 +8,25 @@
 
 import UIKit
 
-class KPMainListViewController: UIViewController {
+class KPMainViewController: UIViewController {
+
+    var searchHeaderView:KPSearchHeaderView!
+    var searchFooterView:KPSearchFooterView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+
+        
+        UIApplication.shared.statusBarStyle = .lightContent;
+        
+        self.searchHeaderView = KPSearchHeaderView();
+        self.view.addSubview(searchHeaderView);
+        self.searchHeaderView.addConstraints(fromStringArray: ["V:|[$self(100)]", "H:|[$self]|"])
+        
+        self.searchFooterView = KPSearchFooterView();
+        self.view.addSubview(searchFooterView);
+        self.searchFooterView.addConstraints(fromStringArray: ["V:[$self(40)]|", "H:|[$self]|"])
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -20,6 +34,7 @@ class KPMainListViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+
     /*
     // MARK: - Navigation
 
