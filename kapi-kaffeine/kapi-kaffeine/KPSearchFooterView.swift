@@ -20,7 +20,7 @@ class KPSearchFooterView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame);
-        self.backgroundColor = KPColorPalette.KPMainColor.Button;
+        self.backgroundColor = KPColorPalette.KPMainColor.buttonColor;
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -14,7 +14,7 @@ class KPSearchHeaderView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame);
-        self.backgroundColor = KPColorPalette.KPMainColor.MainColor;
+        self.backgroundColor = KPColorPalette.KPMainColor.mainColor;
         
         self.searchTagView = KPSearchTagView();
         self.addSubview(self.searchTagView);

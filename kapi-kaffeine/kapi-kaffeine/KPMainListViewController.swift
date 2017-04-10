@@ -10,10 +10,23 @@ import UIKit
 
 class KPMainListViewController: UIViewController {
     
+    static let KPMainListViewCellReuseIdentifier = "cell";
+    
+    var tableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor(hexString: "#CCCCCC");
-        // Do any additional setup after loading the view.
+        
+        self.tableView = UITableView();
+        self.tableView.delegate = self;
+        self.tableView.dataSource = self;
+        self.view.addSubview(self.tableView);
+        self.tableView.addConstraints(fromStringArray: ["V:|-100-[$self]-40-|",
+                                                        "H:|[$self]|"]);
+        self.tableView.register(KPMainListTableViewCell.self,
+                                forCellReuseIdentifier: KPMainListViewController.KPMainListViewCellReuseIdentifier);
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -30,5 +43,28 @@ class KPMainListViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+
+}
+
+extension KPMainListViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier:KPMainListViewController.KPMainListViewCellReuseIdentifier,
+                                                 for: indexPath) as! KPMainListTableViewCell;
+        return cell;
+    }
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1;
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80;
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 10;
+    }
+    
 
 }

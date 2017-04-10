@@ -26,7 +26,6 @@ class KPMainViewController: UIViewController {
             self.view.addSubview((self.currentController?.view)!);
             currentController.didMove(toParentViewController: self);
             currentController.view.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"]);
-            
         }
     }
     

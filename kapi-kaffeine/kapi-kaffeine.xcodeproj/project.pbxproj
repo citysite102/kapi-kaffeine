@@ -16,6 +16,8 @@
 		776ACAFF1E9BB1DE00B629A2 /* KPConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776ACAFE1E9BB1DE00B629A2 /* KPConstant.swift */; };
 		776ACB011E9BB49E00B629A2 /* KPMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776ACB001E9BB49E00B629A2 /* KPMainViewController.swift */; };
 		776ACB041E9BB8A900B629A2 /* KPSearchTagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776ACB031E9BB8A900B629A2 /* KPSearchTagCell.swift */; };
+		776ACB061E9BE33A00B629A2 /* KPMainListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776ACB051E9BE33A00B629A2 /* KPMainListTableViewCell.swift */; };
+		776ACB081E9BE51600B629A2 /* KPMainListCellFeatureContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776ACB071E9BE51600B629A2 /* KPMainListCellFeatureContainer.swift */; };
 		77FB63961E9AA7BB00FFC3DC /* KPDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77FB63951E9AA7BB00FFC3DC /* KPDataModel.swift */; };
 		C00CD5321E9521A600A3CB6F /* KKMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00CD5311E9521A600A3CB6F /* KKMapViewController.swift */; };
 		C00CD5341E95234A00A3CB6F /* style.json in Resources */ = {isa = PBXBuildFile; fileRef = C00CD5331E95234A00A3CB6F /* style.json */; };
@@ -59,6 +61,8 @@
 		776ACAFE1E9BB1DE00B629A2 /* KPConstant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPConstant.swift; sourceTree = "<group>"; };
 		776ACB001E9BB49E00B629A2 /* KPMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPMainViewController.swift; sourceTree = "<group>"; };
 		776ACB031E9BB8A900B629A2 /* KPSearchTagCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSearchTagCell.swift; sourceTree = "<group>"; };
+		776ACB051E9BE33A00B629A2 /* KPMainListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPMainListTableViewCell.swift; sourceTree = "<group>"; };
+		776ACB071E9BE51600B629A2 /* KPMainListCellFeatureContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPMainListCellFeatureContainer.swift; sourceTree = "<group>"; };
 		77FB63951E9AA7BB00FFC3DC /* KPDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPDataModel.swift; sourceTree = "<group>"; };
 		C00CD5311E9521A600A3CB6F /* KKMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KKMapViewController.swift; sourceTree = "<group>"; };
 		C00CD5331E95234A00A3CB6F /* style.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = style.json; sourceTree = "<group>"; };
@@ -131,6 +135,8 @@
 			children = (
 				776ACAF31E9BAFA200B629A2 /* KPSearchHeaderView.swift */,
 				776ACAF71E9BAFE900B629A2 /* KPSearchFooterView.swift */,
+				776ACB051E9BE33A00B629A2 /* KPMainListTableViewCell.swift */,
+				776ACB071E9BE51600B629A2 /* KPMainListCellFeatureContainer.swift */,
 				776ACB021E9BB88600B629A2 /* KPSearchTagView */,
 			);
 			name = View;
@@ -427,10 +433,12 @@
 				776ACB041E9BB8A900B629A2 /* KPSearchTagCell.swift in Sources */,
 				776ACB011E9BB49E00B629A2 /* KPMainViewController.swift in Sources */,
 				776ACAF41E9BAFA200B629A2 /* KPSearchHeaderView.swift in Sources */,
+				776ACB061E9BE33A00B629A2 /* KPMainListTableViewCell.swift in Sources */,
 				776ACAFC1E9BB02D00B629A2 /* KPMainMapViewController.swift in Sources */,
 				C02AFE471E7D260D008FFB33 /* ViewController.swift in Sources */,
 				C02AFE451E7D260D008FFB33 /* AppDelegate.swift in Sources */,
 				776ACAF81E9BAFE900B629A2 /* KPSearchFooterView.swift in Sources */,
+				776ACB081E9BE51600B629A2 /* KPMainListCellFeatureContainer.swift in Sources */,
 				77FB63961E9AA7BB00FFC3DC /* KPDataModel.swift in Sources */,
 				776ACAFF1E9BB1DE00B629A2 /* KPConstant.swift in Sources */,
 			);

@@ -16,10 +16,25 @@ struct KPColorPalette {
 //    static let KPColor_MainColor_Button = UIColor(hexString: "#784d1f")
     
     struct KPMainColor {
-        static let MainColor = UIColor(hexString: "#c8955e")
-        static let Button = UIColor(hexString: "#784d1f")
+        static let mainColor = UIColor(hexString: "#c8955e")
+        static let buttonColor = UIColor(hexString: "#784d1f")
     }
     
+    struct KPTextColor {
+        static let cellNameColor = UIColor(hexString: "#333333")
+        static let cellStatusColor = UIColor(hexString: "#212121")
+        static let cellDistanceColor = UIColor(hexString: "#784d1f")
+        static let whiteColor = UIColor(hexString: "#ffffff")
+    }
+    
+    struct KPBackgroundColor {
+        static let cellScoreBgColor = UIColor(hexString: "#9f9426")
+    }
+    
+    struct KPShopStatusColor {
+        static let opened = UIColor(hexString: "#6dd551")
+        static let closed = UIColor(hexString: "#f05e32")
+    }
     
     struct KPTestHintColor {
         static let redHintColor = UIColor(hexString: "#ff0000")
