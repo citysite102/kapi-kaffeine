@@ -102,6 +102,21 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		776ACAED1E9BAE0200B629A2 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		776ACAEF1E9BAE3A00B629A2 /* MainController */ = {
+			isa = PBXGroup;
+			children = (
+				776ACAED1E9BAE0200B629A2 /* View */,
+			);
+			name = MainController;
+			sourceTree = "<group>";
+		};
 		77FB63941E9AA75900FFC3DC /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -135,6 +150,7 @@
 		C02AFE431E7D260D008FFB33 /* kapi-kaffeine */ = {
 			isa = PBXGroup;
 			children = (
+				776ACAEF1E9BAE3A00B629A2 /* MainController */,
 				77FB63941E9AA75900FFC3DC /* Model */,
 				C02AFE441E7D260D008FFB33 /* AppDelegate.swift */,
 				C02AFE461E7D260D008FFB33 /* ViewController.swift */,
