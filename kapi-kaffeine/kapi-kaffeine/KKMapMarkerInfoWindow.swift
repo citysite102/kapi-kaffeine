@@ -9,21 +9,13 @@
 import UIKit
 
 class KKMapMarkerInfoWindow: UIView {
-
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
     
-    init(data: NSDictionary) {
+    init(dataModel: KPDataModel) {
         
-        let textRect = NSString(string: data.object(forKey: "name") as! NSString).boundingRect(with: CGSize(width: 300, height: 40),
-                                                                                               options: .usesLineFragmentOrigin,
-                                                                                               attributes: [:],
-                                                                                               context: nil)
+        let textRect = NSString(string: dataModel.name).boundingRect(with: CGSize(width: 300, height: 40),
+                                                                options: .usesLineFragmentOrigin,
+                                                                attributes: [:],
+                                                                context: nil)
         
         super.init(frame: CGRect(x: 0, y: 0, width: textRect.width + 60 , height: 30))
         
@@ -33,7 +25,7 @@ class KKMapMarkerInfoWindow: UIView {
         imageView.contentMode = .scaleAspectFit
         let titleLabel = UILabel()
         titleLabel.font = UIFont.systemFont(ofSize: 12)
-        titleLabel.text = data.object(forKey: "name") as? String
+        titleLabel.text = dataModel.name
         
         self.addSubview(imageView)
         self.addSubview(titleLabel)
