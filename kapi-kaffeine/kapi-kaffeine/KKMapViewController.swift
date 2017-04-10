@@ -8,6 +8,7 @@
 
 import UIKit
 import GoogleMaps
+import BenzeneFoundation
 
 class KKMapViewController: UIViewController, GMSMapViewDelegate {
     
@@ -51,11 +52,12 @@ class KKMapViewController: UIViewController, GMSMapViewDelegate {
                 for cafe in self.cafeData {
                     let position = CLLocationCoordinate2DMake(Double(cafe.object(forKey: "latitude") as! String)!,
                                                               Double(cafe.object(forKey: "longitude") as! String)!)
-                    print(position)
                     let marker = GMSMarker(position: position)
+                    
                     marker.title = cafe.object(forKey: "name") as? String
                     marker.icon = UIImage(named: "icon_mapMarker")
                     marker.map = self.view as? GMSMapView
+                    marker.userData = cafe
                     
                 }
                 
@@ -70,11 +72,34 @@ class KKMapViewController: UIViewController, GMSMapViewDelegate {
     
     func mapView(_ mapView: GMSMapView, markerInfoWindow marker: GMSMarker) -> UIView? {
         marker.icon = UIImage(named: "icon_mapMarkerSelected")
-        return nil
+//        let infoWindow = UIView(frame: CGRect(x: 0, y: 0, width: 117, height: 29.7))
+//        infoWindow.backgroundColor = UIColor.white
+//        let imageView = UIImageView(image: UIImage(named: "icon_house"))
+//        imageView.contentMode = .scaleAspectFit
+//        let titleLabel = UILabel()
+//        titleLabel.font = UIFont.systemFont(ofSize: 12)
+//        titleLabel.text = marker.title
+//        
+//        infoWindow.addSubview(imageView)
+//        infoWindow.addSubview(titleLabel)
+//
+//        imageView.addConstraints(fromStringArray: ["H:|-[$self]-[$view0]", "V:|-2-[$self]-2-|", "V:|-[$view0]-|"], views: [titleLabel])
+        let infoWindow = KKMapMarkerInfoWindow(data: marker.userData as! NSDictionary)
+        infoWindow.invalidateIntrinsicContentSize()
+        
+        print(infoWindow.intrinsicContentSize)
+//        infoWindow.frameSize = infoWindow.intrinsicContentSize
+        
+        return infoWindow
     }
     
     func mapView(_ mapView: GMSMapView, didCloseInfoWindowOf marker: GMSMarker) {
         marker.icon = UIImage(named: "icon_mapMarker")
+    }
+    
+    func mapView(_ mapView: GMSMapView, didTapInfoWindowOf marker: GMSMarker) {
+        // Tap info window
+        print(marker.title)
     }
     
 }
