@@ -20,6 +20,13 @@
 		776ACB081E9BE51600B629A2 /* KPMainListCellFeatureContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776ACB071E9BE51600B629A2 /* KPMainListCellFeatureContainer.swift */; };
 		776ACB0B1E9C783E00B629A2 /* KPInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776ACB0A1E9C783E00B629A2 /* KPInformationViewController.swift */; };
 		77C0E0FA1E9D3D7500398852 /* KPSearchFooterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0E0F91E9D3D7500398852 /* KPSearchFooterCell.swift */; };
+		77C0E0FD1E9D489900398852 /* KPInformationHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0E0FC1E9D489900398852 /* KPInformationHeaderView.swift */; };
+		77C0E0FF1E9D48BC00398852 /* KPInformationSharedInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0E0FE1E9D48BC00398852 /* KPInformationSharedInfoView.swift */; };
+		77C0E1021E9D48E000398852 /* KPShopInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0E1011E9D48E000398852 /* KPShopInfoView.swift */; };
+		77C0E1051E9D48F500398852 /* KPShopLocationInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0E1041E9D48F500398852 /* KPShopLocationInfoView.swift */; };
+		77C0E1081E9D491D00398852 /* KPShopScoreInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0E1071E9D491D00398852 /* KPShopScoreInfoView.swift */; };
+		77C0E10A1E9D493400398852 /* KPShopCommentInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0E1091E9D493400398852 /* KPShopCommentInfoView.swift */; };
+		77C0E10C1E9D494400398852 /* KPShopPhotoInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0E10B1E9D494400398852 /* KPShopPhotoInfoView.swift */; };
 		77FB63961E9AA7BB00FFC3DC /* KPDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77FB63951E9AA7BB00FFC3DC /* KPDataModel.swift */; };
 		C00CD5341E95234A00A3CB6F /* style.json in Resources */ = {isa = PBXBuildFile; fileRef = C00CD5331E95234A00A3CB6F /* style.json */; };
 		C02881CB1E9CF1E200776E28 /* KPMainMapMarkerInfoWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02881CA1E9CF1E200776E28 /* KPMainMapMarkerInfoWindow.swift */; };
@@ -66,6 +73,13 @@
 		776ACB071E9BE51600B629A2 /* KPMainListCellFeatureContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPMainListCellFeatureContainer.swift; sourceTree = "<group>"; };
 		776ACB0A1E9C783E00B629A2 /* KPInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPInformationViewController.swift; sourceTree = "<group>"; };
 		77C0E0F91E9D3D7500398852 /* KPSearchFooterCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSearchFooterCell.swift; sourceTree = "<group>"; };
+		77C0E0FC1E9D489900398852 /* KPInformationHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPInformationHeaderView.swift; sourceTree = "<group>"; };
+		77C0E0FE1E9D48BC00398852 /* KPInformationSharedInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPInformationSharedInfoView.swift; sourceTree = "<group>"; };
+		77C0E1011E9D48E000398852 /* KPShopInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPShopInfoView.swift; sourceTree = "<group>"; };
+		77C0E1041E9D48F500398852 /* KPShopLocationInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPShopLocationInfoView.swift; sourceTree = "<group>"; };
+		77C0E1071E9D491D00398852 /* KPShopScoreInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPShopScoreInfoView.swift; sourceTree = "<group>"; };
+		77C0E1091E9D493400398852 /* KPShopCommentInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPShopCommentInfoView.swift; sourceTree = "<group>"; };
+		77C0E10B1E9D494400398852 /* KPShopPhotoInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPShopPhotoInfoView.swift; sourceTree = "<group>"; };
 		77FB63951E9AA7BB00FFC3DC /* KPDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPDataModel.swift; sourceTree = "<group>"; };
 		C00CD5331E95234A00A3CB6F /* style.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = style.json; sourceTree = "<group>"; };
 		C02881CA1E9CF1E200776E28 /* KPMainMapMarkerInfoWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPMainMapMarkerInfoWindow.swift; sourceTree = "<group>"; };
@@ -179,8 +193,31 @@
 			isa = PBXGroup;
 			children = (
 				776ACB0A1E9C783E00B629A2 /* KPInformationViewController.swift */,
+				77C0E0FB1E9D487800398852 /* View */,
 			);
 			name = InformationController;
+			sourceTree = "<group>";
+		};
+		77C0E0FB1E9D487800398852 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				77C0E1001E9D48BF00398852 /* Information */,
+				77C0E0FC1E9D489900398852 /* KPInformationHeaderView.swift */,
+				77C0E0FE1E9D48BC00398852 /* KPInformationSharedInfoView.swift */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		77C0E1001E9D48BF00398852 /* Information */ = {
+			isa = PBXGroup;
+			children = (
+				77C0E1011E9D48E000398852 /* KPShopInfoView.swift */,
+				77C0E1041E9D48F500398852 /* KPShopLocationInfoView.swift */,
+				77C0E1071E9D491D00398852 /* KPShopScoreInfoView.swift */,
+				77C0E1091E9D493400398852 /* KPShopCommentInfoView.swift */,
+				77C0E10B1E9D494400398852 /* KPShopPhotoInfoView.swift */,
+			);
+			name = Information;
 			sourceTree = "<group>";
 		};
 		77FB63941E9AA75900FFC3DC /* Model */ = {
@@ -442,14 +479,21 @@
 				776ACB0B1E9C783E00B629A2 /* KPInformationViewController.swift in Sources */,
 				77C0E0FA1E9D3D7500398852 /* KPSearchFooterCell.swift in Sources */,
 				776ACB041E9BB8A900B629A2 /* KPSearchTagCell.swift in Sources */,
+				77C0E10A1E9D493400398852 /* KPShopCommentInfoView.swift in Sources */,
+				77C0E0FF1E9D48BC00398852 /* KPInformationSharedInfoView.swift in Sources */,
 				776ACB011E9BB49E00B629A2 /* KPMainViewController.swift in Sources */,
+				77C0E1021E9D48E000398852 /* KPShopInfoView.swift in Sources */,
+				77C0E1051E9D48F500398852 /* KPShopLocationInfoView.swift in Sources */,
 				776ACAF41E9BAFA200B629A2 /* KPSearchHeaderView.swift in Sources */,
 				776ACB061E9BE33A00B629A2 /* KPMainListTableViewCell.swift in Sources */,
 				776ACAFC1E9BB02D00B629A2 /* KPMainMapViewController.swift in Sources */,
 				C02881CB1E9CF1E200776E28 /* KPMainMapMarkerInfoWindow.swift in Sources */,
 				C02AFE471E7D260D008FFB33 /* ViewController.swift in Sources */,
+				77C0E0FD1E9D489900398852 /* KPInformationHeaderView.swift in Sources */,
+				77C0E1081E9D491D00398852 /* KPShopScoreInfoView.swift in Sources */,
 				C02AFE451E7D260D008FFB33 /* AppDelegate.swift in Sources */,
 				776ACAF81E9BAFE900B629A2 /* KPSearchFooterView.swift in Sources */,
+				77C0E10C1E9D494400398852 /* KPShopPhotoInfoView.swift in Sources */,
 				776ACB081E9BE51600B629A2 /* KPMainListCellFeatureContainer.swift in Sources */,
 				77FB63961E9AA7BB00FFC3DC /* KPDataModel.swift in Sources */,
 				776ACAFF1E9BB1DE00B629A2 /* KPConstant.swift in Sources */,
