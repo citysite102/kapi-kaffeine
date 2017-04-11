@@ -31,15 +31,16 @@ class KPMainViewController: UIViewController {
     
     var mainListViewController:KPMainListViewController!
     var mainMapViewController:KPMainMapViewController!
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad();
+        
         UIApplication.shared.statusBarStyle = .lightContent;
         
         self.mainListViewController = KPMainListViewController();
         self.mainMapViewController = KPMainMapViewController();
         
-        self.currentController = self.mainListViewController;
+        self.currentController = self.mainMapViewController;
         
         self.searchHeaderView = KPSearchHeaderView();
         self.view.addSubview(searchHeaderView);
@@ -48,6 +49,7 @@ class KPMainViewController: UIViewController {
         self.searchFooterView = KPSearchFooterView();
         self.view.addSubview(searchFooterView);
         self.searchFooterView.addConstraints(fromStringArray: ["V:[$self(40)]|", "H:|[$self]|"])
+        
     }
 
     override func didReceiveMemoryWarning() {

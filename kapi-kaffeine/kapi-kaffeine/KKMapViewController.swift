@@ -52,14 +52,19 @@ class KKMapViewController: UIViewController, GMSMapViewDelegate {
                 (self.view as! GMSMapView).clear()
 
                 for datamodel in self.cafeData  {
-                    let position = CLLocationCoordinate2DMake(Double(datamodel.latitude  ?? "0") ?? 0,
-                                                              Double(datamodel.longitude ?? "0") ?? 0)
-                    let marker = GMSMarker(position: position)
-
-                    marker.title = datamodel.name
-                    marker.icon = UIImage(named: "icon_mapMarker")
-                    marker.map = self.view as? GMSMapView
-                    marker.userData = datamodel
+                    
+                    if let latstr = datamodel.latitude, let latitude = Double(latstr),
+                       let longstr = datamodel.latitude, let longitude = Double(longstr) {
+                        let position = CLLocationCoordinate2DMake(latitude, longitude)
+                        let marker = GMSMarker(position: position)
+                        
+                        marker.title = datamodel.name
+                        marker.icon = UIImage(named: "icon_mapMarker")
+                        marker.map = self.view as? GMSMapView
+                        marker.userData = datamodel
+                        
+                    }
+                    
                 }
                 
             } catch {
