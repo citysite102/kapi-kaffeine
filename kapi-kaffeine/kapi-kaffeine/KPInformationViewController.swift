@@ -10,31 +10,30 @@ import UIKit
 
 class KPInformationViewController: UIViewController {
 
-    
-    
     var scrollContainer:UIScrollView!;
     var shopPhotoContainer:UIView!;
     var shopPhoto:UIImageView!;
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         self.view.backgroundColor = UIColor.white;
         
         self.scrollContainer = UIScrollView();
         self.scrollContainer.delegate = self;
         self.view.addSubview(self.scrollContainer);
-        self.scrollContainer.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"]);
+        self.scrollContainer.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                              "V:|[$self]|"]);
         
         self.shopPhotoContainer = UIView();
         self.scrollContainer.addSubview(self.shopPhotoContainer);
-        self.shopPhotoContainer.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]"]);
+        self.shopPhotoContainer.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                                 "V:|[$self]"]);
         
         self.shopPhoto = UIImageView(image: UIImage(named: "image_shop_demo"));
         self.shopPhoto.contentMode = .scaleAspectFit;
         self.shopPhotoContainer.addSubview(shopPhoto);
-        self.shopPhoto.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"]);
+        self.shopPhoto.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                        "V:|[$self]|"]);
         
     }
 
@@ -51,4 +50,5 @@ extension KPInformationViewController: UIScrollViewDelegate {
         self.scrollContainer.contentOffset = CGPoint.init(x: 0,
                                                           y: self.scrollContainer.contentOffset.y);
     };
+    
 }

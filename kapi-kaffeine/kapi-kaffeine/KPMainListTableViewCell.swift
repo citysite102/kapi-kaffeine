@@ -73,6 +73,12 @@ class KPMainListTableViewCell: UITableViewCell {
         self.addSubview(self.scoreLabel);
         self.scoreLabel.addConstraints(fromStringArray: ["H:[$self(30)]-8-|",
                                                          "V:|-12-[$self(22)]"]);
+        
+        self.featureContainer = KPMainListCellFeatureContainer();
+        self.featureContainer.featureContents = ["燈光美", "氣氛佳"];
+        self.addSubview(self.featureContainer);
+        self.featureContainer.addConstraints(fromStringArray: ["H:[$self]-8-|",
+                                                               "V:[$self]-12-|"]);
     }
     
     required init?(coder aDecoder: NSCoder) {

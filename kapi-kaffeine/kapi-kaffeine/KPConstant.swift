@@ -12,9 +12,6 @@ import BenzeneFoundation
 
 struct KPColorPalette {
 
-//    static let KPColor_MainColor = UIColor(hexString: "#c8955e")
-//    static let KPColor_MainColor_Button = UIColor(hexString: "#784d1f")
-    
     struct KPMainColor {
         static let mainColor = UIColor(hexString: "#c8955e")
         static let buttonColor = UIColor(hexString: "#784d1f")
