@@ -19,19 +19,6 @@ class KPMainListViewController: UIViewController {
     var displayDataModel: [KPDataModel]! {
         didSet {
             self.tableView.reloadData();
-//            for datamodel in self.displayDataModel  {
-//                if let latstr = datamodel.latitude, let latitude = Double(latstr),
-//                    let longstr = datamodel.longitude, let longitude = Double(longstr) {
-//                    
-//                    let position = CLLocationCoordinate2DMake(latitude, longitude)
-//                    let marker = GMSMarker(position: position)
-//                    
-//                    marker.title = datamodel.name
-//                    marker.icon = UIImage(named: "icon_mapMarker")
-//                    marker.map = (self.view as! GMSMapView)
-//                    marker.userData = datamodel
-//                }
-//            }
         }
     }
     
@@ -81,6 +68,7 @@ extension KPMainListViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier:KPMainListViewController.KPMainListViewCellReuseIdentifier,
                                                  for: indexPath) as! KPMainListTableViewCell;
         
+        cell.selectionStyle = .none;
         cell.shopNameLabel.text = self.displayDataModel[indexPath.row].name;
         cell.shopStatusContent = (self.displayDataModel[indexPath.row].openTime! as String).replacingOccurrences(of: "~", with: "-");
         cell.scoreLabel.score = "\(self.displayDataModel[indexPath.row].score!.format(f: ".1"))";
