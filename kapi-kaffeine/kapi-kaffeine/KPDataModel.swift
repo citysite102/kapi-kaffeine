@@ -30,6 +30,35 @@ class KPDataModel: Mappable {
     var mrt: String?
     var openTime: String?
     
+    
+    var usableFeatureCount: Int? {
+        get {
+            var count:Int = 0
+            count += self.wifi?.intValue == 0 ? 0 : 1;
+            count += self.seat?.intValue == 0 ? 0 : 1;
+            count += self.quite?.intValue == 0 ? 0 : 1;
+            count += self.tasty?.intValue == 0 ? 0 : 1;
+            count += self.cheap?.intValue == 0 ? 0 : 1;
+            count += self.music?.intValue == 0 ? 0 : 1;
+            return count
+        }
+    }
+    
+    var score: Double? {
+        get {
+            
+            var sum = 0.0;
+            sum += (self.wifi?.doubleValue) ?? 0;
+            sum += (self.seat?.doubleValue) ?? 0;
+            sum += (self.quite?.doubleValue) ?? 0;
+            sum += (self.tasty?.doubleValue) ?? 0;
+            sum += (self.cheap?.doubleValue) ?? 0;
+            sum += (self.music?.doubleValue) ?? 0;
+            
+            return sum/Double(self.usableFeatureCount!)
+        }
+    }
+    
     required init?(map: Map) {
         
     }

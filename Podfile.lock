@@ -1,5 +1,7 @@
 PODS:
   - Alamofire (4.4.0)
+  - AlamofireImage (3.2.0):
+    - Alamofire (~> 4.1)
   - BenzeneFoundation (0.5.42):
     - BenzeneFoundation/Foundation (= 0.5.42)
     - BenzeneFoundation/UIKit (= 0.5.42)
@@ -54,6 +56,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire (~> 4.4)
+  - AlamofireImage
   - BenzeneFoundation
   - GoogleMaps
   - GooglePlaces
@@ -61,12 +64,13 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
+  AlamofireImage: 157ed682cc81d3b9db4fb90c1f12180ac552d93b
   BenzeneFoundation: 7a44807ff32cd32d8776deccf2b7fd2f92ed8159
   GoogleMaps: 104c418d61ab8a05dff06ed0784c25ea9d37da45
   GooglePlaces: bca867d5e9da15384c794b945e4226848bc6e9d9
   libextobjc: a650fc1bf489a3d3a9bc2e621efa3e1006fc5471
   ObjectMapper: fb30f71e08470d1e5a20b199fafe1246281db898
 
-PODFILE CHECKSUM: 2675959ce49beb19543c2b5726246f549a88b12e
+PODFILE CHECKSUM: f0fd5c4f02c4c8b1293d865899e37225c41b9087
 
 COCOAPODS: 1.1.1

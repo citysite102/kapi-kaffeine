@@ -19,5 +19,6 @@ target 'kapi-kaffeine' do
 
   # Network
   pod 'Alamofire', '~> 4.4'
+  pod 'AlamofireImage'
 
 end

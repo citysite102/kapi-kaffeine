@@ -7,12 +7,33 @@
 //
 
 import UIKit
+import AlamofireImage
+import ObjectMapper
 
 class KPMainListViewController: UIViewController {
     
     static let KPMainListViewCellReuseIdentifier = "cell";
     
     var tableView: UITableView!
+    
+    var displayDataModel: [KPDataModel]! {
+        didSet {
+            self.tableView.reloadData();
+//            for datamodel in self.displayDataModel  {
+//                if let latstr = datamodel.latitude, let latitude = Double(latstr),
+//                    let longstr = datamodel.longitude, let longitude = Double(longstr) {
+//                    
+//                    let position = CLLocationCoordinate2DMake(latitude, longitude)
+//                    let marker = GMSMarker(position: position)
+//                    
+//                    marker.title = datamodel.name
+//                    marker.icon = UIImage(named: "icon_mapMarker")
+//                    marker.map = (self.view as! GMSMapView)
+//                    marker.userData = datamodel
+//                }
+//            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,7 +47,14 @@ class KPMainListViewController: UIViewController {
         self.tableView.register(KPMainListTableViewCell.self,
                                 forCellReuseIdentifier: KPMainListViewController.KPMainListViewCellReuseIdentifier);
         
-        
+        if let dataURL = Bundle.main.url(forResource: "cafes", withExtension: "json") {
+            do {
+                let data = try String(contentsOf: dataURL)
+                self.displayDataModel = Mapper<KPDataModel>().mapArray(JSONString: data) ?? []
+            } catch {
+                print("Failed to load cafes.json file")
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -48,9 +76,30 @@ class KPMainListViewController: UIViewController {
 
 extension KPMainListViewController: UITableViewDelegate, UITableViewDataSource {
     
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier:KPMainListViewController.KPMainListViewCellReuseIdentifier,
                                                  for: indexPath) as! KPMainListTableViewCell;
+        
+        cell.shopNameLabel.text = self.displayDataModel[indexPath.row].name;
+        cell.shopStatusContent = (self.displayDataModel[indexPath.row].openTime! as String).replacingOccurrences(of: "~", with: "-");
+        cell.scoreLabel.score = "\(self.displayDataModel[indexPath.row].score!.format(f: ".1"))";
+        
+        
+//        let openedTime:[String] = (cell.shopStatusLabel.text?.components(separatedBy: "-"))!;
+//        let startTime: String = openedTime[0];
+//        let endTime: String = openedTime[0];
+//        let hourIndex = startTime.index(startTime.startIndex, offsetBy: 2)
+//        let minutesIndex = startTime.index(startTime.startIndex, offsetBy: 3)
+//        
+//        let startHour:Int = Int(startTime.substring(to: hourIndex))!
+//        let startMinute:Int = Int(startTime.substring(from: minutesIndex))!
+//        
+//        let endHour:Int = Int(startTime.substring(to: hourIndex))!
+//        let endMinute:Int = Int(startTime.substring(from: minutesIndex))!
+//        
+//        let currentDateComponent = NSCalendar.current.dateComponents([.hour, .minute], from: Date())
+        
         return cell;
     }
     
@@ -63,7 +112,7 @@ extension KPMainListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10;
+        return self.displayDataModel.count;
     }
     
     
@@ -71,6 +120,11 @@ extension KPMainListViewController: UITableViewDelegate, UITableViewDataSource {
         let demoViewController:KPInformationViewController = KPInformationViewController();
         self.navigationController?.pushViewController(demoViewController, animated: true);
     }
-    
 
+}
+
+extension Double {
+    func format(f: String) -> String {
+        return String(format: "%\(f)f", self)
+    }
 }

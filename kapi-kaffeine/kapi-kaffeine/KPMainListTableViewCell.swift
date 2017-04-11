@@ -11,14 +11,29 @@ import UIKit
 class KPMainListTableViewCell: UITableViewCell {
 
     var dataModel: KPDataModel?
+    var shopOpened: Bool = true {
+        didSet {
+            self.shopStatusHint.backgroundColor = shopOpened ?
+            KPColorPalette.KPShopStatusColor.opened :
+            KPColorPalette.KPShopStatusColor.closed
+        }
+    }
+    var shopStatusContent: String = "營業中" {
+        didSet {
+            self.shopStatusLabel.text = self.shopOpened ?
+                "營業中"+shopStatusContent :
+                "休息中"+shopStatusContent;
+        }
+    }
     
     var shopImageView: UIImageView!
     var shopNameLabel: KPMainListCellNormalLabel!
-    var shopStatusHint: UIView!
-    var shopStatusLabel: UILabel!
     var shopDistanceLabel: KPMainListCellNormalLabel!
     var scoreLabel: KPMainListCellScoreLabel!
-    var featureContainer: KPMainListCellFeatureContainer!
+    
+    private var shopStatusHint: UIView!
+    private var shopStatusLabel: UILabel!
+    private var featureContainer: KPMainListCellFeatureContainer!
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -34,8 +49,10 @@ class KPMainListTableViewCell: UITableViewCell {
         self.shopNameLabel.textColor = KPColorPalette.KPTextColor.cellNameColor;
         self.shopNameLabel.text = "覺旅咖啡";
         self.addSubview(self.shopNameLabel);
-        self.shopNameLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]",
+
+        self.shopNameLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self($metric0)]",
                                                             "V:|-12-[$self]"],
+                                          metrics: [UIScreen.main.bounds.size.width/2],
                                           views: [self.shopImageView]);
         
         self.shopStatusHint = UIView();
@@ -52,9 +69,10 @@ class KPMainListTableViewCell: UITableViewCell {
         self.shopStatusLabel.textColor = KPColorPalette.KPTextColor.cellNameColor;
         self.shopStatusLabel.text = "營業中 12:00-21:00";
         self.addSubview(self.shopStatusLabel);
-        self.shopStatusLabel.addConstraints(fromStringArray: ["H:[$view0]-5-[$self]"],
-                                           views: [self.shopStatusHint,
-                                                   self.shopNameLabel]);
+        self.shopStatusLabel.addConstraints(fromStringArray: ["H:[$view0]-5-[$self($metric0)]"],
+                                            metrics: [UIScreen.main.bounds.size.width/2],
+                                            views: [self.shopStatusHint,
+                                                    self.shopNameLabel]);
         self.shopStatusLabel.addConstraintForCenterAligning(to: self.shopStatusHint, in: .vertical);
         
         self.shopDistanceLabel = KPMainListCellNormalLabel();
@@ -79,6 +97,10 @@ class KPMainListTableViewCell: UITableViewCell {
         self.addSubview(self.featureContainer);
         self.featureContainer.addConstraints(fromStringArray: ["H:[$self]-8-|",
                                                                "V:[$self]-12-|"]);
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
     }
     
     required init?(coder aDecoder: NSCoder) {

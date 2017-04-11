@@ -40,7 +40,7 @@ class KPMainViewController: UIViewController {
         self.mainListViewController = KPMainListViewController();
         self.mainMapViewController = KPMainMapViewController();
         
-        self.currentController = self.mainMapViewController;
+        self.currentController = self.mainListViewController;
         
         self.searchHeaderView = KPSearchHeaderView();
         self.view.addSubview(searchHeaderView);
