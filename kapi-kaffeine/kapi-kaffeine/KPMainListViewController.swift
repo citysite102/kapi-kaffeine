@@ -108,7 +108,6 @@ extension KPMainListViewController: UITableViewDelegate, UITableViewDataSource {
         let demoViewController:KPInformationViewController = KPInformationViewController();
         self.navigationController?.pushViewController(demoViewController, animated: true);
     }
-
 }
 
 extension Double {

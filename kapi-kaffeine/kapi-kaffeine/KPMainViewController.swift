@@ -47,6 +47,9 @@ class KPMainViewController: UIViewController {
         self.searchHeaderView.addConstraints(fromStringArray: ["V:|[$self(100)]", "H:|[$self]|"])
         
         self.searchFooterView = KPSearchFooterView();
+        self.searchFooterView.layer.shadowColor = UIColor.black.cgColor;
+        self.searchFooterView.layer.shadowOpacity = 0.15;
+        self.searchFooterView.layer.shadowOffset = CGSize.init(width: 0.0, height: -1.0);
         self.view.addSubview(searchFooterView);
         self.searchFooterView.addConstraints(fromStringArray: ["V:[$self(40)]|", "H:|[$self]|"])
         
