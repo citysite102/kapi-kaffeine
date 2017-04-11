@@ -21,7 +21,7 @@ class KPMainListViewController: UIViewController {
         self.tableView.delegate = self;
         self.tableView.dataSource = self;
         self.view.addSubview(self.tableView);
-        self.tableView.addConstraints(fromStringArray: ["V:|-100-[$self]-40-|",
+        self.tableView.addConstraints(fromStringArray: ["V:|-40-[$self]|",
                                                         "H:|[$self]|"]);
         self.tableView.register(KPMainListTableViewCell.self,
                                 forCellReuseIdentifier: KPMainListViewController.KPMainListViewCellReuseIdentifier);
@@ -64,6 +64,12 @@ extension KPMainListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 10;
+    }
+    
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let demoViewController:KPInformationViewController = KPInformationViewController();
+        self.navigationController?.pushViewController(demoViewController, animated: true);
     }
     
 

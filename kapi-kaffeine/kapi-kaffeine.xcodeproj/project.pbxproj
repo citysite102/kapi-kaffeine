@@ -18,6 +18,7 @@
 		776ACB041E9BB8A900B629A2 /* KPSearchTagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776ACB031E9BB8A900B629A2 /* KPSearchTagCell.swift */; };
 		776ACB061E9BE33A00B629A2 /* KPMainListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776ACB051E9BE33A00B629A2 /* KPMainListTableViewCell.swift */; };
 		776ACB081E9BE51600B629A2 /* KPMainListCellFeatureContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776ACB071E9BE51600B629A2 /* KPMainListCellFeatureContainer.swift */; };
+		776ACB0B1E9C783E00B629A2 /* KPInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776ACB0A1E9C783E00B629A2 /* KPInformationViewController.swift */; };
 		77FB63961E9AA7BB00FFC3DC /* KPDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77FB63951E9AA7BB00FFC3DC /* KPDataModel.swift */; };
 		C00CD5321E9521A600A3CB6F /* KKMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00CD5311E9521A600A3CB6F /* KKMapViewController.swift */; };
 		C00CD5341E95234A00A3CB6F /* style.json in Resources */ = {isa = PBXBuildFile; fileRef = C00CD5331E95234A00A3CB6F /* style.json */; };
@@ -63,6 +64,7 @@
 		776ACB031E9BB8A900B629A2 /* KPSearchTagCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSearchTagCell.swift; sourceTree = "<group>"; };
 		776ACB051E9BE33A00B629A2 /* KPMainListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPMainListTableViewCell.swift; sourceTree = "<group>"; };
 		776ACB071E9BE51600B629A2 /* KPMainListCellFeatureContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPMainListCellFeatureContainer.swift; sourceTree = "<group>"; };
+		776ACB0A1E9C783E00B629A2 /* KPInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPInformationViewController.swift; sourceTree = "<group>"; };
 		77FB63951E9AA7BB00FFC3DC /* KPDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPDataModel.swift; sourceTree = "<group>"; };
 		C00CD5311E9521A600A3CB6F /* KKMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KKMapViewController.swift; sourceTree = "<group>"; };
 		C00CD5331E95234A00A3CB6F /* style.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = style.json; sourceTree = "<group>"; };
@@ -171,6 +173,14 @@
 			name = KPSearchTagView;
 			sourceTree = "<group>";
 		};
+		776ACB091E9C781000B629A2 /* InformationController */ = {
+			isa = PBXGroup;
+			children = (
+				776ACB0A1E9C783E00B629A2 /* KPInformationViewController.swift */,
+			);
+			name = InformationController;
+			sourceTree = "<group>";
+		};
 		77FB63941E9AA75900FFC3DC /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -206,6 +216,7 @@
 			children = (
 				776ACAFD1E9BB18100B629A2 /* Shared Class */,
 				776ACAEF1E9BAE3A00B629A2 /* MainController */,
+				776ACB091E9C781000B629A2 /* InformationController */,
 				C02AFE441E7D260D008FFB33 /* AppDelegate.swift */,
 				C02AFE461E7D260D008FFB33 /* ViewController.swift */,
 				C02AFE481E7D260D008FFB33 /* Main.storyboard */,
@@ -430,6 +441,7 @@
 				C00CD5321E9521A600A3CB6F /* KKMapViewController.swift in Sources */,
 				776ACAF61E9BAFBF00B629A2 /* KPSearchTagView.swift in Sources */,
 				776ACAFA1E9BB01B00B629A2 /* KPMainListViewController.swift in Sources */,
+				776ACB0B1E9C783E00B629A2 /* KPInformationViewController.swift in Sources */,
 				776ACB041E9BB8A900B629A2 /* KPSearchTagCell.swift in Sources */,
 				776ACB011E9BB49E00B629A2 /* KPMainViewController.swift in Sources */,
 				776ACAF41E9BAFA200B629A2 /* KPSearchHeaderView.swift in Sources */,
