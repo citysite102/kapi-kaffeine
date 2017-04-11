@@ -20,6 +20,7 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate {
                     let longstr = datamodel.longitude, let longitude = Double(longstr) {
                     
                     let position = CLLocationCoordinate2DMake(latitude, longitude)
+
                     let marker = GMSMarker(position: position)
                     
                     marker.title = datamodel.name
@@ -64,7 +65,7 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate {
                 print("Failed to load cafes.json file")
             }
         }
-    
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -72,21 +73,12 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
     
+    // MARK: GMSMapViewDelegate
     
     func mapView(_ mapView: GMSMapView, markerInfoWindow marker: GMSMarker) -> UIView? {
         marker.icon = UIImage(named: "icon_mapMarkerSelected")
-        let infoWindow = KKMapMarkerInfoWindow(dataModel: marker.userData as! KPDataModel)
+        let infoWindow = KPMainMapMarkerInfoWindow(dataModel: marker.userData as! KPDataModel)
         
         return infoWindow
     }
