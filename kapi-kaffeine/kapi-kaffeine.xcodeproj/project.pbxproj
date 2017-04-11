@@ -20,8 +20,8 @@
 		776ACB081E9BE51600B629A2 /* KPMainListCellFeatureContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776ACB071E9BE51600B629A2 /* KPMainListCellFeatureContainer.swift */; };
 		776ACB0B1E9C783E00B629A2 /* KPInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776ACB0A1E9C783E00B629A2 /* KPInformationViewController.swift */; };
 		77FB63961E9AA7BB00FFC3DC /* KPDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77FB63951E9AA7BB00FFC3DC /* KPDataModel.swift */; };
-		C00CD5321E9521A600A3CB6F /* KKMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00CD5311E9521A600A3CB6F /* KKMapViewController.swift */; };
 		C00CD5341E95234A00A3CB6F /* style.json in Resources */ = {isa = PBXBuildFile; fileRef = C00CD5331E95234A00A3CB6F /* style.json */; };
+		C02881CB1E9CF1E200776E28 /* KPMainMapMarkerInfoWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02881CA1E9CF1E200776E28 /* KPMainMapMarkerInfoWindow.swift */; };
 		C02AFE451E7D260D008FFB33 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02AFE441E7D260D008FFB33 /* AppDelegate.swift */; };
 		C02AFE471E7D260D008FFB33 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02AFE461E7D260D008FFB33 /* ViewController.swift */; };
 		C02AFE4A1E7D260D008FFB33 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C02AFE481E7D260D008FFB33 /* Main.storyboard */; };
@@ -30,7 +30,6 @@
 		C02AFE5A1E7D260D008FFB33 /* kapi_kaffeineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02AFE591E7D260D008FFB33 /* kapi_kaffeineTests.swift */; };
 		C02AFE651E7D260D008FFB33 /* kapi_kaffeineUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02AFE641E7D260D008FFB33 /* kapi_kaffeineUITests.swift */; };
 		C0409E1F1E954F1A00C302FF /* cafes.json in Resources */ = {isa = PBXBuildFile; fileRef = C0409E1E1E954F1A00C302FF /* cafes.json */; };
-		C0409E261E966FAC00C302FF /* KKMapMarkerInfoWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0409E251E966FAC00C302FF /* KKMapMarkerInfoWindow.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,8 +65,8 @@
 		776ACB071E9BE51600B629A2 /* KPMainListCellFeatureContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPMainListCellFeatureContainer.swift; sourceTree = "<group>"; };
 		776ACB0A1E9C783E00B629A2 /* KPInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPInformationViewController.swift; sourceTree = "<group>"; };
 		77FB63951E9AA7BB00FFC3DC /* KPDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPDataModel.swift; sourceTree = "<group>"; };
-		C00CD5311E9521A600A3CB6F /* KKMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KKMapViewController.swift; sourceTree = "<group>"; };
 		C00CD5331E95234A00A3CB6F /* style.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = style.json; sourceTree = "<group>"; };
+		C02881CA1E9CF1E200776E28 /* KPMainMapMarkerInfoWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPMainMapMarkerInfoWindow.swift; sourceTree = "<group>"; };
 		C02AFE411E7D260D008FFB33 /* kapi-kaffeine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "kapi-kaffeine.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C02AFE441E7D260D008FFB33 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C02AFE461E7D260D008FFB33 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -82,7 +81,6 @@
 		C02AFE641E7D260D008FFB33 /* kapi_kaffeineUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = kapi_kaffeineUITests.swift; sourceTree = "<group>"; };
 		C02AFE661E7D260D008FFB33 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C0409E1E1E954F1A00C302FF /* cafes.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cafes.json; sourceTree = "<group>"; };
-		C0409E251E966FAC00C302FF /* KKMapMarkerInfoWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KKMapMarkerInfoWindow.swift; sourceTree = "<group>"; };
 		CA73E4544076455C6DC0C065 /* Pods-kapi-kaffeine.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kapi-kaffeine.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-kapi-kaffeine/Pods-kapi-kaffeine.debug.xcconfig"; sourceTree = "<group>"; };
 		FA9A4A083D5D704A746B1C9A /* Pods_kapi_kaffeineTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_kapi_kaffeineTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -140,6 +138,7 @@
 				776ACB051E9BE33A00B629A2 /* KPMainListTableViewCell.swift */,
 				776ACB071E9BE51600B629A2 /* KPMainListCellFeatureContainer.swift */,
 				776ACB021E9BB88600B629A2 /* KPSearchTagView */,
+				C02881CA1E9CF1E200776E28 /* KPMainMapMarkerInfoWindow.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -225,8 +224,6 @@
 				C02AFE501E7D260D008FFB33 /* Info.plist */,
 				C00CD5331E95234A00A3CB6F /* style.json */,
 				C0409E1E1E954F1A00C302FF /* cafes.json */,
-				C00CD5311E9521A600A3CB6F /* KKMapViewController.swift */,
-				C0409E251E966FAC00C302FF /* KKMapMarkerInfoWindow.swift */,
 			);
 			path = "kapi-kaffeine";
 			sourceTree = "<group>";
@@ -437,8 +434,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C0409E261E966FAC00C302FF /* KKMapMarkerInfoWindow.swift in Sources */,
-				C00CD5321E9521A600A3CB6F /* KKMapViewController.swift in Sources */,
 				776ACAF61E9BAFBF00B629A2 /* KPSearchTagView.swift in Sources */,
 				776ACAFA1E9BB01B00B629A2 /* KPMainListViewController.swift in Sources */,
 				776ACB0B1E9C783E00B629A2 /* KPInformationViewController.swift in Sources */,
@@ -447,6 +442,7 @@
 				776ACAF41E9BAFA200B629A2 /* KPSearchHeaderView.swift in Sources */,
 				776ACB061E9BE33A00B629A2 /* KPMainListTableViewCell.swift in Sources */,
 				776ACAFC1E9BB02D00B629A2 /* KPMainMapViewController.swift in Sources */,
+				C02881CB1E9CF1E200776E28 /* KPMainMapMarkerInfoWindow.swift in Sources */,
 				C02AFE471E7D260D008FFB33 /* ViewController.swift in Sources */,
 				C02AFE451E7D260D008FFB33 /* AppDelegate.swift in Sources */,
 				776ACAF81E9BAFE900B629A2 /* KPSearchFooterView.swift in Sources */,
