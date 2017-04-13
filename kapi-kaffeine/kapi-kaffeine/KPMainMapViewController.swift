@@ -12,6 +12,8 @@ import ObjectMapper
 
 class KPMainMapViewController: UIViewController, GMSMapViewDelegate {
     
+    weak var mainController:KPMainViewController!
+    
     var displayDataModel: [KPDataModel]! {
         didSet {
             (self.view as! GMSMapView).clear()

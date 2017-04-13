@@ -14,6 +14,7 @@ class KPMainListViewController: UIViewController {
     
     static let KPMainListViewCellReuseIdentifier = "cell";
     
+    weak var mainController:KPMainViewController!
     var tableView: UITableView!
     
     var displayDataModel: [KPDataModel]! {
@@ -29,12 +30,13 @@ class KPMainListViewController: UIViewController {
         self.tableView.delegate = self;
         self.tableView.dataSource = self;
         self.view.addSubview(self.tableView);
-        self.tableView.addConstraints(fromStringArray: ["V:|-40-[$self]|",
+        self.tableView.addConstraints(fromStringArray: ["V:|-100-[$self]|",
                                                         "H:|[$self]|"]);
         self.tableView.register(KPMainListTableViewCell.self,
                                 forCellReuseIdentifier: KPMainListViewController.KPMainListViewCellReuseIdentifier);
         
-        if let dataURL = Bundle.main.url(forResource: "cafes", withExtension: "json") {
+        if let dataURL = Bundle.main.url(forResource: "cafes",
+                                         withExtension: "json") {
             do {
                 let data = try String(contentsOf: dataURL)
                 self.displayDataModel = Mapper<KPDataModel>().mapArray(JSONString: data) ?? []
@@ -105,8 +107,7 @@ extension KPMainListViewController: UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let demoViewController:KPInformationViewController = KPInformationViewController();
-        self.navigationController?.pushViewController(demoViewController, animated: true);
+        self.mainController.performSegue(withIdentifier: "datailedInformationSegue", sender: self);
     }
 }
 

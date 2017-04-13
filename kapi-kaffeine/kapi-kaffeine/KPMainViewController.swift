@@ -39,12 +39,15 @@ class KPMainViewController: UIViewController {
         
         self.mainListViewController = KPMainListViewController();
         self.mainMapViewController = KPMainMapViewController();
+        self.mainListViewController.mainController = self;
+        self.mainMapViewController.mainController = self;
         
         self.currentController = self.mainListViewController;
         
         self.searchHeaderView = KPSearchHeaderView();
         self.view.addSubview(searchHeaderView);
-        self.searchHeaderView.addConstraints(fromStringArray: ["V:|[$self(100)]", "H:|[$self]|"])
+        self.searchHeaderView.addConstraints(fromStringArray: ["V:|[$self(100)]",
+                                                               "H:|[$self]|"])
         
         self.searchFooterView = KPSearchFooterView();
         self.searchFooterView.layer.shadowColor = UIColor.black.cgColor;
