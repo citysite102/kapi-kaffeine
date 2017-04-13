@@ -21,6 +21,7 @@ struct Action {
 
 class KPInformationSharedInfoView: UIView {
     
+    var infoView: UIView!
     var actions: [Action]? {
         didSet {
             
