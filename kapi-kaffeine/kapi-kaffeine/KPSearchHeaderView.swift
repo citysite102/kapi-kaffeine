@@ -18,7 +18,8 @@ class KPSearchHeaderView: UIView {
         
         self.searchTagView = KPSearchTagView();
         self.addSubview(self.searchTagView);
-        self.searchTagView.addConstraints(fromStringArray: ["V:[$self(40)]|", "H:|[$self]|"]);
+        self.searchTagView.addConstraints(fromStringArray: ["V:[$self(40)]|",
+                                                            "H:|[$self]|"]);
         
     }
     
