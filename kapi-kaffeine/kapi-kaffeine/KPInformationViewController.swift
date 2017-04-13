@@ -10,6 +10,10 @@ import UIKit
 
 class KPInformationViewController: UIViewController {
 
+    
+    var informationDataModel:KPDataModel!
+    var dismissButton:UIButton!
+    
     var scrollContainer:UIScrollView!;
     var shopPhotoContainer:UIView!;
     var shopPhoto:UIImageView!;
@@ -17,6 +21,8 @@ class KPInformationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white;
+        
+        self.navigationController?.navigationBar.topItem?.title = self.informationDataModel.name;
         
         self.scrollContainer = UIScrollView();
         self.scrollContainer.delegate = self;
@@ -34,6 +40,8 @@ class KPInformationViewController: UIViewController {
         self.shopPhotoContainer.addSubview(shopPhoto);
         self.shopPhoto.addConstraints(fromStringArray: ["H:|[$self]|",
                                                         "V:|[$self]|"]);
+        
+        
         
     }
 

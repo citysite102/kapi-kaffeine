@@ -16,6 +16,7 @@ class KPMainListViewController: UIViewController {
     
     weak var mainController:KPMainViewController!
     var tableView: UITableView!
+    var selectedDataModel:KPDataModel!
     
     var displayDataModel: [KPDataModel]! {
         didSet {
@@ -49,18 +50,9 @@ class KPMainListViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+        
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+ 
 }
 
 extension KPMainListViewController: UITableViewDelegate, UITableViewDataSource {
@@ -107,6 +99,7 @@ extension KPMainListViewController: UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.selectedDataModel = self.displayDataModel[indexPath.row];
         self.mainController.performSegue(withIdentifier: "datailedInformationSegue", sender: self);
     }
 }

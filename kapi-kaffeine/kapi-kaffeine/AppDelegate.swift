@@ -21,6 +21,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GMSServices.provideAPIKey("AIzaSyCZiprr4NXdrs4ChdmQ8nNVrAPZJWoy3TQ")
         GMSPlacesClient.provideAPIKey("AIzaSyCZiprr4NXdrs4ChdmQ8nNVrAPZJWoy3TQ")
         
+        
+        // Navigation Custom Settings
+        let navigationBarAppearace = UINavigationBar.appearance()
+        
+        UIApplication.shared.statusBarView?.backgroundColor = KPColorPalette.KPMainColor.statusBarColor
+        UIApplication.shared.statusBarStyle = .lightContent;
+        
+        navigationBarAppearace.tintColor = KPColorPalette.KPTextColor.whiteColor
+        navigationBarAppearace.barTintColor = KPColorPalette.KPMainColor.mainColor
+        navigationBarAppearace.titleTextAttributes = [NSFontAttributeName: UIFont.systemFont(ofSize: 20),
+                                                      NSForegroundColorAttributeName: KPColorPalette.KPTextColor.whiteColor!]
+        
         return true
     }
 
@@ -48,4 +60,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 }
+
+extension UIApplication {
+    var statusBarView: UIView? {
+        return value(forKey: "statusBar") as? UIView
+    }
+}
+
 

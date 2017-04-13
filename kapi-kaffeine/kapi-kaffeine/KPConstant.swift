@@ -15,6 +15,7 @@ struct KPColorPalette {
     struct KPMainColor {
         static let mainColor = UIColor(hexString: "#c8955e")
         static let buttonColor = UIColor(hexString: "#784d1f")
+        static let statusBarColor = UIColor(hexString: "#784d1f")
     }
     
     struct KPTextColor {
