@@ -152,10 +152,7 @@
 				776ACAF31E9BAFA200B629A2 /* KPSearchHeaderView.swift */,
 				776ACAF71E9BAFE900B629A2 /* KPSearchFooterView.swift */,
 				77C0E0F91E9D3D7500398852 /* KPSearchFooterCell.swift */,
-				776ACB051E9BE33A00B629A2 /* KPMainListTableViewCell.swift */,
-				776ACB071E9BE51600B629A2 /* KPMainListCellFeatureContainer.swift */,
 				776ACB021E9BB88600B629A2 /* KPSearchTagView */,
-				C02881CA1E9CF1E200776E28 /* KPMainMapMarkerInfoWindow.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -164,8 +161,8 @@
 			isa = PBXGroup;
 			children = (
 				776ACB001E9BB49E00B629A2 /* KPMainViewController.swift */,
-				776ACAF91E9BB01B00B629A2 /* KPMainListViewController.swift */,
-				776ACAFB1E9BB02D00B629A2 /* KPMainMapViewController.swift */,
+				C0B49D921EA11C3200BA95D8 /* List View */,
+				C0B49D931EA11C4700BA95D8 /* Map View */,
 				776ACAED1E9BAE0200B629A2 /* View */,
 			);
 			name = MainController;
@@ -284,6 +281,41 @@
 				C02AFE661E7D260D008FFB33 /* Info.plist */,
 			);
 			path = "kapi-kaffeineUITests";
+			sourceTree = "<group>";
+		};
+		C0B49D921EA11C3200BA95D8 /* List View */ = {
+			isa = PBXGroup;
+			children = (
+				776ACAF91E9BB01B00B629A2 /* KPMainListViewController.swift */,
+				C0B49D941EA11C5C00BA95D8 /* View */,
+			);
+			name = "List View";
+			sourceTree = "<group>";
+		};
+		C0B49D931EA11C4700BA95D8 /* Map View */ = {
+			isa = PBXGroup;
+			children = (
+				776ACAFB1E9BB02D00B629A2 /* KPMainMapViewController.swift */,
+				C0B49D951EA11C8E00BA95D8 /* View */,
+			);
+			name = "Map View";
+			sourceTree = "<group>";
+		};
+		C0B49D941EA11C5C00BA95D8 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				776ACB051E9BE33A00B629A2 /* KPMainListTableViewCell.swift */,
+				776ACB071E9BE51600B629A2 /* KPMainListCellFeatureContainer.swift */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		C0B49D951EA11C8E00BA95D8 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C02881CA1E9CF1E200776E28 /* KPMainMapMarkerInfoWindow.swift */,
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
