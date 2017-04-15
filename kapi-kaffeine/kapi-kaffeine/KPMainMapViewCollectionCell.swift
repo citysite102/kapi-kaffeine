@@ -11,7 +11,12 @@ import UIKit
 class KPMainMapViewCollectionCell: UICollectionViewCell {
     
     
-    var dataModel: KPDataModel?
+    var dataModel: KPDataModel! {
+        didSet {
+            self.shopNameLabel.text = dataModel.name
+        }
+    }
+    
     var shopOpened: Bool = true {
         didSet {
             self.shopStatusHint.backgroundColor = shopOpened ?

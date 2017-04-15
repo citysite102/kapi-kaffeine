@@ -14,10 +14,17 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate, UICollectio
     
     weak var mainController:KPMainViewController!
     var collectionView: UICollectionView!
+    var mapView: GMSMapView {
+        get {
+            return self.view as! GMSMapView
+        }
+    }
     
+    var mapMarkers: [GMSMarker] = []
     var displayDataModel: [KPDataModel]! {
         didSet {
             (self.view as! GMSMapView).clear()
+            self.mapMarkers = []
             for datamodel in self.displayDataModel  {
                 if let latstr = datamodel.latitude, let latitude = Double(latstr),
                     let longstr = datamodel.longitude, let longitude = Double(longstr) {
@@ -30,6 +37,8 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate, UICollectio
                     marker.icon = UIImage(named: "icon_mapMarker")
                     marker.map = (self.view as! GMSMapView)
                     marker.userData = datamodel
+                    
+                    self.mapMarkers.append(marker)
                 }
             }
         }
@@ -99,24 +108,28 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate, UICollectio
     // MARK: UICollectionView DataSource
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
+        return self.displayDataModel.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! KPMainMapViewCollectionCell
+        cell.dataModel = self.displayDataModel[indexPath.row]
         return cell
     }
     
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         
         
-        
         let pageWidth = UIScreen.main.bounds.size.width - 60
-        let currentOffset = scrollView.contentOffset.x
+        let currentOffset = targetContentOffset.pointee.x//scrollView.contentOffset.x
         
         
         let index = floor((currentOffset + (pageWidth + 15)/2)/(pageWidth + 15))
 
+        self.mapView.selectedMarker = self.mapMarkers[Int(index)]
+        self.mapView.moveCamera(GMSCameraUpdate.setCamera(GMSCameraPosition.camera(withTarget: self.mapView.selectedMarker!.position , zoom: self.mapView.camera.zoom)))
+//        self.mapView.camera = GMSCameraPosition.camera(withTarget: self.mapView.selectedMarker!.position , zoom: self.mapView.camera.zoom)
+        
         targetContentOffset.pointee.x = -30 + index * (pageWidth + 15)
         scrollView.setContentOffset(CGPoint(x: -30 + index * (pageWidth + 15), y: 0), animated: true)
         
@@ -129,7 +142,11 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate, UICollectio
     func mapView(_ mapView: GMSMapView, markerInfoWindow marker: GMSMarker) -> UIView? {
         marker.icon = UIImage(named: "icon_mapMarkerSelected")
         let infoWindow = KPMainMapMarkerInfoWindow(dataModel: marker.userData as! KPDataModel)
-        
+        if let selectedIndex =  self.displayDataModel.index(where: {($0.name == (marker.userData as! KPDataModel).name)}) {
+            self.collectionView.scrollToItem(at: IndexPath.init(row: selectedIndex, section: 0),
+                                             at: UICollectionViewScrollPosition.centeredHorizontally,
+                                             animated: true)
+        }
         return infoWindow
     }
     
