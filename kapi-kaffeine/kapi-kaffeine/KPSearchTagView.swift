@@ -79,12 +79,12 @@ extension KPSearchTagView: UICollectionViewDelegate, UICollectionViewDataSource,
         return cell;
     }
     
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let cell = collectionView.cellForItem(at: indexPath) as! KPSearchTagCell;
-        cell.layoutIfNeeded();
-        return CGSize.init(width: cell.frameSize.width, height: 32);
-    }
+//    func collectionView(_ collectionView: UICollectionView,
+//                        layout collectionViewLayout: UICollectionViewLayout,
+//                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+//        let cell = collectionView.cellForItem(at: indexPath) as! KPSearchTagCell;
+//        cell.layoutIfNeeded();
+//        return CGSize.init(width: cell.frameSize.width, height: 32);
+//    }
     
 }
