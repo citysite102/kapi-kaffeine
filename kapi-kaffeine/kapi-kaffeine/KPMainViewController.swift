@@ -52,11 +52,9 @@ class KPMainViewController: UIViewController {
         self.searchHeaderView.addConstraints(fromStringArray: ["V:|[$self(100)]",
                                                                "H:|[$self]|"])
         
-        let styleButton = UIButton(type: .system)
-        self.searchHeaderView.addSubview(styleButton)
-        styleButton.addConstraints(fromStringArray: ["H:[$self]-|", "V:|-20-[$self]"])
-        styleButton.setTitle("style", for: .normal)
-        styleButton.addTarget(self, action: #selector(style), for: .touchUpInside)
+        self.searchHeaderView.styleButton.addTarget(self,
+                                                    action: #selector(changeStyle),
+                                                    for: .touchUpInside)
         
         self.searchFooterView = KPSearchFooterView();
         self.searchFooterView.layer.shadowColor = UIColor.black.cgColor;
@@ -67,11 +65,15 @@ class KPMainViewController: UIViewController {
         
     }
     
-    func style() {
+    func changeStyle() {
         if (self.currentController == self.mainListViewController) {
             self.currentController = self.mainMapViewController
+            self.searchHeaderView.styleButton.setImage(UIImage.init(named: "icon_list")?.withRenderingMode(.alwaysTemplate),
+                                                                        for: .normal);
         } else {
             self.currentController = self.mainListViewController
+            self.searchHeaderView.styleButton.setImage(UIImage.init(named: "icon_map")?.withRenderingMode(.alwaysTemplate),
+                                                       for: .normal);
         }
     }
 

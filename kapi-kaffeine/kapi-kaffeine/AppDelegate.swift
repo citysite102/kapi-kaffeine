@@ -31,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                                       NSForegroundColorAttributeName: KPColorPalette.KPTextColor.whiteColor!]
         
         // Custom UI
-        UIApplication.shared.statusBarView?.backgroundColor = KPColorPalette.KPMainColor.statusBarColor
+//        UIApplication.shared.statusBarView?.backgroundColor = KPColorPalette.KPMainColor.statusBarColor
         UIApplication.shared.statusBarStyle = .lightContent;
         
         return true
