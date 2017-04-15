@@ -10,9 +10,10 @@ import UIKit
 import GoogleMaps
 import ObjectMapper
 
-class KPMainMapViewController: UIViewController, GMSMapViewDelegate {
+class KPMainMapViewController: UIViewController, GMSMapViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate {
     
     weak var mainController:KPMainViewController!
+    var collectionView: UICollectionView!
     
     var displayDataModel: [KPDataModel]! {
         didSet {
@@ -59,6 +60,25 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate {
 
         // Do any additional setup after loading the view.
         
+        let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.itemSize = CGSize(width: UIScreen.main.bounds.size.width - 60, height: 80)
+        flowLayout.scrollDirection = .horizontal
+        flowLayout.minimumLineSpacing = 15
+        
+        self.collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 0, height: 0),
+                                               collectionViewLayout: flowLayout)
+        self.collectionView.contentInset = UIEdgeInsetsMake(0, 30, 0, 30)
+        self.collectionView.backgroundColor = UIColor.clear
+        self.collectionView.dataSource = self
+        self.collectionView.delegate = self
+        self.collectionView.register(KPMainMapViewCollectionCell.classForCoder(),
+                                     forCellWithReuseIdentifier: "cell")
+        
+        self.view.addSubview(self.collectionView)
+        self.collectionView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$self(140)]-20-|"])
+        
+
+        
         if let dataURL = Bundle.main.url(forResource: "cafes", withExtension: "json") {
             do {
                 let data = try String(contentsOf: dataURL)
@@ -74,6 +94,34 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    
+    // MARK: UICollectionView DataSource
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 6
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! KPMainMapViewCollectionCell
+        return cell
+    }
+    
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        
+        
+        
+        let pageWidth = UIScreen.main.bounds.size.width - 60
+        let currentOffset = scrollView.contentOffset.x
+        
+        
+        let index = floor((currentOffset + (pageWidth + 15)/2)/(pageWidth + 15))
+
+        targetContentOffset.pointee.x = -30 + index * (pageWidth + 15)
+        scrollView.setContentOffset(CGPoint(x: -30 + index * (pageWidth + 15), y: 0), animated: true)
+        
+    }
+    
     
     
     // MARK: GMSMapViewDelegate
