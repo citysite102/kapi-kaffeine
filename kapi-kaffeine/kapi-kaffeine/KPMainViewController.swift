@@ -26,6 +26,11 @@ class KPMainViewController: UIViewController {
             self.view.addSubview((self.currentController?.view)!);
             currentController.didMove(toParentViewController: self);
             currentController.view.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"]);
+            
+            if (self.searchFooterView != nil && self.searchHeaderView != nil) {
+                self.view.bringSubview(toFront: self.searchHeaderView)
+                self.view.bringSubview(toFront: self.searchFooterView)
+            }
         }
     }
     
@@ -47,6 +52,12 @@ class KPMainViewController: UIViewController {
         self.searchHeaderView.addConstraints(fromStringArray: ["V:|[$self(100)]",
                                                                "H:|[$self]|"])
         
+        let styleButton = UIButton(type: .system)
+        self.searchHeaderView.addSubview(styleButton)
+        styleButton.addConstraints(fromStringArray: ["H:[$self]-|", "V:|-20-[$self]"])
+        styleButton.setTitle("style", for: .normal)
+        styleButton.addTarget(self, action: #selector(style), for: .touchUpInside)
+        
         self.searchFooterView = KPSearchFooterView();
         self.searchFooterView.layer.shadowColor = UIColor.black.cgColor;
         self.searchFooterView.layer.shadowOpacity = 0.15;
@@ -54,6 +65,14 @@ class KPMainViewController: UIViewController {
         self.view.addSubview(searchFooterView);
         self.searchFooterView.addConstraints(fromStringArray: ["V:[$self(40)]|", "H:|[$self]|"])
         
+    }
+    
+    func style() {
+        if (self.currentController == self.mainListViewController) {
+            self.currentController = self.mainMapViewController
+        } else {
+            self.currentController = self.mainListViewController
+        }
     }
 
     override func didReceiveMemoryWarning() {

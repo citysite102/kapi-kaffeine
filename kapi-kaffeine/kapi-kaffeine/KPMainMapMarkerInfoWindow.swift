@@ -41,7 +41,6 @@ class KPMainMapMarkerInfoWindow: UIView {
         
         self.layer.addSublayer(shapeLayer)
         
-        
         let imageView = UIImageView(image: UIImage(named: "icon_house"))
         imageView.contentMode = .scaleAspectFit
         
