@@ -24,7 +24,7 @@ class KPSearchTagCell: UICollectionViewCell {
                                                       "V:|-6-[$self(20)]-6-|"]);
         
         self.tagTitle = UILabel();
-        self.tagTitle.font = UIFont.systemFont(ofSize: 12.0);
+        self.tagTitle.font = UIFont.systemFont(ofSize: 13.0);
         self.tagTitle.textColor = KPColorPalette.KPMainColor.mainColor;
         self.addSubview(self.tagTitle);
         self.tagTitle.addConstraints(fromStringArray: ["H:[$view0]-4-[$self]-6-|"],

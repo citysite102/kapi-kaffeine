@@ -16,7 +16,9 @@ class KPSearchTagView: UIView {
     var collectionLayout:UICollectionViewFlowLayout!;
     
     var preferenceHintView: UIView!
-    var demoHeaderTagContents = ["Wifi穩", "插座多", "公館町", "不限時", "師大",
+    var preferenceHintIcon: UIImageView!
+    var preferenceHintLabel: UILabel!
+    var demoHeaderTagContents = ["Wifi穩", "插座多插座", "公館町", "時", "師大",
                                  "信義區", "內湖", "火星", "北極", "黑洞"];
     
     override init(frame: CGRect) {
@@ -28,12 +30,26 @@ class KPSearchTagView: UIView {
         self.preferenceHintView.layer.cornerRadius = 3.0;
         self.addSubview(self.preferenceHintView);
         self.preferenceHintView.addConstraints(fromStringArray: ["V:|-4-[$self]-4-|",
-                                                                 "H:|-8-[$self(86)]"]);
+                                                                 "H:|-8-[$self(96)]"]);
+        
+        self.preferenceHintIcon = UIImageView.init(image: UIImage.init(named: "icon_clock")?.withRenderingMode(.alwaysTemplate));
+        self.preferenceHintIcon.tintColor = UIColor.white;
+        self.preferenceHintView.addSubview(self.preferenceHintIcon);
+        self.preferenceHintIcon.addConstraints(fromStringArray: ["H:|-4-[$self]"]);
+        self.preferenceHintIcon.addConstraintForCenterAligningToSuperview(in: .vertical);
+        
+        self.preferenceHintLabel = UILabel();
+        self.preferenceHintLabel.font = UIFont.systemFont(ofSize: 13.0);
+        self.preferenceHintLabel.textColor = KPColorPalette.KPTextColor.whiteColor;
+        self.preferenceHintLabel.text = "偏好篩選";
+        self.preferenceHintView.addSubview(self.preferenceHintLabel);
+        self.preferenceHintLabel.addConstraints(fromStringArray: ["H:[$self]-8-|"],
+                                     views: [self.preferenceHintIcon]);
+        self.preferenceHintLabel.addConstraintForCenterAligningToSuperview(in: .vertical);
         
         //Collection view
         self.collectionLayout = UICollectionViewFlowLayout();
         self.collectionLayout.scrollDirection = .horizontal;
-//        self.collectionLayout.itemSize = CGSize.init(width: 72, height: 32);
         self.collectionLayout.minimumLineSpacing = 4.0;
         
         self.collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.collectionLayout);
@@ -72,7 +88,7 @@ extension KPSearchTagView: UICollectionViewDelegate, UICollectionViewDataSource,
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: KPSearchTagView.KPSearchTagViewCellReuseIdentifier,
                                                       for: indexPath) as! KPSearchTagCell;
         cell.tagTitle.text = self.demoHeaderTagContents[indexPath.row];
-        cell.tagIcon.image = UIImage.init(named: "icon_close");
+        cell.tagIcon.image = UIImage.init(named: "icon_clock");
         cell.layer.cornerRadius = 2.0;
         cell.layer.masksToBounds = true;
         
@@ -82,10 +98,10 @@ extension KPSearchTagView: UICollectionViewDelegate, UICollectionViewDataSource,
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        let cell = collectionView.cellForItem(at: indexPath) as! KPSearchTagCell;
-//        cell.layoutIfNeeded();
-//        return CGSize.init(width: cell.frameSize.width, height: 32);
-        return CGSize.init(width: 80, height: 32);
+        let contentSize = NSString.init(string: self.demoHeaderTagContents[indexPath.row]).boundingRect(with: CGSize.init(width: DBL_MAX, height: 32),
+                                                                                                        options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 13)], context: nil).size;
+        
+        return CGSize.init(width: contentSize.width + 42, height: 32);
     }
     
 }
