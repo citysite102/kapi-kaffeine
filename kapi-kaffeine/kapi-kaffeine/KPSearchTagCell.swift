@@ -17,6 +17,7 @@ class KPSearchTagCell: UICollectionViewCell {
         super.init(frame: frame);
         
         self.backgroundColor = UIColor.white;
+        self.alpha = 0.4;
         
         self.tagIcon = UIImageView();
         self.addSubview(self.tagIcon);

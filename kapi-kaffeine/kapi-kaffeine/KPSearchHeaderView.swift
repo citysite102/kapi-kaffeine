@@ -32,7 +32,7 @@ class KPSearchHeaderView: UIView {
         self.styleButton.addConstraints(fromStringArray: ["H:[$self(24)]-8-|",
                                                           "V:[$self(24)]"]);
         self.styleButton.addConstraintForCenterAligning(to: self.titleLabel, in: .vertical);
-        self.styleButton.setImage(UIImage.init(named: "icon_list")?.withRenderingMode(.alwaysTemplate),
+        self.styleButton.setImage(UIImage.init(named: "icon_map")?.withRenderingMode(.alwaysTemplate),
                                   for: .normal);
         self.styleButton.tintColor = UIColor.white;
         self.searchTagView = KPSearchTagView();

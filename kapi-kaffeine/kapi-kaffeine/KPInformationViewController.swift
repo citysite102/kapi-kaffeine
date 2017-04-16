@@ -54,9 +54,6 @@ class KPInformationViewController: UIViewController {
         self.shopPhoto.addConstraints(fromStringArray: ["H:|[$self]|",
                                                         "V:|[$self]|"]);
         
-        
-        
-        
     }
 
     override func didReceiveMemoryWarning() {

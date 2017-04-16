@@ -59,11 +59,12 @@ class KPSearchTagView: UIView {
         self.collectionView.showsHorizontalScrollIndicator = false;
         self.collectionView.showsVerticalScrollIndicator = false;
         self.collectionView.delaysContentTouches = true;
+        self.collectionView.allowsMultipleSelection = true;
         self.collectionView.register(KPSearchTagCell.self,
                                      forCellWithReuseIdentifier: KPSearchTagView.KPSearchTagViewCellReuseIdentifier)
         
         self.addSubview(self.collectionView);
-        self.collectionView.addConstraints(fromStringArray: ["H:[$view0]-4-[$self]|", "V:|[$self]|"],
+        self.collectionView.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]|", "V:|[$self]|"],
                                            views: [self.preferenceHintView]);
         
     }
@@ -91,8 +92,19 @@ extension KPSearchTagView: UICollectionViewDelegate, UICollectionViewDataSource,
         cell.tagIcon.image = UIImage.init(named: "icon_clock");
         cell.layer.cornerRadius = 2.0;
         cell.layer.masksToBounds = true;
+        cell.alpha = cell.isSelected ? 1.0 : 0.4;
         
         return cell;
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath);
+        cell?.alpha = 1.0;
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath);
+        cell?.alpha = 0.4;
     }
     
     func collectionView(_ collectionView: UICollectionView,
