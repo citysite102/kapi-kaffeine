@@ -21,6 +21,7 @@ struct Action {
 
 class KPInformationSharedInfoView: UIView {
     
+    var infoTitleLabel: UILabel!
     var infoView: UIView!
     var actions: [Action]? {
         didSet {
@@ -30,6 +31,19 @@ class KPInformationSharedInfoView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame);
+        
+        self.infoTitleLabel = UILabel.init();
+        self.infoTitleLabel.font = UIFont.systemFont(ofSize: 13);
+        self.infoTitleLabel.textColor = KPColorPalette.KPTextColor.mainColor;
+        self.infoTitleLabel.text = "店家資訊";
+        self.addSubview(self.infoTitleLabel);
+        self.infoTitleLabel.addConstraints(fromStringArray: ["V:|-8-[$self]", "H:|-8-[$self]"]);
+        
+        self.infoView = UIView.init();
+        self.infoView.backgroundColor = UIColor.white;
+        self.addSubview(self.infoView);
+        self.infoView.addConstraints(fromStringArray: ["V:[$view0]-8-[$self(420)]|", "H:|[$self]|"],
+                                     views: [self.infoTitleLabel]);
     }
 
     required init?(coder aDecoder: NSCoder) {

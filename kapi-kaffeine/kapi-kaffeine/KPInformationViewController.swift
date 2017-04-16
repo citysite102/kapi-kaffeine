@@ -16,11 +16,11 @@ class KPInformationViewController: UIViewController {
     
     var scrollContainer:UIScrollView!;
     var informationHeaderView: KPInformationHeaderView!;
+    var informationSharedInfoView: KPInformationSharedInfoView!;
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white;
-        
         self.navigationController?.navigationBar.topItem?.title = self.informationDataModel.name;
         
         self.dismissButton = UIButton.init();
@@ -37,6 +37,7 @@ class KPInformationViewController: UIViewController {
         self.dismissButton.addConstraintForCenterAligningToSuperview(in: .vertical);
         
         self.scrollContainer = UIScrollView();
+        self.scrollContainer.backgroundColor = KPColorPalette.KPMainColor.grayColor_level6;
         self.scrollContainer.delegate = self;
         self.view.addSubview(self.scrollContainer);
         self.scrollContainer.addConstraints(fromStringArray: ["H:|[$self]|",
@@ -46,6 +47,12 @@ class KPInformationViewController: UIViewController {
         self.scrollContainer.addSubview(self.informationHeaderView);
         self.informationHeaderView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                                     "V:|[$self]"]);
+        
+        self.informationSharedInfoView = KPInformationSharedInfoView();
+        self.scrollContainer.addSubview(self.informationSharedInfoView);
+        self.informationSharedInfoView.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                                        "V:[$view0]-16-[$self]|"],
+                                                      views: [self.informationHeaderView]);
     }
 
     override func didReceiveMemoryWarning() {

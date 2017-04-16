@@ -36,6 +36,7 @@ class KPInformationHeaderButton: UIView {
         
         self.layer.borderWidth = 1.0;
         self.layer.borderColor = KPColorPalette.KPMainColor.borderColor?.cgColor;
+        self.backgroundColor = UIColor.white;
         
         self.icon = UIImageView.init();
         self.addSubview(self.icon);
@@ -44,7 +45,7 @@ class KPInformationHeaderButton: UIView {
         
         self.titleLabel = UILabel.init();
         self.titleLabel.font = UIFont.systemFont(ofSize: 13);
-        self.titleLabel.textColor = KPColorPalette.KPTextColor.cellDistanceColor;
+        self.titleLabel.textColor = KPColorPalette.KPTextColor.mainColor;
         self.addSubview(self.titleLabel);
         self.titleLabel.addConstraintForCenterAligningToSuperview(in: .horizontal);
         self.titleLabel.addConstraint(from: "V:[$view0]-4-[$self]",
@@ -52,8 +53,7 @@ class KPInformationHeaderButton: UIView {
         
         self.infoLable = UILabel.init();
         self.infoLable.font = UIFont.systemFont(ofSize: 11);
-        self.infoLable.alpha = 0.7;
-        self.infoLable.textColor = KPColorPalette.KPTextColor.grayColor;
+        self.infoLable.textColor = KPColorPalette.KPMainColor.grayColor_level2;
         self.addSubview(self.infoLable);
         self.infoLable.addConstraintForCenterAligningToSuperview(in: .horizontal);
         self.infoLable.addConstraint(from: "V:[$view0]-4-[$self]",

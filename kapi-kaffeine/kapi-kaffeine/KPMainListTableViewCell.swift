@@ -46,7 +46,7 @@ class KPMainListTableViewCell: UITableViewCell {
         
         self.shopNameLabel = KPMainListCellNormalLabel();
         self.shopNameLabel.font = UIFont.systemFont(ofSize: 14.0);
-        self.shopNameLabel.textColor = KPColorPalette.KPTextColor.cellNameColor;
+        self.shopNameLabel.textColor = KPColorPalette.KPTextColor.grayColor;
         self.shopNameLabel.text = "覺旅咖啡";
         self.addSubview(self.shopNameLabel);
 
@@ -66,7 +66,7 @@ class KPMainListTableViewCell: UITableViewCell {
         
         self.shopStatusLabel = UILabel();
         self.shopStatusLabel.font = UIFont.systemFont(ofSize: 12.0);
-        self.shopStatusLabel.textColor = KPColorPalette.KPTextColor.cellNameColor;
+        self.shopStatusLabel.textColor = KPColorPalette.KPTextColor.grayColor;
         self.shopStatusLabel.text = "營業中 12:00-21:00";
         self.addSubview(self.shopStatusLabel);
         self.shopStatusLabel.addConstraints(fromStringArray: ["H:[$view0]-5-[$self($metric0)]"],
@@ -77,7 +77,7 @@ class KPMainListTableViewCell: UITableViewCell {
         
         self.shopDistanceLabel = KPMainListCellNormalLabel();
         self.shopDistanceLabel.font = UIFont.systemFont(ofSize: 20.0);
-        self.shopDistanceLabel.textColor = KPColorPalette.KPTextColor.cellNameColor;
+        self.shopDistanceLabel.textColor = KPColorPalette.KPTextColor.mainColor;
         self.shopDistanceLabel.text = "600m";
         self.shopDistanceLabel.layoutMargins = UIEdgeInsetsMake(0, 0, 0, 0);
         self.addSubview(self.shopDistanceLabel);

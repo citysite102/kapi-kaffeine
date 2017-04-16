@@ -55,7 +55,7 @@ class KPInformationHeaderView: UIView {
                                                          handler: { (headerButton) -> () in print("Test Handler");
         });
         self.addSubview(self.checkButton);
-        self.checkButton.addConstraints(fromStringArray: ["H:[$view0]-(-1)-[$self($metric0)]", "V:[$view0][$self(90)]|"],
+        self.checkButton.addConstraints(fromStringArray: ["H:[$view0]-(-1)-[$self($metric0)]", "V:[$view1][$self(90)]|"],
                                           metrics: [UIScreen.main.bounds.size.width/4+1],
                                           views: [self.collectButton, self.shopPhoto]);
         
@@ -67,7 +67,7 @@ class KPInformationHeaderView: UIView {
                                                        handler: { (headerButton) -> () in print("Test Handler");
         });
         self.addSubview(self.rateButton);
-        self.rateButton.addConstraints(fromStringArray: ["H:[$view0]-(-1)-[$self($metric0)]", "V:[$view0][$self(90)]|"],
+        self.rateButton.addConstraints(fromStringArray: ["H:[$view0]-(-1)-[$self($metric0)]", "V:[$view1][$self(90)]|"],
                                         metrics: [UIScreen.main.bounds.size.width/4+1],
                                         views: [self.checkButton, self.shopPhoto]);
         
@@ -79,7 +79,7 @@ class KPInformationHeaderView: UIView {
                                                        handler: { (headerButton) -> () in print("Test Handler");
         });
         self.addSubview(self.commentButton);
-        self.commentButton.addConstraints(fromStringArray: ["H:[$view0]-(-1)-[$self($metric0)]", "V:[$view0][$self(90)]|"],
+        self.commentButton.addConstraints(fromStringArray: ["H:[$view0]-(-1)-[$self($metric0)]", "V:[$view1][$self(90)]|"],
                                         metrics: [UIScreen.main.bounds.size.width/4+1],
                                         views: [self.rateButton, self.shopPhoto]);
     }
