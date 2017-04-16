@@ -15,8 +15,7 @@ class KPInformationViewController: UIViewController {
     var dismissButton:UIButton!
     
     var scrollContainer:UIScrollView!;
-    var shopPhotoContainer:UIView!;
-    var shopPhoto:UIImageView!;
+    var informationHeaderView: KPInformationHeaderView!;
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,17 +42,10 @@ class KPInformationViewController: UIViewController {
         self.scrollContainer.addConstraints(fromStringArray: ["H:|[$self]|",
                                                               "V:|[$self]|"]);
         
-        self.shopPhotoContainer = UIView();
-        self.scrollContainer.addSubview(self.shopPhotoContainer);
-        self.shopPhotoContainer.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                                 "V:|[$self]"]);
-        
-        self.shopPhoto = UIImageView(image: UIImage(named: "image_shop_demo"));
-        self.shopPhoto.contentMode = .scaleAspectFit;
-        self.shopPhotoContainer.addSubview(shopPhoto);
-        self.shopPhoto.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                        "V:|[$self]|"]);
-        
+        self.informationHeaderView = KPInformationHeaderView();
+        self.scrollContainer.addSubview(self.informationHeaderView);
+        self.informationHeaderView.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                                    "V:|[$self]"]);
     }
 
     override func didReceiveMemoryWarning() {
