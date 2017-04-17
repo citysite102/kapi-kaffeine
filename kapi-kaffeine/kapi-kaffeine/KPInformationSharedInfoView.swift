@@ -22,7 +22,17 @@ struct Action {
 class KPInformationSharedInfoView: UIView {
     
     var infoTitleLabel: UILabel!
-    var infoView: UIView!
+    var infoContainer: UIView!;
+    var infoView: UIView! {
+        didSet {
+            if oldValue != nil {
+                oldValue.removeFromSuperview();
+            }
+            self.infoContainer.addSubview(infoView);
+            infoView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"]);
+        }
+    }
+    
     var actions: [Action]? {
         didSet {
             
@@ -39,11 +49,11 @@ class KPInformationSharedInfoView: UIView {
         self.addSubview(self.infoTitleLabel);
         self.infoTitleLabel.addConstraints(fromStringArray: ["V:|-8-[$self]", "H:|-8-[$self]"]);
         
-        self.infoView = UIView.init();
-        self.infoView.backgroundColor = UIColor.white;
-        self.addSubview(self.infoView);
-        self.infoView.addConstraints(fromStringArray: ["V:[$view0]-8-[$self]|", "H:|[$self]|"],
-                                     views: [self.infoTitleLabel]);
+        self.infoContainer = UIView.init();
+        self.infoContainer.backgroundColor = UIColor.white;
+        self.addSubview(self.infoContainer);
+        self.infoContainer.addConstraints(fromStringArray: ["V:[$view0]-8-[$self]|", "H:|[$self]|"],
+                                          views: [self.infoTitleLabel]);
     }
 
     required init?(coder aDecoder: NSCoder) {

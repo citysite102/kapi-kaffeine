@@ -53,19 +53,21 @@ class KPInformationViewController: UIViewController {
         self.informationHeaderView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                                     "V:|[$self]"]);
         
+        
+        let informationView: KPShopInfoView = KPShopInfoView();
         self.shopInformationView = KPInformationSharedInfoView();
+        self.shopInformationView.infoView = informationView;
         self.shopInformationView.infoTitleLabel.text = "店家資訊";
         self.scrollContainer.addSubview(self.shopInformationView);
         self.shopInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                                   "V:[$view0]-16-[$self(200)]"],
                                                       views: [self.informationHeaderView]);
         
+        let shopLocationInfoView = KPShopLocationInfoView();
+        shopLocationInfoView.dataModel = informationDataModel;
         self.locationInformationView = KPInformationSharedInfoView();
         self.locationInformationView.infoTitleLabel.text = "位置訊息";
-        let shopLocationInfoView = KPShopLocationInfoView()
-        self.locationInformationView.infoView.addSubview(shopLocationInfoView)
-        shopLocationInfoView.dataModel = informationDataModel
-        shopLocationInfoView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"])
+        self.locationInformationView.infoView = shopLocationInfoView;
         self.scrollContainer.addSubview(self.locationInformationView);
         self.locationInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                                   "V:[$view0]-16-[$self(240)]"],

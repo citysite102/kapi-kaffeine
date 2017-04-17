@@ -32,6 +32,13 @@ struct KPColorPalette {
         static let mainColor_light = UIColor(hexString: "#212121")
         static let mainColor = UIColor(hexString: "#784d1f")
         static let whiteColor = UIColor(hexString: "#ffffff")
+        
+        static let grayColor_level1 = UIColor.init(r: 0.2, g: 0.2, b: 0.2, a: 1.0)
+        static let grayColor_level2 = UIColor.init(r: 0.2, g: 0.2, b: 0.2, a: 0.7)
+        static let grayColor_level3 = UIColor.init(r: 0.2, g: 0.2, b: 0.2, a: 0.5)
+        static let grayColor_level4 = UIColor.init(r: 0.2, g: 0.2, b: 0.2, a: 0.3)
+        static let grayColor_level5 = UIColor.init(r: 0.2, g: 0.2, b: 0.2, a: 0.2)
+        static let grayColor_level6 = UIColor.init(r: 0.2, g: 0.2, b: 0.2, a: 0.1)
     }
     
     struct KPBackgroundColor {
