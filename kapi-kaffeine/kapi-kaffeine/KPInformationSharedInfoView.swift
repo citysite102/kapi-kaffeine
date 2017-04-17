@@ -41,7 +41,7 @@ class KPInformationSharedInfoView: UIView {
     var actions: [Action]! {
         didSet {
             
-            let totalWidth = (Int(UIScreen.main.bounds.size.width)-((actions?.count)!-1)*4 - 16);
+            let totalWidth = (Int(UIScreen.main.bounds.size.width)-((actions?.count)!-1)*8 - 16);
             let buttonWidth = Double(totalWidth)/Double((actions?.count)!);
             
             self.actionButtons.removeAll();
@@ -70,7 +70,7 @@ class KPInformationSharedInfoView: UIView {
                                                 metrics: [buttonWidth]);
                 } else {
                     actionButton.addConstraints(fromStringArray: ["V:|-8-[$self(36)]-8-|",
-                                                                  "H:[$view0]-4-[$self($metric0)]"],
+                                                                  "H:[$view0]-8-[$self($metric0)]"],
                                                 metrics: [buttonWidth],
                                                 views: [self.actionButtons[index-1]]);
                 }
@@ -81,6 +81,11 @@ class KPInformationSharedInfoView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame);
+        
+        self.layer.shadowColor = UIColor.black.cgColor;
+        self.layer.shadowOpacity = 0.1;
+        self.layer.shadowRadius = 2.0;
+        self.layer.shadowOffset = CGSize.init(width: 0.0, height: 2.0);
         
         self.infoTitleLabel = UILabel.init();
         self.infoTitleLabel.font = UIFont.systemFont(ofSize: 13);

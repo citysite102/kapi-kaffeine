@@ -26,7 +26,7 @@
 		77C0E0FF1E9D48BC00398852 /* KPInformationSharedInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0E0FE1E9D48BC00398852 /* KPInformationSharedInfoView.swift */; };
 		77C0E1021E9D48E000398852 /* KPShopInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0E1011E9D48E000398852 /* KPShopInfoView.swift */; };
 		77C0E1051E9D48F500398852 /* KPShopLocationInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0E1041E9D48F500398852 /* KPShopLocationInfoView.swift */; };
-		77C0E1081E9D491D00398852 /* KPShopScoreInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0E1071E9D491D00398852 /* KPShopScoreInfoView.swift */; };
+		77C0E1081E9D491D00398852 /* KPShopRateInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0E1071E9D491D00398852 /* KPShopRateInfoView.swift */; };
 		77C0E10A1E9D493400398852 /* KPShopCommentInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0E1091E9D493400398852 /* KPShopCommentInfoView.swift */; };
 		77C0E10C1E9D494400398852 /* KPShopPhotoInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0E10B1E9D494400398852 /* KPShopPhotoInfoView.swift */; };
 		77FB63961E9AA7BB00FFC3DC /* KPDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77FB63951E9AA7BB00FFC3DC /* KPDataModel.swift */; };
@@ -82,7 +82,7 @@
 		77C0E0FE1E9D48BC00398852 /* KPInformationSharedInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPInformationSharedInfoView.swift; sourceTree = "<group>"; };
 		77C0E1011E9D48E000398852 /* KPShopInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPShopInfoView.swift; sourceTree = "<group>"; };
 		77C0E1041E9D48F500398852 /* KPShopLocationInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPShopLocationInfoView.swift; sourceTree = "<group>"; };
-		77C0E1071E9D491D00398852 /* KPShopScoreInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPShopScoreInfoView.swift; sourceTree = "<group>"; };
+		77C0E1071E9D491D00398852 /* KPShopRateInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPShopRateInfoView.swift; sourceTree = "<group>"; };
 		77C0E1091E9D493400398852 /* KPShopCommentInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPShopCommentInfoView.swift; sourceTree = "<group>"; };
 		77C0E10B1E9D494400398852 /* KPShopPhotoInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPShopPhotoInfoView.swift; sourceTree = "<group>"; };
 		77FB63951E9AA7BB00FFC3DC /* KPDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPDataModel.swift; sourceTree = "<group>"; };
@@ -218,7 +218,7 @@
 			children = (
 				77C0E1011E9D48E000398852 /* KPShopInfoView.swift */,
 				77C0E1041E9D48F500398852 /* KPShopLocationInfoView.swift */,
-				77C0E1071E9D491D00398852 /* KPShopScoreInfoView.swift */,
+				77C0E1071E9D491D00398852 /* KPShopRateInfoView.swift */,
 				77C0E1091E9D493400398852 /* KPShopCommentInfoView.swift */,
 				77C0E10B1E9D494400398852 /* KPShopPhotoInfoView.swift */,
 			);
@@ -533,7 +533,7 @@
 				C02AFE471E7D260D008FFB33 /* ViewController.swift in Sources */,
 				775989911EA5171A0029989C /* KPUIImageHelper.swift in Sources */,
 				77C0E0FD1E9D489900398852 /* KPInformationHeaderView.swift in Sources */,
-				77C0E1081E9D491D00398852 /* KPShopScoreInfoView.swift in Sources */,
+				77C0E1081E9D491D00398852 /* KPShopRateInfoView.swift in Sources */,
 				C02AFE451E7D260D008FFB33 /* AppDelegate.swift in Sources */,
 				776ACAF81E9BAFE900B629A2 /* KPSearchFooterView.swift in Sources */,
 				778521811EA3C91C00EA59D9 /* KPInformationHeaderButton.swift in Sources */,

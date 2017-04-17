@@ -42,7 +42,7 @@ class KPInformationViewController: UIViewController {
         self.dismissButton.addConstraintForCenterAligningToSuperview(in: .vertical);
         
         self.scrollContainer = UIScrollView();
-        self.scrollContainer.backgroundColor = KPColorPalette.KPMainColor.grayColor_level6;
+        self.scrollContainer.backgroundColor = KPColorPalette.KPMainColor.grayColor_level7;
         self.scrollContainer.delegate = self;
         self.view.addSubview(self.scrollContainer);
         self.scrollContainer.addConstraints(fromStringArray: ["H:|[$self]|",
@@ -88,14 +88,23 @@ class KPInformationViewController: UIViewController {
         self.locationInformationView.infoView = shopLocationInfoView;
         self.scrollContainer.addSubview(self.locationInformationView);
         self.locationInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                                  "V:[$view0]-24-[$self(240)]"],
+                                                                  "V:[$view0]-24-[$self(292)]"],
                                                 views: [self.shopInformationView]);
         
+        let shopRateInfoView = KPShopRateInfoView();
         self.rateInformationView = KPInformationSharedInfoView();
+        self.rateInformationView.infoView = shopRateInfoView;
         self.rateInformationView.infoTitleLabel.text = "店家評分";
+        self.rateInformationView.actions = [Action(title:"我要評分",
+                                                   style:.normal,
+                                                   color:KPColorPalette.KPMainColor.buttonColor!,
+                                                   icon:(UIImage.init(named: "icon_map")?.withRenderingMode(.alwaysTemplate))!,
+                                                   handler:{(infoView) -> () in
+                                                    print("Location button 1 Tapped");
+        })]
         self.scrollContainer.addSubview(self.rateInformationView);
         self.rateInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                                  "V:[$view0]-24-[$self(228)]"],
+                                                                  "V:[$view0]-24-[$self]"],
                                                 views: [self.locationInformationView]);
         
         self.commentInformationView = KPInformationSharedInfoView();
