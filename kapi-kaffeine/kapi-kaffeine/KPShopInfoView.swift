@@ -21,6 +21,8 @@ class KPShopInfoView: UIView {
                 oldContentView.removeFromSuperview();
             }
             
+            featureContentViews.removeAll();
+            
             for (index, content) in featureContents.enumerated() {
                 
                 let featureView = UIView.init();

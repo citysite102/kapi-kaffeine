@@ -69,6 +69,22 @@ class KPInformationViewController: UIViewController {
         shopLocationInfoView.dataModel = informationDataModel;
         self.locationInformationView = KPInformationSharedInfoView();
         self.locationInformationView.infoTitleLabel.text = "位置訊息";
+        self.locationInformationView.actions = [Action(title:"開啟導航",
+                                                 style:.normal,
+                                                 color:KPColorPalette.KPMainColor.buttonColor!,
+                                                 icon:(UIImage.init(named: "icon_map")?.withRenderingMode(.alwaysTemplate))!,
+                                                 handler:{(infoView) -> () in
+                                                    print("Location button 1 Tapped");
+        }),
+                                                Action(title:"街景模式",
+                                                 style:.normal,
+                                                 color:KPColorPalette.KPMainColor.buttonColor!,
+                                                 icon:(UIImage.init(named: "icon_map")?.withRenderingMode(.alwaysTemplate))!,
+                                                 handler:{(infoView) -> () in
+                                                    print("Location button 2 Tapped");
+                                                })
+        ]
+        
         self.locationInformationView.infoView = shopLocationInfoView;
         self.scrollContainer.addSubview(self.locationInformationView);
         self.locationInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
