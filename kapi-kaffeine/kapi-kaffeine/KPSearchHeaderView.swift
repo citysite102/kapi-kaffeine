@@ -12,6 +12,7 @@ class KPSearchHeaderView: UIView {
 
     var titleLabel: UILabel!
     var searchButton: UIButton!
+    var menuButton: UIButton!
     var styleButton: UIButton!
     var searchTagView: KPSearchTagView!
     
@@ -35,6 +36,27 @@ class KPSearchHeaderView: UIView {
         self.styleButton.setImage(UIImage.init(named: "icon_map")?.withRenderingMode(.alwaysTemplate),
                                   for: .normal);
         self.styleButton.tintColor = UIColor.white;
+        
+        self.searchButton = UIButton(type: .system);
+        self.addSubview(self.searchButton);
+        self.searchButton.addConstraints(fromStringArray: ["H:[$self(24)]-8-[$view0]",
+                                                           "V:[$self(24)]"],
+                                         views: [self.styleButton]);
+        self.searchButton.addConstraintForCenterAligning(to: self.titleLabel, in: .vertical);
+        self.searchButton.setImage(UIImage.init(named: "icon_search")?.withRenderingMode(.alwaysTemplate),
+                                  for: .normal);
+        self.searchButton.tintColor = UIColor.white;
+        
+        self.menuButton = UIButton(type: .system);
+        self.addSubview(self.menuButton);
+        self.menuButton.addConstraints(fromStringArray: ["H:|-8-[$self(24)]",
+                                                          "V:[$self(24)]"]);
+        self.menuButton.addConstraintForCenterAligning(to: self.titleLabel, in: .vertical);
+        self.menuButton.setImage(UIImage.init(named: "icon_menu")?.withRenderingMode(.alwaysTemplate),
+                                  for: .normal);
+        self.menuButton.tintColor = UIColor.white;
+        
+        
         self.searchTagView = KPSearchTagView();
         self.addSubview(self.searchTagView);
         self.searchTagView.addConstraints(fromStringArray: ["V:[$self(40)]|",
