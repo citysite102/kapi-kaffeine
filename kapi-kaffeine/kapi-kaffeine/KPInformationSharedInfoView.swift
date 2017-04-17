@@ -42,7 +42,7 @@ class KPInformationSharedInfoView: UIView {
         self.infoView = UIView.init();
         self.infoView.backgroundColor = UIColor.white;
         self.addSubview(self.infoView);
-        self.infoView.addConstraints(fromStringArray: ["V:[$view0]-8-[$self(420)]|", "H:|[$self]|"],
+        self.infoView.addConstraints(fromStringArray: ["V:[$view0]-8-[$self]|", "H:|[$self]|"],
                                      views: [self.infoTitleLabel]);
     }
 

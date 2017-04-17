@@ -16,7 +16,12 @@ class KPInformationViewController: UIViewController {
     
     var scrollContainer:UIScrollView!;
     var informationHeaderView: KPInformationHeaderView!;
-    var informationSharedInfoView: KPInformationSharedInfoView!;
+    var shopInformationView: KPInformationSharedInfoView!;
+    var locationInformationView: KPInformationSharedInfoView!;
+    var rateInformationView: KPInformationSharedInfoView!;
+    var commentInformationView: KPInformationSharedInfoView!;
+    var photoInformationView: KPInformationSharedInfoView!;
+    var recommendInformationView: KPInformationSharedInfoView!;
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,11 +53,49 @@ class KPInformationViewController: UIViewController {
         self.informationHeaderView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                                     "V:|[$self]"]);
         
-        self.informationSharedInfoView = KPInformationSharedInfoView();
-        self.scrollContainer.addSubview(self.informationSharedInfoView);
-        self.informationSharedInfoView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                                        "V:[$view0]-16-[$self]|"],
+        self.shopInformationView = KPInformationSharedInfoView();
+        self.shopInformationView.infoTitleLabel.text = "店家資訊";
+        self.scrollContainer.addSubview(self.shopInformationView);
+        self.shopInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                                  "V:[$view0]-16-[$self(200)]"],
                                                       views: [self.informationHeaderView]);
+        
+        self.locationInformationView = KPInformationSharedInfoView();
+        self.locationInformationView.infoTitleLabel.text = "位置訊息";
+        self.scrollContainer.addSubview(self.locationInformationView);
+        self.locationInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                                  "V:[$view0]-16-[$self(240)]"],
+                                                views: [self.shopInformationView]);
+        
+        self.rateInformationView = KPInformationSharedInfoView();
+        self.rateInformationView.infoTitleLabel.text = "店家評分";
+        self.scrollContainer.addSubview(self.rateInformationView);
+        self.rateInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                                  "V:[$view0]-16-[$self(228)]"],
+                                                views: [self.locationInformationView]);
+        
+        self.commentInformationView = KPInformationSharedInfoView();
+        self.commentInformationView.infoTitleLabel.text = "留言評價";
+        self.scrollContainer.addSubview(self.commentInformationView);
+        self.commentInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                                     "V:[$view0]-16-[$self(180)]"],
+                                                    views: [self.rateInformationView]);
+        
+        self.photoInformationView = KPInformationSharedInfoView();
+        self.photoInformationView.infoTitleLabel.text = "店家照片";
+        self.scrollContainer.addSubview(self.photoInformationView);
+        self.photoInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                                   "V:[$view0]-16-[$self(170)]"],
+                                                    views: [self.commentInformationView]);
+        
+        self.recommendInformationView = KPInformationSharedInfoView();
+        self.recommendInformationView.infoTitleLabel.text = "你可能也會喜歡";
+        self.scrollContainer.addSubview(self.recommendInformationView);
+        self.recommendInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                                       "V:[$view0]-16-[$self(240)]-32-|"],
+                                                     views: [self.photoInformationView]);
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
