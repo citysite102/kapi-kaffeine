@@ -52,6 +52,7 @@ class KPInformationViewController: UIViewController {
         self.scrollContainer.addSubview(self.informationHeaderView);
         self.informationHeaderView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                                     "V:|[$self]"]);
+        self.informationHeaderView.addConstraintForHavingSameWidth(with: self.view)
         
         
         let informationView: KPShopInfoView = KPShopInfoView();
