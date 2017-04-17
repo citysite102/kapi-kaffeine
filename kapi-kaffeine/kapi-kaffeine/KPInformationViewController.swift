@@ -55,12 +55,13 @@ class KPInformationViewController: UIViewController {
         
         
         let informationView: KPShopInfoView = KPShopInfoView();
+        informationView.featureContents = ["食物好吃", "氣氛佳", "看不見桌子"];
         self.shopInformationView = KPInformationSharedInfoView();
         self.shopInformationView.infoView = informationView;
         self.shopInformationView.infoTitleLabel.text = "店家資訊";
         self.scrollContainer.addSubview(self.shopInformationView);
         self.shopInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                                  "V:[$view0]-16-[$self(200)]"],
+                                                                  "V:[$view0]-16-[$self(210)]"],
                                                       views: [self.informationHeaderView]);
         
         let shopLocationInfoView = KPShopLocationInfoView();
@@ -70,35 +71,35 @@ class KPInformationViewController: UIViewController {
         self.locationInformationView.infoView = shopLocationInfoView;
         self.scrollContainer.addSubview(self.locationInformationView);
         self.locationInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                                  "V:[$view0]-16-[$self(240)]"],
+                                                                  "V:[$view0]-24-[$self(240)]"],
                                                 views: [self.shopInformationView]);
         
         self.rateInformationView = KPInformationSharedInfoView();
         self.rateInformationView.infoTitleLabel.text = "店家評分";
         self.scrollContainer.addSubview(self.rateInformationView);
         self.rateInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                                  "V:[$view0]-16-[$self(228)]"],
+                                                                  "V:[$view0]-24-[$self(228)]"],
                                                 views: [self.locationInformationView]);
         
         self.commentInformationView = KPInformationSharedInfoView();
         self.commentInformationView.infoTitleLabel.text = "留言評價";
         self.scrollContainer.addSubview(self.commentInformationView);
         self.commentInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                                     "V:[$view0]-16-[$self(180)]"],
+                                                                     "V:[$view0]-24-[$self(180)]"],
                                                     views: [self.rateInformationView]);
         
         self.photoInformationView = KPInformationSharedInfoView();
         self.photoInformationView.infoTitleLabel.text = "店家照片";
         self.scrollContainer.addSubview(self.photoInformationView);
         self.photoInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                                   "V:[$view0]-16-[$self(170)]"],
+                                                                   "V:[$view0]-24-[$self(170)]"],
                                                     views: [self.commentInformationView]);
         
         self.recommendInformationView = KPInformationSharedInfoView();
         self.recommendInformationView.infoTitleLabel.text = "你可能也會喜歡";
         self.scrollContainer.addSubview(self.recommendInformationView);
         self.recommendInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                                       "V:[$view0]-16-[$self(240)]-32-|"],
+                                                                       "V:[$view0]-24-[$self(240)]-32-|"],
                                                      views: [self.photoInformationView]);
         
         
