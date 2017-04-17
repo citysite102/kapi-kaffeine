@@ -62,6 +62,10 @@ class KPInformationViewController: UIViewController {
         
         self.locationInformationView = KPInformationSharedInfoView();
         self.locationInformationView.infoTitleLabel.text = "位置訊息";
+        let shopLocationInfoView = KPShopLocationInfoView()
+        self.locationInformationView.infoView.addSubview(shopLocationInfoView)
+        shopLocationInfoView.dataModel = informationDataModel
+        shopLocationInfoView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"])
         self.scrollContainer.addSubview(self.locationInformationView);
         self.locationInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                                   "V:[$view0]-16-[$self(240)]"],
