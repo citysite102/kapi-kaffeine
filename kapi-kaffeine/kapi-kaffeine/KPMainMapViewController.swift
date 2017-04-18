@@ -78,10 +78,7 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate, UICollectio
         // Do any additional setup after loading the view.
         
         self.mapView.isMyLocationEnabled = true
-        if let location = KPLocationManager.sharedInstance().currentLocation?.coordinate {
-            self.mapView.camera = GMSCameraPosition.camera(withTarget: location,
-                                                           zoom: self.mapView.camera.zoom)
-        }
+        self.moveToMyLocation()
         
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.itemSize = CGSize(width: UIScreen.main.bounds.size.width - 60, height: 80)
@@ -111,11 +108,27 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate, UICollectio
             }
         }
         
+        let currentLocationButton = UIButton(type: .custom)
+        currentLocationButton.setImage(UIImage(named: "icon_currentLocation"), for: .normal)
+        currentLocationButton.addTarget(self, action: #selector(moveToMyLocation), for: .touchUpInside)
+        self.view.addSubview(currentLocationButton)
+        currentLocationButton.addConstraints(fromStringArray: ["H:[$self(40)]-15-|", "V:|-120-[$self(40)]"])
+        
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func moveToMyLocation() {
+        if let location = KPLocationManager.sharedInstance().currentLocation?.coordinate {
+            CATransaction.begin()
+            CATransaction.setValue(NSNumber(floatLiteral: 0.5), forKey: kCATransactionAnimationDuration)
+            self.mapView.animate(to: GMSCameraPosition.camera(withTarget: location,
+                                                              zoom: self.mapView.camera.zoom))
+            CATransaction.commit()
+        }
     }
     
     
@@ -145,7 +158,7 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate, UICollectio
         self.mapView.selectedMarker = self.mapMarkers[Int(index)]
 //        self.mapView.moveCamera(GMSCameraUpdate.setCamera(GMSCameraPosition.camera(withTarget: self.mapView.selectedMarker!.position , zoom: self.mapView.camera.zoom)))
         CATransaction.begin()
-        CATransaction.setValue(NSNumber(floatLiteral: 3.0), forKey: kCATransactionAnimationDuration)
+        CATransaction.setValue(NSNumber(floatLiteral: 0.5), forKey: kCATransactionAnimationDuration)
         self.mapView.animate(to: GMSCameraPosition.camera(withTarget: self.mapView.selectedMarker!.position , zoom: self.mapView.camera.zoom))
         CATransaction.commit()
         
@@ -173,7 +186,6 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate, UICollectio
             self.collectionView.scrollToItem(at: IndexPath.init(row: selectedIndex, section: 0),
                                              at: UICollectionViewScrollPosition.centeredHorizontally,
                                              animated: true)
-            self.collectionView.delegate?.scrollViewDidScroll!(self.collectionView)
         }
         return infoWindow
     }

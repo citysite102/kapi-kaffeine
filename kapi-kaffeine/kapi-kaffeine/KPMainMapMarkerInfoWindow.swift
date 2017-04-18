@@ -24,6 +24,11 @@ class KPMainMapMarkerInfoWindow: UIView {
         self.contentView = UIView(frame: CGRect(x: 0, y: 0, width: self.frame.size.width, height: self.frame.size.height - 5))
         self.contentView.backgroundColor = UIColor.white
         
+        self.layer.shadowColor = UIColor.black.cgColor;
+        self.layer.shadowOpacity = 0.1;
+        self.layer.shadowRadius = 2.0;
+        self.layer.shadowOffset = CGSize.init(width: 1.0, height: 2.0);
+        
         self.addSubview(self.contentView)
         
         self.contentView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]"])
@@ -67,6 +72,9 @@ class KPMainMapMarkerInfoWindow: UIView {
                                                    "V:|-4-[$view1]-4-|",
                                                    "V:|[$view2]|"],
                                  views: [titleLabel, starImageView, scoreLabel])
+        
+        scoreLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
+        titleLabel.setContentCompressionResistancePriority(UILayoutPriorityDefaultLow, for: .horizontal)
         
     }
     
