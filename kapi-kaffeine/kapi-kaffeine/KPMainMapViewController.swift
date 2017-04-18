@@ -14,18 +14,35 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate, UICollectio
     
     weak var mainController:KPMainViewController!
     var collectionView: UICollectionView!
-    
-    var currentDataModel:KPDataModel!
-    
-    var selectedDataModel: KPDataModel {
-        return self.currentDataModel
-    }
-    
     var mapView: GMSMapView {
         get {
             return self.view as! GMSMapView
         }
     }
+    
+    var currentDataModel:KPDataModel?
+    var selectedDataModel: KPDataModel? {
+        return self.currentDataModel
+    }
+    
+    
+    
+    var isCollectionViewShow: Bool = false {
+        didSet {
+            if self.collectionViewBottomConstraint != nil {
+                if isCollectionViewShow {
+                    self.collectionViewBottomConstraint.constant = 0
+                } else {
+                    self.collectionViewBottomConstraint.constant = 120
+                }
+                UIView.animate(withDuration: 0.2, animations: { 
+                    self.view.layoutIfNeeded()
+                })
+            }
+        }
+    }
+    
+    var collectionViewBottomConstraint: NSLayoutConstraint!
     
     var mapMarkers: [GMSMarker] = []
     var displayDataModel: [KPDataModel]! {
@@ -95,8 +112,8 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate, UICollectio
                                      forCellWithReuseIdentifier: "cell")
         
         self.view.addSubview(self.collectionView)
-        self.collectionView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$self(120)]|"])
-        
+        self.collectionView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$self(120)]"])
+        self.collectionViewBottomConstraint = self.collectionView.addConstraintForAligning(to: .bottom, of: self.view, constant: 120).first as! NSLayoutConstraint
 
         
         if let dataURL = Bundle.main.url(forResource: "cafes", withExtension: "json") {
@@ -180,12 +197,15 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate, UICollectio
     // MARK: GMSMapViewDelegate
     
     func mapView(_ mapView: GMSMapView, markerInfoWindow marker: GMSMarker) -> UIView? {
+        if self.isCollectionViewShow == false  {
+            self.isCollectionViewShow = true
+        }
         marker.icon = UIImage(named: "icon_mapMarkerSelected")
         let infoWindow = KPMainMapMarkerInfoWindow(dataModel: marker.userData as! KPDataModel)
         if let selectedIndex =  self.displayDataModel.index(where: {($0.name == (marker.userData as! KPDataModel).name)}) {
             self.collectionView.scrollToItem(at: IndexPath.init(row: selectedIndex, section: 0),
                                              at: UICollectionViewScrollPosition.centeredHorizontally,
-                                             animated: true)
+                                             animated: false)
         }
         return infoWindow
     }
@@ -196,8 +216,16 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate, UICollectio
     
     func mapView(_ mapView: GMSMapView, didTapInfoWindowOf marker: GMSMarker) {
         // Tap info window
-        self.currentDataModel = marker.userData as! KPDataModel
+        self.currentDataModel = marker.userData as? KPDataModel
         self.mainController.performSegue(withIdentifier: "datailedInformationSegue", sender: self)
     }
-
+    
+    func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
+        if self.isCollectionViewShow {
+            self.isCollectionViewShow = false
+        }
+    }
+    
+    
+    
 }

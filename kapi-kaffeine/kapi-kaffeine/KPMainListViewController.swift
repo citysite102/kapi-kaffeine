@@ -17,9 +17,9 @@ class KPMainListViewController: UIViewController, KPMainViewControllerDelegate {
     weak var mainController:KPMainViewController!
     var searchFooterView: KPSearchFooterView!
     var tableView: UITableView!
-    var currentDataModel:KPDataModel!
+    var currentDataModel:KPDataModel?
     
-    var selectedDataModel: KPDataModel {
+    var selectedDataModel: KPDataModel? {
         return self.currentDataModel
     }
     
