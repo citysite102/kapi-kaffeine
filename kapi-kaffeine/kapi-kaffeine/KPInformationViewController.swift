@@ -69,6 +69,7 @@ class KPInformationViewController: UIViewController {
         shopLocationInfoView.dataModel = informationDataModel;
         self.locationInformationView = KPInformationSharedInfoView();
         self.locationInformationView.infoTitleLabel.text = "位置訊息";
+        self.locationInformationView.infoSupplementLabel.text = "距離 600m";
         self.locationInformationView.actions = [Action(title:"開啟導航",
                                                  style:.normal,
                                                  color:KPColorPalette.KPMainColor.buttonColor!,
@@ -95,6 +96,7 @@ class KPInformationViewController: UIViewController {
         self.rateInformationView = KPInformationSharedInfoView();
         self.rateInformationView.infoView = shopRateInfoView;
         self.rateInformationView.infoTitleLabel.text = "店家評分";
+        self.rateInformationView.infoSupplementLabel.text = "143 人已評分";
         self.rateInformationView.actions = [Action(title:"我要評分",
                                                    style:.normal,
                                                    color:KPColorPalette.KPMainColor.buttonColor!,
@@ -109,6 +111,7 @@ class KPInformationViewController: UIViewController {
         
         self.commentInformationView = KPInformationSharedInfoView();
         self.commentInformationView.infoTitleLabel.text = "留言評價";
+        self.commentInformationView.infoSupplementLabel.text = "82 人已留言";
         self.scrollContainer.addSubview(self.commentInformationView);
         self.commentInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                                      "V:[$view0]-24-[$self(180)]"],

@@ -24,6 +24,7 @@ struct Action {
 class KPInformationSharedInfoView: UIView {
     
     var infoTitleLabel: UILabel!
+    var infoSupplementLabel: UILabel!
     var infoContainer: UIView!;
     var buttonContainer: UIView!;
     var actionButtons: [UIButton] = [UIButton]();
@@ -90,10 +91,16 @@ class KPInformationSharedInfoView: UIView {
         self.infoTitleLabel = UILabel.init();
         self.infoTitleLabel.font = UIFont.systemFont(ofSize: 13);
         self.infoTitleLabel.textColor = KPColorPalette.KPTextColor.mainColor;
-        self.infoTitleLabel.text = "店家資訊";
         self.addSubview(self.infoTitleLabel);
         self.infoTitleLabel.addConstraints(fromStringArray: ["V:|-8-[$self]",
                                                              "H:|-8-[$self]"]);
+        
+        self.infoSupplementLabel = UILabel.init();
+        self.infoSupplementLabel.font = UIFont.systemFont(ofSize: 13);
+        self.infoSupplementLabel.textColor = KPColorPalette.KPTextColor.grayColor_level2;
+        self.addSubview(self.infoSupplementLabel);
+        self.infoSupplementLabel.addConstraints(fromStringArray: ["V:|-8-[$self]",
+                                                                  "H:[$self]-8-|"]);
         
         self.infoContainer = UIView.init();
         self.infoContainer.backgroundColor = UIColor.white;
