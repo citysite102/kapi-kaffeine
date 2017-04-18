@@ -51,8 +51,10 @@ class KPSearchTagView: UIView {
         self.collectionLayout = UICollectionViewFlowLayout();
         self.collectionLayout.scrollDirection = .horizontal;
         self.collectionLayout.minimumLineSpacing = 4.0;
+        self.collectionLayout.minimumInteritemSpacing = 6.0;
         
-        self.collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.collectionLayout);
+        self.collectionView = UICollectionView(frame: .zero,
+                                               collectionViewLayout: self.collectionLayout);
         self.collectionView.backgroundColor = UIColor.clear;
         self.collectionView.dataSource = self;
         self.collectionView.delegate = self;
@@ -64,7 +66,7 @@ class KPSearchTagView: UIView {
                                      forCellWithReuseIdentifier: KPSearchTagView.KPSearchTagViewCellReuseIdentifier)
         
         self.addSubview(self.collectionView);
-        self.collectionView.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]|", "V:|[$self]|"],
+        self.collectionView.addConstraints(fromStringArray: ["H:[$view0]-6-[$self]|", "V:|[$self]|"],
                                            views: [self.preferenceHintView]);
         
     }

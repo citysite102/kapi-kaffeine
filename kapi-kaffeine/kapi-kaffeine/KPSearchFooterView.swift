@@ -28,7 +28,7 @@ class KPSearchFooterView: UIView {
         //Collection view
         self.collectionLayout = UICollectionViewFlowLayout();
         self.collectionLayout.scrollDirection = .horizontal;
-        self.collectionLayout.itemSize = CGSize.init(width: 56, height: 22);
+        self.collectionLayout.itemSize = CGSize.init(width: 56, height: 24);
         self.collectionLayout.minimumLineSpacing = 4.0;
         
         self.collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.collectionLayout);
