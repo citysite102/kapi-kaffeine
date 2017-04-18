@@ -10,10 +10,17 @@ import UIKit
 import GoogleMaps
 import ObjectMapper
 
-class KPMainMapViewController: UIViewController, GMSMapViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate {
+class KPMainMapViewController: UIViewController, GMSMapViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, KPMainViewControllerDelegate {
     
     weak var mainController:KPMainViewController!
     var collectionView: UICollectionView!
+    
+    var currentDataModel:KPDataModel!
+    
+    var selectedDataModel: KPDataModel {
+        return self.currentDataModel
+    }
+    
     var mapView: GMSMapView {
         get {
             return self.view as! GMSMapView
@@ -37,6 +44,7 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate, UICollectio
                     marker.icon = UIImage(named: "icon_mapMarker")
                     marker.map = (self.view as! GMSMapView)
                     marker.userData = datamodel
+                    marker.appearAnimation = .pop
                     
                     self.mapMarkers.append(marker)
                 }
@@ -96,7 +104,7 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate, UICollectio
                 print("Failed to load cafes.json file")
             }
         }
-
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -117,24 +125,34 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate, UICollectio
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.currentDataModel = self.displayDataModel[indexPath.row]
+        self.mainController.performSegue(withIdentifier: "datailedInformationSegue", sender: self)
+    }
+    
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         
-        
         let pageWidth = UIScreen.main.bounds.size.width - 60
-        let currentOffset = targetContentOffset.pointee.x//scrollView.contentOffset.x
-        
-        
+        let currentOffset = targetContentOffset.pointee.x
         let index = floor((currentOffset + (pageWidth + 15)/2)/(pageWidth + 15))
 
         self.mapView.selectedMarker = self.mapMarkers[Int(index)]
-        self.mapView.moveCamera(GMSCameraUpdate.setCamera(GMSCameraPosition.camera(withTarget: self.mapView.selectedMarker!.position , zoom: self.mapView.camera.zoom)))
-//        self.mapView.camera = GMSCameraPosition.camera(withTarget: self.mapView.selectedMarker!.position , zoom: self.mapView.camera.zoom)
+//        self.mapView.moveCamera(GMSCameraUpdate.setCamera(GMSCameraPosition.camera(withTarget: self.mapView.selectedMarker!.position , zoom: self.mapView.camera.zoom)))
+        self.mapView.animate(to: GMSCameraPosition.camera(withTarget: self.mapView.selectedMarker!.position , zoom: self.mapView.camera.zoom))
         
         targetContentOffset.pointee.x = -30 + index * (pageWidth + 15)
         scrollView.setContentOffset(CGPoint(x: -30 + index * (pageWidth + 15), y: 0), animated: true)
         
     }
     
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let centerX = self.collectionView.contentOffset.x + self.collectionView.frame.size.width/2.0
+        let pageWidth = UIScreen.main.bounds.size.width - 30;
+        for cell in self.collectionView.visibleCells {
+            let offset = fabs(centerX - (cell.frame.origin.x + cell.frame.size.width/2.0));
+            cell.alpha = (pageWidth - offset) / pageWidth * 0.7 + 0.3;
+        }
+    }
     
     
     // MARK: GMSMapViewDelegate
@@ -146,6 +164,7 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate, UICollectio
             self.collectionView.scrollToItem(at: IndexPath.init(row: selectedIndex, section: 0),
                                              at: UICollectionViewScrollPosition.centeredHorizontally,
                                              animated: true)
+            self.collectionView.delegate?.scrollViewDidScroll!(self.collectionView)
         }
         return infoWindow
     }
@@ -156,6 +175,8 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate, UICollectio
     
     func mapView(_ mapView: GMSMapView, didTapInfoWindowOf marker: GMSMarker) {
         // Tap info window
+        self.currentDataModel = marker.userData as! KPDataModel
+        self.mainController.performSegue(withIdentifier: "datailedInformationSegue", sender: self)
     }
 
 }

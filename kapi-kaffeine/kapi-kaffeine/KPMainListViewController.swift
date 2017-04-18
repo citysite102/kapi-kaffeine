@@ -10,13 +10,17 @@ import UIKit
 import AlamofireImage
 import ObjectMapper
 
-class KPMainListViewController: UIViewController {
+class KPMainListViewController: UIViewController, KPMainViewControllerDelegate {
     
     static let KPMainListViewCellReuseIdentifier = "cell";
     
     weak var mainController:KPMainViewController!
     var tableView: UITableView!
-    var selectedDataModel:KPDataModel!
+    var currentDataModel:KPDataModel!
+    
+    var selectedDataModel: KPDataModel {
+        return self.currentDataModel
+    }
     
     var displayDataModel: [KPDataModel]! {
         didSet {
@@ -99,7 +103,7 @@ extension KPMainListViewController: UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.selectedDataModel = self.displayDataModel[indexPath.row];
+        self.currentDataModel = self.displayDataModel[indexPath.row];
         self.mainController.performSegue(withIdentifier: "datailedInformationSegue", sender: self);
     }
 }

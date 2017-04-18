@@ -8,6 +8,11 @@
 
 import UIKit
 
+
+protocol KPMainViewControllerDelegate {
+    var selectedDataModel: KPDataModel { get }
+}
+
 class KPMainViewController: UIViewController {
 
     var searchHeaderView: KPSearchHeaderView!
@@ -88,7 +93,7 @@ class KPMainViewController: UIViewController {
         if segue.identifier == "datailedInformationSegue" {
             let destinationNavigationController = segue.destination as! UINavigationController
             let targetController = destinationNavigationController.topViewController as! KPInformationViewController
-            targetController.informationDataModel = self.mainListViewController.selectedDataModel;
+            targetController.informationDataModel = (sender as! KPMainViewControllerDelegate).selectedDataModel
         }
     }
 
