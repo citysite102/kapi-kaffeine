@@ -36,6 +36,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        UIApplication.shared.statusBarView?.backgroundColor = KPColorPalette.KPMainColor.statusBarColor
         UIApplication.shared.statusBarStyle = .lightContent;
         
+        let mainViewController = KPMainViewController();
+        let sideViewController = KPSideViewController();
+
+        
+        let slideMenuController = KPSliderMenuController(mainViewController: mainViewController,
+                                                      leftMenuViewController: sideViewController);
+        self.window?.rootViewController = slideMenuController;
+        self.window?.makeKeyAndVisible();
         
         return true
     }

@@ -35,7 +35,7 @@
         <scene sceneID="DHB-nT-PGi">
             <objects>
                 <navigationController id="47F-LE-5JZ" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="yDV-5W-wQF">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="yDV-5W-wQF">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

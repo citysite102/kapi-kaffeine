@@ -14,7 +14,7 @@ target 'kapi-kaffeine' do
   pod 'GooglePlaces'
 
   # UI
-  pod 'SlideMenuControllerSwift'
+  # pod 'SlideMenuControllerSwift'
 
   # Model
   pod 'ObjectMapper', '~> 2.2'

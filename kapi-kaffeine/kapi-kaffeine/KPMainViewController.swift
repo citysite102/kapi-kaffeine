@@ -55,9 +55,17 @@ class KPMainViewController: UIViewController {
         self.searchHeaderView.addConstraints(fromStringArray: ["V:|[$self(100)]",
                                                                "H:|[$self]|"])
         
+        
+        self.searchHeaderView.menuButton.addTarget(self,
+                                                   action: #selector(switchSideBar),
+                                                   for: .touchUpInside)
         self.searchHeaderView.styleButton.addTarget(self,
                                                     action: #selector(changeStyle),
                                                     for: .touchUpInside)
+    }
+    
+    func switchSideBar() {
+        self.slideMenuController()?.openLeft();
     }
     
     func changeStyle() {
@@ -71,6 +79,7 @@ class KPMainViewController: UIViewController {
                                                        for: .normal);
         }
     }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
