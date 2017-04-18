@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		4EEB682CBA070A438BA23B29 /* Pods_kapi_kaffeine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 693D5C21ACB83D68DF6CDE6C /* Pods_kapi_kaffeine.framework */; };
 		774208ED1EA5B97300C78A00 /* KPShopCommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774208EC1EA5B97300C78A00 /* KPShopCommentCell.swift */; };
+		774208F11EA5F04B00C78A00 /* KPShopPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774208F01EA5F04B00C78A00 /* KPShopPhotoCell.swift */; };
 		775989911EA5171A0029989C /* KPUIImageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775989901EA5171A0029989C /* KPUIImageHelper.swift */; };
 		776ACAF41E9BAFA200B629A2 /* KPSearchHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776ACAF31E9BAFA200B629A2 /* KPSearchHeaderView.swift */; };
 		776ACAF61E9BAFBF00B629A2 /* KPSearchTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776ACAF51E9BAFBF00B629A2 /* KPSearchTagView.swift */; };
@@ -66,6 +67,7 @@
 		605CB2E5F236FDDFFE502CB5 /* Pods-kapi-kaffeine.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kapi-kaffeine.release.xcconfig"; path = "../Pods/Target Support Files/Pods-kapi-kaffeine/Pods-kapi-kaffeine.release.xcconfig"; sourceTree = "<group>"; };
 		693D5C21ACB83D68DF6CDE6C /* Pods_kapi_kaffeine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_kapi_kaffeine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		774208EC1EA5B97300C78A00 /* KPShopCommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPShopCommentCell.swift; sourceTree = "<group>"; };
+		774208F01EA5F04B00C78A00 /* KPShopPhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPShopPhotoCell.swift; sourceTree = "<group>"; };
 		775989901EA5171A0029989C /* KPUIImageHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPUIImageHelper.swift; sourceTree = "<group>"; };
 		776ACAF31E9BAFA200B629A2 /* KPSearchHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSearchHeaderView.swift; sourceTree = "<group>"; };
 		776ACAF51E9BAFBF00B629A2 /* KPSearchTagView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSearchTagView.swift; sourceTree = "<group>"; };
@@ -154,13 +156,46 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		774208EE1EA5B97F00C78A00 /* Shop Comment Cell */ = {
+		774208EE1EA5B97F00C78A00 /* Comment */ = {
 			isa = PBXGroup;
 			children = (
 				77C0E1091E9D493400398852 /* KPShopCommentInfoView.swift */,
 				774208EC1EA5B97300C78A00 /* KPShopCommentCell.swift */,
 			);
-			name = "Shop Comment Cell";
+			name = Comment;
+			sourceTree = "<group>";
+		};
+		774208EF1EA5EFF700C78A00 /* Photo */ = {
+			isa = PBXGroup;
+			children = (
+				77C0E10B1E9D494400398852 /* KPShopPhotoInfoView.swift */,
+				774208F01EA5F04B00C78A00 /* KPShopPhotoCell.swift */,
+			);
+			name = Photo;
+			sourceTree = "<group>";
+		};
+		774208F21EA5F40E00C78A00 /* Info */ = {
+			isa = PBXGroup;
+			children = (
+				77C0E1011E9D48E000398852 /* KPShopInfoView.swift */,
+			);
+			name = Info;
+			sourceTree = "<group>";
+		};
+		774208F31EA5F41400C78A00 /* Location */ = {
+			isa = PBXGroup;
+			children = (
+				77C0E1041E9D48F500398852 /* KPShopLocationInfoView.swift */,
+			);
+			name = Location;
+			sourceTree = "<group>";
+		};
+		774208F41EA5F41E00C78A00 /* Rate */ = {
+			isa = PBXGroup;
+			children = (
+				77C0E1071E9D491D00398852 /* KPShopRateInfoView.swift */,
+			);
+			name = Rate;
 			sourceTree = "<group>";
 		};
 		776ACAED1E9BAE0200B629A2 /* View */ = {
@@ -216,7 +251,7 @@
 		77C0E0FB1E9D487800398852 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				77C0E1001E9D48BF00398852 /* Information Info View */,
+				77C0E1001E9D48BF00398852 /* Information View */,
 				77C0E0FC1E9D489900398852 /* KPInformationHeaderView.swift */,
 				778521801EA3C91C00EA59D9 /* KPInformationHeaderButton.swift */,
 				77C0E0FE1E9D48BC00398852 /* KPInformationSharedInfoView.swift */,
@@ -224,16 +259,16 @@
 			name = View;
 			sourceTree = "<group>";
 		};
-		77C0E1001E9D48BF00398852 /* Information Info View */ = {
+		77C0E1001E9D48BF00398852 /* Information View */ = {
 			isa = PBXGroup;
 			children = (
-				77C0E1011E9D48E000398852 /* KPShopInfoView.swift */,
-				77C0E1041E9D48F500398852 /* KPShopLocationInfoView.swift */,
-				77C0E1071E9D491D00398852 /* KPShopRateInfoView.swift */,
-				774208EE1EA5B97F00C78A00 /* Shop Comment Cell */,
-				77C0E10B1E9D494400398852 /* KPShopPhotoInfoView.swift */,
+				774208F41EA5F41E00C78A00 /* Rate */,
+				774208F31EA5F41400C78A00 /* Location */,
+				774208F21EA5F40E00C78A00 /* Info */,
+				774208EE1EA5B97F00C78A00 /* Comment */,
+				774208EF1EA5EFF700C78A00 /* Photo */,
 			);
-			name = "Information Info View";
+			name = "Information View";
 			sourceTree = "<group>";
 		};
 		77FB63941E9AA75900FFC3DC /* Model */ = {
@@ -537,6 +572,7 @@
 				77C0E1021E9D48E000398852 /* KPShopInfoView.swift in Sources */,
 				77C0E1051E9D48F500398852 /* KPShopLocationInfoView.swift in Sources */,
 				776ACAF41E9BAFA200B629A2 /* KPSearchHeaderView.swift in Sources */,
+				774208F11EA5F04B00C78A00 /* KPShopPhotoCell.swift in Sources */,
 				C0B49D971EA13BC100BA95D8 /* KPMainMapViewCollectionCell.swift in Sources */,
 				776ACB061E9BE33A00B629A2 /* KPMainListTableViewCell.swift in Sources */,
 				776ACAFC1E9BB02D00B629A2 /* KPMainMapViewController.swift in Sources */,

@@ -111,7 +111,8 @@ extension KPSearchTagView: UICollectionViewDelegate, UICollectionViewDataSource,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         let contentSize = NSString.init(string: self.demoHeaderTagContents[indexPath.row]).boundingRect(with: CGSize.init(width: DBL_MAX, height: 32),
-                                                                                                        options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 13)], context: nil).size;
+                                                                                                        options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 13)],
+                                                                                                        context: nil).size;
         
         return CGSize.init(width: contentSize.width + 42, height: 32);
     }
