@@ -37,7 +37,6 @@ class KPLocationManager: NSObject, CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         self.currentLocation = locations.last;
-        print(self.currentLocation!)
     }
     
 }

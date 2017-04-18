@@ -10,7 +10,7 @@ import UIKit
 
 
 protocol KPMainViewControllerDelegate {
-    var selectedDataModel: KPDataModel { get }
+    var selectedDataModel: KPDataModel? { get }
 }
 
 class KPMainViewController: UIViewController {
