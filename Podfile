@@ -13,6 +13,8 @@ target 'kapi-kaffeine' do
   pod 'GoogleMaps'
   pod 'GooglePlaces'
 
+  # UI
+  pod 'SlideMenuControllerSwift'
 
   # Model
   pod 'ObjectMapper', '~> 2.2'
