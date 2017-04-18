@@ -77,6 +77,12 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate, UICollectio
 
         // Do any additional setup after loading the view.
         
+        self.mapView.isMyLocationEnabled = true
+        if let location = KPLocationManager.sharedInstance().currentLocation?.coordinate {
+            self.mapView.camera = GMSCameraPosition.camera(withTarget: location,
+                                                           zoom: self.mapView.camera.zoom)
+        }
+        
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.itemSize = CGSize(width: UIScreen.main.bounds.size.width - 60, height: 80)
         flowLayout.scrollDirection = .horizontal
@@ -138,7 +144,10 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate, UICollectio
 
         self.mapView.selectedMarker = self.mapMarkers[Int(index)]
 //        self.mapView.moveCamera(GMSCameraUpdate.setCamera(GMSCameraPosition.camera(withTarget: self.mapView.selectedMarker!.position , zoom: self.mapView.camera.zoom)))
+        CATransaction.begin()
+        CATransaction.setValue(NSNumber(floatLiteral: 3.0), forKey: kCATransactionAnimationDuration)
         self.mapView.animate(to: GMSCameraPosition.camera(withTarget: self.mapView.selectedMarker!.position , zoom: self.mapView.camera.zoom))
+        CATransaction.commit()
         
         targetContentOffset.pointee.x = -30 + index * (pageWidth + 15)
         scrollView.setContentOffset(CGPoint(x: -30 + index * (pageWidth + 15), y: 0), animated: true)

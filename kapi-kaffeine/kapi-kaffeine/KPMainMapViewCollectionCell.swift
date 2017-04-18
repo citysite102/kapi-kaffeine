@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 class KPMainMapViewCollectionCell: UICollectionViewCell {
     
@@ -14,6 +15,18 @@ class KPMainMapViewCollectionCell: UICollectionViewCell {
     var dataModel: KPDataModel! {
         didSet {
             self.shopNameLabel.text = dataModel.name
+            if let latstr = self.dataModel.latitude, let latitude = Double(latstr),
+                let longstr = self.dataModel.longitude, let longitude = Double(longstr), let currentLocation = KPLocationManager.sharedInstance().currentLocation {
+                var distance = CLLocation(latitude: latitude, longitude: longitude).distance(from: currentLocation)
+                var unit = "m"
+                if distance > 1000 {
+                    unit = "km"
+                    distance = distance/1000
+                }
+                self.shopDistanceLabel.text = "\(Int(distance))\(unit)"
+            } else {
+                self.shopDistanceLabel.text = "-"
+            }
         }
     }
     
@@ -92,7 +105,7 @@ class KPMainMapViewCollectionCell: UICollectionViewCell {
         self.shopDistanceLabel = KPMainListCellNormalLabel();
         self.shopDistanceLabel.font = UIFont.systemFont(ofSize: 20.0);
         self.shopDistanceLabel.textColor = KPColorPalette.KPTextColor.mainColor;
-        self.shopDistanceLabel.text = "600m";
+        self.shopDistanceLabel.text = "-";
         self.shopDistanceLabel.layoutMargins = UIEdgeInsetsMake(0, 0, 0, 0);
         self.addSubview(self.shopDistanceLabel);
         self.shopDistanceLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]",

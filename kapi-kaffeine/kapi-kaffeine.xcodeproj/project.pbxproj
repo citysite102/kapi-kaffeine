@@ -41,6 +41,7 @@
 		C02AFE4F1E7D260D008FFB33 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C02AFE4D1E7D260D008FFB33 /* LaunchScreen.storyboard */; };
 		C02AFE5A1E7D260D008FFB33 /* kapi_kaffeineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02AFE591E7D260D008FFB33 /* kapi_kaffeineTests.swift */; };
 		C02AFE651E7D260D008FFB33 /* kapi_kaffeineUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02AFE641E7D260D008FFB33 /* kapi_kaffeineUITests.swift */; };
+		C031E9071EA5F0BF00E87FB1 /* KPLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C031E9061EA5F0BF00E87FB1 /* KPLocationManager.swift */; };
 		C0409E1F1E954F1A00C302FF /* cafes.json in Resources */ = {isa = PBXBuildFile; fileRef = C0409E1E1E954F1A00C302FF /* cafes.json */; };
 		C0B49D971EA13BC100BA95D8 /* KPMainMapViewCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B49D961EA13BC100BA95D8 /* KPMainMapViewCollectionCell.swift */; };
 /* End PBXBuildFile section */
@@ -105,6 +106,7 @@
 		C02AFE601E7D260D008FFB33 /* kapi-kaffeineUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "kapi-kaffeineUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C02AFE641E7D260D008FFB33 /* kapi_kaffeineUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = kapi_kaffeineUITests.swift; sourceTree = "<group>"; };
 		C02AFE661E7D260D008FFB33 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C031E9061EA5F0BF00E87FB1 /* KPLocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPLocationManager.swift; sourceTree = "<group>"; };
 		C0409E1E1E954F1A00C302FF /* cafes.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cafes.json; sourceTree = "<group>"; };
 		C0B49D961EA13BC100BA95D8 /* KPMainMapViewCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPMainMapViewCollectionCell.swift; sourceTree = "<group>"; };
 		CA73E4544076455C6DC0C065 /* Pods-kapi-kaffeine.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kapi-kaffeine.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-kapi-kaffeine/Pods-kapi-kaffeine.debug.xcconfig"; sourceTree = "<group>"; };
@@ -226,6 +228,7 @@
 				776ACAFE1E9BB1DE00B629A2 /* KPConstant.swift */,
 				775989901EA5171A0029989C /* KPUIImageHelper.swift */,
 				77FB63941E9AA75900FFC3DC /* Model */,
+				C031E9061EA5F0BF00E87FB1 /* KPLocationManager.swift */,
 			);
 			name = "Shared Class";
 			sourceTree = "<group>";
@@ -562,6 +565,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				776ACAF61E9BAFBF00B629A2 /* KPSearchTagView.swift in Sources */,
+				C031E9071EA5F0BF00E87FB1 /* KPLocationManager.swift in Sources */,
 				776ACAFA1E9BB01B00B629A2 /* KPMainListViewController.swift in Sources */,
 				776ACB0B1E9C783E00B629A2 /* KPInformationViewController.swift in Sources */,
 				77C0E0FA1E9D3D7500398852 /* KPSearchFooterCell.swift in Sources */,

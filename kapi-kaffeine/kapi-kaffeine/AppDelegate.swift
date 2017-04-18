@@ -21,6 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GMSServices.provideAPIKey("AIzaSyCZiprr4NXdrs4ChdmQ8nNVrAPZJWoy3TQ")
         GMSPlacesClient.provideAPIKey("AIzaSyCZiprr4NXdrs4ChdmQ8nNVrAPZJWoy3TQ")
         
+        KPLocationManager.sharedInstance().hello()
+        
         
         // Navigation Custom Settings
         let navigationBarAppearace = UINavigationBar.appearance()
@@ -33,6 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Custom UI
 //        UIApplication.shared.statusBarView?.backgroundColor = KPColorPalette.KPMainColor.statusBarColor
         UIApplication.shared.statusBarStyle = .lightContent;
+        
         
         return true
     }

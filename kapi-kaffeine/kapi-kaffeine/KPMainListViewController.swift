@@ -67,7 +67,7 @@ extension KPMainListViewController: UITableViewDelegate, UITableViewDataSource {
                                                  for: indexPath) as! KPMainListTableViewCell;
         
         cell.selectionStyle = .none;
-        cell.shopNameLabel.text = self.displayDataModel[indexPath.row].name;
+        cell.dataModel = self.displayDataModel[indexPath.row]
         cell.shopStatusContent = (self.displayDataModel[indexPath.row].openTime! as String).replacingOccurrences(of: "~", with: "-");
         cell.scoreLabel.score = "\(self.displayDataModel[indexPath.row].score!.format(f: ".1"))";
         

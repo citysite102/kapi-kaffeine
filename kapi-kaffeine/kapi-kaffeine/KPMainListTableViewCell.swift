@@ -7,10 +7,27 @@
 //
 
 import UIKit
+import CoreLocation
 
 class KPMainListTableViewCell: UITableViewCell {
 
-    var dataModel: KPDataModel?
+    var dataModel: KPDataModel! {
+        didSet {
+            self.shopNameLabel.text = dataModel.name
+            if let latstr = dataModel.latitude, let latitude = Double(latstr),
+                let longstr = dataModel.longitude, let longitude = Double(longstr), let currentLocation = KPLocationManager.sharedInstance().currentLocation {
+                var distance = CLLocation(latitude: latitude, longitude: longitude).distance(from: currentLocation)
+                var unit = "m"
+                if distance > 1000 {
+                    unit = "km"
+                    distance = distance/1000
+                }
+                self.shopDistanceLabel.text = "\(Int(distance))\(unit)"
+            } else {
+                self.shopDistanceLabel.text = "-"
+            }
+        }
+    }
     var shopOpened: Bool = true {
         didSet {
             self.shopStatusHint.backgroundColor = shopOpened ?
