@@ -35,10 +35,11 @@ class KPInformationViewController: UIViewController {
         self.dismissButton.addTarget(self,
                                      action: #selector(KPInformationViewController.handleDismissButtonOnTapped),
                                      for: .touchUpInside);
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: self.dismissButton);
         self.navigationController?.navigationBar.addSubview(self.dismissButton);
-        self.dismissButton.addConstraints(fromStringArray: ["H:|-16-[$self(24)]",
+        self.dismissButton.addConstraints(fromStringArray: ["H:[$self(24)]",
                                                             "V:[$self(24)]"]);
-        self.dismissButton.contentEdgeInsets = UIEdgeInsetsMake(5, 5, 5, 5);
+        self.dismissButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4);
         self.dismissButton.addConstraintForCenterAligningToSuperview(in: .vertical);
         
         self.scrollContainer = UIScrollView();
