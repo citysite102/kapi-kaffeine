@@ -109,13 +109,31 @@ class KPInformationViewController: UIViewController {
                                                                   "V:[$view0]-24-[$self]"],
                                                 views: [self.locationInformationView]);
         
+        
+        let commentInfoView = KPShopCommentInfoView();
         self.commentInformationView = KPInformationSharedInfoView();
+        self.commentInformationView.infoView = commentInfoView;
         self.commentInformationView.infoTitleLabel.text = "留言評價";
         self.commentInformationView.infoSupplementLabel.text = "82 人已留言";
         self.scrollContainer.addSubview(self.commentInformationView);
         self.commentInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                                     "V:[$view0]-24-[$self(180)]"],
+                                                                     "V:[$view0]-24-[$self]"],
                                                     views: [self.rateInformationView]);
+        self.commentInformationView.actions = [Action(title:"看更多評價(20)",
+                                                      style:.normal,
+                                                      color:KPColorPalette.KPMainColor.buttonColor!,
+                                                      icon:(UIImage.init(named: "icon_map")?.withRenderingMode(.alwaysTemplate))!,
+                                                      handler:{(infoView) -> () in
+                                                        print("Comment button 1 Tapped");
+        }),
+                                                Action(title:"我要留言",
+                                                       style:.normal,
+                                                       color:KPColorPalette.KPMainColor.buttonColor!,
+                                                       icon:(UIImage.init(named: "icon_map")?.withRenderingMode(.alwaysTemplate))!,
+                                                       handler:{(infoView) -> () in
+                                                        print("Comment button 2 Tapped");
+                                                })
+        ]
         
         self.photoInformationView = KPInformationSharedInfoView();
         self.photoInformationView.infoTitleLabel.text = "店家照片";
