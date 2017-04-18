@@ -47,6 +47,11 @@ class KPInformationSharedInfoView: UIView {
             
             self.actionButtons.removeAll();
             
+            let separator = UIView();
+            separator.backgroundColor = KPColorPalette.KPMainColor.grayColor_level6;
+            self.buttonContainer.addSubview(separator);
+            separator.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self(1)]"]);
+            
             for (index, action) in (actions?.enumerated())! {
                 let actionButton = UIButton.init(type: .custom);
                 actionButton.setTitle(action.title, for: .normal);

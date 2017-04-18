@@ -19,6 +19,8 @@ class KPShopPhotoCell: UICollectionViewCell {
         self.alpha = 0.4;
         
         self.shopPhoto = UIImageView();
+        self.shopPhoto.layer.cornerRadius = 2.0;
+        self.shopPhoto.layer.masksToBounds = true;
         self.shopPhoto.image = UIImage.init(named: "image_shop_demo");
         self.shopPhoto.contentMode = .scaleToFill;
         self.addSubview(self.shopPhoto);

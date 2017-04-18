@@ -84,7 +84,7 @@ class KPInformationViewController: UIViewController {
                                                  handler:{(infoView) -> () in
                                                     print("Location button 2 Tapped");
                                                 })
-        ]
+        ];
         
         self.locationInformationView.infoView = shopLocationInfoView;
         self.scrollContainer.addSubview(self.locationInformationView);
@@ -103,7 +103,7 @@ class KPInformationViewController: UIViewController {
                                                    icon:(UIImage.init(named: "icon_map")?.withRenderingMode(.alwaysTemplate))!,
                                                    handler:{(infoView) -> () in
                                                     print("Location button 1 Tapped");
-        })]
+        })];
         self.scrollContainer.addSubview(self.rateInformationView);
         self.rateInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                                   "V:[$view0]-24-[$self]"],
@@ -133,7 +133,7 @@ class KPInformationViewController: UIViewController {
                                                        handler:{(infoView) -> () in
                                                         print("Comment button 2 Tapped");
                                                 })
-        ]
+        ];
         
         
         let photoInfoView = KPShopPhotoInfoView();
@@ -144,12 +144,24 @@ class KPInformationViewController: UIViewController {
         self.photoInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                                    "V:[$view0]-24-[$self]"],
                                                     views: [self.commentInformationView]);
+        self.photoInformationView.actions = [Action(title:"上傳照片",
+                                                   style:.normal,
+                                                   color:KPColorPalette.KPMainColor.buttonColor!,
+                                                   icon:(UIImage.init(named: "icon_map")?.withRenderingMode(.alwaysTemplate))!,
+                                                   handler:{(infoView) -> () in
+                                                    print("Photo button 1 Tapped");
+        })]
         
+        let shopRecommendView = KPShopRecommendView();
+        shopRecommendView.displayDataModel = [self.informationDataModel,
+                                              self.informationDataModel,
+                                              self.informationDataModel];
         self.recommendInformationView = KPInformationSharedInfoView();
+        self.recommendInformationView.infoView = shopRecommendView;
         self.recommendInformationView.infoTitleLabel.text = "你可能也會喜歡";
         self.scrollContainer.addSubview(self.recommendInformationView);
         self.recommendInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                                       "V:[$view0]-24-[$self(240)]-32-|"],
+                                                                       "V:[$view0]-24-[$self]-32-|"],
                                                      views: [self.photoInformationView]);
         
         

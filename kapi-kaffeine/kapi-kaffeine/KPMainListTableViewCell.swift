@@ -57,7 +57,7 @@ class KPMainListTableViewCell: UITableViewCell {
         
         self.shopImageView = UIImageView(image: UIImage(named: "image_shop_demo"));
         self.shopImageView.contentMode = .scaleAspectFit;
-        self.addSubview(self.shopImageView);
+        self.contentView.addSubview(self.shopImageView);
         self.shopImageView.addConstraints(fromStringArray: ["H:|-8-[$self(56)]",
                                                             "V:|-12-[$self(56)]-12-|"]);
         
@@ -65,7 +65,7 @@ class KPMainListTableViewCell: UITableViewCell {
         self.shopNameLabel.font = UIFont.systemFont(ofSize: 14.0);
         self.shopNameLabel.textColor = KPColorPalette.KPTextColor.grayColor;
         self.shopNameLabel.text = "覺旅咖啡";
-        self.addSubview(self.shopNameLabel);
+        self.contentView.addSubview(self.shopNameLabel);
 
         self.shopNameLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self($metric0)]",
                                                             "V:|-12-[$self]"],
@@ -75,7 +75,7 @@ class KPMainListTableViewCell: UITableViewCell {
         self.shopStatusHint = UIView();
         self.shopStatusHint.backgroundColor = KPColorPalette.KPShopStatusColor.opened;
         self.shopStatusHint.layer.cornerRadius = 3.0;
-        self.addSubview(self.shopStatusHint);
+        self.contentView.addSubview(self.shopStatusHint);
         self.shopStatusHint.addConstraints(fromStringArray: ["H:[$view0]-9-[$self(6)]",
                                                              "V:[$view1]-7-[$self(6)]"],
                                           views: [self.shopImageView,
@@ -85,7 +85,7 @@ class KPMainListTableViewCell: UITableViewCell {
         self.shopStatusLabel.font = UIFont.systemFont(ofSize: 12.0);
         self.shopStatusLabel.textColor = KPColorPalette.KPTextColor.grayColor;
         self.shopStatusLabel.text = "營業中 12:00-21:00";
-        self.addSubview(self.shopStatusLabel);
+        self.contentView.addSubview(self.shopStatusLabel);
         self.shopStatusLabel.addConstraints(fromStringArray: ["H:[$view0]-5-[$self($metric0)]"],
                                             metrics: [UIScreen.main.bounds.size.width/2],
                                             views: [self.shopStatusHint,
@@ -97,7 +97,7 @@ class KPMainListTableViewCell: UITableViewCell {
         self.shopDistanceLabel.textColor = KPColorPalette.KPTextColor.mainColor;
         self.shopDistanceLabel.text = "600m";
         self.shopDistanceLabel.layoutMargins = UIEdgeInsetsMake(0, 0, 0, 0);
-        self.addSubview(self.shopDistanceLabel);
+        self.contentView.addSubview(self.shopDistanceLabel);
         self.shopDistanceLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]",
                                                                 "V:[$self]-10-|"],
                                               views: [self.shopImageView,
@@ -105,13 +105,13 @@ class KPMainListTableViewCell: UITableViewCell {
         
         self.scoreLabel = KPMainListCellScoreLabel();
         self.scoreLabel.score = "4.3";
-        self.addSubview(self.scoreLabel);
+        self.contentView.addSubview(self.scoreLabel);
         self.scoreLabel.addConstraints(fromStringArray: ["H:[$self(30)]-8-|",
                                                          "V:|-12-[$self(22)]"]);
         
         self.featureContainer = KPMainListCellFeatureContainer();
         self.featureContainer.featureContents = ["燈光美", "氣氛佳"];
-        self.addSubview(self.featureContainer);
+        self.contentView.addSubview(self.featureContainer);
         self.featureContainer.addConstraints(fromStringArray: ["H:[$self]-8-|",
                                                                "V:[$self]-12-|"]);
     }

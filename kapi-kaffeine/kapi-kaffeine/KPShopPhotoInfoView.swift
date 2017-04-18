@@ -37,7 +37,7 @@ class KPShopPhotoInfoView: UIView {
                                      forCellWithReuseIdentifier: KPShopPhotoInfoView.KPShopPhotoInfoViewCellReuseIdentifier)
         
         self.addSubview(self.collectionView);
-        self.collectionView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"]);
+        self.collectionView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self(112)]|"]);
     }
     
     required init?(coder aDecoder: NSCoder) {
