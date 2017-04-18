@@ -23,7 +23,8 @@ class KPShopPhotoInfoView: UIView {
         self.collectionLayout = UICollectionViewFlowLayout();
         self.collectionLayout.scrollDirection = .horizontal;
         self.collectionLayout.sectionInset = UIEdgeInsetsMake(8, 8, 8, 8);
-        self.collectionLayout.minimumLineSpacing = 4.0;
+        self.collectionLayout.minimumLineSpacing = 8.0;
+        self.collectionLayout.itemSize = CGSize.init(width: 96, height: 96);
         
         self.collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.collectionLayout);
         self.collectionView.backgroundColor = UIColor.clear;
@@ -37,7 +38,6 @@ class KPShopPhotoInfoView: UIView {
         
         self.addSubview(self.collectionView);
         self.collectionView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"]);
-        
     }
     
     required init?(coder aDecoder: NSCoder) {

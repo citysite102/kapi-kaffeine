@@ -98,7 +98,7 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate, UICollectio
                                      forCellWithReuseIdentifier: "cell")
         
         self.view.addSubview(self.collectionView)
-        self.collectionView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$self(140)]-20-|"])
+        self.collectionView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$self(120)]|"])
         
 
         

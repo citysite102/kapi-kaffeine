@@ -135,11 +135,14 @@ class KPInformationViewController: UIViewController {
                                                 })
         ]
         
+        
+        let photoInfoView = KPShopPhotoInfoView();
         self.photoInformationView = KPInformationSharedInfoView();
+        self.photoInformationView.infoView = photoInfoView;
         self.photoInformationView.infoTitleLabel.text = "店家照片";
         self.scrollContainer.addSubview(self.photoInformationView);
         self.photoInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                                   "V:[$view0]-24-[$self(170)]"],
+                                                                   "V:[$view0]-24-[$self]"],
                                                     views: [self.commentInformationView]);
         
         self.recommendInformationView = KPInformationSharedInfoView();

@@ -15,6 +15,7 @@ class KPMainListViewController: UIViewController, KPMainViewControllerDelegate {
     static let KPMainListViewCellReuseIdentifier = "cell";
     
     weak var mainController:KPMainViewController!
+    var searchFooterView: KPSearchFooterView!
     var tableView: UITableView!
     var currentDataModel:KPDataModel!
     
@@ -35,10 +36,18 @@ class KPMainListViewController: UIViewController, KPMainViewControllerDelegate {
         self.tableView.delegate = self;
         self.tableView.dataSource = self;
         self.view.addSubview(self.tableView);
-        self.tableView.addConstraints(fromStringArray: ["V:|-100-[$self]|",
+        self.tableView.addConstraints(fromStringArray: ["V:|-100-[$self]",
                                                         "H:|[$self]|"]);
         self.tableView.register(KPMainListTableViewCell.self,
                                 forCellReuseIdentifier: KPMainListViewController.KPMainListViewCellReuseIdentifier);
+        
+        self.searchFooterView = KPSearchFooterView();
+        self.searchFooterView.layer.shadowColor = UIColor.black.cgColor;
+        self.searchFooterView.layer.shadowOpacity = 0.15;
+        self.searchFooterView.layer.shadowOffset = CGSize.init(width: 0.0, height: -1.0);
+        self.view.addSubview(searchFooterView);
+        self.searchFooterView.addConstraints(fromStringArray: ["V:[$view0][$self(40)]|", "H:|[$self]|"],
+                                             views:[self.tableView]);
         
         if let dataURL = Bundle.main.url(forResource: "cafes",
                                          withExtension: "json") {

@@ -16,7 +16,6 @@ protocol KPMainViewControllerDelegate {
 class KPMainViewController: UIViewController {
 
     var searchHeaderView: KPSearchHeaderView!
-    var searchFooterView: KPSearchFooterView!
     
     var currentController: UIViewController! {
         didSet {
@@ -32,9 +31,8 @@ class KPMainViewController: UIViewController {
             currentController.didMove(toParentViewController: self);
             currentController.view.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"]);
             
-            if (self.searchFooterView != nil && self.searchHeaderView != nil) {
+            if (self.searchHeaderView != nil) {
                 self.view.bringSubview(toFront: self.searchHeaderView)
-                self.view.bringSubview(toFront: self.searchFooterView)
             }
         }
     }
@@ -60,14 +58,6 @@ class KPMainViewController: UIViewController {
         self.searchHeaderView.styleButton.addTarget(self,
                                                     action: #selector(changeStyle),
                                                     for: .touchUpInside)
-        
-        self.searchFooterView = KPSearchFooterView();
-        self.searchFooterView.layer.shadowColor = UIColor.black.cgColor;
-        self.searchFooterView.layer.shadowOpacity = 0.15;
-        self.searchFooterView.layer.shadowOffset = CGSize.init(width: 0.0, height: -1.0);
-        self.view.addSubview(searchFooterView);
-        self.searchFooterView.addConstraints(fromStringArray: ["V:[$self(40)]|", "H:|[$self]|"])
-        
     }
     
     func changeStyle() {
