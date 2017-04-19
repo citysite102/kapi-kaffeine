@@ -18,6 +18,7 @@ class KPMainViewController: UIViewController {
 
     var searchHeaderView: KPSearchHeaderView!
     var sideBarController: KPSideViewController!
+    var opacityView: UIView!
     
     var currentController: UIViewController! {
         didSet {
@@ -35,6 +36,7 @@ class KPMainViewController: UIViewController {
             
             if (self.searchHeaderView != nil) {
                 self.view.bringSubview(toFront: self.searchHeaderView)
+                self.view.bringSubview(toFront: self.opacityView)
             }
         }
     }
@@ -48,6 +50,7 @@ class KPMainViewController: UIViewController {
         self.mainListViewController = KPMainListViewController();
         self.mainMapViewController = KPMainMapViewController();
         self.sideBarController = KPSideViewController();
+        self.sideBarController.mainController = self;
         self.mainListViewController.mainController = self;
         self.mainMapViewController.mainController = self;
         
@@ -57,6 +60,14 @@ class KPMainViewController: UIViewController {
         self.view.addSubview(searchHeaderView);
         self.searchHeaderView.addConstraints(fromStringArray: ["V:|[$self(100)]",
                                                                "H:|[$self]|"])
+        
+        self.opacityView = UIView();
+        self.opacityView.backgroundColor = UIColor.black;
+        self.opacityView.alpha = 0.5;
+        self.opacityView.isHidden = true;
+        self.view.addSubview(self.opacityView);
+        self.opacityView.addConstraints(fromStringArray: ["V:|[$self]|",
+                                                          "H:|[$self]|"]);
         
         
         self.searchHeaderView.menuButton.addTarget(self,
@@ -76,6 +87,7 @@ class KPMainViewController: UIViewController {
         SideMenuManager.menuFadeStatusBar = false;
         SideMenuManager.menuAnimationTransformScaleFactor = 0.96;
         SideMenuManager.menuAnimationBackgroundColor = UIColor.black;
+        SideMenuManager.menuWidth = 260;
         
         
     }
@@ -86,6 +98,7 @@ class KPMainViewController: UIViewController {
                 window.windowLevel = UIWindowLevelStatusBar + 1
             }
         })
+        self.opacityView.isHidden = false;
         present(SideMenuManager.menuLeftNavigationController!, animated: true, completion: nil)
     }
     

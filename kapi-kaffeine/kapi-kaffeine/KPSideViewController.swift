@@ -10,11 +10,18 @@ import UIKit
 
 class KPSideViewController: UIViewController {
 
+    weak var mainController: KPMainViewController!
+    var userContainer: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white;
         self.navigationController?.setNavigationBarHidden(true, animated: false);
-        // Do any additional setup after loading the view.
+        
+        self.userContainer = UIView();
+        self.userContainer.backgroundColor = KPColorPalette.KPMainColor.buttonColor;
+        self.view.addSubview(self.userContainer);
+        self.userContainer.addConstraints(fromStringArray: ["V:|[$self(140)]", "H:|[$self]|"]);
     }
 
     override func didReceiveMemoryWarning() {
@@ -29,6 +36,7 @@ class KPSideViewController: UIViewController {
                 window.windowLevel = UIWindowLevelStatusBar - 1;
             }
         })
+        self.mainController.opacityView.isHidden = true;
     }
     
 
