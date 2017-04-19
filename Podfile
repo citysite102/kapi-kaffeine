@@ -15,6 +15,8 @@ target 'kapi-kaffeine' do
 
   # UI
   # pod 'SlideMenuControllerSwift'
+  pod 'SideMenu'
+
 
   # Model
   pod 'ObjectMapper', '~> 2.2'

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SideMenu
 
 
 protocol KPMainViewControllerDelegate {
@@ -16,6 +17,7 @@ protocol KPMainViewControllerDelegate {
 class KPMainViewController: UIViewController {
 
     var searchHeaderView: KPSearchHeaderView!
+    var sideBarController: KPSideViewController!
     
     var currentController: UIViewController! {
         didSet {
@@ -45,6 +47,7 @@ class KPMainViewController: UIViewController {
         
         self.mainListViewController = KPMainListViewController();
         self.mainMapViewController = KPMainMapViewController();
+        self.sideBarController = KPSideViewController();
         self.mainListViewController.mainController = self;
         self.mainMapViewController.mainController = self;
         
@@ -62,10 +65,28 @@ class KPMainViewController: UIViewController {
         self.searchHeaderView.styleButton.addTarget(self,
                                                     action: #selector(changeStyle),
                                                     for: .touchUpInside)
+        
+        
+        
+        let menuLeftNavigationController = UISideMenuNavigationController(rootViewController: sideBarController);
+        menuLeftNavigationController.leftSide = true;
+        
+        SideMenuManager.menuLeftNavigationController = menuLeftNavigationController
+        SideMenuManager.menuPresentMode = .menuSlideIn;
+        SideMenuManager.menuFadeStatusBar = false;
+        SideMenuManager.menuAnimationTransformScaleFactor = 0.96;
+        SideMenuManager.menuAnimationBackgroundColor = UIColor.black;
+        
+        
     }
     
     func switchSideBar() {
-        self.slideMenuController()?.openLeft();
+        DispatchQueue.main.async(execute: {
+            if let window = UIApplication.shared.keyWindow {
+                window.windowLevel = UIWindowLevelStatusBar + 1
+            }
+        })
+        present(SideMenuManager.menuLeftNavigationController!, animated: true, completion: nil)
     }
     
     func changeStyle() {
@@ -79,7 +100,6 @@ class KPMainViewController: UIViewController {
                                                        for: .normal);
         }
     }
-    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
