@@ -40,6 +40,7 @@ class KPMainListViewController: UIViewController, KPMainViewControllerDelegate {
                                                         "H:|[$self]|"]);
         self.tableView.register(KPMainListTableViewCell.self,
                                 forCellReuseIdentifier: KPMainListViewController.KPMainListViewCellReuseIdentifier);
+        self.tableView.allowsSelection = true;
         
         self.searchFooterView = KPSearchFooterView();
         self.searchFooterView.layer.shadowColor = UIColor.black.cgColor;
@@ -102,8 +103,8 @@ extension KPMainListViewController: UITableViewDelegate, UITableViewDataSource {
         return 1;
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80;
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80.0;
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

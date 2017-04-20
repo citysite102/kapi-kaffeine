@@ -19,6 +19,7 @@ class KPMainViewController: UIViewController {
     var searchHeaderView: KPSearchHeaderView!
     var sideBarController: KPSideViewController!
     var opacityView: UIView!
+    var percentDrivenTransition: UIPercentDrivenInteractiveTransition!;
     
     var currentController: UIViewController! {
         didSet {
@@ -88,8 +89,14 @@ class KPMainViewController: UIViewController {
         SideMenuManager.menuAnimationTransformScaleFactor = 0.96;
         SideMenuManager.menuAnimationBackgroundColor = UIColor.black;
         SideMenuManager.menuWidth = 260;
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated);
         
-        
+        if let indexPath = self.mainListViewController.tableView.indexPathForSelectedRow {
+            self.mainListViewController.tableView.deselectRow(at: indexPath, animated: false);
+        }
     }
     
     func switchSideBar() {
@@ -114,6 +121,34 @@ class KPMainViewController: UIViewController {
         }
     }
 
+    func addScreenEdgePanGestureRecognizer(view: UIView, edges: UIRectEdge) {
+        let edgePanGesture = UIScreenEdgePanGestureRecognizer(target: self,
+                                                              action: #selector(edgePanGesture(edgePanGesture:)))
+        edgePanGesture.edges = edges;
+        view.addGestureRecognizer(edgePanGesture)
+    }
+    
+    func edgePanGesture(edgePanGesture: UIScreenEdgePanGestureRecognizer) {
+        
+        let progress = edgePanGesture.translation(in: self.view).x / self.view.bounds.width;
+        if edgePanGesture.state == UIGestureRecognizerState.began {
+            self.percentDrivenTransition = UIPercentDrivenInteractiveTransition();
+                            if edgePanGesture.edges == UIRectEdge.left {
+                self.dismiss(animated: true, completion: nil);
+            }
+        } else if edgePanGesture.state == UIGestureRecognizerState.changed {
+            self.percentDrivenTransition.update(progress/4);
+        } else if edgePanGesture.state == UIGestureRecognizerState.cancelled || edgePanGesture.state == UIGestureRecognizerState.ended {
+            if progress > 0.5 {
+                self.percentDrivenTransition.finish();
+            } else {
+                self.percentDrivenTransition.cancel();
+            }
+            self.percentDrivenTransition = nil;
+        }
+    }
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -123,10 +158,29 @@ class KPMainViewController: UIViewController {
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "datailedInformationSegue" {
+            let toViewController = segue.destination as UIViewController
+            toViewController.transitioningDelegate = self
             let destinationNavigationController = segue.destination as! UINavigationController
             let targetController = destinationNavigationController.topViewController as! KPInformationViewController
             targetController.informationDataModel = (sender as! KPMainViewControllerDelegate).selectedDataModel
+            
+            self.addScreenEdgePanGestureRecognizer(view: toViewController.view, edges: .left);
         }
     }
+}
 
+extension KPMainViewController: UIViewControllerTransitioningDelegate {
+
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return KPInformationTranstion();
+    }
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return KPInformationDismissTransition();
+    }
+    
+    func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) ->
+        UIViewControllerInteractiveTransitioning? {
+            return self.percentDrivenTransition;
+    }
 }

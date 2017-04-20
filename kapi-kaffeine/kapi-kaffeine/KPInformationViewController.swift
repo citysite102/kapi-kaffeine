@@ -22,7 +22,7 @@ class KPInformationViewController: UIViewController {
     var commentInformationView: KPInformationSharedInfoView!;
     var photoInformationView: KPInformationSharedInfoView!;
     var recommendInformationView: KPInformationSharedInfoView!;
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white;
@@ -35,9 +35,9 @@ class KPInformationViewController: UIViewController {
         self.dismissButton.addTarget(self,
                                      action: #selector(KPInformationViewController.handleDismissButtonOnTapped),
                                      for: .touchUpInside);
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: self.dismissButton);
+
         self.navigationController?.navigationBar.addSubview(self.dismissButton);
-        self.dismissButton.addConstraints(fromStringArray: ["H:[$self(24)]",
+        self.dismissButton.addConstraints(fromStringArray: ["H:|-8-[$self(24)]",
                                                             "V:[$self(24)]"]);
         self.dismissButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4);
         self.dismissButton.addConstraintForCenterAligningToSuperview(in: .vertical);
@@ -167,7 +167,7 @@ class KPInformationViewController: UIViewController {
         
         
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -186,5 +186,4 @@ extension KPInformationViewController: UIScrollViewDelegate {
         self.scrollContainer.contentOffset = CGPoint.init(x: 0,
                                                           y: self.scrollContainer.contentOffset.y);
     };
-    
 }

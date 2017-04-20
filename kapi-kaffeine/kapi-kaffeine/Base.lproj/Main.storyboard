@@ -34,7 +34,7 @@
         <!--Navigation Controller-->
         <scene sceneID="DHB-nT-PGi">
             <objects>
-                <navigationController id="47F-LE-5JZ" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="detailedInformationNavController" id="47F-LE-5JZ" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="yDV-5W-wQF">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -61,10 +61,14 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="Ejd-DO-Qbn"/>
+                    <connections>
+                        <segue destination="r8L-n3-4CZ" kind="unwind" unwindAction="returnFromSegueActionsWithSender:" id="BWv-Ug-T27"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iOo-Vq-zdd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="r8L-n3-4CZ" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1876" y="-629"/>
+            <point key="canvasLocation" x="1946" y="-629"/>
         </scene>
     </scenes>
 </document>

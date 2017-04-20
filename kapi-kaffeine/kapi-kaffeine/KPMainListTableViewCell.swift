@@ -59,8 +59,8 @@ class KPMainListTableViewCell: UITableViewCell {
         self.shopImageView.contentMode = .scaleAspectFit;
         self.contentView.addSubview(self.shopImageView);
         self.shopImageView.addConstraints(fromStringArray: ["H:|-8-[$self(56)]",
-                                                            "V:[$self(56)]"]);
-        self.shopImageView.addConstraintForCenterAligningToSuperview(in: .vertical);
+                                                            "V:|-12-[$self(56)]-12-|"]);
+//        self.shopImageView.addConstraintForCenterAligningToSuperview(in: .vertical);
         
         self.shopNameLabel = KPMainListCellNormalLabel();
         self.shopNameLabel.font = UIFont.systemFont(ofSize: 14.0);
@@ -132,7 +132,7 @@ class KPMainListTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        self.backgroundColor = selected ? KPColorPalette.KPMainColor.grayColor_level6 : UIColor.white;
         // Configure the view for the selected state
     }
 }
