@@ -11,7 +11,7 @@ import UIKit
 class KPInformationDismissTransition: NSObject, UIViewControllerAnimatedTransitioning {
     
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return 0.8
+        return 0.9
     }
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
@@ -38,12 +38,12 @@ class KPInformationDismissTransition: NSObject, UIViewControllerAnimatedTransiti
                        initialSpringVelocity: 0.8,
                        options: UIViewAnimationOptions.curveEaseIn,
                        animations: {
-                        fromVC.view.frame = finalFrameForVC.offsetBy(dx: 400, dy: 20);
+                        fromVC.view.frame = finalFrameForVC.offsetBy(dx: 380, dy: 20);
                         fromVC.view.transform = CGAffineTransform(rotationAngle: 0.15);
                         opacityView.alpha = 0.0;
                         toVC.view.transform = CGAffineTransform(scaleX: 1.0, y: 1.0);
         }) { (finish) in
-            
+        
             if (transitionContext.transitionWasCancelled) {
                 opacityView.removeFromSuperview();
             }

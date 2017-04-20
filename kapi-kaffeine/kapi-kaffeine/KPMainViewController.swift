@@ -140,6 +140,7 @@ class KPMainViewController: UIViewController {
             self.percentDrivenTransition.update(progress/4);
         } else if edgePanGesture.state == UIGestureRecognizerState.cancelled || edgePanGesture.state == UIGestureRecognizerState.ended {
             if progress > 0.5 {
+//                self.percentDrivenTransition.completionSpeed = 0.5;
                 self.percentDrivenTransition.finish();
             } else {
                 self.percentDrivenTransition.cancel();

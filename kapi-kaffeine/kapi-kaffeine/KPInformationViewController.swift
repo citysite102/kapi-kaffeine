@@ -66,8 +66,6 @@ class KPInformationViewController: UIViewController {
                                                                   "V:[$view0]-16-[$self(210)]"],
                                                       views: [self.informationHeaderView]);
         
-        let shopLocationInfoView = KPShopLocationInfoView();
-        shopLocationInfoView.dataModel = informationDataModel;
         self.locationInformationView = KPInformationSharedInfoView();
         self.locationInformationView.infoTitleLabel.text = "位置訊息";
         self.locationInformationView.infoSupplementLabel.text = "距離 600m";
@@ -87,7 +85,6 @@ class KPInformationViewController: UIViewController {
                                                 })
         ];
         
-        self.locationInformationView.infoView = shopLocationInfoView;
         self.scrollContainer.addSubview(self.locationInformationView);
         self.locationInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                                   "V:[$view0]-24-[$self(292)]"],
@@ -165,6 +162,14 @@ class KPInformationViewController: UIViewController {
                                                                        "V:[$view0]-24-[$self]-32-|"],
                                                      views: [self.photoInformationView]);
         
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated);
+        let shopLocationInfoView = KPShopLocationInfoView();
+        shopLocationInfoView.dataModel = informationDataModel
+        self.locationInformationView.infoView = shopLocationInfoView;
         
     }
     
