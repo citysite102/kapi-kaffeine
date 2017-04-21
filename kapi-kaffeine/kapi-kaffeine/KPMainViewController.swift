@@ -74,6 +74,9 @@ class KPMainViewController: UIViewController {
         self.searchHeaderView.menuButton.addTarget(self,
                                                    action: #selector(switchSideBar),
                                                    for: .touchUpInside)
+//        self.searchHeaderView.menuButton.addTarget(self) {
+//            self.switchSideBar();
+//        }
         self.searchHeaderView.styleButton.addTarget(self,
                                                     action: #selector(changeStyle),
                                                     for: .touchUpInside)

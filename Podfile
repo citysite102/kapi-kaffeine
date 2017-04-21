@@ -16,6 +16,7 @@ target 'kapi-kaffeine' do
   # UI
   # pod 'SlideMenuControllerSwift'
   pod 'SideMenu'
+  pod 'pop', '~> 1.0'
 
 
   # Model

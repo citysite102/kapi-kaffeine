@@ -11,9 +11,9 @@ import UIKit
 class KPSearchHeaderView: UIView {
 
     var titleLabel: UILabel!
-    var searchButton: UIButton!
-    var menuButton: UIButton!
-    var styleButton: UIButton!
+    var searchButton: KPBounceButton!
+    var menuButton: KPBounceButton!
+    var styleButton: KPBounceButton!
     var searchTagView: KPSearchTagView!
     
     override init(frame: CGRect) {
@@ -28,32 +28,26 @@ class KPSearchHeaderView: UIView {
         self.titleLabel.addConstraintForCenterAligningToSuperview(in: .horizontal);
         self.titleLabel.addConstraint(from: "V:|-32-[$self]");
         
-        self.styleButton = UIButton(type: .system);
+        self.styleButton = KPBounceButton.init(frame: .zero, image: UIImage.init(named: "icon_map")!);
         self.addSubview(self.styleButton);
         self.styleButton.addConstraints(fromStringArray: ["H:[$self(24)]-8-|",
                                                           "V:[$self(24)]"]);
         self.styleButton.addConstraintForCenterAligning(to: self.titleLabel, in: .vertical);
-        self.styleButton.setImage(UIImage.init(named: "icon_map")?.withRenderingMode(.alwaysTemplate),
-                                  for: .normal);
         self.styleButton.tintColor = UIColor.white;
         
-        self.searchButton = UIButton(type: .system);
+        self.searchButton = KPBounceButton.init(frame: .zero, image: UIImage.init(named: "icon_search")!);
         self.addSubview(self.searchButton);
         self.searchButton.addConstraints(fromStringArray: ["H:[$self(24)]-8-[$view0]",
                                                            "V:[$self(24)]"],
                                          views: [self.styleButton]);
         self.searchButton.addConstraintForCenterAligning(to: self.titleLabel, in: .vertical);
-        self.searchButton.setImage(UIImage.init(named: "icon_search")?.withRenderingMode(.alwaysTemplate),
-                                  for: .normal);
         self.searchButton.tintColor = UIColor.white;
         
-        self.menuButton = UIButton(type: .system);
+        self.menuButton = KPBounceButton.init(frame: .zero, image: UIImage.init(named: "icon_menu")!);
         self.addSubview(self.menuButton);
         self.menuButton.addConstraints(fromStringArray: ["H:|-8-[$self(24)]",
                                                           "V:[$self(24)]"]);
         self.menuButton.addConstraintForCenterAligning(to: self.titleLabel, in: .vertical);
-        self.menuButton.setImage(UIImage.init(named: "icon_menu")?.withRenderingMode(.alwaysTemplate),
-                                  for: .normal);
         self.menuButton.tintColor = UIColor.white;
         
         

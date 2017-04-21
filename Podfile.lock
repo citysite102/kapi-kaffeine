@@ -53,6 +53,7 @@ PODS:
   - libextobjc/RuntimeExtensions (0.4.1)
   - libextobjc/UmbrellaHeader (0.4.1)
   - ObjectMapper (2.2.5)
+  - pop (1.0.9)
   - SideMenu (2.3.0)
 
 DEPENDENCIES:
@@ -62,6 +63,7 @@ DEPENDENCIES:
   - GoogleMaps
   - GooglePlaces
   - ObjectMapper (~> 2.2)
+  - pop (~> 1.0)
   - SideMenu
 
 SPEC CHECKSUMS:
@@ -72,8 +74,9 @@ SPEC CHECKSUMS:
   GooglePlaces: bca867d5e9da15384c794b945e4226848bc6e9d9
   libextobjc: a650fc1bf489a3d3a9bc2e621efa3e1006fc5471
   ObjectMapper: fb30f71e08470d1e5a20b199fafe1246281db898
+  pop: f667631a5108a2e60d9e8797c9b32ddaf2080bce
   SideMenu: 43d092cf615cf472f105c5b9867a21beff9fc269
 
-PODFILE CHECKSUM: e55638104be0daa1bb52e5628dc0efd61dfd1ddf
+PODFILE CHECKSUM: afa3c4660d5ab9e8947b85f977c1288e5b7d2c3e
 
 COCOAPODS: 1.1.1
