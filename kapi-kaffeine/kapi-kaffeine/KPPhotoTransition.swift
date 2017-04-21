@@ -15,10 +15,10 @@ class KPPhotoTransition: NSObject, UIViewControllerAnimatedTransitioning {
     }
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-        let fromVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from) as! ViewController;
-        let toVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to) as! ViewController;
-    
-        let container = transitionContext.containerView;
+//        let fromVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from) as! ViewController;
+//        let toVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to) as! ViewController;
+//    
+//        let container = transitionContext.containerView;
         
 //        //2.创建一个 Cell 中 imageView 的截图，并把 imageView 隐藏，造成使用户以为移动的就是 imageView 的假象
 //        let snapshotView = fromVC.selectedCell.imageView.snapshotViewAfterScreenUpdates(false)

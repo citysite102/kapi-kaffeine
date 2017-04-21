@@ -35,11 +35,6 @@ class KPSideViewController: UIViewController {
     
     var regionContents = [regionData?]()
     var regionIconNames = ["icon_taipei", "icon_taitung", "icon_pingtung"]
-//    var regionData = ["北部": ["台北", "中壢"],
-//                      "東部": ["外太空", "黑洞", "冥王星"],
-//                      "中南部": ["台中"],
-//                      ]
-    
     
     
     override func viewDidLoad() {
@@ -83,15 +78,10 @@ class KPSideViewController: UIViewController {
                                 forCellReuseIdentifier: KPSideViewController.KPSideViewControllerRegionCellReuseIdentifier);
         self.tableView.register(KPCityTableViewCell.self,
                                 forCellReuseIdentifier: KPSideViewController.KPSideViewControllerCityCellReuseIdentifier);
-        self.tableView.allowsSelection = true;
         
-        self.regionContents = [regionData(name:"北部", cities:["台北", "中壢"]),
+        self.regionContents = [regionData(name:"北部", cities:["台北", "中壢", "月球"]),
                                regionData(name:"東部", cities:["外太空", "黑洞", "冥王星"]),
                                regionData(name:"中南部", cities:["台北", "台中"])];
-//        self.regionContents = [regionData(name:"北部", cities:["台北"]),
-//                               regionData(name:"東部", cities:["外太空"]),
-//                               regionData(name:"中南部", cities:["台北"])];
-//        
     }
 
     override func didReceiveMemoryWarning() {
@@ -159,14 +149,8 @@ extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
         let regionCities = self.regionContents[indexPath.row]?.cities;
 
         
+        
         if self.regionContents[indexPath.row] != nil {
-//            UIView.beginAnimations(nil, context: nil);
-//            UIView.setAnimationDuration(0.5);
-//            CATransaction.begin()
-//            CATransaction.setAnimationDuration(5.0);
-//            CATransaction.setCompletionBlock({
-//                print("Finished");
-//            })
             
             tableView.beginUpdates()
             if indexPath.row + 1 >= self.regionContents.count {
@@ -180,6 +164,7 @@ extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
             } else {
                 if self.regionContents[indexPath.row+1] != nil {
                     for (index, _) in (regionCities?.enumerated())! {
+                        
                         self.regionContents.insert(nil, at: indexPath.row+index+1);
                         self.tableView.insertRows(at: [NSIndexPath.init(row: indexPath.row+index+1,
                                                                         section: 0) as IndexPath],
@@ -190,32 +175,55 @@ extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
                     var indexPaths = [IndexPath]()
                     for (index, _) in (regionCities?.enumerated())! {
                         indexPaths.append(NSIndexPath.init(row: indexPath.row+index+1, section: 0) as IndexPath);
-                            
                         self.regionContents.remove(at: indexPath.row+1);
-//                        self.tableView.deleteRows(at: [NSIndexPath.init(row: indexPath.row+1,
-//                                                                        section: 0) as IndexPath], with: .top);
-                        
                     }
                     self.tableView.deleteRows(at: indexPaths, with: .top);
                     
                 }
             }
             tableView.endUpdates()
-//            CATransaction.commit();
-//            UIView.commitAnimations()
+
+        /*可調整時間的做法
+        if self.regionContents[indexPath.row] != nil {
+            if indexPath.row + 1 >= self.regionContents.count {
+                for (index, _) in (regionCities?.enumerated())! {
+                    self.regionContents.insert(nil, at: indexPath.row+index+1);
+                    self.tableView.insertRows(at: [NSIndexPath.init(row: indexPath.row+index+1,
+                                                                    section: 0) as IndexPath],
+                                              with: .top);
+                    
+                }
+            } else {
+                if self.regionContents[indexPath.row+1] != nil {
+                    for (_, _) in (regionCities?.enumerated())! {
+                        UIView.animateKeyframes(withDuration: 0.5, delay: 0, options: [.beginFromCurrentState, .overrideInheritedDuration], animations: {
+                            
+                            self.tableView.beginUpdates()
+                            self.regionContents.insert(nil, at: indexPath.row+1);
+                            self.tableView.insertRows(at: [NSIndexPath.init(row: indexPath.row+1,
+                                                                            section: 0) as IndexPath],
+                                                      with: .top);
+                            
+                            self.tableView.endUpdates()
+                            
+                        }, completion: nil)
+                        
+                    }
+                } else {
+                    var indexPaths = [IndexPath]()
+                    for (index, _) in (regionCities?.enumerated())! {
+                        indexPaths.append(NSIndexPath.init(row: indexPath.row+index+1, section: 0) as IndexPath);
+                            
+                        self.regionContents.remove(at: indexPath.row+1);
+                    }
+                    self.tableView.deleteRows(at: indexPaths, with: .top);
+                    
+                }
+            }
+             */
+            
         } else {
-//            for (index, _) in (regionCities?.enumerated())! {
-//                self.regionContents.insert(nil, at: indexPath.row+index+1);
-//                self.tableView.insertRows(at: [NSIndexPath.init(row: indexPath.row+index+1, section: 0) as IndexPath],
-//                                          with: .top);
-//                
-//            }
-//            for (index, _) in (regionCities?.enumerated())! {
-//                self.regionContents.
-//                self.tableView.insertRows(at: [NSIndexPath.init(row: indexPath.row+index+1, section: 0) as IndexPath],
-//                                          with: .top);
-//                
-//            }
+            
         }
     }
 }
