@@ -29,7 +29,6 @@ class KPRegionTableViewCell: UITableViewCell {
         
         self.regionLabel = UILabel();
         self.regionLabel.font = UIFont.systemFont(ofSize: 14);
-        self.regionLabel.text = "測試中";
         self.regionLabel.textColor = KPColorPalette.KPTextColor.grayColor;
         self.addSubview(self.regionLabel);
         self.regionLabel.addConstraints(fromStringArray: ["H:[$view0]-32-[$self]"],

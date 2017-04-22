@@ -19,15 +19,15 @@ class KPBounceButton: UIButton {
 //    var target: Any?
 //    var selector: (()->())?
     
-    override var isHighlighted: Bool {
-        willSet {
-            self.tintColor = UIColor.white;
-        }
-        
-        didSet {
-            print("changed from \(oldValue) to \(isSelected)")
-        }
-    }
+//    override var isHighlighted: Bool {
+//        willSet {
+//            self.tintColor = UIColor.white;
+//        }
+//        
+//        didSet {
+//            print("changed from \(oldValue) to \(isSelected)")
+//        }
+//    }
     
     override init(frame: CGRect) {
         super.init(frame: frame);
