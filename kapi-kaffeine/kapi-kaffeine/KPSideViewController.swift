@@ -14,9 +14,39 @@ class KPSideViewController: UIViewController {
     static let KPSideViewControllerCityCellReuseIdentifier = "cityCell";
     
     weak var mainController: KPMainViewController!
-    var userContainer: UIView!
-    var userPhoto: UIImageView!
-    var userNameLabel: UILabel!
+    var lastY: CGFloat = 0.0
+    
+    lazy var userContainer: UIView = {
+        let containerView = UIView();
+        containerView.backgroundColor = KPColorPalette.KPMainColor.buttonColor;
+        return containerView;
+    }()
+    
+    lazy var userPhoto: UIImageView = {
+        let imageView = UIImageView();
+        imageView.backgroundColor = KPColorPalette.KPMainColor.mainColor;
+        imageView.layer.borderWidth = 2.0;
+        imageView.layer.borderColor = UIColor.white.cgColor;
+        imageView.layer.cornerRadius = 5.0;
+        imageView.layer.masksToBounds = true;
+        return imageView;
+    }()
+    
+    lazy var userNameLabel: UILabel = {
+        let label = UILabel();
+        label.font = UIFont.systemFont(ofSize: 14.0);
+        label.textColor = KPColorPalette.KPTextColor.whiteColor;
+        label.text = "訪客一號";
+        return label;
+    }()
+    
+    lazy var chooseLabel: UILabel = {
+        let label = UILabel();
+        label.font = UIFont.systemFont(ofSize: 12.0);
+        label.textColor = KPColorPalette.KPMainColor.buttonColor;
+        label.text = "請選擇你所在的城市";
+        return label;
+    }()
     
     var tableView: UITableView!
     
@@ -26,11 +56,6 @@ class KPSideViewController: UIViewController {
         var name: String
         var icon: UIImage
         var cities: [String]
-        
-//        init(name: String, cities: [String]?) {
-//            self.name = name
-//            self.cities = cities!
-//        }
     }
     
     struct informationData {
@@ -52,43 +77,37 @@ class KPSideViewController: UIViewController {
         self.view.backgroundColor = UIColor.white;
         self.navigationController?.setNavigationBarHidden(true, animated: false);
         
-        self.userContainer = UIView();
-        self.userContainer.backgroundColor = KPColorPalette.KPMainColor.buttonColor;
         self.view.addSubview(self.userContainer);
         self.userContainer.addConstraints(fromStringArray: ["V:|[$self(140)]", "H:|[$self]|"]);
         
-        self.userPhoto = UIImageView();
-        self.userPhoto.backgroundColor = KPColorPalette.KPMainColor.mainColor;
-        self.userPhoto.layer.borderWidth = 2.0;
-        self.userPhoto.layer.borderColor = UIColor.white.cgColor;
-        self.userPhoto.layer.cornerRadius = 5.0;
-        self.userPhoto.layer.masksToBounds = true;
         self.userContainer.addSubview(self.userPhoto);
         self.userPhoto.addConstraints(fromStringArray: ["H:|-16-[$self(64)]",
                                                         "V:|-16-[$self(64)]"])
         
-        self.userNameLabel = UILabel();
-        self.userNameLabel.font = UIFont.systemFont(ofSize: 14.0);
-        self.userNameLabel.textColor = KPColorPalette.KPTextColor.whiteColor;
-        self.userNameLabel.text = "訪客一號";
         self.userContainer.addSubview(self.userNameLabel);
         self.userNameLabel.addConstraints(fromStringArray: ["H:|-16-[$self]",
                                                             "V:[$view0]-8-[$self]"],
                                           views: [self.userPhoto]);
         
+        self.view.addSubview(self.chooseLabel);
+        self.chooseLabel.addConstraints(fromStringArray: ["H:|-16-[$self]",
+                                                          "V:[$view0]-16-[$self]"],
+                                        views: [self.userContainer]);
+        
         self.tableView = UITableView();
         self.tableView.delegate = self;
         self.tableView.dataSource = self;
         self.tableView.separatorColor = UIColor.clear;
+//        self.tableView.bounces = false;
         self.view.addSubview(self.tableView);
-        self.tableView.addConstraints(fromStringArray: ["V:[$view0]-32-[$self]|",
+        self.tableView.addConstraints(fromStringArray: ["V:[$view0]-16-[$self]|",
                                                         "H:|[$self]|"],
-                                      views: [self.userContainer]);
+                                      views: [self.chooseLabel]);
         self.tableView.register(KPRegionTableViewCell.self,
                                 forCellReuseIdentifier: KPSideViewController.KPSideViewControllerRegionCellReuseIdentifier);
         self.tableView.register(KPCityTableViewCell.self,
                                 forCellReuseIdentifier: KPSideViewController.KPSideViewControllerCityCellReuseIdentifier);
-        
+
         self.regionContents = [regionData(name:"北部",
                                           icon:UIImage.init(named: "icon_taitung")!,
                                           cities:["台北", "中壢", "月球"]),
@@ -152,6 +171,38 @@ class KPSideViewController: UIViewController {
 
 extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
     
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        let currentY = scrollView.contentOffset.y
+//        let currentBottomY = scrollView.frame.size.height + currentY
+//        if currentY > lastY {
+//            tableView.bounces = true
+//        } else {
+//            if currentBottomY < scrollView.contentSize.height + scrollView.contentInset.bottom {
+//                tableView.bounces = false
+//            }
+//        }
+//        lastY = scrollView.contentOffset.y < 0 ? 0 : scrollView.contentOffset.y
+//    }
+    
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if (section == 0) {
+            return 0.0;
+        } else {
+            return 24.0;
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let footerView = UIView.init(frame: CGRect(x: 0, y: 0, width: 1, height: 10));
+        let separator = UIView();
+        separator.backgroundColor = KPColorPalette.KPMainColor.grayColor_level6;
+        footerView.addSubview(separator);
+        separator.addConstraints(fromStringArray: ["V:|-10-[$self(1)]-13-|",
+                                                   "H:|[$self]|"]);
+        return footerView;
+    }
+    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
@@ -164,7 +215,7 @@ extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier:KPSideViewController.KPSideViewControllerCityCellReuseIdentifier,
                                                          for: indexPath) as! KPCityTableViewCell;
-                var regionIndex = self.getRegionIndex(expandIndex: indexPath.row);
+                let regionIndex = self.getRegionIndex(expandIndex: indexPath.row);
                 var regionContent = self.regionContents[regionIndex];
                 cell.cityLabel.text = regionContent?.cities[indexPath.row-regionIndex-1];
                 return cell;
@@ -174,6 +225,7 @@ extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
                                                      for: indexPath) as! KPRegionTableViewCell;
             cell.regionLabel.text = self.informationSectionContents[indexPath.row]?.title;
             cell.regionIcon.image = self.informationSectionContents[indexPath.row]?.icon;
+            cell.expanded = false;
             return cell;
         }
     }
@@ -224,18 +276,23 @@ extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
         if indexPath.section == 0 {
             if self.regionContents[indexPath.row] != nil {
                 
+                let cell = tableView.cellForRow(at: indexPath) as! KPRegionTableViewCell;
+                
                 tableView.beginUpdates()
                 
                 // 若是最後一行/或是任何一個可展開的區塊 --> 展開
                 if indexPath.row + 1 >= self.regionContents.count || self.regionContents[indexPath.row+1] != nil {
+                    cell.expanded = true;
+                    
                     for (index, _) in (regionCities?.enumerated())! {
                         self.regionContents.insert(nil, at: indexPath.row+index+1);
                         self.tableView.insertRows(at: [NSIndexPath.init(row: indexPath.row+index+1,
                                                                         section: 0) as IndexPath],
                                                   with: .top);
-                        
                     }
                 } else {
+                    cell.expanded = false;
+                    
                     var indexPaths = [IndexPath]()
                     for (index, _) in (regionCities?.enumerated())! {
                         indexPaths.append(NSIndexPath.init(row: indexPath.row+index+1, section: 0) as IndexPath);
