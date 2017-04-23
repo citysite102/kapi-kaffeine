@@ -33,6 +33,9 @@
 		77B66FA11EA91477008B6652 /* KPRegionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B66FA01EA91477008B6652 /* KPRegionTableViewCell.swift */; };
 		77B66FA31EA91488008B6652 /* KPCityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B66FA21EA91488008B6652 /* KPCityTableViewCell.swift */; };
 		77B66FA61EAA70F3008B6652 /* KPBounceButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B66FA51EAA70F3008B6652 /* KPBounceButton.swift */; };
+		77B66FA91EACF74C008B6652 /* KPPopoverSensingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B66FA81EACF74C008B6652 /* KPPopoverSensingView.swift */; };
+		77B66FAE1EAD07F3008B6652 /* KPModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B66FAD1EAD07F3008B6652 /* KPModalViewController.swift */; };
+		77B66FB01EAD17DA008B6652 /* KPSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B66FAF1EAD17DA008B6652 /* KPSettingViewController.swift */; };
 		77C0E0FA1E9D3D7500398852 /* KPSearchFooterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0E0F91E9D3D7500398852 /* KPSearchFooterCell.swift */; };
 		77C0E0FD1E9D489900398852 /* KPInformationHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0E0FC1E9D489900398852 /* KPInformationHeaderView.swift */; };
 		77C0E0FF1E9D48BC00398852 /* KPInformationSharedInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0E0FE1E9D48BC00398852 /* KPInformationSharedInfoView.swift */; };
@@ -102,6 +105,9 @@
 		77B66FA01EA91477008B6652 /* KPRegionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPRegionTableViewCell.swift; sourceTree = "<group>"; };
 		77B66FA21EA91488008B6652 /* KPCityTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPCityTableViewCell.swift; sourceTree = "<group>"; };
 		77B66FA51EAA70F3008B6652 /* KPBounceButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPBounceButton.swift; sourceTree = "<group>"; };
+		77B66FA81EACF74C008B6652 /* KPPopoverSensingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPPopoverSensingView.swift; sourceTree = "<group>"; };
+		77B66FAD1EAD07F3008B6652 /* KPModalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPModalViewController.swift; sourceTree = "<group>"; };
+		77B66FAF1EAD17DA008B6652 /* KPSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSettingViewController.swift; sourceTree = "<group>"; };
 		77C0E0F91E9D3D7500398852 /* KPSearchFooterCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSearchFooterCell.swift; sourceTree = "<group>"; };
 		77C0E0FC1E9D489900398852 /* KPInformationHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPInformationHeaderView.swift; sourceTree = "<group>"; };
 		77C0E0FE1E9D48BC00398852 /* KPInformationSharedInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPInformationSharedInfoView.swift; sourceTree = "<group>"; };
@@ -234,6 +240,7 @@
 				77B66F9F1EA91451008B6652 /* View */,
 				774208FD1EA679CB00C78A00 /* KPSideViewController.swift */,
 				774208FF1EA67CE400C78A00 /* KPSliderMenuController.swift */,
+				77B66FAF1EAD17DA008B6652 /* KPSettingViewController.swift */,
 			);
 			name = SideController;
 			sourceTree = "<group>";
@@ -263,6 +270,8 @@
 		776ACAFD1E9BB18100B629A2 /* Shared Class */ = {
 			isa = PBXGroup;
 			children = (
+				77B66FAC1EAD07B9008B6652 /* Controller */,
+				77B66FA71EACF724008B6652 /* Shared View */,
 				776ACAFE1E9BB1DE00B629A2 /* KPConstant.swift */,
 				775989901EA5171A0029989C /* KPUIImageHelper.swift */,
 				77B66FA41EAA7091008B6652 /* Custom */,
@@ -316,6 +325,22 @@
 				77B66FA51EAA70F3008B6652 /* KPBounceButton.swift */,
 			);
 			name = Custom;
+			sourceTree = "<group>";
+		};
+		77B66FA71EACF724008B6652 /* Shared View */ = {
+			isa = PBXGroup;
+			children = (
+				77B66FA81EACF74C008B6652 /* KPPopoverSensingView.swift */,
+			);
+			name = "Shared View";
+			sourceTree = "<group>";
+		};
+		77B66FAC1EAD07B9008B6652 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				77B66FAD1EAD07F3008B6652 /* KPModalViewController.swift */,
+			);
+			name = Controller;
 			sourceTree = "<group>";
 		};
 		77C0E0FB1E9D487800398852 /* View */ = {
@@ -644,7 +669,9 @@
 				77C0E0FF1E9D48BC00398852 /* KPInformationSharedInfoView.swift in Sources */,
 				776ACB011E9BB49E00B629A2 /* KPMainViewController.swift in Sources */,
 				774209001EA67CE400C78A00 /* KPSliderMenuController.swift in Sources */,
+				77B66FAE1EAD07F3008B6652 /* KPModalViewController.swift in Sources */,
 				77C0E1021E9D48E000398852 /* KPShopInfoView.swift in Sources */,
+				77B66FB01EAD17DA008B6652 /* KPSettingViewController.swift in Sources */,
 				77C0E1051E9D48F500398852 /* KPShopLocationInfoView.swift in Sources */,
 				776ACAF41E9BAFA200B629A2 /* KPSearchHeaderView.swift in Sources */,
 				774208F11EA5F04B00C78A00 /* KPShopPhotoCell.swift in Sources */,
@@ -671,6 +698,7 @@
 				77C0E10C1E9D494400398852 /* KPShopPhotoInfoView.swift in Sources */,
 				77B66FA61EAA70F3008B6652 /* KPBounceButton.swift in Sources */,
 				776ACB081E9BE51600B629A2 /* KPMainListCellFeatureContainer.swift in Sources */,
+				77B66FA91EACF74C008B6652 /* KPPopoverSensingView.swift in Sources */,
 				77FB63961E9AA7BB00FFC3DC /* KPDataModel.swift in Sources */,
 				776ACAFF1E9BB1DE00B629A2 /* KPConstant.swift in Sources */,
 			);

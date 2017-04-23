@@ -137,7 +137,11 @@ class KPSideViewController: UIViewController {
                                            informationData(title:"設定",
                                                            icon:UIImage.init(named: "icon_taitung")!,
                                                            handler:{()->() in
-                                                            print("設定")}),
+                                                            let controller = KPModalViewController()
+                                                            let settingController = KPSettingViewController()
+                                                            controller.contentController = settingController;
+                                                            controller.presentModalView();
+                                           }),
         ]
     }
 
@@ -271,10 +275,11 @@ extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let regionCities = self.regionContents[indexPath.row]?.cities;
         
         if indexPath.section == 0 {
             if self.regionContents[indexPath.row] != nil {
+                
+                let regionCities = self.regionContents[indexPath.row]?.cities;
                 
                 let cell = tableView.cellForRow(at: indexPath) as! KPRegionTableViewCell;
                 
