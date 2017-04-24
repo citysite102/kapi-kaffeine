@@ -26,6 +26,7 @@ class KPPopoverSensingView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame);
         self.passTouchEventAnyway = false;
+        self.actionAvailableViews = [UIView]();
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -42,14 +43,16 @@ class KPPopoverSensingView: UIView {
                     return nil;
                 }
             }
+            
+            if passTouchEventAnyway {
+                self.delegate?.sensingViewStartTouchAtUnavailableArea!(self);
+                return nil;
+            } else {
+                return self;
+            }
         }
         
-        if passTouchEventAnyway {
-            self.delegate?.sensingViewStartTouchAtUnavailableArea!(self);
-            return nil;
-        } else {
-            return self;
-        }
+        return hitTestView;
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

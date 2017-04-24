@@ -138,8 +138,11 @@ class KPSideViewController: UIViewController {
                                                            icon:UIImage.init(named: "icon_taitung")!,
                                                            handler:{()->() in
                                                             let controller = KPModalViewController()
+                                                            controller.contentSize = CGSize.init(width: 320,
+                                                                                                 height: 568);
                                                             let settingController = KPSettingViewController()
-                                                            controller.contentController = settingController;
+                                                            let navigationController = UINavigationController.init(rootViewController: settingController);
+                                                            controller.contentController = navigationController;
                                                             controller.presentModalView();
                                            }),
         ]

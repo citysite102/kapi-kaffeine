@@ -10,10 +10,30 @@ import UIKit
 
 class KPSettingViewController: UIViewController {
 
+    var dismissButton:UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.red;
-        // Do any additional setup after loading the view.
+        
+        self.view.backgroundColor = UIColor.white;
+        self.navigationController?.navigationBar.topItem?.title = "設定";
+        
+        self.dismissButton = UIButton.init();
+        self.dismissButton.setImage(UIImage.init(named: "icon_close")?.withRenderingMode(.alwaysTemplate),
+                                    for: .normal);
+        self.dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor;
+        self.dismissButton.addTarget(self,
+                                     action: #selector(KPInformationViewController.handleDismissButtonOnTapped),
+                                     for: .touchUpInside);
+        
+//        self.navigationController?.navigationBar.addSubview(self.dismissButton);
+//        self.dismissButton.addConstraints(fromStringArray: ["H:|-8-[$self(24)]",
+//                                                            "V:[$self(24)]"]);
+//        self.dismissButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4);
+//        self.dismissButton.addConstraintForCenterAligningToSuperview(in: .vertical);
+        
+        let barItem = UIBarButtonItem.init(customView: self.dismissButton);
+        self.navigationItem.leftBarButtonItem = barItem;
     }
 
     override func didReceiveMemoryWarning() {
