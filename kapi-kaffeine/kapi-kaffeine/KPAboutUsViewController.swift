@@ -99,9 +99,9 @@ class KPAboutUsViewController: UIViewController {
         
         self.containerView = UIView();
         self.scrollView.addSubview(self.containerView);
-        self.containerView.addConstraints(fromStringArray: ["H:|-24-[$self]-24-|", "V:|[$self]|"]);
+        self.containerView.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|", "V:|[$self]|"]);
         self.containerView.addConstraintForHavingSameWidth(with: self.view,
-                                                           constant: -48);
+                                                           constant: -32);
         
         self.iconImageView = UIImageView();
         self.iconImageView.backgroundColor = KPColorPalette.KPMainColor.mainColor;
@@ -215,12 +215,12 @@ class KPAboutUsViewController: UIViewController {
                                                               "H:|[$self]"])
             
             memberContainer.addSubview(memberNameLabel);
-            memberNameLabel.addConstraints(fromStringArray: ["V:[$view0]-8-[$self]",
+            memberNameLabel.addConstraints(fromStringArray: ["V:[$view0]-4-[$self]",
                                                              "H:|[$self]"],
                                            views: [memberTitleLabel]);
             
             memberContainer.addSubview(memberEmailLabel);
-            memberEmailLabel.addConstraints(fromStringArray: ["V:[$view0]-8-[$self]|",
+            memberEmailLabel.addConstraints(fromStringArray: ["V:[$view0]-4-[$self]|",
                                                               "H:|[$self]"],
                                             views: [memberNameLabel]);
             

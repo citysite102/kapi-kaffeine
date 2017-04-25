@@ -32,13 +32,25 @@ class KPModalViewController: UIViewController {
     
     var dismissWhenTouchingOnBackground: Bool = true;
     var presentationStyle: KPModalPresentationStyle = .bottom;
+    var layoutWithSize: Bool = true;
+    var layoutWithInset: Bool = false;
+    
     
     var contentSize: CGSize = CGSize.init(width: 0, height: 0) {
         didSet {
             if self.containerSensingView != nil {
                 self.containerWidthConstraint = self.containerSensingView.constraint(forWidth: contentSize.width);
                 self.containerHeightConstraint = self.containerSensingView.constraint(forHeight: contentSize.height);
+                self.layoutWithSize = true;
+                self.layoutWithInset = false;
             }
+        }
+    }
+    
+    var edgeInset: UIEdgeInsets = UIEdgeInsets.init(top: 0, left: 0, bottom: 0, right: 0) {
+        didSet {
+            self.layoutWithSize = false;
+            self.layoutWithInset = true;
         }
     }
     
@@ -114,10 +126,19 @@ class KPModalViewController: UIViewController {
         
         self.containerSensingView.removeAllRelatedConstraintsInSuperView();
         
-        self.containerSensingView.addConstraint(self.containerWidthConstraint);
-        self.containerSensingView.addConstraint(self.containerHeightConstraint);
-        self.containerSensingView.addConstraintForCenterAligningToSuperview(in: .vertical);
-        self.containerSensingView.addConstraintForCenterAligningToSuperview(in: .horizontal);
+        
+        if self.layoutWithSize {
+            self.containerSensingView.addConstraint(self.containerWidthConstraint);
+            self.containerSensingView.addConstraint(self.containerHeightConstraint);
+            self.containerSensingView.addConstraintForCenterAligningToSuperview(in: .vertical);
+            self.containerSensingView.addConstraintForCenterAligningToSuperview(in: .horizontal);
+        }
+        
+        if self.layoutWithInset {
+            self.containerSensingView.addConstraints(fromStringArray: ["V:|-($metric0)-[$self]-($metric1)-|",
+                                                                       "H:|-($metric2)-[$self]-($metric3)-|"],
+                                                     metrics: [edgeInset.top, edgeInset.bottom, edgeInset.left, edgeInset.right]);
+        }
         
         // Initial Position
         var containerPoint: CGPoint = CGPoint.init(x: (self.view.frame.width-self.contentSize.width)/2,
