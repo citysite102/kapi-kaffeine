@@ -52,14 +52,12 @@ class KPSideViewController: UIViewController {
     
     
     struct regionData {
-        
         var name: String
         var icon: UIImage
         var cities: [String]
     }
     
     struct informationData {
-        
         var title: String
         var icon: UIImage
         var handler: () -> ()

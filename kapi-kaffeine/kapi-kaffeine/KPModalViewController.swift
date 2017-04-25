@@ -268,7 +268,7 @@ extension UIViewController {
         }
         
         if parentController is KPModalViewController {
-            return (parentController?.appModalController())!
+            return parentController as? KPModalViewController;
         } else {
             return nil
         }
