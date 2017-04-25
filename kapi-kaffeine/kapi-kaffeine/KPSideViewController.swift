@@ -119,7 +119,14 @@ class KPSideViewController: UIViewController {
         self.informationSectionContents = [informationData(title:"關於我們",
                                                            icon:UIImage.init(named: "icon_taitung")!,
                                                            handler:{()->() in
-                                                            print("關於我們")}),
+                                                            let controller = KPModalViewController()
+                                                            controller.contentSize = CGSize.init(width: 320,
+                                                                                                 height: 568);
+                                                            let aboutUsController = KPAboutUsViewController()
+                                                            let navigationController = UINavigationController.init(rootViewController: aboutUsController);
+                                                            controller.contentController = navigationController;
+                                                            controller.presentModalView();
+                                            }),
                                            informationData(title:"聯絡我們",
                                                            icon:UIImage.init(named: "icon_taitung")!,
                                                            handler:{()->() in

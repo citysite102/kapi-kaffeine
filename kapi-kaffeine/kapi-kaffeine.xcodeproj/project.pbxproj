@@ -36,6 +36,7 @@
 		77B66FA91EACF74C008B6652 /* KPPopoverSensingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B66FA81EACF74C008B6652 /* KPPopoverSensingView.swift */; };
 		77B66FAE1EAD07F3008B6652 /* KPModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B66FAD1EAD07F3008B6652 /* KPModalViewController.swift */; };
 		77B66FB01EAD17DA008B6652 /* KPSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B66FAF1EAD17DA008B6652 /* KPSettingViewController.swift */; };
+		77B66FB31EAF171E008B6652 /* KPAboutUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B66FB21EAF171D008B6652 /* KPAboutUsViewController.swift */; };
 		77C0E0FA1E9D3D7500398852 /* KPSearchFooterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0E0F91E9D3D7500398852 /* KPSearchFooterCell.swift */; };
 		77C0E0FD1E9D489900398852 /* KPInformationHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0E0FC1E9D489900398852 /* KPInformationHeaderView.swift */; };
 		77C0E0FF1E9D48BC00398852 /* KPInformationSharedInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0E0FE1E9D48BC00398852 /* KPInformationSharedInfoView.swift */; };
@@ -108,6 +109,7 @@
 		77B66FA81EACF74C008B6652 /* KPPopoverSensingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPPopoverSensingView.swift; sourceTree = "<group>"; };
 		77B66FAD1EAD07F3008B6652 /* KPModalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPModalViewController.swift; sourceTree = "<group>"; };
 		77B66FAF1EAD17DA008B6652 /* KPSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSettingViewController.swift; sourceTree = "<group>"; };
+		77B66FB21EAF171D008B6652 /* KPAboutUsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPAboutUsViewController.swift; sourceTree = "<group>"; };
 		77C0E0F91E9D3D7500398852 /* KPSearchFooterCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSearchFooterCell.swift; sourceTree = "<group>"; };
 		77C0E0FC1E9D489900398852 /* KPInformationHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPInformationHeaderView.swift; sourceTree = "<group>"; };
 		77C0E0FE1E9D48BC00398852 /* KPInformationSharedInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPInformationSharedInfoView.swift; sourceTree = "<group>"; };
@@ -238,9 +240,9 @@
 			isa = PBXGroup;
 			children = (
 				77B66F9F1EA91451008B6652 /* View */,
+				77B66FB11EAF16FB008B6652 /* Sub Controller */,
 				774208FD1EA679CB00C78A00 /* KPSideViewController.swift */,
 				774208FF1EA67CE400C78A00 /* KPSliderMenuController.swift */,
-				77B66FAF1EAD17DA008B6652 /* KPSettingViewController.swift */,
 			);
 			name = SideController;
 			sourceTree = "<group>";
@@ -341,6 +343,15 @@
 				77B66FAD1EAD07F3008B6652 /* KPModalViewController.swift */,
 			);
 			name = Controller;
+			sourceTree = "<group>";
+		};
+		77B66FB11EAF16FB008B6652 /* Sub Controller */ = {
+			isa = PBXGroup;
+			children = (
+				77B66FAF1EAD17DA008B6652 /* KPSettingViewController.swift */,
+				77B66FB21EAF171D008B6652 /* KPAboutUsViewController.swift */,
+			);
+			name = "Sub Controller";
 			sourceTree = "<group>";
 		};
 		77C0E0FB1E9D487800398852 /* View */ = {
@@ -680,6 +691,7 @@
 				C0B49D971EA13BC100BA95D8 /* KPMainMapViewCollectionCell.swift in Sources */,
 				776ACB061E9BE33A00B629A2 /* KPMainListTableViewCell.swift in Sources */,
 				776ACAFC1E9BB02D00B629A2 /* KPMainMapViewController.swift in Sources */,
+				77B66FB31EAF171E008B6652 /* KPAboutUsViewController.swift in Sources */,
 				C02881CB1E9CF1E200776E28 /* KPMainMapMarkerInfoWindow.swift in Sources */,
 				C02AFE471E7D260D008FFB33 /* ViewController.swift in Sources */,
 				775989911EA5171A0029989C /* KPUIImageHelper.swift in Sources */,
