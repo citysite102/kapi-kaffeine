@@ -130,7 +130,16 @@ class KPSideViewController: UIViewController {
                                            informationData(title:"聯絡我們",
                                                            icon:UIImage.init(named: "icon_taitung")!,
                                                            handler:{()->() in
-                                                            print("聯絡我們")}),
+                                                            let controller = KPModalViewController()
+                                                            controller.edgeInset = UIEdgeInsets.init(top: 0,
+                                                                                                     left: 0,
+                                                                                                     bottom: 0,
+                                                                                                     right: 0);
+                                                            let profileController = KPUserProfileViewController()
+                                                            let navigationController = UINavigationController.init(rootViewController: profileController);
+                                                            controller.contentController = navigationController;
+                                                            controller.presentModalView();
+                                           }),
                                            informationData(title:"粉絲專頁",
                                                            icon:UIImage.init(named: "icon_taitung")!,
                                                            handler:{()->() in
@@ -143,7 +152,10 @@ class KPSideViewController: UIViewController {
                                                            icon:UIImage.init(named: "icon_taitung")!,
                                                            handler:{()->() in
                                                             let controller = KPModalViewController()
-                                                            controller.edgeInset = UIEdgeInsets.init(top: 0, left: 0, bottom: 0, right: 0);
+                                                            controller.edgeInset = UIEdgeInsets.init(top: 0,
+                                                                                                     left: 0,
+                                                                                                     bottom: 0,
+                                                                                                     right: 0);
                                                             let settingController = KPSettingViewController()
                                                             let navigationController = UINavigationController.init(rootViewController: settingController);
                                                             controller.contentController = navigationController;

@@ -27,6 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Navigation Custom Settings
         let navigationBarAppearace = UINavigationBar.appearance()
         
+        navigationBarAppearace.isTranslucent = false;
         navigationBarAppearace.tintColor = KPColorPalette.KPTextColor.whiteColor
         navigationBarAppearace.barTintColor = KPColorPalette.KPMainColor.mainColor
         navigationBarAppearace.titleTextAttributes = [NSFontAttributeName: UIFont.systemFont(ofSize: 20),
