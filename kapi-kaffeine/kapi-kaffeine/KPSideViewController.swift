@@ -96,7 +96,6 @@ class KPSideViewController: UIViewController {
         self.tableView.delegate = self;
         self.tableView.dataSource = self;
         self.tableView.separatorColor = UIColor.clear;
-//        self.tableView.bounces = false;
         self.view.addSubview(self.tableView);
         self.tableView.addConstraints(fromStringArray: ["V:[$view0]-16-[$self]|",
                                                         "H:|[$self]|"],
@@ -128,14 +127,14 @@ class KPSideViewController: UIViewController {
                                                             
                                                             controller.contentController = navigationController;
 //                                                            controller.presentModalView();
-                                                            self.dismiss(animated: true,
-                                                                         completion: {
-                                                                            DispatchQueue.main.asyncAfter(deadline: .now()+0.2,
-                                                                                                          execute: { 
+//                                                            self.dismiss(animated: true,
+//                                                                         completion: {
+//                                                                            DispatchQueue.main.asyncAfter(deadline: .now()+0.2,
+//                                                                                                          execute: { 
 //                                                                                   controller.presentModalView();
-                                                                            })
-//                                                                  controller.presentModalView();
-                                                            })
+//                                                                            })
+                                                                  controller.presentModalView();
+//                                                            })
                                             }),
                                            informationData(title:"聯絡我們",
                                                            icon:UIImage.init(named: "icon_taitung")!,

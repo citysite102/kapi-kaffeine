@@ -11,12 +11,14 @@ import UIKit
 class KPSearchConditionViewController: UIViewController {
 
     var dismissButton:UIButton!
+    var scrollView: UIScrollView!
+    var containerView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.view.backgroundColor = UIColor.white;
-        self.navigationController?.navigationBar.topItem?.title = "個人資料";
+        self.navigationController?.navigationBar.topItem?.title = "篩選偏好設定";
         
         self.dismissButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 24, height: 24));
         self.dismissButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4);
@@ -24,7 +26,7 @@ class KPSearchConditionViewController: UIViewController {
                                     for: .normal);
         self.dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor;
         self.dismissButton.addTarget(self,
-                                     action: #selector(KPSettingViewController.handleDismissButtonOnTapped),
+                                     action: #selector(KPSearchConditionViewController.handleDismissButtonOnTapped),
                                      for: .touchUpInside);
         
         let barItem = UIBarButtonItem.init(customView: self.dismissButton);
@@ -34,9 +36,6 @@ class KPSearchConditionViewController: UIViewController {
                                      action: #selector(KPInformationViewController.handleDismissButtonOnTapped),
                                      for: .touchUpInside);
         
-        func handleDismissButtonOnTapped() {
-            self.appModalController()?.dismissControllerWithDefaultDuration();
-        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -44,6 +43,9 @@ class KPSearchConditionViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func handleDismissButtonOnTapped() {
+        self.appModalController()?.dismissControllerWithDefaultDuration();
+    }
 
     /*
     // MARK: - Navigation

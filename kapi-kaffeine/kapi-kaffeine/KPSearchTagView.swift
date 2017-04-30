@@ -38,7 +38,12 @@ class KPSearchTagView: UIView {
         self.preferenceHintIcon.addConstraints(fromStringArray: ["H:|-4-[$self]"]);
         self.preferenceHintIcon.addConstraintForCenterAligningToSuperview(in: .vertical);
         
+        let preferenceTapGesture = UITapGestureRecognizer.init(target: self,
+                                                               action: #selector(handlePreferenceOnTapped));
+        
+        
         self.preferenceHintLabel = UILabel();
+        self.preferenceHintLabel.isUserInteractionEnabled = true;
         self.preferenceHintLabel.font = UIFont.systemFont(ofSize: 13.0);
         self.preferenceHintLabel.textColor = KPColorPalette.KPTextColor.whiteColor;
         self.preferenceHintLabel.text = "偏好篩選";
@@ -46,6 +51,7 @@ class KPSearchTagView: UIView {
         self.preferenceHintLabel.addConstraints(fromStringArray: ["H:[$self]-8-|"],
                                      views: [self.preferenceHintIcon]);
         self.preferenceHintLabel.addConstraintForCenterAligningToSuperview(in: .vertical);
+        self.preferenceHintLabel.addGestureRecognizer(preferenceTapGesture);
         
         //Collection view
         self.collectionLayout = UICollectionViewFlowLayout();
@@ -73,6 +79,18 @@ class KPSearchTagView: UIView {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func handlePreferenceOnTapped() {
+        let controller = KPModalViewController()
+        controller.edgeInset = UIEdgeInsets.init(top: 20,
+                                                 left: 20,
+                                                 bottom: 20,
+                                                 right: 20);
+        let preferenceController = KPSearchConditionViewController()
+        let navigationController = UINavigationController.init(rootViewController: preferenceController);
+        controller.contentController = navigationController;
+        controller.presentModalView();
     }
 
 }

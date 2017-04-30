@@ -68,7 +68,8 @@ class KPModalViewController: UIViewController {
             
             if contentView != nil {
                 self.containerSensingView.addSubview(contentView);
-                contentView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"]);
+                contentView.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                             "V:|[$self]|"]);
             }
         }
     }
@@ -101,7 +102,7 @@ class KPModalViewController: UIViewController {
     }
     
     func presentModalView(_ controller: UIViewController) {
-        self.modalPresentationStyle = .fullScreen;
+        self.modalPresentationStyle = .overFullScreen;
         controller.present(self, animated: false) {
             self.setupPresentContent();
         };
@@ -111,21 +112,6 @@ class KPModalViewController: UIViewController {
         
         let duration = 0.65;
         let damping  = 0.8;
-        
-        let DemoButton = UIButton.init(type: .custom)
-        DemoButton.setImage(UIImage.init(named: "正常狀態圖片名稱喔耶"), for: .normal)
-        DemoButton.setImage(UIImage.init(named: "點擊狀態圖片名稱喔耶"), for: .highlighted)
-        DemoButton.setImage(UIImage.init(named: "不可點擊狀態圖片名稱喔耶"), for: .disabled)
-        
-        
-        switch 按鈕狀態 {
-            case 正常:
-            DemoButton.imageView?.tintColor = 正常顏色
-            case 點擊:
-            DemoButton.imageView?.tintColor = 點擊顏色
-        }
-        
-        UIImage.init(named: "123")?.withRenderingMode(.alwaysTemplate)
         
         if self.contentController.parent != nil {
             self.contentController.willMove(toParentViewController: nil);
@@ -152,7 +138,10 @@ class KPModalViewController: UIViewController {
         if self.layoutWithInset {
             self.containerSensingView.addConstraints(fromStringArray: ["V:|-($metric0)-[$self]-($metric1)-|",
                                                                        "H:|-($metric2)-[$self]-($metric3)-|"],
-                                                     metrics: [edgeInset.top, edgeInset.bottom, edgeInset.left, edgeInset.right]);
+                                                     metrics: [edgeInset.top,
+                                                               edgeInset.bottom,
+                                                               edgeInset.left,
+                                                               edgeInset.right]);
         }
         
         // Initial Position
@@ -198,6 +187,10 @@ class KPModalViewController: UIViewController {
                         self.containerSensingView.alpha = 1.0;
         }) { (_) in
             
+        }
+        
+        UIView.animate(withDuration: 0.3) { 
+            self.view.backgroundColor = KPColorPalette.KPMainColor.grayColor_level3;
         }
     }
     
