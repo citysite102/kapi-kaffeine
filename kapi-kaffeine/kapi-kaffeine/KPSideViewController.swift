@@ -124,8 +124,18 @@ class KPSideViewController: UIViewController {
                                                                                                  height: 568);
                                                             let aboutUsController = KPAboutUsViewController()
                                                             let navigationController = UINavigationController.init(rootViewController: aboutUsController);
+                                                            
+                                                            
                                                             controller.contentController = navigationController;
-                                                            controller.presentModalView();
+//                                                            controller.presentModalView();
+                                                            self.dismiss(animated: true,
+                                                                         completion: {
+                                                                            DispatchQueue.main.asyncAfter(deadline: .now()+0.2,
+                                                                                                          execute: { 
+//                                                                                   controller.presentModalView();
+                                                                            })
+//                                                                  controller.presentModalView();
+                                                            })
                                             }),
                                            informationData(title:"聯絡我們",
                                                            icon:UIImage.init(named: "icon_taitung")!,

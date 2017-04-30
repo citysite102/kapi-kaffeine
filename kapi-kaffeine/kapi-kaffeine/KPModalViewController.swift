@@ -112,6 +112,21 @@ class KPModalViewController: UIViewController {
         let duration = 0.65;
         let damping  = 0.8;
         
+        let DemoButton = UIButton.init(type: .custom)
+        DemoButton.setImage(UIImage.init(named: "正常狀態圖片名稱喔耶"), for: .normal)
+        DemoButton.setImage(UIImage.init(named: "點擊狀態圖片名稱喔耶"), for: .highlighted)
+        DemoButton.setImage(UIImage.init(named: "不可點擊狀態圖片名稱喔耶"), for: .disabled)
+        
+        
+        switch 按鈕狀態 {
+            case 正常:
+            DemoButton.imageView?.tintColor = 正常顏色
+            case 點擊:
+            DemoButton.imageView?.tintColor = 點擊顏色
+        }
+        
+        UIImage.init(named: "123")?.withRenderingMode(.alwaysTemplate)
+        
         if self.contentController.parent != nil {
             self.contentController.willMove(toParentViewController: nil);
             self.contentController.view.removeFromSuperview();

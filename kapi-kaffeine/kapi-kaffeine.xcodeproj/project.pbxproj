@@ -38,6 +38,7 @@
 		77B66FB01EAD17DA008B6652 /* KPSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B66FAF1EAD17DA008B6652 /* KPSettingViewController.swift */; };
 		77B66FB31EAF171E008B6652 /* KPAboutUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B66FB21EAF171D008B6652 /* KPAboutUsViewController.swift */; };
 		77B66FB51EAFC46B008B6652 /* KPUserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B66FB41EAFC46B008B6652 /* KPUserProfileViewController.swift */; };
+		77B66FB71EAFC9D2008B6652 /* KPSearchConditionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B66FB61EAFC9D2008B6652 /* KPSearchConditionViewController.swift */; };
 		77C0E0FA1E9D3D7500398852 /* KPSearchFooterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0E0F91E9D3D7500398852 /* KPSearchFooterCell.swift */; };
 		77C0E0FD1E9D489900398852 /* KPInformationHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0E0FC1E9D489900398852 /* KPInformationHeaderView.swift */; };
 		77C0E0FF1E9D48BC00398852 /* KPInformationSharedInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0E0FE1E9D48BC00398852 /* KPInformationSharedInfoView.swift */; };
@@ -112,6 +113,7 @@
 		77B66FAF1EAD17DA008B6652 /* KPSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSettingViewController.swift; sourceTree = "<group>"; };
 		77B66FB21EAF171D008B6652 /* KPAboutUsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPAboutUsViewController.swift; sourceTree = "<group>"; };
 		77B66FB41EAFC46B008B6652 /* KPUserProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPUserProfileViewController.swift; sourceTree = "<group>"; };
+		77B66FB61EAFC9D2008B6652 /* KPSearchConditionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSearchConditionViewController.swift; sourceTree = "<group>"; };
 		77C0E0F91E9D3D7500398852 /* KPSearchFooterCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSearchFooterCell.swift; sourceTree = "<group>"; };
 		77C0E0FC1E9D489900398852 /* KPInformationHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPInformationHeaderView.swift; sourceTree = "<group>"; };
 		77C0E0FE1E9D48BC00398852 /* KPInformationSharedInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPInformationSharedInfoView.swift; sourceTree = "<group>"; };
@@ -264,6 +266,7 @@
 			isa = PBXGroup;
 			children = (
 				776ACB001E9BB49E00B629A2 /* KPMainViewController.swift */,
+				77B66FB61EAFC9D2008B6652 /* KPSearchConditionViewController.swift */,
 				C0B49D921EA11C3200BA95D8 /* List View */,
 				C0B49D931EA11C4700BA95D8 /* Map View */,
 				776ACAED1E9BAE0200B629A2 /* View */,
@@ -276,11 +279,11 @@
 			children = (
 				77B66FAC1EAD07B9008B6652 /* Controller */,
 				77B66FA71EACF724008B6652 /* Shared View */,
-				776ACAFE1E9BB1DE00B629A2 /* KPConstant.swift */,
-				775989901EA5171A0029989C /* KPUIImageHelper.swift */,
 				77B66FA41EAA7091008B6652 /* Custom */,
 				777DCC121EA785430055525A /* Transition */,
 				77FB63941E9AA75900FFC3DC /* Model */,
+				776ACAFE1E9BB1DE00B629A2 /* KPConstant.swift */,
+				775989901EA5171A0029989C /* KPUIImageHelper.swift */,
 				C031E9061EA5F0BF00E87FB1 /* KPLocationManager.swift */,
 			);
 			name = "Shared Class";
@@ -675,6 +678,7 @@
 			files = (
 				776ACAF61E9BAFBF00B629A2 /* KPSearchTagView.swift in Sources */,
 				C031E9071EA5F0BF00E87FB1 /* KPLocationManager.swift in Sources */,
+				77B66FB71EAFC9D2008B6652 /* KPSearchConditionViewController.swift in Sources */,
 				776ACAFA1E9BB01B00B629A2 /* KPMainListViewController.swift in Sources */,
 				776ACB0B1E9C783E00B629A2 /* KPInformationViewController.swift in Sources */,
 				77C0E0FA1E9D3D7500398852 /* KPSearchFooterCell.swift in Sources */,
