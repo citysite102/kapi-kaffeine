@@ -70,13 +70,9 @@ class KPMainViewController: UIViewController {
         self.opacityView.addConstraints(fromStringArray: ["V:|[$self]|",
                                                           "H:|[$self]|"]);
         
-        
         self.searchHeaderView.menuButton.addTarget(self,
                                                    action: #selector(switchSideBar),
                                                    for: .touchUpInside)
-//        self.searchHeaderView.menuButton.addTarget(self) {
-//            self.switchSideBar();
-//        }
         self.searchHeaderView.styleButton.addTarget(self,
                                                     action: #selector(changeStyle),
                                                     for: .touchUpInside)
@@ -109,24 +105,26 @@ class KPMainViewController: UIViewController {
             }
         })
         self.opacityView.isHidden = false;
-        present(SideMenuManager.menuLeftNavigationController!, animated: true, completion: nil)
+        present(SideMenuManager.menuLeftNavigationController!,
+                animated: true, completion: nil)
     }
     
     func changeStyle() {
-        if (self.currentController == self.mainListViewController) {
-            self.currentController = self.mainMapViewController
-            self.searchHeaderView.styleButton.setImage(UIImage.init(named: "icon_list")?.withRenderingMode(.alwaysTemplate),
-                                                                        for: .normal);
-        } else {
-            self.currentController = self.mainListViewController
-            self.searchHeaderView.styleButton.setImage(UIImage.init(named: "icon_map")?.withRenderingMode(.alwaysTemplate),
-                                                       for: .normal);
-        }
+        
+        let iconImage = (self.currentController == self.mainListViewController) ?
+            R.image.icon_list()!.withRenderingMode(.alwaysTemplate) :
+            R.image.icon_map()!.withRenderingMode(.alwaysTemplate);
+        
+        self.currentController = (self.currentController == self.mainListViewController) ?
+            self.mainMapViewController :
+            self.mainListViewController;
+        self.searchHeaderView.styleButton.setImage(iconImage, for: .normal);
     }
 
     func addScreenEdgePanGestureRecognizer(view: UIView, edges: UIRectEdge) {
-        let edgePanGesture = UIScreenEdgePanGestureRecognizer(target: self,
-                                                              action: #selector(edgePanGesture(edgePanGesture:)))
+        let edgePanGesture =
+            UIScreenEdgePanGestureRecognizer(target: self,
+                                             action: #selector(edgePanGesture(edgePanGesture:)))
         edgePanGesture.edges = edges;
         view.addGestureRecognizer(edgePanGesture)
     }
@@ -143,7 +141,6 @@ class KPMainViewController: UIViewController {
             self.percentDrivenTransition.update(progress/4);
         } else if edgePanGesture.state == UIGestureRecognizerState.cancelled || edgePanGesture.state == UIGestureRecognizerState.ended {
             if progress > 0.5 {
-//                self.percentDrivenTransition.completionSpeed = 0.5;
                 self.percentDrivenTransition.finish();
             } else {
                 self.percentDrivenTransition.cancel();

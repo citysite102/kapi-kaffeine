@@ -19,6 +19,9 @@ DerivedData/
 !default.perspectivev3
 xcuserdata/
 
+## Swift library
+*.generated.swift
+
 ## Other
 *.moved-aside
 *.xcuserstate

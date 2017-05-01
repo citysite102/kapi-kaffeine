@@ -21,6 +21,7 @@ target 'kapi-kaffeine' do
 
   # Model
   pod 'ObjectMapper', '~> 2.2'
+  pod 'R.swift'
 
   # Network
   pod 'Alamofire', '~> 4.4'
