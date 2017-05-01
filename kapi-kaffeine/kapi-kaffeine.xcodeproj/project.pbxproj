@@ -31,6 +31,9 @@
 		777DCC141EA785730055525A /* KPPhotoTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777DCC131EA785730055525A /* KPPhotoTransition.swift */; };
 		777DCC161EA789A90055525A /* KPInformationTranstion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777DCC151EA789A90055525A /* KPInformationTranstion.swift */; };
 		778521811EA3C91C00EA59D9 /* KPInformationHeaderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778521801EA3C91C00EA59D9 /* KPInformationHeaderButton.swift */; };
+		77869E161EB75B5C0027CA98 /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77869E151EB75B5C0027CA98 /* NetworkClient.swift */; };
+		77869E1A1EB76F690027CA98 /* NetworkErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77869E191EB76F690027CA98 /* NetworkErrorHandler.swift */; };
+		77869E1C1EB771BC0027CA98 /* KPCafeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77869E1B1EB771BC0027CA98 /* KPCafeRequest.swift */; };
 		77B66FA11EA91477008B6652 /* KPRegionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B66FA01EA91477008B6652 /* KPRegionTableViewCell.swift */; };
 		77B66FA31EA91488008B6652 /* KPCityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B66FA21EA91488008B6652 /* KPCityTableViewCell.swift */; };
 		77B66FA61EAA70F3008B6652 /* KPBounceButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B66FA51EAA70F3008B6652 /* KPBounceButton.swift */; };
@@ -40,6 +43,10 @@
 		77B66FB31EAF171E008B6652 /* KPAboutUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B66FB21EAF171D008B6652 /* KPAboutUsViewController.swift */; };
 		77B66FB51EAFC46B008B6652 /* KPUserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B66FB41EAFC46B008B6652 /* KPUserProfileViewController.swift */; };
 		77B66FB71EAFC9D2008B6652 /* KPSearchConditionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B66FB61EAFC9D2008B6652 /* KPSearchConditionViewController.swift */; };
+		77BFC5501EB73F3E00610F55 /* NetworkRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77BFC54F1EB73F3E00610F55 /* NetworkRequest.swift */; };
+		77BFC5521EB740CE00610F55 /* KPUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77BFC5511EB740CE00610F55 /* KPUser.swift */; };
+		77BFC5561EB757E800610F55 /* KPResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77BFC5551EB757E800610F55 /* KPResponseModel.swift */; };
+		77BFC5581EB7586F00610F55 /* KPErrorResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77BFC5571EB7586F00610F55 /* KPErrorResponseModel.swift */; };
 		77C0E0FA1E9D3D7500398852 /* KPSearchFooterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0E0F91E9D3D7500398852 /* KPSearchFooterCell.swift */; };
 		77C0E0FD1E9D489900398852 /* KPInformationHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0E0FC1E9D489900398852 /* KPInformationHeaderView.swift */; };
 		77C0E0FF1E9D48BC00398852 /* KPInformationSharedInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0E0FE1E9D48BC00398852 /* KPInformationSharedInfoView.swift */; };
@@ -107,6 +114,9 @@
 		777DCC131EA785730055525A /* KPPhotoTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPPhotoTransition.swift; sourceTree = "<group>"; };
 		777DCC151EA789A90055525A /* KPInformationTranstion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPInformationTranstion.swift; sourceTree = "<group>"; };
 		778521801EA3C91C00EA59D9 /* KPInformationHeaderButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPInformationHeaderButton.swift; sourceTree = "<group>"; };
+		77869E151EB75B5C0027CA98 /* NetworkClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
+		77869E191EB76F690027CA98 /* NetworkErrorHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkErrorHandler.swift; sourceTree = "<group>"; };
+		77869E1B1EB771BC0027CA98 /* KPCafeRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPCafeRequest.swift; sourceTree = "<group>"; };
 		77B66FA01EA91477008B6652 /* KPRegionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPRegionTableViewCell.swift; sourceTree = "<group>"; };
 		77B66FA21EA91488008B6652 /* KPCityTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPCityTableViewCell.swift; sourceTree = "<group>"; };
 		77B66FA51EAA70F3008B6652 /* KPBounceButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPBounceButton.swift; sourceTree = "<group>"; };
@@ -116,6 +126,10 @@
 		77B66FB21EAF171D008B6652 /* KPAboutUsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPAboutUsViewController.swift; sourceTree = "<group>"; };
 		77B66FB41EAFC46B008B6652 /* KPUserProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPUserProfileViewController.swift; sourceTree = "<group>"; };
 		77B66FB61EAFC9D2008B6652 /* KPSearchConditionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSearchConditionViewController.swift; sourceTree = "<group>"; };
+		77BFC54F1EB73F3E00610F55 /* NetworkRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkRequest.swift; sourceTree = "<group>"; };
+		77BFC5511EB740CE00610F55 /* KPUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPUser.swift; sourceTree = "<group>"; };
+		77BFC5551EB757E800610F55 /* KPResponseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPResponseModel.swift; sourceTree = "<group>"; };
+		77BFC5571EB7586F00610F55 /* KPErrorResponseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPErrorResponseModel.swift; sourceTree = "<group>"; };
 		77C0E0F91E9D3D7500398852 /* KPSearchFooterCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSearchFooterCell.swift; sourceTree = "<group>"; };
 		77C0E0FC1E9D489900398852 /* KPInformationHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPInformationHeaderView.swift; sourceTree = "<group>"; };
 		77C0E0FE1E9D48BC00398852 /* KPInformationSharedInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPInformationSharedInfoView.swift; sourceTree = "<group>"; };
@@ -319,6 +333,25 @@
 			name = Transition;
 			sourceTree = "<group>";
 		};
+		77869E171EB75F1E0027CA98 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				77BFC5551EB757E800610F55 /* KPResponseModel.swift */,
+				77BFC5571EB7586F00610F55 /* KPErrorResponseModel.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		77869E181EB76EDD0027CA98 /* Basic */ = {
+			isa = PBXGroup;
+			children = (
+				77BFC54F1EB73F3E00610F55 /* NetworkRequest.swift */,
+				77869E151EB75B5C0027CA98 /* NetworkClient.swift */,
+				77869E191EB76F690027CA98 /* NetworkErrorHandler.swift */,
+			);
+			name = Basic;
+			sourceTree = "<group>";
+		};
 		77B66F9F1EA91451008B6652 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -362,6 +395,17 @@
 			name = "Sub Controller";
 			sourceTree = "<group>";
 		};
+		77BFC54E1EB73D5800610F55 /* kapi-service */ = {
+			isa = PBXGroup;
+			children = (
+				77869E181EB76EDD0027CA98 /* Basic */,
+				77869E171EB75F1E0027CA98 /* Model */,
+				77BFC5511EB740CE00610F55 /* KPUser.swift */,
+				77869E1B1EB771BC0027CA98 /* KPCafeRequest.swift */,
+			);
+			name = "kapi-service";
+			sourceTree = "<group>";
+		};
 		77C0E0FB1E9D487800398852 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -399,6 +443,7 @@
 			isa = PBXGroup;
 			children = (
 				C02AFE431E7D260D008FFB33 /* kapi-kaffeine */,
+				77BFC54E1EB73D5800610F55 /* kapi-service */,
 				C02AFE581E7D260D008FFB33 /* kapi-kaffeineTests */,
 				C02AFE631E7D260D008FFB33 /* kapi-kaffeineUITests */,
 				C02AFE421E7D260D008FFB33 /* Products */,
@@ -711,9 +756,11 @@
 				77B66FB01EAD17DA008B6652 /* KPSettingViewController.swift in Sources */,
 				77C0E1051E9D48F500398852 /* KPShopLocationInfoView.swift in Sources */,
 				776ACAF41E9BAFA200B629A2 /* KPSearchHeaderView.swift in Sources */,
+				77BFC5521EB740CE00610F55 /* KPUser.swift in Sources */,
 				774208F11EA5F04B00C78A00 /* KPShopPhotoCell.swift in Sources */,
 				77B66FA31EA91488008B6652 /* KPCityTableViewCell.swift in Sources */,
 				774208F91EA675C800C78A00 /* KPCommentModel.swift in Sources */,
+				77BFC5561EB757E800610F55 /* KPResponseModel.swift in Sources */,
 				C0B49D971EA13BC100BA95D8 /* KPMainMapViewCollectionCell.swift in Sources */,
 				776ACB061E9BE33A00B629A2 /* KPMainListTableViewCell.swift in Sources */,
 				776ACAFC1E9BB02D00B629A2 /* KPMainMapViewController.swift in Sources */,
@@ -731,14 +778,19 @@
 				C02AFE451E7D260D008FFB33 /* AppDelegate.swift in Sources */,
 				770AB5D31EB70E8E00EE8A3B /* R.generated.swift in Sources */,
 				776ACAF81E9BAFE900B629A2 /* KPSearchFooterView.swift in Sources */,
+				77BFC5501EB73F3E00610F55 /* NetworkRequest.swift in Sources */,
 				778521811EA3C91C00EA59D9 /* KPInformationHeaderButton.swift in Sources */,
 				77B66FA11EA91477008B6652 /* KPRegionTableViewCell.swift in Sources */,
+				77869E1C1EB771BC0027CA98 /* KPCafeRequest.swift in Sources */,
 				7730B5721EA8676F00D6CD55 /* KPInformationDismissTransition.swift in Sources */,
 				77C0E10C1E9D494400398852 /* KPShopPhotoInfoView.swift in Sources */,
 				77B66FA61EAA70F3008B6652 /* KPBounceButton.swift in Sources */,
 				776ACB081E9BE51600B629A2 /* KPMainListCellFeatureContainer.swift in Sources */,
+				77869E1A1EB76F690027CA98 /* NetworkErrorHandler.swift in Sources */,
+				77869E161EB75B5C0027CA98 /* NetworkClient.swift in Sources */,
 				77B66FA91EACF74C008B6652 /* KPPopoverSensingView.swift in Sources */,
 				77FB63961E9AA7BB00FFC3DC /* KPDataModel.swift in Sources */,
+				77BFC5581EB7586F00610F55 /* KPErrorResponseModel.swift in Sources */,
 				776ACAFF1E9BB1DE00B629A2 /* KPConstant.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

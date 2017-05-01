@@ -21,10 +21,14 @@ target 'kapi-kaffeine' do
 
   # Model
   pod 'ObjectMapper', '~> 2.2'
+  pod 'AlamofireObjectMapper', '~> 4.0'
   pod 'R.swift'
 
   # Network
   pod 'Alamofire', '~> 4.4'
   pod 'AlamofireImage'
+
+  swift_version = "3.0"
+  pod "PromiseKit", "~> 4.0"
 
 end
