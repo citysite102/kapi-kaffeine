@@ -23,6 +23,7 @@ target 'kapi-kaffeine' do
   pod 'ObjectMapper', '~> 2.2'
   pod 'AlamofireObjectMapper', '~> 4.0'
   pod 'R.swift'
+  pod 'SwiftyJSON'
 
   # Network
   pod 'Alamofire', '~> 4.4'

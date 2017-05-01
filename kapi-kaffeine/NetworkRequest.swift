@@ -9,6 +9,7 @@
 import Foundation
 import Alamofire
 import ObjectMapper
+import SwiftyJSON
 
 public struct errorInformation {
     
@@ -33,6 +34,8 @@ public enum NetworkRequestError: Error {
     case noNetworkConnection
 }
 
+public typealias RawJsonResult = JSON
+
 public protocol NetworkRequest {
     
     associatedtype ResponseType
@@ -44,9 +47,6 @@ public protocol NetworkRequest {
     
     /// Will transform given data to requested type of response.
     var responseHandler: (Data) throws -> ResponseType { get }
-    
-    /// Will transform given data to requested array of type of responses.
-    var arrayResponseHandler: (Data) throws -> [ResponseType] { get }
     
     // Optional
     var baseURL: String { get }
@@ -83,8 +83,8 @@ extension NetworkRequest {
 
 extension NetworkRequest where ResponseType: Mappable {
     
-    internal var responseHandler: (Data) throws -> ResponseType { return jsonResponseHandler }
-    internal var arrayResponseHandler: (Data) throws -> [ResponseType] { return jsonArrayResponseHandler }
+    public var responseHandler: (Data) throws -> ResponseType { return jsonResponseHandler }
+    public var arrayResponseHandler: (Data) throws -> [ResponseType] { return jsonArrayResponseHandler }
     
     private func jsonResponseHandler(_ data: Data) throws -> ResponseType {
         let json = String(data: data, encoding: String.Encoding.utf8)
@@ -103,6 +103,15 @@ extension NetworkRequest where ResponseType: Mappable {
         } else {
             throw NetworkRequestError.invalidData
         }
+    }
+}
+
+extension NetworkRequest where ResponseType == RawJsonResult {
+    
+    public var responseHandler: (Data) throws -> ResponseType { return rawJsonResponseHandler }
+
+    private func rawJsonResponseHandler(_ data: Data) throws -> ResponseType {
+        return JSON(data: data)
     }
 }
 

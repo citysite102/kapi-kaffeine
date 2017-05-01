@@ -34,6 +34,7 @@
 		77869E161EB75B5C0027CA98 /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77869E151EB75B5C0027CA98 /* NetworkClient.swift */; };
 		77869E1A1EB76F690027CA98 /* NetworkErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77869E191EB76F690027CA98 /* NetworkErrorHandler.swift */; };
 		77869E1C1EB771BC0027CA98 /* KPCafeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77869E1B1EB771BC0027CA98 /* KPCafeRequest.swift */; };
+		77869E1E1EB79CF40027CA98 /* KPSimpleRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77869E1D1EB79CF40027CA98 /* KPSimpleRequest.swift */; };
 		77B66FA11EA91477008B6652 /* KPRegionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B66FA01EA91477008B6652 /* KPRegionTableViewCell.swift */; };
 		77B66FA31EA91488008B6652 /* KPCityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B66FA21EA91488008B6652 /* KPCityTableViewCell.swift */; };
 		77B66FA61EAA70F3008B6652 /* KPBounceButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B66FA51EAA70F3008B6652 /* KPBounceButton.swift */; };
@@ -117,6 +118,7 @@
 		77869E151EB75B5C0027CA98 /* NetworkClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
 		77869E191EB76F690027CA98 /* NetworkErrorHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkErrorHandler.swift; sourceTree = "<group>"; };
 		77869E1B1EB771BC0027CA98 /* KPCafeRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPCafeRequest.swift; sourceTree = "<group>"; };
+		77869E1D1EB79CF40027CA98 /* KPSimpleRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSimpleRequest.swift; sourceTree = "<group>"; };
 		77B66FA01EA91477008B6652 /* KPRegionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPRegionTableViewCell.swift; sourceTree = "<group>"; };
 		77B66FA21EA91488008B6652 /* KPCityTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPCityTableViewCell.swift; sourceTree = "<group>"; };
 		77B66FA51EAA70F3008B6652 /* KPBounceButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPBounceButton.swift; sourceTree = "<group>"; };
@@ -401,6 +403,7 @@
 				77869E181EB76EDD0027CA98 /* Basic */,
 				77869E171EB75F1E0027CA98 /* Model */,
 				77BFC5511EB740CE00610F55 /* KPUser.swift */,
+				77869E1D1EB79CF40027CA98 /* KPSimpleRequest.swift */,
 				77869E1B1EB771BC0027CA98 /* KPCafeRequest.swift */,
 			);
 			name = "kapi-service";
@@ -776,6 +779,7 @@
 				774208F71EA61D4400C78A00 /* KPShopRecommendView.swift in Sources */,
 				777DCC141EA785730055525A /* KPPhotoTransition.swift in Sources */,
 				C02AFE451E7D260D008FFB33 /* AppDelegate.swift in Sources */,
+				77869E1E1EB79CF40027CA98 /* KPSimpleRequest.swift in Sources */,
 				770AB5D31EB70E8E00EE8A3B /* R.generated.swift in Sources */,
 				776ACAF81E9BAFE900B629A2 /* KPSearchFooterView.swift in Sources */,
 				77BFC5501EB73F3E00610F55 /* NetworkRequest.swift in Sources */,
