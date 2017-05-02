@@ -9,6 +9,7 @@
 import UIKit
 import AlamofireImage
 import ObjectMapper
+import PromiseKit
 
 class KPMainListViewController: UIViewController, KPMainViewControllerDelegate {
     
@@ -59,6 +60,15 @@ class KPMainListViewController: UIViewController, KPMainViewControllerDelegate {
                 print("Failed to load cafes.json file")
             }
         }
+        
+        let request: KPCafeRequest = KPCafeRequest()
+        request.perform(1, 1, 1, "忠孝敦化", "taipei")
+            .then { resultArray in
+                print("Result")
+            }.catch { error in
+                print("Error")
+            }
+        
     }
 
     override func didReceiveMemoryWarning() {
