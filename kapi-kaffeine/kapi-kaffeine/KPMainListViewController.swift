@@ -24,7 +24,7 @@ class KPMainListViewController: UIViewController, KPMainViewControllerDelegate {
         return self.currentDataModel
     }
     
-    var displayDataModel: [KPDataModel]! {
+    var displayDataModel: [KPDataModel] = [KPDataModel]() {
         didSet {
             self.tableView.reloadData();
         }
@@ -50,25 +50,6 @@ class KPMainListViewController: UIViewController, KPMainViewControllerDelegate {
         self.view.addSubview(searchFooterView);
         self.searchFooterView.addConstraints(fromStringArray: ["V:[$view0][$self(40)]|", "H:|[$self]|"],
                                              views:[self.tableView]);
-        
-        if let dataURL = Bundle.main.url(forResource: "cafes",
-                                         withExtension: "json") {
-            do {
-                let data = try String(contentsOf: dataURL)
-                self.displayDataModel = Mapper<KPDataModel>().mapArray(JSONString: data) ?? []
-            } catch {
-                print("Failed to load cafes.json file")
-            }
-        }
-        
-        let request: KPCafeRequest = KPCafeRequest()
-        request.perform(1, 1, 1, "忠孝敦化", "taipei")
-            .then { resultArray in
-                print("Result")
-            }.catch { error in
-                print("Error")
-            }
-        
     }
 
     override func didReceiveMemoryWarning() {

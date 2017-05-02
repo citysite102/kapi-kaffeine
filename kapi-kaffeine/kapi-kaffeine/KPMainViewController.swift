@@ -8,7 +8,7 @@
 
 import UIKit
 import SideMenu
-
+import PromiseKit
 
 protocol KPMainViewControllerDelegate {
     var selectedDataModel: KPDataModel? { get }
@@ -20,7 +20,16 @@ class KPMainViewController: UIViewController {
     var sideBarController: KPSideViewController!
     var opacityView: UIView!
     var percentDrivenTransition: UIPercentDrivenInteractiveTransition!;
+    var mainListViewController:KPMainListViewController?
+    var mainMapViewController:KPMainMapViewController?
     
+    var displayDataModel: [KPDataModel]! {
+        didSet {
+            self.mainListViewController?.displayDataModel = displayDataModel
+            self.mainMapViewController?.displayDataModel = displayDataModel
+        }
+    }
+
     var currentController: UIViewController! {
         didSet {
             
@@ -41,9 +50,6 @@ class KPMainViewController: UIViewController {
             }
         }
     }
-    
-    var mainListViewController:KPMainListViewController!
-    var mainMapViewController:KPMainMapViewController!
         
     override func viewDidLoad() {
         super.viewDidLoad();
@@ -52,8 +58,9 @@ class KPMainViewController: UIViewController {
         self.mainMapViewController = KPMainMapViewController();
         self.sideBarController = KPSideViewController();
         self.sideBarController.mainController = self;
-        self.mainListViewController.mainController = self;
-        self.mainMapViewController.mainController = self;
+        
+        self.mainListViewController!.mainController = self;
+        self.mainMapViewController!.mainController = self;
         
         self.currentController = self.mainListViewController;
         
@@ -88,13 +95,22 @@ class KPMainViewController: UIViewController {
         SideMenuManager.menuAnimationTransformScaleFactor = 0.96;
         SideMenuManager.menuAnimationBackgroundColor = UIColor.black;
         SideMenuManager.menuWidth = 260;
+        
+        
+        let KapiDataRequest = KPNomadRequest();
+        KapiDataRequest.perform().then { resultArray -> Void in
+                self.mainMapViewController?.displayDataModel = resultArray
+                self.mainListViewController?.displayDataModel = resultArray
+            }.catch { error in
+                print("Error");
+            }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated);
         
-        if let indexPath = self.mainListViewController.tableView.indexPathForSelectedRow {
-            self.mainListViewController.tableView.deselectRow(at: indexPath, animated: false);
+        if let indexPath = self.mainListViewController!.tableView.indexPathForSelectedRow {
+            self.mainListViewController!.tableView.deselectRow(at: indexPath, animated: false);
         }
     }
     

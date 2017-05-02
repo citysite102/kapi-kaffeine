@@ -25,8 +25,6 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate, UICollectio
         return self.currentDataModel
     }
     
-    
-    
     var isCollectionViewShow: Bool = false {
         didSet {
             if self.collectionViewBottomConstraint != nil {
@@ -45,7 +43,7 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate, UICollectio
     var collectionViewBottomConstraint: NSLayoutConstraint!
     
     var mapMarkers: [GMSMarker] = []
-    var displayDataModel: [KPDataModel]! {
+    var displayDataModel: [KPDataModel] = [KPDataModel]() {
         didSet {
             (self.view as! GMSMapView).clear()
             self.mapMarkers = []
@@ -114,16 +112,6 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate, UICollectio
         self.view.addSubview(self.collectionView)
         self.collectionView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$self(120)]"])
         self.collectionViewBottomConstraint = self.collectionView.addConstraintForAligning(to: .bottom, of: self.view, constant: 120).first as! NSLayoutConstraint
-
-        
-        if let dataURL = Bundle.main.url(forResource: "cafes", withExtension: "json") {
-            do {
-                let data = try String(contentsOf: dataURL)
-                self.displayDataModel = Mapper<KPDataModel>().mapArray(JSONString: data) ?? []
-            } catch {
-                print("Failed to load cafes.json file")
-            }
-        }
         
         let currentLocationButton = UIButton(type: .custom)
         currentLocationButton.setImage(UIImage(named: "icon_currentLocation"), for: .normal)
