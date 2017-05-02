@@ -14,6 +14,54 @@ class KPSearchConditionViewController: UIViewController {
     var scrollView: UIScrollView!
     var containerView: UIView!
     
+    
+    // 快速設定
+    lazy var quickSettingLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 14.0)
+        label.textColor = KPColorPalette.KPTextColor.grayColor
+        label.text = "使用快速設定"
+        return label
+    }()
+    
+    var quickSettingButtonOne: UIButton!
+    var quickSettingButtonTwo: UIButton!
+    var quickSettingButtonThree: UIButton!
+    lazy var seperator: UIView = {
+        let view = UIView()
+        view.backgroundColor = KPColorPalette.KPMainColor.grayColor_level6
+        return view
+    }()
+    
+    func buttonWithTitle(title: String) -> UIButton {
+        let button = UIButton()
+        button.setTitle(title, for: .normal)
+        button.setTitleColor(KPColorPalette.KPMainColor.buttonColor!,
+                             for: .normal)
+        button.setTitleColor(UIColor.white,
+                             for: .selected)
+        button.setBackgroundImage(UIImage.init(color: UIColor.white),
+                                  for: .normal)
+        button.setBackgroundImage(UIImage.init(color: KPColorPalette.KPMainColor.buttonColor!),
+                                  for: .selected)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        button.layer.cornerRadius = 18.0
+        button.layer.borderWidth = 2.0
+        button.layer.borderColor = KPColorPalette.KPMainColor.buttonColor?.cgColor
+        return button
+    }
+    
+    // 分數區
+    lazy var adjustPointLabel: UILabel = {
+        let label = UILabel();
+        label.font = UIFont.systemFont(ofSize: 14.0)
+        label.textColor = KPColorPalette.KPTextColor.grayColor
+        label.text = "調整分數至你的需求"
+        return label;
+    }()
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -36,6 +84,43 @@ class KPSearchConditionViewController: UIViewController {
                                      action: #selector(KPInformationViewController.handleDismissButtonOnTapped),
                                      for: .touchUpInside);
         
+        self.scrollView = UIScrollView();
+        self.scrollView.showsVerticalScrollIndicator = false;
+        self.view.addSubview(self.scrollView);
+        self.scrollView.addConstraints(fromStringArray: ["V:|[$self]|",
+                                                         "H:|[$self]|"]);
+        self.scrollView.addConstraintForCenterAligningToSuperview(in: .horizontal);
+        
+        
+        self.containerView = UIView();
+        self.scrollView.addSubview(self.containerView);
+        self.containerView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self(500)]|"]);
+        self.containerView.addConstraintForHavingSameWidth(with: self.view);
+        
+        self.containerView.addSubview(self.quickSettingLabel)
+        self.quickSettingLabel.addConstraints(fromStringArray: ["H:|-16-[$self]",
+                                                                "V:|-16-[$self]"])
+        
+        self.quickSettingButtonOne = self.buttonWithTitle(title: "適合讀書工作")
+        self.quickSettingButtonTwo = self.buttonWithTitle(title: "C/P值高")
+        self.quickSettingButtonThree = self.buttonWithTitle(title: "平均四分")
+        self.containerView.addSubview(self.quickSettingButtonOne)
+        self.containerView.addSubview(self.quickSettingButtonTwo)
+        self.containerView.addSubview(self.quickSettingButtonThree)
+        
+        self.quickSettingButtonOne.addConstraints(fromStringArray: ["H:|-16-[$self(110)]",
+                                                                    "V:[$view0]-8-[$self(36)]"],
+                                                  views: [self.quickSettingLabel])
+        self.quickSettingButtonTwo.addConstraints(fromStringArray: ["H:[$view1]-8-[$self(80)]",
+                                                                    "V:[$view0]-8-[$self(36)]"],
+                                                  views: [self.quickSettingLabel, self.quickSettingButtonOne])
+        self.quickSettingButtonThree.addConstraints(fromStringArray: ["H:[$view1]-8-[$self(80)]",
+                                                                      "V:[$view0]-8-[$self(36)]"],
+                                                    views: [self.quickSettingLabel, self.quickSettingButtonTwo])
+        self.containerView.addSubview(self.seperator)
+        self.seperator.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                        "V:[$view0]-16-[$self(1)]"],
+                                      views: [self.quickSettingButtonOne])
     }
 
     override func didReceiveMemoryWarning() {

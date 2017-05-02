@@ -87,7 +87,7 @@ class KPAboutUsViewController: UIViewController {
                                      action: #selector(KPInformationViewController.handleDismissButtonOnTapped),
                                      for: .touchUpInside);
 
-        let navigationBarHeight = self.navigationController?.navigationBar.frame.height;
+//        let navigationBarHeight = self.navigationController?.navigationBar.frame.height;
         
         self.scrollView = UIScrollView();
         self.scrollView.showsVerticalScrollIndicator = false;

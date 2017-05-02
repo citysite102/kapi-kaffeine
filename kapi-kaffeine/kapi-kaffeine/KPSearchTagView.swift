@@ -39,7 +39,7 @@ class KPSearchTagView: UIView {
         self.preferenceHintIcon.addConstraintForCenterAligningToSuperview(in: .vertical);
         
         let preferenceTapGesture = UITapGestureRecognizer.init(target: self,
-                                                               action: #selector(handlePreferenceOnTapped));
+                                                               action: #selector(handlePreferenceButtonOnTapped));
         
         
         self.preferenceHintLabel = UILabel();
@@ -81,12 +81,12 @@ class KPSearchTagView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func handlePreferenceOnTapped() {
+    func handlePreferenceButtonOnTapped() {
         let controller = KPModalViewController()
-        controller.edgeInset = UIEdgeInsets.init(top: 20,
-                                                 left: 20,
-                                                 bottom: 20,
-                                                 right: 20);
+        controller.edgeInset = UIEdgeInsets.init(top: 0,
+                                                 left: 0,
+                                                 bottom: 0,
+                                                 right: 0);
         let preferenceController = KPSearchConditionViewController()
         let navigationController = UINavigationController.init(rootViewController: preferenceController);
         controller.contentController = navigationController;
