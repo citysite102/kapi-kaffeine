@@ -15,6 +15,11 @@ class KPSearchConditionViewController: UIViewController {
     var containerView: UIView!
     
     
+    var ratingTitles = ["Wifi穩定", "安靜程度",
+                        "價格實惠", "座位數量",
+                        "咖啡品質", "餐點美味", "環境舒適"]
+    var ratingViews = [KPRatingView]()
+    
     // 快速設定
     lazy var quickSettingLabel: UILabel = {
         let label = UILabel()
@@ -27,7 +32,14 @@ class KPSearchConditionViewController: UIViewController {
     var quickSettingButtonOne: UIButton!
     var quickSettingButtonTwo: UIButton!
     var quickSettingButtonThree: UIButton!
-    lazy var seperator: UIView = {
+    
+    lazy var seperator_one: UIView = {
+        let view = UIView()
+        view.backgroundColor = KPColorPalette.KPMainColor.grayColor_level6
+        return view
+    }()
+    
+    lazy var seperator_two: UIView = {
         let view = UIView()
         view.backgroundColor = KPColorPalette.KPMainColor.grayColor_level6
         return view
@@ -97,6 +109,8 @@ class KPSearchConditionViewController: UIViewController {
         self.containerView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self(500)]|"]);
         self.containerView.addConstraintForHavingSameWidth(with: self.view);
         
+        
+        // Section 1
         self.containerView.addSubview(self.quickSettingLabel)
         self.quickSettingLabel.addConstraints(fromStringArray: ["H:|-16-[$self]",
                                                                 "V:|-16-[$self]"])
@@ -117,10 +131,43 @@ class KPSearchConditionViewController: UIViewController {
         self.quickSettingButtonThree.addConstraints(fromStringArray: ["H:[$view1]-8-[$self(80)]",
                                                                       "V:[$view0]-8-[$self(36)]"],
                                                     views: [self.quickSettingLabel, self.quickSettingButtonTwo])
-        self.containerView.addSubview(self.seperator)
-        self.seperator.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                        "V:[$view0]-16-[$self(1)]"],
-                                      views: [self.quickSettingButtonOne])
+        self.containerView.addSubview(self.seperator_one)
+        self.seperator_one.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                            "V:[$view0]-16-[$self(1)]"],
+                                          views: [self.quickSettingButtonOne])
+        
+        
+        // Section 2
+        self.containerView.addSubview(self.adjustPointLabel)
+        self.adjustPointLabel.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
+                                                               "V:[$view0]-16-[$self]"],
+                                             views: [self.seperator_one])
+        
+        for (index, title) in ratingTitles.enumerated() {
+            let ratingView = KPRatingView.init(.button,
+                                               R.image.icon_map()!,
+                                               title)
+            self.ratingViews.append(ratingView)
+            self.containerView.addSubview(ratingView)
+            
+            if index == 0 {
+                ratingView.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
+                                                            "V:[$view0]-24-[$self]"],
+                                          views: [self.adjustPointLabel])
+            } else {
+                ratingView.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
+                                                            "V:[$view0]-24-[$self]"],
+                                          views: [self.ratingViews[index-1]])
+            }
+        }
+        
+        self.containerView.addSubview(self.seperator_two)
+        self.seperator_two.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                            "V:[$view0]-16-[$self(1)]"],
+                                          views: [self.ratingViews.last!])
+        
+        // Section 3
+        
     }
 
     override func didReceiveMemoryWarning() {
