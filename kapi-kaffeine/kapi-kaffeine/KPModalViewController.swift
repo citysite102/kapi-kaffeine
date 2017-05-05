@@ -9,11 +9,11 @@
 import UIKit
 
 
-enum KPModalPresentationStyle {
-    case bottom
-    case top
-    case none
-    case popout
+enum KPModalPresentationStyle: String, RawRepresentable {
+    case bottom = "Bottom"
+    case top = "Top"
+    case none = "None"
+    case popout = "Popout"
 }
 
 protocol KPModalControllerDelegate: NSObjectProtocol {

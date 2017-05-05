@@ -15,20 +15,15 @@ class KPSearchConditionViewController: UIViewController {
     var containerView: UIView!
     
     
+//    var ratingTitles = ["Wifi穩定", "安靜程度",
+//                        "價格實惠", "座位數量",
+//                        "咖啡品質", "餐點美味", "環境舒適"]
     var ratingTitles = ["Wifi穩定", "安靜程度",
-                        "價格實惠", "座位數量",
-                        "咖啡品質", "餐點美味", "環境舒適"]
+                        "價格實惠", "座位數量"]
     var ratingViews = [KPRatingView]()
     
-    // 快速設定
-    lazy var quickSettingLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14.0)
-        label.textColor = KPColorPalette.KPTextColor.grayColor
-        label.text = "使用快速設定"
-        return label
-    }()
-    
+    // Section 1
+    var quickSettingLabel: UILabel!
     var quickSettingButtonOne: UIButton!
     var quickSettingButtonTwo: UIButton!
     var quickSettingButtonThree: UIButton!
@@ -39,11 +34,22 @@ class KPSearchConditionViewController: UIViewController {
         return view
     }()
     
+    // Section 2
+    var adjustPointLabel: UILabel!
+    
     lazy var seperator_two: UIView = {
         let view = UIView()
         view.backgroundColor = KPColorPalette.KPMainColor.grayColor_level6
         return view
     }()
+    
+    // Section 3
+    var timeLimitLabel: UILabel!
+    var socketLabel: UILabel!
+    var businessHourLabel: UILabel!
+    var othersLabel: UILabel!
+    
+    
     
     func buttonWithTitle(title: String) -> UIButton {
         let button = UIButton()
@@ -63,15 +69,13 @@ class KPSearchConditionViewController: UIViewController {
         return button
     }
     
-    // 分數區
-    lazy var adjustPointLabel: UILabel = {
+    func titleLabel(_ title: String) -> UILabel {
         let label = UILabel();
         label.font = UIFont.systemFont(ofSize: 14.0)
         label.textColor = KPColorPalette.KPTextColor.grayColor
-        label.text = "調整分數至你的需求"
+        label.text = title
         return label;
-    }()
-    
+    }
     
     
     override func viewDidLoad() {
@@ -111,13 +115,14 @@ class KPSearchConditionViewController: UIViewController {
         
         
         // Section 1
+        self.quickSettingLabel = titleLabel("使用快速設定")
         self.containerView.addSubview(self.quickSettingLabel)
         self.quickSettingLabel.addConstraints(fromStringArray: ["H:|-16-[$self]",
                                                                 "V:|-16-[$self]"])
         
-        self.quickSettingButtonOne = self.buttonWithTitle(title: "適合讀書工作")
-        self.quickSettingButtonTwo = self.buttonWithTitle(title: "C/P值高")
-        self.quickSettingButtonThree = self.buttonWithTitle(title: "平均四分")
+        self.quickSettingButtonOne = buttonWithTitle(title: "適合讀書工作")
+        self.quickSettingButtonTwo = buttonWithTitle(title: "C/P值高")
+        self.quickSettingButtonThree = buttonWithTitle(title: "平均四分")
         self.containerView.addSubview(self.quickSettingButtonOne)
         self.containerView.addSubview(self.quickSettingButtonTwo)
         self.containerView.addSubview(self.quickSettingButtonThree)
@@ -138,6 +143,7 @@ class KPSearchConditionViewController: UIViewController {
         
         
         // Section 2
+        self.adjustPointLabel = titleLabel("調整分數至你的需求")
         self.containerView.addSubview(self.adjustPointLabel)
         self.adjustPointLabel.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
                                                                "V:[$view0]-16-[$self]"],
@@ -167,6 +173,12 @@ class KPSearchConditionViewController: UIViewController {
                                           views: [self.ratingViews.last!])
         
         // Section 3
+        let checkBox = KPCheckBox()
+        checkBox.setMarkType(markType: .radio, animated: true)
+        self.containerView.addSubview(checkBox)
+        checkBox.addConstraints(fromStringArray: ["H:|-16-[$self(24)]",
+                                                  "V:[$view0]-16-[$self(24)]"],
+                                views: [self.seperator_two])
         
     }
 

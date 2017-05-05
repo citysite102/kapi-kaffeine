@@ -9,6 +9,12 @@
 /* Begin PBXBuildFile section */
 		4EEB682CBA070A438BA23B29 /* Pods_kapi_kaffeine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 693D5C21ACB83D68DF6CDE6C /* Pods_kapi_kaffeine.framework */; };
 		770AB5D31EB70E8E00EE8A3B /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770AB5D21EB70E8E00EE8A3B /* R.generated.swift */; };
+		771EECA41EBC217B004A34B8 /* KPCheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771EECA31EBC217B004A34B8 /* KPCheckBox.swift */; };
+		771EECAA1EBC3106004A34B8 /* KPCheckBoxController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771EECA91EBC3106004A34B8 /* KPCheckBoxController.swift */; };
+		771EECAC1EBC3124004A34B8 /* KPCheckBoxBounceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771EECAB1EBC3124004A34B8 /* KPCheckBoxBounceController.swift */; };
+		771EECAF1EBC3177004A34B8 /* KPCheckBoxAnimationGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771EECAE1EBC3177004A34B8 /* KPCheckBoxAnimationGenerator.swift */; };
+		771EECB11EBC3291004A34B8 /* KPCheckBoxPathGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771EECB01EBC3291004A34B8 /* KPCheckBoxPathGenerator.swift */; };
+		771EECB31EBC32E4004A34B8 /* KPCheckBoxRadioPathGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771EECB21EBC32E4004A34B8 /* KPCheckBoxRadioPathGenerator.swift */; };
 		7730B5721EA8676F00D6CD55 /* KPInformationDismissTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7730B5711EA8676F00D6CD55 /* KPInformationDismissTransition.swift */; };
 		774208ED1EA5B97300C78A00 /* KPShopCommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774208EC1EA5B97300C78A00 /* KPShopCommentCell.swift */; };
 		774208F11EA5F04B00C78A00 /* KPShopPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774208F01EA5F04B00C78A00 /* KPShopPhotoCell.swift */; };
@@ -95,6 +101,12 @@
 		605CB2E5F236FDDFFE502CB5 /* Pods-kapi-kaffeine.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kapi-kaffeine.release.xcconfig"; path = "../Pods/Target Support Files/Pods-kapi-kaffeine/Pods-kapi-kaffeine.release.xcconfig"; sourceTree = "<group>"; };
 		693D5C21ACB83D68DF6CDE6C /* Pods_kapi_kaffeine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_kapi_kaffeine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		770AB5D21EB70E8E00EE8A3B /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = SOURCE_ROOT; };
+		771EECA31EBC217B004A34B8 /* KPCheckBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPCheckBox.swift; sourceTree = "<group>"; };
+		771EECA91EBC3106004A34B8 /* KPCheckBoxController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPCheckBoxController.swift; sourceTree = "<group>"; };
+		771EECAB1EBC3124004A34B8 /* KPCheckBoxBounceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPCheckBoxBounceController.swift; sourceTree = "<group>"; };
+		771EECAE1EBC3177004A34B8 /* KPCheckBoxAnimationGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPCheckBoxAnimationGenerator.swift; sourceTree = "<group>"; };
+		771EECB01EBC3291004A34B8 /* KPCheckBoxPathGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPCheckBoxPathGenerator.swift; sourceTree = "<group>"; };
+		771EECB21EBC32E4004A34B8 /* KPCheckBoxRadioPathGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPCheckBoxRadioPathGenerator.swift; sourceTree = "<group>"; };
 		7730B5711EA8676F00D6CD55 /* KPInformationDismissTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPInformationDismissTransition.swift; sourceTree = "<group>"; };
 		774208EC1EA5B97300C78A00 /* KPShopCommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPShopCommentCell.swift; sourceTree = "<group>"; };
 		774208F01EA5F04B00C78A00 /* KPShopPhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPShopPhotoCell.swift; sourceTree = "<group>"; };
@@ -212,6 +224,43 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		771EECA51EBC27BE004A34B8 /* CheckBox */ = {
+			isa = PBXGroup;
+			children = (
+				771EECAD1EBC3162004A34B8 /* Animation Generator */,
+				771EECA81EBC30F4004A34B8 /* Controller */,
+				771EECA61EBC27C6004A34B8 /* Path Generators */,
+				771EECA31EBC217B004A34B8 /* KPCheckBox.swift */,
+			);
+			name = CheckBox;
+			sourceTree = "<group>";
+		};
+		771EECA61EBC27C6004A34B8 /* Path Generators */ = {
+			isa = PBXGroup;
+			children = (
+				771EECB01EBC3291004A34B8 /* KPCheckBoxPathGenerator.swift */,
+				771EECB21EBC32E4004A34B8 /* KPCheckBoxRadioPathGenerator.swift */,
+			);
+			name = "Path Generators";
+			sourceTree = "<group>";
+		};
+		771EECA81EBC30F4004A34B8 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				771EECA91EBC3106004A34B8 /* KPCheckBoxController.swift */,
+				771EECAB1EBC3124004A34B8 /* KPCheckBoxBounceController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		771EECAD1EBC3162004A34B8 /* Animation Generator */ = {
+			isa = PBXGroup;
+			children = (
+				771EECAE1EBC3177004A34B8 /* KPCheckBoxAnimationGenerator.swift */,
+			);
+			name = "Animation Generator";
+			sourceTree = "<group>";
+		};
 		774208EE1EA5B97F00C78A00 /* Comment */ = {
 			isa = PBXGroup;
 			children = (
@@ -285,6 +334,7 @@
 		77421FB21EB8F7EE00064FF0 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				771EECA51EBC27BE004A34B8 /* CheckBox */,
 				77421FB31EB8F82500064FF0 /* KPRatingView.swift */,
 			);
 			name = View;
@@ -786,15 +836,19 @@
 				77BFC5521EB740CE00610F55 /* KPUser.swift in Sources */,
 				774208F11EA5F04B00C78A00 /* KPShopPhotoCell.swift in Sources */,
 				77B66FA31EA91488008B6652 /* KPCityTableViewCell.swift in Sources */,
+				771EECAF1EBC3177004A34B8 /* KPCheckBoxAnimationGenerator.swift in Sources */,
 				774208F91EA675C800C78A00 /* KPCommentModel.swift in Sources */,
 				77BFC5561EB757E800610F55 /* KPResponseModel.swift in Sources */,
 				C0B49D971EA13BC100BA95D8 /* KPMainMapViewCollectionCell.swift in Sources */,
 				776ACB061E9BE33A00B629A2 /* KPMainListTableViewCell.swift in Sources */,
 				776ACAFC1E9BB02D00B629A2 /* KPMainMapViewController.swift in Sources */,
+				771EECA41EBC217B004A34B8 /* KPCheckBox.swift in Sources */,
 				77B66FB31EAF171E008B6652 /* KPAboutUsViewController.swift in Sources */,
 				C02881CB1E9CF1E200776E28 /* KPMainMapMarkerInfoWindow.swift in Sources */,
 				C02AFE471E7D260D008FFB33 /* ViewController.swift in Sources */,
+				771EECAA1EBC3106004A34B8 /* KPCheckBoxController.swift in Sources */,
 				775989911EA5171A0029989C /* KPUIImageHelper.swift in Sources */,
+				771EECAC1EBC3124004A34B8 /* KPCheckBoxBounceController.swift in Sources */,
 				774208FE1EA679CB00C78A00 /* KPSideViewController.swift in Sources */,
 				777DCC161EA789A90055525A /* KPInformationTranstion.swift in Sources */,
 				77C0E0FD1E9D489900398852 /* KPInformationHeaderView.swift in Sources */,
@@ -809,10 +863,12 @@
 				77BFC5501EB73F3E00610F55 /* NetworkRequest.swift in Sources */,
 				778521811EA3C91C00EA59D9 /* KPInformationHeaderButton.swift in Sources */,
 				77B66FA11EA91477008B6652 /* KPRegionTableViewCell.swift in Sources */,
+				771EECB11EBC3291004A34B8 /* KPCheckBoxPathGenerator.swift in Sources */,
 				77869E1C1EB771BC0027CA98 /* KPCafeRequest.swift in Sources */,
 				7730B5721EA8676F00D6CD55 /* KPInformationDismissTransition.swift in Sources */,
 				77C0E10C1E9D494400398852 /* KPShopPhotoInfoView.swift in Sources */,
 				77B66FA61EAA70F3008B6652 /* KPBounceButton.swift in Sources */,
+				771EECB31EBC32E4004A34B8 /* KPCheckBoxRadioPathGenerator.swift in Sources */,
 				776ACB081E9BE51600B629A2 /* KPMainListCellFeatureContainer.swift in Sources */,
 				77869E1A1EB76F690027CA98 /* NetworkErrorHandler.swift in Sources */,
 				77869E161EB75B5C0027CA98 /* NetworkClient.swift in Sources */,

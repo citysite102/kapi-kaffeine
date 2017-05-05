@@ -10,12 +10,12 @@ import UIKit
 
 class KPRatingView: UIView {
 
-    enum KPRateItemViewType: Int {
-        case button = 1
-        case star
+    enum RateType: String, RawRepresentable {
+        case button = "Button"
+        case star = "Star"
     }
     
-    var rateType: KPRateItemViewType = .button {
+    var rateType: RateType = .button {
         didSet {
             
         }
@@ -102,7 +102,7 @@ class KPRatingView: UIView {
         super.init(frame: frame)
     }
     
-    convenience init(_ type: KPRateItemViewType = KPRateItemViewType.button,
+    convenience init(_ type: RateType = RateType.button,
                      _ icon: UIImage,
                      _ title: String) {
         self.init(frame: .zero)

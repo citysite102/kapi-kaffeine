@@ -11,26 +11,16 @@ import pop
 
 class KPBounceButton: UIButton {
     
-//    var selectedColor: UIColor!;
-//    var highlightedColor: UIColor!;
-//    var normalColor: UIColor!;
-//    var disabledColor: UIColor!;
-    
-//    var target: Any?
-//    var selector: (()->())?
-    
-//    override var isHighlighted: Bool {
-//        willSet {
-//            self.tintColor = UIColor.white;
-//        }
-//        
-//        didSet {
-//            print("changed from \(oldValue) to \(isSelected)")
-//        }
-//    }
+    //----------------------------
+    // MARK: - Properties
+    //----------------------------
     
     var dampingRatio: CGFloat = 0.35
     var bounceDuration: Double = 0.8
+    
+    //----------------------------
+    // MARK: - Initalization
+    //----------------------------
     
     override init(frame: CGRect) {
         super.init(frame: frame);
@@ -43,11 +33,6 @@ class KPBounceButton: UIButton {
         self.setImage(image.withRenderingMode(.alwaysTemplate),
                       for: .highlighted);
     }
-    
-//    open func addTarget(_ target: Any?, action: @escaping ()->()) {
-//        self.target = target;
-//        self.selector = action;
-//    }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
