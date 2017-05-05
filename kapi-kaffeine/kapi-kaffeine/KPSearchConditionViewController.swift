@@ -174,7 +174,9 @@ class KPSearchConditionViewController: UIViewController {
         
         // Section 3
         let checkBox = KPCheckBox()
-        checkBox.setMarkType(markType: .radio, animated: true)
+        checkBox.setMarkType(markType: .checkmark, animated: true)
+        checkBox.stateChangeAnimation = .stroke
+        
         self.containerView.addSubview(checkBox)
         checkBox.addConstraints(fromStringArray: ["H:|-16-[$self(24)]",
                                                   "V:[$view0]-16-[$self(24)]"],

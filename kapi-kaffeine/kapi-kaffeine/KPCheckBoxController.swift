@@ -16,7 +16,7 @@ class KPCheckBoxController {
     //----------------------------
     
     /// The path presets for the manager.
-    var pathGenerator: KPCheckBoxPathGenerator = KPCheckBoxPathGenerator()
+    var pathGenerator: KPCheckBoxPathGenerator = KPCheckboxCheckPathGenerator()
     
     /// The animation presets for the manager.
     var animationGenerator: KPCheckBoxAnimationGenerator = KPCheckBoxAnimationGenerator()
@@ -57,9 +57,9 @@ class KPCheckBoxController {
         var newPathGenerator: KPCheckBoxPathGenerator? = nil
         if type != markType {
             switch type {
-//            case .checkmark:
-//                newPathGenerator = M13CheckboxCheckPathGenerator()
-//                break
+            case .checkmark:
+                newPathGenerator = KPCheckboxCheckPathGenerator()
+                break
             case .radio:
                 newPathGenerator = KPCheckBoxRadioPathGenerator()
                 break

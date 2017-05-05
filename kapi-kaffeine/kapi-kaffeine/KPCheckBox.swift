@@ -76,11 +76,11 @@ class KPCheckBox: UIControl {
     /**
      The possible animations for switching to and from the unchecked state.
      */
-    public enum Animation: RawRepresentable, Hashable {
-//        /// Animates the stroke of the box and the check as if they were drawn.
-//        case stroke
-//        /// Animates the checkbox with a bouncey fill effect.
-//        case fill
+    public enum Animation {
+        /// Animates the stroke of the box and the check as if they were drawn.
+        case stroke
+        /// Animates the checkbox with a bouncey fill effect.
+        case fill
         /// Animates the check mark with a bouncy effect.
         case bounce(AnimationStyle)
         /// Animates the checkmark and fills the box with a bouncy effect.
@@ -94,109 +94,14 @@ class KPCheckBox: UIControl {
 //        /// Start the box as a dot, and expand the box.
 //        case dot(AnimationStyle)
         
-        public init?(rawValue: String) {
-            // Map the integer values to the animation types.
-            // This is only for interface builder support. I would like this to be removed eventually.
-            switch rawValue {
-//            case "Stroke":
-//                self = .stroke
-//                break
-//            case "Fill":
-//                self = .fill
-//                break
-            case "BounceStroke":
-                self = .bounce(.stroke)
-                break
-            case "BounceFill":
-                self = .bounce(.fill)
-                break
-//            case "ExpandStroke":
-//                self = .expand(.stroke)
-//                break
-//            case "ExpandFill":
-//                self = .expand(.fill)
-//                break
-//            case "FlatStroke":
-//                self = .flat(.stroke)
-//                break
-//            case "FlatFill":
-//                self = .flat(.fill)
-//                break
-//            case "Spiral":
-//                self = .spiral
-//                break
-//            case "FadeStroke":
-//                self = .fade(.stroke)
-//                break
-//            case "FadeFill":
-//                self = .fade(.fill)
-//                break
-//            case "DotStroke":
-//                self = .dot(.stroke)
-//                break
-//            case "DotFill":
-//                self = .dot(.fill)
-//                break
-            default:
-                return nil
-            }
-        }
-        
-        public var rawValue: String {
-            // Map the animation types to integer values.
-            // This is only for interface builder support. I would like this to be removed eventually.
-            switch self {
-//            case .stroke:
-//                return "Stroke"
-//            case .fill:
-//                return "Fill"
-            case let .bounce(style):
-                switch style {
-                case .stroke:
-                    return "BounceStroke"
-                case .fill:
-                    return "BounceFill"
-                }
-//            case let .expand(style):
-//                switch style {
-//                case .stroke:
-//                    return "ExpandStroke"
-//                case .fill:
-//                    return "ExpandFill"
-//                }
-//            case let .flat(style):
-//                switch style {
-//                case .stroke:
-//                    return "FlatStroke"
-//                case .fill:
-//                    return "FlatFill"
-//                }
-//            case .spiral:
-//                return "Spiral"
-//            case let .fade(style):
-//                switch style {
-//                case .stroke:
-//                    return "FadeStroke"
-//                case .fill:
-//                    return "FadeFill"
-//                }
-//            case let .dot(style):
-//                switch style {
-//                case .stroke:
-//                    return "DotStroke"
-//                case .fill:
-//                    return "DotFill"
-//                }
-            }
-        }
         
         /// The manager for the specific animation type.
         fileprivate var manager: KPCheckBoxController {
             switch self {
-//            case .stroke:
-//                return M13CheckboxStrokeController()
-//            case .fill:
-//                return M13CheckboxFillController()
+            case .stroke:
+                return KPCheckBoxStrokeController()
+            case .fill:
+                return KPCheckBoxFillController()
             case let .bounce(style):
                 return KPCheckBoxBounceController(style: style)
 //            case let .expand(style):
@@ -212,9 +117,6 @@ class KPCheckBox: UIControl {
             }
         }
         
-        public var hashValue: Int {
-            return self.rawValue.hashValue
-        }
     }
     
     //----------------------------
@@ -461,12 +363,12 @@ class KPCheckBox: UIControl {
     }
     
     /// Set the mark type with the option of animating the change.
-    open func setMarkType(markType: MarkType, animated: Bool) {
+    func setMarkType(markType: MarkType, animated: Bool) {
         controller.setMarkType(type: markType, animated: animated)
     }
     
     /// The stroke width of the box.
-    @IBInspectable open var boxLineWidth: CGFloat {
+    var boxLineWidth: CGFloat {
         get {
             return controller.pathGenerator.boxLineWidth
         }
@@ -477,7 +379,7 @@ class KPCheckBox: UIControl {
     }
     
     /// The corner radius of the box if the box type is square.
-    @IBInspectable open var cornerRadius: CGFloat {
+    var cornerRadius: CGFloat {
         get {
             return controller.pathGenerator.cornerRadius
         }
@@ -488,7 +390,7 @@ class KPCheckBox: UIControl {
     }
     
     /// The shape of the checkbox.
-    open var boxType: BoxType {
+    var boxType: BoxType {
         get {
             return controller.pathGenerator.boxType
         }
@@ -499,7 +401,7 @@ class KPCheckBox: UIControl {
     }
     
     /// Wether or not to hide the checkbox.
-    @IBInspectable open var hideBox: Bool {
+    var hideBox: Bool {
         get {
             return controller.hideBox
         }

@@ -43,6 +43,9 @@
 		77869E1A1EB76F690027CA98 /* NetworkErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77869E191EB76F690027CA98 /* NetworkErrorHandler.swift */; };
 		77869E1C1EB771BC0027CA98 /* KPCafeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77869E1B1EB771BC0027CA98 /* KPCafeRequest.swift */; };
 		77869E1E1EB79CF40027CA98 /* KPSimpleRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77869E1D1EB79CF40027CA98 /* KPSimpleRequest.swift */; };
+		77A201991EBC5BE600F3497F /* KPCheckBoxFillController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A201981EBC5BE600F3497F /* KPCheckBoxFillController.swift */; };
+		77A2019B1EBC5BF800F3497F /* KPCheckBoxStrokeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A2019A1EBC5BF800F3497F /* KPCheckBoxStrokeController.swift */; };
+		77A2019D1EBC5D1D00F3497F /* KPCheckboxCheckPathGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A2019C1EBC5D1D00F3497F /* KPCheckboxCheckPathGenerator.swift */; };
 		77B66FA11EA91477008B6652 /* KPRegionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B66FA01EA91477008B6652 /* KPRegionTableViewCell.swift */; };
 		77B66FA31EA91488008B6652 /* KPCityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B66FA21EA91488008B6652 /* KPCityTableViewCell.swift */; };
 		77B66FA61EAA70F3008B6652 /* KPBounceButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B66FA51EAA70F3008B6652 /* KPBounceButton.swift */; };
@@ -135,6 +138,9 @@
 		77869E191EB76F690027CA98 /* NetworkErrorHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkErrorHandler.swift; sourceTree = "<group>"; };
 		77869E1B1EB771BC0027CA98 /* KPCafeRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPCafeRequest.swift; sourceTree = "<group>"; };
 		77869E1D1EB79CF40027CA98 /* KPSimpleRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSimpleRequest.swift; sourceTree = "<group>"; };
+		77A201981EBC5BE600F3497F /* KPCheckBoxFillController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPCheckBoxFillController.swift; sourceTree = "<group>"; };
+		77A2019A1EBC5BF800F3497F /* KPCheckBoxStrokeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPCheckBoxStrokeController.swift; sourceTree = "<group>"; };
+		77A2019C1EBC5D1D00F3497F /* KPCheckboxCheckPathGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPCheckboxCheckPathGenerator.swift; sourceTree = "<group>"; };
 		77B66FA01EA91477008B6652 /* KPRegionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPRegionTableViewCell.swift; sourceTree = "<group>"; };
 		77B66FA21EA91488008B6652 /* KPCityTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPCityTableViewCell.swift; sourceTree = "<group>"; };
 		77B66FA51EAA70F3008B6652 /* KPBounceButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPBounceButton.swift; sourceTree = "<group>"; };
@@ -239,6 +245,7 @@
 			isa = PBXGroup;
 			children = (
 				771EECB01EBC3291004A34B8 /* KPCheckBoxPathGenerator.swift */,
+				77A2019C1EBC5D1D00F3497F /* KPCheckboxCheckPathGenerator.swift */,
 				771EECB21EBC32E4004A34B8 /* KPCheckBoxRadioPathGenerator.swift */,
 			);
 			name = "Path Generators";
@@ -249,6 +256,8 @@
 			children = (
 				771EECA91EBC3106004A34B8 /* KPCheckBoxController.swift */,
 				771EECAB1EBC3124004A34B8 /* KPCheckBoxBounceController.swift */,
+				77A201981EBC5BE600F3497F /* KPCheckBoxFillController.swift */,
+				77A2019A1EBC5BF800F3497F /* KPCheckBoxStrokeController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -822,6 +831,7 @@
 				776ACB0B1E9C783E00B629A2 /* KPInformationViewController.swift in Sources */,
 				77C0E0FA1E9D3D7500398852 /* KPSearchFooterCell.swift in Sources */,
 				776ACB041E9BB8A900B629A2 /* KPSearchTagCell.swift in Sources */,
+				77A2019D1EBC5D1D00F3497F /* KPCheckboxCheckPathGenerator.swift in Sources */,
 				77B66FB51EAFC46B008B6652 /* KPUserProfileViewController.swift in Sources */,
 				77C0E10A1E9D493400398852 /* KPShopCommentInfoView.swift in Sources */,
 				77421FB01EB8EE0C00064FF0 /* KPNomadRequest.swift in Sources */,
@@ -843,6 +853,7 @@
 				776ACB061E9BE33A00B629A2 /* KPMainListTableViewCell.swift in Sources */,
 				776ACAFC1E9BB02D00B629A2 /* KPMainMapViewController.swift in Sources */,
 				771EECA41EBC217B004A34B8 /* KPCheckBox.swift in Sources */,
+				77A201991EBC5BE600F3497F /* KPCheckBoxFillController.swift in Sources */,
 				77B66FB31EAF171E008B6652 /* KPAboutUsViewController.swift in Sources */,
 				C02881CB1E9CF1E200776E28 /* KPMainMapMarkerInfoWindow.swift in Sources */,
 				C02AFE471E7D260D008FFB33 /* ViewController.swift in Sources */,
@@ -863,6 +874,7 @@
 				77BFC5501EB73F3E00610F55 /* NetworkRequest.swift in Sources */,
 				778521811EA3C91C00EA59D9 /* KPInformationHeaderButton.swift in Sources */,
 				77B66FA11EA91477008B6652 /* KPRegionTableViewCell.swift in Sources */,
+				77A2019B1EBC5BF800F3497F /* KPCheckBoxStrokeController.swift in Sources */,
 				771EECB11EBC3291004A34B8 /* KPCheckBoxPathGenerator.swift in Sources */,
 				77869E1C1EB771BC0027CA98 /* KPCafeRequest.swift in Sources */,
 				7730B5721EA8676F00D6CD55 /* KPInformationDismissTransition.swift in Sources */,
