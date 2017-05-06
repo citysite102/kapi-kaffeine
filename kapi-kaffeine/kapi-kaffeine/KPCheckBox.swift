@@ -126,7 +126,7 @@ class KPCheckBox: UIControl {
     /// The manager that manages display and animations of the checkbox.
     /// The default animation is a stroke.
     fileprivate var controller: KPCheckBoxController = KPCheckBoxBounceController()
-    
+    var tapGesture: UITapGestureRecognizer!
     
     //----------------------------
     // MARK: - Initalization
@@ -150,8 +150,8 @@ class KPCheckBox: UIControl {
         controller.tintColor = tintColor
         controller.resetLayersForState(.checked)
         
-        let tapGesture = UITapGestureRecognizer.init(target: self,
-                                                     action: #selector(KPCheckBox.handleTap(_:)))
+        tapGesture = UITapGestureRecognizer.init(target: self,
+                                                 action: #selector(KPCheckBox.handleTap(_:)))
         addGestureRecognizer(tapGesture)
     }
     
@@ -304,16 +304,16 @@ class KPCheckBox: UIControl {
     }
     
     
-    func handleTap(_ sender: UILongPressGestureRecognizer) {
-        if sender.state == .began || sender.state == .changed {
-            isSelected = true
-        } else {
-            isSelected = false
-            if sender.state == .ended {
+    func handleTap(_ sender: UITapGestureRecognizer) {
+//        if sender.state == .began || sender.state == .changed {
+//            isSelected = true
+//        } else {
+//            isSelected = false
+//            if sender.state == .ended {
                 toggleCheckState(true)
                 sendActions(for: .valueChanged)
-            }
-        }
+//            }
+//        }
     }
     
     //----------------------------

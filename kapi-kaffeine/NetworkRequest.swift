@@ -82,7 +82,7 @@ extension NetworkRequest {
 }
 
 extension NetworkRequest where ResponseType: Mappable {
-    
+    // 輸入 Data 型別，回傳 ResponseType 的 function 即可
     public var responseHandler: (Data) throws -> ResponseType { return jsonResponseHandler }
     public var arrayResponseHandler: (Data) throws -> [ResponseType] { return jsonArrayResponseHandler }
     
