@@ -67,6 +67,13 @@ class KPSearchConditionViewController: UIViewController {
     var othersLabel: UILabel!
     var othersCheckBoxOne: KPCheckView!
     
+    lazy var seperator_three: UIView = {
+        let view = UIView()
+        view.backgroundColor = KPColorPalette.KPMainColor.grayColor_level6
+        return view
+    }()
+    
+    var searchButton: UIButton!
     
     func buttonWithTitle(title: String) -> UIButton {
         let button = UIButton()
@@ -252,7 +259,7 @@ class KPSearchConditionViewController: UIViewController {
         self.businessCheckBoxTwo = KPCheckView.init(.checkmark, "特定營業時段")
         self.containerView.addSubview(self.businessCheckBoxTwo)
         self.businessCheckBoxTwo.addConstraints(fromStringArray: ["H:|-16-[$self]",
-                                                                  "V:[$view0]-8-[$self]-40-|"],
+                                                                  "V:[$view0]-8-[$self]"],
                                                 views: [self.businessCheckBoxOne])
         
         
@@ -269,6 +276,23 @@ class KPSearchConditionViewController: UIViewController {
                                               metrics:[KPSearchConditionViewControllerConstants.leftPadding],
                                               views: [self.othersLabel])
         
+        self.containerView.addSubview(self.seperator_three)
+        self.seperator_three.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                            "V:[$view0]-16-[$self(1)]"],
+                                          views: [self.businessCheckBoxTwo])
+        
+        self.searchButton = UIButton()
+        self.searchButton.setTitle("開始搜尋", for: .normal)
+        self.searchButton.setTitleColor(UIColor.white, for: .normal)
+        self.searchButton.setBackgroundImage(UIImage.init(color: KPColorPalette.KPMainColor.mainColor!),
+                                             for: .normal)
+        self.searchButton.layer.cornerRadius = 4.0
+        self.searchButton.layer.masksToBounds = true
+        self.searchButton.titleLabel?.font = UIFont.systemFont(ofSize: 15.0)
+        self.containerView.addSubview(self.searchButton)
+        self.searchButton.addConstraints(fromStringArray: ["V:[$view0]-16-[$self(40)]-16-|",
+                                                           "H:|-16-[$self]-16-|"],
+                                         views: [self.seperator_three])
     }
 
     override func didReceiveMemoryWarning() {

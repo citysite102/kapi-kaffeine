@@ -210,6 +210,8 @@ class KPModalViewController: UIViewController {
     
     func dismissController(duration: CGFloat, completion: (() -> Void)? = nil) {
         
+        self.view.backgroundColor = UIColor.clear
+        
         UIView.animate(withDuration: Double(duration),
                        animations: {
             switch self.presentationStyle {
