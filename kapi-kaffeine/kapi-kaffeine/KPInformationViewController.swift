@@ -45,6 +45,8 @@ class KPInformationViewController: UIViewController {
         self.scrollContainer = UIScrollView();
         self.scrollContainer.backgroundColor = KPColorPalette.KPMainColor.grayColor_level7;
         self.scrollContainer.delegate = self;
+//        self.scrollContainer.delaysContentTouches = false
+        self.scrollContainer.canCancelContentTouches = false
         self.view.addSubview(self.scrollContainer);
         self.scrollContainer.addConstraints(fromStringArray: ["H:|[$self]|",
                                                               "V:|[$self]|"]);

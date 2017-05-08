@@ -8,10 +8,15 @@
 
 import UIKit
 
+protocol KPInformationHeaderViewDelegate: NSObjectProtocol {
+    func headerPhotoTapped(_ headerView: KPInformationHeaderView);
+}
+
 class KPInformationHeaderView: UIView {
 
-    var shopPhotoContainer: UIView!;
-    var shopPhoto: UIImageView!;
+    var shopPhotoContainer: UIView!
+    var shopPhoto: UIImageView!
+    var photoTapGesture: UITapGestureRecognizer!
     
     var scoreContainer: UIView!;
     var facebookButton: UIButton!;
@@ -22,19 +27,26 @@ class KPInformationHeaderView: UIView {
     var rateButton: KPInformationHeaderButton!;
     var commentButton: KPInformationHeaderButton!;
     
+    weak open var delegate: KPInformationHeaderViewDelegate?
+    
     override init(frame: CGRect) {
         super.init(frame: frame);
         
-        self.shopPhotoContainer = UIView();
-        self.addSubview(self.shopPhotoContainer);
+        self.shopPhotoContainer = UIView()
+        self.addSubview(self.shopPhotoContainer)
         self.shopPhotoContainer.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                                 "V:|[$self]"]);
+                                                                 "V:|[$self]"])
         
-        self.shopPhoto = UIImageView(image: UIImage(named: "image_shop_demo"));
-        self.shopPhoto.contentMode = .scaleToFill;
-        self.shopPhotoContainer.addSubview(shopPhoto);
+        self.shopPhoto = UIImageView(image: UIImage(named: "image_shop_demo"))
+        self.shopPhoto.contentMode = .scaleToFill
+        self.shopPhoto.isUserInteractionEnabled = true
+        self.shopPhotoContainer.addSubview(shopPhoto)
         self.shopPhoto.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                        "V:|[$self(240)]"]);
+                                                        "V:|[$self(240)]|"])
+        
+        self.photoTapGesture = UITapGestureRecognizer.init(target: self,
+                                                           action: #selector(handleShopPhotoTap(_:)))
+        self.shopPhoto.addGestureRecognizer(self.photoTapGesture)
         
         self.collectButton = KPInformationHeaderButton();
         self.collectButton.buttonInfo = HeaderButtonInfo(title: "收藏",
@@ -86,6 +98,10 @@ class KPInformationHeaderView: UIView {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func handleShopPhotoTap(_ sender: UITapGestureRecognizer) {
+        self.delegate?.headerPhotoTapped(self);
     }
     
 }
