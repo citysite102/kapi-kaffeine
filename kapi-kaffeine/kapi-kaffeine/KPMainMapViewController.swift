@@ -10,7 +10,7 @@ import UIKit
 import GoogleMaps
 import ObjectMapper
 
-class KPMainMapViewController: UIViewController, GMSMapViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, KPMainViewControllerDelegate {
+class KPMainMapViewController: UIViewController, GMSMapViewDelegate, GMUClusterManagerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, KPMainViewControllerDelegate {
     
     weak var mainController:KPMainViewController!
     var collectionView: UICollectionView!
@@ -19,6 +19,8 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate, UICollectio
             return self.view as! GMSMapView
         }
     }
+    
+    private var clusterManager: GMUClusterManager!
     
     var currentDataModel:KPDataModel?
     var selectedDataModel: KPDataModel? {
@@ -44,7 +46,7 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate, UICollectio
     
     var collectionViewBottomConstraint: NSLayoutConstraint!
     
-    var mapMarkers: [GMSMarker] = []
+    var mapMarkers: [KPClusterItem] = []
     var displayDataModel: [KPDataModel]! {
         didSet {
             (self.view as! GMSMapView).clear()
@@ -55,17 +57,22 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate, UICollectio
                     
                     let position = CLLocationCoordinate2DMake(latitude, longitude)
 
-                    let marker = GMSMarker(position: position)
+                    let marker = KPClusterItem(position: position)
                     
                     marker.title = datamodel.name
                     marker.icon = UIImage(named: "icon_mapMarker")
-                    marker.map = (self.view as! GMSMapView)
+//                    marker.map = (self.view as! GMSMapView)
                     marker.userData = datamodel
                     marker.appearAnimation = .pop
                     
                     self.mapMarkers.append(marker)
+                    self.clusterManager.add(marker)
                 }
             }
+            
+            // Call cluster() after items have been added to perform the clustering
+            // and rendering on map.
+            self.clusterManager.cluster()
         }
     }
     
@@ -91,8 +98,26 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate, UICollectio
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+    
+        
+        
+        // Set up the cluster manager with the supplied icon generator and
+        // renderer.
+        let iconGenerator = GMUDefaultClusterIconGenerator()
+        let algorithm = GMUNonHierarchicalDistanceBasedAlgorithm()
+        let renderer = GMUDefaultClusterRenderer(mapView: mapView,
+                                                 clusterIconGenerator: iconGenerator)
+        clusterManager = GMUClusterManager(map: mapView, algorithm: algorithm,
+                                           renderer: renderer)
+        
+        
+        // Register self to listen to both GMUClusterManagerDelegate and GMSMapViewDelegate events.
+        clusterManager.setDelegate(self, mapDelegate: self)
+        
         
         self.mapView.isMyLocationEnabled = true
         self.moveToMyLocation()
@@ -148,7 +173,6 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate, UICollectio
         }
     }
     
-    
     // MARK: UICollectionView DataSource
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -197,6 +221,11 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate, UICollectio
     // MARK: GMSMapViewDelegate
     
     func mapView(_ mapView: GMSMapView, markerInfoWindow marker: GMSMarker) -> UIView? {
+        
+        if (marker.userData as? KPDataModel) == nil {
+            return nil
+        }
+        
         if self.isCollectionViewShow == false  {
             self.isCollectionViewShow = true
         }
@@ -226,6 +255,11 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate, UICollectio
         }
     }
     
-    
+    private func clusterManager(_ clusterManager: GMUClusterManager, didTap cluster: GMUCluster) {
+        let newCamera = GMSCameraPosition.camera(withTarget: cluster.position,
+                                                 zoom: mapView.camera.zoom + 1)
+        let update = GMSCameraUpdate.setCamera(newCamera)
+        mapView.moveCamera(update)
+    }
     
 }
