@@ -13,6 +13,13 @@ class KPInformationViewController: UIViewController {
     
     var informationDataModel:KPDataModel!
     var dismissButton:UIButton!
+    var snapshotPhotoView: UIView  {
+        get {
+            let snapShotView = UIImageView.init(image: self.informationHeaderView.shopPhoto.image)
+            snapShotView.frame = self.informationHeaderView.shopPhoto.frame
+            return snapShotView
+        }
+    }
     
     var scrollContainer:UIScrollView!;
     var informationHeaderView: KPInformationHeaderView!;
@@ -44,17 +51,17 @@ class KPInformationViewController: UIViewController {
         
         self.scrollContainer = UIScrollView();
         self.scrollContainer.backgroundColor = KPColorPalette.KPMainColor.grayColor_level7;
-        self.scrollContainer.delegate = self;
-//        self.scrollContainer.delaysContentTouches = false
+        self.scrollContainer.delegate = self
         self.scrollContainer.canCancelContentTouches = false
         self.view.addSubview(self.scrollContainer);
         self.scrollContainer.addConstraints(fromStringArray: ["H:|[$self]|",
                                                               "V:|[$self]|"]);
         
-        self.informationHeaderView = KPInformationHeaderView();
-        self.scrollContainer.addSubview(self.informationHeaderView);
+        self.informationHeaderView = KPInformationHeaderView()
+        self.informationHeaderView.delegate = self
+        self.scrollContainer.addSubview(self.informationHeaderView)
         self.informationHeaderView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                                    "V:|[$self]"]);
+                                                                    "V:|[$self]"])
         self.informationHeaderView.addConstraintForHavingSameWidth(with: self.view)
         
         
@@ -188,9 +195,23 @@ class KPInformationViewController: UIViewController {
 }
 
 extension KPInformationViewController: UIScrollViewDelegate {
-
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.scrollContainer.contentOffset = CGPoint.init(x: 0,
-                                                          y: self.scrollContainer.contentOffset.y);
-    };
+                                                          y: self.scrollContainer.contentOffset.y)
+    }
+}
+
+extension KPInformationViewController: KPInformationHeaderViewDelegate {
+    func headerPhotoTapped(_ headerView: KPInformationHeaderView) {
+        let photoDisplayController = KPPhotoDisplayViewController()
+        photoDisplayController.diplayedPhotoInformations =
+            [PhotoInformation(title:"Title", image:R.image.demo_1()!, index:0),
+             PhotoInformation(title:"Title", image:R.image.demo_2()!, index:1),
+             PhotoInformation(title:"Title", image:R.image.demo_3()!, index:2),
+             PhotoInformation(title:"Title", image:R.image.demo_4()!, index:3),
+             PhotoInformation(title:"Title", image:R.image.demo_5()!, index:4),
+             PhotoInformation(title:"Title", image:R.image.demo_6()!, index:5)]
+        self.present(photoDisplayController, animated: true) {
+        }
+    }
 }

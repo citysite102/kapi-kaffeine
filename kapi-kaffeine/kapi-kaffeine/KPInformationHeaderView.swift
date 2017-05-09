@@ -16,7 +16,7 @@ class KPInformationHeaderView: UIView {
 
     var shopPhotoContainer: UIView!
     var shopPhoto: UIImageView!
-    var photoTapGesture: UITapGestureRecognizer!
+    var photoLongPressGesture: UILongPressGestureRecognizer!
     
     var scoreContainer: UIView!;
     var facebookButton: UIButton!;
@@ -37,16 +37,17 @@ class KPInformationHeaderView: UIView {
         self.shopPhotoContainer.addConstraints(fromStringArray: ["H:|[$self]|",
                                                                  "V:|[$self]"])
         
-        self.shopPhoto = UIImageView(image: UIImage(named: "image_shop_demo"))
+        self.shopPhoto = UIImageView(image: UIImage(named: "demo_1"))
         self.shopPhoto.contentMode = .scaleToFill
         self.shopPhoto.isUserInteractionEnabled = true
         self.shopPhotoContainer.addSubview(shopPhoto)
         self.shopPhoto.addConstraints(fromStringArray: ["H:|[$self]|",
                                                         "V:|[$self(240)]|"])
-        
-        self.photoTapGesture = UITapGestureRecognizer.init(target: self,
-                                                           action: #selector(handleShopPhotoTap(_:)))
-        self.shopPhoto.addGestureRecognizer(self.photoTapGesture)
+
+        self.photoLongPressGesture = UILongPressGestureRecognizer.init(target: self,
+                                                                       action: #selector(handleShopPhotoLongPressed(_:)))
+        self.photoLongPressGesture.minimumPressDuration = 0
+        self.shopPhoto.addGestureRecognizer(self.photoLongPressGesture)
         
         self.collectButton = KPInformationHeaderButton();
         self.collectButton.buttonInfo = HeaderButtonInfo(title: "收藏",
@@ -100,8 +101,24 @@ class KPInformationHeaderView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func handleShopPhotoTap(_ sender: UITapGestureRecognizer) {
-        self.delegate?.headerPhotoTapped(self);
+    func handleShopPhotoLongPressed(_ sender: UILongPressGestureRecognizer) {
+        
+        if sender.state == UIGestureRecognizerState.began {
+            UIView.animate(withDuration: 0.2,
+                           animations: { 
+                            self.shopPhoto.transform = CGAffineTransform.init(scaleX: 0.97,
+                                                                              y: 0.97)
+            })
+        } else if sender.state == UIGestureRecognizerState.ended {
+            UIView.animate(withDuration: 0.1,
+                           animations: { 
+                            self.shopPhoto.transform = CGAffineTransform.identity
+            }, completion: { (success) in
+                self.delegate?.headerPhotoTapped(self);
+            })
+        }
+        
     }
+    
     
 }

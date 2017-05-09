@@ -36,7 +36,7 @@
 		776ACB061E9BE33A00B629A2 /* KPMainListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776ACB051E9BE33A00B629A2 /* KPMainListTableViewCell.swift */; };
 		776ACB081E9BE51600B629A2 /* KPMainListCellFeatureContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776ACB071E9BE51600B629A2 /* KPMainListCellFeatureContainer.swift */; };
 		776ACB0B1E9C783E00B629A2 /* KPInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776ACB0A1E9C783E00B629A2 /* KPInformationViewController.swift */; };
-		777DCC141EA785730055525A /* KPPhotoTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777DCC131EA785730055525A /* KPPhotoTransition.swift */; };
+		777DCC141EA785730055525A /* KPPhotoDisplayTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777DCC131EA785730055525A /* KPPhotoDisplayTransition.swift */; };
 		777DCC161EA789A90055525A /* KPInformationTranstion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777DCC151EA789A90055525A /* KPInformationTranstion.swift */; };
 		778521811EA3C91C00EA59D9 /* KPInformationHeaderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778521801EA3C91C00EA59D9 /* KPInformationHeaderButton.swift */; };
 		77869E161EB75B5C0027CA98 /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77869E151EB75B5C0027CA98 /* NetworkClient.swift */; };
@@ -135,7 +135,7 @@
 		776ACB051E9BE33A00B629A2 /* KPMainListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPMainListTableViewCell.swift; sourceTree = "<group>"; };
 		776ACB071E9BE51600B629A2 /* KPMainListCellFeatureContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPMainListCellFeatureContainer.swift; sourceTree = "<group>"; };
 		776ACB0A1E9C783E00B629A2 /* KPInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPInformationViewController.swift; sourceTree = "<group>"; };
-		777DCC131EA785730055525A /* KPPhotoTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPPhotoTransition.swift; sourceTree = "<group>"; };
+		777DCC131EA785730055525A /* KPPhotoDisplayTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPPhotoDisplayTransition.swift; sourceTree = "<group>"; };
 		777DCC151EA789A90055525A /* KPInformationTranstion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPInformationTranstion.swift; sourceTree = "<group>"; };
 		778521801EA3C91C00EA59D9 /* KPInformationHeaderButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPInformationHeaderButton.swift; sourceTree = "<group>"; };
 		77869E151EB75B5C0027CA98 /* NetworkClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
@@ -419,7 +419,7 @@
 		777DCC121EA785430055525A /* Transition */ = {
 			isa = PBXGroup;
 			children = (
-				777DCC131EA785730055525A /* KPPhotoTransition.swift */,
+				777DCC131EA785730055525A /* KPPhotoDisplayTransition.swift */,
 				777DCC151EA789A90055525A /* KPInformationTranstion.swift */,
 				7730B5711EA8676F00D6CD55 /* KPInformationDismissTransition.swift */,
 			);
@@ -881,7 +881,7 @@
 				77C0E1081E9D491D00398852 /* KPShopRateInfoView.swift in Sources */,
 				774208ED1EA5B97300C78A00 /* KPShopCommentCell.swift in Sources */,
 				774208F71EA61D4400C78A00 /* KPShopRecommendView.swift in Sources */,
-				777DCC141EA785730055525A /* KPPhotoTransition.swift in Sources */,
+				777DCC141EA785730055525A /* KPPhotoDisplayTransition.swift in Sources */,
 				C02AFE451E7D260D008FFB33 /* AppDelegate.swift in Sources */,
 				77869E1E1EB79CF40027CA98 /* KPSimpleRequest.swift in Sources */,
 				770AB5D31EB70E8E00EE8A3B /* R.generated.swift in Sources */,

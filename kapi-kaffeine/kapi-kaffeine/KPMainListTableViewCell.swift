@@ -55,7 +55,7 @@ class KPMainListTableViewCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        self.shopImageView = UIImageView(image: UIImage(named: "image_shop_demo"));
+        self.shopImageView = UIImageView(image: UIImage(named: "demo_6"));
         self.shopImageView.contentMode = .scaleAspectFit;
         self.contentView.addSubview(self.shopImageView);
         self.shopImageView.addConstraints(fromStringArray: ["H:|-8-[$self(56)]",

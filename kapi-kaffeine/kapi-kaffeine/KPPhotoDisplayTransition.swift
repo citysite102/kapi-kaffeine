@@ -15,6 +15,40 @@ class KPPhotoTransition: NSObject, UIViewControllerAnimatedTransitioning {
     }
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+        let fromVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from) as! KPInformationViewController;
+        let toVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to) as! KPPhotoDisplayViewController;
+        
+        let container = transitionContext.containerView;
+        let bounds = UIScreen.main.bounds;
+        let finalFrameForVC = transitionContext.finalFrame(for: toVC);
+        
+        let toView = toVC.view!
+        container.addSubview(toView)
+        toView.isHidden = true
+        
+        let snapshot = fromVC.snapshotPhotoView
+        
+        
+        
+//        toVC.view.frame = finalFrameForVC.offsetBy(dx: 0, dy: bounds.size.height);
+//        container.addSubview(toVC.view);
+//        
+//        UIView.animate(withDuration: transitionDuration(using: transitionContext)+0.1,
+//                       delay: 0,
+//                       usingSpringWithDamping: 1.0,
+//                       initialSpringVelocity: 0.8,
+//                       options: UIViewAnimationOptions.curveEaseIn,
+//                       animations: {
+//                        fromVC.view.alpha = 0.5
+//                        fromVC.view.transform = CGAffineTransform(scaleX: 0.94, y: 0.94)
+//                        toVC.view.frame = finalFrameForVC
+//        }) { (finish) in
+//            transitionContext.completeTransition(true)
+//            fromVC.view.alpha = 1.0
+//        }
+    }
+    
+//    func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
 //        let fromVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from) as! ViewController;
 //        let toVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to) as! ViewController;
 //    
@@ -45,6 +79,6 @@ class KPPhotoTransition: NSObject, UIViewControllerAnimatedTransitioning {
 //            //一定要记得动画完成后执行此方法，让系统管理 navigation
 //            transitionContext.completeTransition(true)
 //        }
-    }
+//    }
     
 }

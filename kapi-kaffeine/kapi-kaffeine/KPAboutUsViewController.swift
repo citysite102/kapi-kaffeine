@@ -23,7 +23,7 @@ class KPAboutUsViewController: UIViewController {
         var relative: [relateiveLink]?
     }
     
-    var dismissButton:UIButton!
+    var dismissButton:KPBounceButton!
     
     var scrollView: UIScrollView!
     var containerView: UIView!
@@ -71,7 +71,7 @@ class KPAboutUsViewController: UIViewController {
         self.view.backgroundColor = UIColor.white;
         self.navigationController?.navigationBar.topItem?.title = "設定";
         
-        self.dismissButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 24, height: 24));
+        self.dismissButton = KPBounceButton.init(frame: CGRect.init(x: 0, y: 0, width: 24, height: 24));
         self.dismissButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4);
         self.dismissButton.setImage(UIImage.init(named: "icon_close")?.withRenderingMode(.alwaysTemplate),
                                     for: .normal);

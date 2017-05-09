@@ -18,11 +18,12 @@ class KPPhotoDisplayViewController: UIViewController {
 
     static let KPPhotoDisplayControllerCellReuseIdentifier = "cell";
     
-    var diplayedPhotoInformations: [PhotoInformation] = [PhotoInformation]() {
-        didSet {
-            collectionView.reloadData()
-        }
-    }
+    var diplayedPhotoInformations: [PhotoInformation] = [PhotoInformation]()
+//    {
+//        didSet {
+//            collectionView.reloadData()
+//        }
+//    }
     
     var currentIndexPath: IndexPath? {
         didSet {
@@ -35,10 +36,14 @@ class KPPhotoDisplayViewController: UIViewController {
     
     var collectionView:UICollectionView!;
     var collectionLayout:UICollectionViewFlowLayout!;
+    var dismissButton:KPBounceButton!
+    var titleLabel:UILabel!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.view.backgroundColor = UIColor.black
         //Collection view
         collectionLayout = UICollectionViewFlowLayout()
         collectionLayout.scrollDirection = .horizontal
@@ -49,17 +54,32 @@ class KPPhotoDisplayViewController: UIViewController {
         
         collectionView = UICollectionView(frame: .zero,
                                           collectionViewLayout: collectionLayout)
-        collectionView.backgroundColor = UIColor.clear
+        collectionView.backgroundColor = UIColor.black
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.showsVerticalScrollIndicator = false
         collectionView.delaysContentTouches = true
+        collectionView.isPagingEnabled = true
         collectionView.register(KPPhotoDisplayCell.self,
                                 forCellWithReuseIdentifier: KPPhotoDisplayViewController.KPPhotoDisplayControllerCellReuseIdentifier)
         
         self.view.addSubview(self.collectionView);
-        self.collectionView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self(112)]|"]);
+        self.collectionView.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                             "V:|[$self]|"]);
+        
+        self.dismissButton = KPBounceButton()
+        self.dismissButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4)
+        self.dismissButton.setImage(UIImage.init(named: "icon_close")?.withRenderingMode(.alwaysTemplate),
+                                    for: .normal)
+        self.dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor
+        self.dismissButton.addTarget(self,
+                                     action: #selector(KPPhotoDisplayViewController.handleDismissButtonOnTapped),
+                                     for: .touchUpInside)
+        self.view.addSubview(self.dismissButton)
+        self.dismissButton.addConstraints(fromStringArray: ["H:|-8-[$self(24)]",
+                                                            "V:|-16-[$self(24)]"]);
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -67,6 +87,11 @@ class KPPhotoDisplayViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func handleDismissButtonOnTapped() {
+        self.dismiss(animated: true) { 
+            
+        }
+    }
 
     /*
     // MARK: - Navigation
@@ -95,8 +120,8 @@ extension KPPhotoDisplayViewController:
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: KPPhotoDisplayViewController.KPPhotoDisplayControllerCellReuseIdentifier,
-                                                      for: indexPath) as! KPPhotoDisplayCell;
-        
+                                                      for: indexPath) as! KPPhotoDisplayCell
+        cell.shopPhoto.image = self.diplayedPhotoInformations[indexPath.row].image
         return cell;
     }
 }
