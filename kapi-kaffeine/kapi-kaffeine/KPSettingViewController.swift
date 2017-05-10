@@ -51,7 +51,9 @@ class KPSettingViewController: UIViewController {
                                      for: .touchUpInside);
         
         let barItem = UIBarButtonItem.init(customView: self.dismissButton);
-        self.navigationItem.leftBarButtonItem = barItem;
+        let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
+        negativeSpacer.width = -8;
+        self.navigationItem.leftBarButtonItems = [negativeSpacer, barItem]
         
         self.dismissButton.addTarget(self,
                                      action: #selector(KPInformationViewController.handleDismissButtonOnTapped),

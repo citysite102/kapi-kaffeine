@@ -16,6 +16,7 @@ class KPInformationHeaderView: UIView {
 
     var shopPhotoContainer: UIView!
     var shopPhoto: UIImageView!
+    var morePhotoButton: UIButton!;
     var photoLongPressGesture: UILongPressGestureRecognizer!
     
     var scoreContainer: UIView!;
@@ -43,6 +44,20 @@ class KPInformationHeaderView: UIView {
         self.shopPhotoContainer.addSubview(shopPhoto)
         self.shopPhoto.addConstraints(fromStringArray: ["H:|[$self]|",
                                                         "V:|[$self(240)]|"])
+        
+        self.morePhotoButton = UIButton.init(type: .custom)
+        self.morePhotoButton.setBackgroundImage(UIImage.init(color: UIColor.clear), for: .normal)
+        self.morePhotoButton.layer.cornerRadius = 2.0
+        self.morePhotoButton.layer.borderWidth = 1.0
+        self.morePhotoButton.layer.borderColor = UIColor.white.cgColor
+        self.morePhotoButton.setTitle("99+\n張照片", for: .normal)
+        self.morePhotoButton.titleLabel?.font = UIFont.systemFont(ofSize: 13)
+        self.morePhotoButton.titleLabel?.numberOfLines = 0
+        self.morePhotoButton.titleLabel?.textAlignment = NSTextAlignment.center
+        self.morePhotoButton.setTitleColor(UIColor.white, for: .normal)
+        self.shopPhotoContainer.addSubview(morePhotoButton)
+        self.morePhotoButton.addConstraints(fromStringArray: ["H:[$self(48)]-16-|",
+                                                              "V:[$self(48)]-16-|"])
 
         self.photoLongPressGesture = UILongPressGestureRecognizer.init(target: self,
                                                                        action: #selector(handleShopPhotoLongPressed(_:)))
@@ -92,7 +107,8 @@ class KPInformationHeaderView: UIView {
                                                        handler: { (headerButton) -> () in print("Test Handler");
         });
         self.addSubview(self.commentButton);
-        self.commentButton.addConstraints(fromStringArray: ["H:[$view0]-(-1)-[$self($metric0)]", "V:[$view1][$self(90)]|"],
+        self.commentButton.addConstraints(fromStringArray: ["H:[$view0]-(-1)-[$self($metric0)]",
+                                                            "V:[$view1][$self(90)]|"],
                                         metrics: [UIScreen.main.bounds.size.width/4+1],
                                         views: [self.rateButton, self.shopPhoto]);
     }

@@ -21,6 +21,20 @@ class KPInformationViewController: UIViewController {
         }
     }
     
+    var currentScreenSnapshotImage: UIImage {
+        get {
+            UIGraphicsBeginImageContext(CGSize.init(width: self.view.frameSize.width,
+                                                    height: self.view.frameSize.height));
+            UIGraphicsBeginImageContextWithOptions(CGSize.init(width: self.view.frameSize.width,
+                                                               height: self.view.frameSize.height),
+                                                   true, 0)
+            self.view.layer.render(in: UIGraphicsGetCurrentContext()!)
+            let screenshotImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            return screenshotImage!
+        }
+    }
+    
     var scrollContainer:UIScrollView!;
     var informationHeaderView: KPInformationHeaderView!;
     var shopInformationView: KPInformationSharedInfoView!;
@@ -34,6 +48,7 @@ class KPInformationViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white;
         self.navigationController?.navigationBar.topItem?.title = self.informationDataModel.name;
+        self.navigationController?.delegate = self
         
         self.dismissButton = UIButton.init();
         self.dismissButton.setImage(UIImage.init(named: "icon_close")?.withRenderingMode(.alwaysTemplate),
@@ -63,6 +78,9 @@ class KPInformationViewController: UIViewController {
         self.informationHeaderView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                                     "V:|[$self]"])
         self.informationHeaderView.addConstraintForHavingSameWidth(with: self.view)
+        self.informationHeaderView.morePhotoButton.addTarget(self,
+                                                             action: #selector(KPInformationViewController.handleMorePhotoButtonOnTapped),
+                                                             for: UIControlEvents.touchUpInside)
         
         
         let informationView: KPShopInfoView = KPShopInfoView();
@@ -188,10 +206,40 @@ class KPInformationViewController: UIViewController {
     }
     
     
+    func handleMorePhotoButtonOnTapped() {
+        let galleryController = KPPhotoGalleryViewController()
+        
+        galleryController.diplayedPhotoInformations =
+            [PhotoInformation(title:"Title", image:R.image.demo_1()!, index:0),
+             PhotoInformation(title:"Title", image:R.image.demo_2()!, index:1),
+             PhotoInformation(title:"Title", image:R.image.demo_3()!, index:2),
+             PhotoInformation(title:"Title", image:R.image.demo_4()!, index:3),
+             PhotoInformation(title:"Title", image:R.image.demo_5()!, index:4),
+             PhotoInformation(title:"Title", image:R.image.demo_6()!, index:5)]
+        
+        self.dismissButton.isHidden = true
+        self.navigationController?.pushViewController(viewController: galleryController,
+                                                      animated: true,
+                                                      completion: {}
+        )
+    }
+    
     func handleDismissButtonOnTapped() {
         self.dismiss(animated: true, completion: nil);
     }
     
+}
+
+extension KPInformationViewController: UINavigationControllerDelegate {
+    func navigationController(_ navigationController: UINavigationController,
+                              willShow viewController: UIViewController,
+                              animated: Bool) {
+        if viewController is KPPhotoGalleryViewController {
+            self.dismissButton.isHidden = true
+        } else {
+            self.dismissButton.isHidden = false
+        }
+    }
 }
 
 extension KPInformationViewController: UIScrollViewDelegate {
@@ -204,6 +252,15 @@ extension KPInformationViewController: UIScrollViewDelegate {
 extension KPInformationViewController: KPInformationHeaderViewDelegate {
     func headerPhotoTapped(_ headerView: KPInformationHeaderView) {
         let photoDisplayController = KPPhotoDisplayViewController()
+//        let galleryController = KPPhotoGalleryViewController()
+//        galleryController.view.isHidden = true
+//        galleryController.view.backgroundColor = UIColor.clear
+//        galleryController.view.backgroundColor = UIColor.init(patternImage: currentScreenSnapshotImage)
+//        galleryController.navigationController?.view.isHidden = true
+//        galleryController.navigationController?.setNavigationBarHidden(true, animated: false)
+        
+//        galleryController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+//        photoDisplayController.photoGalleryController = galleryController
         photoDisplayController.diplayedPhotoInformations =
             [PhotoInformation(title:"Title", image:R.image.demo_1()!, index:0),
              PhotoInformation(title:"Title", image:R.image.demo_2()!, index:1),
@@ -211,7 +268,35 @@ extension KPInformationViewController: KPInformationHeaderViewDelegate {
              PhotoInformation(title:"Title", image:R.image.demo_4()!, index:3),
              PhotoInformation(title:"Title", image:R.image.demo_5()!, index:4),
              PhotoInformation(title:"Title", image:R.image.demo_6()!, index:5)]
-        self.present(photoDisplayController, animated: true) {
-        }
+        
+        self.present(photoDisplayController, animated: true, completion: {
+//            UIView.animate(withDuration: 0.5) { () -> Void in
+//                photoDisplayController.setNeedsStatusBarAppearanceUpdate()
+//            }
+        })
+//        self.navigationController?.pushViewController(viewController: galleryController,
+//                                                      animated: false,
+//                                                      completion: { 
+//                                                        galleryController.present(photoDisplayController,
+//                                                                                  animated: true) {
+//                                                        }
+//        })
+//        
+//        self.present(galleryController, animated: false) {
+//            galleryController.present(photoDisplayController, animated: true) {
+//            }
+//        }
     }
 }
+
+extension UINavigationController {
+    public func pushViewController(viewController: UIViewController,
+                                   animated: Bool,
+                                   completion: (() -> Void)?) {
+        CATransaction.begin()
+        CATransaction.setCompletionBlock(completion)
+        pushViewController(viewController, animated: animated)
+        CATransaction.commit()
+    }
+}
+

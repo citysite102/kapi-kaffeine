@@ -35,7 +35,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Custom UI
 //        UIApplication.shared.statusBarView?.backgroundColor = KPColorPalette.KPMainColor.statusBarColor
-        UIApplication.shared.statusBarStyle = .lightContent;
+        UIApplication.shared.statusBarStyle = .lightContent
+//        UIApplication.shared.isStatusBarHidden = true
         
 //        let mainViewController = KPMainViewController();
 //        let sideViewController = KPSideViewController();

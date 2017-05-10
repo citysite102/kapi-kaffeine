@@ -184,6 +184,7 @@ class KPMainViewController: UIViewController {
             self.addScreenEdgePanGestureRecognizer(view: toViewController.view, edges: .left);
         }
     }
+    
 }
 
 extension KPMainViewController: UIViewControllerTransitioningDelegate {

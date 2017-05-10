@@ -8,77 +8,94 @@
 
 import UIKit
 
-class KPPhotoTransition: NSObject, UIViewControllerAnimatedTransitioning {
+protocol ImageTransitionProtocol {
+    func tranisitionSetup()
+    func tranisitionCleanup()
+    func imageWindowFrame() -> CGRect
+}
+
+class KPPhotoDisplayTransition: NSObject, UIViewControllerAnimatedTransitioning {
+    
+    private var image: UIImage?
+    private var fromDelegate: ImageTransitionProtocol?
+    private var toDelegate: ImageTransitionProtocol?
+    
+    var presenting: Bool = true
+    // MARK: Setup Methods
+    
+    func setupImageTransition(_ image: UIImage,
+                              fromDelegate: ImageTransitionProtocol,
+                              toDelegate: ImageTransitionProtocol){
+        self.image = image
+        self.fromDelegate = fromDelegate
+        self.toDelegate = toDelegate
+    }
     
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return 0.5
     }
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-        let fromVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from) as! KPInformationViewController;
-        let toVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to) as! KPPhotoDisplayViewController;
         
-        let container = transitionContext.containerView;
-        let bounds = UIScreen.main.bounds;
-        let finalFrameForVC = transitionContext.finalFrame(for: toVC);
-        
-        let toView = toVC.view!
-        container.addSubview(toView)
-        toView.isHidden = true
-        
-        let snapshot = fromVC.snapshotPhotoView
+        let containerView = transitionContext.containerView;
+        let toVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to)!
+        let fromVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from)!
         
         
+        // 3: Set the destination view controllers frame
+        toVC.view.frame = fromVC.view.frame
         
-//        toVC.view.frame = finalFrameForVC.offsetBy(dx: 0, dy: bounds.size.height);
-//        container.addSubview(toVC.view);
-//        
-//        UIView.animate(withDuration: transitionDuration(using: transitionContext)+0.1,
-//                       delay: 0,
-//                       usingSpringWithDamping: 1.0,
-//                       initialSpringVelocity: 0.8,
-//                       options: UIViewAnimationOptions.curveEaseIn,
-//                       animations: {
-//                        fromVC.view.alpha = 0.5
-//                        fromVC.view.transform = CGAffineTransform(scaleX: 0.94, y: 0.94)
-//                        toVC.view.frame = finalFrameForVC
-//        }) { (finish) in
-//            transitionContext.completeTransition(true)
-//            fromVC.view.alpha = 1.0
-//        }
+        // 4: Create transition image view
+        let imageView = UIImageView(image: image)
+        imageView.contentMode = .scaleAspectFill
+        imageView.frame = (fromDelegate == nil) ?
+            CGRect.init(x: 0, y: 0, width: 0, height: 0) :
+            fromDelegate!.imageWindowFrame()
+        imageView.clipsToBounds = true
+        containerView.addSubview(imageView)
+        
+        // 5: Create from screen snapshot
+        let fromSnapshot = fromVC.view.snapshotView(afterScreenUpdates: true)
+        fromSnapshot?.frame = fromVC.view.frame
+        containerView.addSubview(fromSnapshot!)
+        
+        fromDelegate!.tranisitionSetup()
+        toDelegate!.tranisitionSetup()
+        
+        // 6: Create to screen snapshot
+        let toSnapshot = toVC.view.snapshotView(afterScreenUpdates: true)
+        toSnapshot?.frame = fromVC.view.frame
+        containerView.addSubview(toSnapshot!)
+        toSnapshot?.alpha = 0
+        
+        // 7: Bring the image view to the front and get the final frame
+        containerView.bringSubview(toFront: imageView)
+        let toFrame = (self.toDelegate == nil) ?
+        CGRect.init(x: 0, y: 0, width: 0, height: 0) :
+            self.toDelegate!.imageWindowFrame()
+        
+        // 8: Animate change
+        UIView.animate(withDuration: 0.3,
+                       delay: 0,
+                       options: UIViewAnimationOptions.curveEaseOut,
+                       animations: { 
+                        toSnapshot?.alpha = 1
+                        imageView.frame = toFrame
+        }) { (_) in
+            
+            self.toDelegate!.tranisitionCleanup()
+            self.fromDelegate!.tranisitionCleanup()
+            
+            // 9: Remove transition views
+            imageView.removeFromSuperview()
+            fromSnapshot?.removeFromSuperview()
+            toSnapshot?.removeFromSuperview()
+            
+            // 10: Complete transition
+            if !transitionContext.transitionWasCancelled {
+                containerView.addSubview(toVC.view)
+            }
+            transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
+        }
     }
-    
-//    func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-//        let fromVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from) as! ViewController;
-//        let toVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to) as! ViewController;
-//    
-//        let container = transitionContext.containerView;
-        
-//        //2.创建一个 Cell 中 imageView 的截图，并把 imageView 隐藏，造成使用户以为移动的就是 imageView 的假象
-//        let snapshotView = fromVC.selectedCell.imageView.snapshotViewAfterScreenUpdates(false)
-//        snapshotView.frame = container.convertRect(fromVC.selectedCell.imageView.frame, fromView: fromVC.selectedCell)
-//        fromVC.selectedCell.imageView.hidden = true
-//        
-//        //3.设置目标控制器的位置，并把透明度设为0，在后面的动画中慢慢显示出来变为1
-//        toVC.view.frame = transitionContext.finalFrameForViewController(toVC)
-//        toVC.view.alpha = 0
-//        
-//        //4.都添加到 container 中。注意顺序不能错了
-//        container.addSubview(toVC.view)
-//        container.addSubview(snapshotView)
-//        
-//        //5.执行动画
-//        UIView.animateWithDuration(transitionDuration(transitionContext), delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
-//            snapshotView.frame = toVC.avatarImageView.frame
-//            toVC.view.alpha = 1
-//        }) { (finish: Bool) -> Void in
-//            fromVC.selectedCell.imageView.hidden = false
-//            toVC.avatarImageView.image = toVC.image
-//            snapshotView.removeFromSuperview()
-//            
-//            //一定要记得动画完成后执行此方法，让系统管理 navigation
-//            transitionContext.completeTransition(true)
-//        }
-//    }
-    
 }

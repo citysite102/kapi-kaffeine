@@ -18,26 +18,14 @@ class KPPhotoDisplayViewController: UIViewController {
 
     static let KPPhotoDisplayControllerCellReuseIdentifier = "cell";
     
+    var onceOnly = false
     var diplayedPhotoInformations: [PhotoInformation] = [PhotoInformation]()
-//    {
-//        didSet {
-//            collectionView.reloadData()
-//        }
-//    }
-    
-    var currentIndexPath: IndexPath? {
-        didSet {
-            collectionView.setToIndexPath(currentIndexPath!)
-            collectionView.scrollToItem(at: currentIndexPath!,
-                                        at: .centeredHorizontally,
-                                        animated: false)
-        }
-    }
     
     var collectionView:UICollectionView!;
     var collectionLayout:UICollectionViewFlowLayout!;
     var dismissButton:KPBounceButton!
     var titleLabel:UILabel!
+    var selectedIndexPath: IndexPath!
     
     
     override func viewDidLoad() {
@@ -61,6 +49,7 @@ class KPPhotoDisplayViewController: UIViewController {
         collectionView.showsVerticalScrollIndicator = false
         collectionView.delaysContentTouches = true
         collectionView.isPagingEnabled = true
+        collectionView.isPrefetchingEnabled = true
         collectionView.register(KPPhotoDisplayCell.self,
                                 forCellWithReuseIdentifier: KPPhotoDisplayViewController.KPPhotoDisplayControllerCellReuseIdentifier)
         
@@ -81,34 +70,49 @@ class KPPhotoDisplayViewController: UIViewController {
                                                             "V:|-16-[$self(24)]"]);
         
     }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+//        UIApplication.shared.isStatusBarHidden = true
+    }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+//        UIApplication.shared.isStatusBarHidden = false
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
     func handleDismissButtonOnTapped() {
-        self.dismiss(animated: true) { 
+        self.dismiss(animated: true) {
             
         }
     }
+}
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+extension KPPhotoDisplayViewController: UIScrollViewDelegate {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        selectedIndexPath = IndexPath.init(row: (Int)(collectionView.contentOffset.x/collectionView.frameSize.width),
+                                           section: 0)
     }
-    */
-
 }
 
 extension KPPhotoDisplayViewController:
     UICollectionViewDelegate,
     UICollectionViewDataSource,
     UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        didSelectItemAt indexPath: IndexPath) {
+        selectedIndexPath = indexPath
+        self.dismiss(animated: true, completion: {
+        })
+    }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1;
@@ -126,30 +130,44 @@ extension KPPhotoDisplayViewController:
     }
 }
 
-var kIndexPathPointer = "kIndexPathPointer"
-
-extension UICollectionView{
+extension KPPhotoDisplayViewController: ImageTransitionProtocol {
     
-    func setToIndexPath (_ indexPath : IndexPath){
-        objc_setAssociatedObject(self, &kIndexPathPointer, indexPath, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+    // 1: hide scroll view containing images
+    func tranisitionSetup() {
+        collectionView.isHidden = true
     }
     
-    func toIndexPath () -> IndexPath {
-        let index = self.contentOffset.x/self.frame.size.width
-        if index > 0{
-            return IndexPath(row: Int(index), section: 0)
-        } else if let indexPath = objc_getAssociatedObject(self,&kIndexPathPointer) as? IndexPath {
-            return indexPath
+    // 2; unhide images and set correct image to be showing
+    func tranisitionCleanup() {
+        collectionView.isHidden = false
+        collectionView.scrollToItem(at: selectedIndexPath,
+                                    at: .left,
+                                    animated: false)
+        collectionView.layoutIfNeeded()
+    }
+    
+    // 3: return the imageView window frame
+    func imageWindowFrame() -> CGRect {
+        
+        let cell = collectionView.cellForItem(at: selectedIndexPath)
+        var displayedCell: KPPhotoDisplayCell!
+        if cell == nil {
+            collectionView.scrollToItem(at: selectedIndexPath, at: .centeredHorizontally, animated: false)
+            collectionView.layoutIfNeeded()
+            displayedCell = collectionView.cellForItem(at: selectedIndexPath) as! KPPhotoDisplayCell
         } else {
-            return IndexPath(row: 0, section: 0)
+            displayedCell = cell as! KPPhotoDisplayCell
         }
-    }
-    
-    func fromPageIndexPath () -> IndexPath{
-        let index : Int = Int(self.contentOffset.x/self.frame.size.width)
-        return IndexPath(row: index, section: 0)
+        
+        let photo = displayedCell.shopPhoto.image
+        let imageRatio = (photo?.size.width)! / (photo?.size.height)!
+        
+        let height = collectionView.frameSize.width / imageRatio
+        let yPoint = collectionView.frameOrigin.y + (collectionView.frameSize.height-height)/2
+        return CGRect.init(x: collectionView.frameOrigin.x,
+                           y: yPoint,
+                           width: collectionView.frameSize.width,
+                           height: height)
     }
 }
-
-
 
