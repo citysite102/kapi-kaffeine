@@ -34,6 +34,8 @@ class KPRatingView: UIView {
         }
     }
     
+    var currentStarIndex: Int = 4
+    
     lazy var iconImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -91,6 +93,8 @@ class KPRatingView: UIView {
     }()
     
     // Star Type
+    var starViews:[KPBounceView] = [KPBounceView]()
+    var panGesture: UIPanGestureRecognizer!
     
     
     
@@ -145,11 +149,29 @@ class KPRatingView: UIView {
             
             currentRate = 1
         case .star:
+            
+            panGesture = UIPanGestureRecognizer.init(target: self,
+                                                     action: #selector(handlePanGesture(panGesture:)))
+            addGestureRecognizer(panGesture)
+            
             iconImageView.addConstraints(fromStringArray: ["V:|[$self]|",
                                                            "H:|[$self]"])
             rateTitleLabel.addConstraints(fromStringArray: ["H:[$view0]-16-[$self]"],
                                           views: [iconImageView])
             rateTitleLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
+            for index in 0..<5 {
+                let starView = KPBounceView.init(R.image.icon_star()!)
+                starViews.append(starView)
+                addSubview(starView)
+                if index == 0 {
+                    starView.addConstraints(fromStringArray: ["H:[$self(24)]|",
+                                                              "V:|-2-[$self(24)]-2-|"])
+                } else {
+                    starView.addConstraints(fromStringArray: ["H:[$self(24)]-4-[$view0]",
+                                                              "V:|-2-[$self(24)]-2-|"],
+                                            views:[starViews[index-1]])
+                }
+            }
             
         }
     }
@@ -171,4 +193,31 @@ class KPRatingView: UIView {
     }
     
     // MARK:Star Type UI Event
+    func handlePanGesture(panGesture: UIPanGestureRecognizer) {
+        
+        switch panGesture.state {
+        case .began:
+            break
+        case .changed:
+            let touchPoint = panGesture.location(in: self)
+            for (index, starView) in starViews.enumerated() {
+                if starView.frame.contains(touchPoint) {
+                    currentStarIndex = index
+                    break
+                }
+            }
+
+            for (index, starView) in starViews.enumerated() {
+                starView.selected = index >= currentStarIndex ? true : false
+            }
+            
+            break
+        case .ended, .cancelled:
+            break
+        case .failed, .possible:
+            break
+        }
+        
+    }
+    
 }

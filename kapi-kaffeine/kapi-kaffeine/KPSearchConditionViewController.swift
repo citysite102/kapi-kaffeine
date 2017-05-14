@@ -173,7 +173,7 @@ class KPSearchConditionViewController: UIViewController {
                                              views: [self.seperator_one])
         
         for (index, title) in ratingTitles.enumerated() {
-            let ratingView = KPRatingView.init(.button,
+            let ratingView = KPRatingView.init(.star,
                                                R.image.icon_map()!,
                                                title)
             self.ratingViews.append(ratingView)
