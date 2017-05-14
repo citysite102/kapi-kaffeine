@@ -24,6 +24,7 @@
 		774209001EA67CE400C78A00 /* KPSliderMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774208FF1EA67CE400C78A00 /* KPSliderMenuController.swift */; };
 		77421FB01EB8EE0C00064FF0 /* KPNomadRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77421FAF1EB8EE0C00064FF0 /* KPNomadRequest.swift */; };
 		77421FB41EB8F82500064FF0 /* KPRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77421FB31EB8F82500064FF0 /* KPRatingView.swift */; };
+		77594B471EC89DAF0013BB56 /* KPPhotoAddCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77594B461EC89DAF0013BB56 /* KPPhotoAddCell.swift */; };
 		775989911EA5171A0029989C /* KPUIImageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775989901EA5171A0029989C /* KPUIImageHelper.swift */; };
 		776ACAF41E9BAFA200B629A2 /* KPSearchHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776ACAF31E9BAFA200B629A2 /* KPSearchHeaderView.swift */; };
 		776ACAF61E9BAFBF00B629A2 /* KPSearchTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776ACAF51E9BAFBF00B629A2 /* KPSearchTagView.swift */; };
@@ -123,6 +124,7 @@
 		774208FF1EA67CE400C78A00 /* KPSliderMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSliderMenuController.swift; sourceTree = "<group>"; };
 		77421FAF1EB8EE0C00064FF0 /* KPNomadRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPNomadRequest.swift; sourceTree = "<group>"; };
 		77421FB31EB8F82500064FF0 /* KPRatingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPRatingView.swift; sourceTree = "<group>"; };
+		77594B461EC89DAF0013BB56 /* KPPhotoAddCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPPhotoAddCell.swift; sourceTree = "<group>"; };
 		775989901EA5171A0029989C /* KPUIImageHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPUIImageHelper.swift; sourceTree = "<group>"; };
 		776ACAF31E9BAFA200B629A2 /* KPSearchHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSearchHeaderView.swift; sourceTree = "<group>"; };
 		776ACAF51E9BAFBF00B629A2 /* KPSearchTagView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSearchTagView.swift; sourceTree = "<group>"; };
@@ -410,6 +412,7 @@
 				776ACB0A1E9C783E00B629A2 /* KPInformationViewController.swift */,
 				779EB1431EC0DFD3008AAFF0 /* KPPhotoDisplayViewController.swift */,
 				77E8CC2F1EC0E48300669809 /* KPPhotoDisplayCell.swift */,
+				77594B461EC89DAF0013BB56 /* KPPhotoAddCell.swift */,
 				779EB1451EC0DFE2008AAFF0 /* KPPhotoGalleryViewController.swift */,
 				77C0E0FB1E9D487800398852 /* View */,
 			);
@@ -868,6 +871,7 @@
 				771EECA41EBC217B004A34B8 /* KPCheckBox.swift in Sources */,
 				77A201991EBC5BE600F3497F /* KPCheckBoxFillController.swift in Sources */,
 				77B66FB31EAF171E008B6652 /* KPAboutUsViewController.swift in Sources */,
+				77594B471EC89DAF0013BB56 /* KPPhotoAddCell.swift in Sources */,
 				C02881CB1E9CF1E200776E28 /* KPMainMapMarkerInfoWindow.swift in Sources */,
 				C02AFE471E7D260D008FFB33 /* ViewController.swift in Sources */,
 				77A2019F1EBE23D100F3497F /* KPCheckView.swift in Sources */,

@@ -77,7 +77,7 @@ class KPUserProfileViewController: UIViewController {
                                      action: #selector(KPInformationViewController.handleDismissButtonOnTapped),
                                      for: .touchUpInside);
         
-        let navigationBarHeight = self.navigationController?.navigationBar.frame.height;
+//        let navigationBarHeight = self.navigationController?.navigationBar.frame.height;
         
         self.view.addSubview(self.userContainer);
         self.userContainer.addConstraints(fromStringArray: ["V:|[$self]", "H:|[$self]|"]);

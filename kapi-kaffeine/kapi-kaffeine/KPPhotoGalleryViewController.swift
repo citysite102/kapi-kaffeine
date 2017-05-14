@@ -11,6 +11,7 @@ import UIKit
 class KPPhotoGalleryViewController: UIViewController {
 
     static let KPPhotoGalleryViewControllerCellReuseIdentifier = "cell";
+    static let KPPhotoGalleryViewControllerCellAddIdentifier = "cell_add";
     
     var transitionController: KPPhotoDisplayTransition = KPPhotoDisplayTransition()
     var hideSelectedCell: Bool = false
@@ -72,6 +73,9 @@ class KPPhotoGalleryViewController: UIViewController {
         self.collectionView.register(KPShopPhotoCell.self,
                                      forCellWithReuseIdentifier:
             KPPhotoGalleryViewController.KPPhotoGalleryViewControllerCellReuseIdentifier)
+        self.collectionView.register(KPPhotoAddCell.self,
+                                     forCellWithReuseIdentifier:
+            KPPhotoGalleryViewController.KPPhotoGalleryViewControllerCellAddIdentifier)
         
         self.view.addSubview(self.collectionView)
         self.collectionView.addConstraints(fromStringArray: ["H:|[$self]|",
@@ -109,32 +113,65 @@ extension KPPhotoGalleryViewController: UICollectionViewDelegate, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: KPPhotoGalleryViewController.KPPhotoGalleryViewControllerCellReuseIdentifier,
-                                                      for: indexPath) as! KPShopPhotoCell;
-        cell.layer.cornerRadius = 4.0
-        cell.layer.masksToBounds = true
-        cell.shopPhoto.image = self.diplayedPhotoInformations[indexPath.row].image
-        return cell;
+        
+        if indexPath.row == 0 {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: KPPhotoGalleryViewController.KPPhotoGalleryViewControllerCellAddIdentifier,
+                                                          for: indexPath) as! KPPhotoAddCell;
+            cell.layer.cornerRadius = 4.0
+            cell.layer.masksToBounds = true
+            return cell;
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: KPPhotoGalleryViewController.KPPhotoGalleryViewControllerCellReuseIdentifier,
+                                                          for: indexPath) as! KPShopPhotoCell;
+            cell.layer.cornerRadius = 4.0
+            cell.layer.masksToBounds = true
+            cell.shopPhoto.image = self.diplayedPhotoInformations[indexPath.row].image
+            return cell;
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         selectedIndexPath = indexPath
         
-        let photoDisplayController = KPPhotoDisplayViewController()
-        photoDisplayController.transitioningDelegate = self
-        photoDisplayController.diplayedPhotoInformations =
-            [PhotoInformation(title:"Title", image:R.image.demo_1()!, index:0),
-             PhotoInformation(title:"Title", image:R.image.demo_2()!, index:1),
-             PhotoInformation(title:"Title", image:R.image.demo_3()!, index:2),
-             PhotoInformation(title:"Title", image:R.image.demo_4()!, index:3),
-             PhotoInformation(title:"Title", image:R.image.demo_5()!, index:4),
-             PhotoInformation(title:"Title", image:R.image.demo_6()!, index:5)]
-        
-        self.present(photoDisplayController, animated: true, completion: {
-        })
+        if indexPath.row == 0 {
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.sourceType = .photoLibrary
+            self.present(imagePicker, animated: true, completion: {
+            })
+            
+        } else {
+            let photoDisplayController = KPPhotoDisplayViewController()
+            photoDisplayController.transitioningDelegate = self
+            photoDisplayController.diplayedPhotoInformations =
+                [PhotoInformation(title:"Title", image:R.image.demo_1()!, index:0),
+                 PhotoInformation(title:"Title", image:R.image.demo_2()!, index:1),
+                 PhotoInformation(title:"Title", image:R.image.demo_3()!, index:2),
+                 PhotoInformation(title:"Title", image:R.image.demo_4()!, index:3),
+                 PhotoInformation(title:"Title", image:R.image.demo_5()!, index:4),
+                 PhotoInformation(title:"Title", image:R.image.demo_6()!, index:5)]
+            
+            self.present(photoDisplayController, animated: true, completion: {
+            })
+        }
         
     }
 }
+
+// MARK: Image Picker
+
+extension KPPhotoGalleryViewController: UIImagePickerControllerDelegate,
+UINavigationControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        picker.dismiss(animated: true) { 
+            
+        }
+    }
+    
+}
+
+// MARK: View Transition
 
 extension KPPhotoGalleryViewController: UIViewControllerTransitioningDelegate {
     
@@ -142,6 +179,7 @@ extension KPPhotoGalleryViewController: UIViewControllerTransitioningDelegate {
                              presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         let photoViewController = presented as! KPPhotoDisplayViewController
         photoViewController.selectedIndexPath = selectedIndexPath
+        
         let cell = collectionView.cellForItem(at: selectedIndexPath) as! KPShopPhotoCell
         transitionController.setupImageTransition(cell.shopPhoto.image!,
                                                   fromDelegate: self,
@@ -165,13 +203,11 @@ extension KPPhotoGalleryViewController: ImageTransitionProtocol {
     // 1: hide selected cell for tranisition snapshot
     func tranisitionSetup(){
         hideSelectedCell = true
-//        collectionView.reloadData()
     }
     
     // 2: unhide selected cell after tranisition snapshot is taken
     func tranisitionCleanup(){
         hideSelectedCell = false
-//        collectionView.reloadData()
     }
     
     // 3: return window frame of selected image
