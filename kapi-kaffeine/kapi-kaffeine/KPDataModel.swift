@@ -9,7 +9,7 @@
 import Foundation
 import ObjectMapper
 
-class KPDataModel: Mappable {
+class KPDataModel: NSObject, Mappable, GMUClusterItem {
     
     var identifier: String!
     var name: String!
@@ -56,6 +56,18 @@ class KPDataModel: Mappable {
             sum += (self.music?.doubleValue) ?? 0;
             
             return sum/Double(self.usableFeatureCount!)
+        }
+    }
+    
+    var position: CLLocationCoordinate2D {
+        get {
+            
+            if let latstr = self.latitude, let latitude = Double(latstr),
+                let longstr = self.longitude, let longitude = Double(longstr) {
+                return CLLocationCoordinate2DMake(latitude, longitude)
+            }
+            
+            return CLLocationCoordinate2DMake(-90, 0)
         }
     }
     

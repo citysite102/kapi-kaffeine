@@ -53,7 +53,6 @@
 		C01AC6301EAAEA0A000390F7 /* GMUDefaultClusterRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = C01AC6281EAAEA0A000390F7 /* GMUDefaultClusterRenderer.m */; };
 		C01AC6391EAAEA8F000390F7 /* GQTPointQuadTree.m in Sources */ = {isa = PBXBuildFile; fileRef = C01AC6351EAAEA8F000390F7 /* GQTPointQuadTree.m */; };
 		C01AC63A1EAAEA8F000390F7 /* GQTPointQuadTreeChild.m in Sources */ = {isa = PBXBuildFile; fileRef = C01AC6371EAAEA8F000390F7 /* GQTPointQuadTreeChild.m */; };
-		C01AC63C1EAAEC48000390F7 /* KPClusterItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01AC63B1EAAEC48000390F7 /* KPClusterItem.swift */; };
 		C02881CB1E9CF1E200776E28 /* KPMainMapMarkerInfoWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02881CA1E9CF1E200776E28 /* KPMainMapMarkerInfoWindow.swift */; };
 		C02AFE451E7D260D008FFB33 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02AFE441E7D260D008FFB33 /* AppDelegate.swift */; };
 		C02AFE471E7D260D008FFB33 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02AFE461E7D260D008FFB33 /* ViewController.swift */; };
@@ -156,7 +155,6 @@
 		C01AC6361EAAEA8F000390F7 /* GQTPointQuadTreeChild.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GQTPointQuadTreeChild.h; sourceTree = "<group>"; };
 		C01AC6371EAAEA8F000390F7 /* GQTPointQuadTreeChild.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GQTPointQuadTreeChild.m; sourceTree = "<group>"; };
 		C01AC6381EAAEA8F000390F7 /* GQTPointQuadTreeItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GQTPointQuadTreeItem.h; sourceTree = "<group>"; };
-		C01AC63B1EAAEC48000390F7 /* KPClusterItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPClusterItem.swift; sourceTree = "<group>"; };
 		C02881CA1E9CF1E200776E28 /* KPMainMapMarkerInfoWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPMainMapMarkerInfoWindow.swift; sourceTree = "<group>"; };
 		C02AFE411E7D260D008FFB33 /* kapi-kaffeine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "kapi-kaffeine.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C02AFE441E7D260D008FFB33 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -401,7 +399,6 @@
 			children = (
 				C01AC60D1EAAEA0A000390F7 /* Clustering */,
 				C01AC6311EAAEA8F000390F7 /* QuadTree */,
-				C01AC63B1EAAEC48000390F7 /* KPClusterItem.swift */,
 			);
 			name = "Google-Maps-iOS-Utils";
 			sourceTree = "<group>";
@@ -789,7 +786,6 @@
 				774208ED1EA5B97300C78A00 /* KPShopCommentCell.swift in Sources */,
 				774208F71EA61D4400C78A00 /* KPShopRecommendView.swift in Sources */,
 				C01AC62D1EAAEA0A000390F7 /* GMUClusterManager.m in Sources */,
-				C01AC63C1EAAEC48000390F7 /* KPClusterItem.swift in Sources */,
 				777DCC141EA785730055525A /* KPPhotoTransition.swift in Sources */,
 				C02AFE451E7D260D008FFB33 /* AppDelegate.swift in Sources */,
 				776ACAF81E9BAFE900B629A2 /* KPSearchFooterView.swift in Sources */,

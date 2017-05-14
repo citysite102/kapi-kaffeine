@@ -32,6 +32,7 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate, GMUClusterM
     var isCollectionViewShow: Bool = false {
         didSet {
             if self.collectionViewBottomConstraint != nil {
+                self.view.bringSubview(toFront: self.collectionView)
                 if isCollectionViewShow {
                     self.collectionViewBottomConstraint.constant = 0
                 } else {
@@ -46,28 +47,11 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate, GMUClusterM
     
     var collectionViewBottomConstraint: NSLayoutConstraint!
     
-    var mapMarkers: [KPClusterItem] = []
     var displayDataModel: [KPDataModel]! {
         didSet {
             (self.view as! GMSMapView).clear()
-            self.mapMarkers = []
             for datamodel in self.displayDataModel  {
-                if let latstr = datamodel.latitude, let latitude = Double(latstr),
-                    let longstr = datamodel.longitude, let longitude = Double(longstr) {
-                    
-                    let position = CLLocationCoordinate2DMake(latitude, longitude)
-
-                    let marker = KPClusterItem(position: position)
-                    
-                    marker.title = datamodel.name
-                    marker.icon = UIImage(named: "icon_mapMarker")
-//                    marker.map = (self.view as! GMSMapView)
-                    marker.userData = datamodel
-                    marker.appearAnimation = .pop
-                    
-                    self.mapMarkers.append(marker)
-                    self.clusterManager.add(marker)
-                }
+                self.clusterManager.add(datamodel)
             }
             
             // Call cluster() after items have been added to perform the clustering
@@ -192,19 +176,18 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate, GMUClusterM
     
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         
-        let pageWidth = UIScreen.main.bounds.size.width - 60
-        let currentOffset = targetContentOffset.pointee.x
-        let index = floor((currentOffset + (pageWidth + 15)/2)/(pageWidth + 15))
+//        let pageWidth = UIScreen.main.bounds.size.width - 60
+//        let currentOffset = targetContentOffset.pointee.x
+//        let index = floor((currentOffset + (pageWidth + 15)/2)/(pageWidth + 15))
 
-        self.mapView.selectedMarker = self.mapMarkers[Int(index)]
-//        self.mapView.moveCamera(GMSCameraUpdate.setCamera(GMSCameraPosition.camera(withTarget: self.mapView.selectedMarker!.position , zoom: self.mapView.camera.zoom)))
-        CATransaction.begin()
-        CATransaction.setValue(NSNumber(floatLiteral: 0.5), forKey: kCATransactionAnimationDuration)
-        self.mapView.animate(to: GMSCameraPosition.camera(withTarget: self.mapView.selectedMarker!.position , zoom: self.mapView.camera.zoom))
-        CATransaction.commit()
+//        self.mapView.selectedMarker = self.mapMarkers[Int(index)]
+//        CATransaction.begin()
+//        CATransaction.setValue(NSNumber(floatLiteral: 0.5), forKey: kCATransactionAnimationDuration)
+//        self.mapView.animate(to: GMSCameraPosition.camera(withTarget: self.mapView.selectedMarker!.position , zoom: self.mapView.camera.zoom))
+//        CATransaction.commit()
         
-        targetContentOffset.pointee.x = -30 + index * (pageWidth + 15)
-        scrollView.setContentOffset(CGPoint(x: -30 + index * (pageWidth + 15), y: 0), animated: true)
+//        targetContentOffset.pointee.x = -30 + index * (pageWidth + 15)
+//        scrollView.setContentOffset(CGPoint(x: -30 + index * (pageWidth + 15), y: 0), animated: true)
         
     }
     
@@ -229,6 +212,7 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate, GMUClusterM
         if self.isCollectionViewShow == false  {
             self.isCollectionViewShow = true
         }
+        
         marker.icon = UIImage(named: "icon_mapMarkerSelected")
         let infoWindow = KPMainMapMarkerInfoWindow(dataModel: marker.userData as! KPDataModel)
         if let selectedIndex =  self.displayDataModel.index(where: {($0.name == (marker.userData as! KPDataModel).name)}) {
