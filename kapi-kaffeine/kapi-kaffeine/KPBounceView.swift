@@ -18,6 +18,9 @@ class KPBounceView: UIView {
     var selected: Bool = false {
         didSet {
             icon.tintColor = selected ? selectedColor : unSelectedColor
+            if selected && oldValue != selected {
+                performBounceAnimation()
+            }
         }
     }
     var icon: UIImageView!
@@ -53,24 +56,25 @@ class KPBounceView: UIView {
         
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesBegan(touches, with: event);
-        layer.transform = CATransform3DScale(CATransform3DIdentity, 0.8, 0.8, 1.0);
-    }
-    
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
-    }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesEnded(touches, with: event);
-        self.performTouchEndAnimation();
-    }
-    
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesCancelled(touches, with: event)
-        self.performTouchEndAnimation();
-    }
+//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        super.touchesBegan(touches, with: event);
+//        layer.transform = CATransform3DScale(CATransform3DIdentity, 0.8, 0.8, 1.0);
+//    }
+//    
+//    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        
+//    }
+//    
+//    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        super.touchesEnded(touches, with: event);
+//        self.performTouchEndAnimation();
+//        self.selected = true
+//    }
+//    
+//    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        super.touchesCancelled(touches, with: event)
+//        self.performTouchEndAnimation();
+//    }
     
     private func performTouchEndAnimation() {
         UIView.animate(withDuration: bounceDuration,
@@ -85,18 +89,18 @@ class KPBounceView: UIView {
         }
     }
     
-//    private func performBounceAnimation() {
-//        layer.transform = CATransform3DScale(CATransform3DIdentity, 0.9, 0.9, 1.0);
-//        UIView.animate(withDuration: bounceDuration,
-//                       delay: 0,
-//                       usingSpringWithDamping: dampingRatio,
-//                       initialSpringVelocity: 1,
-//                       options: UIViewAnimationOptions.beginFromCurrentState,
-//                       animations: {
-//                        self.layer.transform = CATransform3DIdentity;
-//        }) { _ in
-//            
-//        }
-//    }
+    private func performBounceAnimation() {
+        layer.transform = CATransform3DScale(CATransform3DIdentity, 0.8, 0.8, 1.0);
+        UIView.animate(withDuration: bounceDuration,
+                       delay: 0,
+                       usingSpringWithDamping: dampingRatio,
+                       initialSpringVelocity: 1,
+                       options: UIViewAnimationOptions.beginFromCurrentState,
+                       animations: {
+                        self.layer.transform = CATransform3DIdentity;
+        }) { _ in
+            
+        }
+    }
 
 }

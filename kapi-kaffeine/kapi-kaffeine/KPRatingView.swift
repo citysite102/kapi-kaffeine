@@ -165,6 +165,7 @@ class KPRatingView: UIView {
                                                      action: #selector(handleTapGesture(tapGesture:)))
             
             addGestureRecognizer(panGesture)
+            addGestureRecognizer(tapGesture)
             
             iconImageView.addConstraints(fromStringArray: ["V:|[$self]|",
                                                            "H:|[$self]"])
