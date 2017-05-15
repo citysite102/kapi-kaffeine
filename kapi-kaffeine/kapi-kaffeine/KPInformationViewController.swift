@@ -128,10 +128,11 @@ class KPInformationViewController: UIViewController {
                                                    icon:(UIImage.init(named: "icon_map")?.withRenderingMode(.alwaysTemplate))!,
                                                    handler:{(infoView) -> () in
                                                     let controller = KPModalViewController()
-                                                    controller.edgeInset = UIEdgeInsets.init(top: 48,
+                                                    controller.edgeInset = UIEdgeInsets.init(top: UIDevice().isCompact ? 16 : 48,
                                                                                              left: 0,
                                                                                              bottom: 0,
                                                                                              right: 0);
+                                                    controller.cornerRadius = [.topRight, .topLeft]
                                                     let ratingViewController = KPRatingViewController()
                                                     controller.contentController = ratingViewController;
                                                     controller.presentModalView();

@@ -58,17 +58,18 @@ class KPRatingViewController: UIViewController {
 
         self.view.backgroundColor = UIColor.white
         
-        scrollView = UIScrollView();
-        scrollView.showsVerticalScrollIndicator = false;
-        view.addSubview(self.scrollView);
+        scrollView = UIScrollView()
+        scrollView.isScrollEnabled = false
+        scrollView.showsVerticalScrollIndicator = false
+        view.addSubview(self.scrollView)
         scrollView.addConstraints(fromStringArray: ["V:|[$self]|",
-                                                    "H:|[$self]|"]);
+                                                    "H:|[$self]|"])
         
         
-        containerView = UIView();
-        scrollView.addSubview(self.containerView);
-        containerView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"]);
-        containerView.addConstraintForHavingSameWidth(with: self.view);
+        containerView = UIView()
+        scrollView.addSubview(self.containerView)
+        containerView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"])
+        containerView.addConstraintForHavingSameWidth(with: self.view)
         
         dismissButton = UIButton.init()
         dismissButton.setImage(UIImage.init(named: "icon_close")?.withRenderingMode(.alwaysTemplate),

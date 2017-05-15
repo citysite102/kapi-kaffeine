@@ -59,10 +59,40 @@ struct KPColorPalette {
         static let redHintColor = UIColor(hexString: "#ff0000")
     }
     
-    
-//    struct Gray {
-//        static let Light = UIColor(white: 0.8374, alpha: 1.0)
-//        static let Medium = UIColor(white: 0.4756, alpha: 1.0)
-//        static let Dark = UIColor(white: 0.2605, alpha: 1.0)
-//    }
 }
+
+extension UIDevice {
+
+    var iPhone: Bool {
+        return UIDevice().userInterfaceIdiom == .phone
+    }
+    
+    var isCompact: Bool {
+        let size = UIScreen.main.bounds.size
+        return size.width < 600 || size.height < 600
+    }
+    
+    enum ScreenType: String {
+        case iPhone4
+        case iPhone5
+        case iPhone6
+        case iPhone6Plus
+        case unknown
+    }
+    var screenType: ScreenType {
+        guard iPhone else { return .unknown }
+        switch UIScreen.main.nativeBounds.height {
+        case 960:
+            return .iPhone4
+        case 1136:
+            return .iPhone5
+        case 1334:
+            return .iPhone6
+        case 2208:
+            return .iPhone6Plus
+        default:
+            return .unknown
+        }
+    }
+}
+

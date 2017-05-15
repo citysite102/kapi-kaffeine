@@ -34,7 +34,7 @@ class KPModalViewController: UIViewController {
     var presentationStyle: KPModalPresentationStyle = .bottom;
     var layoutWithSize: Bool = true;
     var layoutWithInset: Bool = false;
-    
+    var cornerRadius: UIRectCorner?
     
     var contentSize: CGSize = CGSize.init(width: 0, height: 0) {
         didSet {
@@ -171,9 +171,16 @@ class KPModalViewController: UIViewController {
                                              size: containerSize);
         self.contentView.layoutIfNeeded();
         
-//        self.containerSensingView.center = self.backgroundSensingView.center;
-//        self.contentView.layer.transform = CATransform3DMakeScale(0.5, 0.5, 1.0);
-//        self.containerSensingView.alpha = 0;
+        if cornerRadius != nil {
+            let path = UIBezierPath(roundedRect:CGRect.init(x: 0, y: 0,
+                                                            width: contentView.frameSize.width,
+                                                            height: contentView.frameSize.height),
+                                    byRoundingCorners:cornerRadius!,
+                                    cornerRadii: CGSize(width: 8, height:  8))
+            let maskLayer = CAShapeLayer()
+            maskLayer.path = path.cgPath
+            contentView.layer.mask = maskLayer
+        }
         
         UIView.animate(withDuration: duration,
                        delay: 0,
