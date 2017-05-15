@@ -76,6 +76,7 @@
 		77E4955F1EC9EA09003B7EBC /* KPSearchViewDefaultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E4955E1EC9EA09003B7EBC /* KPSearchViewDefaultCell.swift */; };
 		77E495611EC9EA1F003B7EBC /* KPSearchViewRecentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E495601EC9EA1F003B7EBC /* KPSearchViewRecentCell.swift */; };
 		77E495631EC9EEF0003B7EBC /* KPTimePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E495621EC9EEF0003B7EBC /* KPTimePicker.swift */; };
+		77E495651ECA04F5003B7EBC /* KPSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E495641ECA04F5003B7EBC /* KPSearchBar.swift */; };
 		77E8CC301EC0E48300669809 /* KPPhotoDisplayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E8CC2F1EC0E48300669809 /* KPPhotoDisplayCell.swift */; };
 		77FB63961E9AA7BB00FFC3DC /* KPDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77FB63951E9AA7BB00FFC3DC /* KPDataModel.swift */; };
 		C00A5C991EC9F34400ECEFE3 /* KPPhotoDisplayTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777DCC131EA785730055525A /* KPPhotoDisplayTransition.swift */; };
@@ -193,6 +194,7 @@
 		77E4955E1EC9EA09003B7EBC /* KPSearchViewDefaultCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSearchViewDefaultCell.swift; sourceTree = "<group>"; };
 		77E495601EC9EA1F003B7EBC /* KPSearchViewRecentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSearchViewRecentCell.swift; sourceTree = "<group>"; };
 		77E495621EC9EEF0003B7EBC /* KPTimePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPTimePicker.swift; sourceTree = "<group>"; };
+		77E495641ECA04F5003B7EBC /* KPSearchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSearchBar.swift; sourceTree = "<group>"; };
 		77E8CC2F1EC0E48300669809 /* KPPhotoDisplayCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPPhotoDisplayCell.swift; sourceTree = "<group>"; };
 		77FB63951E9AA7BB00FFC3DC /* KPDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPDataModel.swift; sourceTree = "<group>"; };
 		C00CD5331E95234A00A3CB6F /* style.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = style.json; sourceTree = "<group>"; };
@@ -416,6 +418,7 @@
 			isa = PBXGroup;
 			children = (
 				77E4955A1EC9E9B0003B7EBC /* KPSearchViewController.swift */,
+				77E495641ECA04F5003B7EBC /* KPSearchBar.swift */,
 				77E4955E1EC9EA09003B7EBC /* KPSearchViewDefaultCell.swift */,
 				77E495601EC9EA1F003B7EBC /* KPSearchViewRecentCell.swift */,
 				776ACAF31E9BAFA200B629A2 /* KPSearchHeaderView.swift */,
@@ -841,7 +844,7 @@
 				TargetAttributes = {
 					C02AFE401E7D260D008FFB33 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = 4D7RCMZ7F7;
+						DevelopmentTeam = A43Y729CXH;
 						ProvisioningStyle = Automatic;
 					};
 					C02AFE541E7D260D008FFB33 = {
@@ -974,6 +977,7 @@
 			files = (
 				C00A5C991EC9F34400ECEFE3 /* KPPhotoDisplayTransition.swift in Sources */,
 				C01AC62B1EAAEA0A000390F7 /* GMUSimpleClusterAlgorithm.m in Sources */,
+				77E495651ECA04F5003B7EBC /* KPSearchBar.swift in Sources */,
 				77421FB41EB8F82500064FF0 /* KPRatingView.swift in Sources */,
 				776ACAF61E9BAFBF00B629A2 /* KPSearchTagView.swift in Sources */,
 				C01AC62A1EAAEA0A000390F7 /* GMUNonHierarchicalDistanceBasedAlgorithm.m in Sources */,
@@ -1211,7 +1215,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 4D7RCMZ7F7;
+				DEVELOPMENT_TEAM = A43Y729CXH;
 				INFOPLIST_FILE = "kapi-kaffeine/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kapi-kaffeine";
@@ -1228,7 +1232,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 4D7RCMZ7F7;
+				DEVELOPMENT_TEAM = A43Y729CXH;
 				INFOPLIST_FILE = "kapi-kaffeine/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kapi-kaffeine";

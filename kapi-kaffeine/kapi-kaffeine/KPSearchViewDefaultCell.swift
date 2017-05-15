@@ -10,7 +10,9 @@ import UIKit
 
 class KPSearchViewDefaultCell: UITableViewCell {
 
-    lazy var demoLabel: UILabel = {
+    var starIcon: UIImageView!
+    
+    lazy var shopNameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16.0)
         label.textColor = KPColorPalette.KPTextColor.mainColor
@@ -18,13 +20,59 @@ class KPSearchViewDefaultCell: UITableViewCell {
         return label
     }()
     
+    lazy var rateLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 12.0)
+        label.textColor = KPColorPalette.KPTextColor.mainColor
+        label.text = "4.0"
+        return label
+    }()
+    
+    lazy var distanceNameLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 12.0)
+        label.textColor = KPColorPalette.KPTextColor.grayColor_level3
+        label.text = "距離"
+        return label
+    }()
+    
+    lazy var distanceLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 16.0)
+        label.textColor = KPColorPalette.KPTextColor.mainColor
+        label.text = "840m"
+        return label
+    }()
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        addSubview(demoLabel)
-        demoLabel.addConstraints(fromStringArray: ["H:|-8-[$self]"])
-        demoLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
+        addSubview(shopNameLabel)
+        shopNameLabel.addConstraints(fromStringArray: ["H:|-8-[$self(<=160)]"])
+        shopNameLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
+        
+        starIcon = UIImageView.init(image: R.image.icon_star()?.withRenderingMode(.alwaysTemplate))
+        starIcon.tintColor = KPColorPalette.KPMainColor.starColor
+        addSubview(starIcon)
+        starIcon.addConstraints(fromStringArray: ["H:[$view0]-4-[$self(14)]",
+                                                  "V:[$self(14)]"],
+                                views: [shopNameLabel])
+        starIcon.addConstraintForCenterAligningToSuperview(in: .vertical)
+        
+        addSubview(rateLabel)
+        rateLabel.addConstraints(fromStringArray: ["H:[$view0]-2-[$self]"],
+                                views: [starIcon])
+        rateLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
+        
+        addSubview(distanceLabel)
+        distanceLabel.addConstraints(fromStringArray: ["H:[$self]-8-|"])
+        distanceLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
+        
+        addSubview(distanceNameLabel)
+        distanceNameLabel.addConstraints(fromStringArray: ["H:[$self]-4-[$view0]"],
+                                         views:[distanceLabel])
+        distanceNameLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
+        
     }
     
     required init?(coder aDecoder: NSCoder) {

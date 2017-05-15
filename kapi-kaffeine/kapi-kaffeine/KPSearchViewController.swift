@@ -37,12 +37,12 @@ class KPSearchViewController: UIViewController {
                                 action: #selector(KPSearchViewController.handleDismissButtonOnTapped),
                                 for: .touchUpInside)
         
-        let barItem = UIBarButtonItem.init(customView: self.dismissButton);
+//        let barItem = UIBarButtonItem.init(customView: self.dismissButton);
         let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace,
                                              target: nil,
                                              action: nil)
         negativeSpacer.width = -8
-        navigationItem.rightBarButtonItems = [negativeSpacer, barItem]
+//        navigationItem.rightBarButtonItems = [negativeSpacer, barItem]
         navigationItem.leftBarButtonItems = [negativeSpacer, UIBarButtonItem.init(image: R.image.icon_back(),
                                                                                   style: .plain,
                                                                                   target: self,
@@ -75,7 +75,7 @@ class KPSearchViewController: UIViewController {
         searchController.dimsBackgroundDuringPresentation = true
         searchController.searchBar.placeholder = "Search here..."
         searchController.searchBar.delegate = self
-        
+        searchController.hidesNavigationBarDuringPresentation = false
         self.navigationItem.titleView = searchController.searchBar
     }
     
@@ -102,7 +102,7 @@ extension KPSearchViewController: UISearchResultsUpdating, UISearchBarDelegate {
         tableView.reloadData()
     }
     
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if !shouldShowSearchResults {
             shouldShowSearchResults = true
             tableView.reloadData()
@@ -112,7 +112,15 @@ extension KPSearchViewController: UISearchResultsUpdating, UISearchBarDelegate {
     }
     
     func updateSearchResults(for searchController: UISearchController) {
+        guard let searchString = searchController.searchBar.text else {
+            return
+        }
         
+        filteredDataModel = displayDataModel.filter({ (dataModel) -> Bool in
+            return (dataModel.name as NSString).range(of: searchString,
+                                                      options: .caseInsensitive).location != NSNotFound
+        })
+        tableView.reloadData()
     }
 }
 
@@ -124,9 +132,9 @@ extension KPSearchViewController: UITableViewDelegate, UITableViewDataSource {
                                                  for: indexPath) as! KPSearchViewDefaultCell;
         
         if shouldShowSearchResults {
-            cell.demoLabel.text = self.filteredDataModel[indexPath.row].name
+            cell.shopNameLabel.text = self.filteredDataModel[indexPath.row].name
         } else {
-            cell.demoLabel.text = self.displayDataModel[indexPath.row].name
+            cell.shopNameLabel.text = self.displayDataModel[indexPath.row].name
         }
         
         return cell;
@@ -137,7 +145,7 @@ extension KPSearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80.0;
+        return 96.0;
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
