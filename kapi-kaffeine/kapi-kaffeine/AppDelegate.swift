@@ -29,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         navigationBarAppearace.isTranslucent = false;
         navigationBarAppearace.tintColor = KPColorPalette.KPTextColor.whiteColor
-        navigationBarAppearace.barTintColor = KPColorPalette.KPMainColor.mainColor
+        navigationBarAppearace.barTintColor = KPColorPalette.KPMainColor.mainColor_light
         navigationBarAppearace.titleTextAttributes = [NSFontAttributeName: UIFont.systemFont(ofSize: 20),
                                                       NSForegroundColorAttributeName: KPColorPalette.KPTextColor.whiteColor!]
         

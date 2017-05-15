@@ -104,7 +104,7 @@ class KPShopCommentCellButton: UIButton {
 
     var buttonSelected: Bool = false {
         didSet {
-            self.tintColor = buttonSelected ? KPColorPalette.KPMainColor.buttonColor :
+            self.tintColor = buttonSelected ? KPColorPalette.KPMainColor.mainColor :
                 KPColorPalette.KPMainColor.grayColor_level2;
             self.titleLabel?.textColor = KPColorPalette.KPTextColor.grayColor_level1;
         }

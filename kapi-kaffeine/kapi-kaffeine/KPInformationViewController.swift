@@ -98,14 +98,14 @@ class KPInformationViewController: UIViewController {
         self.locationInformationView.infoSupplementLabel.text = "距離 600m";
         self.locationInformationView.actions = [Action(title:"開啟導航",
                                                  style:.normal,
-                                                 color:KPColorPalette.KPMainColor.buttonColor!,
+                                                 color:KPColorPalette.KPMainColor.mainColor!,
                                                  icon:(UIImage.init(named: "icon_map")?.withRenderingMode(.alwaysTemplate))!,
                                                  handler:{(infoView) -> () in
                                                     print("Location button 1 Tapped");
         }),
                                                 Action(title:"街景模式",
                                                  style:.normal,
-                                                 color:KPColorPalette.KPMainColor.buttonColor!,
+                                                 color:KPColorPalette.KPMainColor.mainColor!,
                                                  icon:(UIImage.init(named: "icon_map")?.withRenderingMode(.alwaysTemplate))!,
                                                  handler:{(infoView) -> () in
                                                     print("Location button 2 Tapped");
@@ -124,10 +124,17 @@ class KPInformationViewController: UIViewController {
         self.rateInformationView.infoSupplementLabel.text = "143 人已評分";
         self.rateInformationView.actions = [Action(title:"我要評分",
                                                    style:.normal,
-                                                   color:KPColorPalette.KPMainColor.buttonColor!,
+                                                   color:KPColorPalette.KPMainColor.mainColor!,
                                                    icon:(UIImage.init(named: "icon_map")?.withRenderingMode(.alwaysTemplate))!,
                                                    handler:{(infoView) -> () in
-                                                    print("Location button 1 Tapped");
+                                                    let controller = KPModalViewController()
+                                                    controller.edgeInset = UIEdgeInsets.init(top: 48,
+                                                                                             left: 0,
+                                                                                             bottom: 0,
+                                                                                             right: 0);
+                                                    let ratingViewController = KPRatingViewController()
+                                                    controller.contentController = ratingViewController;
+                                                    controller.presentModalView();
         })];
         self.scrollContainer.addSubview(self.rateInformationView);
         self.rateInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
@@ -146,14 +153,14 @@ class KPInformationViewController: UIViewController {
                                                     views: [self.rateInformationView]);
         self.commentInformationView.actions = [Action(title:"看更多評價(20)",
                                                       style:.normal,
-                                                      color:KPColorPalette.KPMainColor.buttonColor!,
+                                                      color:KPColorPalette.KPMainColor.mainColor!,
                                                       icon:(UIImage.init(named: "icon_map")?.withRenderingMode(.alwaysTemplate))!,
                                                       handler:{(infoView) -> () in
                                                         print("Comment button 1 Tapped");
         }),
                                                 Action(title:"我要留言",
                                                        style:.normal,
-                                                       color:KPColorPalette.KPMainColor.buttonColor!,
+                                                       color:KPColorPalette.KPMainColor.mainColor!,
                                                        icon:(UIImage.init(named: "icon_map")?.withRenderingMode(.alwaysTemplate))!,
                                                        handler:{(infoView) -> () in
                                                         print("Comment button 2 Tapped");
@@ -171,7 +178,7 @@ class KPInformationViewController: UIViewController {
                                                     views: [self.commentInformationView]);
         self.photoInformationView.actions = [Action(title:"上傳照片",
                                                    style:.normal,
-                                                   color:KPColorPalette.KPMainColor.buttonColor!,
+                                                   color:KPColorPalette.KPMainColor.mainColor!,
                                                    icon:(UIImage.init(named: "icon_map")?.withRenderingMode(.alwaysTemplate))!,
                                                    handler:{(infoView) -> () in
                                                     print("Photo button 1 Tapped");

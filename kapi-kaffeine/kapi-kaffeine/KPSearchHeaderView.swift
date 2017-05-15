@@ -18,7 +18,7 @@ class KPSearchHeaderView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame);
-        self.backgroundColor = KPColorPalette.KPMainColor.mainColor;
+        self.backgroundColor = KPColorPalette.KPMainColor.mainColor_light;
         
         self.titleLabel = UILabel();
         self.titleLabel.font = UIFont.systemFont(ofSize: 18.0);

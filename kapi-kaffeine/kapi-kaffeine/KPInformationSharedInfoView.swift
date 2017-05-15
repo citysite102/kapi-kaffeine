@@ -63,8 +63,9 @@ class KPInformationSharedInfoView: UIView {
                 actionButton.layer.masksToBounds = true;
                 actionButton.tag = index;
                 actionButton.tintColor = UIColor.white;
-                self.actionButtons.append(actionButton);
-                self.buttonContainer.addSubview(actionButton);
+                actionButton.addTarget(self, action: #selector(handleButtonOnTapped(button:)), for: .touchUpInside)
+                actionButtons.append(actionButton);
+                buttonContainer.addSubview(actionButton);
                 
                 if index == 0 {
                     actionButton.addConstraints(fromStringArray: ["V:|-8-[$self(36)]-8-|",
@@ -88,43 +89,49 @@ class KPInformationSharedInfoView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame);
         
-        self.layer.shadowColor = UIColor.black.cgColor;
-        self.layer.shadowOpacity = 0.1;
-        self.layer.shadowRadius = 2.0;
-        self.layer.shadowOffset = CGSize.init(width: 0.0, height: 2.0);
+        layer.shadowColor = UIColor.black.cgColor;
+        layer.shadowOpacity = 0.1;
+        layer.shadowRadius = 2.0;
+        layer.shadowOffset = CGSize.init(width: 0.0, height: 2.0);
         
-        self.infoTitleLabel = UILabel.init();
-        self.infoTitleLabel.font = UIFont.systemFont(ofSize: 13);
-        self.infoTitleLabel.textColor = KPColorPalette.KPTextColor.mainColor;
-        self.addSubview(self.infoTitleLabel);
-        self.infoTitleLabel.addConstraints(fromStringArray: ["V:|-8-[$self]",
-                                                             "H:|-8-[$self]"]);
+        infoTitleLabel = UILabel.init();
+        infoTitleLabel.font = UIFont.systemFont(ofSize: 13);
+        infoTitleLabel.textColor = KPColorPalette.KPTextColor.mainColor;
+        addSubview(self.infoTitleLabel);
+        infoTitleLabel.addConstraints(fromStringArray: ["V:|-8-[$self]",
+                                                        "H:|-8-[$self]"]);
         
-        self.infoSupplementLabel = UILabel.init();
-        self.infoSupplementLabel.font = UIFont.systemFont(ofSize: 13);
-        self.infoSupplementLabel.textColor = KPColorPalette.KPTextColor.grayColor_level2;
-        self.addSubview(self.infoSupplementLabel);
-        self.infoSupplementLabel.addConstraints(fromStringArray: ["V:|-8-[$self]",
-                                                                  "H:[$self]-8-|"]);
+        infoSupplementLabel = UILabel.init();
+        infoSupplementLabel.font = UIFont.systemFont(ofSize: 13);
+        infoSupplementLabel.textColor = KPColorPalette.KPTextColor.grayColor_level2;
+        addSubview(self.infoSupplementLabel);
+        infoSupplementLabel.addConstraints(fromStringArray: ["V:|-8-[$self]",
+                                                             "H:[$self]-8-|"]);
         
-        self.infoContainer = UIView.init();
-        self.infoContainer.backgroundColor = UIColor.white;
-        self.addSubview(self.infoContainer);
-        self.infoContainer.addConstraints(fromStringArray: ["V:[$view0]-8-[$self]",
-                                                            "H:|[$self]|"],
-                                          views: [self.infoTitleLabel]);
+        infoContainer = UIView.init();
+        infoContainer.backgroundColor = UIColor.white;
+        addSubview(self.infoContainer);
+        infoContainer.addConstraints(fromStringArray: ["V:[$view0]-8-[$self]",
+                                                       "H:|[$self]|"],
+                                     views: [self.infoTitleLabel]);
         
-        self.buttonContainer = UIView.init();
-        self.buttonContainer.backgroundColor = UIColor.white;
-        self.addSubview(self.buttonContainer);
-        self.buttonContainer.addConstraints(fromStringArray: ["V:[$view0][$self]|",
-                                                              "H:|[$self]|"],
-                                            views: [self.infoContainer]);
+        buttonContainer = UIView.init();
+        buttonContainer.backgroundColor = UIColor.white;
+        addSubview(self.buttonContainer);
+        buttonContainer.addConstraints(fromStringArray: ["V:[$view0][$self]|",
+                                                         "H:|[$self]|"],
+                                       views: [self.infoContainer]);
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    
+    func handleButtonOnTapped(button: UIButton) {
+        actions[button.tag].handler(self)
+    }
+
 }
 
 

@@ -20,11 +20,9 @@ class KPSearchConditionViewController: UIViewController {
     var containerView: UIView!
     
     
-//    var ratingTitles = ["Wifi穩定", "安靜程度",
-//                        "價格實惠", "座位數量",
-//                        "咖啡品質", "餐點美味", "環境舒適"]
     var ratingTitles = ["Wifi穩定", "安靜程度",
-                        "價格實惠", "座位數量"]
+                        "價格實惠", "座位數量",
+                        "咖啡品質", "餐點美味", "環境舒適"]
     var ratingViews = [KPRatingView]()
     
     // Section 1
@@ -78,18 +76,18 @@ class KPSearchConditionViewController: UIViewController {
     func buttonWithTitle(title: String) -> UIButton {
         let button = UIButton()
         button.setTitle(title, for: .normal)
-        button.setTitleColor(KPColorPalette.KPMainColor.buttonColor!,
+        button.setTitleColor(KPColorPalette.KPMainColor.mainColor!,
                              for: .normal)
         button.setTitleColor(UIColor.white,
                              for: .selected)
         button.setBackgroundImage(UIImage.init(color: UIColor.white),
                                   for: .normal)
-        button.setBackgroundImage(UIImage.init(color: KPColorPalette.KPMainColor.buttonColor!),
+        button.setBackgroundImage(UIImage.init(color: KPColorPalette.KPMainColor.mainColor!),
                                   for: .selected)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         button.layer.cornerRadius = 18.0
         button.layer.borderWidth = 2.0
-        button.layer.borderColor = KPColorPalette.KPMainColor.buttonColor?.cgColor
+        button.layer.borderColor = KPColorPalette.KPMainColor.mainColor?.cgColor
         return button
     }
     
@@ -173,7 +171,7 @@ class KPSearchConditionViewController: UIViewController {
                                              views: [self.seperator_one])
         
         for (index, title) in ratingTitles.enumerated() {
-            let ratingView = KPRatingView.init(.star,
+            let ratingView = KPRatingView.init(.button,
                                                R.image.icon_map()!,
                                                title)
             self.ratingViews.append(ratingView)

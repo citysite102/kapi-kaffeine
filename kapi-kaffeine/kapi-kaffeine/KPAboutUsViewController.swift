@@ -90,15 +90,11 @@ class KPAboutUsViewController: UIViewController {
                                      action: #selector(KPInformationViewController.handleDismissButtonOnTapped),
                                      for: .touchUpInside);
 
-//        let navigationBarHeight = self.navigationController?.navigationBar.frame.height;
-        
         self.scrollView = UIScrollView();
         self.scrollView.showsVerticalScrollIndicator = false;
         self.view.addSubview(self.scrollView);
         self.scrollView.addConstraints(fromStringArray: ["V:|[$self]|",
                                                          "H:|[$self]|"]);
-        self.scrollView.addConstraintForCenterAligningToSuperview(in: .horizontal);
-        
         
         self.containerView = UIView();
         self.scrollView.addSubview(self.containerView);

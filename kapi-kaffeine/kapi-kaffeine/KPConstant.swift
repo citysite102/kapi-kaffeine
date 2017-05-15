@@ -13,8 +13,8 @@ import BenzeneFoundation
 struct KPColorPalette {
 
     struct KPMainColor {
-        static let mainColor = UIColor(hexString: "#c8955e")
-        static let buttonColor = UIColor(hexString: "#784d1f")
+        static let mainColor_light = UIColor(hexString: "#c8955e")
+        static let mainColor = UIColor(hexString: "#784d1f")
         static let statusBarColor = UIColor(hexString: "#784d1f")
         static let borderColor = UIColor(hexString: "#e6e6e6")
         static let starColor = UIColor(hexString: "#f9c816")

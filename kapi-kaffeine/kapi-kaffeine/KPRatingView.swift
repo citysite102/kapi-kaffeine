@@ -10,16 +10,17 @@ import UIKit
 
 class KPRatingView: UIView {
 
+    
     enum RateType: String, RawRepresentable {
         case button = "Button"
         case star = "Star"
     }
     
-    var rateType: RateType = .button {
-        didSet {
-            
-        }
-    }
+    //----------------------------
+    // MARK: - Properties
+    //----------------------------
+    
+    var rateType: RateType = .button
     
     var currentRate: Int = 1 {
         didSet {
@@ -44,12 +45,15 @@ class KPRatingView: UIView {
     
     lazy var rateTitleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14.0)
+        label.font = UIFont.systemFont(ofSize: 16.0)
         label.textColor = KPColorPalette.KPTextColor.grayColor
         return label
     }()
     
-    // Button Type
+    //----------------------------
+    // MARK: - Type Properties
+    //----------------------------
+    
     lazy var minusButton: KPBounceButton = {
         let button = KPBounceButton.init()
         button.layer.cornerRadius = 12
@@ -95,8 +99,13 @@ class KPRatingView: UIView {
     // Star Type
     var starViews:[KPBounceView] = [KPBounceView]()
     var panGesture: UIPanGestureRecognizer!
+    var tapGesture: UITapGestureRecognizer!
     
     
+    
+    //----------------------------
+    // MARK: - Initalization
+    //----------------------------
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -152,6 +161,9 @@ class KPRatingView: UIView {
             
             panGesture = UIPanGestureRecognizer.init(target: self,
                                                      action: #selector(handlePanGesture(panGesture:)))
+            tapGesture = UITapGestureRecognizer.init(target: self,
+                                                     action: #selector(handleTapGesture(tapGesture:)))
+            
             addGestureRecognizer(panGesture)
             
             iconImageView.addConstraints(fromStringArray: ["V:|[$self]|",
@@ -218,6 +230,20 @@ class KPRatingView: UIView {
             break
         }
         
+    }
+    
+    func handleTapGesture(tapGesture: UITapGestureRecognizer) {
+        let touchPoint = tapGesture.location(in: self)
+        for (index, starView) in starViews.enumerated() {
+            if starView.frame.contains(touchPoint) {
+                currentStarIndex = index
+                break
+            }
+        }
+        
+        for (index, starView) in starViews.enumerated() {
+            starView.selected = index >= currentStarIndex ? true : false
+        }
     }
     
 }

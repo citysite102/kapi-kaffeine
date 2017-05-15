@@ -146,7 +146,7 @@ class KPCheckBox: UIControl {
             layer.addSublayer(aLayer)
         }
         
-        tintColor = KPColorPalette.KPMainColor.buttonColor
+        tintColor = KPColorPalette.KPMainColor.mainColor
         controller.tintColor = tintColor
         controller.resetLayersForState(.checked)
         

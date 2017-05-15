@@ -18,7 +18,7 @@ class KPSideViewController: UIViewController {
     
     lazy var userContainer: UIView = {
         let containerView = UIView();
-        containerView.backgroundColor = KPColorPalette.KPMainColor.buttonColor;
+        containerView.backgroundColor = KPColorPalette.KPMainColor.mainColor;
         return containerView;
     }()
     
@@ -43,7 +43,7 @@ class KPSideViewController: UIViewController {
     lazy var chooseLabel: UILabel = {
         let label = UILabel();
         label.font = UIFont.systemFont(ofSize: 12.0);
-        label.textColor = KPColorPalette.KPMainColor.buttonColor;
+        label.textColor = KPColorPalette.KPMainColor.mainColor;
         label.text = "請選擇你所在的城市";
         return label;
     }()
