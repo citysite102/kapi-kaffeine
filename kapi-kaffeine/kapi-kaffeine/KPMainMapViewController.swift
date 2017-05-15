@@ -10,7 +10,7 @@ import UIKit
 import GoogleMaps
 import ObjectMapper
 
-class KPMainMapViewController: UIViewController, GMSMapViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, KPMainViewControllerDelegate {
+class KPMainMapViewController: UIViewController, GMSMapViewDelegate, GMUClusterManagerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, KPMainViewControllerDelegate {
     
     weak var mainController:KPMainViewController!
     var collectionView: UICollectionView!
@@ -20,50 +20,59 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate, UICollectio
         }
     }
     
+    private var clusterManager: GMUClusterManager!
+    
     var currentDataModel:KPDataModel?
     var selectedDataModel: KPDataModel? {
         return self.currentDataModel
     }
     
+
     var isCollectionViewShow: Bool = false {
         didSet {
             if self.collectionViewBottomConstraint != nil {
-                if isCollectionViewShow {
-                    self.collectionViewBottomConstraint.constant = 0
-                } else {
-                    self.collectionViewBottomConstraint.constant = 120
+                let showc: Bool = isCollectionViewShow
+                DispatchQueue.main.async {
+                    self.view.bringSubview(toFront: self.collectionView)
+                    if showc {
+                        self.displayDataModel =  self.allDataModel.filter { (dataModel) -> Bool in
+                            let bounds = GMSCoordinateBounds(region: self.mapView.projection.visibleRegion())
+                            return bounds.contains(dataModel.position)
+                        }
+                        self.collectionViewBottomConstraint.constant = 0
+                    } else {
+                        self.collectionViewBottomConstraint.constant = 120
+                    }
+                    UIView.animate(withDuration: 0.2, animations: {
+                        self.view.layoutIfNeeded()
+                    })
                 }
-                UIView.animate(withDuration: 0.2, animations: { 
-                    self.view.layoutIfNeeded()
-                })
             }
         }
     }
     
     var collectionViewBottomConstraint: NSLayoutConstraint!
     
-    var mapMarkers: [GMSMarker] = []
-    var displayDataModel: [KPDataModel] = [KPDataModel]() {
+    var displayDataModel: [KPDataModel] = [] {
+        didSet {
+            self.collectionView?.reloadData()
+            if  let dataModel = self.mapView.selectedMarker?.userData as? KPDataModel,
+                let selectedIndex =  self.displayDataModel.index(where: {($0.name == dataModel.name)}) {
+                self.collectionView.setContentOffset(CGPoint(x: -30 + CGFloat(selectedIndex) * (UIScreen.main.bounds.size.width - 60 + 15), y: 0), animated: false)
+            }
+        }
+    }
+    
+    var allDataModel: [KPDataModel]! {
         didSet {
             (self.view as! GMSMapView).clear()
-            self.mapMarkers = []
-            for datamodel in self.displayDataModel  {
-                if let latstr = datamodel.latitude, let latitude = Double(latstr),
-                    let longstr = datamodel.longitude, let longitude = Double(longstr) {
-                    
-                    let position = CLLocationCoordinate2DMake(latitude, longitude)
-
-                    let marker = GMSMarker(position: position)
-                    
-                    marker.title = datamodel.name
-                    marker.icon = UIImage(named: "icon_mapMarker")
-                    marker.map = (self.view as! GMSMapView)
-                    marker.userData = datamodel
-                    marker.appearAnimation = .pop
-                    
-                    self.mapMarkers.append(marker)
-                }
+            for datamodel in self.allDataModel  {
+                self.clusterManager.add(datamodel)
             }
+            
+            // Call cluster() after items have been added to perform the clustering
+            // and rendering on map.
+            self.clusterManager.cluster()
         }
     }
     
@@ -89,8 +98,20 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate, UICollectio
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        
+        // Set up the cluster manager with the supplied icon generator and
+        // renderer.
+        let iconGenerator = GMUDefaultClusterIconGenerator()
+        let algorithm = GMUNonHierarchicalDistanceBasedAlgorithm()
+        let renderer = GMUDefaultClusterRenderer(mapView: mapView,
+                                                 clusterIconGenerator: iconGenerator)
+        clusterManager = GMUClusterManager(map: mapView, algorithm: algorithm,
+                                           renderer: renderer)
+        
+        
+        // Register self to listen to both GMUClusterManagerDelegate and GMSMapViewDelegate events.
+        clusterManager.setDelegate(self, mapDelegate: self)
         
         self.mapView.isMyLocationEnabled = true
         self.moveToMyLocation()
@@ -113,12 +134,25 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate, UICollectio
         self.collectionView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$self(120)]"])
         self.collectionViewBottomConstraint = self.collectionView.addConstraintForAligning(to: .bottom, of: self.view, constant: 120).first as! NSLayoutConstraint
         
+        
+        if let dataURL = Bundle.main.url(forResource: "cafes", withExtension: "json") {
+            do {
+                let data = try String(contentsOf: dataURL)
+                self.allDataModel = Mapper<KPDataModel>().mapArray(JSONString: data) ?? []
+            } catch {
+                print("Failed to load cafes.json file")
+            }
+        }
+        
         let currentLocationButton = UIButton(type: .custom)
         currentLocationButton.setImage(UIImage(named: "icon_currentLocation"), for: .normal)
         currentLocationButton.addTarget(self, action: #selector(moveToMyLocation), for: .touchUpInside)
         self.view.addSubview(currentLocationButton)
         currentLocationButton.addConstraints(fromStringArray: ["H:[$self(40)]-15-|", "V:|-120-[$self(40)]"])
-        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
     }
 
     override func didReceiveMemoryWarning() {
@@ -135,7 +169,6 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate, UICollectio
             CATransaction.commit()
         }
     }
-    
     
     // MARK: UICollectionView DataSource
     
@@ -160,12 +193,11 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate, UICollectio
         let currentOffset = targetContentOffset.pointee.x
         let index = floor((currentOffset + (pageWidth + 15)/2)/(pageWidth + 15))
 
-        self.mapView.selectedMarker = self.mapMarkers[Int(index)]
-//        self.mapView.moveCamera(GMSCameraUpdate.setCamera(GMSCameraPosition.camera(withTarget: self.mapView.selectedMarker!.position , zoom: self.mapView.camera.zoom)))
-        CATransaction.begin()
-        CATransaction.setValue(NSNumber(floatLiteral: 0.5), forKey: kCATransactionAnimationDuration)
-        self.mapView.animate(to: GMSCameraPosition.camera(withTarget: self.mapView.selectedMarker!.position , zoom: self.mapView.camera.zoom))
-        CATransaction.commit()
+//        self.mapView.selectedMarker = self.mapMarkers[Int(index)]
+//        CATransaction.begin()
+//        CATransaction.setValue(NSNumber(floatLiteral: 0.5), forKey: kCATransactionAnimationDuration)
+//        self.mapView.animate(to: GMSCameraPosition.camera(withTarget: self.mapView.selectedMarker!.position , zoom: self.mapView.camera.zoom))
+//        CATransaction.commit()
         
         targetContentOffset.pointee.x = -30 + index * (pageWidth + 15)
         scrollView.setContentOffset(CGPoint(x: -30 + index * (pageWidth + 15), y: 0), animated: true)
@@ -185,16 +217,19 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate, UICollectio
     // MARK: GMSMapViewDelegate
     
     func mapView(_ mapView: GMSMapView, markerInfoWindow marker: GMSMarker) -> UIView? {
-        if self.isCollectionViewShow == false  {
-            self.isCollectionViewShow = true
+        
+        // 過濾cluster的marker
+        if (marker.userData as? KPDataModel) == nil {
+            return nil
         }
+        
+//        if self.isCollectionViewShow == false  {
+            self.isCollectionViewShow = true
+//        }
+        
         marker.icon = UIImage(named: "icon_mapMarkerSelected")
         let infoWindow = KPMainMapMarkerInfoWindow(dataModel: marker.userData as! KPDataModel)
-        if let selectedIndex =  self.displayDataModel.index(where: {($0.name == (marker.userData as! KPDataModel).name)}) {
-            self.collectionView.scrollToItem(at: IndexPath.init(row: selectedIndex, section: 0),
-                                             at: UICollectionViewScrollPosition.centeredHorizontally,
-                                             animated: false)
-        }
+
         return infoWindow
     }
     
@@ -214,6 +249,21 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate, UICollectio
         }
     }
     
+    func clusterManager(_ clusterManager: GMUClusterManager, didTap cluster: GMUCluster) -> Bool {
+        
+        
+        if self.isCollectionViewShow {
+            self.isCollectionViewShow = false
+        }
+        
+        CATransaction.begin()
+        CATransaction.setValue(NSNumber(floatLiteral: 0.5), forKey: kCATransactionAnimationDuration)
+        
+        self.mapView.animate(to: GMSCameraPosition.camera(withTarget: cluster.position,
+                                                          zoom: self.mapView.camera.zoom + 1))
+        CATransaction.commit()
+        return true
+    }
     
     
 }
