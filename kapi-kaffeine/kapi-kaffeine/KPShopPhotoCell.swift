@@ -24,8 +24,8 @@ class KPShopPhotoCell: UICollectionViewCell {
         self.shopPhoto.image = UIImage.init(named: "image_shop_demo");
         self.shopPhoto.contentMode = .scaleToFill;
         self.addSubview(self.shopPhoto);
-        self.shopPhoto.addConstraints(fromStringArray: ["H:|[$self(96)]|",
-                                                      "V:|[$self(96)]|"]);
+        self.shopPhoto.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                      "V:|[$self]|"]);
     }
     
     required init?(coder aDecoder: NSCoder) {

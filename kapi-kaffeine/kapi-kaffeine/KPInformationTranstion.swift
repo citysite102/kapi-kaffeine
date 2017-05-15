@@ -25,14 +25,14 @@ class KPInformationTranstion: NSObject, UIViewControllerAnimatedTransitioning {
         toVC.view.frame = finalFrameForVC.offsetBy(dx: 0, dy: bounds.size.height);
         container.addSubview(toVC.view);
         
-        UIView.animate(withDuration: transitionDuration(using: transitionContext),
+        UIView.animate(withDuration: transitionDuration(using: transitionContext)+0.1,
                        delay: 0,
-                       usingSpringWithDamping: 0.8,
+                       usingSpringWithDamping: 1.0,
                        initialSpringVelocity: 0.8,
                        options: UIViewAnimationOptions.curveEaseIn,
                        animations: { 
                         fromVC.view.alpha = 0.5
-                        fromVC.view.transform = CGAffineTransform(scaleX: 0.96, y: 0.96)
+                        fromVC.view.transform = CGAffineTransform(scaleX: 0.94, y: 0.94)
                         toVC.view.frame = finalFrameForVC
         }) { (finish) in
             transitionContext.completeTransition(true)

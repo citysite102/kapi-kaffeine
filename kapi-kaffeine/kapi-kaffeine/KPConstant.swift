@@ -13,10 +13,11 @@ import BenzeneFoundation
 struct KPColorPalette {
 
     struct KPMainColor {
-        static let mainColor = UIColor(hexString: "#c8955e")
-        static let buttonColor = UIColor(hexString: "#784d1f")
+        static let mainColor_light = UIColor(hexString: "#c8955e")
+        static let mainColor = UIColor(hexString: "#784d1f")
         static let statusBarColor = UIColor(hexString: "#784d1f")
         static let borderColor = UIColor(hexString: "#e6e6e6")
+        static let starColor = UIColor(hexString: "#f9c816")
         
         
         static let grayColor_level1 = UIColor.init(r: 0.2, g: 0.2, b: 0.2, a: 1.0)
@@ -44,6 +45,9 @@ struct KPColorPalette {
     
     struct KPBackgroundColor {
         static let cellScoreBgColor = UIColor(hexString: "#9f9426")
+        
+        static let scoreButtonColor = UIColor(hexString: "#9f9426")
+        static let disabledScoreButtonColor = UIColor(hexString: "#C8C488")
     }
     
     struct KPShopStatusColor {
@@ -55,10 +59,40 @@ struct KPColorPalette {
         static let redHintColor = UIColor(hexString: "#ff0000")
     }
     
-    
-//    struct Gray {
-//        static let Light = UIColor(white: 0.8374, alpha: 1.0)
-//        static let Medium = UIColor(white: 0.4756, alpha: 1.0)
-//        static let Dark = UIColor(white: 0.2605, alpha: 1.0)
-//    }
 }
+
+extension UIDevice {
+
+    var iPhone: Bool {
+        return UIDevice().userInterfaceIdiom == .phone
+    }
+    
+    var isCompact: Bool {
+        let size = UIScreen.main.bounds.size
+        return size.width < 600 || size.height < 600
+    }
+    
+    enum ScreenType: String {
+        case iPhone4
+        case iPhone5
+        case iPhone6
+        case iPhone6Plus
+        case unknown
+    }
+    var screenType: ScreenType {
+        guard iPhone else { return .unknown }
+        switch UIScreen.main.nativeBounds.height {
+        case 960:
+            return .iPhone4
+        case 1136:
+            return .iPhone5
+        case 1334:
+            return .iPhone6
+        case 2208:
+            return .iPhone6Plus
+        default:
+            return .unknown
+        }
+    }
+}
+

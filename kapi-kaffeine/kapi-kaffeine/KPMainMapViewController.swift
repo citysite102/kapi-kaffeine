@@ -27,9 +27,8 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate, GMUClusterM
         return self.currentDataModel
     }
     
-    
-    
-    var isCollectionViewShow: Bool = true {
+
+    var isCollectionViewShow: Bool = false {
         didSet {
             if self.collectionViewBottomConstraint != nil {
                 let showc: Bool = isCollectionViewShow
@@ -56,7 +55,7 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate, GMUClusterM
     
     var displayDataModel: [KPDataModel] = [] {
         didSet {
-            self.collectionView.reloadData()
+            self.collectionView?.reloadData()
             if  let dataModel = self.mapView.selectedMarker?.userData as? KPDataModel,
                 let selectedIndex =  self.displayDataModel.index(where: {($0.name == dataModel.name)}) {
                 self.collectionView.setContentOffset(CGPoint(x: -30 + CGFloat(selectedIndex) * (UIScreen.main.bounds.size.width - 60 + 15), y: 0), animated: false)
@@ -133,7 +132,7 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate, GMUClusterM
         
         self.view.addSubview(self.collectionView)
         self.collectionView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$self(120)]"])
-        self.collectionViewBottomConstraint = self.collectionView.addConstraintForAligning(to: .bottom, of: self.view, constant: 0).first as! NSLayoutConstraint
+        self.collectionViewBottomConstraint = self.collectionView.addConstraintForAligning(to: .bottom, of: self.view, constant: 120).first as! NSLayoutConstraint
         
         
         if let dataURL = Bundle.main.url(forResource: "cafes", withExtension: "json") {

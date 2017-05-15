@@ -113,7 +113,7 @@ class KPShopInfoView: UIView {
         self.otherTimeButton.setTitle("其他營業時間", for: .normal);
         self.otherTimeButton.setTitleColor(UIColor.white, for: .normal);
         self.otherTimeButton.titleLabel?.font = UIFont.systemFont(ofSize: 12);
-        self.otherTimeButton.backgroundColor = KPColorPalette.KPMainColor.buttonColor;
+        self.otherTimeButton.backgroundColor = KPColorPalette.KPMainColor.mainColor;
         self.otherTimeButton.layer.cornerRadius = 4.0;
         self.addSubview(self.otherTimeButton);
         self.otherTimeButton.addConstraints(fromStringArray: ["H:[$view0]-8-[$self(92)]", "V:[$self(24)]"],

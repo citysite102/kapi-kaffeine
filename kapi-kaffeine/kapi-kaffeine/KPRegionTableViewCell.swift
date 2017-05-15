@@ -13,6 +13,29 @@ class KPRegionTableViewCell: UITableViewCell {
     var regionIcon: UIImageView!
     var regionLabel: UILabel!
     var expandIcon: UIImageView!
+    var expanded: Bool! {
+        didSet {
+            if expanded {
+                UIView.animate(withDuration: 0.2,
+                               delay: 0,
+                               options: .curveEaseIn,
+                               animations: {
+                                self.expandIcon.transform = CGAffineTransform.init(rotationAngle: .pi/2);
+                }, completion: { (_) in
+                    
+                })
+            } else {
+                UIView.animate(withDuration: 0.2,
+                               delay: 0,
+                               options: .curveEaseIn,
+                               animations: {
+                                self.expandIcon.transform = CGAffineTransform.identity;
+                }, completion: { (_) in
+                    
+                })
+            }
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -29,7 +52,6 @@ class KPRegionTableViewCell: UITableViewCell {
         
         self.regionLabel = UILabel();
         self.regionLabel.font = UIFont.systemFont(ofSize: 14);
-        self.regionLabel.text = "測試中";
         self.regionLabel.textColor = KPColorPalette.KPTextColor.grayColor;
         self.addSubview(self.regionLabel);
         self.regionLabel.addConstraints(fromStringArray: ["H:[$view0]-32-[$self]"],
@@ -40,6 +62,8 @@ class KPRegionTableViewCell: UITableViewCell {
         self.addSubview(self.expandIcon);
         self.expandIcon.addConstraints(fromStringArray: ["V:|-12-[$self(24)]-12-|",
                                                          "H:[$self(24)]-16-|"]);
+        
+        self.expanded = false;
         
     }
     
@@ -52,5 +76,4 @@ class KPRegionTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-
 }

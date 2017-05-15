@@ -8,10 +8,16 @@
 
 import UIKit
 
+protocol KPInformationHeaderViewDelegate: NSObjectProtocol {
+    func headerPhotoTapped(_ headerView: KPInformationHeaderView);
+}
+
 class KPInformationHeaderView: UIView {
 
-    var shopPhotoContainer: UIView!;
-    var shopPhoto: UIImageView!;
+    var shopPhotoContainer: UIView!
+    var shopPhoto: UIImageView!
+    var morePhotoButton: UIButton!;
+    var photoLongPressGesture: UILongPressGestureRecognizer!
     
     var scoreContainer: UIView!;
     var facebookButton: UIButton!;
@@ -22,19 +28,41 @@ class KPInformationHeaderView: UIView {
     var rateButton: KPInformationHeaderButton!;
     var commentButton: KPInformationHeaderButton!;
     
+    weak open var delegate: KPInformationHeaderViewDelegate?
+    
     override init(frame: CGRect) {
         super.init(frame: frame);
         
-        self.shopPhotoContainer = UIView();
-        self.addSubview(self.shopPhotoContainer);
+        self.shopPhotoContainer = UIView()
+        self.addSubview(self.shopPhotoContainer)
         self.shopPhotoContainer.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                                 "V:|[$self]"]);
+                                                                 "V:|[$self]"])
         
-        self.shopPhoto = UIImageView(image: UIImage(named: "image_shop_demo"));
-        self.shopPhoto.contentMode = .scaleToFill;
-        self.shopPhotoContainer.addSubview(shopPhoto);
+        self.shopPhoto = UIImageView(image: UIImage(named: "demo_1"))
+        self.shopPhoto.contentMode = .scaleToFill
+        self.shopPhoto.isUserInteractionEnabled = true
+        self.shopPhotoContainer.addSubview(shopPhoto)
         self.shopPhoto.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                        "V:|[$self(240)]"]);
+                                                        "V:|[$self(240)]|"])
+        
+        self.morePhotoButton = UIButton.init(type: .custom)
+        self.morePhotoButton.setBackgroundImage(UIImage.init(color: UIColor.clear), for: .normal)
+        self.morePhotoButton.layer.cornerRadius = 2.0
+        self.morePhotoButton.layer.borderWidth = 1.0
+        self.morePhotoButton.layer.borderColor = UIColor.white.cgColor
+        self.morePhotoButton.setTitle("99+\n張照片", for: .normal)
+        self.morePhotoButton.titleLabel?.font = UIFont.systemFont(ofSize: 13)
+        self.morePhotoButton.titleLabel?.numberOfLines = 0
+        self.morePhotoButton.titleLabel?.textAlignment = NSTextAlignment.center
+        self.morePhotoButton.setTitleColor(UIColor.white, for: .normal)
+        self.shopPhotoContainer.addSubview(morePhotoButton)
+        self.morePhotoButton.addConstraints(fromStringArray: ["H:[$self(48)]-16-|",
+                                                              "V:[$self(48)]-16-|"])
+
+        self.photoLongPressGesture = UILongPressGestureRecognizer.init(target: self,
+                                                                       action: #selector(handleShopPhotoLongPressed(_:)))
+        self.photoLongPressGesture.minimumPressDuration = 0
+        self.shopPhoto.addGestureRecognizer(self.photoLongPressGesture)
         
         self.collectButton = KPInformationHeaderButton();
         self.collectButton.buttonInfo = HeaderButtonInfo(title: "收藏",
@@ -79,7 +107,8 @@ class KPInformationHeaderView: UIView {
                                                        handler: { (headerButton) -> () in print("Test Handler");
         });
         self.addSubview(self.commentButton);
-        self.commentButton.addConstraints(fromStringArray: ["H:[$view0]-(-1)-[$self($metric0)]", "V:[$view1][$self(90)]|"],
+        self.commentButton.addConstraints(fromStringArray: ["H:[$view0]-(-1)-[$self($metric0)]",
+                                                            "V:[$view1][$self(90)]|"],
                                         metrics: [UIScreen.main.bounds.size.width/4+1],
                                         views: [self.rateButton, self.shopPhoto]);
     }
@@ -87,5 +116,25 @@ class KPInformationHeaderView: UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    func handleShopPhotoLongPressed(_ sender: UILongPressGestureRecognizer) {
+        
+        if sender.state == UIGestureRecognizerState.began {
+            UIView.animate(withDuration: 0.2,
+                           animations: { 
+                            self.shopPhoto.transform = CGAffineTransform.init(scaleX: 0.97,
+                                                                              y: 0.97)
+            })
+        } else if sender.state == UIGestureRecognizerState.ended {
+            UIView.animate(withDuration: 0.1,
+                           animations: { 
+                            self.shopPhoto.transform = CGAffineTransform.identity
+            }, completion: { (success) in
+                self.delegate?.headerPhotoTapped(self);
+            })
+        }
+        
+    }
+    
     
 }

@@ -13,6 +13,27 @@ class KPInformationViewController: UIViewController {
     
     var informationDataModel:KPDataModel!
     var dismissButton:UIButton!
+    var snapshotPhotoView: UIView  {
+        get {
+            let snapShotView = UIImageView.init(image: self.informationHeaderView.shopPhoto.image)
+            snapShotView.frame = self.informationHeaderView.shopPhoto.frame
+            return snapShotView
+        }
+    }
+    
+    var currentScreenSnapshotImage: UIImage {
+        get {
+            UIGraphicsBeginImageContext(CGSize.init(width: self.view.frameSize.width,
+                                                    height: self.view.frameSize.height));
+            UIGraphicsBeginImageContextWithOptions(CGSize.init(width: self.view.frameSize.width,
+                                                               height: self.view.frameSize.height),
+                                                   true, 0)
+            self.view.layer.render(in: UIGraphicsGetCurrentContext()!)
+            let screenshotImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            return screenshotImage!
+        }
+    }
     
     var scrollContainer:UIScrollView!;
     var informationHeaderView: KPInformationHeaderView!;
@@ -27,6 +48,7 @@ class KPInformationViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white;
         self.navigationController?.navigationBar.topItem?.title = self.informationDataModel.name;
+        self.navigationController?.delegate = self
         
         self.dismissButton = UIButton.init();
         self.dismissButton.setImage(UIImage.init(named: "icon_close")?.withRenderingMode(.alwaysTemplate),
@@ -44,16 +66,21 @@ class KPInformationViewController: UIViewController {
         
         self.scrollContainer = UIScrollView();
         self.scrollContainer.backgroundColor = KPColorPalette.KPMainColor.grayColor_level7;
-        self.scrollContainer.delegate = self;
+        self.scrollContainer.delegate = self
+        self.scrollContainer.canCancelContentTouches = false
         self.view.addSubview(self.scrollContainer);
         self.scrollContainer.addConstraints(fromStringArray: ["H:|[$self]|",
                                                               "V:|[$self]|"]);
         
-        self.informationHeaderView = KPInformationHeaderView();
-        self.scrollContainer.addSubview(self.informationHeaderView);
+        self.informationHeaderView = KPInformationHeaderView()
+        self.informationHeaderView.delegate = self
+        self.scrollContainer.addSubview(self.informationHeaderView)
         self.informationHeaderView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                                    "V:|[$self]"]);
+                                                                    "V:|[$self]"])
         self.informationHeaderView.addConstraintForHavingSameWidth(with: self.view)
+        self.informationHeaderView.morePhotoButton.addTarget(self,
+                                                             action: #selector(KPInformationViewController.handleMorePhotoButtonOnTapped),
+                                                             for: UIControlEvents.touchUpInside)
         
         
         let informationView: KPShopInfoView = KPShopInfoView();
@@ -71,14 +98,14 @@ class KPInformationViewController: UIViewController {
         self.locationInformationView.infoSupplementLabel.text = "距離 600m";
         self.locationInformationView.actions = [Action(title:"開啟導航",
                                                  style:.normal,
-                                                 color:KPColorPalette.KPMainColor.buttonColor!,
+                                                 color:KPColorPalette.KPMainColor.mainColor!,
                                                  icon:(UIImage.init(named: "icon_map")?.withRenderingMode(.alwaysTemplate))!,
                                                  handler:{(infoView) -> () in
                                                     print("Location button 1 Tapped");
         }),
                                                 Action(title:"街景模式",
                                                  style:.normal,
-                                                 color:KPColorPalette.KPMainColor.buttonColor!,
+                                                 color:KPColorPalette.KPMainColor.mainColor!,
                                                  icon:(UIImage.init(named: "icon_map")?.withRenderingMode(.alwaysTemplate))!,
                                                  handler:{(infoView) -> () in
                                                     print("Location button 2 Tapped");
@@ -97,10 +124,18 @@ class KPInformationViewController: UIViewController {
         self.rateInformationView.infoSupplementLabel.text = "143 人已評分";
         self.rateInformationView.actions = [Action(title:"我要評分",
                                                    style:.normal,
-                                                   color:KPColorPalette.KPMainColor.buttonColor!,
+                                                   color:KPColorPalette.KPMainColor.mainColor!,
                                                    icon:(UIImage.init(named: "icon_map")?.withRenderingMode(.alwaysTemplate))!,
                                                    handler:{(infoView) -> () in
-                                                    print("Location button 1 Tapped");
+                                                    let controller = KPModalViewController()
+                                                    controller.edgeInset = UIEdgeInsets.init(top: UIDevice().isCompact ? 16 : 48,
+                                                                                             left: 0,
+                                                                                             bottom: 0,
+                                                                                             right: 0);
+                                                    controller.cornerRadius = [.topRight, .topLeft]
+                                                    let ratingViewController = KPRatingViewController()
+                                                    controller.contentController = ratingViewController;
+                                                    controller.presentModalView();
         })];
         self.scrollContainer.addSubview(self.rateInformationView);
         self.rateInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
@@ -119,14 +154,14 @@ class KPInformationViewController: UIViewController {
                                                     views: [self.rateInformationView]);
         self.commentInformationView.actions = [Action(title:"看更多評價(20)",
                                                       style:.normal,
-                                                      color:KPColorPalette.KPMainColor.buttonColor!,
+                                                      color:KPColorPalette.KPMainColor.mainColor!,
                                                       icon:(UIImage.init(named: "icon_map")?.withRenderingMode(.alwaysTemplate))!,
                                                       handler:{(infoView) -> () in
                                                         print("Comment button 1 Tapped");
         }),
                                                 Action(title:"我要留言",
                                                        style:.normal,
-                                                       color:KPColorPalette.KPMainColor.buttonColor!,
+                                                       color:KPColorPalette.KPMainColor.mainColor!,
                                                        icon:(UIImage.init(named: "icon_map")?.withRenderingMode(.alwaysTemplate))!,
                                                        handler:{(infoView) -> () in
                                                         print("Comment button 2 Tapped");
@@ -144,7 +179,7 @@ class KPInformationViewController: UIViewController {
                                                     views: [self.commentInformationView]);
         self.photoInformationView.actions = [Action(title:"上傳照片",
                                                    style:.normal,
-                                                   color:KPColorPalette.KPMainColor.buttonColor!,
+                                                   color:KPColorPalette.KPMainColor.mainColor!,
                                                    icon:(UIImage.init(named: "icon_map")?.withRenderingMode(.alwaysTemplate))!,
                                                    handler:{(infoView) -> () in
                                                     print("Photo button 1 Tapped");
@@ -179,16 +214,97 @@ class KPInformationViewController: UIViewController {
     }
     
     
+    func handleMorePhotoButtonOnTapped() {
+        let galleryController = KPPhotoGalleryViewController()
+        
+        galleryController.diplayedPhotoInformations =
+            [PhotoInformation(title:"Title", image:R.image.demo_1()!, index:0),
+             PhotoInformation(title:"Title", image:R.image.demo_2()!, index:1),
+             PhotoInformation(title:"Title", image:R.image.demo_3()!, index:2),
+             PhotoInformation(title:"Title", image:R.image.demo_4()!, index:3),
+             PhotoInformation(title:"Title", image:R.image.demo_5()!, index:4),
+             PhotoInformation(title:"Title", image:R.image.demo_6()!, index:5)]
+        
+        self.dismissButton.isHidden = true
+        self.navigationController?.pushViewController(viewController: galleryController,
+                                                      animated: true,
+                                                      completion: {}
+        )
+    }
+    
     func handleDismissButtonOnTapped() {
         self.dismiss(animated: true, completion: nil);
     }
     
 }
 
-extension KPInformationViewController: UIScrollViewDelegate {
+extension KPInformationViewController: UINavigationControllerDelegate {
+    func navigationController(_ navigationController: UINavigationController,
+                              willShow viewController: UIViewController,
+                              animated: Bool) {
+        if viewController is KPPhotoGalleryViewController {
+            self.dismissButton.isHidden = true
+        } else {
+            self.dismissButton.isHidden = false
+        }
+    }
+}
 
+extension KPInformationViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.scrollContainer.contentOffset = CGPoint.init(x: 0,
-                                                          y: self.scrollContainer.contentOffset.y);
-    };
+                                                          y: self.scrollContainer.contentOffset.y)
+    }
 }
+
+extension KPInformationViewController: KPInformationHeaderViewDelegate {
+    func headerPhotoTapped(_ headerView: KPInformationHeaderView) {
+        let photoDisplayController = KPPhotoDisplayViewController()
+//        let galleryController = KPPhotoGalleryViewController()
+//        galleryController.view.isHidden = true
+//        galleryController.view.backgroundColor = UIColor.clear
+//        galleryController.view.backgroundColor = UIColor.init(patternImage: currentScreenSnapshotImage)
+//        galleryController.navigationController?.view.isHidden = true
+//        galleryController.navigationController?.setNavigationBarHidden(true, animated: false)
+        
+//        galleryController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+//        photoDisplayController.photoGalleryController = galleryController
+        photoDisplayController.diplayedPhotoInformations =
+            [PhotoInformation(title:"Title", image:R.image.demo_1()!, index:0),
+             PhotoInformation(title:"Title", image:R.image.demo_2()!, index:1),
+             PhotoInformation(title:"Title", image:R.image.demo_3()!, index:2),
+             PhotoInformation(title:"Title", image:R.image.demo_4()!, index:3),
+             PhotoInformation(title:"Title", image:R.image.demo_5()!, index:4),
+             PhotoInformation(title:"Title", image:R.image.demo_6()!, index:5)]
+        
+        self.present(photoDisplayController, animated: true, completion: {
+//            UIView.animate(withDuration: 0.5) { () -> Void in
+//                photoDisplayController.setNeedsStatusBarAppearanceUpdate()
+//            }
+        })
+//        self.navigationController?.pushViewController(viewController: galleryController,
+//                                                      animated: false,
+//                                                      completion: { 
+//                                                        galleryController.present(photoDisplayController,
+//                                                                                  animated: true) {
+//                                                        }
+//        })
+//        
+//        self.present(galleryController, animated: false) {
+//            galleryController.present(photoDisplayController, animated: true) {
+//            }
+//        }
+    }
+}
+
+extension UINavigationController {
+    public func pushViewController(viewController: UIViewController,
+                                   animated: Bool,
+                                   completion: (() -> Void)?) {
+        CATransaction.begin()
+        CATransaction.setCompletionBlock(completion)
+        pushViewController(viewController, animated: animated)
+        CATransaction.commit()
+    }
+}
+

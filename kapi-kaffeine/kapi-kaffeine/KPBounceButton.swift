@@ -11,23 +11,16 @@ import pop
 
 class KPBounceButton: UIButton {
     
-//    var selectedColor: UIColor!;
-//    var highlightedColor: UIColor!;
-//    var normalColor: UIColor!;
-//    var disabledColor: UIColor!;
+    //----------------------------
+    // MARK: - Properties
+    //----------------------------
     
-//    var target: Any?
-//    var selector: (()->())?
+    var dampingRatio: CGFloat = 0.35
+    var bounceDuration: Double = 0.8
     
-    override var isHighlighted: Bool {
-        willSet {
-            self.tintColor = UIColor.white;
-        }
-        
-        didSet {
-            print("changed from \(oldValue) to \(isSelected)")
-        }
-    }
+    //----------------------------
+    // MARK: - Initalization
+    //----------------------------
     
     override init(frame: CGRect) {
         super.init(frame: frame);
@@ -40,11 +33,6 @@ class KPBounceButton: UIButton {
         self.setImage(image.withRenderingMode(.alwaysTemplate),
                       for: .highlighted);
     }
-    
-//    open func addTarget(_ target: Any?, action: @escaping ()->()) {
-//        self.target = target;
-//        self.selector = action;
-//    }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -70,9 +58,9 @@ class KPBounceButton: UIButton {
     }
     
     func performTouchEndAnimation() {
-        UIView.animate(withDuration: 0.8,
+        UIView.animate(withDuration: bounceDuration,
                        delay: 0,
-                       usingSpringWithDamping: 0.35,
+                       usingSpringWithDamping: dampingRatio,
                        initialSpringVelocity: 1,
                        options: UIViewAnimationOptions.beginFromCurrentState,
                        animations: { 

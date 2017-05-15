@@ -8,7 +8,7 @@
 
 import UIKit
 import SideMenu
-
+import PromiseKit
 
 protocol KPMainViewControllerDelegate {
     var selectedDataModel: KPDataModel? { get }
@@ -20,7 +20,16 @@ class KPMainViewController: UIViewController {
     var sideBarController: KPSideViewController!
     var opacityView: UIView!
     var percentDrivenTransition: UIPercentDrivenInteractiveTransition!;
+    var mainListViewController:KPMainListViewController?
+    var mainMapViewController:KPMainMapViewController?
     
+    var displayDataModel: [KPDataModel]! {
+        didSet {
+            self.mainListViewController?.displayDataModel = displayDataModel
+            self.mainMapViewController?.displayDataModel = displayDataModel
+        }
+    }
+
     var currentController: UIViewController! {
         didSet {
             
@@ -41,9 +50,6 @@ class KPMainViewController: UIViewController {
             }
         }
     }
-    
-    var mainListViewController:KPMainListViewController!
-    var mainMapViewController:KPMainMapViewController!
         
     override func viewDidLoad() {
         super.viewDidLoad();
@@ -52,8 +58,9 @@ class KPMainViewController: UIViewController {
         self.mainMapViewController = KPMainMapViewController();
         self.sideBarController = KPSideViewController();
         self.sideBarController.mainController = self;
-        self.mainListViewController.mainController = self;
-        self.mainMapViewController.mainController = self;
+        
+        self.mainListViewController!.mainController = self;
+        self.mainMapViewController!.mainController = self;
         
         self.currentController = self.mainListViewController;
         
@@ -70,13 +77,9 @@ class KPMainViewController: UIViewController {
         self.opacityView.addConstraints(fromStringArray: ["V:|[$self]|",
                                                           "H:|[$self]|"]);
         
-        
         self.searchHeaderView.menuButton.addTarget(self,
                                                    action: #selector(switchSideBar),
                                                    for: .touchUpInside)
-//        self.searchHeaderView.menuButton.addTarget(self) {
-//            self.switchSideBar();
-//        }
         self.searchHeaderView.styleButton.addTarget(self,
                                                     action: #selector(changeStyle),
                                                     for: .touchUpInside)
@@ -92,13 +95,22 @@ class KPMainViewController: UIViewController {
         SideMenuManager.menuAnimationTransformScaleFactor = 0.96;
         SideMenuManager.menuAnimationBackgroundColor = UIColor.black;
         SideMenuManager.menuWidth = 260;
+        
+        
+        let KapiDataRequest = KPNomadRequest();
+        KapiDataRequest.perform().then { resultArray -> Void in
+                self.mainMapViewController?.displayDataModel = resultArray
+                self.mainListViewController?.displayDataModel = resultArray
+            }.catch { error in
+                print("Error");
+            }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated);
         
-        if let indexPath = self.mainListViewController.tableView.indexPathForSelectedRow {
-            self.mainListViewController.tableView.deselectRow(at: indexPath, animated: false);
+        if let indexPath = self.mainListViewController!.tableView.indexPathForSelectedRow {
+            self.mainListViewController!.tableView.deselectRow(at: indexPath, animated: false);
         }
     }
     
@@ -109,24 +121,26 @@ class KPMainViewController: UIViewController {
             }
         })
         self.opacityView.isHidden = false;
-        present(SideMenuManager.menuLeftNavigationController!, animated: true, completion: nil)
+        present(SideMenuManager.menuLeftNavigationController!,
+                animated: true, completion: nil)
     }
     
     func changeStyle() {
-        if (self.currentController == self.mainListViewController) {
-            self.currentController = self.mainMapViewController
-            self.searchHeaderView.styleButton.setImage(UIImage.init(named: "icon_list")?.withRenderingMode(.alwaysTemplate),
-                                                                        for: .normal);
-        } else {
-            self.currentController = self.mainListViewController
-            self.searchHeaderView.styleButton.setImage(UIImage.init(named: "icon_map")?.withRenderingMode(.alwaysTemplate),
-                                                       for: .normal);
-        }
+        
+        let iconImage = (self.currentController == self.mainListViewController) ?
+            R.image.icon_list()!.withRenderingMode(.alwaysTemplate) :
+            R.image.icon_map()!.withRenderingMode(.alwaysTemplate);
+        
+        self.currentController = (self.currentController == self.mainListViewController) ?
+            self.mainMapViewController :
+            self.mainListViewController;
+        self.searchHeaderView.styleButton.setImage(iconImage, for: .normal);
     }
 
     func addScreenEdgePanGestureRecognizer(view: UIView, edges: UIRectEdge) {
-        let edgePanGesture = UIScreenEdgePanGestureRecognizer(target: self,
-                                                              action: #selector(edgePanGesture(edgePanGesture:)))
+        let edgePanGesture =
+            UIScreenEdgePanGestureRecognizer(target: self,
+                                             action: #selector(edgePanGesture(edgePanGesture:)))
         edgePanGesture.edges = edges;
         view.addGestureRecognizer(edgePanGesture)
     }
@@ -143,7 +157,6 @@ class KPMainViewController: UIViewController {
             self.percentDrivenTransition.update(progress/4);
         } else if edgePanGesture.state == UIGestureRecognizerState.cancelled || edgePanGesture.state == UIGestureRecognizerState.ended {
             if progress > 0.5 {
-//                self.percentDrivenTransition.completionSpeed = 0.5;
                 self.percentDrivenTransition.finish();
             } else {
                 self.percentDrivenTransition.cancel();
@@ -171,6 +184,7 @@ class KPMainViewController: UIViewController {
             self.addScreenEdgePanGestureRecognizer(view: toViewController.view, edges: .left);
         }
     }
+    
 }
 
 extension KPMainViewController: UIViewControllerTransitioningDelegate {

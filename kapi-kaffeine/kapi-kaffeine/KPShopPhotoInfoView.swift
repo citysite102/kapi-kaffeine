@@ -14,6 +14,7 @@ class KPShopPhotoInfoView: UIView {
     
     var collectionView:UICollectionView!;
     var collectionLayout:UICollectionViewFlowLayout!;
+    
     override init(frame: CGRect) {
         super.init(frame: frame);
         

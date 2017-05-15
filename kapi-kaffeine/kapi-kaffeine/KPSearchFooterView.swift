@@ -23,7 +23,7 @@ class KPSearchFooterView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame);
-        self.backgroundColor = KPColorPalette.KPMainColor.buttonColor;
+        self.backgroundColor = KPColorPalette.KPMainColor.mainColor;
         
         //Collection view
         self.collectionLayout = UICollectionViewFlowLayout();
@@ -45,7 +45,7 @@ class KPSearchFooterView: UIView {
         self.collectionView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"]);
         
         self.hotSpotView = UIView();
-        self.hotSpotView.backgroundColor = KPColorPalette.KPMainColor.buttonColor;
+        self.hotSpotView.backgroundColor = KPColorPalette.KPMainColor.mainColor;
         self.hotSpotView.layer.shadowColor = UIColor.black.cgColor;
         self.hotSpotView.layer.shadowOpacity = 0.2;
         self.hotSpotView.layer.shadowOffset = CGSize.init(width: 1.0, height: 0);
@@ -57,7 +57,7 @@ class KPSearchFooterView: UIView {
         self.hotSpotContainer.layer.cornerRadius = 2.0;
         self.hotSpotContainer.layer.masksToBounds = true;
         self.hotSpotContainer.layer.borderWidth = 1.0;
-        self.hotSpotContainer.layer.borderColor = KPColorPalette.KPMainColor.mainColor?.cgColor;
+        self.hotSpotContainer.layer.borderColor = KPColorPalette.KPMainColor.mainColor_light?.cgColor;
         self.hotSpotView.addSubview(self.hotSpotContainer);
         self.hotSpotContainer.addConstraintForCenterAligningToSuperview(in: .horizontal);
         self.hotSpotContainer.addConstraintForCenterAligningToSuperview(in: .vertical);

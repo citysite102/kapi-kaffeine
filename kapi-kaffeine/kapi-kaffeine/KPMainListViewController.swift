@@ -9,6 +9,7 @@
 import UIKit
 import AlamofireImage
 import ObjectMapper
+import PromiseKit
 
 class KPMainListViewController: UIViewController, KPMainViewControllerDelegate {
     
@@ -23,7 +24,7 @@ class KPMainListViewController: UIViewController, KPMainViewControllerDelegate {
         return self.currentDataModel
     }
     
-    var displayDataModel: [KPDataModel]! {
+    var displayDataModel: [KPDataModel] = [KPDataModel]() {
         didSet {
             self.tableView.reloadData();
         }
@@ -49,16 +50,6 @@ class KPMainListViewController: UIViewController, KPMainViewControllerDelegate {
         self.view.addSubview(searchFooterView);
         self.searchFooterView.addConstraints(fromStringArray: ["V:[$view0][$self(40)]|", "H:|[$self]|"],
                                              views:[self.tableView]);
-        
-        if let dataURL = Bundle.main.url(forResource: "cafes",
-                                         withExtension: "json") {
-            do {
-                let data = try String(contentsOf: dataURL)
-                self.displayDataModel = Mapper<KPDataModel>().mapArray(JSONString: data) ?? []
-            } catch {
-                print("Failed to load cafes.json file")
-            }
-        }
     }
 
     override func didReceiveMemoryWarning() {

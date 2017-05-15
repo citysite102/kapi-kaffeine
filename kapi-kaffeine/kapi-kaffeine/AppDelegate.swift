@@ -27,14 +27,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Navigation Custom Settings
         let navigationBarAppearace = UINavigationBar.appearance()
         
+        navigationBarAppearace.isTranslucent = false;
         navigationBarAppearace.tintColor = KPColorPalette.KPTextColor.whiteColor
-        navigationBarAppearace.barTintColor = KPColorPalette.KPMainColor.mainColor
+        navigationBarAppearace.barTintColor = KPColorPalette.KPMainColor.mainColor_light
         navigationBarAppearace.titleTextAttributes = [NSFontAttributeName: UIFont.systemFont(ofSize: 20),
                                                       NSForegroundColorAttributeName: KPColorPalette.KPTextColor.whiteColor!]
         
         // Custom UI
 //        UIApplication.shared.statusBarView?.backgroundColor = KPColorPalette.KPMainColor.statusBarColor
-        UIApplication.shared.statusBarStyle = .lightContent;
+        UIApplication.shared.statusBarStyle = .lightContent
+//        UIApplication.shared.isStatusBarHidden = true
         
 //        let mainViewController = KPMainViewController();
 //        let sideViewController = KPSideViewController();

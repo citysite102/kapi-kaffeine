@@ -23,7 +23,6 @@ class KPCityTableViewCell: UITableViewCell {
         self.cityLabel = UILabel();
         self.cityLabel.font = UIFont.systemFont(ofSize: 12);
         self.cityLabel.textColor = KPColorPalette.KPTextColor.grayColor;
-        self.cityLabel.text = "測試中";
         self.addSubview(self.cityLabel);
         self.cityLabel.addConstraints(fromStringArray: ["H:|-72-[$self]",
                                                         "V:|-12-[$self(16)]-12-|"]);
