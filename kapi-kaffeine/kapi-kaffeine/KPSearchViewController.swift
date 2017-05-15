@@ -73,8 +73,8 @@ class KPSearchViewController: UIViewController {
     func configureSearchController() {
         searchController = UISearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = self
-        searchController.dimsBackgroundDuringPresentation = true
-        searchController.searchBar.placeholder = "Search here..."
+//        searchController.dimsBackgroundDuringPresentation = true
+        searchController.searchBar.placeholder = "搜尋咖啡店名稱..."
         searchController.searchBar.delegate = self
         searchController.hidesNavigationBarDuringPresentation = false
         self.navigationItem.titleView = searchController.searchBar
@@ -157,9 +157,15 @@ extension KPSearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        mainListController.currentDataModel = self.displayDataModel[indexPath.row]
-        mainListController.mainController.performSegue(withIdentifier: "datailedInformationSegue",
-                                                       sender: mainListController)
-        
+//        mainListController.currentDataModel = self.displayDataModel[indexPath.row]
+//        mainListController.mainController.performSegue(withIdentifier: "datailedInformationSegue",
+//                                                       sender: mainListController)
+        let infoController = KPInformationViewController()
+        if shouldShowSearchResults {
+            infoController.informationDataModel = filteredDataModel[indexPath.row]
+        } else {
+            infoController.informationDataModel = displayDataModel[indexPath.row]
+        }
+        self.navigationController?.pushViewController(infoController, animated: true)
     }
 }

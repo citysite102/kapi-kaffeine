@@ -47,10 +47,10 @@ class KPInformationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white;
-        self.navigationController?.navigationBar.topItem?.title = self.informationDataModel.name;
+        self.navigationItem.title = self.informationDataModel.name;
         self.navigationController?.delegate = self
         
-        self.dismissButton = UIButton.init();
+        self.dismissButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 24, height: 24));
         self.dismissButton.setImage(UIImage.init(named: "icon_close")?.withRenderingMode(.alwaysTemplate),
                                     for: .normal);
         self.dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor;
@@ -58,11 +58,19 @@ class KPInformationViewController: UIViewController {
                                      action: #selector(KPInformationViewController.handleDismissButtonOnTapped),
                                      for: .touchUpInside);
 
-        self.navigationController?.navigationBar.addSubview(self.dismissButton);
-        self.dismissButton.addConstraints(fromStringArray: ["H:|-8-[$self(24)]",
-                                                            "V:[$self(24)]"]);
+        let barItem = UIBarButtonItem.init(customView: self.dismissButton);
+        let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace,
+                                             target: nil,
+                                             action: nil)
+        negativeSpacer.width = -8
+        navigationItem.leftBarButtonItems = [negativeSpacer, barItem]
+        
+        
+//        self.navigationController?.navigationBar.addSubview(self.dismissButton);
+//        self.dismissButton.addConstraints(fromStringArray: ["H:|-8-[$self(24)]",
+//                                                            "V:[$self(24)]"]);
         self.dismissButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4);
-        self.dismissButton.addConstraintForCenterAligningToSuperview(in: .vertical);
+//        self.dismissButton.addConstraintForCenterAligningToSuperview(in: .vertical);
         
         self.scrollContainer = UIScrollView();
         self.scrollContainer.backgroundColor = KPColorPalette.KPMainColor.grayColor_level7;
