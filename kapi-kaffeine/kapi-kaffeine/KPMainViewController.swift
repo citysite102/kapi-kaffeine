@@ -83,7 +83,9 @@ class KPMainViewController: UIViewController {
         self.searchHeaderView.styleButton.addTarget(self,
                                                     action: #selector(changeStyle),
                                                     for: .touchUpInside)
-        
+        self.searchHeaderView.searchButton.addTarget(self,
+                                                     action: #selector(search),
+                                                        for: .touchUpInside)
         
         
         let menuLeftNavigationController = UISideMenuNavigationController(rootViewController: sideBarController);
@@ -99,8 +101,7 @@ class KPMainViewController: UIViewController {
         
         let KapiDataRequest = KPNomadRequest();
         KapiDataRequest.perform().then { resultArray -> Void in
-                self.mainMapViewController?.displayDataModel = resultArray
-                self.mainListViewController?.displayDataModel = resultArray
+                self.displayDataModel = resultArray
             }.catch { error in
                 print("Error");
             }
@@ -126,7 +127,6 @@ class KPMainViewController: UIViewController {
     }
     
     func changeStyle() {
-        
         let iconImage = (self.currentController == self.mainListViewController) ?
             R.image.icon_list()!.withRenderingMode(.alwaysTemplate) :
             R.image.icon_map()!.withRenderingMode(.alwaysTemplate);
@@ -137,6 +137,19 @@ class KPMainViewController: UIViewController {
         self.searchHeaderView.styleButton.setImage(iconImage, for: .normal);
     }
 
+    func search() {
+        let controller = KPModalViewController()
+        controller.edgeInset = UIEdgeInsets.init(top: 0,
+                                                 left: 0,
+                                                 bottom: 0,
+                                                 right: 0);
+        let searchController = KPSearchViewController()
+        searchController.displayDataModel = self.displayDataModel
+        let navigationController = UINavigationController.init(rootViewController: searchController);
+        controller.contentController = navigationController;
+        controller.presentModalView();
+    }
+    
     func addScreenEdgePanGestureRecognizer(view: UIView, edges: UIRectEdge) {
         let edgePanGesture =
             UIScreenEdgePanGestureRecognizer(target: self,
