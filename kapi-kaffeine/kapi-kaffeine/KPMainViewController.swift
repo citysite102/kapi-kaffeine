@@ -143,8 +143,10 @@ class KPMainViewController: UIViewController {
                                                  left: 0,
                                                  bottom: 0,
                                                  right: 0);
+        controller.presentationStyle = .right
         let searchController = KPSearchViewController()
-        searchController.displayDataModel = self.displayDataModel
+        searchController.displayDataModel = displayDataModel
+        searchController.mainListController = mainListViewController
         let navigationController = UINavigationController.init(rootViewController: searchController);
         controller.contentController = navigationController;
         controller.presentModalView();

@@ -13,10 +13,11 @@ class KPSearchViewController: UIViewController {
     static let KPSearchViewControllerDefaultCellReuseIdentifier = "cell";
     static let KPSearchViewControllerRecentCellReuseIdentifier = "cell_recent";
     
+    weak var mainListController: KPMainListViewController!
+    
     var dismissButton:UIButton!
     var tableView: UITableView!
     var searchController: UISearchController!
-    
 
     var shouldShowSearchResults = false
     
@@ -82,7 +83,7 @@ class KPSearchViewController: UIViewController {
     
     // MARK: UI Event
     func handleDismissButtonOnTapped() {
-        self.appModalController()?.dismissControllerWithDefaultDuration();
+        self.appModalController()?.dismissControllerWithDefaultDuration()
     }
     
     func handleBackButtonOnTapped() {
@@ -129,8 +130,7 @@ extension KPSearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier:KPSearchViewController.KPSearchViewControllerDefaultCellReuseIdentifier,
-                                                 for: indexPath) as! KPSearchViewDefaultCell;
-        
+                                                 for: indexPath) as! KPSearchViewDefaultCell
         if shouldShowSearchResults {
             cell.shopNameLabel.text = self.filteredDataModel[indexPath.row].name
         } else {
@@ -156,9 +156,10 @@ extension KPSearchViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        self.currentDataModel = self.displayDataModel[indexPath.row];
-//        self.mainController.performSegue(withIdentifier: "datailedInformationSegue", sender: self);
+        mainListController.currentDataModel = self.displayDataModel[indexPath.row]
+        mainListController.mainController.performSegue(withIdentifier: "datailedInformationSegue",
+                                                       sender: mainListController)
+        
     }
 }

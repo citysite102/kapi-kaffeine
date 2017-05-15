@@ -12,6 +12,8 @@ import UIKit
 enum KPModalPresentationStyle: String, RawRepresentable {
     case bottom = "Bottom"
     case top = "Top"
+    case right = "Right"
+    case left = "Left"
     case none = "None"
     case popout = "Popout"
 }
@@ -128,11 +130,19 @@ class KPModalViewController: UIViewController {
         self.containerSensingView.removeAllRelatedConstraintsInSuperView();
         
         
+        var containerPoint: CGPoint = CGPoint.init(x: 0, y: 0)
+        var containerSize: CGSize = CGSize.init(width: 0, height: 0)
+        
         if self.layoutWithSize {
             self.containerSensingView.addConstraint(self.containerWidthConstraint);
             self.containerSensingView.addConstraint(self.containerHeightConstraint);
             self.containerSensingView.addConstraintForCenterAligningToSuperview(in: .vertical);
             self.containerSensingView.addConstraintForCenterAligningToSuperview(in: .horizontal);
+            
+            containerPoint = CGPoint.init(x: (self.view.frame.width-self.contentSize.width)/2,
+                                          y: self.view.frame.height)
+            containerSize = CGSize.init(width: self.contentSize.width,
+                                        height: self.contentSize.height);
         }
         
         if self.layoutWithInset {
@@ -142,19 +152,23 @@ class KPModalViewController: UIViewController {
                                                                edgeInset.bottom,
                                                                edgeInset.left,
                                                                edgeInset.right]);
+            containerPoint = CGPoint.init(x: edgeInset.left,
+                                          y: edgeInset.top)
+            containerSize = CGSize.init(width: backgroundSensingView.frame.size.width - edgeInset.left - edgeInset.right,
+                                        height: backgroundSensingView.frame.size.height - edgeInset.top - edgeInset.bottom);
         }
-        
-        // Initial Position
-        var containerPoint: CGPoint = CGPoint.init(x: (self.view.frame.width-self.contentSize.width)/2,
-                                                   y: self.view.frame.height);
-        let containerSize: CGSize = CGSize.init(width: self.contentSize.width,
-                                                height: self.contentSize.height);
         
         switch self.presentationStyle {
         case KPModalPresentationStyle.top:
-            containerPoint.y = -self.contentSize.height;
+            containerPoint.y = -self.contentSize.height
         case KPModalPresentationStyle.bottom:
-            containerPoint.y = self.view.frame.height;
+            containerPoint.y = self.view.frame.height
+        case KPModalPresentationStyle.left:
+            containerPoint.x = -self.view.frame.width
+            containerPoint.y = 0
+        case KPModalPresentationStyle.right:
+            containerPoint.x = self.view.frame.width
+            containerPoint.y = 0
         case KPModalPresentationStyle.popout:
             self.containerSensingView.transform = CGAffineTransform.init(scaleX: 0.5, y: 0.5);
             self.containerSensingView.alpha = 0.0;
@@ -228,6 +242,12 @@ class KPModalViewController: UIViewController {
             case KPModalPresentationStyle.bottom:
                 self.containerSensingView.frameOrigin = CGPoint.init(x: self.containerSensingView.frame.minX,
                                                                      y: self.view.frame.height);
+            case KPModalPresentationStyle.left:
+                self.containerSensingView.frameOrigin = CGPoint.init(x: -self.view.frame.width,
+                                                                     y: self.containerSensingView.frame.minY);
+            case KPModalPresentationStyle.right:
+                self.containerSensingView.frameOrigin = CGPoint.init(x: self.view.frame.width,
+                                                                     y: self.containerSensingView.frame.minY);
             case KPModalPresentationStyle.popout:
                 self.containerSensingView.transform = CGAffineTransform.init(scaleX: 0.5, y: 0.5);
                 self.containerSensingView.alpha = 0.0;

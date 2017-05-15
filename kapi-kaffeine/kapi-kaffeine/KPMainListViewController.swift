@@ -57,7 +57,6 @@ class KPMainListViewController: UIViewController, KPMainViewControllerDelegate {
         // Dispose of any resources that can be recreated.
         
     }
- 
 }
 
 extension KPMainListViewController: UITableViewDelegate, UITableViewDataSource {
@@ -71,7 +70,6 @@ extension KPMainListViewController: UITableViewDelegate, UITableViewDataSource {
         cell.dataModel = self.displayDataModel[indexPath.row]
         cell.shopStatusContent = (self.displayDataModel[indexPath.row].openTime! as String).replacingOccurrences(of: "~", with: "-");
         cell.scoreLabel.score = "\(self.displayDataModel[indexPath.row].score!.format(f: ".1"))";
-        
         
 //        let openedTime:[String] = (cell.shopStatusLabel.text?.components(separatedBy: "-"))!;
 //        let startTime: String = openedTime[0];
@@ -101,7 +99,6 @@ extension KPMainListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.displayDataModel.count;
     }
-    
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.currentDataModel = self.displayDataModel[indexPath.row];
