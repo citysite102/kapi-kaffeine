@@ -10,7 +10,7 @@ import UIKit
 
 class KPTimePicker: UIView, UIPickerViewDataSource, UIPickerViewDelegate {
     
-    var pickerRowHeight: CGFloat = 85
+    var pickerRowHeight: CGFloat = 60
     
     var pickerView: UIPickerView!
 
@@ -19,7 +19,7 @@ class KPTimePicker: UIView, UIPickerViewDataSource, UIPickerViewDelegate {
         pickerView = UIPickerView()
         self.addSubview(pickerView)
         
-        pickerView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"])
+        pickerView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self(\(pickerRowHeight*3.5))]|"])
         pickerView.dataSource = self
         pickerView.delegate = self
         

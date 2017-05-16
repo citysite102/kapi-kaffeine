@@ -19,9 +19,7 @@ class KPTimePickerViewController: KPSharedSettingViewController {
         
         timePicker = KPTimePicker()
         containerView.addSubview(timePicker)
-//        timePicker.addConstraint(forHeight: 300)
-//        timePicker.addConstraintForCenterAligningToSuperview(in: .vertical)
-        timePicker.addConstraint(from: "V:|[$self(300)]|")
+        timePicker.addConstraint(from: "V:|[$self]|")
         timePicker.addConstraintForCenterAligningToSuperview(in: .horizontal)
         
     }
