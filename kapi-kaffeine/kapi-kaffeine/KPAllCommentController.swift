@@ -13,8 +13,8 @@ class KPAllCommentController: UIViewController {
     static let KPAllCommentControllerCellReuseIdentifier = "cell";
     
     var tableView: UITableView!
-    var dismissButton:KPBounceButton!
-    var editButton:KPBounceButton!
+    var backButton: KPBounceButton!
+    var editButton: KPBounceButton!
     var comments: [KPCommentModel]! {
         didSet {
             self.tableView.reloadData();
@@ -28,34 +28,32 @@ class KPAllCommentController: UIViewController {
         self.navigationItem.title = "所有評價"
         self.navigationItem.hidesBackButton = true
         
-        
-        dismissButton = KPBounceButton.init(frame: CGRect.init(x: 0, y: 0, width: 24, height: 24));
-        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4);
-        dismissButton.setImage(R.image.icon_back()?.withRenderingMode(.alwaysTemplate),
+        backButton = KPBounceButton.init(frame: CGRect.init(x: 0, y: 0, width: 24, height: 24));
+        backButton.setImage(R.image.icon_back()?.withRenderingMode(.alwaysTemplate),
                                for: .normal);
-        dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor;
-        dismissButton.addTarget(self,
-                                action: #selector(KPSearchViewController.handleDismissButtonOnTapped),
-                                for: .touchUpInside)
-        let barItem = UIBarButtonItem.init(customView: self.dismissButton);
+        backButton.tintColor = KPColorPalette.KPTextColor.whiteColor;
+        backButton.addTarget(self,
+                             action: #selector(KPAllCommentController.handleBackButtonOnTapped),
+                             for: .touchUpInside)
+        let barItem = UIBarButtonItem.init(customView: self.backButton);
         
+        editButton = KPBounceButton.init(frame: CGRect.init(x: 0, y: 0, width: 24, height: 24));
+        editButton.setImage(R.image.icon_edit()?.withRenderingMode(.alwaysTemplate),
+                            for: .normal);
+        editButton.tintColor = KPColorPalette.KPTextColor.whiteColor;
+        editButton.addTarget(self,
+                             action: #selector(KPAllCommentController.handleEditButtonOnTapped),
+                             for: .touchUpInside)
+        
+        let rightbarItem = UIBarButtonItem.init(customView: self.editButton);
         let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace,
                                              target: nil,
                                              action: nil)
         negativeSpacer.width = -8
         
-        self.navigationItem.leftBarButtonItems = [negativeSpacer, UIBarButtonItem.init(image: R.image.icon_back(),
-                                                                                       style: .plain,
-                                                                                       target: self,
-                                                                                       action: #selector(KPPhotoGalleryViewController.handleBackButtonOnTapped))]
-        //
-//        //        let barItem = UIBarButtonItem.init(customView: self.dismissButton);
-//        let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace,
-//                                             target: nil,
-//                                             action: nil)
-//        negativeSpacer.width = -8
-//        //        navigationItem.rightBarButtonItems = [negativeSpacer, barItem]
-
+        navigationItem.leftBarButtonItems = [negativeSpacer, barItem]
+        navigationItem.rightBarButtonItems = [negativeSpacer, rightbarItem]
+        
         tableView = UITableView()
         tableView.delegate = self
         tableView.dataSource = self
@@ -74,6 +72,17 @@ class KPAllCommentController: UIViewController {
     }
     
 
+    func handleBackButtonOnTapped() {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    func handleEditButtonOnTapped() {
+        let newCommentViewController = KPNewCommentController()
+        self.navigationController?.pushViewController(viewController: newCommentViewController,
+                                                      animated: true,
+                                                      completion: {})
+    }
+    
     /*
     // MARK: - Navigation
 

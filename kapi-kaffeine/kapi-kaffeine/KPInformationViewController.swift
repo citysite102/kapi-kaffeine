@@ -165,14 +165,20 @@ class KPInformationViewController: UIViewController {
                                                       color:KPColorPalette.KPMainColor.mainColor!,
                                                       icon:(R.image.icon_map()?.withRenderingMode(.alwaysTemplate))!,
                                                       handler:{(infoView) -> () in
-                                                        print("Comment button 1 Tapped");
+                                                        let commentViewController = KPAllCommentController()
+                                                        self.navigationController?.pushViewController(viewController: commentViewController,
+                                                                                                      animated: true,
+                                                                                                      completion: {})
         }),
                                                 Action(title:"我要留言",
                                                        style:.normal,
                                                        color:KPColorPalette.KPMainColor.mainColor!,
                                                        icon:(R.image.icon_map()?.withRenderingMode(.alwaysTemplate))!,
                                                        handler:{(infoView) -> () in
-                                                        print("Comment button 2 Tapped");
+                                                        let newCommentViewController = KPNewCommentController()
+                                                        self.navigationController?.pushViewController(viewController: newCommentViewController,
+                                                                                                      animated: true,
+                                                                                                      completion: {})
                                                 })
         ];
         
