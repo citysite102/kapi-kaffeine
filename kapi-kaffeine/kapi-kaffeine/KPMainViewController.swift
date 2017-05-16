@@ -138,17 +138,25 @@ class KPMainViewController: UIViewController {
     }
 
     func search() {
+//        let controller = KPModalViewController()
+//        controller.edgeInset = UIEdgeInsets.init(top: 0,
+//                                                 left: 0,
+//                                                 bottom: 0,
+//                                                 right: 0);
+//        controller.presentationStyle = .right
+//        let searchController = KPSearchViewController()
+//        searchController.displayDataModel = displayDataModel
+//        searchController.mainListController = mainListViewController
+//        let navigationController = UINavigationController.init(rootViewController: searchController);
+//        controller.contentController = navigationController;
+//        controller.presentModalView();
         let controller = KPModalViewController()
         controller.edgeInset = UIEdgeInsets.init(top: 0,
                                                  left: 0,
                                                  bottom: 0,
                                                  right: 0);
-        controller.presentationStyle = .right
-        let searchController = KPSearchViewController()
-        searchController.displayDataModel = displayDataModel
-        searchController.mainListController = mainListViewController
-        let navigationController = UINavigationController.init(rootViewController: searchController);
-        controller.contentController = navigationController;
+        let loadingController = KPLoadingViewController()
+        controller.contentController = loadingController;
         controller.presentModalView();
     }
     
