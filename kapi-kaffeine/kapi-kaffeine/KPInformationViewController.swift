@@ -216,6 +216,15 @@ class KPInformationViewController: UIViewController {
         
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        
+        // Fix table view height according to fix cell
+        let commentInfoView = commentInformationView.infoView as! KPShopCommentInfoView
+        commentInfoView.tableViewHeightConstraint.constant = commentInfoView.tableView.contentSize.height
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

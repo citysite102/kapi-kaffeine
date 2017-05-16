@@ -13,26 +13,33 @@ class KPShopCommentInfoView: UIView {
     static let KPShopCommentInfoCellReuseIdentifier = "cell";
     
     var tableView: UITableView!
+    var tableViewHeightConstraint: NSLayoutConstraint!
     var displayDataModel: [KPDataModel]! {
         didSet {
             self.tableView.reloadData();
         }
     }
     
+    
     override init(frame: CGRect) {
         super.init(frame: frame) // calls designated initializer
         
-        self.tableView = UITableView();
-        self.tableView.delegate = self;
-        self.tableView.dataSource = self;
-        self.addSubview(self.tableView);
-        self.tableView.addConstraints(fromStringArray: ["V:|[$self(340)]|",
-                                                        "H:|[$self]|"]);
-        self.tableView.register(KPShopCommentCell.self,
-                                forCellReuseIdentifier: KPShopCommentInfoView.KPShopCommentInfoCellReuseIdentifier);
+        tableView = UITableView()
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.isUserInteractionEnabled = false
+        addSubview(self.tableView)
+        tableView.addConstraints(fromStringArray: ["V:|[$self]|",
+                                                   "H:|[$self]|"])
+        tableViewHeightConstraint = tableView.addConstraint(forHeight: 340)
+        tableView.register(KPShopCommentCell.self,
+                           forCellReuseIdentifier: KPShopCommentInfoView.KPShopCommentInfoCellReuseIdentifier)
         
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+    }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -54,7 +61,7 @@ extension KPShopCommentInfoView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4;
+        return 3;
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
