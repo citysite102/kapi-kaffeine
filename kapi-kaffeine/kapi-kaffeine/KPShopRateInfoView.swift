@@ -21,8 +21,7 @@ class KPShopRateInfoView: UIView {
         for (index, property) in self.rateProperties.enumerated() {
         
             let rateView = rateStatusView.init(frame:.zero,
-                                               icon:UIImage.init(named:
-                                                "icon_clock")!,
+                                               icon:R.image.icon_map()!,
                                                content:property,
                                                rateContent:"5.0");
             self.addSubview(rateView!);

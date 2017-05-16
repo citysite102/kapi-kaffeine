@@ -59,7 +59,7 @@ class KPPhotoDisplayViewController: UIViewController {
         
         self.dismissButton = KPBounceButton()
         self.dismissButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4)
-        self.dismissButton.setImage(UIImage.init(named: "icon_close")?.withRenderingMode(.alwaysTemplate),
+        self.dismissButton.setImage(R.image.icon_close()?.withRenderingMode(.alwaysTemplate),
                                     for: .normal)
         self.dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor
         self.dismissButton.addTarget(self,

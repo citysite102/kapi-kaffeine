@@ -28,14 +28,14 @@ class KPSearchHeaderView: UIView {
         self.titleLabel.addConstraintForCenterAligningToSuperview(in: .horizontal);
         self.titleLabel.addConstraint(from: "V:|-32-[$self]");
         
-        self.styleButton = KPBounceButton.init(frame: .zero, image: UIImage.init(named: "icon_map")!);
+        self.styleButton = KPBounceButton.init(frame: .zero, image: R.image.icon_map()!);
         self.addSubview(self.styleButton);
         self.styleButton.addConstraints(fromStringArray: ["H:[$self(24)]-8-|",
                                                           "V:[$self(24)]"]);
         self.styleButton.addConstraintForCenterAligning(to: self.titleLabel, in: .vertical);
         self.styleButton.tintColor = UIColor.white;
         
-        self.searchButton = KPBounceButton.init(frame: .zero, image: UIImage.init(named: "icon_search")!);
+        self.searchButton = KPBounceButton.init(frame: .zero, image: R.image.icon_search()!);
         self.addSubview(self.searchButton);
         self.searchButton.addConstraints(fromStringArray: ["H:[$self(24)]-8-[$view0]",
                                                            "V:[$self(24)]"],
@@ -43,7 +43,7 @@ class KPSearchHeaderView: UIView {
         self.searchButton.addConstraintForCenterAligning(to: self.titleLabel, in: .vertical);
         self.searchButton.tintColor = UIColor.white;
         
-        self.menuButton = KPBounceButton.init(frame: .zero, image: UIImage.init(named: "icon_menu")!);
+        self.menuButton = KPBounceButton.init(frame: .zero, image: R.image.icon_menu()!);
         self.addSubview(self.menuButton);
         self.menuButton.addConstraints(fromStringArray: ["H:|-8-[$self(24)]",
                                                           "V:[$self(24)]"]);

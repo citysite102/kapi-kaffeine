@@ -51,7 +51,7 @@ class KPInformationViewController: UIViewController {
         self.navigationController?.delegate = self
         
         self.dismissButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 24, height: 24));
-        self.dismissButton.setImage(UIImage.init(named: "icon_close")?.withRenderingMode(.alwaysTemplate),
+        self.dismissButton.setImage(R.image.icon_close()?.withRenderingMode(.alwaysTemplate),
                                     for: .normal);
         self.dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor;
         self.dismissButton.addTarget(self,
@@ -107,14 +107,14 @@ class KPInformationViewController: UIViewController {
         self.locationInformationView.actions = [Action(title:"開啟導航",
                                                  style:.normal,
                                                  color:KPColorPalette.KPMainColor.mainColor!,
-                                                 icon:(UIImage.init(named: "icon_map")?.withRenderingMode(.alwaysTemplate))!,
+                                                 icon:(R.image.icon_map()?.withRenderingMode(.alwaysTemplate))!,
                                                  handler:{(infoView) -> () in
                                                     print("Location button 1 Tapped");
         }),
                                                 Action(title:"街景模式",
                                                  style:.normal,
                                                  color:KPColorPalette.KPMainColor.mainColor!,
-                                                 icon:(UIImage.init(named: "icon_map")?.withRenderingMode(.alwaysTemplate))!,
+                                                 icon:(R.image.icon_map()?.withRenderingMode(.alwaysTemplate))!,
                                                  handler:{(infoView) -> () in
                                                     print("Location button 2 Tapped");
                                                 })
@@ -133,7 +133,7 @@ class KPInformationViewController: UIViewController {
         self.rateInformationView.actions = [Action(title:"我要評分",
                                                    style:.normal,
                                                    color:KPColorPalette.KPMainColor.mainColor!,
-                                                   icon:(UIImage.init(named: "icon_map")?.withRenderingMode(.alwaysTemplate))!,
+                                                   icon:(R.image.icon_map()?.withRenderingMode(.alwaysTemplate))!,
                                                    handler:{(infoView) -> () in
                                                     let controller = KPModalViewController()
                                                     controller.edgeInset = UIEdgeInsets.init(top: UIDevice().isCompact ? 16 : 48,
@@ -163,14 +163,14 @@ class KPInformationViewController: UIViewController {
         self.commentInformationView.actions = [Action(title:"看更多評價(20)",
                                                       style:.normal,
                                                       color:KPColorPalette.KPMainColor.mainColor!,
-                                                      icon:(UIImage.init(named: "icon_map")?.withRenderingMode(.alwaysTemplate))!,
+                                                      icon:(R.image.icon_map()?.withRenderingMode(.alwaysTemplate))!,
                                                       handler:{(infoView) -> () in
                                                         print("Comment button 1 Tapped");
         }),
                                                 Action(title:"我要留言",
                                                        style:.normal,
                                                        color:KPColorPalette.KPMainColor.mainColor!,
-                                                       icon:(UIImage.init(named: "icon_map")?.withRenderingMode(.alwaysTemplate))!,
+                                                       icon:(R.image.icon_map()?.withRenderingMode(.alwaysTemplate))!,
                                                        handler:{(infoView) -> () in
                                                         print("Comment button 2 Tapped");
                                                 })
@@ -188,7 +188,7 @@ class KPInformationViewController: UIViewController {
         self.photoInformationView.actions = [Action(title:"上傳照片",
                                                    style:.normal,
                                                    color:KPColorPalette.KPMainColor.mainColor!,
-                                                   icon:(UIImage.init(named: "icon_map")?.withRenderingMode(.alwaysTemplate))!,
+                                                   icon:(R.image.icon_map()?.withRenderingMode(.alwaysTemplate))!,
                                                    handler:{(infoView) -> () in
                                                     print("Photo button 1 Tapped");
         })]
@@ -218,7 +218,6 @@ class KPInformationViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
         
         // Fix table view height according to fix cell
         let commentInfoView = commentInformationView.infoView as! KPShopCommentInfoView

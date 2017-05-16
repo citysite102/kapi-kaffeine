@@ -14,7 +14,7 @@ class KPShopCommentInfoView: UIView {
     
     var tableView: UITableView!
     var tableViewHeightConstraint: NSLayoutConstraint!
-    var displayDataModel: [KPDataModel]! {
+    var comments: [KPCommentModel]! {
         didSet {
             self.tableView.reloadData();
         }

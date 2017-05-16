@@ -55,7 +55,7 @@ class KPSharedSettingViewController: UIViewController {
         scrollViewContainer.addConstraintForHavingSameWidth(with: self.view)
         
         dismissButton = UIButton.init()
-        dismissButton.setImage(UIImage.init(named: "icon_close")?.withRenderingMode(.alwaysTemplate),
+        dismissButton.setImage(R.image.icon_close()?.withRenderingMode(.alwaysTemplate),
                                for: .normal)
         dismissButton.tintColor = KPColorPalette.KPMainColor.mainColor
         dismissButton.addTarget(self,

@@ -67,7 +67,7 @@ class KPInformationHeaderView: UIView {
         self.collectButton = KPInformationHeaderButton();
         self.collectButton.buttonInfo = HeaderButtonInfo(title: "收藏",
                                                          info: "0人已收藏",
-                                                         icon: UIImage.init(named: "icon_clock")!,
+                                                         icon: R.image.icon_map()!,
                                                          handler: { (headerButton) -> () in print("Test Handler");
         });
         self.addSubview(self.collectButton);
@@ -79,7 +79,7 @@ class KPInformationHeaderView: UIView {
         self.checkButton = KPInformationHeaderButton();
         self.checkButton.buttonInfo = HeaderButtonInfo(title: "我要打卡",
                                                          info: "194人來做",
-                                                         icon: UIImage.init(named: "icon_clock")!,
+                                                         icon: R.image.icon_map()!,
                                                          handler: { (headerButton) -> () in print("Test Handler");
         });
         self.addSubview(self.checkButton);
@@ -91,7 +91,7 @@ class KPInformationHeaderView: UIView {
         self.rateButton = KPInformationHeaderButton();
         self.rateButton.buttonInfo = HeaderButtonInfo(title: "我要評分",
                                                        info: "尚無評分",
-                                                       icon: UIImage.init(named: "icon_clock")!,
+                                                       icon: R.image.icon_map()!,
                                                        handler: { (headerButton) -> () in print("Test Handler");
         });
         self.addSubview(self.rateButton);
@@ -103,7 +103,7 @@ class KPInformationHeaderView: UIView {
         self.commentButton = KPInformationHeaderButton();
         self.commentButton.buttonInfo = HeaderButtonInfo(title: "已評價",
                                                        info: "29人已留言",
-                                                       icon: UIImage.init(named: "icon_clock")!,
+                                                       icon: R.image.icon_map()!,
                                                        handler: { (headerButton) -> () in print("Test Handler");
         });
         self.addSubview(self.commentButton);

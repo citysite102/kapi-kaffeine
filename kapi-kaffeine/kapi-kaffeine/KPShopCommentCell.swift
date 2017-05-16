@@ -33,7 +33,7 @@ class KPShopCommentCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        self.userPicture = UIImageView(image: UIImage(named: "image_shop_demo"));
+        self.userPicture = UIImageView(image: R.image.demo_1());
         self.userPicture.contentMode = .scaleAspectFit;
         self.userPicture.layer.cornerRadius = 10.0;
         self.userPicture.layer.masksToBounds = true;
@@ -74,7 +74,7 @@ class KPShopCommentCell: UITableViewCell {
                                           views: [self.userPicture, self.userNameLabel]);
         
         self.voteUpButton = KPShopCommentCellButton.init(frame: .zero,
-                                                         icon: UIImage.init(named: "icon_map")!,
+                                                         icon: R.image.icon_map()!,
                                                          title: "9");
         self.voteUpButton.buttonSelected = true;
         self.contentView.addSubview(self.voteUpButton);
@@ -85,7 +85,7 @@ class KPShopCommentCell: UITableViewCell {
         
         
         self.voteDownButton = KPShopCommentCellButton.init(frame: .zero,
-                                                           icon: UIImage.init(named: "icon_map")!,
+                                                           icon: R.image.icon_map()!,
                                                            title: "0");
         self.contentView.addSubview(self.voteDownButton);
         self.voteDownButton.addConstraints(fromStringArray: ["H:[$view0]-24-[$self(40)]",
