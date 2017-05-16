@@ -13,14 +13,27 @@ import ObjectMapper
 class KPMainMapViewController: UIViewController, GMSMapViewDelegate, GMUClusterManagerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, KPMainViewControllerDelegate {
     
     weak var mainController:KPMainViewController!
+    
     var collectionView: UICollectionView!
+    var collectionViewBottomConstraint: NSLayoutConstraint!
+
+    lazy var nearestButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setTitle("離我最近", for: .normal)
+        button.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor.mainColor!), for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        button.layer.cornerRadius = 5
+        button.clipsToBounds = true
+        return button
+    }()
+    
+    private var clusterManager: GMUClusterManager!
+    
     var mapView: GMSMapView {
         get {
             return self.view as! GMSMapView
         }
     }
-    
-    private var clusterManager: GMUClusterManager!
     
     var currentDataModel:KPDataModel?
     var selectedDataModel: KPDataModel? {
@@ -39,9 +52,9 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate, GMUClusterM
                             let bounds = GMSCoordinateBounds(region: self.mapView.projection.visibleRegion())
                             return bounds.contains(dataModel.position)
                         }
-                        self.collectionViewBottomConstraint.constant = 0
+                        self.collectionViewBottomConstraint.constant = -15
                     } else {
-                        self.collectionViewBottomConstraint.constant = 120
+                        self.collectionViewBottomConstraint.constant = 90
                     }
                     UIView.animate(withDuration: 0.2, animations: {
                         self.view.layoutIfNeeded()
@@ -51,7 +64,6 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate, GMUClusterM
         }
     }
     
-    var collectionViewBottomConstraint: NSLayoutConstraint!
     
     var displayDataModel: [KPDataModel] = [] {
         didSet {
@@ -75,6 +87,9 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate, GMUClusterM
             self.clusterManager.cluster()
         }
     }
+    
+    
+    
     
     override func loadView() {
         let camera = GMSCameraPosition.camera(withLatitude: 25.018744, longitude: 121.532785, zoom: 18.0)
@@ -131,8 +146,8 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate, GMUClusterM
                                      forCellWithReuseIdentifier: "cell")
         
         self.view.addSubview(self.collectionView)
-        self.collectionView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$self(120)]"])
-        self.collectionViewBottomConstraint = self.collectionView.addConstraintForAligning(to: .bottom, of: self.view, constant: 120).first as! NSLayoutConstraint
+        self.collectionView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$self(90)]"])
+        self.collectionViewBottomConstraint = self.collectionView.addConstraintForAligning(to: .bottom, of: self.view, constant: 90).first as! NSLayoutConstraint
         
         
         if let dataURL = Bundle.main.url(forResource: "cafes", withExtension: "json") {
@@ -147,8 +162,13 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate, GMUClusterM
         let currentLocationButton = UIButton(type: .custom)
         currentLocationButton.setImage(UIImage(named: "icon_currentLocation"), for: .normal)
         currentLocationButton.addTarget(self, action: #selector(moveToMyLocation), for: .touchUpInside)
+        currentLocationButton.alpha = 0.7
         self.view.addSubview(currentLocationButton)
         currentLocationButton.addConstraints(fromStringArray: ["H:[$self(40)]-15-|", "V:|-120-[$self(40)]"])
+        
+        self.view.addSubview(nearestButton)
+        nearestButton.addConstraints(fromStringArray: ["H:|-30-[$self(90)]", "V:[$self(40)]-20-[$view0]"],
+                                     views: [collectionView])
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -223,9 +243,7 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate, GMUClusterM
             return nil
         }
         
-//        if self.isCollectionViewShow == false  {
-            self.isCollectionViewShow = true
-//        }
+        self.isCollectionViewShow = true
         
         marker.icon = UIImage(named: "icon_mapMarkerSelected")
         let infoWindow = KPMainMapMarkerInfoWindow(dataModel: marker.userData as! KPDataModel)
@@ -250,7 +268,6 @@ class KPMainMapViewController: UIViewController, GMSMapViewDelegate, GMUClusterM
     }
     
     func clusterManager(_ clusterManager: GMUClusterManager, didTap cluster: GMUCluster) -> Bool {
-        
         
         if self.isCollectionViewShow {
             self.isCollectionViewShow = false
