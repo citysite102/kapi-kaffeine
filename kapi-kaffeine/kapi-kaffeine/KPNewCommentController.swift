@@ -11,15 +11,27 @@ import UIKit
 class KPNewCommentController: UIViewController {
 
     
+    static let commentMaximumTextLength: Int = 200
+    
     var dismissButton: KPBounceButton!
     var sendButton: UIButton!
     var containerView: UIView!
     var textFieldContainerView: UIView!
+    var tapGesture: UITapGestureRecognizer!
+    
     lazy var textFieldHeaderLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12.0)
         label.textColor = KPColorPalette.KPTextColor.mainColor
         label.text = "請留下你的評價"
+        return label
+    }()
+    
+    lazy var remainingTextLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 12.0)
+        label.textColor = KPColorPalette.KPTextColor.mainColor
+        label.text = "0/\(commentMaximumTextLength)"
         return label
     }()
     
@@ -71,6 +83,10 @@ class KPNewCommentController: UIViewController {
         textFieldContainerView.addConstraints(fromStringArray: ["V:|[$self(240)]",
                                                                 "H:|[$self]|"])
         
+        tapGesture = UITapGestureRecognizer.init(target: self,
+                                                 action: #selector(handleTapGesture(tapGesture:)))
+        textFieldContainerView.addGestureRecognizer(tapGesture)
+        
         textFieldContainerView.addSubview(textFieldHeaderLabel)
         textFieldHeaderLabel.addConstraints(fromStringArray: ["V:|-16-[$self]",
                                                               "H:|-16-[$self]"])
@@ -78,10 +94,18 @@ class KPNewCommentController: UIViewController {
         inputTextField = UITextField()
         inputTextField.delegate = self
         inputTextField.placeholder = "Ex:東西很好吃，環境也很舒適..."
+        inputTextField.addTarget(self,
+                                 action: #selector(textFieldDidChange(_:)),
+                                 for: .editingChanged)
+        
         textFieldContainerView.addSubview(inputTextField)
         inputTextField.addConstraints(fromStringArray: ["V:[$view0]-8-[$self]",
                                                         "H:|-16-[$self]-16-|"],
                                       views: [textFieldHeaderLabel])
+        
+        textFieldContainerView.addSubview(remainingTextLabel)
+        remainingTextLabel.addConstraints(fromStringArray: ["V:[$self]-16-|",
+                                                            "H:[$self]-16-|"])
         
     }
 
@@ -97,8 +121,29 @@ class KPNewCommentController: UIViewController {
     func handleSendButtonOnTapped() {
         
     }
+    
+    func handleTapGesture(tapGesture: UITapGestureRecognizer) {
+        inputTextField.becomeFirstResponder()
+    }
+    
+    func textFieldDidChange(_ textField: UITextField) {
+        remainingTextLabel.text = "\((textField.text! as NSString).length)/200"
+    }
 }
 
 extension KPNewCommentController: UITextFieldDelegate {
     
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        let textContent = textField.text! as NSString
+        
+        let oldLength = textContent.length
+        let replacementLength = (string as NSString).length
+        let rangeLength = range.length
+        
+        let newLength = oldLength - rangeLength + replacementLength
+        let returnKey = (string as NSString).range(of: "\n").location != NSNotFound
+        
+        return newLength <= KPNewCommentController.commentMaximumTextLength || returnKey
+    }
 }
