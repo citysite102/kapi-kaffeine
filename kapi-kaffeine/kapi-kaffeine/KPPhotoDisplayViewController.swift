@@ -82,17 +82,17 @@ class KPPhotoDisplayViewController: UIViewController {
         
         view.addSubview(photoTitleLabel)
         photoTitleLabel.text = "覺旅咖啡 Journey Cafe"
-        photoTitleLabel.isHidden = true
+//        photoTitleLabel.isHidden = true
         photoTitleLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
         photoTitleLabel.addConstraint(from: "V:|-16-[$self]")
-        photoTitleLabel.transform = CGAffineTransform.init(translationX: 0, y: -100)
+//        photoTitleLabel.transform = CGAffineTransform.init(translationX: 0, y: -100)
         
         view.addSubview(countLabel)
         countLabel.text = "6 of 104"
-        countLabel.isHidden = true
+//        countLabel.isHidden = true
         countLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
         countLabel.addConstraint(from: "V:[$self]-32-|")
-        countLabel.transform = CGAffineTransform.init(translationX: 0, y: 100)
+//        countLabel.transform = CGAffineTransform.init(translationX: 0, y: 100)
     }
     
     
@@ -122,19 +122,19 @@ class KPPhotoDisplayViewController: UIViewController {
     }
     
     func showLabelContent() {
-        photoTitleLabel.isHidden = false
-        countLabel.isHidden = false
-        UIView.animate(withDuration: 0.5,
-                       delay: 0,
-                       usingSpringWithDamping: 0.8,
-                       initialSpringVelocity: 0.8,
-                       options: .curveEaseOut,
-                       animations: { 
-                        self.photoTitleLabel.transform = CGAffineTransform.identity
-                        self.countLabel.transform = CGAffineTransform.identity
-        }) { (_) in
-            
-        }
+//        photoTitleLabel.isHidden = false
+//        countLabel.isHidden = false
+//        UIView.animate(withDuration: 0.5,
+//                       delay: 0,
+//                       usingSpringWithDamping: 0.8,
+//                       initialSpringVelocity: 0.8,
+//                       options: .curveEaseOut,
+//                       animations: { 
+//                        self.photoTitleLabel.transform = CGAffineTransform.identity
+//                        self.countLabel.transform = CGAffineTransform.identity
+//        }) { (_) in
+//            
+//        }
     }
 }
 

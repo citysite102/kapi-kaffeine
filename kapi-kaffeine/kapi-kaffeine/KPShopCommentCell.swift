@@ -33,65 +33,67 @@ class KPShopCommentCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        self.userPicture = UIImageView(image: R.image.demo_1());
-        self.userPicture.contentMode = .scaleAspectFit;
-        self.userPicture.layer.cornerRadius = 10.0;
-        self.userPicture.layer.masksToBounds = true;
-        self.contentView.addSubview(self.userPicture);
-        self.userPicture.addConstraints(fromStringArray: ["H:|-16-[$self(32)]",
-                                                            "V:|-16-[$self(32)]"]);
+        userPicture = UIImageView(image: R.image.demo_1())
+        userPicture.contentMode = .scaleAspectFit
+        userPicture.layer.cornerRadius = 10.0
+        userPicture.layer.borderWidth = 1.0
+        userPicture.layer.borderColor = KPColorPalette.KPMainColor.grayColor_level5?.cgColor
+        userPicture.layer.masksToBounds = true
+        contentView.addSubview(userPicture)
+        userPicture.addConstraints(fromStringArray: ["H:|-16-[$self(32)]",
+                                                            "V:|-16-[$self(32)]"])
         
 
-        self.userNameLabel = UILabel();
-        self.userNameLabel.font = UIFont.systemFont(ofSize: 12.0);
-        self.userNameLabel.textColor = KPColorPalette.KPTextColor.grayColor_level1;
-        self.userNameLabel.text = "Simon Lin";
-        self.contentView.addSubview(self.userNameLabel);
-        self.userNameLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self(190)]",
+        userNameLabel = UILabel();
+        userNameLabel.font = UIFont.systemFont(ofSize: 12.0)
+        userNameLabel.textColor = KPColorPalette.KPTextColor.grayColor_level1
+        userNameLabel.text = "Simon Lin"
+        contentView.addSubview(userNameLabel);
+        userNameLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self(190)]",
                                                             "V:|-16-[$self]"],
                                           metrics: [UIScreen.main.bounds.size.width/2],
-                                          views: [self.userPicture]);
+                                          views: [userPicture]);
         
-        self.timeHintLabel = UILabel();
-        self.timeHintLabel.font = UIFont.systemFont(ofSize: 10.0);
-        self.timeHintLabel.textColor = KPColorPalette.KPTextColor.grayColor_level2;
-        self.timeHintLabel.text = "25 分鐘前";
-        self.contentView.addSubview(self.timeHintLabel);
-        self.timeHintLabel.addConstraints(fromStringArray: ["H:[$self]-16-|",
+        timeHintLabel = UILabel();
+        timeHintLabel.font = UIFont.systemFont(ofSize: 10.0);
+        timeHintLabel.textColor = KPColorPalette.KPTextColor.grayColor_level2;
+        timeHintLabel.text = "25 分鐘前";
+        contentView.addSubview(timeHintLabel);
+        timeHintLabel.addConstraints(fromStringArray: ["H:[$self]-16-|",
                                                             "V:|-16-[$self]"],
                                           metrics: [UIScreen.main.bounds.size.width/2],
-                                          views: [self.userPicture]);
+                                          views: [userPicture]);
 
-        self.userCommentLabel = UILabel();
-        self.userCommentLabel.font = UIFont.systemFont(ofSize: 14.0);
-        self.userCommentLabel.numberOfLines = 0;
-        self.userCommentLabel.textColor = KPColorPalette.KPTextColor.grayColor_level3;
-        self.userCommentLabel.text = "It runs well. But the problem is that code (in didSet) is not run for the very first time. I mean when a new FavoriteView instance is initialized.";
-        self.contentView.addSubview(self.userCommentLabel);
-        self.userCommentLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]-16-|",
+        userCommentLabel = UILabel();
+        userCommentLabel.font = UIFont.systemFont(ofSize: 14.0);
+        userCommentLabel.numberOfLines = 0;
+        userCommentLabel.textColor = KPColorPalette.KPTextColor.grayColor_level3;
+        userCommentLabel.text = "It runs well. But the problem is that code (in didSet) is not run for the very first time. I mean when a new FavoriteView instance is initialized.";
+        contentView.addSubview(userCommentLabel);
+        userCommentLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]-16-|",
                                                                "V:[$view1]-4-[$self]"],
                                           metrics: [UIScreen.main.bounds.size.width/2],
-                                          views: [self.userPicture, self.userNameLabel]);
+                                          views: [userPicture, userNameLabel]);
         
-        self.voteUpButton = KPShopCommentCellButton.init(frame: .zero,
+        voteUpButton = KPShopCommentCellButton.init(frame: .zero,
                                                          icon: R.image.icon_map()!,
                                                          title: "9");
-        self.voteUpButton.buttonSelected = true;
-        self.contentView.addSubview(self.voteUpButton);
-        self.voteUpButton.addConstraints(fromStringArray: ["H:[$view0]-8-[$self(40)]",
+        voteUpButton.buttonSelected = true;
+        contentView.addSubview(voteUpButton);
+        voteUpButton.addConstraints(fromStringArray: ["H:[$view0]-8-[$self(40)]",
                                                            "V:[$view1]-12-[$self(16)]-20-|"],
                                          metrics: [UIScreen.main.bounds.size.width/2],
-                                         views: [self.userPicture, self.userCommentLabel]);
+                                         views: [userPicture, userCommentLabel]);
         
         
-        self.voteDownButton = KPShopCommentCellButton.init(frame: .zero,
+        voteDownButton = KPShopCommentCellButton.init(frame: .zero,
                                                            icon: R.image.icon_map()!,
                                                            title: "0");
-        self.contentView.addSubview(self.voteDownButton);
-        self.voteDownButton.addConstraints(fromStringArray: ["H:[$view0]-24-[$self(40)]",
+        contentView.addSubview(voteDownButton);
+        voteDownButton.addConstraints(fromStringArray: ["H:[$view0]-24-[$self(40)]",
                                                              "V:[$view1]-12-[$self(16)]-20-|"],
                                            metrics: [UIScreen.main.bounds.size.width/2],
-                                           views: [self.voteUpButton, self.userCommentLabel]);
+                                           views: [voteUpButton, userCommentLabel]);
         
     }
     
@@ -104,9 +106,9 @@ class KPShopCommentCellButton: UIButton {
 
     var buttonSelected: Bool = false {
         didSet {
-            self.tintColor = buttonSelected ? KPColorPalette.KPMainColor.mainColor :
+            tintColor = buttonSelected ? KPColorPalette.KPMainColor.mainColor :
                 KPColorPalette.KPMainColor.grayColor_level2;
-            self.titleLabel?.textColor = KPColorPalette.KPTextColor.grayColor_level1;
+            titleLabel?.textColor = KPColorPalette.KPTextColor.grayColor_level1;
         }
     }
     
@@ -119,11 +121,11 @@ class KPShopCommentCellButton: UIButton {
                              title: String) {
         self.init(frame:frame);
         
-        self.setImage(icon, for: .normal);
-        self.setTitle(title, for: .normal);
-        self.setTitleColor(KPColorPalette.KPTextColor.grayColor_level1, for: .normal);
-        self.titleLabel?.font = UIFont.systemFont(ofSize: 14);
-        self.tintColor = KPColorPalette.KPMainColor.grayColor_level2;
+        setImage(icon, for: .normal);
+        setTitle(title, for: .normal);
+        setTitleColor(KPColorPalette.KPTextColor.grayColor_level1, for: .normal);
+        titleLabel?.font = UIFont.systemFont(ofSize: 14);
+        tintColor = KPColorPalette.KPMainColor.grayColor_level2;
     }
     
     required init?(coder aDecoder: NSCoder) {
