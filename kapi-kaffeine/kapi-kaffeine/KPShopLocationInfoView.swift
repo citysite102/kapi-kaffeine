@@ -51,6 +51,8 @@ class KPShopLocationInfoView: UIView, GMSMapViewDelegate {
         self.addSubview(mapView)
         
         mapView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"])
+        
+        self.mapView.isUserInteractionEnabled = false
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -65,7 +67,7 @@ class KPShopLocationInfoView: UIView, GMSMapViewDelegate {
     }
     
     func mapView(_ mapView: GMSMapView, didCloseInfoWindowOf marker: GMSMarker) {
-            marker.icon = UIImage(named: "icon_mapMarker")
+        marker.icon = UIImage(named: "icon_mapMarker")
     }
 
 }
