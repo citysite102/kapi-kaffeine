@@ -291,6 +291,18 @@ class KPSearchConditionViewController: UIViewController {
         self.searchButton.addConstraints(fromStringArray: ["V:[$view0]-16-[$self(40)]-16-|",
                                                            "H:|-16-[$self]-16-|"],
                                          views: [self.seperator_three])
+        self.searchButton.addTarget(self, action: #selector(showTimePicker), for: .touchUpInside)
+    }
+    
+    func showTimePicker() {
+        let controller = KPModalViewController()
+        controller.edgeInset = UIEdgeInsets.init(top: 50,
+                                                 left: 0,
+                                                 bottom: 0,
+                                                 right: 0);
+        let timePickerController = KPTimePickerViewController()
+        controller.contentController = timePickerController
+        controller.presentModalView()
     }
 
     override func didReceiveMemoryWarning() {
