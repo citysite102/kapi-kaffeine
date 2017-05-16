@@ -75,14 +75,15 @@ class KPPhotoDisplayTransition: NSObject, UIViewControllerAnimatedTransitioning 
             self.toDelegate!.imageWindowFrame()
         
         // 8: Animate change
-        UIView.animate(withDuration: 0.3,
+        UIView.animate(withDuration: 0.5,
                        delay: 0,
-                       options: UIViewAnimationOptions.curveEaseOut,
+                       usingSpringWithDamping: 0.8,
+                       initialSpringVelocity: 0.6,
+                       options: .curveEaseOut,
                        animations: { 
                         toSnapshot?.alpha = 1
                         imageView.frame = toFrame
         }) { (_) in
-            
             self.toDelegate!.tranisitionCleanup()
             self.fromDelegate!.tranisitionCleanup()
             
@@ -96,6 +97,7 @@ class KPPhotoDisplayTransition: NSObject, UIViewControllerAnimatedTransitioning 
                 containerView.addSubview(toVC.view)
             }
             transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
+
         }
     }
 }

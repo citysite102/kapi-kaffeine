@@ -24,9 +24,20 @@ class KPPhotoDisplayViewController: UIViewController {
     var collectionView:UICollectionView!;
     var collectionLayout:UICollectionViewFlowLayout!;
     var dismissButton:KPBounceButton!
-    var titleLabel:UILabel!
     var selectedIndexPath: IndexPath!
     
+    lazy var photoTitleLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 20.0)
+        label.textColor = KPColorPalette.KPTextColor.whiteColor
+        return label
+    }()
+    lazy var countLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 14.0)
+        label.textColor = KPColorPalette.KPTextColor.whiteColor
+        return label
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,22 +64,35 @@ class KPPhotoDisplayViewController: UIViewController {
         collectionView.register(KPPhotoDisplayCell.self,
                                 forCellWithReuseIdentifier: KPPhotoDisplayViewController.KPPhotoDisplayControllerCellReuseIdentifier)
         
-        self.view.addSubview(self.collectionView);
-        self.collectionView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                             "V:|[$self]|"]);
+        view.addSubview(self.collectionView);
+        collectionView.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                        "V:|[$self]|"]);
         
-        self.dismissButton = KPBounceButton()
-        self.dismissButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4)
-        self.dismissButton.setImage(R.image.icon_close()?.withRenderingMode(.alwaysTemplate),
-                                    for: .normal)
-        self.dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor
-        self.dismissButton.addTarget(self,
-                                     action: #selector(KPPhotoDisplayViewController.handleDismissButtonOnTapped),
-                                     for: .touchUpInside)
-        self.view.addSubview(self.dismissButton)
-        self.dismissButton.addConstraints(fromStringArray: ["H:|-8-[$self(24)]",
-                                                            "V:|-16-[$self(24)]"]);
+        dismissButton = KPBounceButton()
+        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4)
+        dismissButton.setImage(R.image.icon_close()?.withRenderingMode(.alwaysTemplate),
+                               for: .normal)
+        dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor
+        dismissButton.addTarget(self,
+                                action: #selector(KPPhotoDisplayViewController.handleDismissButtonOnTapped),
+                                for: .touchUpInside)
+        view.addSubview(self.dismissButton)
+        dismissButton.addConstraints(fromStringArray: ["H:|-8-[$self(24)]",
+                                                       "V:|-16-[$self(24)]"]);
         
+        view.addSubview(photoTitleLabel)
+        photoTitleLabel.text = "覺旅咖啡 Journey Cafe"
+        photoTitleLabel.isHidden = true
+        photoTitleLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
+        photoTitleLabel.addConstraint(from: "V:|-16-[$self]")
+        photoTitleLabel.transform = CGAffineTransform.init(translationX: 0, y: -100)
+        
+        view.addSubview(countLabel)
+        countLabel.text = "6 of 104"
+        countLabel.isHidden = true
+        countLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
+        countLabel.addConstraint(from: "V:[$self]-32-|")
+        countLabel.transform = CGAffineTransform.init(translationX: 0, y: 100)
     }
     
     
@@ -82,13 +106,33 @@ class KPPhotoDisplayViewController: UIViewController {
 //        UIApplication.shared.isStatusBarHidden = false
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.showLabelContent()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
     func handleDismissButtonOnTapped() {
-        self.dismiss(animated: true) {
+            self.dismiss(animated: true) {
+            }
+    }
+    
+    func showLabelContent() {
+        photoTitleLabel.isHidden = false
+        countLabel.isHidden = false
+        UIView.animate(withDuration: 0.5,
+                       delay: 0,
+                       usingSpringWithDamping: 0.8,
+                       initialSpringVelocity: 0.8,
+                       options: .curveEaseOut,
+                       animations: { 
+                        self.photoTitleLabel.transform = CGAffineTransform.identity
+                        self.countLabel.transform = CGAffineTransform.identity
+        }) { (_) in
             
         }
     }

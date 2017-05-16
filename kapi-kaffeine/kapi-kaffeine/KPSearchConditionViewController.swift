@@ -208,12 +208,12 @@ class KPSearchConditionViewController: UIViewController {
         self.timeRadioBoxTwo = KPCheckView.init(.radio, "客滿/人多限時")
         self.containerView.addSubview(self.timeRadioBoxTwo)
         self.timeRadioBoxTwo.addConstraints(fromStringArray: ["H:|-16-[$self]",
-                                                              "V:[$view0]-8-[$self]"],
+                                                              "V:[$view0]-16-[$self]"],
                                             views: [self.timeRadioBoxOne])
         self.timeRadioBoxThree = KPCheckView.init(.radio, "不限時")
         self.containerView.addSubview(self.timeRadioBoxThree)
         self.timeRadioBoxThree.addConstraints(fromStringArray: ["H:|-16-[$self]",
-                                                                "V:[$view0]-8-[$self]"],
+                                                                "V:[$view0]-16-[$self]"],
                                               views: [self.timeRadioBoxTwo])
         
         self.socketLabel = titleLabel("插座數量")
@@ -221,7 +221,7 @@ class KPSearchConditionViewController: UIViewController {
         self.socketLabel.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",
                                                           "V:[$view0]-16-[$self]"],
                                         metrics:[KPSearchConditionViewControllerConstants.leftPadding],
-                                           views: [self.seperator_two])
+                                        views: [self.seperator_two])
         
         self.socketRadioBoxOne = KPCheckView.init(.radio, "不設定")
         self.containerView.addSubview(self.socketRadioBoxOne)
@@ -232,20 +232,20 @@ class KPSearchConditionViewController: UIViewController {
         self.socketRadioBoxTwo = KPCheckView.init(.radio, "部分座位有")
         self.containerView.addSubview(self.socketRadioBoxTwo)
         self.socketRadioBoxTwo.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",
-                                                                "V:[$view0]-8-[$self]"],
+                                                                "V:[$view0]-16-[$self]"],
                                               metrics:[KPSearchConditionViewControllerConstants.leftPadding],
-                                                views: [self.socketRadioBoxOne])
+                                              views: [self.socketRadioBoxOne])
         self.socketRadioBoxThree = KPCheckView.init(.radio, "很多插座")
         self.containerView.addSubview(self.socketRadioBoxThree)
         self.socketRadioBoxThree.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",
-                                                                  "V:[$view0]-8-[$self]"],
+                                                                  "V:[$view0]-16-[$self]"],
                                                 metrics:[KPSearchConditionViewControllerConstants.leftPadding],
                                                 views: [self.socketRadioBoxTwo])
         
         self.businessHourLabel = titleLabel("營業時間")
         self.containerView.addSubview(self.businessHourLabel)
         self.businessHourLabel.addConstraints(fromStringArray: ["H:|-16-[$self]",
-                                                                "V:[$view0]-16-[$self]"],
+                                                                "V:[$view0]-24-[$self]"],
                                               views: [self.timeRadioBoxThree])
         
         self.businessCheckBoxOne = KPCheckView.init(.checkmark, "目前營業中")
@@ -257,16 +257,16 @@ class KPSearchConditionViewController: UIViewController {
         self.businessCheckBoxTwo = KPCheckView.init(.checkmark, "特定營業時段")
         self.containerView.addSubview(self.businessCheckBoxTwo)
         self.businessCheckBoxTwo.addConstraints(fromStringArray: ["H:|-16-[$self]",
-                                                                  "V:[$view0]-8-[$self]"],
+                                                                  "V:[$view0]-16-[$self]"],
                                                 views: [self.businessCheckBoxOne])
         
         
         self.othersLabel = titleLabel("其他選項")
         self.containerView.addSubview(self.othersLabel)
         self.othersLabel.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",
-                                                          "V:[$view0]-16-[$self]"],
+                                                          "V:[$view0]-24-[$self]"],
                                         metrics:[KPSearchConditionViewControllerConstants.leftPadding],
-                                                views: [self.timeRadioBoxThree])
+                                        views: [self.timeRadioBoxThree])
         self.othersCheckBoxOne = KPCheckView.init(.checkmark, "可站立工作")
         self.containerView.addSubview(self.othersCheckBoxOne)
         self.othersCheckBoxOne.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",
@@ -276,8 +276,8 @@ class KPSearchConditionViewController: UIViewController {
         
         self.containerView.addSubview(self.seperator_three)
         self.seperator_three.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                            "V:[$view0]-16-[$self(1)]"],
-                                          views: [self.businessCheckBoxTwo])
+                                                              "V:[$view0]-16-[$self(1)]"],
+                                            views: [self.businessCheckBoxTwo])
         
         self.searchButton = UIButton()
         self.searchButton.setTitle("開始搜尋", for: .normal)

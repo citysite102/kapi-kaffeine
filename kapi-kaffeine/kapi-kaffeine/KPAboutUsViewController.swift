@@ -132,7 +132,7 @@ class KPAboutUsViewController: UIViewController {
                                               views: [self.iconInformationView, self.iconImageView]);
         
         self.productDescriptionTitleLabel = UILabel();
-        self.productDescriptionTitleLabel.font = UIFont.systemFont(ofSize: 15.0);
+        self.productDescriptionTitleLabel.font = UIFont.systemFont(ofSize: 18.0);
         self.productDescriptionTitleLabel.textColor = KPColorPalette.KPTextColor.mainColor;
         self.productDescriptionTitleLabel.text = "產品介紹";
         self.containerView.addSubview(self.productDescriptionTitleLabel);
@@ -140,8 +140,8 @@ class KPAboutUsViewController: UIViewController {
                                             views: [self.iconImageView]);
         
         self.productDescriptionContentLabel = UILabel();
-        self.productDescriptionContentLabel.font = UIFont.systemFont(ofSize: 13.0);
-        self.productDescriptionContentLabel.textColor = KPColorPalette.KPTextColor.grayColor_level2;
+        self.productDescriptionContentLabel.font = UIFont.systemFont(ofSize: 14.0);
+        self.productDescriptionContentLabel.textColor = KPColorPalette.KPTextColor.grayColor_level3;
         self.productDescriptionContentLabel.text = "有事情嗎，有事情嗎，有事情嗎，有事情嗎，有事情嗎，有事情嗎，有事情嗎，有事情嗎，有事情嗎，" +
         "有事情嗎。沒事。有事情嗎，有事情嗎，有事情嗎，有事情嗎，有事情嗎，有事情嗎，有事情嗎，有事情嗎，有事情嗎，有事情嗎。沒事。";
         self.productDescriptionContentLabel.textAlignment = .left;
@@ -152,7 +152,7 @@ class KPAboutUsViewController: UIViewController {
                                                               views: [self.productDescriptionTitleLabel]);
         
         self.productMemberTitleLabel = UILabel();
-        self.productMemberTitleLabel.font = UIFont.systemFont(ofSize: 15.0);
+        self.productMemberTitleLabel.font = UIFont.systemFont(ofSize: 18.0);
         self.productMemberTitleLabel.textColor = KPColorPalette.KPTextColor.mainColor;
         self.productMemberTitleLabel.text = "團隊成員";
         self.containerView.addSubview(self.productMemberTitleLabel);
@@ -226,7 +226,7 @@ class KPAboutUsViewController: UIViewController {
         }
         
         self.dataSourceTitleLabel = UILabel();
-        self.dataSourceTitleLabel.font = UIFont.systemFont(ofSize: 15.0);
+        self.dataSourceTitleLabel.font = UIFont.systemFont(ofSize: 18.0);
         self.dataSourceTitleLabel.textColor = KPColorPalette.KPTextColor.mainColor;
         self.dataSourceTitleLabel.text = "資料來源";
         self.containerView.addSubview(self.dataSourceTitleLabel);
@@ -235,8 +235,8 @@ class KPAboutUsViewController: UIViewController {
                                                  views: [self.productMemberContainerViews.last!]);
         
         self.dataSourceContentLabel = UILabel();
-        self.dataSourceContentLabel.font = UIFont.systemFont(ofSize: 13.0);
-        self.dataSourceContentLabel.textColor = KPColorPalette.KPTextColor.mainColor;
+        self.dataSourceContentLabel.font = UIFont.systemFont(ofSize: 14.0);
+        self.dataSourceContentLabel.textColor = KPColorPalette.KPTextColor.grayColor_level3;
         self.dataSourceContentLabel.text = "https://cafenomad.tw/";
         self.containerView.addSubview(self.dataSourceContentLabel);
         self.dataSourceContentLabel.addConstraints(fromStringArray: ["H:|[$self]", "V:[$view0]-8-[$self]-32-|"],
