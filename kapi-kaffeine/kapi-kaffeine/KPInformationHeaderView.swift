@@ -60,7 +60,7 @@ class KPInformationHeaderView: UIView {
         collectButton = KPInformationHeaderButton();
         collectButton.buttonInfo = HeaderButtonInfo(title: "收藏",
                                                     info: "0人已收藏",
-                                                    icon: R.image.icon_map()!,
+                                                    icon: R.image.icon_collect()!,
                                                     handler: { (headerButton) -> () in print("Test Handler");
         });
         container.addSubview(collectButton);
@@ -84,7 +84,7 @@ class KPInformationHeaderView: UIView {
         rateButton = KPInformationHeaderButton();
         rateButton.buttonInfo = HeaderButtonInfo(title: "我要評分",
                                                  info: "尚無評分",
-                                                 icon: R.image.icon_map()!,
+                                                 icon: R.image.icon_star()!,
                                                  handler: { (headerButton) -> () in print("Test Handler");
         });
         container.addSubview(rateButton);
@@ -96,7 +96,7 @@ class KPInformationHeaderView: UIView {
         commentButton = KPInformationHeaderButton();
         commentButton.buttonInfo = HeaderButtonInfo(title: "已評價",
                                                     info: "29人已留言",
-                                                    icon: R.image.icon_map()!,
+                                                    icon: R.image.icon_comment()!,
                                                     handler: { (headerButton) -> () in print("Test Handler");
         });
         container.addSubview(commentButton);

@@ -16,6 +16,8 @@
 		771EECB11EBC3291004A34B8 /* KPCheckBoxPathGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771EECB01EBC3291004A34B8 /* KPCheckBoxPathGenerator.swift */; };
 		771EECB31EBC32E4004A34B8 /* KPCheckBoxRadioPathGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771EECB21EBC32E4004A34B8 /* KPCheckBoxRadioPathGenerator.swift */; };
 		772C538A1ECBFE5600C88798 /* KPViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772C53891ECBFE5600C88798 /* KPViewController.swift */; };
+		772D68261ECC78840013F802 /* KPNewStoreController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772D68251ECC78840013F802 /* KPNewStoreController.swift */; };
+		772D68281ECC81140013F802 /* KPSubTitleEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772D68271ECC81140013F802 /* KPSubTitleEditView.swift */; };
 		7730B5721EA8676F00D6CD55 /* KPInformationDismissTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7730B5711EA8676F00D6CD55 /* KPInformationDismissTransition.swift */; };
 		774208ED1EA5B97300C78A00 /* KPShopCommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774208EC1EA5B97300C78A00 /* KPShopCommentCell.swift */; };
 		774208F11EA5F04B00C78A00 /* KPShopPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774208F01EA5F04B00C78A00 /* KPShopPhotoCell.swift */; };
@@ -84,6 +86,7 @@
 		77E495651ECA04F5003B7EBC /* KPSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E495641ECA04F5003B7EBC /* KPSearchBar.swift */; };
 		77E8CC301EC0E48300669809 /* KPPhotoDisplayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E8CC2F1EC0E48300669809 /* KPPhotoDisplayCell.swift */; };
 		77FB63961E9AA7BB00FFC3DC /* KPDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77FB63951E9AA7BB00FFC3DC /* KPDataModel.swift */; };
+		77FBE95B1ECC926C00EBBB9B /* KPFeatureTagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77FBE95A1ECC926C00EBBB9B /* KPFeatureTagCell.swift */; };
 		C00A5C991EC9F34400ECEFE3 /* KPPhotoDisplayTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777DCC131EA785730055525A /* KPPhotoDisplayTransition.swift */; };
 		C00A6E111ECADE3700A05C9A /* KPTimePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00A6E101ECADE3700A05C9A /* KPTimePickerViewController.swift */; };
 		C00A6E131ECB0B7F00A05C9A /* KPSharedSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00A6E121ECB0B7F00A05C9A /* KPSharedSettingViewController.swift */; };
@@ -140,6 +143,8 @@
 		771EECB01EBC3291004A34B8 /* KPCheckBoxPathGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPCheckBoxPathGenerator.swift; sourceTree = "<group>"; };
 		771EECB21EBC32E4004A34B8 /* KPCheckBoxRadioPathGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPCheckBoxRadioPathGenerator.swift; sourceTree = "<group>"; };
 		772C53891ECBFE5600C88798 /* KPViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPViewController.swift; sourceTree = "<group>"; };
+		772D68251ECC78840013F802 /* KPNewStoreController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPNewStoreController.swift; sourceTree = "<group>"; };
+		772D68271ECC81140013F802 /* KPSubTitleEditView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSubTitleEditView.swift; sourceTree = "<group>"; };
 		7730B5711EA8676F00D6CD55 /* KPInformationDismissTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPInformationDismissTransition.swift; sourceTree = "<group>"; };
 		774208EC1EA5B97300C78A00 /* KPShopCommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPShopCommentCell.swift; sourceTree = "<group>"; };
 		774208F01EA5F04B00C78A00 /* KPShopPhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPShopPhotoCell.swift; sourceTree = "<group>"; };
@@ -209,6 +214,7 @@
 		77E495641ECA04F5003B7EBC /* KPSearchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSearchBar.swift; sourceTree = "<group>"; };
 		77E8CC2F1EC0E48300669809 /* KPPhotoDisplayCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPPhotoDisplayCell.swift; sourceTree = "<group>"; };
 		77FB63951E9AA7BB00FFC3DC /* KPDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPDataModel.swift; sourceTree = "<group>"; };
+		77FBE95A1ECC926C00EBBB9B /* KPFeatureTagCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPFeatureTagCell.swift; sourceTree = "<group>"; };
 		C00A6E101ECADE3700A05C9A /* KPTimePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPTimePickerViewController.swift; sourceTree = "<group>"; };
 		C00A6E121ECB0B7F00A05C9A /* KPSharedSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSharedSettingViewController.swift; sourceTree = "<group>"; };
 		C00CD5331E95234A00A3CB6F /* style.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = style.json; sourceTree = "<group>"; };
@@ -350,6 +356,15 @@
 				771EECAE1EBC3177004A34B8 /* KPCheckBoxAnimationGenerator.swift */,
 			);
 			name = "Animation Generator";
+			sourceTree = "<group>";
+		};
+		772D68241ECC78410013F802 /* NewStoreController */ = {
+			isa = PBXGroup;
+			children = (
+				772D68251ECC78840013F802 /* KPNewStoreController.swift */,
+				77FBE95A1ECC926C00EBBB9B /* KPFeatureTagCell.swift */,
+			);
+			name = NewStoreController;
 			sourceTree = "<group>";
 		};
 		774208EE1EA5B97F00C78A00 /* Comment */ = {
@@ -533,6 +548,7 @@
 		77B66FA41EAA7091008B6652 /* Custom */ = {
 			isa = PBXGroup;
 			children = (
+				772D68271ECC81140013F802 /* KPSubTitleEditView.swift */,
 				77B66FA51EAA70F3008B6652 /* KPBounceButton.swift */,
 				77594B481EC8AEB40013BB56 /* KPBounceView.swift */,
 				77421FB31EB8F82500064FF0 /* KPRatingView.swift */,
@@ -731,6 +747,7 @@
 				776ACAFD1E9BB18100B629A2 /* Shared Class */,
 				77421FB11EB8F5E100064FF0 /* ConditionController */,
 				776ACAEF1E9BAE3A00B629A2 /* MainController */,
+				772D68241ECC78410013F802 /* NewStoreController */,
 				776ACB091E9C781000B629A2 /* InformationController */,
 				C02AFE441E7D260D008FFB33 /* AppDelegate.swift */,
 				C02AFE461E7D260D008FFB33 /* ViewController.swift */,
@@ -1006,6 +1023,7 @@
 			files = (
 				C00A5C991EC9F34400ECEFE3 /* KPPhotoDisplayTransition.swift in Sources */,
 				C01AC62B1EAAEA0A000390F7 /* GMUSimpleClusterAlgorithm.m in Sources */,
+				772D68261ECC78840013F802 /* KPNewStoreController.swift in Sources */,
 				77E495651ECA04F5003B7EBC /* KPSearchBar.swift in Sources */,
 				77421FB41EB8F82500064FF0 /* KPRatingView.swift in Sources */,
 				776ACAF61E9BAFBF00B629A2 /* KPSearchTagView.swift in Sources */,
@@ -1070,10 +1088,12 @@
 				772C538A1ECBFE5600C88798 /* KPViewController.swift in Sources */,
 				77C0E1081E9D491D00398852 /* KPShopRateInfoView.swift in Sources */,
 				77E495611EC9EA1F003B7EBC /* KPSearchViewRecentCell.swift in Sources */,
+				772D68281ECC81140013F802 /* KPSubTitleEditView.swift in Sources */,
 				77E495551EC98BE0003B7EBC /* KPRatingViewController.swift in Sources */,
 				774208ED1EA5B97300C78A00 /* KPShopCommentCell.swift in Sources */,
 				774208F71EA61D4400C78A00 /* KPShopRecommendView.swift in Sources */,
 				C01AC62D1EAAEA0A000390F7 /* GMUClusterManager.m in Sources */,
+				77FBE95B1ECC926C00EBBB9B /* KPFeatureTagCell.swift in Sources */,
 				C02AFE451E7D260D008FFB33 /* AppDelegate.swift in Sources */,
 				77869E1E1EB79CF40027CA98 /* KPSimpleRequest.swift in Sources */,
 				770AB5D31EB70E8E00EE8A3B /* R.generated.swift in Sources */,

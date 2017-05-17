@@ -41,7 +41,8 @@ class KPInformationHeaderButton: UIView {
         self.icon = UIImageView.init();
         self.addSubview(self.icon);
         self.icon.addConstraintForCenterAligningToSuperview(in: .horizontal);
-        self.icon.addConstraint(from: "V:|-12-[$self]");
+        self.icon.addConstraint(from: "V:|-12-[$self(24)]");
+        self.icon.addConstraint(from: "H:[$self(24)]");
         
         self.titleLabel = UILabel.init();
         self.titleLabel.font = UIFont.systemFont(ofSize: 13);

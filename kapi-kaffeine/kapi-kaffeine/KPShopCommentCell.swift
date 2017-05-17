@@ -14,6 +14,9 @@ class KPShopCommentCell: UITableViewCell {
     var userPicture: UIImageView!
     var userNameLabel: UILabel!
     var timeHintLabel: UILabel!
+    
+    var commentStyle: NSMutableParagraphStyle!
+    
     var userCommentLabel: UILabel!
     var voteUpButton: KPShopCommentCellButton!
     var voteDownButton: KPShopCommentCellButton!
@@ -41,59 +44,65 @@ class KPShopCommentCell: UITableViewCell {
         userPicture.layer.masksToBounds = true
         contentView.addSubview(userPicture)
         userPicture.addConstraints(fromStringArray: ["H:|-16-[$self(32)]",
-                                                            "V:|-16-[$self(32)]"])
+                                                     "V:|-16-[$self(32)]"])
         
 
-        userNameLabel = UILabel();
-        userNameLabel.font = UIFont.systemFont(ofSize: 12.0)
+        userNameLabel = UILabel()
+        userNameLabel.font = UIFont.systemFont(ofSize: 14.0)
         userNameLabel.textColor = KPColorPalette.KPTextColor.grayColor_level1
         userNameLabel.text = "Simon Lin"
-        contentView.addSubview(userNameLabel);
+        contentView.addSubview(userNameLabel)
         userNameLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self(190)]",
-                                                            "V:|-16-[$self]"],
+                                                       "V:|-16-[$self]"],
                                           metrics: [UIScreen.main.bounds.size.width/2],
-                                          views: [userPicture]);
+                                          views: [userPicture])
         
-        timeHintLabel = UILabel();
-        timeHintLabel.font = UIFont.systemFont(ofSize: 10.0);
-        timeHintLabel.textColor = KPColorPalette.KPTextColor.grayColor_level2;
-        timeHintLabel.text = "25 分鐘前";
-        contentView.addSubview(timeHintLabel);
+        timeHintLabel = UILabel()
+        timeHintLabel.font = UIFont.systemFont(ofSize: 12.0)
+        timeHintLabel.textColor = KPColorPalette.KPTextColor.grayColor_level4
+        timeHintLabel.text = "25 分鐘前"
+        contentView.addSubview(timeHintLabel)
         timeHintLabel.addConstraints(fromStringArray: ["H:[$self]-16-|",
-                                                            "V:|-16-[$self]"],
+                                                       "V:|-16-[$self]"],
                                           metrics: [UIScreen.main.bounds.size.width/2],
-                                          views: [userPicture]);
+                                          views: [userPicture])
 
-        userCommentLabel = UILabel();
-        userCommentLabel.font = UIFont.systemFont(ofSize: 14.0);
-        userCommentLabel.numberOfLines = 0;
-        userCommentLabel.textColor = KPColorPalette.KPTextColor.grayColor_level3;
-        userCommentLabel.text = "It runs well. But the problem is that code (in didSet) is not run for the very first time. I mean when a new FavoriteView instance is initialized.";
-        contentView.addSubview(userCommentLabel);
+        commentStyle = NSMutableParagraphStyle()
+        commentStyle.lineSpacing = 2.0
+        
+        let attrS = NSMutableAttributedString.init(string: "時間, 天氣, 溫度(°C), 體感溫度(°C), 降雨機率, 蒲福風級, 風向, 相對濕度 .... 今天（16日）受鋒面影響，天氣不穩定，隨著雲系一波波移入")
+        attrS.addAttributes([NSParagraphStyleAttributeName: commentStyle],
+                            range: NSRange.init(location: 0, length: attrS.length))
+        userCommentLabel = UILabel()
+        userCommentLabel.font = UIFont.systemFont(ofSize: 14.0)
+        userCommentLabel.numberOfLines = 0
+        userCommentLabel.textColor = KPColorPalette.KPTextColor.grayColor_level3
+        userCommentLabel.attributedText = attrS
+        contentView.addSubview(userCommentLabel)
         userCommentLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]-16-|",
-                                                               "V:[$view1]-4-[$self]"],
+                                                          "V:[$view1]-4-[$self]"],
                                           metrics: [UIScreen.main.bounds.size.width/2],
-                                          views: [userPicture, userNameLabel]);
+                                          views: [userPicture, userNameLabel])
         
         voteUpButton = KPShopCommentCellButton.init(frame: .zero,
-                                                         icon: R.image.icon_map()!,
-                                                         title: "9");
-        voteUpButton.buttonSelected = true;
-        contentView.addSubview(voteUpButton);
-        voteUpButton.addConstraints(fromStringArray: ["H:[$view0]-8-[$self(40)]",
-                                                           "V:[$view1]-12-[$self(16)]-20-|"],
+                                                    icon: R.image.icon_upvote()!,
+                                                    title: "9")
+        voteUpButton.buttonSelected = true
+        contentView.addSubview(voteUpButton)
+        voteUpButton.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]",
+                                                      "V:[$view1]-12-[$self(20)]-20-|"],
                                          metrics: [UIScreen.main.bounds.size.width/2],
-                                         views: [userPicture, userCommentLabel]);
+                                         views: [userPicture, userCommentLabel])
         
         
         voteDownButton = KPShopCommentCellButton.init(frame: .zero,
-                                                           icon: R.image.icon_map()!,
-                                                           title: "0");
-        contentView.addSubview(voteDownButton);
-        voteDownButton.addConstraints(fromStringArray: ["H:[$view0]-24-[$self(40)]",
-                                                             "V:[$view1]-12-[$self(16)]-20-|"],
+                                                      icon: R.image.icon_downvote()!,
+                                                      title: "0")
+        contentView.addSubview(voteDownButton)
+        voteDownButton.addConstraints(fromStringArray: ["H:[$view0]-16-[$self]",
+                                                        "V:[$view1]-12-[$self(20)]-20-|"],
                                            metrics: [UIScreen.main.bounds.size.width/2],
-                                           views: [voteUpButton, userCommentLabel]);
+                                           views: [voteUpButton, userCommentLabel])
         
     }
     
@@ -107,8 +116,8 @@ class KPShopCommentCellButton: UIButton {
     var buttonSelected: Bool = false {
         didSet {
             tintColor = buttonSelected ? KPColorPalette.KPMainColor.mainColor :
-                KPColorPalette.KPMainColor.grayColor_level2;
-            titleLabel?.textColor = KPColorPalette.KPTextColor.grayColor_level1;
+                KPColorPalette.KPMainColor.grayColor_level2
+            titleLabel?.textColor = KPColorPalette.KPTextColor.grayColor_level1
         }
     }
     
@@ -119,13 +128,14 @@ class KPShopCommentCellButton: UIButton {
     public convenience init?(frame: CGRect,
                              icon: UIImage,
                              title: String) {
-        self.init(frame:frame);
+        self.init(frame:frame)
         
-        setImage(icon, for: .normal);
-        setTitle(title, for: .normal);
-        setTitleColor(KPColorPalette.KPTextColor.grayColor_level1, for: .normal);
-        titleLabel?.font = UIFont.systemFont(ofSize: 14);
-        tintColor = KPColorPalette.KPMainColor.grayColor_level2;
+        setImage(icon, for: .normal)
+        setTitle(title, for: .normal)
+        setTitleColor(KPColorPalette.KPTextColor.grayColor_level1, for: .normal)
+        titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        tintColor = KPColorPalette.KPMainColor.grayColor_level2
+        imageView?.contentMode = .scaleAspectFit
     }
     
     required init?(coder aDecoder: NSCoder) {

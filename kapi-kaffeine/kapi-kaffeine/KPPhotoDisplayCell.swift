@@ -10,7 +10,7 @@ import UIKit
 
 class KPPhotoDisplayCell: UICollectionViewCell {
     
-    var shopPhoto:UIImageView!
+    var shopPhoto: UIImageView!
     
     override init(frame: CGRect) {
         super.init(frame: frame);

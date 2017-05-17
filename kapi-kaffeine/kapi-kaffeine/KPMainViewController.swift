@@ -85,7 +85,7 @@ class KPMainViewController: KPViewController {
                                                     for: .touchUpInside)
         self.searchHeaderView.searchButton.addTarget(self,
                                                      action: #selector(search),
-                                                        for: .touchUpInside)
+                                                     for: .touchUpInside)
         
         
         let menuLeftNavigationController = UISideMenuNavigationController(rootViewController: sideBarController);
@@ -150,14 +150,28 @@ class KPMainViewController: KPViewController {
 //        let navigationController = UINavigationController.init(rootViewController: searchController);
 //        controller.contentController = navigationController;
 //        controller.presentModalView();
+        
+        
+//        let controller = KPModalViewController()
+//        controller.edgeInset = UIEdgeInsets.init(top: 0,
+//                                                 left: 0,
+//                                                 bottom: 0,
+//                                                 right: 0);
+//        let loadingController = KPLoadingViewController()
+//        controller.contentController = loadingController;
+//        controller.presentModalView();
+
+        
         let controller = KPModalViewController()
         controller.edgeInset = UIEdgeInsets.init(top: 0,
                                                  left: 0,
                                                  bottom: 0,
                                                  right: 0);
-        let loadingController = KPLoadingViewController()
-        controller.contentController = loadingController;
+        let newStoreController = KPNewStoreController()
+        let navigationController = UINavigationController.init(rootViewController: newStoreController);
+        controller.contentController = navigationController;
         controller.presentModalView();
+        
     }
     
     func addScreenEdgePanGestureRecognizer(view: UIView, edges: UIRectEdge) {
