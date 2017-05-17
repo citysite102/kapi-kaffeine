@@ -32,7 +32,7 @@ class KPPhotoDisplayViewController: KPViewController {
             
             CATransaction.begin()
             CATransaction.setCompletionBlock({
-                self.photoTitleLabel.text = titleContent
+                self.photoTitleLabel.text = self.titleContent
                 self.photoTitleLabel.layer.add(fadeTransition, forKey: nil)
             })
             self.photoTitleLabel.text = ""
