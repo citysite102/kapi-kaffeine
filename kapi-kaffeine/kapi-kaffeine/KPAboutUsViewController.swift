@@ -8,7 +8,7 @@
 
 import UIKit
 
-class KPAboutUsViewController: UIViewController {
+class KPAboutUsViewController: KPViewController {
 
     
     struct relateiveLink {

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class KPNewCommentController: UIViewController {
+class KPNewCommentController: KPViewController {
 
     
     static let commentMaximumTextLength: Int = 200

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class KPAllCommentController: UIViewController {
+class KPAllCommentController: KPViewController {
 
     static let KPAllCommentControllerCellReuseIdentifier = "cell";
     

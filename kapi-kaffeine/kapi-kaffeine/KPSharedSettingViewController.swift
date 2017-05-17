@@ -8,7 +8,7 @@
 
 import UIKit
 
-class KPSharedSettingViewController: UIViewController {
+class KPSharedSettingViewController: KPViewController {
 
     var dismissButton:UIButton!
     var scrollView: UIScrollView!

@@ -14,11 +14,11 @@ struct PhotoInformation {
     let index: Int
 }
 
-class KPPhotoDisplayViewController: UIViewController {
+class KPPhotoDisplayViewController: KPViewController {
 
     static let KPPhotoDisplayControllerCellReuseIdentifier = "cell";
     
-    var onceOnly = false
+    var statusBarShouldBeHidden = false
     var diplayedPhotoInformations: [PhotoInformation] = [PhotoInformation]()
     
     var collectionView:UICollectionView!;
@@ -38,6 +38,15 @@ class KPPhotoDisplayViewController: UIViewController {
         label.textColor = KPColorPalette.KPTextColor.whiteColor
         return label
     }()
+    
+    
+    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+        return .slide
+    }
+    
+    override var prefersStatusBarHidden: Bool {
+        return statusBarShouldBeHidden
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -98,17 +107,19 @@ class KPPhotoDisplayViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        UIApplication.shared.isStatusBarHidden = true
+        statusBarShouldBeHidden = true
+        UIView.animate(withDuration: 0.25) {
+            self.setNeedsStatusBarAppearanceUpdate()
+        }
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-//        UIApplication.shared.isStatusBarHidden = false
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.showLabelContent()
+        showLabelContent()
     }
     
     override func didReceiveMemoryWarning() {

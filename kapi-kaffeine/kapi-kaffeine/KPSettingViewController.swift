@@ -15,7 +15,7 @@ enum KPSettingViewCellStyle {
     case switchControl
 }
 
-class KPSettingViewController: UIViewController {
+class KPSettingViewController: KPViewController {
 
     
     struct settingData {

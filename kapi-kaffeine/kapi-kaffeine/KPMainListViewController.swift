@@ -11,7 +11,7 @@ import AlamofireImage
 import ObjectMapper
 import PromiseKit
 
-class KPMainListViewController: UIViewController, KPMainViewControllerDelegate {
+class KPMainListViewController: KPViewController, KPMainViewControllerDelegate {
     
     static let KPMainListViewCellReuseIdentifier = "cell";
     

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class KPLoadingViewController_v1: UIViewController {
+class KPLoadingViewController_v1: KPViewController {
 
 //    enum loadingState: String, RawRepresentable {
 //        case loading = "loading"

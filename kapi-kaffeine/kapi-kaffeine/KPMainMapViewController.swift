@@ -10,7 +10,7 @@ import UIKit
 import GoogleMaps
 import ObjectMapper
 
-class KPMainMapViewController: UIViewController, GMSMapViewDelegate, GMUClusterManagerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, KPMainViewControllerDelegate {
+class KPMainMapViewController: KPViewController, GMSMapViewDelegate, GMUClusterManagerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, KPMainViewControllerDelegate {
     
     weak var mainController:KPMainViewController!
     var collectionView: UICollectionView!

@@ -14,7 +14,7 @@ protocol KPMainViewControllerDelegate {
     var selectedDataModel: KPDataModel? { get }
 }
 
-class KPMainViewController: UIViewController {
+class KPMainViewController: KPViewController {
 
     var searchHeaderView: KPSearchHeaderView!
     var sideBarController: KPSideViewController!
@@ -30,7 +30,7 @@ class KPMainViewController: UIViewController {
         }
     }
 
-    var currentController: UIViewController! {
+    var currentController: KPViewController! {
         didSet {
             
             if oldValue != nil {
@@ -50,7 +50,7 @@ class KPMainViewController: UIViewController {
             }
         }
     }
-        
+    
     override func viewDidLoad() {
         super.viewDidLoad();
         

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class KPInformationViewController: UIViewController {
+class KPInformationViewController: KPViewController {
 
     
     var informationDataModel:KPDataModel!
@@ -66,11 +66,7 @@ class KPInformationViewController: UIViewController {
         navigationItem.leftBarButtonItems = [negativeSpacer, barItem]
         
         
-//        navigationController?.navigationBar.addSubview(dismissButton);
-//        dismissButton.addConstraints(fromStringArray: ["H:|-8-[$self(24)]",
-//                                                            "V:[$self(24)]"]);
         dismissButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4);
-//        dismissButton.addConstraintForCenterAligningToSuperview(in: .vertical);
         
         scrollContainer = UIScrollView();
         scrollContainer.backgroundColor = KPColorPalette.KPMainColor.grayColor_level7;

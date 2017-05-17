@@ -26,7 +26,7 @@ protocol KPModalControllerDelegate: NSObjectProtocol {
     func modalControllerBackgroundOnTouched(_ modalViewController: KPModalViewController);
 }
 
-class KPModalViewController: UIViewController {
+class KPModalViewController: KPViewController {
 
     
     static let defaultDismissDuration: CGFloat = 0.2;

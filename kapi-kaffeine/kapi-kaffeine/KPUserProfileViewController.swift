@@ -8,7 +8,7 @@
 
 import UIKit
 
-class KPUserProfileViewController: UIViewController {
+class KPUserProfileViewController: KPViewController {
 
     var dismissButton:UIButton!
     

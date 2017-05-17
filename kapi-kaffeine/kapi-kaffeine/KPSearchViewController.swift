@@ -8,7 +8,7 @@
 
 import UIKit
 
-class KPSearchViewController: UIViewController {
+class KPSearchViewController: KPViewController {
 
     static let KPSearchViewControllerDefaultCellReuseIdentifier = "cell";
     static let KPSearchViewControllerRecentCellReuseIdentifier = "cell_recent";

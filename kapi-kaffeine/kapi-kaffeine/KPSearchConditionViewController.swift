@@ -13,7 +13,7 @@ struct KPSearchConditionViewControllerConstants{
     static let leftPadding = 168
 }
 
-class KPSearchConditionViewController: UIViewController {
+class KPSearchConditionViewController: KPViewController {
 
     var dismissButton:UIButton!
     var scrollView: UIScrollView!
