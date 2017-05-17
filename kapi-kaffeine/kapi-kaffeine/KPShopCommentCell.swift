@@ -68,7 +68,7 @@ class KPShopCommentCell: UITableViewCell {
                                           views: [userPicture])
 
         commentStyle = NSMutableParagraphStyle()
-        commentStyle.lineSpacing = 2.0
+        commentStyle.lineSpacing = 2.4
         
         let attrS = NSMutableAttributedString.init(string: "時間, 天氣, 溫度(°C), 體感溫度(°C), 降雨機率, 蒲福風級, 風向, 相對濕度 .... 今天（16日）受鋒面影響，天氣不穩定，隨著雲系一波波移入")
         attrS.addAttributes([NSParagraphStyleAttributeName: commentStyle],

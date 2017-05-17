@@ -23,12 +23,16 @@ class KPNewStoreController: KPViewController {
     var nameSubTitleView: KPSubTitleEditView!
     var citySubTitleView: KPSubTitleEditView!
     var featureSubTitleView: KPSubTitleEditView!
+    var sizingCell: KPFeatureTagCell!
     
     let tags = ["工業風", "藝術", "文青", "老屋", "美式風",
                 "服務佳", "有寵物", "開很晚", "手沖單品", "好停車",
                 "很多書", "適合工作", "適合讀書", "聚會佳", "可預約", "可包場"]
     
     var featureCollectionView: UICollectionView!
+    var rateCheckedView: KPItemCheckedView!
+    var businessHourCheckedView: KPItemCheckedView!
+    
     
     func headerLabel(_ title: String) -> UILabel {
         let label = UILabel()
@@ -88,7 +92,7 @@ class KPNewStoreController: KPViewController {
         sectionOneContainer.backgroundColor = UIColor.white
         containerView.addSubview(sectionOneContainer)
         sectionOneContainer.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                             "V:[$view0]-8-[$self(300)]"],
+                                                             "V:[$view0]-8-[$self]"],
                                            views: [sectionOneHeaderLabel])
      
         nameSubTitleView = KPSubTitleEditView.init(.Bottom,
@@ -113,13 +117,16 @@ class KPNewStoreController: KPViewController {
                                                       "選擇店家特色標籤")
         sectionOneContainer.addSubview(featureSubTitleView)
         featureSubTitleView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                             "V:[$view0][$self(150)]"],
+                                                             "V:[$view0][$self(160)]"],
                                         views:[citySubTitleView])
         
-        let flowLayout = UICollectionViewFlowLayout()
-        flowLayout.itemSize = CGSize(width: 30, height: 20)
-        flowLayout.scrollDirection = .horizontal
-        flowLayout.minimumLineSpacing = 15
+        sizingCell = KPFeatureTagCell()
+        
+        
+        let flowLayout = KPFeatureTagLayout()
+        flowLayout.scrollDirection = .vertical
+        flowLayout.minimumLineSpacing = 8
+        flowLayout.minimumInteritemSpacing = 8
         
         featureCollectionView = UICollectionView(frame: .zero,
                                                  collectionViewLayout: flowLayout)
@@ -129,8 +136,28 @@ class KPNewStoreController: KPViewController {
         featureCollectionView.register(KPFeatureTagCell.self,
                                        forCellWithReuseIdentifier: "cell")
         
-        
         featureSubTitleView.customInfoView = featureCollectionView
+    
+        rateCheckedView = KPItemCheckedView.init("幫店家評分",
+                                                 "未評分",
+                                                 "已評分(3.0)",
+                                                 .Bottom)
+        
+        sectionOneContainer.addSubview(rateCheckedView)
+        rateCheckedView.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                         "V:[$view0][$self(64)]"],
+                                           views:[featureSubTitleView])
+        
+        businessHourCheckedView = KPItemCheckedView.init("填寫營業時間",
+                                                         "未填寫",
+                                                         "已填寫",
+                                                         .Bottom)
+        
+        sectionOneContainer.addSubview(businessHourCheckedView)
+        businessHourCheckedView.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                                 "V:[$view0][$self(64)]|"],
+                                               views:[rateCheckedView])
+        
     }
 
     func handleDismissButtonOnTapped() {
@@ -143,7 +170,8 @@ class KPNewStoreController: KPViewController {
     }
 }
 
-extension KPNewStoreController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension KPNewStoreController: UICollectionViewDelegate, UICollectionViewDataSource,
+UICollectionViewDelegateFlowLayout {
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -156,5 +184,11 @@ extension KPNewStoreController: UICollectionViewDelegate, UICollectionViewDataSo
                                                           for: indexPath) as! KPFeatureTagCell;
             cell.featureLabel.text = self.tags[indexPath.row]
             return cell;
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        sizingCell.featureLabel.text = self.tags[indexPath.row]
+        return CGSize(width: sizingCell.systemLayoutSizeFitting(UILayoutFittingCompressedSize).width,
+                      height: 30)
     }
 }

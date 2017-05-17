@@ -24,8 +24,11 @@ class KPFeatureTagCell: UICollectionViewCell {
         layer.borderWidth = 1.0
         layer.borderColor = KPColorPalette.KPMainColor.mainColor?.cgColor
         addSubview(featureLabel)
-        featureLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
-        featureLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
+//        featureLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
+//        featureLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
+        featureLabel.addConstraint(from: "H:|-8-[$self]-8-|")
+        featureLabel.addConstraint(from: "V:|-2-[$self]-2-|")
+        featureLabel.preferredMaxLayoutWidth = 64
     }
     
     required init?(coder aDecoder: NSCoder) {

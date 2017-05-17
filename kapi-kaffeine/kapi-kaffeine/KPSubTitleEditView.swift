@@ -39,8 +39,8 @@ class KPSubTitleEditView: UIView {
     var customInfoView: UIView! {
         didSet {
             addSubview(customInfoView)
-            customInfoView.addConstraints(fromStringArray: ["V:[$view0]-8-[$self]|",
-                                                            "H:|[$self]|"],
+            customInfoView.addConstraints(fromStringArray: ["V:[$view0]-8-[$self]-8-|",
+                                                            "H:|-16-[$self]-16-|"],
                                           views:[self.subTitleLabel])
         }
     }
@@ -72,7 +72,7 @@ class KPSubTitleEditView: UIView {
     
     convenience init(_ borderType: BorderType = .Bottom,
                      _ displayType: DisplayType = .Edited,
-                     _ title: String) {
+                     _ title: String?) {
         self.init(frame: .zero)
         
         bType = borderType
