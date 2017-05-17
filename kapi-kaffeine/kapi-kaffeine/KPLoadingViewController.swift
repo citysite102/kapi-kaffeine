@@ -16,19 +16,27 @@ class KPLoadingViewController: UIViewController {
         case failed = "failed"
     }
     
-    var container: UIView!
-    var indicator: UIActivityIndicatorView!
+    private var container: UIView!
+    private var indicator: UIActivityIndicatorView!
     
+    
+    var successContent: String! = "留言成功"
     var successView: UIImageView!
+    
+    var failContent: String! = "留言失敗"
     var failedView: UIImageView!
     
     var state: loadingState = .loading {
         didSet {
             switch state {
             case .successed:
-                print("Nothing")
+                DispatchQueue.main.asyncAfter(deadline: .now()+0.2) {
+                    self.performStateAnimation(.successed)
+                }
             case .failed:
-                print("Nothing")
+                DispatchQueue.main.asyncAfter(deadline: .now()+0.2) {
+                    self.performStateAnimation(.failed)
+                }
             default:
                 print("Still Nothing")
             }
@@ -37,7 +45,7 @@ class KPLoadingViewController: UIViewController {
     
     lazy var loadingLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 15.0)
+        label.font = UIFont.systemFont(ofSize: 14.0)
         label.textColor = KPColorPalette.KPTextColor.whiteColor
         return label
     }()
@@ -75,8 +83,16 @@ class KPLoadingViewController: UIViewController {
         successView.transform = CGAffineTransform.init(translationX: 0, y: 24)
         successView.alpha = 0
         
+        failedView = UIImageView.init(image: R.image.icon_loading_success()?.withRenderingMode(.alwaysTemplate))
+        failedView.tintColor = UIColor.white
+        container.addSubview(failedView)
+        failedView.addConstraints(fromStringArray: ["V:|-20-[$self]"])
+        failedView.addConstraintForCenterAligningToSuperview(in: .horizontal)
+        failedView.transform = CGAffineTransform.init(translationX: 0, y: 24)
+        failedView.alpha = 0
+        
         DispatchQueue.main.asyncAfter(deadline: .now()+1.2) {
-            self.performStateAnimation()
+            self.state = .successed
         }
         
     }
@@ -86,26 +102,73 @@ class KPLoadingViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func performStateAnimation() {
-        UIView.animate(withDuration: 0.6,
-                       delay: 0,
-                       options: .curveEaseOut,
-                       animations: { 
-                        self.successView.alpha = 1.0
-                        self.indicator.alpha = 0
-                        self.indicator.transform = CGAffineTransform.init(translationX: 0, y: -24)
-                        self.successView.transform = CGAffineTransform.identity
-        }) { (_) in
-            
-        }
+    func performStateAnimation(_ state: loadingState) {
         
         let fadeTransition = CATransition()
         fadeTransition.duration = 0.3
         
-        CATransaction.begin()
-        loadingLabel.text = "成功囉"
-        loadingLabel.layer.add(fadeTransition, forKey: nil)
-        CATransaction.commit()
+        switch state {
+        case .successed:
+            UIView.animate(withDuration: 0.3,
+                           delay: 0,
+                           options: .curveEaseOut,
+                           animations: {
+                            self.indicator.alpha = 0
+                            self.indicator.transform = CGAffineTransform.init(translationX: 0, y: -24)
+            }) { (_) in
+                
+            }
+            UIView.animate(withDuration: 0.3,
+                           delay: 0.2,
+                           options: .curveEaseOut,
+                           animations: {
+                            self.successView.alpha = 1.0
+                            self.successView.transform = CGAffineTransform.identity
+            }) { (_) in
+                
+            }
+            CATransaction.begin()
+            CATransaction.setCompletionBlock({
+                self.loadingLabel.text = self.successContent
+                self.loadingLabel.layer.add(fadeTransition, forKey: nil)
+            })
+            loadingLabel.text = ""
+            loadingLabel.layer.add(fadeTransition, forKey: nil)
+            CATransaction.commit()
+        case .failed:
+            UIView.animate(withDuration: 0.3,
+                           delay: 0,
+                           options: .curveEaseOut,
+                           animations: {
+                            self.indicator.alpha = 0
+                            self.indicator.transform = CGAffineTransform.init(translationX: 0, y: -24)
+            }) { (_) in
+                
+            }
+            UIView.animate(withDuration: 0.3,
+                           delay: 0.2,
+                           options: .curveEaseOut,
+                           animations: {
+                            self.failedView.alpha = 1.0
+                            self.failedView.transform = CGAffineTransform.identity
+            }) { (_) in
+                
+            }
+            CATransaction.begin()
+            CATransaction.setCompletionBlock({
+                self.loadingLabel.text = self.failContent
+                self.loadingLabel.layer.add(fadeTransition, forKey: nil)
+            })
+            loadingLabel.text = ""
+            loadingLabel.layer.add(fadeTransition, forKey: nil)
+            CATransaction.commit()
+        default:
+            break
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now()+1.0) {
+            self.appModalController()?.dismissController(duration: 0.5)
+        }
     }
     
 
