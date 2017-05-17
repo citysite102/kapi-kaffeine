@@ -54,7 +54,7 @@ class KPInformationHeaderView: UIView {
 
         photoLongPressGesture = UILongPressGestureRecognizer.init(target: self,
                                                                        action: #selector(handleShopPhotoLongPressed(_:)))
-        photoLongPressGesture.minimumPressDuration = 0
+        photoLongPressGesture.minimumPressDuration = 0.0
         shopPhoto.addGestureRecognizer(photoLongPressGesture)
         
         collectButton = KPInformationHeaderButton();

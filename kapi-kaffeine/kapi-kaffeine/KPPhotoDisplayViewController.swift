@@ -25,6 +25,22 @@ class KPPhotoDisplayViewController: KPViewController {
     var collectionLayout:UICollectionViewFlowLayout!;
     var dismissButton:KPBounceButton!
     var selectedIndexPath: IndexPath!
+    var titleContent: String! {
+        willSet {
+            let fadeTransition = CATransition()
+            fadeTransition.duration = 0.3
+            
+            CATransaction.begin()
+            CATransaction.setCompletionBlock({
+                self.photoTitleLabel.text = titleContent
+                self.photoTitleLabel.layer.add(fadeTransition, forKey: nil)
+            })
+            self.photoTitleLabel.text = ""
+            self.photoTitleLabel.layer.add(fadeTransition, forKey: nil)
+            CATransaction.commit()
+        }
+    }
+    
     
     lazy var photoTitleLabel: UILabel = {
         let label = UILabel()
@@ -51,8 +67,8 @@ class KPPhotoDisplayViewController: KPViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.view.backgroundColor = UIColor.black
-        //Collection view
+        view.backgroundColor = UIColor.black
+        
         collectionLayout = UICollectionViewFlowLayout()
         collectionLayout.scrollDirection = .horizontal
         collectionLayout.itemSize = CGSize.init(width: UIScreen.main.bounds.size.width,
@@ -91,17 +107,13 @@ class KPPhotoDisplayViewController: KPViewController {
         
         view.addSubview(photoTitleLabel)
         photoTitleLabel.text = "覺旅咖啡 Journey Cafe"
-//        photoTitleLabel.isHidden = true
         photoTitleLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
         photoTitleLabel.addConstraint(from: "V:|-16-[$self]")
-//        photoTitleLabel.transform = CGAffineTransform.init(translationX: 0, y: -100)
         
         view.addSubview(countLabel)
         countLabel.text = "6 of 104"
-//        countLabel.isHidden = true
         countLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
-        countLabel.addConstraint(from: "V:[$self]-32-|")
-//        countLabel.transform = CGAffineTransform.init(translationX: 0, y: 100)
+        countLabel.addConstraint(from: "V:[$self]-24-|")
     }
     
     
@@ -119,7 +131,6 @@ class KPPhotoDisplayViewController: KPViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        showLabelContent()
     }
     
     override func didReceiveMemoryWarning() {
@@ -132,21 +143,6 @@ class KPPhotoDisplayViewController: KPViewController {
             }
     }
     
-    func showLabelContent() {
-//        photoTitleLabel.isHidden = false
-//        countLabel.isHidden = false
-//        UIView.animate(withDuration: 0.5,
-//                       delay: 0,
-//                       usingSpringWithDamping: 0.8,
-//                       initialSpringVelocity: 0.8,
-//                       options: .curveEaseOut,
-//                       animations: { 
-//                        self.photoTitleLabel.transform = CGAffineTransform.identity
-//                        self.countLabel.transform = CGAffineTransform.identity
-//        }) { (_) in
-//            
-//        }
-    }
 }
 
 extension KPPhotoDisplayViewController: UIScrollViewDelegate {
