@@ -8,6 +8,11 @@
 
 import UIKit
 
+
+struct KPNewStoreControllerConstants {
+    static let leftPadding = 168
+}
+
 class KPNewStoreController: KPViewController {
 
     var dismissButton:UIButton!
@@ -20,10 +25,24 @@ class KPNewStoreController: KPViewController {
     var sectionOneHeaderLabel: UILabel!
     var sectionTwoHeaderLabel: UILabel!
     
+    var timeLimitLabel: UILabel!
+    var timeRadioBoxOne: KPCheckView!
+    var timeRadioBoxTwo: KPCheckView!
+    var timeRadioBoxThree: KPCheckView!
+    
+    var socketLabel: UILabel!
+    var socketRadioBoxOne: KPCheckView!
+    var socketRadioBoxTwo: KPCheckView!
+    var socketRadioBoxThree: KPCheckView!
+    
     var nameSubTitleView: KPSubTitleEditView!
     var citySubTitleView: KPSubTitleEditView!
     var featureSubTitleView: KPSubTitleEditView!
     var sizingCell: KPFeatureTagCell!
+    
+    var addressSubTitleView: KPSubTitleEditView!
+    var phoneSubTitleView: KPSubTitleEditView!
+    var facebookSubTitleView: KPSubTitleEditView!
     
     let tags = ["工業風", "藝術", "文青", "老屋", "美式風",
                 "服務佳", "有寵物", "開很晚", "手沖單品", "好停車",
@@ -157,6 +176,95 @@ class KPNewStoreController: KPViewController {
         businessHourCheckedView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                                  "V:[$view0][$self(64)]|"],
                                                views:[rateCheckedView])
+        
+        
+        
+        sectionTwoHeaderLabel = headerLabel("其他選項")
+        containerView.addSubview(sectionTwoHeaderLabel)
+        sectionTwoHeaderLabel.addConstraints(fromStringArray: ["H:|-16-[$self]",
+                                                               "V:[$view0]-16-[$self]"],
+                                             views:[sectionOneContainer])
+        
+        sectionTwoContainer = UIView()
+        sectionTwoContainer.backgroundColor = UIColor.white
+        containerView.addSubview(sectionTwoContainer)
+        sectionTwoContainer.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                             "V:[$view0]-8-[$self]-8-|"],
+                                           views: [sectionTwoHeaderLabel])
+        
+        timeLimitLabel = headerLabel("有無時間限制")
+        sectionTwoContainer.addSubview(timeLimitLabel)
+        timeLimitLabel.addConstraints(fromStringArray: ["H:|-16-[$self]",
+                                                        "V:|-16-[$self]"])
+        timeRadioBoxOne = KPCheckView.init(.radio, "不設定")
+        sectionTwoContainer.addSubview(timeRadioBoxOne)
+        timeRadioBoxOne.addConstraints(fromStringArray: ["H:|-16-[$self]",
+                                                         "V:[$view0]-16-[$self]"],
+                                       views: [timeLimitLabel])
+        timeRadioBoxTwo = KPCheckView.init(.radio, "客滿/人多限時")
+        sectionTwoContainer.addSubview(timeRadioBoxTwo)
+        timeRadioBoxTwo.addConstraints(fromStringArray: ["H:|-16-[$self]",
+                                                         "V:[$view0]-16-[$self]"],
+                                       views: [timeRadioBoxOne])
+        timeRadioBoxThree = KPCheckView.init(.radio, "不限時")
+        sectionTwoContainer.addSubview(timeRadioBoxThree)
+        timeRadioBoxThree.addConstraints(fromStringArray: ["H:|-16-[$self]",
+                                                           "V:[$view0]-16-[$self]"],
+                                         views: [timeRadioBoxTwo])
+        
+        socketLabel = headerLabel("插座數量")
+        sectionTwoContainer.addSubview(socketLabel)
+        socketLabel.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",
+                                                     "V:|-16-[$self]"],
+                                   metrics:[KPNewStoreControllerConstants.leftPadding])
+        
+        socketRadioBoxOne = KPCheckView.init(.radio, "不設定")
+        sectionTwoContainer.addSubview(socketRadioBoxOne)
+        socketRadioBoxOne.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",
+                                                           "V:[$view0]-16-[$self]"],
+                                         metrics:[KPNewStoreControllerConstants.leftPadding],
+                                         views: [socketLabel])
+        socketRadioBoxTwo = KPCheckView.init(.radio, "部分座位有")
+        sectionTwoContainer.addSubview(socketRadioBoxTwo)
+        socketRadioBoxTwo.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",
+                                                           "V:[$view0]-16-[$self]"],
+                                         metrics:[KPNewStoreControllerConstants.leftPadding],
+                                         views: [socketRadioBoxOne])
+        socketRadioBoxThree = KPCheckView.init(.radio, "很多插座")
+        sectionTwoContainer.addSubview(socketRadioBoxThree)
+        socketRadioBoxThree.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",
+                                                             "V:[$view0]-16-[$self]"],
+                                           metrics:[KPNewStoreControllerConstants.leftPadding],
+                                           views: [socketRadioBoxTwo])
+        
+        
+        addressSubTitleView = KPSubTitleEditView.init(.Both,
+                                                      .Fixed,
+                                                      "店家地址")
+        addressSubTitleView.content = "台北市內湖區陽光街432巷42號1樓"
+        sectionTwoContainer.addSubview(addressSubTitleView)
+        addressSubTitleView.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                             "V:[$view0]-16-[$self(72)]"],
+                                           views: [socketRadioBoxThree])
+        
+        phoneSubTitleView = KPSubTitleEditView.init(.Bottom,
+                                                    .Fixed,
+                                                    "店家電話")
+        phoneSubTitleView.content = "(02)8892 6842"
+        sectionTwoContainer.addSubview(phoneSubTitleView)
+        phoneSubTitleView.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                           "V:[$view0][$self(72)]"],
+                                           views: [addressSubTitleView])
+        
+        facebookSubTitleView = KPSubTitleEditView.init(.Bottom,
+                                                       .Fixed,
+                                                       "Facebook 連結")
+        facebookSubTitleView.content = "www.google.com"
+        sectionTwoContainer.addSubview(facebookSubTitleView)
+        facebookSubTitleView.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                              "V:[$view0][$self(72)]|"],
+                                         views: [phoneSubTitleView])
+        
         
     }
 

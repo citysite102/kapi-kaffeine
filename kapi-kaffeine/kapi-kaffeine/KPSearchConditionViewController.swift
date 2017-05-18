@@ -9,7 +9,7 @@
 import UIKit
 
 
-struct KPSearchConditionViewControllerConstants{
+struct KPSearchConditionViewControllerConstants {
     static let leftPadding = 168
 }
 
