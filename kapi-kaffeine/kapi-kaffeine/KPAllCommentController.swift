@@ -12,6 +12,8 @@ class KPAllCommentController: KPViewController {
 
     static let KPAllCommentControllerCellReuseIdentifier = "cell";
     
+    
+    var shownCellIndex: [Int] = [Int]()
     var tableView: UITableView!
     var backButton: KPBounceButton!
     var editButton: KPBounceButton!
@@ -57,7 +59,6 @@ class KPAllCommentController: KPViewController {
         tableView = UITableView()
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.isUserInteractionEnabled = false
         view.addSubview(self.tableView)
         tableView.addConstraints(fromStringArray: ["V:|[$self]|",
                                                    "H:|[$self]|"])
@@ -109,10 +110,28 @@ extension KPAllCommentController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3;
+        return 6;
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1;
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let displayCell = cell as! KPShopCommentCell
+        
+        if !shownCellIndex.contains(indexPath.row) {
+            displayCell.userPicture.transform = CGAffineTransform.init(scaleX: 0.1, y: 0.1).rotated(by: -CGFloat.pi/2)
+            UIView.animate(withDuration: 0.8,
+                           delay: 0.2,
+                           usingSpringWithDamping: 0.6,
+                           initialSpringVelocity: 0.8,
+                           options: .curveEaseOut,
+                           animations: { 
+                            displayCell.userPicture.transform = CGAffineTransform.identity
+            }) { (_) in
+                self.shownCellIndex.append(indexPath.row)
+            }
+        }
     }
 }
