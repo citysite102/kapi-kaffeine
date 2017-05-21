@@ -33,7 +33,7 @@ class KPModalViewController: KPViewController {
     
     var keyboardIsShowing: Bool = false
     var dismissWhenTouchingOnBackground: Bool = true
-    var contentMoveWithKeyboard: Bool = true
+    var contentMoveWithKeyboard: Bool = false
     var backgroundYConstraint: NSLayoutConstraint!
     
     var presentationStyle: KPModalPresentationStyle = .bottom

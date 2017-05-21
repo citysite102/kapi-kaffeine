@@ -60,7 +60,6 @@ class KPMainListTableViewCell: UITableViewCell {
         self.contentView.addSubview(self.shopImageView);
         self.shopImageView.addConstraints(fromStringArray: ["H:|-8-[$self(56)]",
                                                             "V:|-12-[$self(56)]-12-|"]);
-//        self.shopImageView.addConstraintForCenterAligningToSuperview(in: .vertical);
         
         self.shopNameLabel = KPMainListCellNormalLabel();
         self.shopNameLabel.font = UIFont.systemFont(ofSize: 14.0);

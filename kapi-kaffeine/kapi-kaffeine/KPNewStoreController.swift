@@ -150,7 +150,7 @@ class KPNewStoreController: KPViewController {
         citySubTitleView.customInputAction = {
             () -> Void in
             let controller = KPModalViewController()
-            controller.edgeInset = UIEdgeInsets.init(top: UIDevice().isCompact ? 16 : 48,
+            controller.edgeInset = UIEdgeInsets.init(top: UIDevice().isCompact ? 48 : 56,
                                                      left: 0,
                                                      bottom: 0,
                                                      right: 0);

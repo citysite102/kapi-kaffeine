@@ -71,6 +71,7 @@ PODS:
   - R.swift (3.2.0):
     - R.swift.Library (~> 3.0.2)
   - R.swift.Library (3.0.2)
+  - Shimmer (1.0.2)
   - SideMenu (2.3.2)
   - SwiftyJSON (3.1.4)
 
@@ -85,6 +86,7 @@ DEPENDENCIES:
   - pop (~> 1.0)
   - PromiseKit (~> 4.0)
   - R.swift
+  - Shimmer
   - SideMenu
   - SwiftyJSON
 
@@ -101,9 +103,10 @@ SPEC CHECKSUMS:
   PromiseKit: 08dfb783c161ddcd95b7912421f14c5113fd8318
   R.swift: 207a372a2b5977caef440c696a368009460641d1
   R.swift.Library: fbdec16c9802ad104fc1ba53415dc190e6ec5c73
+  Shimmer: c5374be1c2b0c9e292fb05b339a513cf291cac86
   SideMenu: 3fa07dd05d4bade2b6f9889fb1877e312e1ba319
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
 
-PODFILE CHECKSUM: 994a0da010197c4a4e1b8119ff77cbc24b7e3667
+PODFILE CHECKSUM: 168b533ac7a97f2f1b05f26e3ce870b4148bdd11
 
 COCOAPODS: 1.1.1
