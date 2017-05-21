@@ -24,6 +24,12 @@ class KPSubTitleEditView: UIView {
     }
     
     
+    var inputKeyboardType: UIKeyboardType! {
+        didSet {
+            self.editTextField.keyboardType = inputKeyboardType
+        }
+    }
+    
     var placeHolderContent: String! {
         didSet {
             self.editTextField.placeholder = placeHolderContent
@@ -44,6 +50,10 @@ class KPSubTitleEditView: UIView {
                                           views:[self.subTitleLabel])
         }
     }
+    
+    var customInputAction: (() -> Void)!
+    
+    var tapGesture: UITapGestureRecognizer!
     
     private var bType: BorderType!
     private var dType: DisplayType!
@@ -94,6 +104,11 @@ class KPSubTitleEditView: UIView {
             makeTitleUI()
             makeBorder()
         }
+        
+        tapGesture = UITapGestureRecognizer.init(target: self,
+                                                 action: #selector(handleTapGesture(tapGesture:)))
+        tapGesture.cancelsTouchesInView = false
+        addGestureRecognizer(tapGesture)
     }
     
     func makeUI() {
@@ -135,6 +150,14 @@ class KPSubTitleEditView: UIView {
                                                               "V:[$self(1)]|"])
         default:
             print("No border")
+        }
+    }
+    
+    func handleTapGesture(tapGesture: UITapGestureRecognizer) {
+        if editTextField.isEnabled {
+            editTextField.becomeFirstResponder()
+        } else {
+            customInputAction()
         }
     }
 }

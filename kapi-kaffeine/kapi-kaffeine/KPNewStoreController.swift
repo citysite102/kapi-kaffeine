@@ -15,9 +15,11 @@ struct KPNewStoreControllerConstants {
 
 class KPNewStoreController: KPViewController {
 
-    var dismissButton:UIButton!
+    var dismissButton: KPBounceButton!
+    var sendButton: UIButton!
     var scrollView: UIScrollView!
     var containerView: UIView!
+    var tapGesture: UITapGestureRecognizer!
     
     var sectionOneContainer: UIView!
     var sectionTwoContainer: UIView!
@@ -68,10 +70,10 @@ class KPNewStoreController: KPViewController {
         view.backgroundColor = UIColor.white
         navigationController?.navigationBar.topItem?.title = "新增店家"
         
-        dismissButton = UIButton.init(frame: CGRect.init(x: 0,
-                                                         y: 0,
-                                                         width: 24,
-                                                         height: 24))
+        dismissButton = KPBounceButton.init(frame: CGRect.init(x: 0,
+                                                               y: 0,
+                                                               width: 24,
+                                                               height: 24))
         dismissButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4)
         dismissButton.setImage(R.image.icon_close()?.withRenderingMode(.alwaysTemplate),
                                     for: .normal)
@@ -81,7 +83,25 @@ class KPNewStoreController: KPViewController {
                                 for: .touchUpInside)
         
         let barItem = UIBarButtonItem.init(customView: dismissButton)
-        navigationItem.leftBarButtonItem = barItem
+        
+        sendButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 40, height: 24));
+        sendButton.setTitle("新增", for: .normal)
+        sendButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+        sendButton.tintColor = KPColorPalette.KPTextColor.mainColor;
+        sendButton.addTarget(self,
+                             action: #selector(KPNewCommentController.handleSendButtonOnTapped),
+                             for: .touchUpInside)
+        
+        let rightbarItem = UIBarButtonItem.init(customView: self.sendButton);
+        
+        let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace,
+                                             target: nil,
+                                             action: nil)
+        negativeSpacer.width = -8
+        navigationItem.leftBarButtonItems = [negativeSpacer, barItem]
+        navigationItem.rightBarButtonItems = [negativeSpacer, rightbarItem]
+        
+        
         
         dismissButton.addTarget(self,
                                 action: #selector(KPInformationViewController.handleDismissButtonOnTapped),
@@ -90,6 +110,7 @@ class KPNewStoreController: KPViewController {
         scrollView = UIScrollView()
         scrollView.backgroundColor = KPColorPalette.KPMainColor.grayColor_level7
         scrollView.showsVerticalScrollIndicator = false
+        scrollView.delegate = self
         view.addSubview(scrollView)
         scrollView.addConstraints(fromStringArray: ["V:|[$self]|",
                                                     "H:|[$self]|"])
@@ -123,9 +144,21 @@ class KPNewStoreController: KPViewController {
                                                           "V:|[$self(72)]"])
         
         citySubTitleView = KPSubTitleEditView.init(.Bottom,
-                                                   .Edited,
+                                                   .Fixed,
                                                    "所在城市")
         citySubTitleView.placeHolderContent = "請選擇城市"
+        citySubTitleView.customInputAction = {
+            () -> Void in
+            let controller = KPModalViewController()
+            controller.edgeInset = UIEdgeInsets.init(top: UIDevice().isCompact ? 16 : 48,
+                                                     left: 0,
+                                                     bottom: 0,
+                                                     right: 0);
+            controller.cornerRadius = [.topRight, .topLeft]
+            let countryController = KPCountrySelectController()
+            controller.contentController = countryController;
+            controller.presentModalView();
+        }
         sectionOneContainer.addSubview(citySubTitleView)
         citySubTitleView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                           "V:[$view0][$self(72)]"],
@@ -136,7 +169,7 @@ class KPNewStoreController: KPViewController {
                                                       "選擇店家特色標籤")
         sectionOneContainer.addSubview(featureSubTitleView)
         featureSubTitleView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                             "V:[$view0][$self(160)]"],
+                                                             "V:[$view0][$self(200)]"],
                                         views:[citySubTitleView])
         
         sizingCell = KPFeatureTagCell()
@@ -152,6 +185,7 @@ class KPNewStoreController: KPViewController {
         featureCollectionView.delegate = self
         featureCollectionView.dataSource = self
         featureCollectionView.backgroundColor = UIColor.clear
+        featureCollectionView.allowsMultipleSelection = true
         featureCollectionView.register(KPFeatureTagCell.self,
                                        forCellWithReuseIdentifier: "cell")
         
@@ -239,31 +273,38 @@ class KPNewStoreController: KPViewController {
         
         
         addressSubTitleView = KPSubTitleEditView.init(.Both,
-                                                      .Fixed,
+                                                      .Edited,
                                                       "店家地址")
-        addressSubTitleView.content = "台北市內湖區陽光街432巷42號1樓"
+        addressSubTitleView.placeHolderContent = "請輸入店家地址"
         sectionTwoContainer.addSubview(addressSubTitleView)
         addressSubTitleView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                              "V:[$view0]-16-[$self(72)]"],
                                            views: [socketRadioBoxThree])
         
         phoneSubTitleView = KPSubTitleEditView.init(.Bottom,
-                                                    .Fixed,
+                                                    .Edited,
                                                     "店家電話")
-        phoneSubTitleView.content = "(02)8892 6842"
+        phoneSubTitleView.placeHolderContent = "請輸入店家電話"
+        phoneSubTitleView.inputKeyboardType = .phonePad
         sectionTwoContainer.addSubview(phoneSubTitleView)
         phoneSubTitleView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                            "V:[$view0][$self(72)]"],
                                            views: [addressSubTitleView])
         
         facebookSubTitleView = KPSubTitleEditView.init(.Bottom,
-                                                       .Fixed,
+                                                       .Edited,
                                                        "Facebook 連結")
-        facebookSubTitleView.content = "www.google.com"
+        facebookSubTitleView.placeHolderContent = "請輸入店家 Facebook 連結"
         sectionTwoContainer.addSubview(facebookSubTitleView)
         facebookSubTitleView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                               "V:[$view0][$self(72)]|"],
                                          views: [phoneSubTitleView])
+        
+        
+        tapGesture = UITapGestureRecognizer.init(target: self,
+                                                 action: #selector(handleTapGesture(tapGesture:)))
+        tapGesture.cancelsTouchesInView = false
+        containerView.addGestureRecognizer(tapGesture)
         
         
     }
@@ -271,6 +312,11 @@ class KPNewStoreController: KPViewController {
     func handleDismissButtonOnTapped() {
         appModalController()?.dismissControllerWithDefaultDuration();
     }
+    
+    func handleTapGesture(tapGesture: UITapGestureRecognizer) {
+        view.endEditing(true)
+    }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -298,5 +344,9 @@ UICollectionViewDelegateFlowLayout {
         sizingCell.featureLabel.text = self.tags[indexPath.row]
         return CGSize(width: sizingCell.systemLayoutSizeFitting(UILayoutFittingCompressedSize).width,
                       height: 30)
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        view.endEditing(true)
     }
 }

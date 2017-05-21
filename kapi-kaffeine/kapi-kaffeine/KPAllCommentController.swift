@@ -123,8 +123,8 @@ extension KPAllCommentController: UITableViewDelegate, UITableViewDataSource {
         if !shownCellIndex.contains(indexPath.row) {
             displayCell.userPicture.transform = CGAffineTransform.init(scaleX: 0.1, y: 0.1).rotated(by: -CGFloat.pi/2)
             UIView.animate(withDuration: 0.8,
-                           delay: 0.2,
-                           usingSpringWithDamping: 0.6,
+                           delay: 0.2+Double(indexPath.row)*0.1,
+                           usingSpringWithDamping: 0.5,
                            initialSpringVelocity: 0.8,
                            options: .curveEaseOut,
                            animations: { 

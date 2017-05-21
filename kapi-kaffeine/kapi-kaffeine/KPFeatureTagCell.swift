@@ -13,7 +13,7 @@ class KPFeatureTagCell: UICollectionViewCell {
     lazy var featureLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14.0)
-        label.textColor = KPColorPalette.KPTextColor.mainColor
+        label.textColor = KPColorPalette.KPTextColor.mainColor_light
         label.textAlignment = .center
         return label
     }()
@@ -22,13 +22,18 @@ class KPFeatureTagCell: UICollectionViewCell {
         super.init(frame: frame);
         
         layer.borderWidth = 1.0
-        layer.borderColor = KPColorPalette.KPMainColor.mainColor?.cgColor
+        layer.borderColor = KPColorPalette.KPMainColor.mainColor_light?.cgColor
         addSubview(featureLabel)
-//        featureLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
-//        featureLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
         featureLabel.addConstraint(from: "H:|-8-[$self]-8-|")
         featureLabel.addConstraint(from: "V:|-2-[$self]-2-|")
         featureLabel.preferredMaxLayoutWidth = 64
+    }
+    
+    override var isSelected: Bool {
+        didSet {
+            layer.backgroundColor = isSelected ? KPColorPalette.KPMainColor.mainColor_light?.cgColor : UIColor.white.cgColor
+            self.featureLabel.textColor = isSelected ? UIColor.white : KPColorPalette.KPMainColor.mainColor_light
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {

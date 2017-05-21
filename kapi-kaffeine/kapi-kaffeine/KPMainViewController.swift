@@ -163,6 +163,7 @@ class KPMainViewController: KPViewController {
 
         
         let controller = KPModalViewController()
+//        controller.contentMoveWithKeyboard = true
         controller.edgeInset = UIEdgeInsets.init(top: 0,
                                                  left: 0,
                                                  bottom: 0,
