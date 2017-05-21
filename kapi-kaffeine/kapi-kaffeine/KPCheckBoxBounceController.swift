@@ -23,7 +23,11 @@ class KPCheckBoxBounceController: KPCheckBoxController {
                     markLayer.fillColor = tintColor.cgColor
                 }
             } else {
-                selectedBoxLayer.fillColor = tintColor.cgColor
+                if markType == .radio {
+                    selectedBoxLayer.fillColor = nil
+                } else {
+                    selectedBoxLayer.fillColor = tintColor.cgColor
+                }
             }
         }
     }
@@ -38,6 +42,10 @@ class KPCheckBoxBounceController: KPCheckBoxController {
         didSet {
             if style == .fill {
                 markLayer.strokeColor = secondaryCheckmarkTintColor?.cgColor
+                if markType == .radio {
+                    markLayer.strokeColor = nil
+                    markLayer.fillColor  = secondaryCheckmarkTintColor?.cgColor
+                }
             }
         }
     }
@@ -227,8 +235,14 @@ class KPCheckBoxBounceController: KPCheckBoxController {
                 markLayer.fillColor = tintColor.cgColor
             }
         } else {
-            selectedBoxLayer.fillColor = tintColor.cgColor
             markLayer.strokeColor = secondaryCheckmarkTintColor?.cgColor
+            if markType == .radio {
+                selectedBoxLayer.fillColor = nil
+                markLayer.fillColor = tintColor.cgColor
+                markLayer.strokeColor = nil
+            } else {
+                selectedBoxLayer.fillColor = tintColor.cgColor
+            }
         }
         
         markLayer.lineWidth = pathGenerator.checkmarkLineWidth
