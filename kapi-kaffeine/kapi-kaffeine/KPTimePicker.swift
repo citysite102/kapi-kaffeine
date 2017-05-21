@@ -8,11 +8,23 @@
 
 import UIKit
 
+protocol KPTimePickerDelegate {
+    func valueUpdate(value: String)
+}
+
 class KPTimePicker: UIView, UIPickerViewDataSource, UIPickerViewDelegate {
     
     var pickerRowHeight: CGFloat = 60
     
     var pickerView: UIPickerView!
+    
+    var delegate: KPTimePickerDelegate?
+    
+    var timeValue: String {
+        get {
+            return "\(String(format: "%02d", (pickerView.selectedRow(inComponent: 0)+1+pickerView.selectedRow(inComponent: 2)*12)%24)):\(String(format: "%02d", pickerView.selectedRow(inComponent: 1)*15))"
+        }
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -186,7 +198,9 @@ class KPTimePicker: UIView, UIPickerViewDataSource, UIPickerViewDelegate {
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        
+        if delegate != nil {
+            delegate?.valueUpdate(value: timeValue)
+        }
     }
 
 }
