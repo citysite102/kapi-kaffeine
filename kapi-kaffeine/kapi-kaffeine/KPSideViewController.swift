@@ -8,7 +8,7 @@
 
 import UIKit
 
-class KPSideViewController: UIViewController {
+class KPSideViewController: KPViewController {
 
     static let KPSideViewControllerRegionCellReuseIdentifier = "regionCell";
     static let KPSideViewControllerCityCellReuseIdentifier = "cityCell";

@@ -45,7 +45,7 @@ class KPRegionTableViewCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        self.regionIcon = UIImageView.init(image: UIImage.init(named: "icon_taipei"));
+        self.regionIcon = UIImageView.init(image: R.image.icon_taipei());
         self.addSubview(self.regionIcon);
         self.regionIcon.addConstraints(fromStringArray: ["V:|-12-[$self(24)]-12-|",
                                                          "H:|-16-[$self(24)]"]);
@@ -58,7 +58,7 @@ class KPRegionTableViewCell: UITableViewCell {
                                         views: [self.regionIcon]);
         self.regionLabel.addConstraintForCenterAligningToSuperview(in: .vertical);
         
-        self.expandIcon = UIImageView.init(image: UIImage.init(named: "icon_map"));
+        self.expandIcon = UIImageView.init(image: R.image.icon_map());
         self.addSubview(self.expandIcon);
         self.expandIcon.addConstraints(fromStringArray: ["V:|-12-[$self(24)]-12-|",
                                                          "H:[$self(24)]-16-|"]);

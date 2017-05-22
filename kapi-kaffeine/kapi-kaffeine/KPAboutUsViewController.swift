@@ -8,7 +8,7 @@
 
 import UIKit
 
-class KPAboutUsViewController: UIViewController {
+class KPAboutUsViewController: KPViewController {
 
     
     struct relateiveLink {
@@ -68,99 +68,99 @@ class KPAboutUsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor.white;
-        self.navigationController?.navigationBar.topItem?.title = "設定";
+        view.backgroundColor = UIColor.white;
+        navigationController?.navigationBar.topItem?.title = "設定";
         
-        self.dismissButton = KPBounceButton.init(frame: CGRect.init(x: 0, y: 0, width: 24, height: 24));
-        self.dismissButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4);
-        self.dismissButton.setImage(UIImage.init(named: "icon_close")?.withRenderingMode(.alwaysTemplate),
+        dismissButton = KPBounceButton.init(frame: CGRect.init(x: 0, y: 0, width: 24, height: 24));
+        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4);
+        dismissButton.setImage(UIImage.init(named: "icon_close")?.withRenderingMode(.alwaysTemplate),
                                     for: .normal);
-        self.dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor;
-        self.dismissButton.addTarget(self,
+        dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor;
+        dismissButton.addTarget(self,
                                      action: #selector(KPSettingViewController.handleDismissButtonOnTapped),
                                      for: .touchUpInside);
         
         
-        let barItem = UIBarButtonItem.init(customView: self.dismissButton);
+        let barItem = UIBarButtonItem.init(customView: dismissButton);
         let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
         negativeSpacer.width = -8;
-        self.navigationItem.leftBarButtonItems = [negativeSpacer, barItem]
+        navigationItem.leftBarButtonItems = [negativeSpacer, barItem]
         
-        self.dismissButton.addTarget(self,
+        dismissButton.addTarget(self,
                                      action: #selector(KPInformationViewController.handleDismissButtonOnTapped),
                                      for: .touchUpInside);
 
-        self.scrollView = UIScrollView();
-        self.scrollView.showsVerticalScrollIndicator = false;
-        self.view.addSubview(self.scrollView);
-        self.scrollView.addConstraints(fromStringArray: ["V:|[$self]|",
+        scrollView = UIScrollView();
+        scrollView.showsVerticalScrollIndicator = false;
+        view.addSubview(scrollView);
+        scrollView.addConstraints(fromStringArray: ["V:|[$self]|",
                                                          "H:|[$self]|"]);
         
-        self.containerView = UIView();
-        self.scrollView.addSubview(self.containerView);
-        self.containerView.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|", "V:|[$self]|"]);
-        self.containerView.addConstraintForHavingSameWidth(with: self.view,
+        containerView = UIView();
+        scrollView.addSubview(containerView);
+        containerView.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|", "V:|[$self]|"]);
+        containerView.addConstraintForHavingSameWidth(with: view,
                                                            constant: -32);
         
-        self.iconImageView = UIImageView();
-        self.iconImageView.backgroundColor = KPColorPalette.KPMainColor.mainColor;
-        self.containerView.addSubview(self.iconImageView);
-        self.iconImageView.addConstraints(fromStringArray: ["V:|-($metric0)-[$self(80)]",
+        iconImageView = UIImageView();
+        iconImageView.backgroundColor = KPColorPalette.KPMainColor.mainColor;
+        containerView.addSubview(iconImageView);
+        iconImageView.addConstraints(fromStringArray: ["V:|-($metric0)-[$self(80)]",
                                                             "H:|[$self(80)]"],
                                           metrics:[32]);
         
-        self.iconTitleView = UIImageView();
-        self.iconTitleView.backgroundColor = KPColorPalette.KPMainColor.grayColor_level2;
-        self.containerView.addSubview(self.iconTitleView);
-        self.iconTitleView.addConstraints(fromStringArray: ["V:|-($metric0)-[$self(24)]",
+        iconTitleView = UIImageView();
+        iconTitleView.backgroundColor = KPColorPalette.KPMainColor.grayColor_level2;
+        containerView.addSubview(iconTitleView);
+        iconTitleView.addConstraints(fromStringArray: ["V:|-($metric0)-[$self(24)]",
                                                             "H:[$view0]-16-[$self(64)]"],
                                           metrics:[32],
-                                          views:[self.iconImageView]);
+                                          views:[iconImageView]);
         
-        self.iconInformationView = UIImageView();
-        self.iconInformationView.backgroundColor = KPColorPalette.KPMainColor.grayColor_level2;
-        self.containerView.addSubview(self.iconInformationView);
-        self.iconInformationView.addConstraints(fromStringArray: ["V:[$view0]-4-[$self(18)]",
+        iconInformationView = UIImageView();
+        iconInformationView.backgroundColor = KPColorPalette.KPMainColor.grayColor_level2;
+        containerView.addSubview(iconInformationView);
+        iconInformationView.addConstraints(fromStringArray: ["V:[$view0]-4-[$self(18)]",
                                                                   "H:[$view1]-16-[$self(100)]"],
-                                                views:[self.iconTitleView, self.iconImageView]);
+                                                views:[iconTitleView, iconImageView]);
         
-        self.moreFeatureButton = UIButton();
-        self.moreFeatureButton.backgroundColor = KPColorPalette.KPMainColor.grayColor_level2;
-        self.containerView.addSubview(self.moreFeatureButton);
-        self.moreFeatureButton.addConstraints(fromStringArray: ["V:[$view0]-8-[$self(24)]",
+        moreFeatureButton = UIButton();
+        moreFeatureButton.backgroundColor = KPColorPalette.KPMainColor.grayColor_level2;
+        containerView.addSubview(moreFeatureButton);
+        moreFeatureButton.addConstraints(fromStringArray: ["V:[$view0]-8-[$self(24)]",
                                                                 "H:[$view1]-16-[$self(92)]"],
-                                              views: [self.iconInformationView, self.iconImageView]);
+                                              views: [iconInformationView, iconImageView]);
         
-        self.productDescriptionTitleLabel = UILabel();
-        self.productDescriptionTitleLabel.font = UIFont.systemFont(ofSize: 15.0);
-        self.productDescriptionTitleLabel.textColor = KPColorPalette.KPTextColor.mainColor;
-        self.productDescriptionTitleLabel.text = "產品介紹";
-        self.containerView.addSubview(self.productDescriptionTitleLabel);
-        self.productDescriptionTitleLabel.addConstraints(fromStringArray: ["H:|[$self]", "V:[$view0]-24-[$self]"],
-                                            views: [self.iconImageView]);
+        productDescriptionTitleLabel = UILabel();
+        productDescriptionTitleLabel.font = UIFont.systemFont(ofSize: 18.0);
+        productDescriptionTitleLabel.textColor = KPColorPalette.KPTextColor.mainColor;
+        productDescriptionTitleLabel.text = "產品介紹";
+        containerView.addSubview(productDescriptionTitleLabel);
+        productDescriptionTitleLabel.addConstraints(fromStringArray: ["H:|[$self]", "V:[$view0]-24-[$self]"],
+                                            views: [iconImageView]);
         
-        self.productDescriptionContentLabel = UILabel();
-        self.productDescriptionContentLabel.font = UIFont.systemFont(ofSize: 13.0);
-        self.productDescriptionContentLabel.textColor = KPColorPalette.KPTextColor.grayColor_level2;
-        self.productDescriptionContentLabel.text = "有事情嗎，有事情嗎，有事情嗎，有事情嗎，有事情嗎，有事情嗎，有事情嗎，有事情嗎，有事情嗎，" +
+        productDescriptionContentLabel = UILabel();
+        productDescriptionContentLabel.font = UIFont.systemFont(ofSize: 14.0);
+        productDescriptionContentLabel.textColor = KPColorPalette.KPTextColor.grayColor_level3;
+        productDescriptionContentLabel.text = "有事情嗎，有事情嗎，有事情嗎，有事情嗎，有事情嗎，有事情嗎，有事情嗎，有事情嗎，有事情嗎，" +
         "有事情嗎。沒事。有事情嗎，有事情嗎，有事情嗎，有事情嗎，有事情嗎，有事情嗎，有事情嗎，有事情嗎，有事情嗎，有事情嗎。沒事。";
-        self.productDescriptionContentLabel.textAlignment = .left;
-        self.productDescriptionContentLabel.numberOfLines = 0;
-        self.containerView.addSubview(self.productDescriptionContentLabel);
-        self.productDescriptionContentLabel.addConstraints(fromStringArray: ["H:|[$self]|",
+        productDescriptionContentLabel.textAlignment = .left;
+        productDescriptionContentLabel.numberOfLines = 0;
+        containerView.addSubview(productDescriptionContentLabel);
+        productDescriptionContentLabel.addConstraints(fromStringArray: ["H:|[$self]|",
                                                                              "V:[$view0]-8-[$self]"],
-                                                              views: [self.productDescriptionTitleLabel]);
+                                                              views: [productDescriptionTitleLabel]);
         
-        self.productMemberTitleLabel = UILabel();
-        self.productMemberTitleLabel.font = UIFont.systemFont(ofSize: 15.0);
-        self.productMemberTitleLabel.textColor = KPColorPalette.KPTextColor.mainColor;
-        self.productMemberTitleLabel.text = "團隊成員";
-        self.containerView.addSubview(self.productMemberTitleLabel);
-        self.productMemberTitleLabel.addConstraints(fromStringArray: ["H:|[$self]", "V:[$view0]-24-[$self]"],
+        productMemberTitleLabel = UILabel();
+        productMemberTitleLabel.font = UIFont.systemFont(ofSize: 18.0);
+        productMemberTitleLabel.textColor = KPColorPalette.KPTextColor.mainColor;
+        productMemberTitleLabel.text = "團隊成員";
+        containerView.addSubview(productMemberTitleLabel);
+        productMemberTitleLabel.addConstraints(fromStringArray: ["H:|[$self]", "V:[$view0]-24-[$self]"],
                                                          metrics: [UIScreen.main.bounds.size.width/2],
-                                                         views: [self.productDescriptionContentLabel]);
+                                                         views: [productDescriptionContentLabel]);
 
-        for (index, member) in self.productMembers.enumerated() {
+        for (index, member) in productMembers.enumerated() {
             
             let memberContainer = UIView();
             let memberTitleLabel = UILabel();
@@ -180,31 +180,31 @@ class KPAboutUsViewController: UIViewController {
             memberEmailLabel.text = member.email;
             
             
-            self.productMemberContainerViews.append(memberContainer);
+            productMemberContainerViews.append(memberContainer);
             
             if (index <= 1) {
                 if index%2 == 0 {
-                    self.containerView.addSubview(memberContainer);
+                    containerView.addSubview(memberContainer);
                     memberContainer.addConstraints(fromStringArray: ["H:|[$self(140)]",
                                                                      "V:[$view0]-8-[$self]"],
-                                                   views: [self.productMemberTitleLabel]);
+                                                   views: [productMemberTitleLabel]);
                 } else {
-                    self.containerView.addSubview(memberContainer);
+                    containerView.addSubview(memberContainer);
                     memberContainer.addConstraints(fromStringArray: ["H:[$self(140)]|",
                                                                      "V:[$view0]-8-[$self]"],
-                                                   views: [self.productMemberTitleLabel]);
+                                                   views: [productMemberTitleLabel]);
                 }
             } else {
                 if index%2 == 0 {
-                    self.containerView.addSubview(memberContainer);
+                    containerView.addSubview(memberContainer);
                         memberContainer.addConstraints(fromStringArray: ["H:|[$self(140)]",
                                                                          "V:[$view0]-16-[$self]"],
-                                                       views: [self.productMemberContainerViews[index-2]]);
+                                                       views: [productMemberContainerViews[index-2]]);
                 } else {
-                    self.containerView.addSubview(memberContainer);
+                    containerView.addSubview(memberContainer);
                         memberContainer.addConstraints(fromStringArray: ["H:[$self(140)]|",
                                                                          "V:[$view0]-16-[$self]"],
-                                                       views: [self.productMemberContainerViews[index-2]]);
+                                                       views: [productMemberContainerViews[index-2]]);
                 }
             }
             
@@ -225,23 +225,23 @@ class KPAboutUsViewController: UIViewController {
             
         }
         
-        self.dataSourceTitleLabel = UILabel();
-        self.dataSourceTitleLabel.font = UIFont.systemFont(ofSize: 15.0);
-        self.dataSourceTitleLabel.textColor = KPColorPalette.KPTextColor.mainColor;
-        self.dataSourceTitleLabel.text = "資料來源";
-        self.containerView.addSubview(self.dataSourceTitleLabel);
-        self.dataSourceTitleLabel.addConstraints(fromStringArray: ["H:|[$self]", "V:[$view0]-24-[$self]"],
+        dataSourceTitleLabel = UILabel();
+        dataSourceTitleLabel.font = UIFont.systemFont(ofSize: 18.0);
+        dataSourceTitleLabel.textColor = KPColorPalette.KPTextColor.mainColor;
+        dataSourceTitleLabel.text = "資料來源";
+        containerView.addSubview(dataSourceTitleLabel);
+        dataSourceTitleLabel.addConstraints(fromStringArray: ["H:|[$self]", "V:[$view0]-24-[$self]"],
                                                  metrics: [UIScreen.main.bounds.size.width/2],
-                                                 views: [self.productMemberContainerViews.last!]);
+                                                 views: [productMemberContainerViews.last!]);
         
-        self.dataSourceContentLabel = UILabel();
-        self.dataSourceContentLabel.font = UIFont.systemFont(ofSize: 13.0);
-        self.dataSourceContentLabel.textColor = KPColorPalette.KPTextColor.mainColor;
-        self.dataSourceContentLabel.text = "https://cafenomad.tw/";
-        self.containerView.addSubview(self.dataSourceContentLabel);
-        self.dataSourceContentLabel.addConstraints(fromStringArray: ["H:|[$self]", "V:[$view0]-8-[$self]-32-|"],
+        dataSourceContentLabel = UILabel();
+        dataSourceContentLabel.font = UIFont.systemFont(ofSize: 14.0);
+        dataSourceContentLabel.textColor = KPColorPalette.KPTextColor.grayColor_level3;
+        dataSourceContentLabel.text = "https://cafenomad.tw/";
+        containerView.addSubview(dataSourceContentLabel);
+        dataSourceContentLabel.addConstraints(fromStringArray: ["H:|[$self]", "V:[$view0]-8-[$self]-32-|"],
                                                    metrics: [UIScreen.main.bounds.size.width/2],
-                                                   views: [self.dataSourceTitleLabel]);
+                                                   views: [dataSourceTitleLabel]);
         
     }
 
@@ -252,7 +252,7 @@ class KPAboutUsViewController: UIViewController {
     
 
     func handleDismissButtonOnTapped() {
-        self.appModalController()?.dismissControllerWithDefaultDuration();
+        appModalController()?.dismissControllerWithDefaultDuration();
     }
     
     /*

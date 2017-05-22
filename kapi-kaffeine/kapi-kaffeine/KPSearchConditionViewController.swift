@@ -9,11 +9,11 @@
 import UIKit
 
 
-struct KPSearchConditionViewControllerConstants{
+struct KPSearchConditionViewControllerConstants {
     static let leftPadding = 168
 }
 
-class KPSearchConditionViewController: UIViewController {
+class KPSearchConditionViewController: KPViewController {
 
     var dismissButton:UIButton!
     var scrollView: UIScrollView!
@@ -102,196 +102,196 @@ class KPSearchConditionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.view.backgroundColor = UIColor.white;
-        self.navigationController?.navigationBar.topItem?.title = "篩選偏好設定";
+        view.backgroundColor = UIColor.white;
+        navigationController?.navigationBar.topItem?.title = "篩選偏好設定";
         
-        self.dismissButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 24, height: 24));
-        self.dismissButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4);
-        self.dismissButton.setImage(UIImage.init(named: "icon_close")?.withRenderingMode(.alwaysTemplate),
+        dismissButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 24, height: 24));
+        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4);
+        dismissButton.setImage(R.image.icon_close()?.withRenderingMode(.alwaysTemplate),
                                     for: .normal);
-        self.dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor;
-        self.dismissButton.addTarget(self,
+        dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor;
+        dismissButton.addTarget(self,
                                      action: #selector(KPSearchConditionViewController.handleDismissButtonOnTapped),
                                      for: .touchUpInside);
         
-        let barItem = UIBarButtonItem.init(customView: self.dismissButton);
-        self.navigationItem.leftBarButtonItem = barItem;
+        let barItem = UIBarButtonItem.init(customView: dismissButton);
+        navigationItem.leftBarButtonItem = barItem;
         
-        self.dismissButton.addTarget(self,
+        dismissButton.addTarget(self,
                                      action: #selector(KPInformationViewController.handleDismissButtonOnTapped),
                                      for: .touchUpInside);
         
-        self.scrollView = UIScrollView();
-        self.scrollView.showsVerticalScrollIndicator = false;
-        self.view.addSubview(self.scrollView);
-        self.scrollView.addConstraints(fromStringArray: ["V:|[$self]|",
+        scrollView = UIScrollView();
+        scrollView.showsVerticalScrollIndicator = false;
+        view.addSubview(scrollView);
+        scrollView.addConstraints(fromStringArray: ["V:|[$self]|",
                                                          "H:|[$self]|"]);
-        self.scrollView.addConstraintForCenterAligningToSuperview(in: .horizontal);
+        scrollView.addConstraintForCenterAligningToSuperview(in: .horizontal);
         
         
-        self.containerView = UIView();
-        self.scrollView.addSubview(self.containerView);
-        self.containerView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"]);
-        self.containerView.addConstraintForHavingSameWidth(with: self.view);
+        containerView = UIView();
+        scrollView.addSubview(containerView);
+        containerView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"]);
+        containerView.addConstraintForHavingSameWidth(with: view);
         
         
         // Section 1
-        self.quickSettingLabel = titleLabel("使用快速設定")
-        self.containerView.addSubview(self.quickSettingLabel)
-        self.quickSettingLabel.addConstraints(fromStringArray: ["H:|-16-[$self]",
+        quickSettingLabel = titleLabel("使用快速設定")
+        containerView.addSubview(quickSettingLabel)
+        quickSettingLabel.addConstraints(fromStringArray: ["H:|-16-[$self]",
                                                                 "V:|-16-[$self]"])
         
-        self.quickSettingButtonOne = buttonWithTitle(title: "適合讀書工作")
-        self.quickSettingButtonTwo = buttonWithTitle(title: "C/P值高")
-        self.quickSettingButtonThree = buttonWithTitle(title: "平均四分")
-        self.containerView.addSubview(self.quickSettingButtonOne)
-        self.containerView.addSubview(self.quickSettingButtonTwo)
-        self.containerView.addSubview(self.quickSettingButtonThree)
+        quickSettingButtonOne = buttonWithTitle(title: "適合讀書工作")
+        quickSettingButtonTwo = buttonWithTitle(title: "C/P值高")
+        quickSettingButtonThree = buttonWithTitle(title: "平均四分")
+        containerView.addSubview(quickSettingButtonOne)
+        containerView.addSubview(quickSettingButtonTwo)
+        containerView.addSubview(quickSettingButtonThree)
         
-        self.quickSettingButtonOne.addConstraints(fromStringArray: ["H:|-16-[$self(110)]",
+        quickSettingButtonOne.addConstraints(fromStringArray: ["H:|-16-[$self(110)]",
                                                                     "V:[$view0]-8-[$self(36)]"],
-                                                  views: [self.quickSettingLabel])
-        self.quickSettingButtonTwo.addConstraints(fromStringArray: ["H:[$view1]-8-[$self(80)]",
+                                                  views: [quickSettingLabel])
+        quickSettingButtonTwo.addConstraints(fromStringArray: ["H:[$view1]-8-[$self(80)]",
                                                                     "V:[$view0]-8-[$self(36)]"],
-                                                  views: [self.quickSettingLabel, self.quickSettingButtonOne])
-        self.quickSettingButtonThree.addConstraints(fromStringArray: ["H:[$view1]-8-[$self(80)]",
+                                                  views: [quickSettingLabel, quickSettingButtonOne])
+        quickSettingButtonThree.addConstraints(fromStringArray: ["H:[$view1]-8-[$self(80)]",
                                                                       "V:[$view0]-8-[$self(36)]"],
-                                                    views: [self.quickSettingLabel, self.quickSettingButtonTwo])
-        self.containerView.addSubview(self.seperator_one)
-        self.seperator_one.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                    views: [quickSettingLabel, quickSettingButtonTwo])
+        containerView.addSubview(seperator_one)
+        seperator_one.addConstraints(fromStringArray: ["H:|[$self]|",
                                                             "V:[$view0]-16-[$self(1)]"],
-                                          views: [self.quickSettingButtonOne])
+                                          views: [quickSettingButtonOne])
         
         
         // Section 2
-        self.adjustPointLabel = titleLabel("調整分數至你的需求")
-        self.containerView.addSubview(self.adjustPointLabel)
-        self.adjustPointLabel.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
+        adjustPointLabel = titleLabel("調整分數至你的需求")
+        containerView.addSubview(adjustPointLabel)
+        adjustPointLabel.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
                                                                "V:[$view0]-16-[$self]"],
-                                             views: [self.seperator_one])
+                                             views: [seperator_one])
         
         for (index, title) in ratingTitles.enumerated() {
             let ratingView = KPRatingView.init(.button,
                                                R.image.icon_map()!,
                                                title)
-            self.ratingViews.append(ratingView)
-            self.containerView.addSubview(ratingView)
+            ratingViews.append(ratingView)
+            containerView.addSubview(ratingView)
             
             if index == 0 {
                 ratingView.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
                                                             "V:[$view0]-24-[$self]"],
-                                          views: [self.adjustPointLabel])
+                                          views: [adjustPointLabel])
             } else {
                 ratingView.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
                                                             "V:[$view0]-24-[$self]"],
-                                          views: [self.ratingViews[index-1]])
+                                          views: [ratingViews[index-1]])
             }
         }
         
-        self.containerView.addSubview(self.seperator_two)
-        self.seperator_two.addConstraints(fromStringArray: ["H:|[$self]|",
+        containerView.addSubview(seperator_two)
+        seperator_two.addConstraints(fromStringArray: ["H:|[$self]|",
                                                             "V:[$view0]-16-[$self(1)]"],
-                                          views: [self.ratingViews.last!])
+                                          views: [ratingViews.last!])
         
         
         // Section 3
-        self.timeLimitLabel = titleLabel("有無時間限制")
-        self.containerView.addSubview(self.timeLimitLabel)
-        self.timeLimitLabel.addConstraints(fromStringArray: ["H:|-16-[$self]",
+        timeLimitLabel = titleLabel("有無時間限制")
+        containerView.addSubview(timeLimitLabel)
+        timeLimitLabel.addConstraints(fromStringArray: ["H:|-16-[$self]",
                                                              "V:[$view0]-16-[$self]"],
-                                           views: [self.seperator_two])
-        self.timeRadioBoxOne = KPCheckView.init(.radio, "不設定")
-        self.containerView.addSubview(self.timeRadioBoxOne)
-        self.timeRadioBoxOne.addConstraints(fromStringArray: ["H:|-16-[$self]",
+                                           views: [seperator_two])
+        timeRadioBoxOne = KPCheckView.init(.radio, "不設定")
+        containerView.addSubview(timeRadioBoxOne)
+        timeRadioBoxOne.addConstraints(fromStringArray: ["H:|-16-[$self]",
                                                               "V:[$view0]-16-[$self]"],
-                                            views: [self.timeLimitLabel])
-        self.timeRadioBoxTwo = KPCheckView.init(.radio, "客滿/人多限時")
-        self.containerView.addSubview(self.timeRadioBoxTwo)
-        self.timeRadioBoxTwo.addConstraints(fromStringArray: ["H:|-16-[$self]",
-                                                              "V:[$view0]-8-[$self]"],
-                                            views: [self.timeRadioBoxOne])
-        self.timeRadioBoxThree = KPCheckView.init(.radio, "不限時")
-        self.containerView.addSubview(self.timeRadioBoxThree)
-        self.timeRadioBoxThree.addConstraints(fromStringArray: ["H:|-16-[$self]",
-                                                                "V:[$view0]-8-[$self]"],
-                                              views: [self.timeRadioBoxTwo])
+                                            views: [timeLimitLabel])
+        timeRadioBoxTwo = KPCheckView.init(.radio, "客滿/人多限時")
+        containerView.addSubview(timeRadioBoxTwo)
+        timeRadioBoxTwo.addConstraints(fromStringArray: ["H:|-16-[$self]",
+                                                              "V:[$view0]-16-[$self]"],
+                                            views: [timeRadioBoxOne])
+        timeRadioBoxThree = KPCheckView.init(.radio, "不限時")
+        containerView.addSubview(timeRadioBoxThree)
+        timeRadioBoxThree.addConstraints(fromStringArray: ["H:|-16-[$self]",
+                                                                "V:[$view0]-16-[$self]"],
+                                              views: [timeRadioBoxTwo])
         
-        self.socketLabel = titleLabel("插座數量")
-        self.containerView.addSubview(self.socketLabel)
-        self.socketLabel.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",
+        socketLabel = titleLabel("插座數量")
+        containerView.addSubview(socketLabel)
+        socketLabel.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",
                                                           "V:[$view0]-16-[$self]"],
                                         metrics:[KPSearchConditionViewControllerConstants.leftPadding],
-                                           views: [self.seperator_two])
+                                        views: [seperator_two])
         
-        self.socketRadioBoxOne = KPCheckView.init(.radio, "不設定")
-        self.containerView.addSubview(self.socketRadioBoxOne)
-        self.socketRadioBoxOne.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",
+        socketRadioBoxOne = KPCheckView.init(.radio, "不設定")
+        containerView.addSubview(socketRadioBoxOne)
+        socketRadioBoxOne.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",
                                                                 "V:[$view0]-16-[$self]"],
                                               metrics:[KPSearchConditionViewControllerConstants.leftPadding],
-                                              views: [self.socketLabel])
-        self.socketRadioBoxTwo = KPCheckView.init(.radio, "部分座位有")
-        self.containerView.addSubview(self.socketRadioBoxTwo)
-        self.socketRadioBoxTwo.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",
-                                                                "V:[$view0]-8-[$self]"],
-                                              metrics:[KPSearchConditionViewControllerConstants.leftPadding],
-                                                views: [self.socketRadioBoxOne])
-        self.socketRadioBoxThree = KPCheckView.init(.radio, "很多插座")
-        self.containerView.addSubview(self.socketRadioBoxThree)
-        self.socketRadioBoxThree.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",
-                                                                  "V:[$view0]-8-[$self]"],
-                                                metrics:[KPSearchConditionViewControllerConstants.leftPadding],
-                                                views: [self.socketRadioBoxTwo])
-        
-        self.businessHourLabel = titleLabel("營業時間")
-        self.containerView.addSubview(self.businessHourLabel)
-        self.businessHourLabel.addConstraints(fromStringArray: ["H:|-16-[$self]",
+                                              views: [socketLabel])
+        socketRadioBoxTwo = KPCheckView.init(.radio, "部分座位有")
+        containerView.addSubview(socketRadioBoxTwo)
+        socketRadioBoxTwo.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",
                                                                 "V:[$view0]-16-[$self]"],
-                                              views: [self.timeRadioBoxThree])
-        
-        self.businessCheckBoxOne = KPCheckView.init(.checkmark, "目前營業中")
-        self.containerView.addSubview(self.businessCheckBoxOne)
-        self.businessCheckBoxOne.addConstraints(fromStringArray: ["H:|-16-[$self]",
+                                              metrics:[KPSearchConditionViewControllerConstants.leftPadding],
+                                              views: [socketRadioBoxOne])
+        socketRadioBoxThree = KPCheckView.init(.radio, "很多插座")
+        containerView.addSubview(socketRadioBoxThree)
+        socketRadioBoxThree.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",
                                                                   "V:[$view0]-16-[$self]"],
-                                                views: [self.businessHourLabel])
+                                                metrics:[KPSearchConditionViewControllerConstants.leftPadding],
+                                                views: [socketRadioBoxTwo])
         
-        self.businessCheckBoxTwo = KPCheckView.init(.checkmark, "特定營業時段")
-        self.containerView.addSubview(self.businessCheckBoxTwo)
-        self.businessCheckBoxTwo.addConstraints(fromStringArray: ["H:|-16-[$self]",
-                                                                  "V:[$view0]-8-[$self]"],
-                                                views: [self.businessCheckBoxOne])
+        businessHourLabel = titleLabel("營業時間")
+        containerView.addSubview(businessHourLabel)
+        businessHourLabel.addConstraints(fromStringArray: ["H:|-16-[$self]",
+                                                                "V:[$view0]-24-[$self]"],
+                                              views: [timeRadioBoxThree])
+        
+        businessCheckBoxOne = KPCheckView.init(.checkmark, "目前營業中")
+        containerView.addSubview(businessCheckBoxOne)
+        businessCheckBoxOne.addConstraints(fromStringArray: ["H:|-16-[$self]",
+                                                                  "V:[$view0]-16-[$self]"],
+                                                views: [businessHourLabel])
+        
+        businessCheckBoxTwo = KPCheckView.init(.checkmark, "特定營業時段")
+        containerView.addSubview(businessCheckBoxTwo)
+        businessCheckBoxTwo.addConstraints(fromStringArray: ["H:|-16-[$self]",
+                                                                  "V:[$view0]-16-[$self]"],
+                                                views: [businessCheckBoxOne])
         
         
-        self.othersLabel = titleLabel("其他選項")
-        self.containerView.addSubview(self.othersLabel)
-        self.othersLabel.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",
-                                                          "V:[$view0]-16-[$self]"],
+        othersLabel = titleLabel("其他選項")
+        containerView.addSubview(othersLabel)
+        othersLabel.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",
+                                                          "V:[$view0]-24-[$self]"],
                                         metrics:[KPSearchConditionViewControllerConstants.leftPadding],
-                                                views: [self.timeRadioBoxThree])
-        self.othersCheckBoxOne = KPCheckView.init(.checkmark, "可站立工作")
-        self.containerView.addSubview(self.othersCheckBoxOne)
-        self.othersCheckBoxOne.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",
+                                        views: [timeRadioBoxThree])
+        othersCheckBoxOne = KPCheckView.init(.checkmark, "可站立工作")
+        containerView.addSubview(othersCheckBoxOne)
+        othersCheckBoxOne.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",
                                                                 "V:[$view0]-16-[$self]"],
                                               metrics:[KPSearchConditionViewControllerConstants.leftPadding],
-                                              views: [self.othersLabel])
+                                              views: [othersLabel])
         
-        self.containerView.addSubview(self.seperator_three)
-        self.seperator_three.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                            "V:[$view0]-16-[$self(1)]"],
-                                          views: [self.businessCheckBoxTwo])
+        containerView.addSubview(seperator_three)
+        seperator_three.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                              "V:[$view0]-16-[$self(1)]"],
+                                            views: [businessCheckBoxTwo])
         
-        self.searchButton = UIButton()
-        self.searchButton.setTitle("開始搜尋", for: .normal)
-        self.searchButton.setTitleColor(UIColor.white, for: .normal)
-        self.searchButton.setBackgroundImage(UIImage.init(color: KPColorPalette.KPMainColor.mainColor!),
+        searchButton = UIButton()
+        searchButton.setTitle("開始搜尋", for: .normal)
+        searchButton.setTitleColor(UIColor.white, for: .normal)
+        searchButton.setBackgroundImage(UIImage.init(color: KPColorPalette.KPMainColor.mainColor!),
                                              for: .normal)
-        self.searchButton.layer.cornerRadius = 4.0
-        self.searchButton.layer.masksToBounds = true
-        self.searchButton.titleLabel?.font = UIFont.systemFont(ofSize: 15.0)
-        self.containerView.addSubview(self.searchButton)
-        self.searchButton.addConstraints(fromStringArray: ["V:[$view0]-16-[$self(40)]-16-|",
+        searchButton.layer.cornerRadius = 4.0
+        searchButton.layer.masksToBounds = true
+        searchButton.titleLabel?.font = UIFont.systemFont(ofSize: 15.0)
+        containerView.addSubview(searchButton)
+        searchButton.addConstraints(fromStringArray: ["V:[$view0]-16-[$self(40)]-16-|",
                                                            "H:|-16-[$self]-16-|"],
-                                         views: [self.seperator_three])
-        self.searchButton.addTarget(self, action: #selector(showTimePicker), for: .touchUpInside)
+                                         views: [seperator_three])
+        searchButton.addTarget(self, action: #selector(showTimePicker), for: .touchUpInside)
     }
     
     func showTimePicker() {
@@ -311,7 +311,7 @@ class KPSearchConditionViewController: UIViewController {
     }
     
     func handleDismissButtonOnTapped() {
-        self.appModalController()?.dismissControllerWithDefaultDuration();
+        appModalController()?.dismissControllerWithDefaultDuration();
     }
 
 }

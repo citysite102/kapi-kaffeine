@@ -14,7 +14,7 @@ protocol KPMainViewControllerDelegate {
     var selectedDataModel: KPDataModel? { get }
 }
 
-class KPMainViewController: UIViewController {
+class KPMainViewController: KPViewController {
 
     var searchHeaderView: KPSearchHeaderView!
     var sideBarController: KPSideViewController!
@@ -30,7 +30,7 @@ class KPMainViewController: UIViewController {
         }
     }
 
-    var currentController: UIViewController! {
+    var currentController: KPViewController! {
         didSet {
             
             if oldValue != nil {
@@ -50,7 +50,7 @@ class KPMainViewController: UIViewController {
             }
         }
     }
-        
+    
     override func viewDidLoad() {
         super.viewDidLoad();
         
@@ -85,7 +85,7 @@ class KPMainViewController: UIViewController {
                                                     for: .touchUpInside)
         self.searchHeaderView.searchButton.addTarget(self,
                                                      action: #selector(search),
-                                                        for: .touchUpInside)
+                                                     for: .touchUpInside)
         
         
         let menuLeftNavigationController = UISideMenuNavigationController(rootViewController: sideBarController);
@@ -138,18 +138,40 @@ class KPMainViewController: UIViewController {
     }
 
     func search() {
+//        let controller = KPModalViewController()
+//        controller.edgeInset = UIEdgeInsets.init(top: 0,
+//                                                 left: 0,
+//                                                 bottom: 0,
+//                                                 right: 0);
+//        controller.presentationStyle = .right
+//        let searchController = KPSearchViewController()
+//        searchController.displayDataModel = displayDataModel
+//        searchController.mainListController = mainListViewController
+//        let navigationController = UINavigationController.init(rootViewController: searchController);
+//        controller.contentController = navigationController;
+//        controller.presentModalView();
+        
+        
+//        let controller = KPModalViewController()
+//        controller.edgeInset = UIEdgeInsets.init(top: 0,
+//                                                 left: 0,
+//                                                 bottom: 0,
+//                                                 right: 0);
+//        let loadingController = KPLoadingViewController()
+//        controller.contentController = loadingController;
+//        controller.presentModalView();
+
+        
         let controller = KPModalViewController()
         controller.edgeInset = UIEdgeInsets.init(top: 0,
                                                  left: 0,
                                                  bottom: 0,
                                                  right: 0);
-        controller.presentationStyle = .right
-        let searchController = KPSearchViewController()
-        searchController.displayDataModel = displayDataModel
-        searchController.mainListController = mainListViewController
-        let navigationController = UINavigationController.init(rootViewController: searchController);
+        let newStoreController = KPNewStoreController()
+        let navigationController = UINavigationController.init(rootViewController: newStoreController);
         controller.contentController = navigationController;
         controller.presentModalView();
+        
     }
     
     func addScreenEdgePanGestureRecognizer(view: UIView, edges: UIRectEdge) {

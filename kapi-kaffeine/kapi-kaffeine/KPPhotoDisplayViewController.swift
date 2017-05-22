@@ -14,25 +14,61 @@ struct PhotoInformation {
     let index: Int
 }
 
-class KPPhotoDisplayViewController: UIViewController {
+class KPPhotoDisplayViewController: KPViewController {
 
     static let KPPhotoDisplayControllerCellReuseIdentifier = "cell";
     
-    var onceOnly = false
+    var statusBarShouldBeHidden = false
     var diplayedPhotoInformations: [PhotoInformation] = [PhotoInformation]()
     
     var collectionView:UICollectionView!;
     var collectionLayout:UICollectionViewFlowLayout!;
     var dismissButton:KPBounceButton!
-    var titleLabel:UILabel!
     var selectedIndexPath: IndexPath!
+    var titleContent: String! {
+        willSet {
+            let fadeTransition = CATransition()
+            fadeTransition.duration = 0.3
+            
+            CATransaction.begin()
+            CATransaction.setCompletionBlock({
+                self.photoTitleLabel.text = self.titleContent
+                self.photoTitleLabel.layer.add(fadeTransition, forKey: nil)
+            })
+            self.photoTitleLabel.text = ""
+            self.photoTitleLabel.layer.add(fadeTransition, forKey: nil)
+            CATransaction.commit()
+        }
+    }
     
+    
+    lazy var photoTitleLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 20.0)
+        label.textColor = KPColorPalette.KPTextColor.whiteColor
+        return label
+    }()
+    lazy var countLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 14.0)
+        label.textColor = KPColorPalette.KPTextColor.whiteColor
+        return label
+    }()
+    
+    
+    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+        return .slide
+    }
+    
+    override var prefersStatusBarHidden: Bool {
+        return statusBarShouldBeHidden
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.view.backgroundColor = UIColor.black
-        //Collection view
+        view.backgroundColor = UIColor.black
+        
         collectionLayout = UICollectionViewFlowLayout()
         collectionLayout.scrollDirection = .horizontal
         collectionLayout.itemSize = CGSize.init(width: UIScreen.main.bounds.size.width,
@@ -53,33 +89,48 @@ class KPPhotoDisplayViewController: UIViewController {
         collectionView.register(KPPhotoDisplayCell.self,
                                 forCellWithReuseIdentifier: KPPhotoDisplayViewController.KPPhotoDisplayControllerCellReuseIdentifier)
         
-        self.view.addSubview(self.collectionView);
-        self.collectionView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                             "V:|[$self]|"]);
+        view.addSubview(self.collectionView);
+        collectionView.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                        "V:|[$self]|"]);
         
-        self.dismissButton = KPBounceButton()
-        self.dismissButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4)
-        self.dismissButton.setImage(UIImage.init(named: "icon_close")?.withRenderingMode(.alwaysTemplate),
-                                    for: .normal)
-        self.dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor
-        self.dismissButton.addTarget(self,
-                                     action: #selector(KPPhotoDisplayViewController.handleDismissButtonOnTapped),
-                                     for: .touchUpInside)
-        self.view.addSubview(self.dismissButton)
-        self.dismissButton.addConstraints(fromStringArray: ["H:|-8-[$self(24)]",
-                                                            "V:|-16-[$self(24)]"]);
+        dismissButton = KPBounceButton()
+        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4)
+        dismissButton.setImage(R.image.icon_close()?.withRenderingMode(.alwaysTemplate),
+                               for: .normal)
+        dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor
+        dismissButton.addTarget(self,
+                                action: #selector(KPPhotoDisplayViewController.handleDismissButtonOnTapped),
+                                for: .touchUpInside)
+        view.addSubview(self.dismissButton)
+        dismissButton.addConstraints(fromStringArray: ["H:|-8-[$self(24)]",
+                                                       "V:|-16-[$self(24)]"]);
         
+        view.addSubview(photoTitleLabel)
+        photoTitleLabel.text = "覺旅咖啡 Journey Cafe"
+        photoTitleLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
+        photoTitleLabel.addConstraint(from: "V:|-16-[$self]")
+        
+        view.addSubview(countLabel)
+        countLabel.text = "6 of 104"
+        countLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
+        countLabel.addConstraint(from: "V:[$self]-24-|")
     }
     
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        UIApplication.shared.isStatusBarHidden = true
+        statusBarShouldBeHidden = true
+        UIView.animate(withDuration: 0.25) {
+            self.setNeedsStatusBarAppearanceUpdate()
+        }
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-//        UIApplication.shared.isStatusBarHidden = false
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
     }
     
     override func didReceiveMemoryWarning() {
@@ -88,10 +139,10 @@ class KPPhotoDisplayViewController: UIViewController {
     }
     
     func handleDismissButtonOnTapped() {
-        self.dismiss(animated: true) {
-            
-        }
+            self.dismiss(animated: true) {
+            }
     }
+    
 }
 
 extension KPPhotoDisplayViewController: UIScrollViewDelegate {

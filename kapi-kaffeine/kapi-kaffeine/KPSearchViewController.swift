@@ -8,7 +8,7 @@
 
 import UIKit
 
-class KPSearchViewController: UIViewController {
+class KPSearchViewController: KPViewController {
 
     static let KPSearchViewControllerDefaultCellReuseIdentifier = "cell";
     static let KPSearchViewControllerRecentCellReuseIdentifier = "cell_recent";
@@ -31,7 +31,7 @@ class KPSearchViewController: UIViewController {
         
         dismissButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 24, height: 24));
         dismissButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4);
-        dismissButton.setImage(UIImage.init(named: "icon_close")?.withRenderingMode(.alwaysTemplate),
+        dismissButton.setImage(R.image.icon_close()?.withRenderingMode(.alwaysTemplate),
                                     for: .normal);
         dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor;
         dismissButton.addTarget(self,
@@ -73,7 +73,7 @@ class KPSearchViewController: UIViewController {
     func configureSearchController() {
         searchController = UISearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = self
-//        searchController.dimsBackgroundDuringPresentation = true
+        searchController.dimsBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "搜尋咖啡店名稱..."
         searchController.searchBar.delegate = self
         searchController.hidesNavigationBarDuringPresentation = false
@@ -96,6 +96,10 @@ extension KPSearchViewController: UISearchResultsUpdating, UISearchBarDelegate {
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         shouldShowSearchResults = true
         tableView.reloadData()
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        searchController.searchBar.resignFirstResponder()
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class KPSharedSettingViewController: UIViewController {
+class KPSharedSettingViewController: KPViewController {
 
     var dismissButton:UIButton!
     var scrollView: UIScrollView!
@@ -55,7 +55,7 @@ class KPSharedSettingViewController: UIViewController {
         scrollViewContainer.addConstraintForHavingSameWidth(with: self.view)
         
         dismissButton = UIButton.init()
-        dismissButton.setImage(UIImage.init(named: "icon_close")?.withRenderingMode(.alwaysTemplate),
+        dismissButton.setImage(R.image.icon_close()?.withRenderingMode(.alwaysTemplate),
                                for: .normal)
         dismissButton.tintColor = KPColorPalette.KPMainColor.mainColor
         dismissButton.addTarget(self,
@@ -80,23 +80,23 @@ class KPSharedSettingViewController: UIViewController {
         
         containerView = UIView()
         scrollViewContainer.addSubview(containerView)
-        containerView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$view0][$self]"],
+        containerView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$view0][$self]|"],
                                      views: [seperator_one])
-        
-        scrollViewContainer.addSubview(seperator_two)
-        seperator_two.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
-                                                       "V:[$view0][$self(1)]"],
-                                     views: [containerView])
+    
         
         sendButton = UIButton.init(type: .custom)
         sendButton.setTitle("送出評分", for: .normal)
         sendButton.setTitleColor(KPColorPalette.KPTextColor.mainColor,
                                  for: .normal)
         sendButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
-        scrollViewContainer.addSubview(sendButton)
-        sendButton.addConstraints(fromStringArray: ["V:[$view0]-16-[$self(30)]-16-|"],
-                                  views: [seperator_two])
+        view.addSubview(sendButton)
+        sendButton.addConstraints(fromStringArray: ["V:[$self(30)]-16-|"])
         sendButton.addConstraintForCenterAligningToSuperview(in: .horizontal)
+        
+        view.addSubview(seperator_two)
+        seperator_two.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
+                                                       "V:[$self(1)]-16-[$view0]"],
+                                     views: [sendButton])
         
     }
     

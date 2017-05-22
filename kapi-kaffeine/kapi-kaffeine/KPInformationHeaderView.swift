@@ -14,6 +14,7 @@ protocol KPInformationHeaderViewDelegate: NSObjectProtocol {
 
 class KPInformationHeaderView: UIView {
 
+    var container: UIView!
     var shopPhotoContainer: UIView!
     var shopPhoto: UIImageView!
     var morePhotoButton: UIButton!;
@@ -33,84 +34,91 @@ class KPInformationHeaderView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame);
         
-        self.shopPhotoContainer = UIView()
-        self.addSubview(self.shopPhotoContainer)
-        self.shopPhotoContainer.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                                 "V:|[$self]"])
+        container = UIView()
+        addSubview(container)
+        container.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                   "V:|[$self]|"])
         
-        self.shopPhoto = UIImageView(image: UIImage(named: "demo_1"))
-        self.shopPhoto.contentMode = .scaleToFill
-        self.shopPhoto.isUserInteractionEnabled = true
-        self.shopPhotoContainer.addSubview(shopPhoto)
-        self.shopPhoto.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                        "V:|[$self(240)]|"])
+        shopPhotoContainer = UIView()
+        shopPhotoContainer.clipsToBounds = true
+        container.addSubview(shopPhotoContainer)
+        shopPhotoContainer.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                            "V:|[$self]"])
         
-        self.morePhotoButton = UIButton.init(type: .custom)
-        self.morePhotoButton.setBackgroundImage(UIImage.init(color: UIColor.clear), for: .normal)
-        self.morePhotoButton.layer.cornerRadius = 2.0
-        self.morePhotoButton.layer.borderWidth = 1.0
-        self.morePhotoButton.layer.borderColor = UIColor.white.cgColor
-        self.morePhotoButton.setTitle("99+\n張照片", for: .normal)
-        self.morePhotoButton.titleLabel?.font = UIFont.systemFont(ofSize: 13)
-        self.morePhotoButton.titleLabel?.numberOfLines = 0
-        self.morePhotoButton.titleLabel?.textAlignment = NSTextAlignment.center
-        self.morePhotoButton.setTitleColor(UIColor.white, for: .normal)
-        self.shopPhotoContainer.addSubview(morePhotoButton)
-        self.morePhotoButton.addConstraints(fromStringArray: ["H:[$self(48)]-16-|",
-                                                              "V:[$self(48)]-16-|"])
+        shopPhoto = UIImageView(image: UIImage(named: "demo_1"))
+        shopPhoto.contentMode = .scaleToFill
+        shopPhoto.isUserInteractionEnabled = true
+        shopPhotoContainer.addSubview(shopPhoto)
+        shopPhoto.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                   "V:|[$self(240)]|"])
 
-        self.photoLongPressGesture = UILongPressGestureRecognizer.init(target: self,
+        photoLongPressGesture = UILongPressGestureRecognizer.init(target: self,
                                                                        action: #selector(handleShopPhotoLongPressed(_:)))
-        self.photoLongPressGesture.minimumPressDuration = 0
-        self.shopPhoto.addGestureRecognizer(self.photoLongPressGesture)
+        photoLongPressGesture.minimumPressDuration = 0.0
+        shopPhoto.addGestureRecognizer(photoLongPressGesture)
         
-        self.collectButton = KPInformationHeaderButton();
-        self.collectButton.buttonInfo = HeaderButtonInfo(title: "收藏",
-                                                         info: "0人已收藏",
-                                                         icon: UIImage.init(named: "icon_clock")!,
-                                                         handler: { (headerButton) -> () in print("Test Handler");
+        collectButton = KPInformationHeaderButton();
+        collectButton.buttonInfo = HeaderButtonInfo(title: "收藏",
+                                                    info: "0人已收藏",
+                                                    icon: R.image.icon_collect()!,
+                                                    handler: { (headerButton) -> () in print("Test Handler");
         });
-        self.addSubview(self.collectButton);
-        self.collectButton.addConstraints(fromStringArray: ["H:|[$self($metric0)]", "V:[$view0][$self(90)]|"],
-                                          metrics: [UIScreen.main.bounds.size.width/4],
-            views: [self.shopPhoto]);
+        container.addSubview(collectButton);
+        collectButton.addConstraints(fromStringArray: ["H:|[$self($metric0)]", "V:[$view0][$self(90)]|"],
+                                     metrics: [UIScreen.main.bounds.size.width/4],
+                                     views: [shopPhotoContainer]);
         
         
-        self.checkButton = KPInformationHeaderButton();
-        self.checkButton.buttonInfo = HeaderButtonInfo(title: "我要打卡",
-                                                         info: "194人來做",
-                                                         icon: UIImage.init(named: "icon_clock")!,
-                                                         handler: { (headerButton) -> () in print("Test Handler");
+        checkButton = KPInformationHeaderButton();
+        checkButton.buttonInfo = HeaderButtonInfo(title: "我要打卡",
+                                                  info: "194人來做",
+                                                  icon: R.image.icon_map()!,
+                                                  handler: { (headerButton) -> () in print("Test Handler");
         });
-        self.addSubview(self.checkButton);
-        self.checkButton.addConstraints(fromStringArray: ["H:[$view0]-(-1)-[$self($metric0)]", "V:[$view1][$self(90)]|"],
-                                          metrics: [UIScreen.main.bounds.size.width/4+1],
-                                          views: [self.collectButton, self.shopPhoto]);
+        container.addSubview(checkButton);
+        checkButton.addConstraints(fromStringArray: ["H:[$view0]-(-1)-[$self($metric0)]", "V:[$view1][$self(90)]|"],
+                                   metrics: [UIScreen.main.bounds.size.width/4+1],
+                                   views: [collectButton, shopPhotoContainer]);
         
         
-        self.rateButton = KPInformationHeaderButton();
-        self.rateButton.buttonInfo = HeaderButtonInfo(title: "我要評分",
-                                                       info: "尚無評分",
-                                                       icon: UIImage.init(named: "icon_clock")!,
-                                                       handler: { (headerButton) -> () in print("Test Handler");
+        rateButton = KPInformationHeaderButton();
+        rateButton.buttonInfo = HeaderButtonInfo(title: "我要評分",
+                                                 info: "尚無評分",
+                                                 icon: R.image.icon_star()!,
+                                                 handler: { (headerButton) -> () in print("Test Handler");
         });
-        self.addSubview(self.rateButton);
-        self.rateButton.addConstraints(fromStringArray: ["H:[$view0]-(-1)-[$self($metric0)]", "V:[$view1][$self(90)]|"],
+        container.addSubview(rateButton);
+        rateButton.addConstraints(fromStringArray: ["H:[$view0]-(-1)-[$self($metric0)]", "V:[$view1][$self(90)]|"],
                                         metrics: [UIScreen.main.bounds.size.width/4+1],
-                                        views: [self.checkButton, self.shopPhoto]);
+                                        views: [checkButton, shopPhotoContainer]);
         
         
-        self.commentButton = KPInformationHeaderButton();
-        self.commentButton.buttonInfo = HeaderButtonInfo(title: "已評價",
-                                                       info: "29人已留言",
-                                                       icon: UIImage.init(named: "icon_clock")!,
-                                                       handler: { (headerButton) -> () in print("Test Handler");
+        commentButton = KPInformationHeaderButton();
+        commentButton.buttonInfo = HeaderButtonInfo(title: "已評價",
+                                                    info: "29人已留言",
+                                                    icon: R.image.icon_comment()!,
+                                                    handler: { (headerButton) -> () in print("Test Handler");
         });
-        self.addSubview(self.commentButton);
-        self.commentButton.addConstraints(fromStringArray: ["H:[$view0]-(-1)-[$self($metric0)]",
-                                                            "V:[$view1][$self(90)]|"],
+        container.addSubview(commentButton);
+        commentButton.addConstraints(fromStringArray: ["H:[$view0]-(-1)-[$self($metric0)]",
+                                                       "V:[$view1][$self(90)]|"],
                                         metrics: [UIScreen.main.bounds.size.width/4+1],
-                                        views: [self.rateButton, self.shopPhoto]);
+                                        views: [rateButton, shopPhotoContainer]);
+        
+        morePhotoButton = UIButton.init(type: .custom)
+        morePhotoButton.setBackgroundImage(UIImage.init(color: UIColor.clear), for: .normal)
+        morePhotoButton.layer.cornerRadius = 2.0
+        morePhotoButton.layer.borderWidth = 1.0
+        morePhotoButton.layer.borderColor = UIColor.white.cgColor
+        morePhotoButton.setTitle("99+\n張照片", for: .normal)
+        morePhotoButton.titleLabel?.font = UIFont.systemFont(ofSize: 13)
+        morePhotoButton.titleLabel?.numberOfLines = 0
+        morePhotoButton.titleLabel?.textAlignment = NSTextAlignment.center
+        morePhotoButton.setTitleColor(UIColor.white, for: .normal)
+        container.addSubview(morePhotoButton)
+        morePhotoButton.addConstraints(fromStringArray: ["H:[$self(48)]-16-|",
+                                                         "V:[$self(48)]-16-[$view0]"],
+                                       views:[commentButton])
     }
     
     required init?(coder aDecoder: NSCoder) {

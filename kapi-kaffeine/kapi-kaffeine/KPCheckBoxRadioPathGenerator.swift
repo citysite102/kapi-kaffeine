@@ -12,8 +12,8 @@ import UIKit
 class KPCheckBoxRadioPathGenerator: KPCheckBoxPathGenerator {
     
     override func pathForMark() -> UIBezierPath? {
-        let transform = CGAffineTransform(scaleX: 0.665, y: 0.665)
-        let translate = CGAffineTransform(translationX: size * 0.1675, y: size * 0.1675)
+        let transform = CGAffineTransform(scaleX: 0.6, y: 0.6)
+        let translate = CGAffineTransform(translationX: size * 0.2, y: size * 0.2)
         let path = pathForBox()
         path?.apply(transform)
         path?.apply(translate)

@@ -85,7 +85,7 @@ class KPShopInfoView: UIView {
         self.featureContainer.addConstraints(fromStringArray: ["V:[$view0]-8-[$self]", "H:|-16-[$self]"],
                                              views: [self.titleLabel]);
         
-        self.openTimeIcon = UIImageView.init(image: UIImage.init(named: "icon_clock"));
+        self.openTimeIcon = UIImageView.init(image: R.image.icon_map());
         self.addSubview(self.openTimeIcon);
         self.openTimeIcon.addConstraints(fromStringArray: ["V:[$view0]-16-[$self(20)]",
                                                            "H:|-16-[$self(20)]"],
@@ -121,7 +121,7 @@ class KPShopInfoView: UIView {
         self.otherTimeButton.addConstraintForCenterAligning(to: self.openLabel,
                                                             in: .vertical);
         
-        self.phoneIcon = UIImageView.init(image: UIImage.init(named: "icon_clock"));
+        self.phoneIcon = UIImageView.init(image: R.image.icon_clock());
         self.addSubview(self.phoneIcon);
         self.phoneIcon.addConstraints(fromStringArray: ["V:[$view0]-8-[$self(20)]",
                                                         "H:|-16-[$self(20)]"],
@@ -137,7 +137,7 @@ class KPShopInfoView: UIView {
         self.phoneLabel.addConstraintForCenterAligning(to: self.phoneIcon,
                                                        in: .vertical);
         
-        self.locationIcon = UIImageView.init(image: UIImage.init(named: "icon_clock"));
+        self.locationIcon = UIImageView.init(image: R.image.icon_map());
         self.addSubview(self.locationIcon);
         self.locationIcon.addConstraints(fromStringArray: ["V:[$view0]-8-[$self(20)]",
                                                            "H:|-16-[$self(20)]"],

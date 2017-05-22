@@ -32,7 +32,7 @@ class KPSearchTagView: UIView {
         self.preferenceHintView.addConstraints(fromStringArray: ["V:|-4-[$self]-4-|",
                                                                  "H:|-8-[$self(96)]"]);
         
-        self.preferenceHintIcon = UIImageView.init(image: UIImage.init(named: "icon_clock")?.withRenderingMode(.alwaysTemplate));
+        self.preferenceHintIcon = UIImageView.init(image: R.image.icon_clock()?.withRenderingMode(.alwaysTemplate));
         self.preferenceHintIcon.tintColor = UIColor.white;
         self.preferenceHintView.addSubview(self.preferenceHintIcon);
         self.preferenceHintIcon.addConstraints(fromStringArray: ["H:|-4-[$self]"]);
@@ -109,7 +109,7 @@ extension KPSearchTagView: UICollectionViewDelegate, UICollectionViewDataSource,
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: KPSearchTagView.KPSearchTagViewCellReuseIdentifier,
                                                       for: indexPath) as! KPSearchTagCell;
         cell.tagTitle.text = self.demoHeaderTagContents[indexPath.row];
-        cell.tagIcon.image = UIImage.init(named: "icon_clock");
+        cell.tagIcon.image = R.image.icon_clock();
         cell.layer.cornerRadius = 2.0;
         cell.layer.masksToBounds = true;
         cell.alpha = cell.isSelected ? 1.0 : 0.4;

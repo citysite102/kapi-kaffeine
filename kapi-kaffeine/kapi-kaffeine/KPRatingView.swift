@@ -46,7 +46,7 @@ class KPRatingView: UIView {
     lazy var rateTitleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16.0)
-        label.textColor = KPColorPalette.KPTextColor.grayColor
+        label.textColor = KPColorPalette.KPTextColor.grayColor_level1
         return label
     }()
     
@@ -138,18 +138,23 @@ class KPRatingView: UIView {
                                           views: [iconImageView])
             rateTitleLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
             
+            let scoreLabelContainer = UIView()
+            addSubview(scoreLabelContainer)
             addSubview(minusButton)
-            addSubview(rateScoreLabel)
+            scoreLabelContainer.addSubview(rateScoreLabel)
             addSubview(addButton)
             
             addButton.addConstraints(fromStringArray: ["V:|[$self(24)]|",
                                                        "H:[$self(24)]|"])
-            rateScoreLabel.addConstraints(fromStringArray: ["H:[$self]-16-[$view0]"],
-                                          views: [addButton])
+            
+            scoreLabelContainer.addConstraints(fromStringArray: ["H:[$self(40)][$view0]",
+                                                                 "V:|[$self(24)]|"],
+                                               views: [addButton])
+            rateScoreLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
             rateScoreLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
-            minusButton.addConstraints(fromStringArray: ["H:[$self(24)]-16-[$view0]",
+            minusButton.addConstraints(fromStringArray: ["H:[$self(24)][$view0]",
                                                          "V:|[$self(24)]|"],
-                                       views: [rateScoreLabel])
+                                       views: [scoreLabelContainer])
             
             addButton.addTarget(self, action: #selector(handleAddButtonOnTapped),
                                 for: .touchUpInside)

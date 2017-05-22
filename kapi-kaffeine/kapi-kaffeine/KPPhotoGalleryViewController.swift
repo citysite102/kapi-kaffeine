@@ -8,7 +8,7 @@
 
 import UIKit
 
-class KPPhotoGalleryViewController: UIViewController {
+class KPPhotoGalleryViewController: KPViewController {
 
     static let KPPhotoGalleryViewControllerCellReuseIdentifier = "cell";
     static let KPPhotoGalleryViewControllerCellAddIdentifier = "cell_add";

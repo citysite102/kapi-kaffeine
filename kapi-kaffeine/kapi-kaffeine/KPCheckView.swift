@@ -18,7 +18,7 @@ class KPCheckView: UIView {
     lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16.0)
-        label.textColor = KPColorPalette.KPTextColor.grayColor
+        label.textColor = KPColorPalette.KPTextColor.grayColor_level1
         return label
     }()
     
