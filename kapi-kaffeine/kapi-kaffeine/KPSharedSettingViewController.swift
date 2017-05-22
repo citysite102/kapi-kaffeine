@@ -12,7 +12,6 @@ class KPSharedSettingViewController: KPViewController {
 
     var dismissButton:UIButton!
     var scrollView: UIScrollView!
-    var scrollViewContainer: UIView!
     var containerView: UIView!
     var sendButton: UIButton!
 
@@ -41,19 +40,6 @@ class KPSharedSettingViewController: KPViewController {
         
         self.view.backgroundColor = UIColor.white
         
-        scrollView = UIScrollView()
-        scrollView.isScrollEnabled = false
-        scrollView.showsVerticalScrollIndicator = false
-        view.addSubview(self.scrollView)
-        scrollView.addConstraints(fromStringArray: ["V:|[$self]|",
-                                                    "H:|[$self]|"])
-        
-        
-        scrollViewContainer = UIView()
-        scrollView.addSubview(self.scrollViewContainer)
-        scrollViewContainer.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"])
-        scrollViewContainer.addConstraintForHavingSameWidth(with: self.view)
-        
         dismissButton = UIButton.init()
         dismissButton.setImage(R.image.icon_close()?.withRenderingMode(.alwaysTemplate),
                                for: .normal)
@@ -62,27 +48,41 @@ class KPSharedSettingViewController: KPViewController {
                                 action: #selector(KPRatingViewController.handleDismissButtonOnTapped),
                                 for: .touchUpInside)
         
-        scrollViewContainer.addSubview(dismissButton)
+        view.addSubview(dismissButton)
         dismissButton.addConstraints(fromStringArray: ["H:|-16-[$self(24)]",
                                                        "V:|-16-[$self(24)]"])
         dismissButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4)
         
         
-        scrollViewContainer.addSubview(titleLabel)
+        view.addSubview(titleLabel)
         titleLabel.addConstraints(fromStringArray: ["V:[$view0]-24-[$self]",
                                                     "H:|-16-[$self]"],
                                   views:[dismissButton])
         
-        scrollViewContainer.addSubview(seperator_one)
+        view.addSubview(seperator_one)
         seperator_one.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
                                                        "V:[$view0]-16-[$self(1)]"],
                                      views: [titleLabel])
         
+        scrollView = UIScrollView()
+        scrollView.isScrollEnabled = false
+        scrollView.showsVerticalScrollIndicator = false
+        view.addSubview(self.scrollView)
+        scrollView.addConstraints(fromStringArray: ["V:[$view0][$self]",
+                                                    "H:|[$self]|"],
+                                  views: [seperator_one])
+        
+        
         containerView = UIView()
-        scrollViewContainer.addSubview(containerView)
-        containerView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$view0][$self]|"],
-                                     views: [seperator_one])
-    
+        scrollView.addSubview(self.containerView)
+        containerView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"])
+        containerView.addConstraintForHavingSameWidth(with: scrollView)
+        
+        
+        view.addSubview(seperator_two)
+        seperator_two.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
+                                                       "V:[$view0][$self(1)]"],
+                                     views: [scrollView])
         
         sendButton = UIButton.init(type: .custom)
         sendButton.setTitle("送出評分", for: .normal)
@@ -90,7 +90,9 @@ class KPSharedSettingViewController: KPViewController {
                                  for: .normal)
         sendButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         view.addSubview(sendButton)
-        sendButton.addConstraints(fromStringArray: ["V:[$self(30)]-16-|"])
+
+        sendButton.addConstraints(fromStringArray: ["V:[$view0]-16-[$self(30)]-16-|"],
+                                  views: [seperator_two])
         sendButton.addConstraintForCenterAligningToSuperview(in: .horizontal)
         
         view.addSubview(seperator_two)
