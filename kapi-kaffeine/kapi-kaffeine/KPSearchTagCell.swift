@@ -14,23 +14,24 @@ class KPSearchTagCell: UICollectionViewCell {
     var tagIcon:UIImageView!
     
     override init(frame: CGRect) {
-        super.init(frame: frame);
+        super.init(frame: frame)
         
-        self.backgroundColor = UIColor.white;
-        self.alpha = 0.4;
+        backgroundColor = UIColor.white
+        alpha = 0.4
         
-        self.tagIcon = UIImageView();
-        self.addSubview(self.tagIcon);
-        self.tagIcon.addConstraints(fromStringArray: ["H:|-6-[$self(20)]",
-                                                      "V:|-6-[$self(20)]-6-|"]);
+        tagIcon = UIImageView()
+        addSubview(tagIcon)
+        tagIcon.addConstraints(fromStringArray: ["H:|-6-[$self(20)]",
+                                                      "V:|-6-[$self(20)]-6-|"])
+        tagIcon.tintColor = KPColorPalette.KPMainColor.mainColor
         
-        self.tagTitle = UILabel();
-        self.tagTitle.font = UIFont.systemFont(ofSize: 13.0);
-        self.tagTitle.textColor = KPColorPalette.KPMainColor.mainColor;
-        self.addSubview(self.tagTitle);
-        self.tagTitle.addConstraints(fromStringArray: ["H:[$view0]-4-[$self]-6-|"],
-                                     views: [self.tagIcon]);
-        self.tagTitle.addConstraintForCenterAligningToSuperview(in: .vertical);
+        tagTitle = UILabel()
+        tagTitle.font = UIFont.systemFont(ofSize: 13.0)
+        tagTitle.textColor = KPColorPalette.KPMainColor.mainColor
+        addSubview(tagTitle)
+        tagTitle.addConstraints(fromStringArray: ["H:[$view0]-4-[$self]-6-|"],
+                                     views: [tagIcon])
+        tagTitle.addConstraintForCenterAligningToSuperview(in: .vertical)
     }
     
     required init?(coder aDecoder: NSCoder) {

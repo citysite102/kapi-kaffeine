@@ -39,6 +39,7 @@ class KPRatingView: UIView {
     
     lazy var iconImageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.tintColor = KPColorPalette.KPMainColor.mainColor
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()

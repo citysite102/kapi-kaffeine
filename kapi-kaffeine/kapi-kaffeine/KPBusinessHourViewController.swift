@@ -40,7 +40,7 @@ class KPBusinessHourViewController: KPSharedSettingViewController, KPTimePickerD
             let checkView = KPCheckView.init(.checkmark, title)
             containerView.addSubview(checkView)
             checkBoxViews.append(checkView)
-            
+            containerView.addConstraint(forHeight: 500)
             if index == 0 {
                 checkView.addConstraints(fromStringArray: ["H:|-16-[$self]", "V:|-24-[$self]"])
             } else {
@@ -85,7 +85,7 @@ class KPBusinessHourViewController: KPSharedSettingViewController, KPTimePickerD
             
         }
         
-        heightConstraints.append(checkBoxViews.last!.addConstraint(from: "V:[$self]-16-|").first as! NSLayoutConstraint)
+//        heightConstraints.append(checkBoxViews.last!.addConstraint(from: "V:[$self]-16-|").first as! NSLayoutConstraint)
         
         
         sendButton.addTarget(self, action: #selector(closeTimePicker), for: .touchUpInside)

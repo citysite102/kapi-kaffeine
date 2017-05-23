@@ -13,6 +13,10 @@ class KPRatingViewController: KPSharedSettingViewController {
     var ratingTitles = ["Wifi穩定", "安靜程度",
                         "價格實惠", "座位數量",
                         "咖啡品質", "餐點美味", "環境舒適"]
+    var ratingImages = [R.image.icon_wifi(), R.image.icon_sleep(),
+                        R.image.icon_money(), R.image.icon_seat(),
+                        R.image.icon_cup(), R.image.icon_cutlery(),
+                        R.image.icon_pic()]
     var ratingViews = [KPRatingView]()
 
     lazy var scoreLabel: UILabel = {
@@ -38,7 +42,7 @@ class KPRatingViewController: KPSharedSettingViewController {
         
         for (index, title) in ratingTitles.enumerated() {
             let ratingView = KPRatingView.init(.star,
-                                               R.image.icon_map()!,
+                                               ratingImages[index]!,
                                                title)
             ratingViews.append(ratingView)
             containerView.addSubview(ratingView)
