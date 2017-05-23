@@ -8,84 +8,115 @@
 
 import UIKit
 
-class KPForthIntroView: UIView {
+class KPForthIntroView: KPSharedIntroView {
 
-    var bottomImageView: UIImageView!
+    var container: UIView!
     var firstPopImageView: UIImageView!
     var secondPopImageView: UIImageView!
     var thirdPopImageView: UIImageView!
-    var forthPopImageView: UIImageView!
-    var fifthPopImageView: UIImageView!
+    var starImageViewOne: UIImageView!
+    var starImageViewTwo: UIImageView!
+    var starImageViewThree: UIImageView!
+    var starImageViewFour: UIImageView!
+    var starImageViewFive: UIImageView!
     
     
-    var descriptionStyle: NSMutableParagraphStyle!
+    var animateSpeekBox: UIView!
+    var animateSpeekBoxTwo: UIView!
+    var animateSpeekBoxThree: UIView!
     
-    lazy var introTitleLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 22.0)
-        label.textAlignment = .center
-        label.textColor = KPColorPalette.KPTextColor.whiteColor
-        return label
-    }()
-    
-    lazy var introDescriptionLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 18.0)
-        label.alpha = 0.8
-        label.numberOfLines = 0
-        label.textAlignment = .center
-        label.textColor = KPColorPalette.KPTextColor.whiteColor
-        return label
-    }()
-    
+    var animateStarView: UIImageView!
     
     override init(frame: CGRect) {
         super.init(frame: frame);
         
         self.isUserInteractionEnabled = false
         
-        bottomImageView = UIImageView(image: R.image.image_onbroading_2())
-        bottomImageView.contentMode = .scaleAspectFit
-        addSubview(bottomImageView)
-        bottomImageView.addConstraints(fromStringArray: ["V:|-80-[$self(240)]",
-                                                         "H:[$self]"])
-        bottomImageView.addConstraintForCenterAligningToSuperview(in: .horizontal)
+        container = UIView()
+        addSubview(container)
+        container.addConstraints(fromStringArray: ["V:|-80-[$self]",
+                                                   "H:[$self(260)]"])
+        container.addConstraintForCenterAligningToSuperview(in: .horizontal)
         
-        firstPopImageView = UIImageView(image: R.image.image_onbroading_21())
-        addSubview(firstPopImageView)
-        firstPopImageView.addConstraintForAligning(to: .top, of: bottomImageView, constant: 0)
-        firstPopImageView.addConstraintForAligning(to: .left, of: bottomImageView, constant: 40)
+        firstPopImageView = UIImageView(image: R.image.image_onbroading_41())
+        container.addSubview(firstPopImageView)
+        firstPopImageView.addConstraints(fromStringArray: ["V:|[$self]",
+                                                           "H:|-5-[$self]"])
         
-        secondPopImageView = UIImageView(image: R.image.image_onbroading_22())
-        addSubview(secondPopImageView)
-        secondPopImageView.addConstraintForAligning(to: .top, of: bottomImageView, constant: 56)
-        secondPopImageView.addConstraintForAligning(to: .left, of: bottomImageView, constant: 0)
+        secondPopImageView = UIImageView(image: R.image.image_onbroading_42())
+        container.addSubview(secondPopImageView)
+        secondPopImageView.addConstraints(fromStringArray: ["V:|[$self]",
+                                                            "H:[$self]-4-|"])
+        animateSpeekBox = UIView()
+        animateSpeekBox.backgroundColor = UIColor(rgbaHexValue: 0xD4D4D4FF)
+        animateSpeekBox.layer.cornerRadius = 2.0
+        animateSpeekBox.layer.masksToBounds = true
+        secondPopImageView.addSubview(animateSpeekBox)
+        animateSpeekBox.addConstraints(fromStringArray: ["V:|-14-[$self(7)]",
+                                                         "H:|-16-[$self(120)]"])
         
-        thirdPopImageView = UIImageView(image: R.image.image_onbroading_23())
-        addSubview(thirdPopImageView)
-        thirdPopImageView.addConstraintForAligning(to: .top, of: bottomImageView, constant: 120)
-        thirdPopImageView.addConstraintForAligning(to: .left, of: bottomImageView, constant: -16)
+        animateSpeekBoxTwo = UIView()
+        animateSpeekBoxTwo.backgroundColor = UIColor(rgbaHexValue: 0xD4D4D4FF)
+        animateSpeekBoxTwo.layer.cornerRadius = 2.0
+        animateSpeekBoxTwo.layer.masksToBounds = true
+        secondPopImageView.addSubview(animateSpeekBoxTwo)
+        animateSpeekBoxTwo.addConstraints(fromStringArray: ["V:|-27-[$self(7)]",
+                                                            "H:|-16-[$self(120)]"],
+                                       views:[animateSpeekBox])
         
-        forthPopImageView = UIImageView(image: R.image.image_onbroading_24())
-        addSubview(forthPopImageView)
-        forthPopImageView.addConstraintForAligning(to: .top, of: bottomImageView, constant: 24)
-        forthPopImageView.addConstraintForAligning(to: .right, of: bottomImageView, constant: 16)
+        animateSpeekBoxThree = UIView()
+        animateSpeekBoxThree.backgroundColor = UIColor(rgbaHexValue: 0xD4D4D4FF)
+        animateSpeekBoxThree.layer.cornerRadius = 2.0
+        animateSpeekBoxThree.layer.masksToBounds = true
+        secondPopImageView.addSubview(animateSpeekBoxThree)
+        animateSpeekBoxThree.addConstraints(fromStringArray: ["V:|-40-[$self(7)]",
+                                                              "H:|-16-[$self(70)]"],
+                                       views:[animateSpeekBoxTwo])
         
-        fifthPopImageView = UIImageView(image: R.image.image_onbroading_25())
-        addSubview(fifthPopImageView)
-        fifthPopImageView.addConstraintForAligning(to: .top, of: bottomImageView, constant: 112)
-        fifthPopImageView.addConstraintForAligning(to: .right, of: bottomImageView, constant: 16)
         
-        firstPopImageView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
-        secondPopImageView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
-        thirdPopImageView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
-        forthPopImageView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
-        fifthPopImageView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+        thirdPopImageView = UIImageView(image: R.image.image_onbroading_43())
+        container.addSubview(thirdPopImageView)
+        thirdPopImageView.addConstraints(fromStringArray: ["V:[$view0]-8-[$self]",
+                                                           "H:|[$self]|"],
+                                         views: [secondPopImageView])
         
-        descriptionStyle = NSMutableParagraphStyle()
-        descriptionStyle.alignment = .center
-        descriptionStyle.lineSpacing = 2.4
+        animateStarView =  UIImageView(image: R.image.image_onbroading_star_animate()?.withRenderingMode(.alwaysTemplate))
+        animateStarView.tintColor = KPColorPalette.KPMainColor.grayColor_level5
+        thirdPopImageView.addSubview(animateStarView)
+        animateStarView.addConstraints(fromStringArray: ["V:|-16-[$self]",
+                                                         "H:|-87-[$self]"])
         
+        
+        starImageViewOne = UIImageView(image: R.image.image_onbroading_star_1())
+        container.addSubview(starImageViewOne)
+        starImageViewOne.addConstraints(fromStringArray: ["V:[$view0]-50-[$self]-16-|",
+                                                          "H:|-16-[$self]"],
+                                         views: [thirdPopImageView])
+        
+        starImageViewTwo = UIImageView(image: R.image.image_onbroading_star_2())
+        container.addSubview(starImageViewTwo)
+        starImageViewTwo.addConstraints(fromStringArray: ["V:[$view0]-32-[$self]",
+                                                          "H:[$view1]-12-[$self]"],
+                                        views: [thirdPopImageView, starImageViewOne])
+        
+        starImageViewThree = UIImageView(image: R.image.image_onbroading_star_3())
+        container.addSubview(starImageViewThree)
+        starImageViewThree.addConstraints(fromStringArray: ["V:[$view0]-16-[$self]"],
+                                          views: [thirdPopImageView])
+        starImageViewThree.addConstraintForCenterAligningToSuperview(in: .horizontal)
+        
+        starImageViewFive = UIImageView(image: R.image.image_onbroading_star_1())
+        container.addSubview(starImageViewFive)
+        starImageViewFive.addConstraints(fromStringArray: ["V:[$view0]-50-[$self]",
+                                                           "H:[$self]-16-|"],
+                                         views: [thirdPopImageView])
+        
+        starImageViewFour = UIImageView(image: R.image.image_onbroading_star_2())
+        container.addSubview(starImageViewFour)
+        starImageViewFour.addConstraints(fromStringArray: ["V:[$view0]-32-[$self]",
+                                                            "H:[$self]-12-[$view1]"],
+                                          views: [thirdPopImageView, starImageViewFive])
+
         let attrS = NSMutableAttributedString.init(string: "為店家評分，留言，上傳照片，讓特別的時光留下美好回憶")
         attrS.addAttributes([NSParagraphStyleAttributeName: descriptionStyle],
                             range: NSRange.init(location: 0, length: attrS.length))
@@ -94,79 +125,164 @@ class KPForthIntroView: UIView {
         introTitleLabel.text = "留下你的足跡"
         introDescriptionLabel.attributedText = attrS
         
-        addSubview(introTitleLabel)
-        addSubview(introDescriptionLabel)
         
-        introTitleLabel.addConstraints(fromStringArray: ["V:[$self]-168-|",
-                                                         "H:|-32-[$self]-32-|"])
-        
-        introDescriptionLabel.addConstraints(fromStringArray: ["V:[$view0]-16-[$self]",
-                                                               "H:|-32-[$self]-32-|"],
-                                             views:[introTitleLabel])
-        
-        DispatchQueue.main.asyncAfter(deadline: .now()+0.2) {
-            self.showPopContents()
-        }
-        
+        animateSpeekBox.isHidden = true
+        animateSpeekBoxTwo.isHidden = true
+        animateSpeekBoxThree.isHidden = true
+
+        starImageViewOne.isHidden = true
+        starImageViewTwo.isHidden = true
+        starImageViewThree.isHidden = true
+        starImageViewFour.isHidden = true
+        starImageViewFive.isHidden = true
+    
     }
     
     func showPopContents() {
         
-        UIView.animate(withDuration: 0.5,
+        
+        animateSpeekBox.isHidden = false
+        animateSpeekBoxTwo.isHidden = false
+        animateSpeekBoxThree.isHidden = false
+        
+        starImageViewOne.isHidden = false
+        starImageViewTwo.isHidden = false
+        starImageViewThree.isHidden = false
+        starImageViewFour.isHidden = false
+        starImageViewFive.isHidden = false
+        
+        let oldBoxOneFrame = animateSpeekBox.frame
+        let oldBoxTwoFrame = animateSpeekBoxTwo.frame
+        let oldBoxThreeFrame = animateSpeekBoxThree.frame
+        
+        animateSpeekBox.layer.anchorPoint = CGPoint(x: 0, y: 0.5)
+        animateSpeekBox.frame = oldBoxOneFrame
+        animateSpeekBox.transform = CGAffineTransform(scaleX: 0, y: 1)
+        animateSpeekBoxTwo.layer.anchorPoint = CGPoint(x: 0, y: 0.5)
+        animateSpeekBoxTwo.frame = oldBoxTwoFrame
+        animateSpeekBoxTwo.transform = CGAffineTransform(scaleX: 0, y: 1)
+        animateSpeekBoxThree.layer.anchorPoint = CGPoint(x: 0, y: 0.5)
+        animateSpeekBoxThree.frame = oldBoxThreeFrame
+        animateSpeekBoxThree.transform = CGAffineTransform(scaleX: 0, y: 1)
+        
+        starImageViewOne.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+        starImageViewTwo.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+        starImageViewThree.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+        starImageViewFour.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+        starImageViewFive.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+        
+        
+        UIView.animate(withDuration: 1.0,
                        delay: 0,
                        usingSpringWithDamping: 0.5,
                        initialSpringVelocity: 0.8,
                        options: .curveEaseOut,
                        animations: {
-                        self.firstPopImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                        self.animateSpeekBox.transform = CGAffineTransform.identity
         }) { (_) in
             
         }
         
-        UIView.animate(withDuration: 0.5,
+        UIView.animate(withDuration: 1.0,
                        delay: 0.1,
                        usingSpringWithDamping: 0.5,
                        initialSpringVelocity: 0.8,
                        options: .curveEaseOut,
                        animations: {
-                        self.secondPopImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                        self.animateSpeekBoxTwo.transform = CGAffineTransform.identity
         }) { (_) in
             
         }
         
-        UIView.animate(withDuration: 0.5,
+        UIView.animate(withDuration: 1.0,
                        delay: 0.2,
                        usingSpringWithDamping: 0.5,
                        initialSpringVelocity: 0.8,
                        options: .curveEaseOut,
                        animations: {
-                        self.thirdPopImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                        self.animateSpeekBoxThree.transform = CGAffineTransform.identity
         }) { (_) in
             
+            UIView.animate(withDuration: 0.2,
+                           delay: 0.0,
+                           usingSpringWithDamping: 0.5,
+                           initialSpringVelocity: 0.8,
+                           options: .curveEaseOut,
+                           animations: {
+                            self.animateStarView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+            }) { (_) in
+                UIView.animate(withDuration: 0.3,
+                               delay: 0.0,
+                               usingSpringWithDamping: 0.5,
+                               initialSpringVelocity: 0.8,
+                               options: .curveEaseOut,
+                               animations: {
+                                self.animateStarView.tintColor = UIColor(rgbaHexValue: 0xF9C816FF)
+                                self.animateStarView.transform = CGAffineTransform.identity
+                }) { (_) in
+                    self.performStarAnimation(0.1)
+                }
+            }
+            
         }
+    }
+    
+    func performStarAnimation(_ delay: TimeInterval) {
         
-        UIView.animate(withDuration: 0.5,
-                       delay: 0.2,
+        UIView.animate(withDuration: 0.6,
+                       delay: delay+0,
                        usingSpringWithDamping: 0.5,
                        initialSpringVelocity: 0.8,
                        options: .curveEaseOut,
                        animations: {
-                        self.forthPopImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                        self.starImageViewOne.transform = CGAffineTransform.identity
         }) { (_) in
             
         }
         
-        UIView.animate(withDuration: 0.5,
-                       delay: 0.2,
+        UIView.animate(withDuration: 0.6,
+                       delay: delay+0.1,
                        usingSpringWithDamping: 0.5,
                        initialSpringVelocity: 0.8,
                        options: .curveEaseOut,
                        animations: {
-                        self.fifthPopImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                        self.starImageViewTwo.transform = CGAffineTransform.identity
         }) { (_) in
             
         }
         
+        UIView.animate(withDuration: 0.6,
+                       delay: delay+0.2,
+                       usingSpringWithDamping: 0.5,
+                       initialSpringVelocity: 0.8,
+                       options: .curveEaseOut,
+                       animations: {
+                        self.starImageViewThree.transform = CGAffineTransform.identity
+        }) { (_) in
+            
+        }
+        
+        UIView.animate(withDuration: 0.6,
+                       delay: delay+0.3,
+                       usingSpringWithDamping: 0.5,
+                       initialSpringVelocity: 0.8,
+                       options: .curveEaseOut,
+                       animations: {
+                        self.starImageViewFour.transform = CGAffineTransform.identity
+        }) { (_) in
+            
+        }
+        
+        UIView.animate(withDuration: 0.6,
+                       delay: delay+0.4,
+                       usingSpringWithDamping: 0.5,
+                       initialSpringVelocity: 0.8,
+                       options: .curveEaseOut,
+                       animations: {
+                        self.starImageViewFive.transform = CGAffineTransform.identity
+        }) { (_) in
+            
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {

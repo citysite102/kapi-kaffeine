@@ -8,7 +8,7 @@
 
 import UIKit
 
-class KPSecondIntroView: UIView {
+class KPSecondIntroView: KPSharedIntroView {
 
     var bottomImageView: UIImageView!
     var firstPopImageView: UIImageView!
@@ -16,28 +16,6 @@ class KPSecondIntroView: UIView {
     var thirdPopImageView: UIImageView!
     var forthPopImageView: UIImageView!
     var fifthPopImageView: UIImageView!
-    
-    
-    var descriptionStyle: NSMutableParagraphStyle!
-    
-    lazy var introTitleLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 22.0)
-        label.textAlignment = .center
-        label.textColor = KPColorPalette.KPTextColor.whiteColor
-        return label
-    }()
-    
-    lazy var introDescriptionLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 18.0)
-        label.alpha = 0.8
-        label.numberOfLines = 0
-        label.textAlignment = .center
-        label.textColor = KPColorPalette.KPTextColor.whiteColor
-        return label
-    }()
-    
     
     override init(frame: CGRect) {
         super.init(frame: frame);
@@ -82,10 +60,6 @@ class KPSecondIntroView: UIView {
         forthPopImageView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
         fifthPopImageView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
         
-        descriptionStyle = NSMutableParagraphStyle()
-        descriptionStyle.alignment = .center
-        descriptionStyle.lineSpacing = 2.4
-        
         let attrS = NSMutableAttributedString.init(string: "收錄全台超過1000家咖啡館資訊，隨時更新，動態一手掌握")
         attrS.addAttributes([NSParagraphStyleAttributeName: descriptionStyle],
                             range: NSRange.init(location: 0, length: attrS.length))
@@ -94,15 +68,6 @@ class KPSecondIntroView: UIView {
         introTitleLabel.text = "上千家咖啡館任你選"
         introDescriptionLabel.attributedText = attrS
         
-        addSubview(introTitleLabel)
-        addSubview(introDescriptionLabel)
-        
-        introTitleLabel.addConstraints(fromStringArray: ["V:[$self]-168-|",
-                                                         "H:|-32-[$self]-32-|"])
-        
-        introDescriptionLabel.addConstraints(fromStringArray: ["V:[$view0]-16-[$self]",
-                                                               "H:|-32-[$self]-32-|"],
-                                             views:[introTitleLabel])
     }
     
     func showPopContents() {
@@ -141,7 +106,7 @@ class KPSecondIntroView: UIView {
         }
         
         UIView.animate(withDuration: 0.5,
-                       delay: 0.2,
+                       delay: 0.3,
                        usingSpringWithDamping: 0.5,
                        initialSpringVelocity: 0.8,
                        options: .curveEaseOut,
@@ -152,7 +117,7 @@ class KPSecondIntroView: UIView {
         }
         
         UIView.animate(withDuration: 0.5,
-                       delay: 0.2,
+                       delay: 0.4,
                        usingSpringWithDamping: 0.5,
                        initialSpringVelocity: 0.8,
                        options: .curveEaseOut,

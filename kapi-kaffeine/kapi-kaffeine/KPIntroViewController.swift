@@ -9,8 +9,9 @@
 import UIKit
 import BenzeneFoundation
 
-class KPIntroViewController: UIViewController {
+class KPIntroViewController: KPViewController {
 
+    var statusBarShouldBeHidden = false
     
     var scrollView: UIScrollView!
     var pageControl: UIPageControl!
@@ -131,6 +132,24 @@ class KPIntroViewController: UIViewController {
                                         height: UIScreen.main.bounds.size.height)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        statusBarShouldBeHidden = true
+        UIView.animate(withDuration: 0.25) {
+            self.setNeedsStatusBarAppearanceUpdate()
+        }
+    }
+    
+    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+        return .slide
+    }
+    
+    override var prefersStatusBarHidden: Bool {
+        return statusBarShouldBeHidden
+    }
+    
+    // MARK: UI Event
+    
     func skipButtonOnTapped(_ sender: UIButton) {
         self.appModalController()?.dismissControllerWithDefaultDuration()
     }
@@ -143,9 +162,13 @@ extension KPIntroViewController: UIScrollViewDelegate {
         pageControl.currentPage = Int(current)
         
         if pageControl.currentPage == 1 {
-            DispatchQueue.main.asyncAfter(deadline: .now()+0.1) {
-                self.secondIntroView.showPopContents()
-            }
+            self.secondIntroView.showPopContents()
+        } else if pageControl.currentPage == 2 {
+            self.thirdIntroView.showPopContents()
+        } else if pageControl.currentPage == 3 {
+            self.forthIntroView.showPopContents()
+        } else if pageControl.currentPage == 4 {
+            self.fifthIntroView.showPopContents()
         }
     }
     
@@ -166,16 +189,11 @@ extension KPIntroViewController: UIScrollViewDelegate {
                                         0,
                                         0)
         transform = CATransform3DScale(transform, scale, scale, 1)
-//        introTitleLabel.layer.transform = transform
-//        introDescriptionLabel.layer.transform = transform
         
-//        if currentProgress <= 0.5 {
-//            introTitleLabel.alpha = 1-currentProgress*2
-//            introDescriptionLabel.alpha = 1-currentProgress*2
-//        } else {
-//            introTitleLabel.alpha = (currentProgress-0.5)*2
-//            introDescriptionLabel.alpha = (currentProgress-0.5)*2
-//        }
-        
+        if current > 1 && current < 2 {
+            self.thirdIntroView.updateLayoutWithProgress(currentProgress)
+        } else if current > 3 && current < 4 {
+            self.fifthIntroView.updateLayoutWithProgress(currentProgress)
+        }
     }
 }

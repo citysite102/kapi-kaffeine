@@ -67,6 +67,7 @@
 		77BB392A1ED3DD5700958AFE /* KPThirdIntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77BB39291ED3DD5700958AFE /* KPThirdIntroView.swift */; };
 		77BB392C1ED3DD6000958AFE /* KPForthIntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77BB392B1ED3DD6000958AFE /* KPForthIntroView.swift */; };
 		77BB392F1ED3DD7100958AFE /* KPFifthIntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77BB392E1ED3DD7100958AFE /* KPFifthIntroView.swift */; };
+		77BB39391ED49BD100958AFE /* KPSharedIntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77BB39381ED49BD000958AFE /* KPSharedIntroView.swift */; };
 		77BFC5501EB73F3E00610F55 /* NetworkRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77BFC54F1EB73F3E00610F55 /* NetworkRequest.swift */; };
 		77BFC5521EB740CE00610F55 /* KPUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77BFC5511EB740CE00610F55 /* KPUser.swift */; };
 		77BFC5561EB757E800610F55 /* KPResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77BFC5551EB757E800610F55 /* KPResponseModel.swift */; };
@@ -207,6 +208,7 @@
 		77BB39291ED3DD5700958AFE /* KPThirdIntroView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPThirdIntroView.swift; sourceTree = "<group>"; };
 		77BB392B1ED3DD6000958AFE /* KPForthIntroView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPForthIntroView.swift; sourceTree = "<group>"; };
 		77BB392E1ED3DD7100958AFE /* KPFifthIntroView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPFifthIntroView.swift; sourceTree = "<group>"; };
+		77BB39381ED49BD000958AFE /* KPSharedIntroView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSharedIntroView.swift; sourceTree = "<group>"; };
 		77BFC54F1EB73F3E00610F55 /* NetworkRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkRequest.swift; sourceTree = "<group>"; };
 		77BFC5511EB740CE00610F55 /* KPUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPUser.swift; sourceTree = "<group>"; };
 		77BFC5551EB757E800610F55 /* KPResponseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPResponseModel.swift; sourceTree = "<group>"; };
@@ -669,6 +671,7 @@
 			isa = PBXGroup;
 			children = (
 				77F718331ED33DF300755AA2 /* KPIntroViewController.swift */,
+				77BB39381ED49BD000958AFE /* KPSharedIntroView.swift */,
 				77BB39251ED350AD00958AFE /* KPFirstIntroView.swift */,
 				77BB39271ED3DD4300958AFE /* KPSecondIntroView.swift */,
 				77BB39291ED3DD5700958AFE /* KPThirdIntroView.swift */,
@@ -1078,6 +1081,7 @@
 				772D68261ECC78840013F802 /* KPNewStoreController.swift in Sources */,
 				77E495651ECA04F5003B7EBC /* KPSearchBar.swift in Sources */,
 				C0EBE5431ECB29800021653E /* KPBusinessHourViewController.swift in Sources */,
+				77BB39391ED49BD100958AFE /* KPSharedIntroView.swift in Sources */,
 				77421FB41EB8F82500064FF0 /* KPRatingView.swift in Sources */,
 				776ACAF61E9BAFBF00B629A2 /* KPSearchTagView.swift in Sources */,
 				C01AC62A1EAAEA0A000390F7 /* GMUNonHierarchicalDistanceBasedAlgorithm.m in Sources */,

@@ -8,83 +8,41 @@
 
 import UIKit
 
-class KPFifthIntroView: UIView {
+class KPFifthIntroView: KPSharedIntroView {
 
     var bottomImageView: UIImageView!
     var firstPopImageView: UIImageView!
     var secondPopImageView: UIImageView!
     var thirdPopImageView: UIImageView!
-    var forthPopImageView: UIImageView!
-    var fifthPopImageView: UIImageView!
     
-    
-    var descriptionStyle: NSMutableParagraphStyle!
-    
-    lazy var introTitleLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 22.0)
-        label.textAlignment = .center
-        label.textColor = KPColorPalette.KPTextColor.whiteColor
-        return label
-    }()
-    
-    lazy var introDescriptionLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 18.0)
-        label.alpha = 0.8
-        label.numberOfLines = 0
-        label.textAlignment = .center
-        label.textColor = KPColorPalette.KPTextColor.whiteColor
-        return label
-    }()
-    
+    var facebookLoginButton: UIButton!
     
     override init(frame: CGRect) {
         super.init(frame: frame);
         
         self.isUserInteractionEnabled = false
         
-        bottomImageView = UIImageView(image: R.image.image_onbroading_2())
+        bottomImageView = UIImageView(image: R.image.image_onbroading_5())
         bottomImageView.contentMode = .scaleAspectFit
         addSubview(bottomImageView)
-        bottomImageView.addConstraints(fromStringArray: ["V:|-80-[$self(240)]",
+        bottomImageView.addConstraints(fromStringArray: ["V:|-88-[$self]",
                                                          "H:[$self]"])
         bottomImageView.addConstraintForCenterAligningToSuperview(in: .horizontal)
         
-        firstPopImageView = UIImageView(image: R.image.image_onbroading_21())
+        firstPopImageView = UIImageView(image: R.image.image_onbroading_51())
         addSubview(firstPopImageView)
-        firstPopImageView.addConstraintForAligning(to: .top, of: bottomImageView, constant: 0)
-        firstPopImageView.addConstraintForAligning(to: .left, of: bottomImageView, constant: 40)
+        firstPopImageView.addConstraintForAligning(to: .top, of: bottomImageView, constant: 32)
+        firstPopImageView.addConstraintForAligning(to: .left, of: bottomImageView, constant: 8)
         
-        secondPopImageView = UIImageView(image: R.image.image_onbroading_22())
+        secondPopImageView = UIImageView(image: R.image.image_onbroading_52())
         addSubview(secondPopImageView)
-        secondPopImageView.addConstraintForAligning(to: .top, of: bottomImageView, constant: 56)
-        secondPopImageView.addConstraintForAligning(to: .left, of: bottomImageView, constant: 0)
+        secondPopImageView.addConstraintForAligning(to: .top, of: bottomImageView, constant: 16)
+        secondPopImageView.addConstraintForAligning(to: .right, of: bottomImageView, constant: 0)
         
-        thirdPopImageView = UIImageView(image: R.image.image_onbroading_23())
+        thirdPopImageView = UIImageView(image: R.image.image_onbroading_53())
         addSubview(thirdPopImageView)
-        thirdPopImageView.addConstraintForAligning(to: .top, of: bottomImageView, constant: 120)
-        thirdPopImageView.addConstraintForAligning(to: .left, of: bottomImageView, constant: -16)
-        
-        forthPopImageView = UIImageView(image: R.image.image_onbroading_24())
-        addSubview(forthPopImageView)
-        forthPopImageView.addConstraintForAligning(to: .top, of: bottomImageView, constant: 24)
-        forthPopImageView.addConstraintForAligning(to: .right, of: bottomImageView, constant: 16)
-        
-        fifthPopImageView = UIImageView(image: R.image.image_onbroading_25())
-        addSubview(fifthPopImageView)
-        fifthPopImageView.addConstraintForAligning(to: .top, of: bottomImageView, constant: 112)
-        fifthPopImageView.addConstraintForAligning(to: .right, of: bottomImageView, constant: 16)
-        
-        firstPopImageView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
-        secondPopImageView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
-        thirdPopImageView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
-        forthPopImageView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
-        fifthPopImageView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
-        
-        descriptionStyle = NSMutableParagraphStyle()
-        descriptionStyle.alignment = .center
-        descriptionStyle.lineSpacing = 2.4
+        thirdPopImageView.addConstraintForAligning(to: .bottom, of: bottomImageView, constant: 16)
+        thirdPopImageView.addConstraintForAligning(to: .left, of: bottomImageView, constant: 32)
         
         let attrS = NSMutableAttributedString.init(string: "全台網友協力貢獻店家資料，找咖啡不再是件麻煩事")
         attrS.addAttributes([NSParagraphStyleAttributeName: descriptionStyle],
@@ -94,79 +52,85 @@ class KPFifthIntroView: UIView {
         introTitleLabel.text = "最挺你的社群"
         introDescriptionLabel.attributedText = attrS
         
-        addSubview(introTitleLabel)
-        addSubview(introDescriptionLabel)
-        
-        introTitleLabel.addConstraints(fromStringArray: ["V:[$self]-168-|",
-                                                         "H:|-32-[$self]-32-|"])
-        
-        introDescriptionLabel.addConstraints(fromStringArray: ["V:[$view0]-16-[$self]",
-                                                               "H:|-32-[$self]-32-|"],
-                                             views:[introTitleLabel])
-        
-        DispatchQueue.main.asyncAfter(deadline: .now()+0.2) {
-            self.showPopContents()
-        }
-        
+        facebookLoginButton = UIButton()
+        facebookLoginButton.setImage(R.image.facebook_login(), for: .normal)
+        addSubview(facebookLoginButton)
+        facebookLoginButton.addConstraintForCenterAligningToSuperview(in: .horizontal)
+        facebookLoginButton.addConstraints(fromStringArray: ["V:[$self(64)]-32-|",
+                                                             "H:[$self(276)]"])
     }
     
     func showPopContents() {
         
-        UIView.animate(withDuration: 0.5,
-                       delay: 0,
-                       usingSpringWithDamping: 0.5,
-                       initialSpringVelocity: 0.8,
-                       options: .curveEaseOut,
-                       animations: {
-                        self.firstPopImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        UIView.animateKeyframes(withDuration: 3.0,
+                                delay: 0,
+                                options: [.repeat],
+                                animations: { 
+                                    UIView.addKeyframe(withRelativeStartTime: 0,
+                                                       relativeDuration: 0.25,
+                                                       animations: { 
+                                                self.firstPopImageView.alpha = 0.0
+                                    })
+                                    
+                                    UIView.addKeyframe(withRelativeStartTime: 0.5,
+                                                       relativeDuration: 0.25,
+                                                       animations: {
+                                                        self.firstPopImageView.alpha = 1.0
+                                    })
         }) { (_) in
             
         }
         
-        UIView.animate(withDuration: 0.5,
-                       delay: 0.1,
-                       usingSpringWithDamping: 0.5,
-                       initialSpringVelocity: 0.8,
-                       options: .curveEaseOut,
-                       animations: {
-                        self.secondPopImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        UIView.animateKeyframes(withDuration: 3.0,
+                                delay: 1.0,
+                                options: [.repeat],
+                                animations: {
+                                    UIView.addKeyframe(withRelativeStartTime: 0,
+                                                       relativeDuration: 0.25,
+                                                       animations: {
+                                                        self.secondPopImageView.alpha = 0.0
+                                    })
+                                    
+                                    UIView.addKeyframe(withRelativeStartTime: 0.5,
+                                                       relativeDuration: 0.25,
+                                                       animations: {
+                                                        self.secondPopImageView.alpha = 1.0
+                                    })
         }) { (_) in
             
         }
         
-        UIView.animate(withDuration: 0.5,
-                       delay: 0.2,
-                       usingSpringWithDamping: 0.5,
-                       initialSpringVelocity: 0.8,
-                       options: .curveEaseOut,
-                       animations: {
-                        self.thirdPopImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        UIView.animateKeyframes(withDuration: 3.0,
+                                delay: 2.0,
+                                options: [.repeat],
+                                animations: {
+                                    UIView.addKeyframe(withRelativeStartTime: 0,
+                                                       relativeDuration: 0.25,
+                                                       animations: {
+                                                        self.thirdPopImageView.alpha = 0.0
+                                    })
+                                    
+                                    UIView.addKeyframe(withRelativeStartTime: 0.5,
+                                                       relativeDuration: 0.25,
+                                                       animations: {
+                                                        self.thirdPopImageView.alpha = 1.0
+                                    })
         }) { (_) in
             
         }
         
-        UIView.animate(withDuration: 0.5,
-                       delay: 0.2,
-                       usingSpringWithDamping: 0.5,
-                       initialSpringVelocity: 0.8,
-                       options: .curveEaseOut,
-                       animations: {
-                        self.forthPopImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        }) { (_) in
-            
-        }
-        
-        UIView.animate(withDuration: 0.5,
-                       delay: 0.2,
-                       usingSpringWithDamping: 0.5,
-                       initialSpringVelocity: 0.8,
-                       options: .curveEaseOut,
-                       animations: {
-                        self.fifthPopImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        }) { (_) in
-            
-        }
-        
+    }
+    
+    func updateLayoutWithProgress(_ progress: CGFloat) {
+        print("Progress:\(320-320*progress)")
+        firstPopImageView.transform = CGAffineTransform(translationX: progress == 0 ? 0 : 140-140*progress,
+                                                        y: 0)
+        secondPopImageView.transform = CGAffineTransform(translationX: progress == 0 ? 0 : 200-200*progress,
+                                                         y: 0)
+        thirdPopImageView.transform = CGAffineTransform(translationX: progress == 0 ? 0 : 260-260*progress,
+                                                        y: 0)
+        facebookLoginButton.transform = CGAffineTransform(translationX: progress == 0 ? 0 : 320-320*progress,
+                                                        y: 0)
     }
     
     required init?(coder aDecoder: NSCoder) {
