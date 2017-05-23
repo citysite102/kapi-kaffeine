@@ -61,6 +61,10 @@ struct KPColorPalette {
     
 }
 
+struct AppConstant {
+    static let introShownKey = "KPIntroHasShownKey"
+}
+
 extension UIDevice {
 
     var iPhone: Bool {

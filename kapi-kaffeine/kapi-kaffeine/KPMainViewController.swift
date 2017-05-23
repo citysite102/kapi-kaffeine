@@ -162,16 +162,24 @@ class KPMainViewController: KPViewController {
 //        controller.presentModalView();
 
         
+//        let controller = KPModalViewController()
+//        controller.edgeInset = UIEdgeInsets.init(top: 0,
+//                                                 left: 0,
+//                                                 bottom: 0,
+//                                                 right: 0);
+//        let newStoreController = KPNewStoreController()
+//        let navigationController = UINavigationController.init(rootViewController: newStoreController);
+//        controller.contentController = navigationController;
+//        controller.presentModalView();
+        
         let controller = KPModalViewController()
         controller.edgeInset = UIEdgeInsets.init(top: 0,
                                                  left: 0,
                                                  bottom: 0,
                                                  right: 0);
-        let newStoreController = KPNewStoreController()
-        let navigationController = UINavigationController.init(rootViewController: newStoreController);
-        controller.contentController = navigationController;
+        let introController = KPIntroViewController()
+        controller.contentController = introController;
         controller.presentModalView();
-        
     }
     
     func addScreenEdgePanGestureRecognizer(view: UIView, edges: UIRectEdge) {

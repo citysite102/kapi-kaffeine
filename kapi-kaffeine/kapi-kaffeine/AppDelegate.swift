@@ -33,6 +33,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         navigationBarAppearace.titleTextAttributes = [NSFontAttributeName: UIFont.systemFont(ofSize: 20),
                                                       NSForegroundColorAttributeName: KPColorPalette.KPTextColor.whiteColor!]
         
+        if !(UserDefaults.standard.object(forKey: AppConstant.introShownKey) != nil) {
+            
+        }
+        
         // Custom UI
 //        UIApplication.shared.statusBarView?.backgroundColor = KPColorPalette.KPMainColor.statusBarColor
 //        UIApplication.shared.statusBarStyle = .lightContent
