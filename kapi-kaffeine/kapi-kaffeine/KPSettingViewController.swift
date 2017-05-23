@@ -86,6 +86,21 @@ class KPSettingViewController: KPViewController {
                                                 identifier:KPSettingViewController.KPSettingViewSwitchCellReuseIdentifier,
                                                 cellStyle:.switchControl,
                                                 handler:nil),
+                                    settingData(title:"如何使用找咖啡",
+                                                information:nil,
+                                                identifier:KPSettingViewController.KPSettingViewButtonCellReuseIdentifier,
+                                                cellStyle:.button,
+                                                handler: {
+                                                    ()->() in
+                                                    let controller = KPModalViewController()
+                                                    controller.edgeInset = UIEdgeInsets.init(top: 0,
+                                                                                             left: 0,
+                                                                                             bottom: 0,
+                                                                                             right: 0);
+                                                    let introController = KPIntroViewController()
+                                                    controller.contentController = introController;
+                                                    controller.presentModalView();
+                                    }),
                                     settingData(title:"協助填寫問卷，幫助讓產品更好",
                                                 information:nil,
                                                 identifier:KPSettingViewController.KPSettingViewButtonCellReuseIdentifier,

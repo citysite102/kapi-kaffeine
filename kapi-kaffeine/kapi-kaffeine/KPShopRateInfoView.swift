@@ -10,47 +10,51 @@ import UIKit
 
 class KPShopRateInfoView: UIView {
 
-    var rateProperties = ["WiFi穩定", "價格實惠", "咖啡品質",
+    var rateContents = ["WiFi穩定", "價格實惠", "咖啡品質",
                           "插座數量", "站立座位", "安靜程度",
-                          "通常有位置", "環境舒適度", "有無限時"];
-    var rateViews:[rateStatusView] = [rateStatusView]();
+                          "通常有位置", "環境舒適度", "有無限時"]
+    var rateImages = [R.image.icon_wifi(), R.image.icon_money(), R.image.icon_cup(),
+                      R.image.icon_socket(), R.image.icon_seat(), R.image.icon_sleep(),
+                      R.image.icon_seat(), R.image.icon_pic(), R.image.icon_clock()]
+    
+    var rateViews:[rateStatusView] = [rateStatusView]()
     
     override init(frame: CGRect) {
         super.init(frame: frame) // calls designated initializer
         
-        for (index, property) in self.rateProperties.enumerated() {
+        for (index, property) in rateContents.enumerated() {
         
             let rateView = rateStatusView.init(frame:.zero,
-                                               icon:R.image.icon_map()!,
+                                               icon:rateImages[index]!,
                                                content:property,
-                                               rateContent:"5.0");
-            self.addSubview(rateView!);
-            self.rateViews.append(rateView!);
+                                               rateContent:"5.0")
+            addSubview(rateView!)
+            rateViews.append(rateView!)
             
-            rateView!.addConstraint(forWidth: (UIScreen.main.bounds.size.width-48)/2);
+            rateView!.addConstraint(forWidth: (UIScreen.main.bounds.size.width-48)/2)
             if index == 0 {
                 rateView!.addConstraints(fromStringArray: ["V:|-16-[$self(24)]",
-                                                           "H:|-16-[$self]"]);
+                                                           "H:|-16-[$self]"])
                 
             } else if index == 4 {
                 rateView!.addConstraints(fromStringArray: ["V:[$view0]-8-[$self(24)]-16-|",
                                                            "H:|-16-[$self]"],
-                                         views: [self.rateViews[index-1]]);
+                                         views: [rateViews[index-1]])
                 
             } else if index == 5 {
                 rateView!.addConstraints(fromStringArray: ["V:|-16-[$self(24)]",
                                                            "H:[$view0]-16-[$self]"],
-                                         views:[self.rateViews[0]]);
+                                         views:[rateViews[0]])
 
             } else if index == 6 || index == 7 || index == 8 {
                 rateView!.addConstraints(fromStringArray: ["V:[$view0]-8-[$self(24)]",
                                                            "H:[$view1]-16-[$self]"],
-                                         views:[self.rateViews[index-1],
-                                                self.rateViews[0]]);
+                                         views:[rateViews[index-1],
+                                                rateViews[0]])
             } else {
                 rateView!.addConstraints(fromStringArray: ["V:[$view0]-8-[$self(24)]",
                                                            "H:|-16-[$self]"],
-                                         views: [self.rateViews[index-1]]);
+                                         views: [rateViews[index-1]])
             }
         }
     }
@@ -74,30 +78,31 @@ class rateStatusView: UIView {
                              icon: UIImage,
                              content: String,
                              rateContent: String) {
-        self.init(frame:frame);
+        self.init(frame:frame)
         
-        let iconImageView = UIImageView.init(image: icon);
-        self.addSubview(iconImageView);
+        let iconImageView = UIImageView.init(image: icon)
+        iconImageView.tintColor = KPColorPalette.KPMainColor.mainColor
+        addSubview(iconImageView)
         iconImageView.addConstraints(fromStringArray: ["V:|[$self(24)]|",
-                                                       "H:|[$self(24)]"]);
+                                                       "H:|[$self(24)]"])
         
-        let ratePropertyLabel = UILabel.init();
-        ratePropertyLabel.font = UIFont.systemFont(ofSize: 13.0);
-        ratePropertyLabel.text = content;
-        ratePropertyLabel.textColor = KPColorPalette.KPTextColor.mainColor;
-        self.addSubview(ratePropertyLabel);
+        let ratePropertyLabel = UILabel.init()
+        ratePropertyLabel.font = UIFont.systemFont(ofSize: 13.0)
+        ratePropertyLabel.text = content
+        ratePropertyLabel.textColor = KPColorPalette.KPTextColor.mainColor
+        addSubview(ratePropertyLabel)
         ratePropertyLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]"],
                                         views: [iconImageView])
-        ratePropertyLabel.addConstraintForCenterAligningToSuperview(in: .vertical);
+        ratePropertyLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
         
-        let rateContentLabel = UILabel.init();
-        rateContentLabel.font = UIFont.systemFont(ofSize: 13.0);
-        rateContentLabel.text = rateContent;
-        rateContentLabel.textColor = KPColorPalette.KPTextColor.mainColor_light;
-        self.addSubview(rateContentLabel);
+        let rateContentLabel = UILabel.init()
+        rateContentLabel.font = UIFont.systemFont(ofSize: 13.0)
+        rateContentLabel.text = rateContent
+        rateContentLabel.textColor = KPColorPalette.KPTextColor.mainColor_light
+        addSubview(rateContentLabel)
         rateContentLabel.addConstraints(fromStringArray: ["H:[$self]|"],
                                          views: [ratePropertyLabel])
-        rateContentLabel.addConstraintForCenterAligningToSuperview(in: .vertical);
+        rateContentLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
         
     }
     

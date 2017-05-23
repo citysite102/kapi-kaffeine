@@ -106,17 +106,17 @@ class KPSideViewController: KPViewController {
                                 forCellReuseIdentifier: KPSideViewController.KPSideViewControllerCityCellReuseIdentifier);
 
         self.regionContents = [regionData(name:"北部",
-                                          icon:UIImage.init(named: "icon_taitung")!,
+                                          icon:R.image.icon_taipei()!,
                                           cities:["台北", "中壢", "月球"]),
                                regionData(name:"東部",
-                                          icon:UIImage.init(named: "icon_taitung")!,
+                                          icon:R.image.icon_pingtung()!,
                                           cities:["外太空", "黑洞", "冥王星"]),
                                regionData(name:"中南部",
-                                          icon:UIImage.init(named: "icon_taitung")!,
+                                          icon:R.image.icon_taitung()!,
                                           cities:["台北", "台中"])];
         
         self.informationSectionContents = [informationData(title:"關於我們",
-                                                           icon:UIImage.init(named: "icon_taitung")!,
+                                                           icon:R.image.icon_cup()!,
                                                            handler:{()->() in
                                                             let controller = KPModalViewController()
                                                             controller.contentSize = CGSize.init(width: 320,
@@ -137,7 +137,7 @@ class KPSideViewController: KPViewController {
 //                                                            })
                                             }),
                                            informationData(title:"聯絡我們",
-                                                           icon:UIImage.init(named: "icon_taitung")!,
+                                                           icon:R.image.icon_msg()!,
                                                            handler:{()->() in
                                                             let controller = KPModalViewController()
                                                             controller.edgeInset = UIEdgeInsets.init(top: 0,
@@ -150,15 +150,15 @@ class KPSideViewController: KPViewController {
                                                             controller.presentModalView();
                                            }),
                                            informationData(title:"粉絲專頁",
-                                                           icon:UIImage.init(named: "icon_taitung")!,
+                                                           icon:R.image.icon_fb()!,
                                                            handler:{()->() in
                                                             print("粉絲專頁")}),
                                            informationData(title:"幫我們評分",
-                                                           icon:UIImage.init(named: "icon_taitung")!,
+                                                           icon:R.image.icon_star()!,
                                                            handler:{()->() in
                                                             print("幫我們評分")}),
                                            informationData(title:"設定",
-                                                           icon:UIImage.init(named: "icon_taitung")!,
+                                                           icon:R.image.icon_setting()!,
                                                            handler:{()->() in
                                                             let controller = KPModalViewController()
                                                             controller.edgeInset = UIEdgeInsets.init(top: 0,
