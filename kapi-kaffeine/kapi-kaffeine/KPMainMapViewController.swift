@@ -27,6 +27,17 @@ class KPMainMapViewController: KPViewController, GMSMapViewDelegate, GMUClusterM
         return button
     }()
     
+    lazy var addButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.scoreButtonColor!), for: .normal)
+        button.setImage(R.image.icon_add(), for: .normal)
+        button.tintColor = UIColor.white
+        button.layer.cornerRadius = 28
+        button.imageEdgeInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+        button.clipsToBounds = true
+        return button
+    }()
+    
     private var clusterManager: GMUClusterManager!
     
     var mapView: GMSMapView {
@@ -160,15 +171,20 @@ class KPMainMapViewController: KPViewController, GMSMapViewDelegate, GMUClusterM
         }
         
         let currentLocationButton = UIButton(type: .custom)
-        currentLocationButton.setImage(UIImage(named: "icon_currentLocation"), for: .normal)
+        currentLocationButton.setImage(R.image.icon_currentLocation(), for: .normal)
         currentLocationButton.addTarget(self, action: #selector(moveToMyLocation), for: .touchUpInside)
         currentLocationButton.alpha = 0.7
         self.view.addSubview(currentLocationButton)
-        currentLocationButton.addConstraints(fromStringArray: ["H:[$self(40)]-15-|", "V:|-120-[$self(40)]"])
+        currentLocationButton.addConstraints(fromStringArray: ["H:[$self(40)]-16-|", "V:|-120-[$self(40)]"])
         
-        self.view.addSubview(nearestButton)
-        nearestButton.addConstraints(fromStringArray: ["H:|-30-[$self(90)]", "V:[$self(40)]-20-[$view0]"],
+        view.addSubview(nearestButton)
+        nearestButton.addConstraints(fromStringArray: ["H:|-16-[$self(90)]", "V:[$self(40)]-24-[$view0]"],
                                      views: [collectionView])
+        
+        view.addSubview(addButton)
+        addButton.addTarget(self, action: #selector(handleAddButtonTapped(_:)), for: .touchUpInside)
+        addButton.addConstraints(fromStringArray: ["H:[$self(56)]-18-|", "V:[$self(56)]-24-[$view0]"],
+                                 views: [collectionView])
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -188,6 +204,20 @@ class KPMainMapViewController: KPViewController, GMSMapViewDelegate, GMUClusterM
                                                               zoom: self.mapView.camera.zoom))
             CATransaction.commit()
         }
+    }
+    
+    // MARK: UI Event
+    
+    func handleAddButtonTapped(_ sender: UIButton) {
+        let controller = KPModalViewController()
+        controller.edgeInset = UIEdgeInsets.init(top: 0,
+                                                 left: 0,
+                                                 bottom: 0,
+                                                 right: 0)
+        let newStoreController = KPNewStoreController()
+        let navigationController = UINavigationController.init(rootViewController: newStoreController)
+        controller.contentController = navigationController
+        controller.presentModalView()
     }
     
     // MARK: UICollectionView DataSource
