@@ -11,16 +11,10 @@ import UIKit
 class KPBusinessHourViewController: KPSharedSettingViewController, KPTimePickerDelegate {
     
     var checkBoxViews = [KPCheckView]()
+    var startTimeButtons = [UIButton]()
+    var endTimeButtons = [UIButton]()
     
-    var heightConstraints = [NSLayoutConstraint]()
-    
-    lazy var timePicker: KPTimePicker = {
-        let picker = KPTimePicker()
-        picker.delegate = self
-        return picker
-    }()
-    
-    var currentTimePickerIndex: Int = -1
+    var currentSelectedButton: UIButton?
     
     var attrs = [
         NSFontAttributeName : UIFont.systemFont(ofSize: 19.0),
@@ -29,6 +23,8 @@ class KPBusinessHourViewController: KPSharedSettingViewController, KPTimePickerD
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.automaticallyAdjustsScrollViewInsets = false
         
         scrollView.isScrollEnabled = true
         
@@ -40,21 +36,12 @@ class KPBusinessHourViewController: KPSharedSettingViewController, KPTimePickerD
             let checkView = KPCheckView.init(.checkmark, title)
             containerView.addSubview(checkView)
             checkBoxViews.append(checkView)
-            containerView.addConstraint(forHeight: 500)
+
             if index == 0 {
                 checkView.addConstraints(fromStringArray: ["H:|-16-[$self]", "V:|-24-[$self]"])
             } else {
-//                checkView.addConstraints(fromStringArray: ["H:|-16-[$self]", "V:[$view0]-32-[$self]"],
-//                                         views: [checkBoxViews[index-1]])
-                checkView.addConstraint(from: "H:|-16-[$self]")
-                heightConstraints.append(NSLayoutConstraint.init(item: checkView,
-                                                                 attribute: .top,
-                                                                 relatedBy: .equal,
-                                                                 toItem: checkBoxViews[index-1],
-                                                                 attribute: .bottom,
-                                                                 multiplier: 1,
-                                                                 constant: 32))
-                containerView.addConstraint(heightConstraints.last!)
+                checkView.addConstraints(fromStringArray: ["H:|-16-[$self]", "V:[$view0]-32-[$self]"],
+                                         views: [checkBoxViews[index-1]])
             }
             
             let startTimeButton = UIButton()
@@ -64,6 +51,7 @@ class KPBusinessHourViewController: KPSharedSettingViewController, KPTimePickerD
             startTimeButton.addConstraintForCenterAligning(to: checkView, in: .vertical)
             startTimeButton.addTarget(self, action: #selector(startTimeSelectButtonOnTap(button:)), for: .touchUpInside)
             startTimeButton.tag = index
+            startTimeButtons.append(startTimeButton)
             
             let endTimeButton = UIButton()
             let attrstr1 = NSAttributedString.init(string: "20:00", attributes: attrs)
@@ -72,6 +60,7 @@ class KPBusinessHourViewController: KPSharedSettingViewController, KPTimePickerD
             endTimeButton.addConstraintForCenterAligning(to: checkView, in: .vertical)
             endTimeButton.addTarget(self, action: #selector(endTimeSelectButtonOnTap(button:)), for: .touchUpInside)
             endTimeButton.tag = index
+            endTimeButtons.append(endTimeButton)
             
             let label = UILabel()
             label.text = "至"
@@ -85,63 +74,39 @@ class KPBusinessHourViewController: KPSharedSettingViewController, KPTimePickerD
             
         }
         
-//        heightConstraints.append(checkBoxViews.last!.addConstraint(from: "V:[$self]-16-|").first as! NSLayoutConstraint)
+
+        checkBoxViews.last!.addConstraint(from: "V:[$self]-16-|")
         
-        
-        sendButton.addTarget(self, action: #selector(closeTimePicker), for: .touchUpInside)
-        
-    }
-    
-    func closeTimePicker() {
-        showTimePickerAtIndex(index: -1)
     }
     
     func startTimeSelectButtonOnTap(button: UIButton) {
-        showTimePickerAtIndex(index: button.tag)
+        currentSelectedButton = button
+        showTimePicker()
     }
     
     func endTimeSelectButtonOnTap(button: UIButton) {
-        showTimePickerAtIndex(index: button.tag)
+        currentSelectedButton = button
+        showTimePicker()
     }
     
-    func showTimePickerAtIndex(index: Int) {
-        if currentTimePickerIndex != -1 {
-            // hide the current time picker
-            heightConstraints[currentTimePickerIndex].constant = 32
-            if timePicker.superview != nil {
-                timePicker.removeFromSuperview()
-            }
+    func showTimePicker() {
+        
+        let controller = KPModalViewController()
+        controller.contentSize = CGSize(width: UIScreen.main.bounds.width-80, height: 300)
+        controller.presentationStyle = .popout
+        let timePickerController = KPTimePickerViewController()
+        if let timeValue = currentSelectedButton?.titleLabel?.attributedText?.string {
+            timePickerController.timeValue = timeValue
         }
-        
-//        UIView.animate(withDuration: 0.5, animations: { 
-//            self.containerView.layoutIfNeeded()
-//        }) { (complete) in
-            if index != -1 {
-                // show time picker at index
-                self.containerView.addSubview(self.timePicker)
-                self.timePicker.addConstraint(from: "V:[$view0][$self]", views:[self.checkBoxViews[index]])
-                self.timePicker.addConstraintForCenterAligningToSuperview(in: .horizontal)
-                self.heightConstraints[index].constant = 32 + self.timePicker.pickerRowHeight*3.5
-                
-            }
-            
-            self.currentTimePickerIndex = index
-            
-            UIView.animate(withDuration: 0.5) {
-                self.containerView.layoutIfNeeded()
-            }
-//        }
-        
-        
+        timePickerController.businessHourController = self
+        controller.contentController = timePickerController;
+        controller.presentModalView()
         
     }
     
-    func valueUpdate(value: String) {
-        for view in containerView.subviews {
-            if view.tag == currentTimePickerIndex, let button = view as? UIButton {
-                let attrstr = NSAttributedString.init(string: value, attributes: attrs)
-                button.setAttributedTitle(attrstr, for: .normal)
-            }
+    func valueUpdate(timePicker: KPTimePicker, value: String) {
+        if currentSelectedButton != nil {
+            currentSelectedButton!.setAttributedTitle(NSAttributedString.init(string: value, attributes: attrs), for: .normal)
         }
     }
     

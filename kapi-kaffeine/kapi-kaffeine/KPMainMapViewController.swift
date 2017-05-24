@@ -10,7 +10,7 @@ import UIKit
 import GoogleMaps
 import ObjectMapper
 
-class KPMainMapViewController: KPViewController, GMSMapViewDelegate, GMUClusterManagerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, KPMainViewControllerDelegate {
+class KPMainMapViewController: KPViewController, GMSMapViewDelegate, GMUClusterManagerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, KPMainViewControllerDelegate {
     
     weak var mainController:KPMainViewController!
     
@@ -153,6 +153,9 @@ class KPMainMapViewController: KPViewController, GMSMapViewDelegate, GMUClusterM
         self.collectionView.backgroundColor = UIColor.clear
         self.collectionView.dataSource = self
         self.collectionView.delegate = self
+        self.collectionView.decelerationRate = UIScrollViewDecelerationRateFast
+//        self.collectionView.isPagingEnabled = true
+        self.collectionView.showsHorizontalScrollIndicator = false
         self.collectionView.register(KPMainMapViewCollectionCell.classForCoder(),
                                      forCellWithReuseIdentifier: "cell")
         
@@ -251,9 +254,9 @@ class KPMainMapViewController: KPViewController, GMSMapViewDelegate, GMUClusterM
         
         targetContentOffset.pointee.x = -30 + index * (pageWidth + 15)
         scrollView.setContentOffset(CGPoint(x: -30 + index * (pageWidth + 15), y: 0), animated: true)
-        
+
     }
-    
+
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let centerX = self.collectionView.contentOffset.x + self.collectionView.frame.size.width/2.0
         let pageWidth = UIScreen.main.bounds.size.width - 30;

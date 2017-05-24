@@ -1337,7 +1337,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CA73E4544076455C6DC0C065 /* Pods-kapi-kaffeine.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = A43Y729CXH;
 				INFOPLIST_FILE = "kapi-kaffeine/Info.plist";
@@ -1354,7 +1354,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 605CB2E5F236FDDFFE502CB5 /* Pods-kapi-kaffeine.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = A43Y729CXH;
 				INFOPLIST_FILE = "kapi-kaffeine/Info.plist";

@@ -43,12 +43,12 @@ class KPModalViewController: KPViewController {
     
     var contentSize: CGSize = CGSize.init(width: 0, height: 0) {
         didSet {
-            if self.containerSensingView != nil {
-                self.containerWidthConstraint = self.containerSensingView.constraint(forWidth: contentSize.width)
-                self.containerHeightConstraint = self.containerSensingView.constraint(forHeight: contentSize.height)
+//            if self.containerSensingView != nil {
+//                self.containerWidthConstraint = self.containerSensingView.constraint(forWidth: contentSize.width)
+//                self.containerHeightConstraint = self.containerSensingView.constraint(forHeight: contentSize.height)
                 self.layoutWithSize = true
                 self.layoutWithInset = false
-            }
+//            }
         }
     }
     
@@ -61,9 +61,14 @@ class KPModalViewController: KPViewController {
     
     
     var backgroundSensingView: KPPopoverSensingView!
-    var containerSensingView: KPPopoverSensingView!
-    var containerWidthConstraint: NSLayoutConstraint!
-    var containerHeightConstraint: NSLayoutConstraint!
+    var containerSensingView: KPPopoverSensingView = {
+        let containerSensingView = KPPopoverSensingView()
+        containerSensingView.backgroundColor = UIColor.clear
+        containerSensingView.isHidden = true
+        return containerSensingView
+    }()
+//    var containerWidthConstraint: NSLayoutConstraint!
+//    var containerHeightConstraint: NSLayoutConstraint!
     
     var contentView: UIView! {
         didSet {
@@ -92,15 +97,11 @@ class KPModalViewController: KPViewController {
                                                                "V:|[$self]"])
         backgroundYConstraint = backgroundSensingView.addConstraint(from: "V:[$self]|").first as! NSLayoutConstraint
         
-        
-        containerSensingView = KPPopoverSensingView()
-        containerSensingView.backgroundColor = UIColor.clear
         containerSensingView.delegate = self
-        containerSensingView.isHidden = true
         backgroundSensingView.addSubview(containerSensingView)
         
-        containerWidthConstraint = containerSensingView.constraint(forWidth: contentSize.width)
-        containerHeightConstraint = containerSensingView.constraint(forHeight: contentSize.height)
+//        containerWidthConstraint = containerSensingView.constraint(forWidth: contentSize.width)
+//        containerHeightConstraint = containerSensingView.constraint(forHeight: contentSize.height)
         
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillShow(_:)),
@@ -148,13 +149,13 @@ class KPModalViewController: KPViewController {
         var containerSize: CGSize = CGSize.init(width: 0, height: 0)
         
         if self.layoutWithSize {
-            self.containerSensingView.addConstraint(self.containerWidthConstraint)
-            self.containerSensingView.addConstraint(self.containerHeightConstraint)
+            self.containerSensingView.addConstraint(forWidth: contentSize.width)
+            self.containerSensingView.addConstraint(forHeight: contentSize.height)
             self.containerSensingView.addConstraintForCenterAligningToSuperview(in: .vertical)
             self.containerSensingView.addConstraintForCenterAligningToSuperview(in: .horizontal)
             
             containerPoint = CGPoint.init(x: (self.view.frame.width-self.contentSize.width)/2,
-                                          y: self.view.frame.height)
+                                          y: self.contentSize.height)
             containerSize = CGSize.init(width: self.contentSize.width,
                                         height: self.contentSize.height)
         }
@@ -184,12 +185,10 @@ class KPModalViewController: KPViewController {
             containerPoint.x = self.view.frame.width
             containerPoint.y = 0
         case KPModalPresentationStyle.popout:
-            self.containerSensingView.transform = CGAffineTransform.init(scaleX: 0.5, y: 0.5)
             self.containerSensingView.alpha = 0.0
         default:
             print("Not Implement")
         }
-        
         
         let containerFrame = CGRect.init(origin: containerPoint,
                                          size: containerSize)
@@ -197,6 +196,7 @@ class KPModalViewController: KPViewController {
         self.containerSensingView.frame = containerFrame
         self.contentView.frame = CGRect.init(origin: CGPoint.init(x: 0, y: 0),
                                              size: containerSize)
+        
         self.contentView.layoutIfNeeded()
         
         if cornerRadius != nil {
@@ -210,13 +210,17 @@ class KPModalViewController: KPViewController {
             contentView.layer.mask = maskLayer
         }
         
+        if presentationStyle == .popout {
+            self.containerSensingView.transform = CGAffineTransform.init(scaleX: 0.5, y: 0.5)
+        }
+        
         UIView.animate(withDuration: duration,
                        delay: 0,
                        usingSpringWithDamping: CGFloat(damping),
                        initialSpringVelocity: 1.0,
                        options: UIViewAnimationOptions.curveEaseIn,
                        animations: {
-                        
+                        self.containerSensingView.transform = CGAffineTransform.identity
                         self.backgroundSensingView.layoutIfNeeded()
                         self.containerSensingView.isHidden = false
                         self.containerSensingView.alpha = 1.0
