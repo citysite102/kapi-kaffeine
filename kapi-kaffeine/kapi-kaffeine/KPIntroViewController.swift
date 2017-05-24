@@ -8,8 +8,6 @@
 
 import UIKit
 import BenzeneFoundation
-import FacebookLogin
-import FacebookCore
 
 class KPIntroViewController: KPViewController {
 
@@ -125,6 +123,8 @@ class KPIntroViewController: KPViewController {
         fifthIntroView.facebookLoginButton.addTarget(self, action: #selector(handleFacebookLoginButtonOnTapped(_:)),
                                                      for: UIControlEvents.touchUpInside)
         
+        
+        print("Current User:\(currentUser.demoData)")
     }
 
     override func didReceiveMemoryWarning() {
@@ -155,19 +155,7 @@ class KPIntroViewController: KPViewController {
     }
     
     func handleFacebookLoginButtonOnTapped(_ sender: UIButton) {
-        let loginManager = LoginManager()
-        loginManager.loginBehavior = LoginBehavior.native;
         
-        loginManager.logIn([.publicProfile], viewController: self) { (loginResult) in
-            switch loginResult {
-            case .failed(let error):
-                print(error)
-            case .cancelled:
-                print("User cancelled login.")
-            case .success(let grantedPermissions, let declinedPermissions, let accessToken):
-                print("Logged in \(grantedPermissions) \(declinedPermissions) \(accessToken)")
-            }
-        }
     }
     
     // MARK: UI Event

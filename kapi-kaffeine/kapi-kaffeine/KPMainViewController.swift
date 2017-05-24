@@ -103,6 +103,12 @@ class KPMainViewController: KPViewController {
         SideMenuManager.menuWidth = 260
         
         
+        // 使用者第一次使用
+        if !(UserDefaults.standard.object(forKey: AppConstant.introShownKey) != nil) {
+            
+        }
+        
+        
         let KapiDataRequest = KPNomadRequest()
         KapiDataRequest.perform().then { resultArray -> Void in
                 self.displayDataModel = resultArray

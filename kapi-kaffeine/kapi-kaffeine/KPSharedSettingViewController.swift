@@ -49,9 +49,9 @@ class KPSharedSettingViewController: KPViewController {
                                 for: .touchUpInside)
         
         view.addSubview(dismissButton)
-        dismissButton.addConstraints(fromStringArray: ["H:|-16-[$self(24)]",
-                                                       "V:|-16-[$self(24)]"])
-        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4)
+        dismissButton.addConstraints(fromStringArray: ["H:|-16-[$self(30)]",
+                                                       "V:|-16-[$self(30)]"])
+        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(7, 7, 7, 7)
         
         
         view.addSubview(titleLabel)

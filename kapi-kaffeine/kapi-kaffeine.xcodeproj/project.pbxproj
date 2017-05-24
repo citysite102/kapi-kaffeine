@@ -15,6 +15,8 @@
 		771EECAF1EBC3177004A34B8 /* KPCheckBoxAnimationGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771EECAE1EBC3177004A34B8 /* KPCheckBoxAnimationGenerator.swift */; };
 		771EECB11EBC3291004A34B8 /* KPCheckBoxPathGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771EECB01EBC3291004A34B8 /* KPCheckBoxPathGenerator.swift */; };
 		771EECB31EBC32E4004A34B8 /* KPCheckBoxRadioPathGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771EECB21EBC32E4004A34B8 /* KPCheckBoxRadioPathGenerator.swift */; };
+		772748421ED5D21A00C42FB6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 772748411ED5D21A00C42FB6 /* GoogleService-Info.plist */; };
+		772748441ED5F81300C42FB6 /* KPUserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772748431ED5F81300C42FB6 /* KPUserManager.swift */; };
 		772C538A1ECBFE5600C88798 /* KPViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772C53891ECBFE5600C88798 /* KPViewController.swift */; };
 		772D68261ECC78840013F802 /* KPNewStoreController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772D68251ECC78840013F802 /* KPNewStoreController.swift */; };
 		772D68281ECC81140013F802 /* KPSubTitleEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772D68271ECC81140013F802 /* KPSubTitleEditView.swift */; };
@@ -155,6 +157,8 @@
 		771EECAE1EBC3177004A34B8 /* KPCheckBoxAnimationGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPCheckBoxAnimationGenerator.swift; sourceTree = "<group>"; };
 		771EECB01EBC3291004A34B8 /* KPCheckBoxPathGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPCheckBoxPathGenerator.swift; sourceTree = "<group>"; };
 		771EECB21EBC32E4004A34B8 /* KPCheckBoxRadioPathGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPCheckBoxRadioPathGenerator.swift; sourceTree = "<group>"; };
+		772748411ED5D21A00C42FB6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		772748431ED5F81300C42FB6 /* KPUserManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPUserManager.swift; sourceTree = "<group>"; };
 		772C53891ECBFE5600C88798 /* KPViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPViewController.swift; sourceTree = "<group>"; };
 		772D68251ECC78840013F802 /* KPNewStoreController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPNewStoreController.swift; sourceTree = "<group>"; };
 		772D68271ECC81140013F802 /* KPSubTitleEditView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSubTitleEditView.swift; sourceTree = "<group>"; };
@@ -382,6 +386,15 @@
 				771EECAE1EBC3177004A34B8 /* KPCheckBoxAnimationGenerator.swift */,
 			);
 			name = "Animation Generator";
+			sourceTree = "<group>";
+		};
+		772748401ED5D18B00C42FB6 /* kapi-user */ = {
+			isa = PBXGroup;
+			children = (
+				772748431ED5F81300C42FB6 /* KPUserManager.swift */,
+				77BFC5511EB740CE00610F55 /* KPUser.swift */,
+			);
+			name = "kapi-user";
 			sourceTree = "<group>";
 		};
 		772D68241ECC78410013F802 /* NewStoreController */ = {
@@ -622,7 +635,6 @@
 			children = (
 				77869E181EB76EDD0027CA98 /* Basic */,
 				77869E171EB75F1E0027CA98 /* Model */,
-				77BFC5511EB740CE00610F55 /* KPUser.swift */,
 				77869E1D1EB79CF40027CA98 /* KPSimpleRequest.swift */,
 				77869E1B1EB771BC0027CA98 /* KPCafeRequest.swift */,
 				77421FAF1EB8EE0C00064FF0 /* KPNomadRequest.swift */,
@@ -775,6 +787,7 @@
 			children = (
 				C02AFE431E7D260D008FFB33 /* kapi-kaffeine */,
 				77BFC54E1EB73D5800610F55 /* kapi-service */,
+				772748401ED5D18B00C42FB6 /* kapi-user */,
 				C02AFE581E7D260D008FFB33 /* kapi-kaffeineTests */,
 				C02AFE631E7D260D008FFB33 /* kapi-kaffeineUITests */,
 				C02AFE421E7D260D008FFB33 /* Products */,
@@ -810,6 +823,7 @@
 				C02AFE4B1E7D260D008FFB33 /* Assets.xcassets */,
 				C02AFE4D1E7D260D008FFB33 /* LaunchScreen.storyboard */,
 				C02AFE501E7D260D008FFB33 /* Info.plist */,
+				772748411ED5D21A00C42FB6 /* GoogleService-Info.plist */,
 				C00CD5331E95234A00A3CB6F /* style.json */,
 				C0409E1E1E954F1A00C302FF /* cafes.json */,
 				C01AC60C1EAAE86E000390F7 /* kapi-kaffeine-bridging-header.h */,
@@ -989,6 +1003,7 @@
 				C02AFE4C1E7D260D008FFB33 /* Assets.xcassets in Resources */,
 				C02AFE4A1E7D260D008FFB33 /* Main.storyboard in Resources */,
 				C00CD5341E95234A00A3CB6F /* style.json in Resources */,
+				772748421ED5D21A00C42FB6 /* GoogleService-Info.plist in Resources */,
 				C0409E1F1E954F1A00C302FF /* cafes.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1092,6 +1107,7 @@
 				77C0E0FA1E9D3D7500398852 /* KPSearchFooterCell.swift in Sources */,
 				77BB39261ED350AD00958AFE /* KPFirstIntroView.swift in Sources */,
 				776ACB041E9BB8A900B629A2 /* KPSearchTagCell.swift in Sources */,
+				772748441ED5F81300C42FB6 /* KPUserManager.swift in Sources */,
 				77A2019D1EBC5D1D00F3497F /* KPCheckboxCheckPathGenerator.swift in Sources */,
 				77B66FB51EAFC46B008B6652 /* KPUserProfileViewController.swift in Sources */,
 				77C0E10A1E9D493400398852 /* KPShopCommentInfoView.swift in Sources */,

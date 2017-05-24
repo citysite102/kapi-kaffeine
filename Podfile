@@ -34,6 +34,8 @@ target 'kapi-kaffeine' do
   pod 'FacebookCore'
   pod 'FacebookLogin'
   pod 'FacebookShare'
+  pod 'Firebase/Core'
+  pod 'Firebase/Auth'
 
   swift_version = "3.0"
   pod "PromiseKit", "~> 4.0"

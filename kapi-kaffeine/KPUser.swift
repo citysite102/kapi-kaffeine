@@ -7,7 +7,27 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseAuth
+import FacebookLogin
+import FacebookCore
 
-class KPUser: NSObject {
+public class KPUser {
+    
+    var demoData: Int = 0
+    
+}
 
+public var currentUser: KPUser {
+    
+    struct Static {
+        static var instance: KPUser?
+    }
+    
+    if Static.instance == nil {
+        Static.instance = KPUser()
+        Static.instance?.demoData = 3
+    }
+    
+    return Static.instance!
 }

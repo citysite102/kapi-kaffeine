@@ -10,6 +10,7 @@ import UIKit
 import GoogleMaps
 import GooglePlaces
 import FacebookCore
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -32,6 +33,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                                   didFinishLaunchingWithOptions: launchOptions)
         
         
+        // Firebase
+        FIRApp.configure()
+        
         // Navigation Custom Settings
         let navigationBarAppearace = UINavigationBar.appearance()
         
@@ -40,10 +44,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         navigationBarAppearace.barTintColor = KPColorPalette.KPMainColor.mainColor_light
         navigationBarAppearace.titleTextAttributes = [NSFontAttributeName: UIFont.systemFont(ofSize: 20),
                                                       NSForegroundColorAttributeName: KPColorPalette.KPTextColor.whiteColor!]
-        
-        if !(UserDefaults.standard.object(forKey: AppConstant.introShownKey) != nil) {
-            
-        }
         
         return true
     }
