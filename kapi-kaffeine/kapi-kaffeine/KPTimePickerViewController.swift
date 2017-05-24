@@ -8,19 +8,49 @@
 
 import UIKit
 
-class KPTimePickerViewController: KPSharedSettingViewController {
+class KPTimePickerViewController: UIViewController, KPTimePickerDelegate {
     
     var timePicker: KPTimePicker!
+    
+    weak var businessHourController: KPBusinessHourViewController!
+    var timeValue: String! {
+        didSet {
+            if timePicker != nil {
+                timePicker.timeValue = timeValue
+            }
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        titleLabel.text = "選時間了喔"
-        
+        self.view.backgroundColor = UIColor.white
         timePicker = KPTimePicker()
-        containerView.addSubview(timePicker)
-        timePicker.addConstraint(from: "V:|[$self]|")
+        view.addSubview(timePicker)
+        if timeValue != nil {
+            timePicker.timeValue = timeValue
+        }
+        timePicker.addConstraint(from: "V:|-[$self]")
         timePicker.addConstraintForCenterAligningToSuperview(in: .horizontal)
+        timePicker.delegate = self
+        
+        let seporator = UIView()
+        seporator.backgroundColor = KPColorPalette.KPMainColor.grayColor_level6
+        view.addSubview(seporator)
+        seporator.addConstraints(fromStringArray: ["H:|-8-[$self]-8-|", "V:[$view0]-16-[$self(1)]"],
+                                 views:[timePicker])
+        
+        let doneButton = UIButton()
+        doneButton.setTitle("完成", for: .normal)
+        doneButton.setTitleColor(UIColor.white, for: .normal)
+        doneButton.setBackgroundImage(UIImage.init(color: KPColorPalette.KPMainColor.mainColor!),
+                                        for: .normal)
+        doneButton.layer.cornerRadius = 4.0
+        doneButton.layer.masksToBounds = true
+        doneButton.titleLabel?.font = UIFont.systemFont(ofSize: 15.0)
+        view.addSubview(doneButton)
+        doneButton.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|", "V:[$view0]-16-[$self(40)]-16-|"], views: [seporator])
+        doneButton.addTarget(self, action: #selector(handleDoneButtonOnTap(sender:)), for: .touchUpInside)
         
     }
 
@@ -29,6 +59,15 @@ class KPTimePickerViewController: KPSharedSettingViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func valueUpdate(timePicker: KPTimePicker, value: String) {
+        timeValue = value
+    }
+    
+    func handleDoneButtonOnTap(sender: UIButton) {
+        self.businessHourController.valueUpdate(timePicker: timePicker, value: timeValue)
+        self.appModalController()?.dismissControllerWithDefaultDuration()
+        
+    }
 
     /*
     // MARK: - Navigation
