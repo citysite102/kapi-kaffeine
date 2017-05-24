@@ -30,8 +30,6 @@ class KPForthIntroView: KPSharedIntroView {
     override init(frame: CGRect) {
         super.init(frame: frame);
         
-        self.isUserInteractionEnabled = false
-        
         container = UIView()
         addSubview(container)
         container.addConstraints(fromStringArray: ["V:|-80-[$self]",

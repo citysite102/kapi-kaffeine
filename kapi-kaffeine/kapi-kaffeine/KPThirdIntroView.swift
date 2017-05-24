@@ -19,7 +19,6 @@ class KPThirdIntroView: KPSharedIntroView {
     override init(frame: CGRect) {
         super.init(frame: frame);
         
-        self.isUserInteractionEnabled = false
         
         firstPopImageView = UIImageView(image: R.image.image_onbroading_31())
         firstPopImageView.contentMode = .scaleAspectFit

@@ -9,6 +9,7 @@
 import UIKit
 import GoogleMaps
 import GooglePlaces
+import FacebookCore
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,11 +18,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        
+        // Google Map
         GMSServices.provideAPIKey("AIzaSyCZiprr4NXdrs4ChdmQ8nNVrAPZJWoy3TQ")
         GMSPlacesClient.provideAPIKey("AIzaSyCZiprr4NXdrs4ChdmQ8nNVrAPZJWoy3TQ")
         
         KPLocationManager.sharedInstance().hello()
+        
+        
+        // Facebook
+        SDKApplicationDelegate.shared.application(application,
+                                                  didFinishLaunchingWithOptions: launchOptions)
         
         
         // Navigation Custom Settings
@@ -37,23 +45,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
         }
         
-        // Custom UI
-//        UIApplication.shared.statusBarView?.backgroundColor = KPColorPalette.KPMainColor.statusBarColor
-//        UIApplication.shared.statusBarStyle = .lightContent
-//        UIApplication.shared.isStatusBarHidden = true
-        
-//        let mainViewController = KPMainViewController();
-//        let sideViewController = KPSideViewController();
-//
-//        
-//        let slideMenuController = KPSliderMenuController(mainViewController: mainViewController,
-//                                                      leftMenuViewController: sideViewController);
-//        self.window?.rootViewController = slideMenuController;
-//        self.window?.makeKeyAndVisible();
-        
         return true
     }
 
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        return SDKApplicationDelegate.shared.application(app, open: url, options: options)
+    }
+    
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
@@ -69,7 +67,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        AppEventsLogger.activate(application)
     }
 
     func applicationWillTerminate(_ application: UIApplication) {

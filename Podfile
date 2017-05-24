@@ -30,6 +30,11 @@ target 'kapi-kaffeine' do
   pod 'Alamofire', '~> 4.4'
   pod 'AlamofireImage'
 
+  # Login
+  pod 'FacebookCore'
+  pod 'FacebookLogin'
+  pod 'FacebookShare'
+
   swift_version = "3.0"
   pod "PromiseKit", "~> 4.0"
 

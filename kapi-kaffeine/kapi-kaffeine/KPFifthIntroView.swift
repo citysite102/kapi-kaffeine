@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import FacebookLogin
+import FacebookCore
 
 class KPFifthIntroView: KPSharedIntroView {
 
@@ -20,7 +22,7 @@ class KPFifthIntroView: KPSharedIntroView {
     override init(frame: CGRect) {
         super.init(frame: frame);
         
-        self.isUserInteractionEnabled = false
+        isUserInteractionEnabled = true
         
         bottomImageView = UIImageView(image: R.image.image_onbroading_5())
         bottomImageView.contentMode = .scaleAspectFit
@@ -59,6 +61,7 @@ class KPFifthIntroView: KPSharedIntroView {
         facebookLoginButton.addConstraints(fromStringArray: ["V:[$self(64)]-32-|",
                                                              "H:[$self(276)]"])
     }
+    
     
     func showPopContents() {
         
@@ -138,3 +141,4 @@ class KPFifthIntroView: KPSharedIntroView {
     }
 
 }
+

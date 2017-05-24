@@ -8,6 +8,8 @@
 
 import UIKit
 import BenzeneFoundation
+import FacebookLogin
+import FacebookCore
 
 class KPIntroViewController: KPViewController {
 
@@ -17,7 +19,7 @@ class KPIntroViewController: KPViewController {
     var pageControl: UIPageControl!
     
     var skipButton: UIButton!
-//    
+    
     var firstIntroView: KPFirstIntroView!
     var secondIntroView: KPSecondIntroView!
     var thirdIntroView: KPThirdIntroView!
@@ -42,6 +44,7 @@ class KPIntroViewController: KPViewController {
         scrollView.bounces = false
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.delegate = self
+        scrollView.canCancelContentTouches = false
         
         pageControl = UIPageControl()
         pageControl.numberOfPages = 5
@@ -119,6 +122,9 @@ class KPIntroViewController: KPViewController {
         fifthIntroView.addConstraintForHavingSameHeight(with: self.view)
         fifthIntroView.addConstraintForHavingSameWidth(with: self.view)
         
+        fifthIntroView.facebookLoginButton.addTarget(self, action: #selector(handleFacebookLoginButtonOnTapped(_:)),
+                                                     for: UIControlEvents.touchUpInside)
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -146,6 +152,22 @@ class KPIntroViewController: KPViewController {
     
     override var prefersStatusBarHidden: Bool {
         return statusBarShouldBeHidden
+    }
+    
+    func handleFacebookLoginButtonOnTapped(_ sender: UIButton) {
+        let loginManager = LoginManager()
+        loginManager.loginBehavior = LoginBehavior.native;
+        
+        loginManager.logIn([.publicProfile], viewController: self) { (loginResult) in
+            switch loginResult {
+            case .failed(let error):
+                print(error)
+            case .cancelled:
+                print("User cancelled login.")
+            case .success(let grantedPermissions, let declinedPermissions, let accessToken):
+                print("Logged in \(grantedPermissions) \(declinedPermissions) \(accessToken)")
+            }
+        }
     }
     
     // MARK: UI Event

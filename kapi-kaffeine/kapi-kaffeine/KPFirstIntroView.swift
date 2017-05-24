@@ -20,8 +20,6 @@ class KPFirstIntroView: KPSharedIntroView {
     override init(frame: CGRect) {
         super.init(frame: frame);
         
-        self.isUserInteractionEnabled = false
-        
         bottomImageView = UIImageView(image: R.image.image_onbroading_1())
         bottomImageView.contentMode = .scaleAspectFit
         addSubview(bottomImageView)
