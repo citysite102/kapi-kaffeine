@@ -98,12 +98,7 @@ class KPSettingViewController: KPViewController {
                                                                                              bottom: 0,
                                                                                              right: 0);
                                                     let introController = KPIntroViewController()
-                                                    controller.contentController = introController;
-//                                                    controller.presentModalView();
-                                                    
                                                     self.appModalController()?.present(introController, animated: true, completion: nil)
-                                                    
-//                                                    self.navigationController?.pushViewController(introController, animated: true)
                                     }),
                                     settingData(title:"協助填寫問卷，幫助讓產品更好",
                                                 information:nil,

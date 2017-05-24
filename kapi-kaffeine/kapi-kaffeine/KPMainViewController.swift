@@ -19,7 +19,7 @@ class KPMainViewController: KPViewController {
     var searchHeaderView: KPSearchHeaderView!
     var sideBarController: KPSideViewController!
     var opacityView: UIView!
-    var percentDrivenTransition: UIPercentDrivenInteractiveTransition!;
+    var percentDrivenTransition: UIPercentDrivenInteractiveTransition!
     var mainListViewController:KPMainListViewController?
     var mainMapViewController:KPMainMapViewController?
     
@@ -34,15 +34,15 @@ class KPMainViewController: KPViewController {
         didSet {
             
             if oldValue != nil {
-                oldValue?.willMove(toParentViewController: nil);
-                oldValue?.view.removeFromSuperview();
-                oldValue?.removeFromParentViewController();
+                oldValue?.willMove(toParentViewController: nil)
+                oldValue?.view.removeFromSuperview()
+                oldValue?.removeFromParentViewController()
             }
             
-            self.addChildViewController(currentController!);
-            self.view.addSubview((self.currentController?.view)!);
-            currentController.didMove(toParentViewController: self);
-            currentController.view.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"]);
+            self.addChildViewController(currentController!)
+            self.view.addSubview((self.currentController?.view)!)
+            currentController.didMove(toParentViewController: self)
+            currentController.view.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"])
             
             if (self.searchHeaderView != nil) {
                 self.view.bringSubview(toFront: self.searchHeaderView)
@@ -52,30 +52,30 @@ class KPMainViewController: KPViewController {
     }
     
     override func viewDidLoad() {
-        super.viewDidLoad();
+        super.viewDidLoad()
         
-        self.mainListViewController = KPMainListViewController();
-        self.mainMapViewController = KPMainMapViewController();
-        self.sideBarController = KPSideViewController();
-        self.sideBarController.mainController = self;
+        self.mainListViewController = KPMainListViewController()
+        self.mainMapViewController = KPMainMapViewController()
+        self.sideBarController = KPSideViewController()
+        self.sideBarController.mainController = self
         
-        self.mainListViewController!.mainController = self;
-        self.mainMapViewController!.mainController = self;
+        self.mainListViewController!.mainController = self
+        self.mainMapViewController!.mainController = self
         
-        self.currentController = self.mainListViewController;
+        self.currentController = self.mainListViewController
         
-        self.searchHeaderView = KPSearchHeaderView();
-        self.view.addSubview(searchHeaderView);
+        self.searchHeaderView = KPSearchHeaderView()
+        self.view.addSubview(searchHeaderView)
         self.searchHeaderView.addConstraints(fromStringArray: ["V:|[$self(100)]",
                                                                "H:|[$self]|"])
         
-        self.opacityView = UIView();
-        self.opacityView.backgroundColor = UIColor.black;
-        self.opacityView.alpha = 0.5;
-        self.opacityView.isHidden = true;
-        self.view.addSubview(self.opacityView);
+        self.opacityView = UIView()
+        self.opacityView.backgroundColor = UIColor.black
+        self.opacityView.alpha = 0.0
+        self.opacityView.isHidden = true
+        self.view.addSubview(self.opacityView)
         self.opacityView.addConstraints(fromStringArray: ["V:|[$self]|",
-                                                          "H:|[$self]|"]);
+                                                          "H:|[$self]|"])
         
         self.searchHeaderView.menuButton.addTarget(self,
                                                    action: #selector(switchSideBar),
@@ -88,32 +88,34 @@ class KPMainViewController: KPViewController {
                                                      for: .touchUpInside)
         
         
-        let menuLeftNavigationController = UISideMenuNavigationController(rootViewController: sideBarController);
-        menuLeftNavigationController.leftSide = true;
+        let menuLeftNavigationController = UISideMenuNavigationController(rootViewController: sideBarController)
+        menuLeftNavigationController.leftSide = true
         
         
         SideMenuManager.menuLeftNavigationController = menuLeftNavigationController
-        SideMenuManager.menuPresentMode = .viewSlideInOut;
-        SideMenuManager.menuFadeStatusBar = false;
-        SideMenuManager.menuShadowOpacity = 0;
-        SideMenuManager.menuAnimationTransformScaleFactor = 1.0;
-        SideMenuManager.menuAnimationBackgroundColor = UIColor.black;
-        SideMenuManager.menuWidth = 260;
+        SideMenuManager.menuPresentMode = .menuSlideIn
+        SideMenuManager.menuFadeStatusBar = false
+        SideMenuManager.menuShadowOpacity = 0.6
+        SideMenuManager.menuShadowRadius = 3
+        SideMenuManager.menuAnimationFadeStrength = 0.5
+        SideMenuManager.menuAnimationTransformScaleFactor = 0.98
+        SideMenuManager.menuAnimationBackgroundColor = UIColor.black
+        SideMenuManager.menuWidth = 260
         
         
-        let KapiDataRequest = KPNomadRequest();
+        let KapiDataRequest = KPNomadRequest()
         KapiDataRequest.perform().then { resultArray -> Void in
                 self.displayDataModel = resultArray
             }.catch { error in
-                print("Error");
+                print("Error")
             }
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated);
+        super.viewWillAppear(animated)
         
         if let indexPath = self.mainListViewController!.tableView.indexPathForSelectedRow {
-            self.mainListViewController!.tableView.deselectRow(at: indexPath, animated: false);
+            self.mainListViewController!.tableView.deselectRow(at: indexPath, animated: false)
         }
     }
     
@@ -123,7 +125,7 @@ class KPMainViewController: KPViewController {
                 window.windowLevel = UIWindowLevelStatusBar + 1
             }
         })
-        self.opacityView.isHidden = false;
+        self.opacityView.isHidden = false
         present(SideMenuManager.menuLeftNavigationController!,
                 animated: true, completion: nil)
     }
@@ -131,12 +133,12 @@ class KPMainViewController: KPViewController {
     func changeStyle() {
         let iconImage = (self.currentController == self.mainListViewController) ?
             R.image.icon_list()!.withRenderingMode(.alwaysTemplate) :
-            R.image.icon_map()!.withRenderingMode(.alwaysTemplate);
+            R.image.icon_map()!.withRenderingMode(.alwaysTemplate)
         
         self.currentController = (self.currentController == self.mainListViewController) ?
             self.mainMapViewController :
-            self.mainListViewController;
-        self.searchHeaderView.styleButton.setImage(iconImage, for: .normal);
+            self.mainListViewController
+        self.searchHeaderView.styleButton.setImage(iconImage, for: .normal)
     }
 
     func search() {
@@ -144,35 +146,35 @@ class KPMainViewController: KPViewController {
 //        controller.edgeInset = UIEdgeInsets.init(top: 0,
 //                                                 left: 0,
 //                                                 bottom: 0,
-//                                                 right: 0);
+//                                                 right: 0)
 //        controller.presentationStyle = .right
 //        let searchController = KPSearchViewController()
 //        searchController.displayDataModel = displayDataModel
 //        searchController.mainListController = mainListViewController
-//        let navigationController = UINavigationController.init(rootViewController: searchController);
-//        controller.contentController = navigationController;
-//        controller.presentModalView();
+//        let navigationController = UINavigationController.init(rootViewController: searchController)
+//        controller.contentController = navigationController
+//        controller.presentModalView()
         
         
 //        let controller = KPModalViewController()
 //        controller.edgeInset = UIEdgeInsets.init(top: 0,
 //                                                 left: 0,
 //                                                 bottom: 0,
-//                                                 right: 0);
+//                                                 right: 0)
 //        let loadingController = KPLoadingViewController()
-//        controller.contentController = loadingController;
-//        controller.presentModalView();
+//        controller.contentController = loadingController
+//        controller.presentModalView()
 
         
         let controller = KPModalViewController()
         controller.edgeInset = UIEdgeInsets.init(top: 0,
                                                  left: 0,
                                                  bottom: 0,
-                                                 right: 0);
+                                                 right: 0)
         let newStoreController = KPNewStoreController()
-        let navigationController = UINavigationController.init(rootViewController: newStoreController);
-        controller.contentController = navigationController;
-        controller.presentModalView();
+        let navigationController = UINavigationController.init(rootViewController: newStoreController)
+        controller.contentController = navigationController
+        controller.presentModalView()
         
     }
     
@@ -180,27 +182,27 @@ class KPMainViewController: KPViewController {
         let edgePanGesture =
             UIScreenEdgePanGestureRecognizer(target: self,
                                              action: #selector(edgePanGesture(edgePanGesture:)))
-        edgePanGesture.edges = edges;
+        edgePanGesture.edges = edges
         view.addGestureRecognizer(edgePanGesture)
     }
     
     func edgePanGesture(edgePanGesture: UIScreenEdgePanGestureRecognizer) {
         
-        let progress = edgePanGesture.translation(in: self.view).x / self.view.bounds.width;
+        let progress = edgePanGesture.translation(in: self.view).x / self.view.bounds.width
         if edgePanGesture.state == UIGestureRecognizerState.began {
-            self.percentDrivenTransition = UIPercentDrivenInteractiveTransition();
+            self.percentDrivenTransition = UIPercentDrivenInteractiveTransition()
                             if edgePanGesture.edges == UIRectEdge.left {
-                self.dismiss(animated: true, completion: nil);
+                self.dismiss(animated: true, completion: nil)
             }
         } else if edgePanGesture.state == UIGestureRecognizerState.changed {
-            self.percentDrivenTransition.update(progress/4);
+            self.percentDrivenTransition.update(progress/4)
         } else if edgePanGesture.state == UIGestureRecognizerState.cancelled || edgePanGesture.state == UIGestureRecognizerState.ended {
             if progress > 0.5 {
-                self.percentDrivenTransition.finish();
+                self.percentDrivenTransition.finish()
             } else {
-                self.percentDrivenTransition.cancel();
+                self.percentDrivenTransition.cancel()
             }
-            self.percentDrivenTransition = nil;
+            self.percentDrivenTransition = nil
         }
     }
     
@@ -220,7 +222,7 @@ class KPMainViewController: KPViewController {
             let targetController = destinationNavigationController.topViewController as! KPInformationViewController
             targetController.informationDataModel = (sender as! KPMainViewControllerDelegate).selectedDataModel
             
-            self.addScreenEdgePanGestureRecognizer(view: toViewController.view, edges: .left);
+            self.addScreenEdgePanGestureRecognizer(view: toViewController.view, edges: .left)
         }
     }
     
@@ -229,15 +231,15 @@ class KPMainViewController: KPViewController {
 extension KPMainViewController: UIViewControllerTransitioningDelegate {
 
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return KPInformationTranstion();
+        return KPInformationTranstion()
     }
     
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return KPInformationDismissTransition();
+        return KPInformationDismissTransition()
     }
     
     func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) ->
         UIViewControllerInteractiveTransitioning? {
-            return self.percentDrivenTransition;
+            return self.percentDrivenTransition
     }
 }
