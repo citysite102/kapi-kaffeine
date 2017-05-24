@@ -119,31 +119,17 @@ class KPSideViewController: KPViewController {
                                                            icon:R.image.icon_cup()!,
                                                            handler:{()->() in
                                                             let controller = KPModalViewController()
-                                                            controller.contentSize = CGSize.init(width: 320,
-                                                                                                 height: 568);
+                                                            controller.edgeInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
                                                             let aboutUsController = KPAboutUsViewController()
                                                             let navigationController = UINavigationController.init(rootViewController: aboutUsController);
-                                                            
-                                                            
                                                             controller.contentController = navigationController;
-//                                                            controller.presentModalView();
-//                                                            self.dismiss(animated: true,
-//                                                                         completion: {
-//                                                                            DispatchQueue.main.asyncAfter(deadline: .now()+0.2,
-//                                                                                                          execute: { 
-//                                                                                   controller.presentModalView();
-//                                                                            })
-                                                                  controller.presentModalView();
-//                                                            })
+                                                            controller.presentModalView();
                                             }),
                                            informationData(title:"聯絡我們",
                                                            icon:R.image.icon_msg()!,
                                                            handler:{()->() in
                                                             let controller = KPModalViewController()
-                                                            controller.edgeInset = UIEdgeInsets.init(top: 0,
-                                                                                                     left: 0,
-                                                                                                     bottom: 0,
-                                                                                                     right: 0);
+                                                            controller.edgeInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
                                                             let profileController = KPUserProfileViewController()
                                                             let navigationController = UINavigationController.init(rootViewController: profileController);
                                                             controller.contentController = navigationController;
@@ -161,10 +147,7 @@ class KPSideViewController: KPViewController {
                                                            icon:R.image.icon_setting()!,
                                                            handler:{()->() in
                                                             let controller = KPModalViewController()
-                                                            controller.edgeInset = UIEdgeInsets.init(top: 0,
-                                                                                                     left: 0,
-                                                                                                     bottom: 0,
-                                                                                                     right: 0);
+                                                            controller.edgeInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
                                                             let settingController = KPSettingViewController()
                                                             let navigationController = UINavigationController.init(rootViewController: settingController);
                                                             controller.contentController = navigationController;
@@ -172,7 +155,8 @@ class KPSideViewController: KPViewController {
                                            }),
         ]
     }
-
+    
+        
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -187,18 +171,6 @@ class KPSideViewController: KPViewController {
         })
         self.mainController.opacityView.isHidden = true;
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
 extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
@@ -242,11 +214,14 @@ extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
             if self.regionContents[indexPath.row] != nil {
                 let cell = tableView.dequeueReusableCell(withIdentifier:KPSideViewController.KPSideViewControllerRegionCellReuseIdentifier,
                                                          for: indexPath) as! KPRegionTableViewCell;
+                cell.selectionStyle = .none
+                cell.expandIcon.isHidden = false
                 cell.regionLabel.text = self.regionContents[indexPath.row]?.name;
                 return cell;
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier:KPSideViewController.KPSideViewControllerCityCellReuseIdentifier,
                                                          for: indexPath) as! KPCityTableViewCell;
+                cell.selectionStyle = .none
                 let regionIndex = self.getRegionIndex(expandIndex: indexPath.row);
                 var regionContent = self.regionContents[regionIndex];
                 cell.cityLabel.text = regionContent?.cities[indexPath.row-regionIndex-1];
@@ -255,8 +230,10 @@ extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier:KPSideViewController.KPSideViewControllerRegionCellReuseIdentifier,
                                                      for: indexPath) as! KPRegionTableViewCell;
+            cell.selectionStyle = .none
             cell.regionLabel.text = self.informationSectionContents[indexPath.row]?.title;
             cell.regionIcon.image = self.informationSectionContents[indexPath.row]?.icon;
+            cell.expandIcon.isHidden = true
             cell.expanded = false;
             return cell;
         }

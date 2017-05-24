@@ -20,7 +20,7 @@ class KPRegionTableViewCell: UITableViewCell {
                                delay: 0,
                                options: .curveEaseIn,
                                animations: {
-                                self.expandIcon.transform = CGAffineTransform.init(rotationAngle: .pi/2)
+                                self.expandIcon.transform = CGAffineTransform.init(rotationAngle: .pi)
                 }, completion: { (_) in
                     
                 })
@@ -59,7 +59,8 @@ class KPRegionTableViewCell: UITableViewCell {
                                         views: [regionIcon])
         regionLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
         
-        expandIcon = UIImageView.init(image: R.image.icon_map())
+        expandIcon = UIImageView.init(image: R.image.icon_down())
+        expandIcon.tintColor = KPColorPalette.KPMainColor.mainColor
         addSubview(expandIcon)
         expandIcon.addConstraints(fromStringArray: ["V:|-12-[$self(24)]-12-|",
                                                          "H:[$self(24)]-16-|"])
