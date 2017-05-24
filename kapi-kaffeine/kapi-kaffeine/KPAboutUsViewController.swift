@@ -77,7 +77,7 @@ class KPAboutUsViewController: KPViewController {
                                     for: .normal);
         dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor;
         dismissButton.addTarget(self,
-                                     action: #selector(KPSettingViewController.handleDismissButtonOnTapped),
+                                     action: #selector(KPAboutUsViewController.handleDismissButtonOnTapped),
                                      for: .touchUpInside);
         
         
@@ -85,10 +85,6 @@ class KPAboutUsViewController: KPViewController {
         let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
         negativeSpacer.width = -8;
         navigationItem.leftBarButtonItems = [negativeSpacer, barItem]
-        
-        dismissButton.addTarget(self,
-                                     action: #selector(KPInformationViewController.handleDismissButtonOnTapped),
-                                     for: .touchUpInside);
 
         scrollView = UIScrollView();
         scrollView.showsVerticalScrollIndicator = false;

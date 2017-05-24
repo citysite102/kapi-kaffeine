@@ -91,10 +91,12 @@ class KPMainViewController: KPViewController {
         let menuLeftNavigationController = UISideMenuNavigationController(rootViewController: sideBarController);
         menuLeftNavigationController.leftSide = true;
         
+        
         SideMenuManager.menuLeftNavigationController = menuLeftNavigationController
-        SideMenuManager.menuPresentMode = .menuSlideIn;
+        SideMenuManager.menuPresentMode = .viewSlideInOut;
         SideMenuManager.menuFadeStatusBar = false;
-        SideMenuManager.menuAnimationTransformScaleFactor = 0.96;
+        SideMenuManager.menuShadowOpacity = 0;
+        SideMenuManager.menuAnimationTransformScaleFactor = 1.0;
         SideMenuManager.menuAnimationBackgroundColor = UIColor.black;
         SideMenuManager.menuWidth = 260;
         

@@ -99,7 +99,11 @@ class KPSettingViewController: KPViewController {
                                                                                              right: 0);
                                                     let introController = KPIntroViewController()
                                                     controller.contentController = introController;
-                                                    controller.presentModalView();
+//                                                    controller.presentModalView();
+                                                    
+                                                    self.appModalController()?.present(introController, animated: true, completion: nil)
+                                                    
+//                                                    self.navigationController?.pushViewController(introController, animated: true)
                                     }),
                                     settingData(title:"協助填寫問卷，幫助讓產品更好",
                                                 information:nil,
@@ -162,6 +166,10 @@ extension KPSettingViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.settingDataContents.count;
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.settingDataContents[indexPath.row].handler!()
     }
     
     

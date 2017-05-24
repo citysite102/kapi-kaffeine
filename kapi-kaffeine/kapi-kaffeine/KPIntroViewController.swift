@@ -151,7 +151,12 @@ class KPIntroViewController: KPViewController {
     // MARK: UI Event
     
     func skipButtonOnTapped(_ sender: UIButton) {
-        self.appModalController()?.dismissControllerWithDefaultDuration()
+        
+        if self.appModalController() != nil {
+            self.appModalController()?.dismissControllerWithDefaultDuration()
+        } else {
+            self.dismiss(animated: true, completion: nil)
+        }
     }
 }
 
