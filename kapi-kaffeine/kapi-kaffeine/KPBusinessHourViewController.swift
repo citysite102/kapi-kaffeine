@@ -92,7 +92,7 @@ class KPBusinessHourViewController: KPSharedSettingViewController, KPTimePickerD
     func showTimePicker() {
         
         let controller = KPModalViewController()
-        controller.contentSize = CGSize(width: UIScreen.main.bounds.width-80, height: 300)
+        controller.contentSize = CGSize(width: 320, height: 300)
         controller.presentationStyle = .popout
         let timePickerController = KPTimePickerViewController()
         if let timeValue = currentSelectedButton?.titleLabel?.attributedText?.string {
