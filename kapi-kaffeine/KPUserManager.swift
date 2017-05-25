@@ -11,6 +11,7 @@ import Firebase
 import FirebaseAuth
 import FacebookLogin
 import FacebookCore
+import ObjectMapper
 
 public class KPUserManager {
     
@@ -22,8 +23,14 @@ public class KPUserManager {
     
     private init() {
         
-        
         // 讀取資料
+        KPUserDefaults.loadUserInformation()
+        
+        // 建立Current User
+        if KPUserDefaults.accessToken != nil {
+            let currentUserInfo = ["access_token": KPUserDefaults.accessToken]
+            self.currentUser = Mapper<KPUser>().map(JSONObject: currentUserInfo)
+        }
     }
     
     
@@ -68,8 +75,19 @@ public class KPUserManager {
                                                             return
                                                         }
                                                         
+                                                        
+                                                        
+                                                        // 儲存用戶資料
+                                                        KPUserDefaults.accessToken = user?.uid
+                                                        
+                                                        
+                                                        // 建立Current User
+                                                        let currentUserInfo = ["access_token": user?.uid]
+                                                        self.currentUser = Mapper<KPUser>().map(JSONObject: currentUserInfo)
+                                                        
                                                         completion?(true)
-                                                        viewController.dismiss(animated: true, completion: { 
+                                                        
+                                                        viewController.dismiss(animated: true, completion: {
                                                             print("Successfully Logged In")
                                                             
                                                         })
@@ -77,4 +95,5 @@ public class KPUserManager {
                             }
         }
     }
+    
 }

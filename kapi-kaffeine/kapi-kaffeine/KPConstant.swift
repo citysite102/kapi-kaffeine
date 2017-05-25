@@ -63,6 +63,8 @@ struct KPColorPalette {
 
 struct AppConstant {
     static let introShownKey = "KPIntroHasShownKey"
+    
+    static let userDefaultsSuitName = "kapi-userdefault"
 }
 
 extension UIDevice {

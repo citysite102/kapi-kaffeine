@@ -93,32 +93,32 @@ class KPIntroViewController: KPViewController {
         
         firstIntroView.addConstraints(fromStringArray: ["V:|[$self]|",
                                                         "H:|[$self]"])
-        firstIntroView.addConstraintForHavingSameHeight(with: self.view)
-        firstIntroView.addConstraintForHavingSameWidth(with: self.view)
+        firstIntroView.addConstraintForHavingSameHeight(with: view)
+        firstIntroView.addConstraintForHavingSameWidth(with: view)
         
         secondIntroView.addConstraints(fromStringArray: ["V:|[$self]|",
                                                         "H:[$view0][$self]"],
                                       views:[firstIntroView])
-        secondIntroView.addConstraintForHavingSameHeight(with: self.view)
-        secondIntroView.addConstraintForHavingSameWidth(with: self.view)
+        secondIntroView.addConstraintForHavingSameHeight(with: view)
+        secondIntroView.addConstraintForHavingSameWidth(with: view)
         
         thirdIntroView.addConstraints(fromStringArray: ["V:|[$self]|",
                                                         "H:[$view0][$self]"],
                                       views:[secondIntroView])
-        thirdIntroView.addConstraintForHavingSameHeight(with: self.view)
-        thirdIntroView.addConstraintForHavingSameWidth(with: self.view)
+        thirdIntroView.addConstraintForHavingSameHeight(with: view)
+        thirdIntroView.addConstraintForHavingSameWidth(with: view)
         
         forthIntroView.addConstraints(fromStringArray: ["V:|[$self]|",
                                                         "H:[$view0][$self]"],
                                       views:[thirdIntroView])
-        forthIntroView.addConstraintForHavingSameHeight(with: self.view)
-        forthIntroView.addConstraintForHavingSameWidth(with: self.view)
+        forthIntroView.addConstraintForHavingSameHeight(with: view)
+        forthIntroView.addConstraintForHavingSameWidth(with: view)
         
         fifthIntroView.addConstraints(fromStringArray: ["V:|[$self]|",
                                                         "H:[$view0][$self]|"],
                                       views:[forthIntroView])
-        fifthIntroView.addConstraintForHavingSameHeight(with: self.view)
-        fifthIntroView.addConstraintForHavingSameWidth(with: self.view)
+        fifthIntroView.addConstraintForHavingSameHeight(with: view)
+        fifthIntroView.addConstraintForHavingSameWidth(with: view)
         
         fifthIntroView.facebookLoginButton.addTarget(self, action: #selector(handleFacebookLoginButtonOnTapped(_:)),
                                                      for: UIControlEvents.touchUpInside)
@@ -159,10 +159,10 @@ class KPIntroViewController: KPViewController {
     
     func skipButtonOnTapped(_ sender: UIButton) {
         
-        if self.appModalController() != nil {
-            self.appModalController()?.dismissControllerWithDefaultDuration()
+        if appModalController() != nil {
+            appModalController()?.dismissControllerWithDefaultDuration()
         } else {
-            self.dismiss(animated: true, completion: nil)
+            dismiss(animated: true, completion: nil)
         }
     }
 }
@@ -172,15 +172,17 @@ extension KPIntroViewController: UIScrollViewDelegate {
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let current = scrollView.contentOffset.x/UIScreen.main.bounds.size.width
         pageControl.currentPage = Int(current)
+        pageControl.isHidden = false
         
         if pageControl.currentPage == 1 {
-            self.secondIntroView.showPopContents()
+            secondIntroView.showPopContents()
         } else if pageControl.currentPage == 2 {
-            self.thirdIntroView.showPopContents()
+            thirdIntroView.showPopContents()
         } else if pageControl.currentPage == 3 {
-            self.forthIntroView.showPopContents()
+            forthIntroView.showPopContents()
         } else if pageControl.currentPage == 4 {
-            self.fifthIntroView.showPopContents()
+            fifthIntroView.showPopContents()
+            pageControl.isHidden = true
         }
     }
     
@@ -203,9 +205,9 @@ extension KPIntroViewController: UIScrollViewDelegate {
         transform = CATransform3DScale(transform, scale, scale, 1)
         
         if current > 1 && current < 2 {
-            self.thirdIntroView.updateLayoutWithProgress(currentProgress)
+            thirdIntroView.updateLayoutWithProgress(currentProgress)
         } else if current > 3 && current < 4 {
-            self.fifthIntroView.updateLayoutWithProgress(currentProgress)
+            fifthIntroView.updateLayoutWithProgress(currentProgress)
         }
     }
 }

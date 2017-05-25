@@ -9,9 +9,9 @@
 import UIKit
 import ObjectMapper
 
-class KPUser: NSObject, Mappable {
+final class KPUser: NSObject, Mappable {
     
-    
+    var accessToken: String!
     var identifier: String!
     var displayName: String!
     var photoURL: String!
@@ -28,13 +28,14 @@ class KPUser: NSObject, Mappable {
     
     required init?(map: Map) {
         
-        if map.JSON["identifier"] == nil {
-            return nil
-        }
+//        if map.JSON["identifier"] == nil {
+//            return nil
+//        }
         
     }
     
     func mapping(map: Map) {
+        accessToken         <-    map["access_token"]
         identifier          <-    map["id"]
         displayName         <-    map["display_name"]
         photoURL            <-    map["photo_url"]
