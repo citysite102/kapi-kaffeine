@@ -60,6 +60,7 @@ class KPFifthIntroView: KPSharedIntroView {
         facebookLoginButton.addConstraintForCenterAligningToSuperview(in: .horizontal)
         facebookLoginButton.addConstraints(fromStringArray: ["V:[$self(64)]-32-|",
                                                              "H:[$self(276)]"])
+        
     }
     
     

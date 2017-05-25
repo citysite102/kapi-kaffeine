@@ -57,12 +57,12 @@
         <dict>
             <key>CFBundleURLSchemes</key>
             <array>
-                <string>fb1678222145539349</string>
+                <string>fb387376394953767</string>
             </array>
         </dict>
     </array>
     <key>FacebookAppID</key>
-    <string>1678222145539349</string>
+    <string>387376394953767</string>
     <key>FacebookDisplayName</key>
     <string>KAPI-iOS</string>
     <key>LSApplicationQueriesSchemes</key>

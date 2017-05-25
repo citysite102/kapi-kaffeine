@@ -7,27 +7,46 @@
 //
 
 import UIKit
-import Firebase
-import FirebaseAuth
-import FacebookLogin
-import FacebookCore
+import ObjectMapper
 
-public class KPUser {
+class KPUser: NSObject, Mappable {
     
-    var demoData: Int = 0
     
-}
-
-public var currentUser: KPUser {
+    var identifier: String!
+    var displayName: String!
+    var photoURL: String!
+    var defaultLocation: String!
+    var intro: String?
+    var level: NSNumber?
+    var exp: NSNumber?
+    var email: String?
+    var createdDate: NSNumber?
+    var favorites: [String]?
+    var visits: [String]?
     
-    struct Static {
-        static var instance: KPUser?
+    
+    
+    required init?(map: Map) {
+        
+        if map.JSON["identifier"] == nil {
+            return nil
+        }
+        
     }
     
-    if Static.instance == nil {
-        Static.instance = KPUser()
-        Static.instance?.demoData = 3
+    func mapping(map: Map) {
+        identifier          <-    map["id"]
+        displayName         <-    map["display_name"]
+        photoURL            <-    map["photo_url"]
+        defaultLocation     <-    map["default_location"]
+        intro               <-    map["intro"]
+        level               <-    map["level"]
+        exp                 <-    map["exp"]
+        email               <-    map["email"]
+        createdDate         <-    map["created_date"]
+        favorites           <-    map["favorites"]
+        visits              <-    map["visits"]
     }
     
-    return Static.instance!
+
 }

@@ -14,6 +14,27 @@ import FacebookCore
 
 public class KPUserManager {
     
+    
+    static let sharedManager = KPUserManager()
+    
+    
+    // MARK: Initialization
+    
+    private init() {
+        
+        
+        // 讀取資料
+    }
+    
+    
+    // MARK: Properties
+    
+    var currentUser: KPUser?
+    
+    //
+    
+    // MARK: API
+    
     func logIn(_ viewController: UIViewController,
                completion: ((Bool) -> Swift.Void)? = nil) {
         
@@ -43,14 +64,15 @@ public class KPUserManager {
                                                             viewController.present(alertController,
                                                                                    animated: true,
                                                                                    completion: nil)
-                                                            completion!(false)
+                                                            completion?(false)
+                                                            return
                                                         }
                                                         
-                                                        completion!(true)
-//                                                        viewController.dismiss(animated: true, completion: { 
-//                                                            print("Successfully Logged In")
-//                                                            
-//                                                        })
+                                                        completion?(true)
+                                                        viewController.dismiss(animated: true, completion: { 
+                                                            print("Successfully Logged In")
+                                                            
+                                                        })
                                 })
                             }
         }

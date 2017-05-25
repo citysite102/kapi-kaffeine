@@ -122,9 +122,6 @@ class KPIntroViewController: KPViewController {
         
         fifthIntroView.facebookLoginButton.addTarget(self, action: #selector(handleFacebookLoginButtonOnTapped(_:)),
                                                      for: UIControlEvents.touchUpInside)
-        
-        
-        print("Current User:\(currentUser.demoData)")
     }
 
     override func didReceiveMemoryWarning() {
@@ -155,7 +152,7 @@ class KPIntroViewController: KPViewController {
     }
     
     func handleFacebookLoginButtonOnTapped(_ sender: UIButton) {
-        
+        KPUserManager.sharedManager.logIn(self)
     }
     
     // MARK: UI Event
