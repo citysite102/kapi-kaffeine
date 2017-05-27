@@ -25,7 +25,7 @@ public class KPUserManager {
         
         // 讀取資料
         KPUserDefaults.loadUserInformation()
-        
+
         // 建立Current User
         if KPUserDefaults.accessToken != nil {
             let currentUserInfo = ["access_token": KPUserDefaults.accessToken]
@@ -80,21 +80,19 @@ public class KPUserManager {
                                                         loginRequest.perform(user?.uid,
                                                                              user?.displayName,
                                                                              user?.photoURL?.absoluteString,
-                                                                             user?.email).then { result -> Void in
-                                                                                self.currentUser = Mapper<KPUser>().map(JSONObject: result)
+                                                                             user?.email ?? "unknown").then { result -> Void in
+                                                                                
+                                                                                // 建立 Current User
+                                                                                self.currentUser =
+                                                                                    Mapper<KPUser>().map(JSONObject: result["data"].dictionaryValue)
+                                                                                self.currentUser?.accessToken = result["token"].stringValue
+                                                                                KPUserDefaults.accessToken = self.currentUser?.accessToken
+                                                            
                                                             }.catch { error in
                                                                 print("Error")
                                                             }
-                                                        // 儲存用戶資料
-//                                                        KPUserDefaults.accessToken = user?.uid
-                                                        
-                                                        
-                                                        // 建立Current User
-//                                                        let currentUserInfo = ["access_token": user?.uid]
-//                                                        self.currentUser = Mapper<KPUser>().map(JSONObject: currentUserInfo)
                                                         
                                                         completion?(true)
-                                                        
                                                         viewController.dismiss(animated: true, completion: {
                                                             print("Successfully Logged In")
                                                             

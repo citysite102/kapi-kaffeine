@@ -10,7 +10,7 @@ import UIKit
 
 class KPSharedSettingViewController: KPViewController {
 
-    var dismissButton:UIButton!
+    var dismissButton: KPBounceButton!
     var scrollView: UIScrollView!
     var containerView: UIView!
     var sendButton: UIButton!
@@ -40,7 +40,7 @@ class KPSharedSettingViewController: KPViewController {
         
         self.view.backgroundColor = UIColor.white
         
-        dismissButton = UIButton.init()
+        dismissButton = KPBounceButton.init()
         dismissButton.setImage(R.image.icon_close()?.withRenderingMode(.alwaysTemplate),
                                for: .normal)
         dismissButton.tintColor = KPColorPalette.KPMainColor.mainColor

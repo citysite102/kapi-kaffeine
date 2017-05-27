@@ -36,7 +36,7 @@ public enum NetworkRequestError: Error {
 
 public typealias RawJsonResult = JSON
 
-// MARK: Simple Request
+// MARK: Request
 
 public protocol NetworkRequest {
     
@@ -113,6 +113,83 @@ extension NetworkRequest where ResponseType == RawJsonResult {
     
     public var responseHandler: (Data) throws -> ResponseType { return rawJsonResponseHandler }
 
+    private func rawJsonResponseHandler(_ data: Data) throws -> ResponseType {
+        return JSON(data: data)
+    }
+}
+
+
+// MARK: Upload Request
+
+public protocol NetworkUploadRequest {
+    
+    associatedtype ResponseType
+    
+    var endpoint: String { get }
+    
+    var responseHandler: (Data) throws -> ResponseType { get }
+    
+    // Optional
+    var baseURL: String { get }
+    
+    var method: Alamofire.HTTPMethod { get }
+    
+    var threshold: UInt64 { get }
+
+    var parameters: [String : Any]? { get }
+
+    var headers: [String : String] { get }
+    
+    /// Client that helps you to make reqeust.
+    var networkClient: NetworkClientType { get }
+    
+}
+
+extension NetworkUploadRequest {
+    
+    public var url: String { return baseURL + endpoint}
+    public var baseURL: String {return "https://kapi-test.herokuapp.com/api/v1"}
+    public var method: Alamofire.HTTPMethod { return .post }
+    
+    public var threshold: UInt64 { return SessionManager.multipartFormDataEncodingMemoryThreshold }
+    public var parameters: [String : AnyObject] { return [:] }
+    public var headers: [String : String] { return ["Content-Type":"multipart/form-data",
+                                                    "User-Agent":"iReMW4K4fyWos"] }
+    
+    public var networkClient: NetworkClientType { return NetworkClient() }
+    
+}
+
+extension NetworkUploadRequest where ResponseType: Mappable {
+    
+    // 輸入 Data 型別，回傳 ResponseType
+    public var responseHandler: (Data) throws -> ResponseType { return jsonResponseHandler }
+    public var arrayResponseHandler: (Data) throws -> [ResponseType] { return jsonArrayResponseHandler }
+    
+    private func jsonResponseHandler(_ data: Data) throws -> ResponseType {
+        let json = String(data: data, encoding: String.Encoding.utf8)
+        
+        if let response = Mapper<ResponseType>().map(JSONString: json!) {
+            return response
+        } else {
+            throw NetworkRequestError.invalidData
+        }
+    }
+    
+    private func jsonArrayResponseHandler(_ data: Data) throws -> [ResponseType] {
+        let json = String(data: data , encoding: String.Encoding.utf8)
+        if let responses = Mapper<ResponseType>().mapArray(JSONString: json!) {
+            return responses
+        } else {
+            throw NetworkRequestError.invalidData
+        }
+    }
+}
+
+extension NetworkUploadRequest where ResponseType == RawJsonResult {
+    
+    public var responseHandler: (Data) throws -> ResponseType { return rawJsonResponseHandler }
+    
     private func rawJsonResponseHandler(_ data: Data) throws -> ResponseType {
         return JSON(data: data)
     }

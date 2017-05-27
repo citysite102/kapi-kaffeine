@@ -14,7 +14,7 @@ import PromiseKit
 
 public protocol NetworkClientType {
     func performRequest<Request: NetworkRequest>(_ networkRequest: Request) -> Promise<Data>
-//    func performUploadRequest<Request: NetworkUploadRequest>
+    func performUploadRequest<Request: NetworkUploadRequest>(_ networkRequest: Request) -> Promise<Data>
 }
 
 public struct NetworkClient: NetworkClientType {
@@ -40,6 +40,32 @@ public struct NetworkClient: NetworkClientType {
                                 reject(NetworkRequestError.unknownError)
                             }
         }
+        return promise
+    }
+    
+    
+    public func performUploadRequest<Request>(_ networkRequest: Request) -> Promise<Data> where Request : NetworkUploadRequest {
+
+        let (promise, fulfill, reject) = Promise<Data>.pending()
+        Alamofire.upload(multipartFormData: { (multipartFormData) in
+            for (key, value) in networkRequest.parameters! {
+                multipartFormData.append((value as! String).data(using: .utf8)!,
+                                         withName: key)
+            }
+        }, usingThreshold: networkRequest.threshold,
+           to: networkRequest.url,
+           method: networkRequest.method,
+           headers: networkRequest.headers) { (encodingResult) in
+            switch encodingResult {
+            case .success(let upload, _, _):
+                upload.responseJSON { response in
+                    fulfill(response.data!)
+                }
+            case .failure(let encodingError):
+                reject(encodingError)
+            }
+        }
+        
         return promise
     }
     

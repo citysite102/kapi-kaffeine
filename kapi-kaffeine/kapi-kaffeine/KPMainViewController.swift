@@ -108,6 +108,10 @@ class KPMainViewController: KPViewController {
             
         }
         
+        if (KPUserManager.sharedManager.currentUser != nil) {
+            
+        }
+        
         
         let KapiDataRequest = KPNomadRequest()
         KapiDataRequest.perform().then { resultArray -> Void in
