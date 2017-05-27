@@ -14,6 +14,7 @@ import PromiseKit
 
 public protocol NetworkClientType {
     func performRequest<Request: NetworkRequest>(_ networkRequest: Request) -> Promise<Data>
+//    func performUploadRequest<Request: NetworkUploadRequest>
 }
 
 public struct NetworkClient: NetworkClientType {

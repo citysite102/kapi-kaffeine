@@ -134,21 +134,10 @@ extension KPSettingViewController: UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-//        var cell = tableView.dequeueReusableCell(withIdentifier: self.settingDataContents[indexPath.row].identifier,
-//                                                 for: indexPath) as UITableViewCell?;
-//        
-//        if cell == nil {
-//            cell = UITableViewCell(style: .value1,
-//                                   reuseIdentifier: self.settingDataContents[indexPath.row].identifier);
-//        }
-//        self.setupCell(self.settingDataContents[indexPath.row], cell: cell!);
-//        return cell!;
         let cell = UITableViewCell(style: .value1,
                                    reuseIdentifier: self.settingDataContents[indexPath.row].identifier);
         self.setupCell(self.settingDataContents[indexPath.row], cell: cell);
         return cell;
-
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {

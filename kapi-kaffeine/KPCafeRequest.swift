@@ -10,65 +10,9 @@ import UIKit
 import ObjectMapper
 import PromiseKit
 
-class businessHour: Mappable {
-    
-    required init?(map: Map) {
-    }
-    
-    func mapping(map: Map) {
-    }
-}
-
-class rate: Mappable {
-    
-    required init?(map: Map) {
-    }
-    
-    func mapping(map: Map) {
-    }
-}
-
-class photo: Mappable {
-    
-    required init?(map: Map) {
-    }
-    
-    func mapping(map: Map) {
-    }
-}
-
-class searchResult: Mappable {
-    
-    var identifier: String!
-    var address: String!
-    var name: String!
-    var phone: String?
-    var city: String?
-    var latitude: NSNumber?
-    var longtitude: NSNumber?
-    var standingDesk: NSNumber?
-    var socket: NSNumber?
-    var limitedTime: NSNumber?
-    var url: String?
-    var fbUrl: String?
-    var mrt: String?
-    var businessHour: businessHour?
-    var tags: [AnyObject]?
-    var rates: rate?
-    var photos: photo?
-    var isKapi: Bool?
-    
-    required init?(map: Map) {
-        
-    }
-    
-    func mapping(map: Map) {
-    }
-}
-
 class KPCafeRequest: NetworkRequest {
 
-    typealias ResponseType = searchResult
+    typealias ResponseType = KPDataModel
     
     private var limitedTime: NSNumber?
     private var socket: NSNumber?

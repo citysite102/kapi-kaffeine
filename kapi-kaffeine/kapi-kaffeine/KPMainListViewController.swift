@@ -80,8 +80,8 @@ extension KPMainListViewController: UITableViewDelegate, UITableViewDataSource {
             
             cell.selectionStyle = .none
             cell.dataModel = self.displayDataModel[indexPath.row]
-            cell.shopStatusContent = (self.displayDataModel[indexPath.row].openTime! as String).replacingOccurrences(of: "~", with: "-")
-            cell.scoreLabel.score = "\(self.displayDataModel[indexPath.row].score!.format(f: ".1"))"
+//            cell.shopStatusContent = (self.displayDataModel[indexPath.row].openTime! as String).replacingOccurrences(of: "~", with: "-")
+//            cell.scoreLabel.score = "\(self.displayDataModel[indexPath.row].score!.format(f: ".1"))"
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier:KPMainListViewController.KPMainListViewLoadingCellReuseIdentifier,

@@ -16,7 +16,7 @@ import ObjectMapper
 public class KPUserManager {
     
     
-    static let sharedManager = KPUserManager()
+    static let sharedManager = KPUserManager() 
     
     
     // MARK: Initialization
@@ -76,14 +76,22 @@ public class KPUserManager {
                                                         }
                                                         
                                                         
-                                                        
+                                                        let loginRequest = KPLoginRequest()
+                                                        loginRequest.perform(user?.uid,
+                                                                             user?.displayName,
+                                                                             user?.photoURL?.absoluteString,
+                                                                             user?.email).then { result -> Void in
+                                                                                self.currentUser = Mapper<KPUser>().map(JSONObject: result)
+                                                            }.catch { error in
+                                                                print("Error")
+                                                            }
                                                         // 儲存用戶資料
-                                                        KPUserDefaults.accessToken = user?.uid
+//                                                        KPUserDefaults.accessToken = user?.uid
                                                         
                                                         
                                                         // 建立Current User
-                                                        let currentUserInfo = ["access_token": user?.uid]
-                                                        self.currentUser = Mapper<KPUser>().map(JSONObject: currentUserInfo)
+//                                                        let currentUserInfo = ["access_token": user?.uid]
+//                                                        self.currentUser = Mapper<KPUser>().map(JSONObject: currentUserInfo)
                                                         
                                                         completion?(true)
                                                         

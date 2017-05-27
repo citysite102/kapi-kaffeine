@@ -36,6 +36,8 @@ public enum NetworkRequestError: Error {
 
 public typealias RawJsonResult = JSON
 
+// MARK: Simple Request
+
 public protocol NetworkRequest {
     
     associatedtype ResponseType

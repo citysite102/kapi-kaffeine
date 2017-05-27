@@ -65,7 +65,7 @@ class KPFirstIntroView: KPSharedIntroView {
         
         UIView.animate(withDuration: 0.5,
                        delay: 0,
-                       usingSpringWithDamping: 0.5,
+                       usingSpringWithDamping: 0.4,
                        initialSpringVelocity: 0.8,
                        options: .curveEaseOut,
                        animations: { 
@@ -76,7 +76,7 @@ class KPFirstIntroView: KPSharedIntroView {
         
         UIView.animate(withDuration: 0.5,
                        delay: 0.1,
-                       usingSpringWithDamping: 0.5,
+                       usingSpringWithDamping: 0.4,
                        initialSpringVelocity: 0.8,
                        options: .curveEaseOut,
                        animations: {
@@ -87,7 +87,7 @@ class KPFirstIntroView: KPSharedIntroView {
         
         UIView.animate(withDuration: 0.5,
                        delay: 0.2,
-                       usingSpringWithDamping: 0.5,
+                       usingSpringWithDamping: 0.4,
                        initialSpringVelocity: 0.8,
                        options: .curveEaseOut,
                        animations: {
