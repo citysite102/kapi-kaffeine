@@ -109,16 +109,14 @@ class KPMainViewController: KPViewController {
         }
         
         if (KPUserManager.sharedManager.currentUser != nil) {
-            
-        }
-        
-        
-        let KapiDataRequest = KPNomadRequest()
-        KapiDataRequest.perform().then { resultArray -> Void in
-                self.displayDataModel = resultArray
-            }.catch { error in
-                print("Error")
+            KPServiceHandler.sharedHandler.fetchRemoteData(nil,
+                                                           nil,
+                                                           nil,
+                                                           nil,
+                                                           nil) { (results: [KPDataModel]) in
+                self.displayDataModel = results
             }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

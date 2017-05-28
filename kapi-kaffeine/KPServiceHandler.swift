@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import ObjectMapper
 
 class KPServiceHandler {
 
@@ -30,8 +31,20 @@ class KPServiceHandler {
                          _ mrt: String?,
                          _ city: String?,
                          _ completion:((_ result: [KPDataModel]) -> Void)?) {
-        kapiDataRequest.perform(limitedTime, socket, standingDesk, mrt, city).then { resultArray -> Void in
-            completion?(resultArray)
+        kapiDataRequest.perform(limitedTime,
+                                socket,
+                                standingDesk,
+                                mrt,
+                                city).then { result -> Void in
+                                    var cafaDatas = [KPDataModel]()
+                                    
+                                    for data in (result["data"].arrayObject)! {
+                                        let cafeData = Mapper<KPDataModel>().map(JSONObject: data)
+                                        if cafeData != nil {
+                                            cafaDatas.append(cafeData!)
+                                        }
+                                    }
+                                    completion?(cafaDatas)
             }.catch { error in
                 print("Error")
         }

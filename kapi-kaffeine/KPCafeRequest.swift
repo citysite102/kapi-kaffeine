@@ -9,10 +9,11 @@
 import UIKit
 import ObjectMapper
 import PromiseKit
+import Alamofire
 
-class KPCafeRequest: NetworkRequest {
+class KPCafeRequest: NetworkUploadRequest {
 
-    typealias ResponseType = KPDataModel
+    typealias ResponseType = RawJsonResult
     
     private var limitedTime: NSNumber?
     private var socket: NSNumber?
@@ -43,16 +44,24 @@ class KPCafeRequest: NetworkRequest {
         return parameters
     }
     
-    public func perform(_ limitedTime: NSNumber?,
-                        _ socket: NSNumber?,
-                        _ standingDesk: NSNumber?,
-                        _ mrt: String?,
-                        _ city: String?) -> Promise<([ResponseType])> {
+    var method: Alamofire.HTTPMethod { return .get }
+    
+    var headers: [String : String] {
+        return ["token": (KPUserManager.sharedManager.currentUser?.accessToken)!]
+    }
+    
+    
+    
+    public func perform(_ limitedTime: NSNumber? = nil,
+                        _ socket: NSNumber? = nil,
+                        _ standingDesk: NSNumber? = nil,
+                        _ mrt: String? = nil,
+                        _ city: String? = nil) -> Promise<(ResponseType)> {
         self.limitedTime = limitedTime
         self.socket = socket
         self.standingDesk = standingDesk
         self.mrt = mrt
         self.city = city
-        return networkClient.performRequest(self).then(execute: arrayResponseHandler)
+        return  networkClient.performUploadRequest(self).then(execute: responseHandler)
     }
 }
