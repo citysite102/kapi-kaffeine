@@ -78,6 +78,11 @@ class KPInformationViewController: KPViewController {
         
         informationHeaderView = KPInformationHeaderView()
         informationHeaderView.delegate = self
+        if let photoURL = informationDataModel.photos?["google_l"] {
+            informationHeaderView.shopPhoto.af_setImage(withURL: URL(string: photoURL)!,
+                                                        placeholderImage: R.image.demo_1())
+        }
+        //informationDataModel
         scrollContainer.addSubview(informationHeaderView)
         informationHeaderView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                                "V:|[$self]"])

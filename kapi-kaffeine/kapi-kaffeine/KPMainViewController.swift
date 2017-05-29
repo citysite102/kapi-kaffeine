@@ -139,10 +139,64 @@ class KPMainViewController: KPViewController {
             R.image.icon_list()!.withRenderingMode(.alwaysTemplate) :
             R.image.icon_map()!.withRenderingMode(.alwaysTemplate)
         
-        self.currentController = (self.currentController == self.mainListViewController) ?
-            self.mainMapViewController :
-            self.mainListViewController
-        self.searchHeaderView.styleButton.setImage(iconImage, for: .normal)
+        var transform   = CATransform3DIdentity;
+        transform.m34 = -1.0/1000;
+        
+        let rightRotateTransform = CATransform3DRotate(transform,
+                                                       CGFloat.pi/2,
+                                                       0,
+                                                       1,
+                                                       0)
+            UIView.animate(withDuration: 0.2,
+                           delay: 0,
+                           options: .curveEaseOut,
+                           animations: { 
+                            self.currentController.view.layer.transform =
+                                CATransform3DScale(rightRotateTransform
+                                , 1
+                                , 1
+                                , 1)
+            }) { (_) in
+                self.currentController = (self.currentController == self.mainListViewController) ?
+                    self.mainMapViewController :
+                    self.mainListViewController
+                self.searchHeaderView.styleButton.setImage(iconImage, for: .normal)
+                
+                self.currentController.view.layer.transform = CATransform3DRotate(self.currentController.view.layer.transform,
+                                                           -CGFloat.pi, 0, 1, 0);
+                UIView.animate(withDuration: 0.2,
+                               delay: 0,
+                               options: .curveEaseOut,
+                               animations: { 
+                                self.currentController.view.layer.transform =
+                                    CATransform3DRotate(self.currentController.view.layer.transform, CGFloat.pi/2, 0, 1, 0);
+                }, completion: { (_) in
+                    
+                })
+        }
+//        [UIView animateWithDuration:0.2 delay:0
+//            options:UIViewAnimationOptionCurveLinear|UIViewAnimationOptionAllowUserInteraction
+//            animations:^{
+//            self.layer.transform = CATransform3DScale(rightRotateTransform, 1, 1, 1);
+//            } completion:^(BOOL finished) {
+//            self.layer.transform = CATransform3DRotate(self.layer.transform,
+//            -M_PI, 0, 1, 0);
+//            self.docContentView.hidden = YES;
+//            self.docEditingView.hidden = NO;
+//            [UIView animateWithDuration:0.8 delay:0 usingSpringWithDamping:0.4
+//            initialSpringVelocity:0.2
+//            options:UIViewAnimationOptionAllowUserInteraction
+//            animations:^{
+//            self.layer.transform = CATransform3DRotate(self.layer.transform,
+//            M_PI_2, 0, 1, 0);
+//            } completion:^(BOOL finished) {
+//            self.userInteractionEnabled = YES;
+//            }];
+//            }];
+//        self.currentController = (self.currentController == self.mainListViewController) ?
+//            self.mainMapViewController :
+//            self.mainListViewController
+//        self.searchHeaderView.styleButton.setImage(iconImage, for: .normal)
     }
 
     func search() {
