@@ -11,7 +11,7 @@ import UIKit
 class KPInformationViewController: KPViewController {
 
     
-    var informationDataModel:KPDataModel!
+    var informationDataModel: KPDataModel!
     var dismissButton:UIButton!
     var snapshotPhotoView: UIView  {
         get {
@@ -88,7 +88,10 @@ class KPInformationViewController: KPViewController {
         
         
         let informationView: KPShopInfoView = KPShopInfoView();
-        informationView.featureContents = ["食物好吃", "氣氛佳", "看不見桌子"];
+        informationView.featureContents = informationDataModel.featureContents
+        informationView.titleLabel.text = informationDataModel.name
+        informationView.locationLabel.text = informationDataModel.address
+        informationView.phoneLabel.text = informationDataModel.phone
         shopInformationView = KPInformationSharedInfoView();
         shopInformationView.infoView = informationView;
         shopInformationView.infoTitleLabel.text = "店家資訊";
@@ -122,6 +125,7 @@ class KPInformationViewController: KPViewController {
                                                 views: [shopInformationView]);
         
         let shopRateInfoView = KPShopRateInfoView();
+        shopRateInfoView.rates = informationDataModel.rates
         rateInformationView = KPInformationSharedInfoView();
         rateInformationView.infoView = shopRateInfoView;
         rateInformationView.infoTitleLabel.text = "店家評分";

@@ -25,26 +25,25 @@ class KPServiceHandler {
     
     // MARK: API
     
-    func fetchRemoteData(_ limitedTime: NSNumber?,
-                         _ socket: NSNumber?,
-                         _ standingDesk: NSNumber?,
-                         _ mrt: String?,
-                         _ city: String?,
-                         _ completion:((_ result: [KPDataModel]) -> Void)?) {
+    func fetchRemoteData(_ limitedTime: NSNumber? = nil,
+                         _ socket: NSNumber? = nil,
+                         _ standingDesk: NSNumber? = nil,
+                         _ mrt: String? = nil,
+                         _ city: String? = nil,
+                         _ completion:((_ result: [KPDataModel]) -> Void)? = nil) {
         kapiDataRequest.perform(limitedTime,
                                 socket,
                                 standingDesk,
                                 mrt,
                                 city).then { result -> Void in
-                                    var cafaDatas = [KPDataModel]()
-                                    
+                                    var cafeDatas = [KPDataModel]()
                                     for data in (result["data"].arrayObject)! {
-                                        let cafeData = Mapper<KPDataModel>().map(JSONObject: data)
+                                        let cafeData = KPDataModel(JSON: (data as! [String: Any]))
                                         if cafeData != nil {
-                                            cafaDatas.append(cafeData!)
+                                            cafeDatas.append(cafeData!)
                                         }
                                     }
-                                    completion?(cafaDatas)
+                                    completion?(cafeDatas)
             }.catch { error in
                 print("Error")
         }

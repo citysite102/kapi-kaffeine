@@ -109,11 +109,7 @@ class KPMainViewController: KPViewController {
         }
         
         if (KPUserManager.sharedManager.currentUser != nil) {
-            KPServiceHandler.sharedHandler.fetchRemoteData(nil,
-                                                           nil,
-                                                           nil,
-                                                           nil,
-                                                           nil) { (results: [KPDataModel]) in
+            KPServiceHandler.sharedHandler.fetchRemoteData() { (results: [KPDataModel]) in
                 self.displayDataModel = results
             }
         }

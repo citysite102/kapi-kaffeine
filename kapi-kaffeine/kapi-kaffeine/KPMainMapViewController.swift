@@ -24,6 +24,11 @@ class KPMainMapViewController: KPViewController, GMSMapViewDelegate, GMUClusterM
         button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         button.layer.cornerRadius = 5
         button.clipsToBounds = true
+//        button.layer.masksToBounds = false
+//        button.layer.shadowColor = UIColor.black.cgColor;
+//        button.layer.shadowOpacity = 0.1;
+//        button.layer.shadowRadius = 2.0;
+//        button.layer.shadowOffset = CGSize.init(width: 0.0, height: 2.0);
         return button
     }()
     

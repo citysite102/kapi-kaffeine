@@ -10,148 +10,152 @@ import UIKit
 
 class KPShopInfoView: UIView {
 
-    var titleLabel: UILabel!;
-    var featureContainer: UIView!;
-    var featureContentViews: [UIView] = [UIView]();
+    var titleLabel: UILabel!
+    var featureContainer: UIView!
+    var featureContentViews: [UIView] = [UIView]()
     
     var featureContents: [String]! {
         didSet {
             
             for oldContentView in featureContentViews {
-                oldContentView.removeFromSuperview();
+                oldContentView.removeFromSuperview()
             }
             
-            featureContentViews.removeAll();
+            featureContentViews.removeAll()
             
             for (index, content) in featureContents.enumerated() {
                 
-                let featureView = UIView.init();
+                let featureView = UIView.init()
                 
-                featureView.layer.borderWidth = 1.0;
-                featureView.layer.borderColor = KPColorPalette.KPMainColor.mainColor?.cgColor;
-                featureView.layer.cornerRadius = 12.0;
-                self.featureContainer.addSubview(featureView);
-                self.featureContentViews.append(featureView);
+                featureView.layer.borderWidth = 1.0
+                featureView.layer.borderColor = KPColorPalette.KPMainColor.mainColor?.cgColor
+                featureView.layer.cornerRadius = 12.0
+                featureContainer.addSubview(featureView)
+                featureContentViews.append(featureView)
                 
                 if index == 0 {
                     featureView.addConstraints(fromStringArray: ["V:|[$self(24)]|",
-                                                                 "H:|[$self]"]);
+                                                                 "H:|[$self]"])
                 } else if index == featureContents.count-1 {
                     featureView.addConstraints(fromStringArray: ["V:|[$self(24)]|",
                                                                  "H:[$view0]-4-[$self]|"],
-                                               views: [self.featureContentViews[index-1]]);
+                                               views: [featureContentViews[index-1]])
                 } else {
                     featureView.addConstraints(fromStringArray: ["V:|[$self(24)]|",
                                                                  "H:[$view0]-4-[$self]"],
-                                               views: [self.featureContentViews[index-1]]);
+                                               views: [featureContentViews[index-1]])
                 }
                 
                 
-                let contentLabel = UILabel.init();
+                let contentLabel = UILabel.init()
                 
-                contentLabel.font = UIFont.systemFont(ofSize: 12.0);
-                contentLabel.textColor = KPColorPalette.KPTextColor.mainColor;
-                contentLabel.text = content;
-                featureView.addSubview(contentLabel);
-                contentLabel.addConstraints(fromStringArray: ["H:|-8-[$self]-8-|"]);
-                contentLabel.addConstraintForCenterAligningToSuperview(in: .vertical);
+                contentLabel.font = UIFont.systemFont(ofSize: 12.0)
+                contentLabel.textColor = KPColorPalette.KPTextColor.mainColor
+                contentLabel.text = content
+                featureView.addSubview(contentLabel)
+                contentLabel.addConstraints(fromStringArray: ["H:|-8-[$self]-8-|"])
+                contentLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
                 
             }
         }
     }
     
-    var openTimeIcon: UIImageView!;
-    var openHint: UIView!;
-    var openLabel: UILabel!;
-    var otherTimeButton: UIButton!;
-    var phoneIcon: UIImageView!;
-    var phoneLabel: UILabel!;
-    var locationIcon: UIImageView!;
-    var locationLabel: UILabel!;
+    var openTimeIcon: UIImageView!
+    var openHint: UIView!
+    var openLabel: UILabel!
+    var otherTimeButton: UIButton!
+    var phoneIcon: UIImageView!
+    var phoneLabel: UILabel!
+    var locationIcon: UIImageView!
+    var locationLabel: UILabel!
     
     override init(frame: CGRect) {
-        super.init(frame: frame);
+        super.init(frame: frame)
         
-        self.titleLabel = UILabel.init();
-        self.titleLabel.font = UIFont.systemFont(ofSize: 16);
-        self.titleLabel.text = "測試";
-        self.titleLabel.textColor = KPColorPalette.KPTextColor.grayColor_level1;
-        self.addSubview(self.titleLabel);
-        self.titleLabel.addConstraints(fromStringArray: ["V:|-16-[$self]",
-                                                         "H:|-16-[$self]"]);
+        titleLabel = UILabel.init()
+        titleLabel.font = UIFont.systemFont(ofSize: 16)
+        titleLabel.text = "測試"
+        titleLabel.textColor = KPColorPalette.KPTextColor.grayColor_level1
+        addSubview(titleLabel)
+        titleLabel.addConstraints(fromStringArray: ["V:|-16-[$self]",
+                                                         "H:|-16-[$self]"])
         
-        self.featureContainer = UIView.init();
-        self.addSubview(self.featureContainer);
-        self.featureContainer.addConstraints(fromStringArray: ["V:[$view0]-8-[$self]", "H:|-16-[$self]"],
-                                             views: [self.titleLabel]);
+        featureContainer = UIView.init()
+        addSubview(featureContainer)
+        featureContainer.addConstraints(fromStringArray: ["V:[$view0]-8-[$self]", "H:|-16-[$self]"],
+                                             views: [titleLabel])
         
-        self.openTimeIcon = UIImageView.init(image: R.image.icon_map());
-        self.addSubview(self.openTimeIcon);
-        self.openTimeIcon.addConstraints(fromStringArray: ["V:[$view0]-16-[$self(20)]",
+        openTimeIcon = UIImageView.init(image: R.image.icon_tradehour())
+        openTimeIcon.tintColor = KPColorPalette.KPMainColor.mainColor
+        addSubview(openTimeIcon)
+        openTimeIcon.addConstraints(fromStringArray: ["V:[$view0]-16-[$self(20)]",
                                                            "H:|-16-[$self(20)]"],
-                                         views: [self.featureContainer]);
+                                         views: [featureContainer])
         
-        self.openHint = UIView.init();
-        self.openHint.layer.cornerRadius = 3.0;
-        self.openHint.backgroundColor = KPColorPalette.KPShopStatusColor.opened;
-        self.addSubview(self.openHint);
-        self.openHint.addConstraints(fromStringArray: ["V:[$self(6)]",
+        openHint = UIView.init()
+        openHint.layer.cornerRadius = 3.0
+        openHint.backgroundColor = KPColorPalette.KPShopStatusColor.opened
+        addSubview(openHint)
+        openHint.addConstraints(fromStringArray: ["V:[$self(6)]",
                                                        "H:[$view0]-4-[$self(6)]"],
-                                     views: [self.openTimeIcon]);
-        self.openHint.addConstraintForCenterAligning(to: self.openTimeIcon, in: .vertical);
+                                     views: [openTimeIcon])
+        openHint.addConstraintForCenterAligning(to: openTimeIcon, in: .vertical)
         
-        self.openLabel = UILabel.init();
-        self.openLabel.font = UIFont.systemFont(ofSize: 14);
-        self.openLabel.text = "測試";
-        self.openLabel.textColor = KPColorPalette.KPTextColor.grayColor_level1;
-        self.addSubview(self.openLabel);
-        self.openLabel.addConstraints(fromStringArray: ["H:[$view0]-4-[$self]"],
-                                      views: [self.openHint]);
-        self.openLabel.addConstraintForCenterAligning(to: self.openTimeIcon, in: .vertical);
+        openLabel = UILabel.init()
+        openLabel.font = UIFont.systemFont(ofSize: 14)
+        openLabel.text = "測試"
+        openLabel.textColor = KPColorPalette.KPTextColor.grayColor_level1
+        addSubview(openLabel)
+        openLabel.addConstraints(fromStringArray: ["H:[$view0]-4-[$self]"],
+                                      views: [openHint])
+        openLabel.addConstraintForCenterAligning(to: openTimeIcon, in: .vertical)
         
-        self.otherTimeButton = UIButton.init(type: .custom);
-        self.otherTimeButton.setTitle("其他營業時間", for: .normal);
-        self.otherTimeButton.setTitleColor(UIColor.white, for: .normal);
-        self.otherTimeButton.titleLabel?.font = UIFont.systemFont(ofSize: 12);
-        self.otherTimeButton.backgroundColor = KPColorPalette.KPMainColor.mainColor;
-        self.otherTimeButton.layer.cornerRadius = 4.0;
-        self.addSubview(self.otherTimeButton);
-        self.otherTimeButton.addConstraints(fromStringArray: ["H:[$view0]-8-[$self(92)]", "V:[$self(24)]"],
-                                            views: [self.openLabel]);
-        self.otherTimeButton.addConstraintForCenterAligning(to: self.openLabel,
-                                                            in: .vertical);
+        otherTimeButton = UIButton.init(type: .custom)
+        otherTimeButton.tintColor = KPColorPalette.KPMainColor.mainColor
+        otherTimeButton.setTitle("其他營業時間", for: .normal)
+        otherTimeButton.setTitleColor(UIColor.white, for: .normal)
+        otherTimeButton.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        otherTimeButton.backgroundColor = KPColorPalette.KPMainColor.mainColor
+        otherTimeButton.layer.cornerRadius = 4.0
+        addSubview(otherTimeButton)
+        otherTimeButton.addConstraints(fromStringArray: ["H:[$view0]-8-[$self(92)]", "V:[$self(24)]"],
+                                            views: [openLabel])
+        otherTimeButton.addConstraintForCenterAligning(to: openLabel,
+                                                            in: .vertical)
         
-        self.phoneIcon = UIImageView.init(image: R.image.icon_clock());
-        self.addSubview(self.phoneIcon);
-        self.phoneIcon.addConstraints(fromStringArray: ["V:[$view0]-8-[$self(20)]",
+        phoneIcon = UIImageView.init(image: R.image.icon_phone())
+        phoneIcon.tintColor = KPColorPalette.KPMainColor.mainColor
+        addSubview(phoneIcon)
+        phoneIcon.addConstraints(fromStringArray: ["V:[$view0]-8-[$self(20)]",
                                                         "H:|-16-[$self(20)]"],
-                                         views: [self.openTimeIcon]);
+                                         views: [openTimeIcon])
         
-        self.phoneLabel = UILabel.init();
-        self.phoneLabel.font = UIFont.systemFont(ofSize: 14);
-        self.phoneLabel.text = "測試";
-        self.phoneLabel.textColor = KPColorPalette.KPTextColor.grayColor_level1;
-        self.addSubview(self.phoneLabel);
-        self.phoneLabel.addConstraints(fromStringArray: ["H:[$view0]-4-[$self]"],
-                                      views: [self.phoneIcon]);
-        self.phoneLabel.addConstraintForCenterAligning(to: self.phoneIcon,
-                                                       in: .vertical);
+        phoneLabel = UILabel.init()
+        phoneLabel.font = UIFont.systemFont(ofSize: 14)
+        phoneLabel.text = "測試"
+        phoneLabel.textColor = KPColorPalette.KPTextColor.grayColor_level1
+        addSubview(phoneLabel)
+        phoneLabel.addConstraints(fromStringArray: ["H:[$view0]-4-[$self]"],
+                                      views: [phoneIcon])
+        phoneLabel.addConstraintForCenterAligning(to: phoneIcon,
+                                                       in: .vertical)
         
-        self.locationIcon = UIImageView.init(image: R.image.icon_map());
-        self.addSubview(self.locationIcon);
-        self.locationIcon.addConstraints(fromStringArray: ["V:[$view0]-8-[$self(20)]",
+        locationIcon = UIImageView.init(image: R.image.icon_pin())
+        locationIcon.tintColor = KPColorPalette.KPMainColor.mainColor
+        addSubview(locationIcon)
+        locationIcon.addConstraints(fromStringArray: ["V:[$view0]-8-[$self(20)]",
                                                            "H:|-16-[$self(20)]"],
-                                      views: [self.phoneIcon]);
+                                      views: [phoneIcon])
         
-        self.locationLabel = UILabel.init();
-        self.locationLabel.font = UIFont.systemFont(ofSize: 14);
-        self.locationLabel.text = "測試";
-        self.locationLabel.textColor = KPColorPalette.KPTextColor.grayColor_level1;
-        self.addSubview(self.locationLabel);
-        self.locationLabel.addConstraints(fromStringArray: ["H:[$view0]-4-[$self]"],
-                                          views: [self.locationIcon]);
-        self.locationLabel.addConstraintForCenterAligning(to: self.locationIcon,
-                                                          in: .vertical);
+        locationLabel = UILabel.init()
+        locationLabel.font = UIFont.systemFont(ofSize: 14)
+        locationLabel.text = "測試"
+        locationLabel.textColor = KPColorPalette.KPTextColor.grayColor_level1
+        addSubview(locationLabel)
+        locationLabel.addConstraints(fromStringArray: ["H:[$view0]-4-[$self]"],
+                                          views: [locationIcon])
+        locationLabel.addConstraintForCenterAligning(to: locationIcon,
+                                                          in: .vertical)
         
     }
     

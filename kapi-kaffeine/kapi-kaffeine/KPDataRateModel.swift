@@ -11,17 +11,16 @@ import ObjectMapper
 
 class KPDataRateModel: NSObject, Mappable {
 
-    var wifi: NSNumber?
-    var seat: NSNumber?
-    var food: NSNumber?
-    var quite: NSNumber?
-    var tasty: NSNumber?
-    var cheap: NSNumber?
-    var music: NSNumber?
-    var average: NSNumber?
+    var wifi: NSNumber? = 0
+    var seat: NSNumber? = 0
+    var food: NSNumber? = 0
+    var quite: NSNumber? = 0
+    var tasty: NSNumber? = 0
+    var cheap: NSNumber? = 0
+    var music: NSNumber? = 0
+    var average: NSNumber? = 0
     
     required init?(map: Map) {
-        
     }
     
     func mapping(map: Map) {

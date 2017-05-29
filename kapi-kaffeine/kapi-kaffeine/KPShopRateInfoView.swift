@@ -10,24 +10,41 @@ import UIKit
 
 class KPShopRateInfoView: UIView {
 
-    var rateContents = ["WiFi穩定", "價格實惠", "咖啡品質",
-                          "插座數量", "站立座位", "安靜程度",
-                          "通常有位置", "環境舒適度", "有無限時"]
-    var rateImages = [R.image.icon_wifi(), R.image.icon_money(), R.image.icon_cup(),
-                      R.image.icon_socket(), R.image.icon_seat(), R.image.icon_sleep(),
-                      R.image.icon_seat(), R.image.icon_pic(), R.image.icon_clock()]
+    var rateTitles = ["WiFi穩定", "安靜程度", "價格實惠",
+                      "座位數量", "咖啡品質", "餐點美味",
+                      "環境舒適"]
+    var rateImages = [R.image.icon_wifi(), R.image.icon_sleep(), R.image.icon_money(),
+                      R.image.icon_seat(), R.image.icon_cup(), R.image.icon_cutlery(),
+                      R.image.icon_pic()]
     
-    var rateViews:[rateStatusView] = [rateStatusView]()
+    var rateViews: [rateStatusView] = [rateStatusView]()
+    var rateContents = [String]()
+    var rates: KPDataRateModel! {
+        didSet {
+            rateContents.append(rates.wifi != nil ? "\((rates.wifi?.stringValue)!).0" : "0.0")
+            rateContents.append(rates.quite != nil ? "\((rates.quite?.stringValue)!).0" : "0.0")
+            rateContents.append(rates.cheap != nil ? "\((rates.cheap?.stringValue)!).0" : "0.0")
+            rateContents.append(rates.seat != nil ? "\((rates.seat?.stringValue)!).0" : "0.0")
+            rateContents.append(rates.tasty != nil ? "\((rates.tasty?.stringValue)!).0" : "0.0")
+            rateContents.append(rates.food != nil ? "\((rates.food?.stringValue)!).0" : "0.0")
+            rateContents.append(rates.music != nil ? "\((rates.music?.stringValue)!).0" : "0.0")
+            
+            for (index, rateView) in rateViews.enumerated() {
+                rateView.rateContentLabel.text = rateContents[index]
+            }
+        }
+    }
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame) // calls designated initializer
         
-        for (index, property) in rateContents.enumerated() {
+        for (index, property) in rateTitles.enumerated() {
         
             let rateView = rateStatusView.init(frame:.zero,
                                                icon:rateImages[index]!,
                                                content:property,
-                                               rateContent:"5.0")
+                                               rateContent:"0.0")
             addSubview(rateView!)
             rateViews.append(rateView!)
             
@@ -69,6 +86,10 @@ class KPShopRateInfoView: UIView {
 
 class rateStatusView: UIView {
     
+    var iconImageView: UIImageView!
+    var rateTitleLabel: UILabel!
+    var rateContentLabel: UILabel!
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame) // calls designated initializer
@@ -80,28 +101,28 @@ class rateStatusView: UIView {
                              rateContent: String) {
         self.init(frame:frame)
         
-        let iconImageView = UIImageView.init(image: icon)
+        iconImageView = UIImageView.init(image: icon)
         iconImageView.tintColor = KPColorPalette.KPMainColor.mainColor
         addSubview(iconImageView)
         iconImageView.addConstraints(fromStringArray: ["V:|[$self(24)]|",
                                                        "H:|[$self(24)]"])
         
-        let ratePropertyLabel = UILabel.init()
-        ratePropertyLabel.font = UIFont.systemFont(ofSize: 13.0)
-        ratePropertyLabel.text = content
-        ratePropertyLabel.textColor = KPColorPalette.KPTextColor.mainColor
-        addSubview(ratePropertyLabel)
-        ratePropertyLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]"],
-                                        views: [iconImageView])
-        ratePropertyLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
+        rateTitleLabel = UILabel.init()
+        rateTitleLabel.font = UIFont.systemFont(ofSize: 13.0)
+        rateTitleLabel.text = content
+        rateTitleLabel.textColor = KPColorPalette.KPTextColor.mainColor
+        addSubview(rateTitleLabel)
+        rateTitleLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]"],
+                                      views: [iconImageView])
+        rateTitleLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
         
-        let rateContentLabel = UILabel.init()
+        rateContentLabel = UILabel.init()
         rateContentLabel.font = UIFont.systemFont(ofSize: 13.0)
         rateContentLabel.text = rateContent
         rateContentLabel.textColor = KPColorPalette.KPTextColor.mainColor_light
         addSubview(rateContentLabel)
         rateContentLabel.addConstraints(fromStringArray: ["H:[$self]|"],
-                                         views: [ratePropertyLabel])
+                                         views: [rateTitleLabel])
         rateContentLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
         
     }

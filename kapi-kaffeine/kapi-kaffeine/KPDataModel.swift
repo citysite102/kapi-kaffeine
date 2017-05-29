@@ -26,14 +26,56 @@ class KPDataModel: NSObject, Mappable, GMUClusterItem {
     var mrt: String?
     var businessHour: [String: String]!
     var tags: [KPDataTagModel]?
-    var rates: [KPDataRateModel]?
+    var rates: KPDataRateModel?
     var photos: [String: String]?
     var isKapi: Bool!
     
     
+    var featureContents: [String]! {
+        get {
+            var features = [String]()
+            
+            if let storeRates = self.rates {
+                
+                if (storeRates.wifi?.intValue ?? 0)! > 4 {
+                    features.append("網路快速")
+                }
+                
+                if (storeRates.seat?.intValue ?? 0)! > 4 {
+                    features.append("座位舒適")
+                }
+                
+                if (storeRates.music?.intValue ?? 0)! > 4 {
+                    features.append("提供音樂")
+                }
+                
+                if (storeRates.food?.intValue ?? 0)! > 4 &&
+                    features.count < 3 {
+                    features.append("提供餐點")
+                }
+                
+                if (storeRates.quite?.intValue ?? 0)! > 4 &&
+                    features.count < 3 {
+                    features.append("環境安靜")
+                }
+                
+                if (storeRates.tasty?.intValue ?? 0)! > 4 &&
+                    features.count < 3 {
+                    features.append("食物美味")
+                }
+                
+                if (storeRates.cheap?.intValue ?? 0)! > 4 &&
+                    features.count < 3 {
+                    features.append("價格實在")
+                }
+            
+            }
+            return features
+        }
+    }
+    
     var position: CLLocationCoordinate2D {
         get {
-            
             if let latstr = self.latitude, let latitude = Double(latstr),
                 let longstr = self.longitude, let longitude = Double(longstr) {
                 return CLLocationCoordinate2DMake(latitude, longitude)
