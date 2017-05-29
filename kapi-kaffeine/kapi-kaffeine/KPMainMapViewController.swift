@@ -45,11 +45,7 @@ class KPMainMapViewController: KPViewController, GMSMapViewDelegate, GMUClusterM
     
     private var clusterManager: GMUClusterManager!
     
-    var mapView: GMSMapView {
-        get {
-            return self.view as! GMSMapView
-        }
-    }
+    var mapView: GMSMapView!
     
     var currentDataModel:KPDataModel?
     var selectedDataModel: KPDataModel? {
@@ -93,7 +89,7 @@ class KPMainMapViewController: KPViewController, GMSMapViewDelegate, GMUClusterM
     
     var allDataModel: [KPDataModel]! {
         didSet {
-            (self.view as! GMSMapView).clear()
+            self.mapView.clear()
             for datamodel in self.allDataModel  {
                 self.clusterManager.add(datamodel)
             }
@@ -103,13 +99,13 @@ class KPMainMapViewController: KPViewController, GMSMapViewDelegate, GMUClusterM
             self.clusterManager.cluster()
         }
     }
-    
-    
-    
-    
-    override func loadView() {
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        
         let camera = GMSCameraPosition.camera(withLatitude: 25.018744, longitude: 121.532785, zoom: 18.0)
-        let mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
+        self.mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
         
         mapView.delegate = self
         
@@ -124,12 +120,9 @@ class KPMainMapViewController: KPViewController, GMSMapViewDelegate, GMUClusterM
             NSLog("One or more of the map styles failed to load. \(error)")
         }
         
-        self.view = mapView
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
+        self.view.addSubview(self.mapView)
         
+        self.mapView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|-100-[$self]|"])
         
         // Set up the cluster manager with the supplied icon generator and
         // renderer.
