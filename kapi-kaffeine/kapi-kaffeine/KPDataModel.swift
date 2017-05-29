@@ -50,22 +50,22 @@ class KPDataModel: NSObject, Mappable, GMUClusterItem {
                 }
                 
                 if (storeRates.food?.intValue ?? 0)! > 4 &&
-                    features.count < 3 {
+                    features.count < 2 {
                     features.append("提供餐點")
                 }
                 
                 if (storeRates.quite?.intValue ?? 0)! > 4 &&
-                    features.count < 3 {
+                    features.count < 2 {
                     features.append("環境安靜")
                 }
                 
                 if (storeRates.tasty?.intValue ?? 0)! > 4 &&
-                    features.count < 3 {
+                    features.count < 2 {
                     features.append("食物美味")
                 }
                 
                 if (storeRates.cheap?.intValue ?? 0)! > 4 &&
-                    features.count < 3 {
+                    features.count < 2 {
                     features.append("價格實在")
                 }
             

@@ -8,14 +8,29 @@
 
 import UIKit
 import CoreLocation
+import AlamofireImage
 
 class KPMainListTableViewCell: UITableViewCell {
 
     var dataModel: KPDataModel! {
         didSet {
-            self.shopNameLabel.text = dataModel.name
-            if let latstr = dataModel.latitude, let latitude = Double(latstr),
-                let longstr = dataModel.longitude, let longitude = Double(longstr), let currentLocation = KPLocationManager.sharedInstance().currentLocation {
+            
+            DispatchQueue.main.async {
+                self.shopNameLabel.text = self.dataModel.name ?? "未命名"
+                self.featureContainer.featureContents = self.dataModel.featureContents
+                self.scoreLabel.score = String(format: "%.1f",
+                                               (self.dataModel.rates?.average?.floatValue)!)
+            }
+            
+            if let photoURL = dataModel.photos?["google_s"] {
+                self.shopImageView.af_setImage(withURL: URL(string: photoURL)!,
+                                               placeholderImage: R.image.icon_loading())
+            } else {
+                self.shopImageView.image = R.image.icon_noImage()
+            }
+            
+            if let latstr = self.dataModel.latitude, let latitude = Double(latstr),
+                let longstr = self.dataModel.longitude, let longitude = Double(longstr), let currentLocation = KPLocationManager.sharedInstance().currentLocation {
                 var distance = CLLocation(latitude: latitude, longitude: longitude).distance(from: currentLocation)
                 var unit = "m"
                 if distance > 1000 {
@@ -64,7 +79,6 @@ class KPMainListTableViewCell: UITableViewCell {
         self.shopNameLabel = KPMainListCellNormalLabel();
         self.shopNameLabel.font = UIFont.systemFont(ofSize: 14.0);
         self.shopNameLabel.textColor = KPColorPalette.KPTextColor.grayColor;
-        self.shopNameLabel.text = "覺旅咖啡";
         self.contentView.addSubview(self.shopNameLabel);
 
         self.shopNameLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self($metric0)]",
@@ -104,13 +118,11 @@ class KPMainListTableViewCell: UITableViewCell {
                                                       self.shopStatusLabel]);
         
         self.scoreLabel = KPMainListCellScoreLabel();
-        self.scoreLabel.score = "4.3";
         self.contentView.addSubview(self.scoreLabel);
         self.scoreLabel.addConstraints(fromStringArray: ["H:[$self(30)]-8-|",
                                                          "V:|-12-[$self(22)]"]);
         
         self.featureContainer = KPMainListCellFeatureContainer();
-        self.featureContainer.featureContents = ["燈光美", "氣氛佳"];
         self.contentView.addSubview(self.featureContainer);
         self.featureContainer.addConstraints(fromStringArray: ["H:[$self]-8-|",
                                                                "V:[$self]-12-|"]);
