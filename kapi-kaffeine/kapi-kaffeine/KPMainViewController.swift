@@ -30,30 +30,32 @@ class KPMainViewController: KPViewController {
         }
     }
 
-    var currentController: KPViewController! {
-        didSet {
-            
-            if oldValue != nil {
-                oldValue?.willMove(toParentViewController: nil)
-                oldValue?.view.removeFromSuperview()
-                oldValue?.removeFromParentViewController()
-            }
-            
-            self.addChildViewController(currentController!)
-            self.view.addSubview((self.currentController?.view)!)
-            currentController.didMove(toParentViewController: self)
-            currentController.view.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"])
-            
-            if (self.searchHeaderView != nil) {
-                self.view.bringSubview(toFront: self.searchHeaderView)
-                self.view.bringSubview(toFront: self.opacityView)
-            }
-        }
-    }
+    var currentController: KPViewController!
+//    {
+//        didSet {
+//            
+//            if oldValue != nil {
+//                oldValue?.willMove(toParentViewController: nil)
+//                oldValue?.view.removeFromSuperview()
+//                oldValue?.removeFromParentViewController()
+//            }
+//            
+//            self.addChildViewController(currentController!)
+//            self.view.addSubview((self.currentController?.view)!)
+//            currentController.didMove(toParentViewController: self)
+//            currentController.view.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"])
+//            
+//            if (self.searchHeaderView != nil) {
+//                self.view.bringSubview(toFront: self.searchHeaderView)
+//                self.view.bringSubview(toFront: self.opacityView)
+//            }
+//        }
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.view.backgroundColor = UIColor.black
         self.mainListViewController = KPMainListViewController()
         self.mainMapViewController = KPMainMapViewController()
         self.sideBarController = KPSideViewController()
@@ -61,6 +63,19 @@ class KPMainViewController: KPViewController {
         
         self.mainListViewController!.mainController = self
         self.mainMapViewController!.mainController = self
+        
+        self.addChildViewController(mainMapViewController!)
+        self.view.addSubview((mainMapViewController?.view)!)
+        mainMapViewController?.didMove(toParentViewController: self)
+        _ = mainMapViewController?.view.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                                         "V:|[$self]|"])
+        mainMapViewController?.view.isHidden = true
+        
+        self.addChildViewController(mainListViewController!)
+        self.view.addSubview((mainListViewController?.view)!)
+        mainListViewController?.didMove(toParentViewController: self)
+        _ = mainListViewController?.view.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                                          "V:|[$self]|"])
         
         self.currentController = self.mainListViewController
         
@@ -139,64 +154,125 @@ class KPMainViewController: KPViewController {
             R.image.icon_list()!.withRenderingMode(.alwaysTemplate) :
             R.image.icon_map()!.withRenderingMode(.alwaysTemplate)
         
-        var transform   = CATransform3DIdentity;
-        transform.m34 = -1.0/1000;
+        var transform   = CATransform3DIdentity
+        transform.m34 = -1.0/1000
         
-        let rightRotateTransform = CATransform3DRotate(transform,
-                                                       CGFloat.pi/2,
-                                                       0,
-                                                       1,
-                                                       0)
+        
+        self.mainListViewController?.view.layer.shouldRasterize = true
+        self.mainMapViewController?.view.layer.shouldRasterize = true
+        
+        if self.currentController == self.mainListViewController {
+            
+            let rightRotateTransform = CATransform3DRotate(transform,
+                                                           CGFloat.pi/2,
+                                                           0,
+                                                           1,
+                                                           0)
             UIView.animate(withDuration: 0.2,
                            delay: 0,
                            options: .curveEaseOut,
                            animations: { 
-                            self.currentController.view.layer.transform =
+                            self.mainListViewController?.view.layer.transform =
                                 CATransform3DScale(rightRotateTransform
-                                , 1
-                                , 1
-                                , 1)
+                                , 0.8
+                                , 0.8
+                                , 0.8)
+                            self.mainMapViewController?.view.layer.transform =
+                                CATransform3DScale(rightRotateTransform
+                                    , 0.8
+                                    , 0.8
+                                    , 0.8)
+                            self.mainMapViewController?.view.alpha = 0.5
             }) { (_) in
-                self.currentController = (self.currentController == self.mainListViewController) ?
-                    self.mainMapViewController :
-                    self.mainListViewController
-                self.searchHeaderView.styleButton.setImage(iconImage, for: .normal)
+                self.currentController = self.mainMapViewController
                 
-                self.currentController.view.layer.transform = CATransform3DRotate(self.currentController.view.layer.transform,
-                                                           -CGFloat.pi, 0, 1, 0);
-                UIView.animate(withDuration: 0.2,
+                self.searchHeaderView.styleButton.setImage(iconImage, for: .normal)
+                self.mainMapViewController?.view.isHidden = false
+                self.mainMapViewController?.collectionView.isHidden = true
+                self.mainListViewController?.view.isHidden = true
+                
+                self.mainListViewController?.view.layer.transform =
+                    CATransform3DRotate((self.mainListViewController?.view.layer.transform)!,
+                                                           CGFloat.pi, 0, 1, 0)
+                self.mainMapViewController?.view.layer.transform =
+                    CATransform3DRotate((self.mainMapViewController?.view.layer.transform)!,
+                                        CGFloat.pi, 0, 1, 0)
+                
+                let backRotateTransform = CATransform3DRotate((self.mainMapViewController?.view.layer.transform)!, CGFloat.pi/2, 0, 1, 0)
+                UIView.animate(withDuration: 0.25,
                                delay: 0,
-                               options: .curveEaseOut,
+                               options: .curveEaseIn,
                                animations: { 
-                                self.currentController.view.layer.transform =
-                                    CATransform3DRotate(self.currentController.view.layer.transform, CGFloat.pi/2, 0, 1, 0);
+                                self.mainListViewController?.view.layer.transform =
+                                    CATransform3DScale(backRotateTransform, 1/0.8, 1/0.8, 1/0.8)
+                                
+                                self.mainMapViewController?.view.layer.transform =
+                                    CATransform3DScale(backRotateTransform, 1/0.8, 1/0.8, 1/0.8)
+                                
+                                self.mainMapViewController?.view.alpha = 1.0
+                                
                 }, completion: { (_) in
-                    
+                    self.mainListViewController?.view.layer.shouldRasterize = false
+                    self.mainMapViewController?.view.layer.shouldRasterize = false
+                    self.mainMapViewController?.collectionView.isHidden = false
                 })
+            }
+        } else {
+            let leftRotateTransform = CATransform3DRotate(transform,
+                                                          -CGFloat.pi/2,
+                                                          0,
+                                                          1,
+                                                          0)
+            self.mainMapViewController?.collectionView.isHidden = true
+            UIView.animate(withDuration: 0.2,
+                           delay: 0,
+                           options: .curveEaseOut,
+                           animations: {
+                            self.mainListViewController?.view.layer.transform =
+                                CATransform3DScale(leftRotateTransform
+                                    , 0.8
+                                    , 0.8
+                                    , 0.8)
+                            self.mainMapViewController?.view.layer.transform =
+                                CATransform3DScale(leftRotateTransform
+                                    , 0.8
+                                    , 0.8
+                                    , 0.8)
+                            self.mainListViewController?.view.alpha = 0.5
+            }) { (_) in
+                self.currentController = self.mainListViewController
+                
+                self.searchHeaderView.styleButton.setImage(iconImage, for: .normal)
+                self.mainMapViewController?.view.isHidden = true
+                self.mainListViewController?.view.isHidden = false
+
+                self.mainListViewController?.view.layer.transform =
+                    CATransform3DRotate((self.mainListViewController?.view.layer.transform)!,
+                                        -CGFloat.pi, 0, 1, 0)
+                self.mainMapViewController?.view.layer.transform =
+                    CATransform3DRotate((self.mainMapViewController?.view.layer.transform)!,
+                                        -CGFloat.pi, 0, 1, 0)
+                
+                let backRotateTransform = CATransform3DRotate((self.mainListViewController?.view.layer.transform)!, -CGFloat.pi/2, 0, 1, 0)
+                UIView.animate(withDuration: 0.25,
+                               delay: 0,
+                               options: .curveEaseIn,
+                               animations: {
+                                
+                                self.mainListViewController?.view.layer.transform =
+                                    CATransform3DScale(backRotateTransform, 1/0.8, 1/0.8, 1/0.8)
+                                
+                                self.mainMapViewController?.view.layer.transform =
+                                    CATransform3DScale(backRotateTransform, 1/0.8, 1/0.8, 1/0.8)
+                                
+                                self.mainListViewController?.view.alpha = 1.0
+                }, completion: { (_) in
+                    self.mainListViewController?.view.layer.shouldRasterize = false
+                    self.mainMapViewController?.view.layer.shouldRasterize = false
+                    self.mainMapViewController?.collectionView.isHidden = false
+                })
+            }
         }
-//        [UIView animateWithDuration:0.2 delay:0
-//            options:UIViewAnimationOptionCurveLinear|UIViewAnimationOptionAllowUserInteraction
-//            animations:^{
-//            self.layer.transform = CATransform3DScale(rightRotateTransform, 1, 1, 1);
-//            } completion:^(BOOL finished) {
-//            self.layer.transform = CATransform3DRotate(self.layer.transform,
-//            -M_PI, 0, 1, 0);
-//            self.docContentView.hidden = YES;
-//            self.docEditingView.hidden = NO;
-//            [UIView animateWithDuration:0.8 delay:0 usingSpringWithDamping:0.4
-//            initialSpringVelocity:0.2
-//            options:UIViewAnimationOptionAllowUserInteraction
-//            animations:^{
-//            self.layer.transform = CATransform3DRotate(self.layer.transform,
-//            M_PI_2, 0, 1, 0);
-//            } completion:^(BOOL finished) {
-//            self.userInteractionEnabled = YES;
-//            }];
-//            }];
-//        self.currentController = (self.currentController == self.mainListViewController) ?
-//            self.mainMapViewController :
-//            self.mainListViewController
-//        self.searchHeaderView.styleButton.setImage(iconImage, for: .normal)
     }
 
     func search() {
@@ -236,6 +312,7 @@ class KPMainViewController: KPViewController {
     func edgePanGesture(edgePanGesture: UIScreenEdgePanGestureRecognizer) {
         
         let progress = edgePanGesture.translation(in: self.view).x / self.view.bounds.width
+        
         if edgePanGesture.state == UIGestureRecognizerState.began {
             self.percentDrivenTransition = UIPercentDrivenInteractiveTransition()
                             if edgePanGesture.edges == UIRectEdge.left {

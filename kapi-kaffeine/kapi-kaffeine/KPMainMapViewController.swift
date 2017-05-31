@@ -68,8 +68,16 @@ class KPMainMapViewController: KPViewController, GMSMapViewDelegate, GMUClusterM
                     } else {
                         self.collectionViewBottomConstraint.constant = 90
                     }
-                    UIView.animate(withDuration: 0.2, animations: {
-                        self.view.layoutIfNeeded()
+                    
+                    UIView.animate(withDuration: 0.4,
+                                   delay: 0,
+                                   usingSpringWithDamping: 0.8,
+                                   initialSpringVelocity: 0.8,
+                                   options: UIViewAnimationOptions.curveEaseIn,
+                                   animations: { 
+                                    self.view.layoutIfNeeded()
+                    }, completion: { (_) in
+                        
                     })
                 }
             }
@@ -80,7 +88,8 @@ class KPMainMapViewController: KPViewController, GMSMapViewDelegate, GMUClusterM
     var displayDataModel: [KPDataModel] = [] {
         didSet {
             self.collectionView?.reloadData()
-            if  let dataModel = self.mapView.selectedMarker?.userData as? KPDataModel,
+            if  self.mapView != nil,
+                let dataModel = self.mapView.selectedMarker?.userData as? KPDataModel,
                 let selectedIndex =  self.displayDataModel.index(where: {($0.name == dataModel.name)}) {
                 self.collectionView.setContentOffset(CGPoint(x: -30 + CGFloat(selectedIndex) * (UIScreen.main.bounds.size.width - 60 + 15), y: 0), animated: false)
             }
