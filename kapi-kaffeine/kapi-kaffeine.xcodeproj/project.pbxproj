@@ -35,6 +35,7 @@
 		774209001EA67CE400C78A00 /* KPSliderMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774208FF1EA67CE400C78A00 /* KPSliderMenuController.swift */; };
 		77421FB01EB8EE0C00064FF0 /* KPNomadRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77421FAF1EB8EE0C00064FF0 /* KPNomadRequest.swift */; };
 		77421FB41EB8F82500064FF0 /* KPRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77421FB31EB8F82500064FF0 /* KPRatingView.swift */; };
+		7745C0821EF050D100244541 /* KPLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7745C0811EF050D100244541 /* KPLoginViewController.swift */; };
 		77594B471EC89DAF0013BB56 /* KPPhotoAddCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77594B461EC89DAF0013BB56 /* KPPhotoAddCell.swift */; };
 		77594B491EC8AEB40013BB56 /* KPBounceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77594B481EC8AEB40013BB56 /* KPBounceView.swift */; };
 		775989911EA5171A0029989C /* KPUIImageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775989901EA5171A0029989C /* KPUIImageHelper.swift */; };
@@ -183,6 +184,7 @@
 		774208FF1EA67CE400C78A00 /* KPSliderMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSliderMenuController.swift; sourceTree = "<group>"; };
 		77421FAF1EB8EE0C00064FF0 /* KPNomadRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPNomadRequest.swift; sourceTree = "<group>"; };
 		77421FB31EB8F82500064FF0 /* KPRatingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPRatingView.swift; sourceTree = "<group>"; };
+		7745C0811EF050D100244541 /* KPLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPLoginViewController.swift; sourceTree = "<group>"; };
 		77594B461EC89DAF0013BB56 /* KPPhotoAddCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPPhotoAddCell.swift; sourceTree = "<group>"; };
 		77594B481EC8AEB40013BB56 /* KPBounceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPBounceView.swift; sourceTree = "<group>"; };
 		775989901EA5171A0029989C /* KPUIImageHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPUIImageHelper.swift; sourceTree = "<group>"; };
@@ -541,6 +543,7 @@
 			isa = PBXGroup;
 			children = (
 				776ACB001E9BB49E00B629A2 /* KPMainViewController.swift */,
+				7745C0811EF050D100244541 /* KPLoginViewController.swift */,
 				C0B49D921EA11C3200BA95D8 /* List */,
 				C0B49D931EA11C4700BA95D8 /* Map */,
 				776ACAED1E9BAE0200B629A2 /* Search */,
@@ -1200,6 +1203,7 @@
 				C01AC62C1EAAEA0A000390F7 /* GMUWrappingDictionaryKey.m in Sources */,
 				77C594AD1ECB171A00118947 /* KPAllCommentController.swift in Sources */,
 				777DCC161EA789A90055525A /* KPInformationTranstion.swift in Sources */,
+				7745C0821EF050D100244541 /* KPLoginViewController.swift in Sources */,
 				C01AC6391EAAEA8F000390F7 /* GQTPointQuadTree.m in Sources */,
 				77C0E0FD1E9D489900398852 /* KPInformationHeaderView.swift in Sources */,
 				772C538A1ECBFE5600C88798 /* KPViewController.swift in Sources */,

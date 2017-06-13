@@ -27,14 +27,14 @@ class KPIntroViewController: KPViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = UIColor.white
-        
-        let layer = CAGradientLayer()
-        layer.colors = [KPColorPalette.KPMainColor.mainColor_light!.cgColor,
-                        KPColorPalette.KPMainColor.mainColor!.cgColor]
-        layer.locations = [0.0, 1.0]
-        layer.frame = UIScreen.main.bounds
-        view.layer.addSublayer(layer)
+//        view.backgroundColor = UIColor.white
+        view.backgroundColor = UIColor(patternImage: R.image.image_background()!)
+//        let layer = CAGradientLayer()
+//        layer.colors = [KPColorPalette.KPBackgroundColor.mainColor_top!.cgColor,
+//                        KPColorPalette.KPBackgroundColor.mainColor_bottom!.cgColor]
+//        layer.locations = [0.0, 1.0]
+//        layer.frame = UIScreen.main.bounds
+//        view.layer.addSublayer(layer)
         
         
         scrollView = UIScrollView()
@@ -120,7 +120,8 @@ class KPIntroViewController: KPViewController {
         fifthIntroView.addConstraintForHavingSameHeight(with: view)
         fifthIntroView.addConstraintForHavingSameWidth(with: view)
         
-        fifthIntroView.facebookLoginButton.addTarget(self, action: #selector(handleFacebookLoginButtonOnTapped(_:)),
+        fifthIntroView.facebookLoginButton.addTarget(self,
+                                                     action: #selector(facebookLoginButtonOnTapped(_:)),
                                                      for: UIControlEvents.touchUpInside)
     }
 
@@ -151,7 +152,7 @@ class KPIntroViewController: KPViewController {
         return statusBarShouldBeHidden
     }
     
-    func handleFacebookLoginButtonOnTapped(_ sender: UIButton) {
+    func facebookLoginButtonOnTapped(_ sender: UIButton) {
         KPUserManager.sharedManager.logIn(self)
     }
     

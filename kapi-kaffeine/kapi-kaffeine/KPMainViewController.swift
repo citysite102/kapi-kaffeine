@@ -133,7 +133,13 @@ class KPMainViewController: KPViewController {
             
         } else {
             if KPUserManager.sharedManager.currentUser == nil {
-                // 跳出登入視窗
+                let controller = KPModalViewController()
+                controller.edgeInset = UIEdgeInsets.init(top: 0,
+                                                         left: 0,
+                                                         bottom: 0,
+                                                         right: 0);
+                let loginController = KPLoginViewController()
+                self.present(loginController, animated: true, completion: nil)
             }
         }
         

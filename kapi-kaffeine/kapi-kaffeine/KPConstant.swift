@@ -48,6 +48,9 @@ struct KPColorPalette {
         
         static let scoreButtonColor = UIColor(hexString: "#9f9426")
         static let disabledScoreButtonColor = UIColor(hexString: "#C8C488")
+        
+        static let mainColor_top = UIColor(hexString: "D1A06B")
+        static let mainColor_bottom = UIColor(hexString: "#A67037")
     }
     
     struct KPShopStatusColor {
