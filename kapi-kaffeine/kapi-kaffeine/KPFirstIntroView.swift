@@ -18,7 +18,7 @@ class KPFirstIntroView: KPSharedIntroView {
     var thirdPopImageView: UIImageView!
     
     override init(frame: CGRect) {
-        super.init(frame: frame);
+        super.init(frame: frame)
         
         bottomImageView = UIImageView(image: R.image.image_onbroading_1())
         bottomImageView.contentMode = .scaleAspectFit

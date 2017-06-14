@@ -15,8 +15,8 @@ import ObjectMapper
 
 public class KPUserManager {
     
-    
-    static let sharedManager = KPUserManager() 
+    var loadingView: KPLoadingView!
+    static let sharedManager = KPUserManager()
     
     
     // MARK: Initialization
@@ -26,6 +26,11 @@ public class KPUserManager {
         // 讀取資料
         KPUserDefaults.loadUserInformation()
 
+        // 介面
+        loadingView = KPLoadingView()
+        loadingView.successContent = "登入成功"
+        loadingView.failContent = "登入失敗"
+     
         // 建立Current User
         if KPUserDefaults.accessToken != nil {
             let currentUserInfo = ["access_token": KPUserDefaults.accessToken]
@@ -38,8 +43,6 @@ public class KPUserManager {
     
     var currentUser: KPUser?
     
-    //
-    
     // MARK: API
     
     func logIn(_ viewController: UIViewController,
@@ -50,15 +53,24 @@ public class KPUserManager {
         loginManager.loginBehavior = LoginBehavior.native;
         loginManager.logIn([.publicProfile],
                            viewController: viewController) { (loginResult) in
+                            
+                            viewController.view.addSubview(self.loadingView)
+                            self.loadingView.addConstraints(fromStringArray: ["V:|[$self]|",
+                                                                              "H:|[$self]|"])
+                            
                             switch loginResult {
-                            case .failed(let error):
-                                print(error)
+                            case .failed(_):
+                                self.loadingView.state = .failed
+                                completion?(false)
                             case .cancelled:
-                                print("User cancelled login.")
+                                self.loadingView.state = .failed
+                                completion?(false)
                             case .success( _, _, let accessToken):
+                                
                                 let credential = FIRFacebookAuthProvider.credential(withAccessToken: accessToken.authenticationToken)
                                 FIRAuth.auth()?.signIn(with: credential,
                                                        completion: { (user, error) in
+                                                        
                                                         if let error = error {
                                                             print("Login error: \(error.localizedDescription)")
                                                             let alertController = UIAlertController(title: "Login Error",
@@ -71,6 +83,7 @@ public class KPUserManager {
                                                             viewController.present(alertController,
                                                                                    animated: true,
                                                                                    completion: nil)
+                                                            self.loadingView.state = .failed
                                                             completion?(false)
                                                             return
                                                         }
@@ -88,15 +101,19 @@ public class KPUserManager {
                                                                                 self.currentUser?.accessToken = result["token"].stringValue
                                                                                 KPUserDefaults.accessToken = self.currentUser?.accessToken
                                                             
+                                                                                self.loadingView.state = .successed
+                                                                                completion?(true)
+                                                                                
+                                                                                DispatchQueue.main.asyncAfter(deadline: .now()+1.0) {
+                                                                                    viewController.dismiss(animated: true, completion: {
+                                                                                        print("Successfully Logged In")
+                                                                                        
+                                                                                    })
+                                                                                }
+                                                                            
                                                             }.catch { error in
                                                                 print("Error")
                                                             }
-                                                        
-                                                        completion?(true)
-                                                        viewController.dismiss(animated: true, completion: {
-                                                            print("Successfully Logged In")
-                                                            
-                                                        })
                                 })
                             }
         }

@@ -209,12 +209,12 @@ class KPMainViewController: KPViewController {
                                                             self.searchHeaderView.styleButton.setImage(iconImage, for: .normal)
                                                             self.mainMapViewController?.collectionView.isHidden = true
                                                             
-                                                            self.mainListViewController?.view.layer.transform =
-                                                                CATransform3DRotate((self.mainListViewController?.view.layer.transform)!,
-                                                                                    CGFloat.pi, 0, 1, 0)
-                                                            self.mainMapViewController?.view.layer.transform =
-                                                                CATransform3DRotate((self.mainMapViewController?.view.layer.transform)!,
-                                                                                    CGFloat.pi, 0, 1, 0)
+//                                                            self.mainListViewController?.view.layer.transform =
+//                                                                CATransform3DRotate((self.mainListViewController?.view.layer.transform)!,
+//                                                                                    CGFloat.pi, 0, 1, 0)
+//                                                            self.mainMapViewController?.view.layer.transform =
+//                                                                CATransform3DRotate((self.mainMapViewController?.view.layer.transform)!,
+//                                                                                    CGFloat.pi, 0, 1, 0)
                                                             
                                                             let backRotateTransform = CATransform3DRotate((self.mainMapViewController?.view.layer.transform)!, -CGFloat.pi/2, 0, 1, 0)
                                                             self.mainListViewController?.view.layer.transform =

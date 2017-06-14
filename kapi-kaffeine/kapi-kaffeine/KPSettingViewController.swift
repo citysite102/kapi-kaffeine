@@ -136,6 +136,7 @@ extension KPSettingViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .value1,
                                    reuseIdentifier: self.settingDataContents[indexPath.row].identifier);
+        cell.selectionStyle = .none
         self.setupCell(self.settingDataContents[indexPath.row], cell: cell);
         return cell;
     }

@@ -19,7 +19,6 @@ class KPLoginViewController: KPViewController {
     var facebookLoginButton: UIButton!
     var skipLoginButton: UIButton!
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -40,7 +39,7 @@ class KPLoginViewController: KPViewController {
                                  views: [iconImage])
         
         descriptionLabel = UILabel();
-        descriptionLabel.font = UIFont.systemFont(ofSize: 16.0);
+        descriptionLabel.font = UIFont.systemFont(ofSize: 15.0);
         descriptionLabel.textColor = KPColorPalette.KPTextColor.whiteColor;
         descriptionLabel.text = " - 輕鬆找到最適合的咖啡店 -";
         view.addSubview(descriptionLabel);
@@ -69,7 +68,7 @@ class KPLoginViewController: KPViewController {
                                        views:[facebookLoginButton])
         skipLoginButton.addTarget(self, action: #selector(skipButtonOnTapped(_:)),
                              for: UIControlEvents.touchUpInside)
-        
+    
     }
 
     func facebookLoginButtonOnTapped(_ sender: UIButton) {

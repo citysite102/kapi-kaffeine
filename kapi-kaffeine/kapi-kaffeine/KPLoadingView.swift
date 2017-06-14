@@ -1,5 +1,5 @@
 //
-//  KPLoadingViewController.swift
+//  KPLoadingView.swift
 //  kapi-kaffeine
 //
 //  Created by YU CHONKAO on 2017/5/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class KPLoadingViewController: KPViewController {
+class KPLoadingView: UIView {
 
     enum loadingState: String, RawRepresentable {
         case loading = "loading"
@@ -33,9 +33,15 @@ class KPLoadingViewController: KPViewController {
                 DispatchQueue.main.asyncAfter(deadline: .now()+0.2) {
                     self.performStateAnimation(.successed)
                 }
+                DispatchQueue.main.asyncAfter(deadline: .now()+1.0) {
+                    self.dismiss()
+                }
             case .failed:
                 DispatchQueue.main.asyncAfter(deadline: .now()+0.2) {
                     self.performStateAnimation(.failed)
+                }
+                DispatchQueue.main.asyncAfter(deadline: .now()+1.0) {
+                    self.dismiss()
                 }
             default:
                 print("Still Nothing")
@@ -50,14 +56,16 @@ class KPLoadingViewController: KPViewController {
         return label
     }()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
+    
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
         container = UIView()
         container.backgroundColor = KPColorPalette.KPMainColor.grayColor_level3
         container.layer.cornerRadius = 8.0
         container.layer.masksToBounds = true
-        view.addSubview(container)
+        addSubview(container)
         container.addConstraints(fromStringArray: ["V:[$self(96)]",
                                                    "H:[$self(96)]"])
         container.addConstraintForCenterAligningToSuperview(in: .vertical)
@@ -90,16 +98,7 @@ class KPLoadingViewController: KPViewController {
         failedView.addConstraintForCenterAligningToSuperview(in: .horizontal)
         failedView.transform = CGAffineTransform.init(translationX: 0, y: 24)
         failedView.alpha = 0
-        
-        DispatchQueue.main.asyncAfter(deadline: .now()+1.2) {
-            self.state = .successed
-        }
-        
-    }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     func performStateAnimation(_ state: loadingState) {
@@ -165,21 +164,22 @@ class KPLoadingViewController: KPViewController {
         default:
             break
         }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now()+1.0) {
-            self.appModalController()?.dismissController(duration: 0.5)
+    }
+    
+    
+    func dismiss() {
+        UIView.animate(withDuration: 0.15,
+                       delay: 0,
+                       options: .curveEaseOut,
+                       animations: { 
+                        self.container.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+        }) { (_) in
+            self.removeFromSuperview()
         }
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
-    */
-
 }

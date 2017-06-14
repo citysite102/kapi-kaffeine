@@ -92,7 +92,7 @@
 		77C594AB1ECB170000118947 /* KPNewCommentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C594AA1ECB170000118947 /* KPNewCommentController.swift */; };
 		77C594AD1ECB171A00118947 /* KPAllCommentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C594AC1ECB171A00118947 /* KPAllCommentController.swift */; };
 		77C594AF1ECB6E3100118947 /* KPLoadingViewController_v1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C594AE1ECB6E3100118947 /* KPLoadingViewController_v1.swift */; };
-		77C594B11ECB754900118947 /* KPLoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C594B01ECB754900118947 /* KPLoadingViewController.swift */; };
+		77C594B11ECB754900118947 /* KPLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C594B01ECB754900118947 /* KPLoadingView.swift */; };
 		77E495551EC98BE0003B7EBC /* KPRatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E495541EC98BE0003B7EBC /* KPRatingViewController.swift */; };
 		77E4955B1EC9E9B1003B7EBC /* KPSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E4955A1EC9E9B0003B7EBC /* KPSearchViewController.swift */; };
 		77E4955F1EC9EA09003B7EBC /* KPSearchViewDefaultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E4955E1EC9EA09003B7EBC /* KPSearchViewDefaultCell.swift */; };
@@ -242,7 +242,7 @@
 		77C594AA1ECB170000118947 /* KPNewCommentController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPNewCommentController.swift; sourceTree = "<group>"; };
 		77C594AC1ECB171A00118947 /* KPAllCommentController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPAllCommentController.swift; sourceTree = "<group>"; };
 		77C594AE1ECB6E3100118947 /* KPLoadingViewController_v1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPLoadingViewController_v1.swift; sourceTree = "<group>"; };
-		77C594B01ECB754900118947 /* KPLoadingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPLoadingViewController.swift; sourceTree = "<group>"; };
+		77C594B01ECB754900118947 /* KPLoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPLoadingView.swift; sourceTree = "<group>"; };
 		77E495541EC98BE0003B7EBC /* KPRatingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPRatingViewController.swift; sourceTree = "<group>"; };
 		77E4955A1EC9E9B0003B7EBC /* KPSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSearchViewController.swift; sourceTree = "<group>"; };
 		77E4955E1EC9EA09003B7EBC /* KPSearchViewDefaultCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSearchViewDefaultCell.swift; sourceTree = "<group>"; };
@@ -654,7 +654,7 @@
 				77B66FAD1EAD07F3008B6652 /* KPModalViewController.swift */,
 				C00A6E121ECB0B7F00A05C9A /* KPSharedSettingViewController.swift */,
 				77C594AE1ECB6E3100118947 /* KPLoadingViewController_v1.swift */,
-				77C594B01ECB754900118947 /* KPLoadingViewController.swift */,
+				77C594B01ECB754900118947 /* KPLoadingView.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -1152,7 +1152,7 @@
 				77C594AB1ECB170000118947 /* KPNewCommentController.swift in Sources */,
 				77421FB01EB8EE0C00064FF0 /* KPNomadRequest.swift in Sources */,
 				77C0E0FF1E9D48BC00398852 /* KPInformationSharedInfoView.swift in Sources */,
-				77C594B11ECB754900118947 /* KPLoadingViewController.swift in Sources */,
+				77C594B11ECB754900118947 /* KPLoadingView.swift in Sources */,
 				C01AC6291EAAEA0A000390F7 /* GMUGridBasedClusterAlgorithm.m in Sources */,
 				776ACB011E9BB49E00B629A2 /* KPMainViewController.swift in Sources */,
 				C01AC6301EAAEA0A000390F7 /* GMUDefaultClusterRenderer.m in Sources */,

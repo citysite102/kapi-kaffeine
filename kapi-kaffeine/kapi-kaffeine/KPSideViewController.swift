@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SideMenu
 
 class KPSideViewController: KPViewController {
 
@@ -118,22 +119,30 @@ class KPSideViewController: KPViewController {
         self.informationSectionContents = [informationData(title:"關於我們",
                                                            icon:R.image.icon_cup()!,
                                                            handler:{()->() in
+                                                            
+                                                            SideMenuManager.menuLeftNavigationController?.dismiss(animated: true,
+                                                                                                                  completion: nil)
+                                                            
                                                             let controller = KPModalViewController()
                                                             controller.edgeInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
                                                             let aboutUsController = KPAboutUsViewController()
                                                             let navigationController = UINavigationController.init(rootViewController: aboutUsController);
                                                             controller.contentController = navigationController;
-                                                            controller.presentModalView();
+                                                            controller.presentModalView(UIApplication.shared.rootViewController);
                                             }),
                                            informationData(title:"聯絡我們",
                                                            icon:R.image.icon_msg()!,
                                                            handler:{()->() in
+                                                            
+                                                            SideMenuManager.menuLeftNavigationController?.dismiss(animated: true,
+                                                                                                                  completion: nil)
+                                                            
                                                             let controller = KPModalViewController()
                                                             controller.edgeInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
                                                             let profileController = KPUserProfileViewController()
                                                             let navigationController = UINavigationController.init(rootViewController: profileController);
                                                             controller.contentController = navigationController;
-                                                            controller.presentModalView();
+                                                            controller.presentModalView(UIApplication.shared.rootViewController);
                                            }),
                                            informationData(title:"粉絲專頁",
                                                            icon:R.image.icon_fb()!,
@@ -146,17 +155,21 @@ class KPSideViewController: KPViewController {
                                            informationData(title:"設定",
                                                            icon:R.image.icon_setting()!,
                                                            handler:{()->() in
+                                                            
+                                                            
+                                                            SideMenuManager.menuLeftNavigationController?.dismiss(animated: true,
+                                                                                                                  completion: nil)
                                                             let controller = KPModalViewController()
                                                             controller.edgeInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
                                                             let settingController = KPSettingViewController()
                                                             let navigationController = UINavigationController.init(rootViewController: settingController);
                                                             controller.contentController = navigationController;
-                                                            controller.presentModalView();
+                                                            controller.presentModalView(UIApplication.shared.rootViewController);
                                            }),
         ]
     }
     
-        
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
