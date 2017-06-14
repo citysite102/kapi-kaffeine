@@ -19,8 +19,15 @@ final public class KPUserDefaults {
         }
     }
     
+    public static var userIdentifier: String? {
+        didSet {
+            defaults?.set(accessToken, forKey: "user_identifier")
+        }
+    }
+    
     static func loadUserInformation() {
         accessToken = defaults?.object(forKey: "accessToken") as? String
+        userIdentifier = defaults?.object(forKey: "user_identifier") as? String
     }
     
 }

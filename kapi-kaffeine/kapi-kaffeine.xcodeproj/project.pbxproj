@@ -16,6 +16,7 @@
 		771EECAF1EBC3177004A34B8 /* KPCheckBoxAnimationGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771EECAE1EBC3177004A34B8 /* KPCheckBoxAnimationGenerator.swift */; };
 		771EECB11EBC3291004A34B8 /* KPCheckBoxPathGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771EECB01EBC3291004A34B8 /* KPCheckBoxPathGenerator.swift */; };
 		771EECB31EBC32E4004A34B8 /* KPCheckBoxRadioPathGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771EECB21EBC32E4004A34B8 /* KPCheckBoxRadioPathGenerator.swift */; };
+		771F90B11EF1976B00D66C14 /* KPFavoriteRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771F90B01EF1976B00D66C14 /* KPFavoriteRequest.swift */; };
 		772748421ED5D21A00C42FB6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 772748411ED5D21A00C42FB6 /* GoogleService-Info.plist */; };
 		772748441ED5F81300C42FB6 /* KPUserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772748431ED5F81300C42FB6 /* KPUserManager.swift */; };
 		772C538A1ECBFE5600C88798 /* KPViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772C53891ECBFE5600C88798 /* KPViewController.swift */; };
@@ -165,6 +166,7 @@
 		771EECAE1EBC3177004A34B8 /* KPCheckBoxAnimationGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPCheckBoxAnimationGenerator.swift; sourceTree = "<group>"; };
 		771EECB01EBC3291004A34B8 /* KPCheckBoxPathGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPCheckBoxPathGenerator.swift; sourceTree = "<group>"; };
 		771EECB21EBC32E4004A34B8 /* KPCheckBoxRadioPathGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPCheckBoxRadioPathGenerator.swift; sourceTree = "<group>"; };
+		771F90B01EF1976B00D66C14 /* KPFavoriteRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPFavoriteRequest.swift; sourceTree = "<group>"; };
 		772748411ED5D21A00C42FB6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		772748431ED5F81300C42FB6 /* KPUserManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPUserManager.swift; sourceTree = "<group>"; };
 		772C53891ECBFE5600C88798 /* KPViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPViewController.swift; sourceTree = "<group>"; };
@@ -402,6 +404,14 @@
 			name = "Animation Generator";
 			sourceTree = "<group>";
 		};
+		771F90AF1EF1973400D66C14 /* Favorite */ = {
+			isa = PBXGroup;
+			children = (
+				771F90B01EF1976B00D66C14 /* KPFavoriteRequest.swift */,
+			);
+			name = Favorite;
+			sourceTree = "<group>";
+		};
 		772748401ED5D18B00C42FB6 /* kapi-user */ = {
 			isa = PBXGroup;
 			children = (
@@ -436,6 +446,7 @@
 		773463501ED74FE500EA78F0 /* Request */ = {
 			isa = PBXGroup;
 			children = (
+				771F90AF1EF1973400D66C14 /* Favorite */,
 				77869E181EB76EDD0027CA98 /* Basic */,
 				77869E171EB75F1E0027CA98 /* Model */,
 				77869E1D1EB79CF40027CA98 /* KPSimpleRequest.swift */,
@@ -1134,6 +1145,7 @@
 				77E495651ECA04F5003B7EBC /* KPSearchBar.swift in Sources */,
 				C0EBE5431ECB29800021653E /* KPBusinessHourViewController.swift in Sources */,
 				77BB39391ED49BD100958AFE /* KPSharedIntroView.swift in Sources */,
+				771F90B11EF1976B00D66C14 /* KPFavoriteRequest.swift in Sources */,
 				77421FB41EB8F82500064FF0 /* KPRatingView.swift in Sources */,
 				776ACAF61E9BAFBF00B629A2 /* KPSearchTagView.swift in Sources */,
 				C01AC62A1EAAEA0A000390F7 /* GMUNonHierarchicalDistanceBasedAlgorithm.m in Sources */,

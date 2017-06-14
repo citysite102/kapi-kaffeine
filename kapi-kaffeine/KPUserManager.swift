@@ -15,9 +15,10 @@ import ObjectMapper
 
 public class KPUserManager {
     
-    var loadingView: KPLoadingView!
-    static let sharedManager = KPUserManager()
     
+    // MARK: Singleton
+    
+    static let sharedManager = KPUserManager()
     
     // MARK: Initialization
     
@@ -33,7 +34,8 @@ public class KPUserManager {
      
         // 建立Current User
         if KPUserDefaults.accessToken != nil {
-            let currentUserInfo = ["access_token": KPUserDefaults.accessToken]
+            let currentUserInfo = ["access_token": KPUserDefaults.accessToken,
+                                   "id": KPUserDefaults.userIdentifier]
             self.currentUser = Mapper<KPUser>().map(JSONObject: currentUserInfo)
         }
     }
@@ -42,6 +44,7 @@ public class KPUserManager {
     // MARK: Properties
     
     var currentUser: KPUser?
+    var loadingView: KPLoadingView!
     
     // MARK: API
     
@@ -99,8 +102,10 @@ public class KPUserManager {
                                                                                 self.currentUser =
                                                                                     Mapper<KPUser>().map(JSONObject: result["data"].dictionaryValue)
                                                                                 self.currentUser?.accessToken = result["token"].stringValue
+                                                                                self.currentUser?.identifier = user?.uid
                                                                                 KPUserDefaults.accessToken = self.currentUser?.accessToken
-                                                            
+                                                                                KPUserDefaults.userIdentifier = user?.uid
+                                                                                
                                                                                 self.loadingView.state = .successed
                                                                                 completion?(true)
                                                                                 
@@ -117,6 +122,34 @@ public class KPUserManager {
                                 })
                             }
         }
+    }
+    
+    // MARK: Content
+    
+    func addFavoriteCafe(_ cafeID: String,
+                         _ completion:(() -> Void)? = nil) {
+        
+        let addRequest = KPFavoriteRequest()
+        addRequest.perform(cafeID,
+                           KPFavoriteRequest.requestType.add).then { result -> Void in
+                            
+                print("Result\(result)")
+            }.catch { (error) in
+                print("error\(error)")
+            }
+    }
+    
+    func removeFavoriteCafe(_ cafeID: String,
+                            _ completion:(() -> Void)? = nil) {
+        
+        let removeRequest = KPFavoriteRequest()
+        removeRequest.perform(cafeID,
+                              KPFavoriteRequest.requestType.delete).then { result -> Void in
+                            
+                print("Result\(result)")
+            }.catch { (error) in
+                print("error\(error)")
+            }
     }
     
 }

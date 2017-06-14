@@ -14,6 +14,8 @@ protocol KPInformationHeaderViewDelegate: NSObjectProtocol {
 
 class KPInformationHeaderView: UIView {
 
+    
+    var cafeID: String!
     var container: UIView!
     var shopPhotoContainer: UIView!
     var shopPhoto: UIImageView!
@@ -30,6 +32,47 @@ class KPInformationHeaderView: UIView {
     var commentButton: KPInformationHeaderButton!;
     
     weak open var delegate: KPInformationHeaderViewDelegate?
+    
+    convenience init (frame: CGRect,
+                      cafeIdentifier: String) {
+        self.init(frame: frame);
+        self.cafeID = cafeIdentifier
+        collectButton.buttonInfo = HeaderButtonInfo(title: "收藏",
+                                                    info: "0人已收藏",
+                                                    icon: R.image.icon_collect()!,
+                                                    handler: { (headerButton) -> () in
+                                                        print("Test Handler");
+                                                        
+                                                        headerButton.selected = !(headerButton.selected)
+                                                        
+                                                        if headerButton.selected {
+                                                            KPUserManager.sharedManager.addFavoriteCafe(self.cafeID)
+                                                        } else {
+                                                            KPUserManager.sharedManager.removeFavoriteCafe(self.cafeID)
+                                                        }
+        });
+        
+        checkButton.buttonInfo = HeaderButtonInfo(title: "我要打卡",
+                                                  info: "194人來做",
+                                                  icon: R.image.icon_map()!,
+                                                  handler: { (headerButton) -> () in
+                                                    print("Test Handler");
+        });
+        
+        rateButton.buttonInfo = HeaderButtonInfo(title: "我要評分",
+                                                 info: "尚無評分",
+                                                 icon: R.image.icon_star()!,
+                                                 handler: { (headerButton) -> () in
+                                                    print("Test Handler");
+        });
+        
+        commentButton.buttonInfo = HeaderButtonInfo(title: "已評價",
+                                                    info: "29人已留言",
+                                                    icon: R.image.icon_comment()!,
+                                                    handler: { (headerButton) -> () in
+                                                        print("Test Handler");
+        });
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame);
@@ -58,11 +101,7 @@ class KPInformationHeaderView: UIView {
         shopPhoto.addGestureRecognizer(photoLongPressGesture)
         
         collectButton = KPInformationHeaderButton();
-        collectButton.buttonInfo = HeaderButtonInfo(title: "收藏",
-                                                    info: "0人已收藏",
-                                                    icon: R.image.icon_collect()!,
-                                                    handler: { (headerButton) -> () in print("Test Handler");
-        });
+        
         container.addSubview(collectButton);
         collectButton.addConstraints(fromStringArray: ["H:|[$self($metric0)]", "V:[$view0][$self(90)]|"],
                                      metrics: [UIScreen.main.bounds.size.width/4],
@@ -70,11 +109,6 @@ class KPInformationHeaderView: UIView {
         
         
         checkButton = KPInformationHeaderButton();
-        checkButton.buttonInfo = HeaderButtonInfo(title: "我要打卡",
-                                                  info: "194人來做",
-                                                  icon: R.image.icon_map()!,
-                                                  handler: { (headerButton) -> () in print("Test Handler");
-        });
         container.addSubview(checkButton);
         checkButton.addConstraints(fromStringArray: ["H:[$view0]-(-1)-[$self($metric0)]", "V:[$view1][$self(90)]|"],
                                    metrics: [UIScreen.main.bounds.size.width/4+1],
@@ -82,11 +116,6 @@ class KPInformationHeaderView: UIView {
         
         
         rateButton = KPInformationHeaderButton();
-        rateButton.buttonInfo = HeaderButtonInfo(title: "我要評分",
-                                                 info: "尚無評分",
-                                                 icon: R.image.icon_star()!,
-                                                 handler: { (headerButton) -> () in print("Test Handler");
-        });
         container.addSubview(rateButton);
         rateButton.addConstraints(fromStringArray: ["H:[$view0]-(-1)-[$self($metric0)]", "V:[$view1][$self(90)]|"],
                                         metrics: [UIScreen.main.bounds.size.width/4+1],
@@ -94,11 +123,6 @@ class KPInformationHeaderView: UIView {
         
         
         commentButton = KPInformationHeaderButton();
-        commentButton.buttonInfo = HeaderButtonInfo(title: "已評價",
-                                                    info: "29人已留言",
-                                                    icon: R.image.icon_comment()!,
-                                                    handler: { (headerButton) -> () in print("Test Handler");
-        });
         container.addSubview(commentButton);
         commentButton.addConstraints(fromStringArray: ["H:[$view0]-(-1)-[$self($metric0)]",
                                                        "V:[$view1][$self(90)]|"],
