@@ -58,13 +58,10 @@ class KPSecondIntroView: KPSharedIntroView {
         forthPopImageView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
         fifthPopImageView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
         
-        let attrS = NSMutableAttributedString.init(string: "收錄全台超過1000家咖啡館資訊，隨時更新，動態一手掌握")
-        attrS.addAttributes([NSParagraphStyleAttributeName: descriptionStyle],
-                            range: NSRange.init(location: 0, length: attrS.length))
-        
-        
         introTitleLabel.text = "上千家咖啡館任你選"
-        introDescriptionLabel.attributedText = attrS
+        introDescriptionLabel.textAlignment = .center
+        introDescriptionLabel.setText(text: "收錄全台超過1000家咖啡館資訊，隨時更新，動態一手掌握",
+                                      lineSpacing: KPFactorConstant.KPSpacing.introSpacing)
         
     }
     

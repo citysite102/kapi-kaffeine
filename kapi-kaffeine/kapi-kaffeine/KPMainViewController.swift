@@ -50,12 +50,14 @@ class KPMainViewController: KPViewController {
         view.addSubview((mainMapViewController?.view)!)
         mainMapViewController?.didMove(toParentViewController: self)
         mainMapViewController?.view.layer.shouldRasterize = true
+        mainMapViewController?.view.layer.rasterizationScale = UIScreen.main.scale
         _ = mainMapViewController?.view.addConstraints(fromStringArray: ["H:|[$self]|",
                                                                          "V:|[$self]|"])
         
         addChildViewController(mainListViewController!)
         view.addSubview((mainListViewController?.view)!)
         mainListViewController?.didMove(toParentViewController: self)
+        mainListViewController?.view.layer.rasterizationScale = UIScreen.main.scale
         _ = mainListViewController?.view.addConstraints(fromStringArray: ["H:|[$self]|",
                                                                           "V:|[$self]|"])
         
@@ -190,7 +192,7 @@ class KPMainViewController: KPViewController {
             mainListViewController?.view.alpha = 1.0
             mainMapViewController?.view.alpha = 0.0
             
-            UIView.animateKeyframes(withDuration: 0.8,
+            UIView.animateKeyframes(withDuration: 0.6,
                                     delay: 0,
                                     options: .calculationModeCubicPaced,
                                     animations: { 
@@ -250,7 +252,7 @@ class KPMainViewController: KPViewController {
             mainListViewController?.view.alpha = 0.0
             mainMapViewController?.view.alpha = 1.0
             
-            UIView.animateKeyframes(withDuration: 0.8,
+            UIView.animateKeyframes(withDuration: 0.6,
                                     delay: 0,
                                     options: .calculationModeCubicPaced,
                                     animations: {

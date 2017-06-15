@@ -64,9 +64,14 @@ struct KPColorPalette {
     
 }
 
+struct KPFactorConstant {
+    struct KPSpacing {
+        static let introSpacing: CGFloat = 2.4
+    }
+}
+
 struct AppConstant {
     static let introShownKey = "KPIntroHasShownKey"
-    
     static let userDefaultsSuitName = "kapi-userdefault"
 }
 

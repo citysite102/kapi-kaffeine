@@ -114,14 +114,11 @@ class KPForthIntroView: KPSharedIntroView {
         starImageViewFour.addConstraints(fromStringArray: ["V:[$view0]-32-[$self]",
                                                             "H:[$self]-12-[$view1]"],
                                           views: [thirdPopImageView, starImageViewFive])
-
-        let attrS = NSMutableAttributedString.init(string: "為店家評分，留言，上傳照片，讓特別的時光留下美好回憶")
-        attrS.addAttributes([NSParagraphStyleAttributeName: descriptionStyle],
-                            range: NSRange.init(location: 0, length: attrS.length))
-        
         
         introTitleLabel.text = "留下你的足跡"
-        introDescriptionLabel.attributedText = attrS
+        introDescriptionLabel.textAlignment = .center
+        introDescriptionLabel.setText(text: "為店家評分，留言，上傳照片，讓特別的時光留下美好回憶",
+                                      lineSpacing: KPFactorConstant.KPSpacing.introSpacing)
         
         
         animateSpeekBox.isHidden = true

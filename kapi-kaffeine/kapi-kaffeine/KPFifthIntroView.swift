@@ -46,13 +46,10 @@ class KPFifthIntroView: KPSharedIntroView {
         thirdPopImageView.addConstraintForAligning(to: .bottom, of: bottomImageView, constant: 16)
         thirdPopImageView.addConstraintForAligning(to: .left, of: bottomImageView, constant: 32)
         
-        let attrS = NSMutableAttributedString.init(string: "全台網友協力貢獻店家資料，找咖啡不再是件麻煩事")
-        attrS.addAttributes([NSParagraphStyleAttributeName: descriptionStyle],
-                            range: NSRange.init(location: 0, length: attrS.length))
-        
-        
         introTitleLabel.text = "最挺你的社群"
-        introDescriptionLabel.attributedText = attrS
+        introDescriptionLabel.textAlignment = .center
+        introDescriptionLabel.setText(text: "全台網友協力貢獻店家資料，找咖啡不再是件麻煩事",
+                                      lineSpacing: KPFactorConstant.KPSpacing.introSpacing)
         
         facebookLoginButton = UIButton()
         facebookLoginButton.setImage(R.image.facebook_login(), for: .normal)

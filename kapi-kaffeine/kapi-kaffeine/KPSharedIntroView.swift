@@ -9,8 +9,6 @@
 import UIKit
 
 class KPSharedIntroView: UIView {
-
-    var descriptionStyle: NSMutableParagraphStyle!
     
     lazy var introTitleLabel: UILabel = {
         let label = UILabel()
@@ -34,11 +32,7 @@ class KPSharedIntroView: UIView {
         super.init(frame: frame);
         
         self.isUserInteractionEnabled = false
-        
-        descriptionStyle = NSMutableParagraphStyle()
-        descriptionStyle.alignment = .center
-        descriptionStyle.lineSpacing = 2.4
-        
+
         addSubview(introTitleLabel)
         addSubview(introDescriptionLabel)
         

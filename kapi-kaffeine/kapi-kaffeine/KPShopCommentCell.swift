@@ -15,8 +15,6 @@ class KPShopCommentCell: UITableViewCell {
     var userNameLabel: UILabel!
     var timeHintLabel: UILabel!
     
-    var commentStyle: NSMutableParagraphStyle!
-    
     var userCommentLabel: UILabel!
     var voteUpButton: KPShopCommentCellButton!
     var voteDownButton: KPShopCommentCellButton!
@@ -67,17 +65,12 @@ class KPShopCommentCell: UITableViewCell {
                                           metrics: [UIScreen.main.bounds.size.width/2],
                                           views: [userPicture])
 
-        commentStyle = NSMutableParagraphStyle()
-        commentStyle.lineSpacing = 2.4
-        
-        let attrS = NSMutableAttributedString.init(string: "時間, 天氣, 溫度(°C), 體感溫度(°C), 降雨機率, 蒲福風級, 風向, 相對濕度 .... 今天（16日）受鋒面影響，天氣不穩定，隨著雲系一波波移入")
-        attrS.addAttributes([NSParagraphStyleAttributeName: commentStyle],
-                            range: NSRange.init(location: 0, length: attrS.length))
         userCommentLabel = UILabel()
         userCommentLabel.font = UIFont.systemFont(ofSize: 14.0)
         userCommentLabel.numberOfLines = 0
         userCommentLabel.textColor = KPColorPalette.KPTextColor.grayColor_level3
-        userCommentLabel.attributedText = attrS
+        userCommentLabel.setText(text: "時間, 天氣, 溫度(°C), 體感溫度(°C), 降雨機率, 蒲福風級, 風向, 相對濕度 .... 今天（16日）受鋒面影響，天氣不穩定，隨著雲系一波波移入",
+                                 lineSpacing: 2.4)
         contentView.addSubview(userCommentLabel)
         userCommentLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]-16-|",
                                                           "V:[$view1]-4-[$self]"],

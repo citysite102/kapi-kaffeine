@@ -46,14 +46,10 @@ class KPFirstIntroView: KPSharedIntroView {
         secondPopImageView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
         thirdPopImageView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
         
-        
-        let attrS = NSMutableAttributedString.init(string: "不管是想要工作，聚會，讀書，你總是能找到最適合你的地方")
-        attrS.addAttributes([NSParagraphStyleAttributeName: descriptionStyle],
-                            range: NSRange.init(location: 0, length: attrS.length))
-        
-        
         introTitleLabel.text = "超實用咖啡地圖"
-        introDescriptionLabel.attributedText = attrS
+        introDescriptionLabel.textAlignment = .center
+        introDescriptionLabel.setText(text: "不管是想要工作，聚會，讀書，你總是能找到最適合你的地方",
+                                      lineSpacing: KPFactorConstant.KPSpacing.introSpacing)
         
         DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
             self.showPopContents()

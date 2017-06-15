@@ -54,14 +54,11 @@ class KPThirdIntroView: KPSharedIntroView {
         fifthPopImageView.addConstraintForAligning(to: .right, of: forthPopImageView, constant: 56)
         
         fifthPopImageView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
-
-        let attrS = NSMutableAttributedString.init(string: "關鍵字搜尋，偏好篩選，附近店家，方法不只一個，但絕對快速簡單")
-        attrS.addAttributes([NSParagraphStyleAttributeName: descriptionStyle],
-                            range: NSRange.init(location: 0, length: attrS.length))
-        
         
         introTitleLabel.text = "快速找到目的地"
-        introDescriptionLabel.attributedText = attrS        
+        introDescriptionLabel.textAlignment = .center
+        introDescriptionLabel.setText(text: "關鍵字搜尋，偏好篩選，附近店家，方法不只一個，但絕對快速簡單",
+                                      lineSpacing: KPFactorConstant.KPSpacing.introSpacing)
     }
     
     func showPopContents() {
