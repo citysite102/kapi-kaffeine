@@ -21,7 +21,13 @@ class KPInformationDismissTransition: NSObject, UIViewControllerAnimatedTransiti
         
         let container = transitionContext.containerView;
         let finalFrameForVC = transitionContext.finalFrame(for: toVC);
-
+        
+        
+        fromVC.view.layer.shouldRasterize = true
+        fromVC.view.layer.rasterizationScale = UIScreen.main.scale
+        toVC.view.layer.shouldRasterize = true
+        toVC.view.layer.rasterizationScale = UIScreen.main.scale
+        
         toVC.view.transform = CGAffineTransform(scaleX: 0.94, y: 0.94)
         container.insertSubview(toVC.view, at: 0);
         
@@ -48,6 +54,8 @@ class KPInformationDismissTransition: NSObject, UIViewControllerAnimatedTransiti
                 opacityView.removeFromSuperview();
             }
             transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
+            fromVC.view.layer.shouldRasterize = false
+            toVC.view.layer.shouldRasterize = false
         }
     }
     

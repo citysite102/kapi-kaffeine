@@ -316,17 +316,6 @@ class KPMainViewController: KPViewController {
         let navigationController = UINavigationController.init(rootViewController: searchController)
         controller.contentController = navigationController
         controller.presentModalView()
-        
-        
-//        let controller = KPModalViewController()
-//        controller.edgeInset = UIEdgeInsets.init(top: 0,
-//                                                 left: 0,
-//                                                 bottom: 0,
-//                                                 right: 0)
-//        let loadingController = KPLoadingViewController()
-//        controller.contentController = loadingController
-//        controller.presentModalView()
-        
     }
     
     func addScreenEdgePanGestureRecognizer(view: UIView, edges: UIRectEdge) {
