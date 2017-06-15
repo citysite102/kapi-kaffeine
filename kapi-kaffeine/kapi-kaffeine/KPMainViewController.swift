@@ -49,6 +49,7 @@ class KPMainViewController: KPViewController {
         addChildViewController(mainMapViewController!)
         view.addSubview((mainMapViewController?.view)!)
         mainMapViewController?.didMove(toParentViewController: self)
+        mainMapViewController?.view.layer.shouldRasterize = true
         _ = mainMapViewController?.view.addConstraints(fromStringArray: ["H:|[$self]|",
                                                                          "V:|[$self]|"])
         
@@ -175,8 +176,8 @@ class KPMainViewController: KPViewController {
         transform.m34 = -1.0/1000
         
         
-        self.mainListViewController?.view.layer.shouldRasterize = true
-        self.mainMapViewController?.view.layer.shouldRasterize = true
+        mainListViewController?.view.layer.shouldRasterize = true
+        mainMapViewController?.view.layer.shouldRasterize = true
         
         if self.currentController == self.mainListViewController {
             
@@ -186,8 +187,8 @@ class KPMainViewController: KPViewController {
                                                            1,
                                                            0)
             
-            self.mainListViewController?.view.alpha = 1.0
-            self.mainMapViewController?.view.alpha = 0.0
+            mainListViewController?.view.alpha = 1.0
+            mainMapViewController?.view.alpha = 0.0
             
             UIView.animateKeyframes(withDuration: 0.8,
                                     delay: 0,
@@ -235,7 +236,6 @@ class KPMainViewController: KPViewController {
                                                             self.mainMapViewController?.view.alpha = 1.0
                                         })
             }, completion: { (_) in
-                self.mainListViewController?.view.layer.shouldRasterize = false
                 self.mainMapViewController?.view.layer.shouldRasterize = false
                 self.mainMapViewController?.collectionView.isHidden = false
             })
@@ -247,8 +247,8 @@ class KPMainViewController: KPViewController {
                                                           1,
                                                           0)
             
-            self.mainListViewController?.view.alpha = 0.0
-            self.mainMapViewController?.view.alpha = 1.0
+            mainListViewController?.view.alpha = 0.0
+            mainMapViewController?.view.alpha = 1.0
             
             UIView.animateKeyframes(withDuration: 0.8,
                                     delay: 0,
@@ -298,7 +298,6 @@ class KPMainViewController: KPViewController {
                                         })
             }, completion: { (_) in
                 self.mainListViewController?.view.layer.shouldRasterize = false
-                self.mainMapViewController?.view.layer.shouldRasterize = false
                 self.mainMapViewController?.collectionView.isHidden = false
             })
         }

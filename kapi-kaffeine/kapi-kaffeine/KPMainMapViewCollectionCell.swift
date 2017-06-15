@@ -15,6 +15,14 @@ class KPMainMapViewCollectionCell: UICollectionViewCell {
     var dataModel: KPDataModel! {
         didSet {
             self.shopNameLabel.text = dataModel.name
+            
+            if let photoURL = dataModel.photos?["google_s"] {
+                self.shopImageView.af_setImage(withURL: URL(string: photoURL)!,
+                                               placeholderImage: R.image.icon_loading())
+            } else {
+                self.shopImageView.image = R.image.icon_noImage()
+            }
+            
             if let latstr = self.dataModel.latitude, let latitude = Double(latstr),
                 let longstr = self.dataModel.longitude, let longitude = Double(longstr), let currentLocation = KPLocationManager.sharedInstance().currentLocation {
                 var distance = CLLocation(latitude: latitude, longitude: longitude).distance(from: currentLocation)
