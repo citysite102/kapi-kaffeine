@@ -8,9 +8,11 @@
 
 import UIKit
 
-class KPUserProfileViewController: KPViewController {
+class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, KPTabViewDelegate {
 
     var dismissButton:UIButton!
+    
+    let titles = ["已收藏", "我去過", "已評分", "已評價"]
     
     lazy var userContainer: UIView = {
         let containerView = UIView();
@@ -52,6 +54,11 @@ class KPUserProfileViewController: KPViewController {
         label.numberOfLines = 0;
         return label;
     }()
+    
+    var tableViews: [UITableView] = []
+    var scrollView: UIScrollView!
+    var scrollContainer: UIView!
+    var tabView: KPTabView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -103,6 +110,55 @@ class KPUserProfileViewController: KPViewController {
                                           views: [self.userPhoto,
                                                   self.userCityLabel]);
         
+        tabView = KPTabView(titles: self.titles)
+        tabView.delegate = self
+        view.addSubview(tabView)
+        tabView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$view0][$self]"], views: [userContainer])
+        
+        scrollView = UIScrollView()
+        scrollView.delegate = self
+        scrollView.isPagingEnabled = true
+        view.addSubview(scrollView)
+        scrollView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$view0][$self]|"], views: [tabView])
+
+        scrollContainer = UIView()
+        scrollView.addSubview(scrollContainer)
+        scrollContainer.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"])
+        scrollContainer.addConstraintForHavingSameHeight(with: scrollView)
+        
+        for (index, _) in self.titles.enumerated() {
+            let tableView = UITableView()
+            tableView.dataSource = self
+            
+            tableView.register(KPMainListTableViewCell.self,
+                                forCellReuseIdentifier: KPMainListViewController.KPMainListViewCellReuseIdentifier)
+            tableView.register(KPDefaultLoadingTableCell.self,
+                                forCellReuseIdentifier: KPMainListViewController.KPMainListViewLoadingCellReuseIdentifier)
+            tableView.estimatedRowHeight = 80
+            
+            scrollContainer.addSubview(tableView)
+            tableView.addConstraint(from: "V:|[$self]|")
+            tableView.addConstraintForHavingSameWidth(with: view)
+            
+            if tableViews.count > 0 {
+                tableView.addConstraint(from: "H:[$view0][$self]", views: [tableViews[index-1]])
+            } else {
+                tableView.addConstraint(from: "H:|[$self]")
+            }
+            
+            tableViews.append(tableView)
+        }
+        tableViews.last!.addConstraint(from: "H:[$self]|")
+        
+        
+        if let user = KPUserManager.sharedManager.currentUser {
+            if let photoURL = URL(string: user.photoURL ?? "") {
+                userPhoto.af_setImage(withURL: photoURL)
+            }
+            userNameLabel.text = user.displayName
+            userCityLabel.text = user.defaultLocation
+        }
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -114,14 +170,30 @@ class KPUserProfileViewController: KPViewController {
         self.appModalController()?.dismissControllerWithDefaultDuration();
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
+    func tabView(_: KPTabView, didSelectIndex index: Int) {
+        scrollView.setContentOffset(CGPoint(x: UIScreen.main.bounds.width*CGFloat(index), y: 0), animated: true)
     }
-    */
+
+    // MARK: UITableViewDataSource
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 0
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return tableView.dequeueReusableCell(withIdentifier: KPMainListViewController.KPMainListViewLoadingCellReuseIdentifier, for: indexPath)
+    }
+    
+    // MARK: UIScrollView Delegate
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let screenWidth = UIScreen.main.bounds.width
+        tabView.currentIndex = Int((scrollView.contentOffset.x+screenWidth/2)/screenWidth)
+    }
 
 }
