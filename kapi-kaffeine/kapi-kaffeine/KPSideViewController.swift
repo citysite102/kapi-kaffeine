@@ -177,12 +177,15 @@ class KPSideViewController: KPViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated);
-        DispatchQueue.main.async(execute: {
-            if let window = UIApplication.shared.keyWindow {
-                window.windowLevel = UIWindowLevelStatusBar - 1;
-            }
-        })
         self.mainController.opacityView.isHidden = true;
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        mainController.statusBarShouldBeHidden = false
+        UIView.animate(withDuration: 0.25) {
+            self.mainController.setNeedsStatusBarAppearanceUpdate()
+        }
     }
 }
 

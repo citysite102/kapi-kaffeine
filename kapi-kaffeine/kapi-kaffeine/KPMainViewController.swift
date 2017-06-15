@@ -16,6 +16,7 @@ protocol KPMainViewControllerDelegate {
 
 class KPMainViewController: KPViewController {
 
+    var statusBarShouldBeHidden = false
     var searchHeaderView: KPSearchHeaderView!
     var sideBarController: KPSideViewController!
     var opacityView: UIView!
@@ -105,6 +106,14 @@ class KPMainViewController: KPViewController {
 
     }
     
+    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+        return .fade
+    }
+    
+    override var prefersStatusBarHidden: Bool {
+        return statusBarShouldBeHidden
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -115,7 +124,6 @@ class KPMainViewController: KPViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
         
         // 使用者第一次使用
         if UserDefaults.standard.object(forKey: AppConstant.introShownKey) == nil {
@@ -147,11 +155,12 @@ class KPMainViewController: KPViewController {
     }
     
     func switchSideBar() {
-        DispatchQueue.main.async(execute: {
-            if let window = UIApplication.shared.keyWindow {
-                window.windowLevel = UIWindowLevelStatusBar + 1
-            }
-        })
+        
+        statusBarShouldBeHidden = true
+        UIView.animate(withDuration: 0.25) {
+            self.setNeedsStatusBarAppearanceUpdate()
+        }
+        
         self.opacityView.isHidden = false
         present(SideMenuManager.menuLeftNavigationController!,
                 animated: true, completion: nil)

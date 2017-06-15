@@ -31,6 +31,9 @@ public class KPUserManager {
         loadingView = KPLoadingView()
         loadingView.successContent = "登入成功"
         loadingView.failContent = "登入失敗"
+        
+        // 屬性
+        loginManager = LoginManager()
      
         // 建立Current User
         if KPUserDefaults.accessToken != nil {
@@ -43,15 +46,33 @@ public class KPUserManager {
     
     // MARK: Properties
     
-    var currentUser: KPUser?
+    var currentUser: KPUser? {
+        didSet {
+            let userInformationString = currentUser?.toJSONString()
+            let userInformation: NSDictionary?
+            
+            if let jsonData = userInformationString?.data(using: .utf8) {
+                do {
+                    userInformation = try JSONSerialization.jsonObject(with: jsonData,
+                                                                       options: []) as? NSDictionary
+                    
+                    if userInformation != nil {
+                        KPUserDefaults.userInformation = userInformation
+                    }
+                } catch let error as NSError {
+                    print(error)
+                }
+            }
+        }
+    }
+    
+    var loginManager: LoginManager!
     var loadingView: KPLoadingView!
     
     // MARK: API
     
     func logIn(_ viewController: UIViewController,
                completion: ((Bool) -> Swift.Void)? = nil) {
-        
-        let loginManager = LoginManager()
         
         loginManager.loginBehavior = LoginBehavior.native;
         loginManager.logIn([.publicProfile],
@@ -100,19 +121,14 @@ public class KPUserManager {
                                                                                 
                                                                                 // 建立 Current User
                                                                                 self.currentUser =
-                                                                                    Mapper<KPUser>().map(JSONObject: result["data"].dictionaryValue)
+                                                                                    Mapper<KPUser>().map(JSONObject: result["data"].dictionaryObject)
                                                                                 self.currentUser?.accessToken = result["token"].stringValue
-                                                                                self.currentUser?.identifier = user?.uid
-                                                                                KPUserDefaults.accessToken = self.currentUser?.accessToken
-                                                                                KPUserDefaults.userIdentifier = user?.uid
-                                                                                
                                                                                 self.loadingView.state = .successed
                                                                                 completion?(true)
                                                                                 
                                                                                 DispatchQueue.main.asyncAfter(deadline: .now()+1.0) {
                                                                                     viewController.dismiss(animated: true, completion: {
                                                                                         print("Successfully Logged In")
-                                                                                        
                                                                                     })
                                                                                 }
                                                                             
@@ -122,6 +138,12 @@ public class KPUserManager {
                                 })
                             }
         }
+    }
+    
+    
+    func logOut() {
+        loginManager.logOut()
+        KPUserDefaults.clearUserInformation()
     }
     
     // MARK: Content
