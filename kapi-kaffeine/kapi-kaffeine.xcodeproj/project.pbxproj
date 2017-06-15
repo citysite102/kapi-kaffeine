@@ -17,6 +17,7 @@
 		771EECB11EBC3291004A34B8 /* KPCheckBoxPathGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771EECB01EBC3291004A34B8 /* KPCheckBoxPathGenerator.swift */; };
 		771EECB31EBC32E4004A34B8 /* KPCheckBoxRadioPathGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771EECB21EBC32E4004A34B8 /* KPCheckBoxRadioPathGenerator.swift */; };
 		771F90B11EF1976B00D66C14 /* KPFavoriteRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771F90B01EF1976B00D66C14 /* KPFavoriteRequest.swift */; };
+		771F90B31EF2424900D66C14 /* KPShadowButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771F90B21EF2424900D66C14 /* KPShadowButton.swift */; };
 		772748421ED5D21A00C42FB6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 772748411ED5D21A00C42FB6 /* GoogleService-Info.plist */; };
 		772748441ED5F81300C42FB6 /* KPUserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772748431ED5F81300C42FB6 /* KPUserManager.swift */; };
 		772C538A1ECBFE5600C88798 /* KPViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772C53891ECBFE5600C88798 /* KPViewController.swift */; };
@@ -167,6 +168,7 @@
 		771EECB01EBC3291004A34B8 /* KPCheckBoxPathGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPCheckBoxPathGenerator.swift; sourceTree = "<group>"; };
 		771EECB21EBC32E4004A34B8 /* KPCheckBoxRadioPathGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPCheckBoxRadioPathGenerator.swift; sourceTree = "<group>"; };
 		771F90B01EF1976B00D66C14 /* KPFavoriteRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPFavoriteRequest.swift; sourceTree = "<group>"; };
+		771F90B21EF2424900D66C14 /* KPShadowButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPShadowButton.swift; sourceTree = "<group>"; };
 		772748411ED5D21A00C42FB6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		772748431ED5F81300C42FB6 /* KPUserManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPUserManager.swift; sourceTree = "<group>"; };
 		772C53891ECBFE5600C88798 /* KPViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPViewController.swift; sourceTree = "<group>"; };
@@ -645,6 +647,7 @@
 				77594B481EC8AEB40013BB56 /* KPBounceView.swift */,
 				77421FB31EB8F82500064FF0 /* KPRatingView.swift */,
 				77E495621EC9EEF0003B7EBC /* KPTimePicker.swift */,
+				771F90B21EF2424900D66C14 /* KPShadowButton.swift */,
 				771EECA51EBC27BE004A34B8 /* CheckBox */,
 			);
 			name = Custom;
@@ -1175,6 +1178,7 @@
 				77B66FB01EAD17DA008B6652 /* KPSettingViewController.swift in Sources */,
 				77C0E1051E9D48F500398852 /* KPShopLocationInfoView.swift in Sources */,
 				77BB392A1ED3DD5700958AFE /* KPThirdIntroView.swift in Sources */,
+				771F90B31EF2424900D66C14 /* KPShadowButton.swift in Sources */,
 				776ACAF41E9BAFA200B629A2 /* KPSearchHeaderView.swift in Sources */,
 				77BFC5521EB740CE00610F55 /* KPUser.swift in Sources */,
 				77E495631EC9EEF0003B7EBC /* KPTimePicker.swift in Sources */,

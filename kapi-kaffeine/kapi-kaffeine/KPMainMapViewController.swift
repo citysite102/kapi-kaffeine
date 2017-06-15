@@ -10,37 +10,38 @@ import UIKit
 import GoogleMaps
 import ObjectMapper
 
-class KPMainMapViewController: KPViewController, GMSMapViewDelegate, GMUClusterManagerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, KPMainViewControllerDelegate {
+class KPMainMapViewController: KPViewController,
+GMSMapViewDelegate,
+GMUClusterManagerDelegate,
+UICollectionViewDataSource,
+UICollectionViewDelegate,
+UICollectionViewDelegateFlowLayout,
+KPMainViewControllerDelegate {
     
     weak var mainController:KPMainViewController!
     
     var collectionView: UICollectionView!
     var collectionViewBottomConstraint: NSLayoutConstraint!
 
-    lazy var nearestButton: UIButton = {
-        let button = UIButton(type: .custom)
-        button.setTitle("離我最近", for: .normal)
-        button.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor.mainColor!), for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
-        button.layer.cornerRadius = 5
-        button.clipsToBounds = true
-//        button.layer.masksToBounds = false
-//        button.layer.shadowColor = UIColor.black.cgColor;
-//        button.layer.shadowOpacity = 0.1;
-//        button.layer.shadowRadius = 2.0;
-//        button.layer.shadowOffset = CGSize.init(width: 0.0, height: 2.0);
-        return button
+    lazy var nearestButton: KPShadowButton = {
+        let shadowButton = KPShadowButton()
+        shadowButton.button.setTitle("離我最近", for: .normal)
+        shadowButton.button.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor.mainColor!), for: .normal)
+        shadowButton.button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        shadowButton.layer.cornerRadius = 5
+        shadowButton.backgroundColor = KPColorPalette.KPMainColor.mainColor!
+        return shadowButton
     }()
     
-    lazy var addButton: UIButton = {
-        let button = UIButton(type: .custom)
-        button.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.scoreButtonColor!), for: .normal)
-        button.setImage(R.image.icon_add(), for: .normal)
-        button.tintColor = UIColor.white
-        button.layer.cornerRadius = 28
-        button.imageEdgeInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
-        button.clipsToBounds = true
-        return button
+    lazy var addButton: KPShadowButton = {
+        let shadowButton = KPShadowButton()
+        shadowButton.backgroundColor = KPColorPalette.KPBackgroundColor.scoreButtonColor!
+        shadowButton.button.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.scoreButtonColor!), for: .normal)
+        shadowButton.button.setImage(R.image.icon_add(), for: .normal)
+        shadowButton.button.tintColor = UIColor.white
+        shadowButton.button.imageEdgeInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+        shadowButton.layer.cornerRadius = 28
+        return shadowButton
     }()
     
     private var clusterManager: GMUClusterManager!
@@ -69,11 +70,11 @@ class KPMainMapViewController: KPViewController, GMSMapViewDelegate, GMUClusterM
                         self.collectionViewBottomConstraint.constant = 90
                     }
                     
-                    UIView.animate(withDuration: 0.4,
+                    UIView.animate(withDuration: 0.5,
                                    delay: 0,
                                    usingSpringWithDamping: 0.8,
                                    initialSpringVelocity: 0.8,
-                                   options: UIViewAnimationOptions.curveEaseIn,
+                                   options: UIViewAnimationOptions.curveEaseOut,
                                    animations: { 
                                     self.view.layoutIfNeeded()
                     }, completion: { (_) in
@@ -161,7 +162,6 @@ class KPMainMapViewController: KPViewController, GMSMapViewDelegate, GMUClusterM
         self.collectionView.dataSource = self
         self.collectionView.delegate = self
         self.collectionView.decelerationRate = UIScrollViewDecelerationRateFast
-//        self.collectionView.isPagingEnabled = true
         self.collectionView.showsHorizontalScrollIndicator = false
         self.collectionView.register(KPMainMapViewCollectionCell.classForCoder(),
                                      forCellWithReuseIdentifier: "cell")
@@ -192,7 +192,7 @@ class KPMainMapViewController: KPViewController, GMSMapViewDelegate, GMUClusterM
                                      views: [collectionView])
         
         view.addSubview(addButton)
-        addButton.addTarget(self, action: #selector(handleAddButtonTapped(_:)), for: .touchUpInside)
+        addButton.button.addTarget(self, action: #selector(handleAddButtonTapped(_:)), for: .touchUpInside)
         addButton.addConstraints(fromStringArray: ["H:[$self(56)]-18-|", "V:[$self(56)]-24-[$view0]"],
                                  views: [collectionView])
     }
@@ -253,7 +253,6 @@ class KPMainMapViewController: KPViewController, GMSMapViewDelegate, GMUClusterM
         let currentOffset = targetContentOffset.pointee.x
         let index = floor((currentOffset + (pageWidth + 15)/2)/(pageWidth + 15))
 
-//        self.mapView.selectedMarker = self.mapMarkers[Int(index)]
 //        CATransaction.begin()
 //        CATransaction.setValue(NSNumber(floatLiteral: 0.5), forKey: kCATransactionAnimationDuration)
 //        self.mapView.animate(to: GMSCameraPosition.camera(withTarget: self.mapView.selectedMarker!.position , zoom: self.mapView.camera.zoom))
