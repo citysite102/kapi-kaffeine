@@ -25,10 +25,12 @@ class KPDefaultLoadingTableCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        self.contentView.frame = CGRect(x: 0, y: 0, width: 320, height: 80)
+        
         shimmerView = FBShimmeringView()
         contentView.addSubview(shimmerView)
         shimmerView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                     "V:|[$self(80)]|"])
+                                                     "V:|[$self(80@999)]|"])
         
         
         loadingImageView = UIImageView(image: R.image.loading_cell())

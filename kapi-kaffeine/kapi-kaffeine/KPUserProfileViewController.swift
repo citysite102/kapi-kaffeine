@@ -11,7 +11,6 @@ import UIKit
 class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, KPTabViewDelegate {
 
     var dismissButton:UIButton!
-    var currentDataModel: KPDataModel?
     
     let tabTitles: [(title: String, key: String)] = [("已收藏", "favorites"), ("我去過", "visits"), ("已評分", "favorites"), ("已評價", "visits")]
     
@@ -139,6 +138,7 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
         for (index, tabTitle) in tabTitles.enumerated() {
             let tableView = UITableView()
             tableView.dataSource = self
+            tableView.delegate = self
             tableView.tag = index
             tableView.register(KPMainListTableViewCell.self,
                                 forCellReuseIdentifier: KPMainListViewController.KPMainListViewCellReuseIdentifier)
@@ -222,6 +222,12 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
         cell.selectionStyle = .none
         cell.dataModel = self.displayDataModels[tableView.tag][indexPath.row]
         return cell
+    }
+    
+    // MARK: UITableView Delegate
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
     }
     
     // MARK: UIScrollView Delegate
