@@ -11,8 +11,9 @@ import UIKit
 class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, KPTabViewDelegate {
 
     var dismissButton:UIButton!
+    var currentDataModel: KPDataModel?
     
-    let titles = ["已收藏", "我去過", "已評分", "已評價"]
+    let tabTitles: [(title: String, key: String)] = [("已收藏", "favorites"), ("我去過", "visits"), ("已評分", "favorites"), ("已評價", "visits")]
     
     lazy var userContainer: UIView = {
         let containerView = UIView();
@@ -56,13 +57,20 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
     }()
     
     var tableViews: [UITableView] = []
+    var displayDataModels: [[KPDataModel]] = []
     var scrollView: UIScrollView!
     var scrollContainer: UIView!
     var tabView: KPTabView!
     
+    var isAnimating: Bool = false {
+        didSet {
+            self.scrollView.isUserInteractionEnabled = !isAnimating
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.view.backgroundColor = UIColor.white;
         self.navigationController?.navigationBar.topItem?.title = "個人資料";
         
@@ -110,7 +118,8 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
                                           views: [self.userPhoto,
                                                   self.userCityLabel]);
         
-        tabView = KPTabView(titles: self.titles)
+        
+        tabView = KPTabView(titles: self.tabTitles.map {$0.title})
         tabView.delegate = self
         view.addSubview(tabView)
         tabView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$view0][$self]"], views: [userContainer])
@@ -118,6 +127,7 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
         scrollView = UIScrollView()
         scrollView.delegate = self
         scrollView.isPagingEnabled = true
+        scrollView.showsHorizontalScrollIndicator = false
         view.addSubview(scrollView)
         scrollView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$view0][$self]|"], views: [tabView])
 
@@ -126,10 +136,10 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
         scrollContainer.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"])
         scrollContainer.addConstraintForHavingSameHeight(with: scrollView)
         
-        for (index, _) in self.titles.enumerated() {
+        for (index, tabTitle) in tabTitles.enumerated() {
             let tableView = UITableView()
             tableView.dataSource = self
-            
+            tableView.tag = index
             tableView.register(KPMainListTableViewCell.self,
                                 forCellReuseIdentifier: KPMainListViewController.KPMainListViewCellReuseIdentifier)
             tableView.register(KPDefaultLoadingTableCell.self,
@@ -147,6 +157,19 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
             }
             
             tableViews.append(tableView)
+            
+            
+            if let displayModel = KPUserManager.sharedManager.currentUser?.value(forKey: tabTitle.key) as? [String],
+                let allDataModel = KPMainViewController.allDataModel {
+                
+                displayDataModels.append(allDataModel.filter({ (dataModel) -> Bool in
+                    displayModel.contains(dataModel.identifier)
+                }))
+                
+            } else {
+                displayDataModels.append([])
+            }
+            
         }
         tableViews.last!.addConstraint(from: "H:[$self]|")
         
@@ -159,6 +182,7 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
             userCityLabel.text = user.defaultLocation
         }
         
+        view.bringSubview(toFront: tabView)
     }
 
     override func didReceiveMemoryWarning() {
@@ -172,28 +196,47 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
 
     
     func tabView(_: KPTabView, didSelectIndex index: Int) {
-        scrollView.setContentOffset(CGPoint(x: UIScreen.main.bounds.width*CGFloat(index), y: 0), animated: true)
+        isAnimating = true
+        UIView.animate(withDuration: 0.25, animations: { 
+            self.scrollView.contentOffset = CGPoint(x: UIScreen.main.bounds.width*CGFloat(index), y: 0)
+        }) { (complete) in
+            self.isAnimating = false
+        }
+//        scrollView.setContentOffset(CGPoint(x: UIScreen.main.bounds.width*CGFloat(index), y: 0), animated: true)
     }
 
     // MARK: UITableViewDataSource
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 0
+        return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return self.displayDataModels[tableView.tag].count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return tableView.dequeueReusableCell(withIdentifier: KPMainListViewController.KPMainListViewLoadingCellReuseIdentifier, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier:KPMainListViewController.KPMainListViewCellReuseIdentifier,
+                                                 for: indexPath) as! KPMainListTableViewCell
+        
+        cell.selectionStyle = .none
+        cell.dataModel = self.displayDataModels[tableView.tag][indexPath.row]
+        return cell
     }
     
     // MARK: UIScrollView Delegate
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if isAnimating {
+            return
+        }
         let screenWidth = UIScreen.main.bounds.width
         tabView.currentIndex = Int((scrollView.contentOffset.x+screenWidth/2)/screenWidth)
     }
+    
+//    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+//       isAnimating = false
+//    }
+    
 
 }

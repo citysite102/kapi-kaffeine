@@ -32,6 +32,16 @@ final class KPUser: NSObject, Mappable {
 //            return nil
 //        }
         
+        favorites = ["0de448f3-f9ca-48a1-82ea-6035f20af922",
+            "00e21150-8b6d-4a54-b4bb-5fa45099b15e",
+            "bb970f5b-eee6-4977-a954-913df8893bfa",
+            "620bf13e-9b91-4753-acf6-454b5652be8b",
+            "63a7d995-dad8-4ea9-aeb6-491864f35e1d"]
+        visits = ["1b2a2f3e-0a57-4dc1-b0e8-2c1ee8c683f3",
+            "1eedae3c-4edd-4310-8f4e-28a9bdf2799e",
+            "9fbc5b98-cd70-495f-9023-c4d079467c16",
+            "9cae70e6-7d8e-4db6-9548-4fbd78f76b9b"]
+        
     }
     
     func mapping(map: Map) {

@@ -24,10 +24,14 @@ class KPMainViewController: KPViewController {
     var mainListViewController:KPMainListViewController?
     var mainMapViewController:KPMainMapViewController?
     
+    
+    static var allDataModel: [KPDataModel]?
+    
     var displayDataModel: [KPDataModel]! {
         didSet {
             self.mainListViewController?.displayDataModel = displayDataModel
             self.mainMapViewController?.displayDataModel = displayDataModel
+            KPMainViewController.allDataModel = displayDataModel
         }
     }
 
