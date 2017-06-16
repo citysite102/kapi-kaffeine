@@ -185,31 +185,41 @@ class KPMainViewController: KPViewController {
         mainListViewController?.view.layer.shouldRasterize = true
         mainMapViewController?.view.layer.shouldRasterize = true
         
+        
+        self.mainListViewController?.view.layer.transform = transform
+        self.mainMapViewController?.view.layer.transform = transform
+        
+        
         if self.currentController == self.mainListViewController {
-            
-            let rightRotateTransform = CATransform3DRotate(transform,
-                                                           CGFloat.pi/2,
-                                                           0,
-                                                           1,
-                                                           0)
-            
             mainListViewController?.view.alpha = 1.0
             mainMapViewController?.view.alpha = 0.0
             
-            UIView.animateKeyframes(withDuration: 0.6,
+            self.mainMapViewController?.view.layer.transform =
+                CATransform3DRotate((self.mainMapViewController?.view.layer.transform)!,
+                                    CGFloat.pi, 0, 1, 0)
+            
+            UIView.animateKeyframes(withDuration: 0.8,
                                     delay: 0,
                                     options: .calculationModeCubicPaced,
                                     animations: { 
                                         UIView.addKeyframe(withRelativeStartTime: 0,
                                                            relativeDuration: 0.4,
-                                                           animations: { 
+                                                           animations: {
                                                             self.mainListViewController?.view.layer.transform =
-                                                                CATransform3DScale(rightRotateTransform
+                                                                CATransform3DScale(CATransform3DRotate(transform,
+                                                                                                       CGFloat.pi/2,
+                                                                                                       0,
+                                                                                                       1,
+                                                                                                       0)
                                                                     , 0.8
                                                                     , 0.8
                                                                     , 0.8)
                                                             self.mainMapViewController?.view.layer.transform =
-                                                                CATransform3DScale(rightRotateTransform
+                                                                CATransform3DScale(CATransform3DRotate(transform,
+                                                                                                       -CGFloat.pi/2,
+                                                                                                       0,
+                                                                                                       1,
+                                                                                                       0)
                                                                     , 0.8
                                                                     , 0.8
                                                                     , 0.8)
@@ -225,19 +235,13 @@ class KPMainViewController: KPViewController {
                                                             self.searchHeaderView.styleButton.setImage(iconImage, for: .normal)
                                                             self.mainMapViewController?.collectionView.isHidden = true
                                                             
-//                                                            self.mainListViewController?.view.layer.transform =
-//                                                                CATransform3DRotate((self.mainListViewController?.view.layer.transform)!,
-//                                                                                    CGFloat.pi, 0, 1, 0)
-//                                                            self.mainMapViewController?.view.layer.transform =
-//                                                                CATransform3DRotate((self.mainMapViewController?.view.layer.transform)!,
-//                                                                                    CGFloat.pi, 0, 1, 0)
-                                                            
-                                                            let backRotateTransform = CATransform3DRotate((self.mainMapViewController?.view.layer.transform)!, -CGFloat.pi/2, 0, 1, 0)
                                                             self.mainListViewController?.view.layer.transform =
-                                                                CATransform3DScale(backRotateTransform, 1/0.8, 1/0.8, 1/0.8)
+                                                                CATransform3DScale(CATransform3DRotate((self.mainMapViewController?.view.layer.transform)!,
+                                                                                                       -CGFloat.pi/2, 0, 1, 0), 1/0.8, 1/0.8, 1/0.8)
                                                             
                                                             self.mainMapViewController?.view.layer.transform =
-                                                                CATransform3DScale(backRotateTransform, 1/0.8, 1/0.8, 1/0.8)
+                                                                CATransform3DScale(CATransform3DRotate((self.mainMapViewController?.view.layer.transform)!,
+                                                                                                       CGFloat.pi/2, 0, 1, 0), 1/0.8, 1/0.8, 1/0.8)
                                                             
                                                             self.mainMapViewController?.view.alpha = 1.0
                                         })
@@ -247,16 +251,15 @@ class KPMainViewController: KPViewController {
             })
 
         } else {
-            let leftRotateTransform = CATransform3DRotate(transform,
-                                                          -CGFloat.pi/2,
-                                                          0,
-                                                          1,
-                                                          0)
-            
             mainListViewController?.view.alpha = 0.0
             mainMapViewController?.view.alpha = 1.0
             
-            UIView.animateKeyframes(withDuration: 0.6,
+            self.mainListViewController?.view.layer.transform =
+                CATransform3DRotate((self.mainListViewController?.view.layer.transform)!,
+                                    CGFloat.pi, 0, 1, 0)
+            
+            
+            UIView.animateKeyframes(withDuration: 0.8,
                                     delay: 0,
                                     options: .calculationModeCubicPaced,
                                     animations: {
@@ -264,12 +267,20 @@ class KPMainViewController: KPViewController {
                                                            relativeDuration: 0.4,
                                                            animations: {
                                                             self.mainListViewController?.view.layer.transform =
-                                                                CATransform3DScale(leftRotateTransform
+                                                                CATransform3DScale(CATransform3DRotate(transform,
+                                                                                                       -CGFloat.pi/2,
+                                                                                                       0,
+                                                                                                       1,
+                                                                                                       0)
                                                                     , 0.8
                                                                     , 0.8
                                                                     , 0.8)
                                                             self.mainMapViewController?.view.layer.transform =
-                                                                CATransform3DScale(leftRotateTransform
+                                                                CATransform3DScale(CATransform3DRotate(transform,
+                                                                                                       CGFloat.pi/2,
+                                                                                                       0,
+                                                                                                       1,
+                                                                                                       0)
                                                                     , 0.8
                                                                     , 0.8
                                                                     , 0.8)
@@ -284,21 +295,13 @@ class KPMainViewController: KPViewController {
                                                             
                                                             self.searchHeaderView.styleButton.setImage(iconImage, for: .normal)
                                                             self.mainMapViewController?.collectionView.isHidden = true
-
                                                             self.mainListViewController?.view.layer.transform =
-                                                                CATransform3DRotate((self.mainListViewController?.view.layer.transform)!,
-                                                                                    -CGFloat.pi, 0, 1, 0)
-                                                            self.mainMapViewController?.view.layer.transform =
-                                                                CATransform3DRotate((self.mainMapViewController?.view.layer.transform)!,
-                                                                                    -CGFloat.pi, 0, 1, 0)
-                                                            
-                                                            let backRotateTransform =
-                                                                CATransform3DRotate((self.mainMapViewController?.view.layer.transform)!, -CGFloat.pi/2, 0, 1, 0)
-                                                            self.mainListViewController?.view.layer.transform =
-                                                                CATransform3DScale(backRotateTransform, 1/0.8, 1/0.8, 1/0.8)
+                                                                CATransform3DScale(CATransform3DRotate((self.mainListViewController?.view.layer.transform)!,
+                                                                                                       CGFloat.pi/2, 0, 1, 0), 1/0.8, 1/0.8, 1/0.8)
                                                             
                                                             self.mainMapViewController?.view.layer.transform =
-                                                                CATransform3DScale(backRotateTransform, 1/0.8, 1/0.8, 1/0.8)
+                                                                CATransform3DScale(CATransform3DRotate((self.mainMapViewController?.view.layer.transform)!,
+                                                                                                       CGFloat.pi/2, 0, 1, 0), 1/0.8, 1/0.8, 1/0.8)
                                                             
                                                             self.mainListViewController?.view.alpha = 1.0
                                         })

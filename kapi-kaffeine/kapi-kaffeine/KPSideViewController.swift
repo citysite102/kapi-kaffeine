@@ -155,16 +155,13 @@ class KPSideViewController: KPViewController {
                                            informationData(title:"設定",
                                                            icon:R.image.icon_setting()!,
                                                            handler:{()->() in
-                                                            
-                                                            
-                                                            SideMenuManager.menuLeftNavigationController?.dismiss(animated: true,
-                                                                                                                  completion: nil)
                                                             let controller = KPModalViewController()
                                                             controller.edgeInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
                                                             let settingController = KPSettingViewController()
                                                             let navigationController = UINavigationController.init(rootViewController: settingController);
                                                             controller.contentController = navigationController;
-                                                            controller.presentModalView(UIApplication.shared.rootViewController);
+                                                            controller.presentModalView(self,
+                                                                                        UIModalPresentationStyle.fullScreen)
                                            }),
         ]
     }

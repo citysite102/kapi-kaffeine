@@ -119,7 +119,11 @@ class KPModalViewController: KPViewController {
     }
     
     func presentModalView(_ controller: UIViewController) {
-        modalPresentationStyle = .overFullScreen
+        presentModalView(controller, .overFullScreen)
+    }
+    
+    func presentModalView(_ controller: UIViewController, _ style: UIModalPresentationStyle) {
+        modalPresentationStyle = style
         controller.present(self, animated: false) {
             self.setupPresentContent()
         }
@@ -127,7 +131,7 @@ class KPModalViewController: KPViewController {
     
     func setupPresentContent() {
         
-        let duration = 0.65
+        let duration = 5.0
         let damping  = 0.8
         
         if self.contentController.parent != nil {
