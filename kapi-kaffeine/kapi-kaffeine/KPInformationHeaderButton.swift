@@ -17,6 +17,8 @@ struct HeaderButtonInfo {
 
 class KPInformationHeaderButton: UIView {
 
+    var dampingRatio: CGFloat = 0.6
+    var bounceDuration: Double = 0.5
     var icon: UIImageView!
     var titleLabel: UILabel!
     var infoLable: UILabel!
@@ -76,6 +78,40 @@ class KPInformationHeaderButton: UIView {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        self.performTouchBeganAnimation()
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesEnded(touches, with: event)
+        self.performTouchEndAnimation()
         self.handler(self)
     }
+    
+    private func performTouchEndAnimation() {
+        UIView.animate(withDuration: bounceDuration,
+                       delay: 0,
+                       usingSpringWithDamping: dampingRatio,
+                       initialSpringVelocity: 1,
+                       options: UIViewAnimationOptions.beginFromCurrentState,
+                       animations: {
+                        self.icon.layer.transform = CATransform3DIdentity
+        }) { _ in
+            
+        }
+    }
+    
+    private func performTouchBeganAnimation() {
+        UIView.animate(withDuration: 0.3,
+                       delay: 0,
+                       usingSpringWithDamping: 0.8,
+                       initialSpringVelocity: 1,
+                       options: UIViewAnimationOptions.beginFromCurrentState,
+                       animations: {
+                        self.icon.layer.transform = CATransform3DScale(CATransform3DIdentity, 0.8, 0.8, 1.0)
+        }) { _ in
+            
+        }
+    }
+    
 }

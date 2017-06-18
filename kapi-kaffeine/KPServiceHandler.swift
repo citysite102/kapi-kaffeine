@@ -15,15 +15,18 @@ class KPServiceHandler {
     static let sharedHandler = KPServiceHandler()
     
     private var kapiDataRequest: KPCafeRequest!
+    private var loadingView: KPLoadingView!
+    
     
     // MARK: Initialization
     
     private init() {
         kapiDataRequest = KPCafeRequest()
+        loadingView = KPLoadingView()
     }
     
     
-    // MARK: API
+    // MARK: Global API
     
     func fetchRemoteData(_ limitedTime: NSNumber? = nil,
                          _ socket: NSNumber? = nil,
@@ -47,5 +50,53 @@ class KPServiceHandler {
             }.catch { error in
                 print("Error")
         }
+    }
+    
+    
+    // Information API
+    
+    var currentDisplayModel: KPDataModel?
+    
+    func addNewComment(_ comment: String? = "",
+                       _ completion: ((_ successed: Bool) -> Void)?) {
+        let newCommentRequest = KPNewCommentRequest()
+        
+        loadingView.loadingLabel.text = "新增中..."
+        loadingView.successContent = "新增成功"
+        loadingView.failContent = "新增失敗"
+        
+        UIApplication.shared.topViewController.view.addSubview(loadingView)
+        loadingView.state = .loading
+        loadingView.addConstraints(fromStringArray: ["V:|[$self]|",
+                                                     "H:|[$self]|"])
+        
+        newCommentRequest.perform((currentDisplayModel?.identifier)!,
+                                  comment!).then { result -> Void in
+                                    if let commentResult = result["result"].bool {
+                                        self.loadingView.state = commentResult ? .successed : .failed
+                                        if completion != nil {
+                                            completion!(commentResult)
+                                        }
+                                    }
+                                    print("Result\(result)")
+        }.catch { (error) in
+            self.loadingView.state = .failed
+            if completion != nil {
+                completion!(false)
+            }
+        }
+    }
+    
+    func getComments(_ completion: ((_ successed: Bool) -> Void)?) {
+        
+        let getCommentRequest = KPGetCommentRequest()
+        getCommentRequest.perform((currentDisplayModel?.identifier)!).then { result -> Void in
+            
+            print("Result\(result)")
+            
+            }.catch { (error) in
+            
+        }
+        
     }
 }

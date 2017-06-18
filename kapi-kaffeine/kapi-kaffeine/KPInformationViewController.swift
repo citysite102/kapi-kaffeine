@@ -11,7 +11,12 @@ import UIKit
 class KPInformationViewController: KPViewController {
 
     
-    var informationDataModel: KPDataModel!
+    var informationDataModel: KPDataModel! {
+        didSet {
+            KPServiceHandler.sharedHandler.currentDisplayModel = informationDataModel
+        }
+    }
+    
     var dismissButton:UIButton!
     var snapshotPhotoView: UIView  {
         get {
@@ -189,6 +194,10 @@ class KPInformationViewController: KPViewController {
                                                                                                       completion: {})
                                                 })
         ];
+        
+        KPServiceHandler.sharedHandler.getComments { (_) in
+            
+        }
         
         
         let photoInfoView = KPShopPhotoInfoView();

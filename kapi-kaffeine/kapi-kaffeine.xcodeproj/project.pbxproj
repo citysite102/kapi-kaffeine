@@ -37,6 +37,8 @@
 		774209001EA67CE400C78A00 /* KPSliderMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774208FF1EA67CE400C78A00 /* KPSliderMenuController.swift */; };
 		77421FB01EB8EE0C00064FF0 /* KPNomadRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77421FAF1EB8EE0C00064FF0 /* KPNomadRequest.swift */; };
 		77421FB41EB8F82500064FF0 /* KPRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77421FB31EB8F82500064FF0 /* KPRatingView.swift */; };
+		77427BDD1EF6E592005D7AE4 /* KPNewCommentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77427BDC1EF6E592005D7AE4 /* KPNewCommentRequest.swift */; };
+		77427BDF1EF6EF2F005D7AE4 /* KPGetCommentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77427BDE1EF6EF2F005D7AE4 /* KPGetCommentRequest.swift */; };
 		7745C0821EF050D100244541 /* KPLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7745C0811EF050D100244541 /* KPLoginViewController.swift */; };
 		77594B471EC89DAF0013BB56 /* KPPhotoAddCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77594B461EC89DAF0013BB56 /* KPPhotoAddCell.swift */; };
 		77594B491EC8AEB40013BB56 /* KPBounceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77594B481EC8AEB40013BB56 /* KPBounceView.swift */; };
@@ -189,6 +191,8 @@
 		774208FF1EA67CE400C78A00 /* KPSliderMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSliderMenuController.swift; sourceTree = "<group>"; };
 		77421FAF1EB8EE0C00064FF0 /* KPNomadRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPNomadRequest.swift; sourceTree = "<group>"; };
 		77421FB31EB8F82500064FF0 /* KPRatingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPRatingView.swift; sourceTree = "<group>"; };
+		77427BDC1EF6E592005D7AE4 /* KPNewCommentRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPNewCommentRequest.swift; sourceTree = "<group>"; };
+		77427BDE1EF6EF2F005D7AE4 /* KPGetCommentRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPGetCommentRequest.swift; sourceTree = "<group>"; };
 		7745C0811EF050D100244541 /* KPLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPLoginViewController.swift; sourceTree = "<group>"; };
 		77594B461EC89DAF0013BB56 /* KPPhotoAddCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPPhotoAddCell.swift; sourceTree = "<group>"; };
 		77594B481EC8AEB40013BB56 /* KPBounceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPBounceView.swift; sourceTree = "<group>"; };
@@ -450,6 +454,7 @@
 		773463501ED74FE500EA78F0 /* Request */ = {
 			isa = PBXGroup;
 			children = (
+				77427BDB1EF6E572005D7AE4 /* Comment */,
 				771F90AF1EF1973400D66C14 /* Favorite */,
 				77869E181EB76EDD0027CA98 /* Basic */,
 				77869E171EB75F1E0027CA98 /* Model */,
@@ -537,6 +542,15 @@
 			children = (
 			);
 			name = View;
+			sourceTree = "<group>";
+		};
+		77427BDB1EF6E572005D7AE4 /* Comment */ = {
+			isa = PBXGroup;
+			children = (
+				77427BDC1EF6E592005D7AE4 /* KPNewCommentRequest.swift */,
+				77427BDE1EF6EF2F005D7AE4 /* KPGetCommentRequest.swift */,
+			);
+			name = Comment;
 			sourceTree = "<group>";
 		};
 		776ACAED1E9BAE0200B629A2 /* Search */ = {
@@ -1146,6 +1160,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C00A5C991EC9F34400ECEFE3 /* KPPhotoDisplayTransition.swift in Sources */,
+				77427BDF1EF6EF2F005D7AE4 /* KPGetCommentRequest.swift in Sources */,
 				C01AC62B1EAAEA0A000390F7 /* GMUSimpleClusterAlgorithm.m in Sources */,
 				772D68261ECC78840013F802 /* KPNewStoreController.swift in Sources */,
 				77E495651ECA04F5003B7EBC /* KPSearchBar.swift in Sources */,
@@ -1224,6 +1239,7 @@
 				77C594AD1ECB171A00118947 /* KPAllCommentController.swift in Sources */,
 				777DCC161EA789A90055525A /* KPInformationTranstion.swift in Sources */,
 				7745C0821EF050D100244541 /* KPLoginViewController.swift in Sources */,
+				77427BDD1EF6E592005D7AE4 /* KPNewCommentRequest.swift in Sources */,
 				C01AC6391EAAEA8F000390F7 /* GQTPointQuadTree.m in Sources */,
 				77C0E0FD1E9D489900398852 /* KPInformationHeaderView.swift in Sources */,
 				772C538A1ECBFE5600C88798 /* KPViewController.swift in Sources */,

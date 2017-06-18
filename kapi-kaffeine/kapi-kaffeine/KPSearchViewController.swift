@@ -161,9 +161,6 @@ extension KPSearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        mainListController.currentDataModel = self.displayDataModel[indexPath.row]
-//        mainListController.mainController.performSegue(withIdentifier: "datailedInformationSegue",
-//                                                       sender: mainListController)
         let infoController = KPInformationViewController()
         if shouldShowSearchResults {
             infoController.informationDataModel = filteredDataModel[indexPath.row]

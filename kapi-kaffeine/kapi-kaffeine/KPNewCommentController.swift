@@ -119,7 +119,15 @@ class KPNewCommentController: KPViewController {
     }
     
     func handleSendButtonOnTapped() {
-        
+        inputTextField.resignFirstResponder()
+        KPServiceHandler.sharedHandler.addNewComment(inputTextField.text) { (successed) in
+            if successed {
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
+                                              execute: { 
+                                            self.navigationController?.popViewController(animated: true)
+                })
+            }
+        }
     }
     
     func handleTapGesture(tapGesture: UITapGestureRecognizer) {
