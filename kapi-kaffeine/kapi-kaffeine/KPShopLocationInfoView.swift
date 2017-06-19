@@ -15,17 +15,14 @@ class KPShopLocationInfoView: UIView, GMSMapViewDelegate {
     
     var dataModel: KPDataModel! {
         didSet {
-            if let latstr = dataModel.latitude, let latitude = Double(latstr),
-                let longstr = dataModel.longitude, let longitude = Double(longstr) {
-                let position = CLLocationCoordinate2DMake(latitude, longitude)
-                let marker = GMSMarker(position: position)
-                marker.title = dataModel.name
-                marker.icon = UIImage(named: "icon_mapMarker")
-                marker.map = self.mapView
-                marker.userData = dataModel
-                self.mapView.selectedMarker = marker
-                self.mapView.camera = GMSCameraPosition.camera(withTarget: position, zoom: self.mapView.camera.zoom)
-            }
+            let position = CLLocationCoordinate2DMake(dataModel.latitude, dataModel.longitude)
+            let marker = GMSMarker(position: position)
+            marker.title = dataModel.name
+            marker.icon = UIImage(named: "icon_mapMarker")
+            marker.map = self.mapView
+            marker.userData = dataModel
+            self.mapView.selectedMarker = marker
+            self.mapView.camera = GMSCameraPosition.camera(withTarget: position, zoom: self.mapView.camera.zoom)
         }
     }
     

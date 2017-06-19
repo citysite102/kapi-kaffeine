@@ -16,8 +16,8 @@ class KPDataModel: NSObject, Mappable, GMUClusterItem {
     var name: String!
     var phone: String!
     var city: String!
-    var latitude: String?
-    var longitude: String?
+    var latitude: Double!
+    var longitude: Double!
     var standingDesk: String?
     var socket: String?
     var limitedTime: String?
@@ -76,12 +76,7 @@ class KPDataModel: NSObject, Mappable, GMUClusterItem {
     
     var position: CLLocationCoordinate2D {
         get {
-            if let latstr = self.latitude, let latitude = Double(latstr),
-                let longstr = self.longitude, let longitude = Double(longstr) {
-                return CLLocationCoordinate2DMake(latitude, longitude)
-            }
-            
-            return CLLocationCoordinate2DMake(-90, 0)
+            return CLLocationCoordinate2DMake(latitude, longitude)
         }
     }
     

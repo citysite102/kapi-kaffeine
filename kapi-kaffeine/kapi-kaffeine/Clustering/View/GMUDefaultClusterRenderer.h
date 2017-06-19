@@ -120,6 +120,9 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (BOOL)shouldRenderAsCluster:(id<GMUCluster>)cluster atZoom:(float)zoom;
 
+- (NSArray< GMSMarker *> *)markers;
+
+
 @end
 
 NS_ASSUME_NONNULL_END

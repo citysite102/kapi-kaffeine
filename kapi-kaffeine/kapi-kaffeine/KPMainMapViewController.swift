@@ -22,7 +22,7 @@ KPMainViewControllerDelegate {
     
     var collectionView: UICollectionView!
     var collectionViewBottomConstraint: NSLayoutConstraint!
-    var currentIndexPath: IndexPath?
+    var clusterRenderer: GMUClusterRenderer!
 
     lazy var nearestButton: KPShadowButton = {
         let shadowButton = KPShadowButton()
@@ -54,10 +54,12 @@ KPMainViewControllerDelegate {
         return self.currentDataModel
     }
     
+    var teee: Bool = false
+    
 
     var isCollectionViewShow: Bool = false {
         didSet {
-            if self.collectionViewBottomConstraint != nil {
+            if self.collectionViewBottomConstraint != nil && !self.teee {
                 let showc: Bool = isCollectionViewShow
                 DispatchQueue.main.async {
                     self.view.bringSubview(toFront: self.collectionView)
@@ -98,7 +100,7 @@ KPMainViewControllerDelegate {
         }
     }
     
-    var allDataModel: [KPDataModel]! {
+    var allDataModel: [KPDataModel] = [] {
         didSet {
             self.mapView.clear()
             for datamodel in self.allDataModel  {
@@ -139,11 +141,10 @@ KPMainViewControllerDelegate {
         // renderer.
         let iconGenerator = GMUDefaultClusterIconGenerator()
         let algorithm = GMUNonHierarchicalDistanceBasedAlgorithm()
-        let renderer = GMUDefaultClusterRenderer(mapView: mapView,
+        clusterRenderer = GMUDefaultClusterRenderer(mapView: mapView,
                                                  clusterIconGenerator: iconGenerator)
         clusterManager = GMUClusterManager(map: mapView, algorithm: algorithm,
-                                           renderer: renderer)
-        
+                                           renderer: clusterRenderer)
         
         // Register self to listen to both GMUClusterManagerDelegate and GMSMapViewDelegate events.
         clusterManager.setDelegate(self, mapDelegate: self)
@@ -172,14 +173,14 @@ KPMainViewControllerDelegate {
         self.collectionViewBottomConstraint = self.collectionView.addConstraintForAligning(to: .bottom, of: self.view, constant: 90).first as! NSLayoutConstraint
         
         
-        if let dataURL = Bundle.main.url(forResource: "cafes", withExtension: "json") {
-            do {
-                let data = try String(contentsOf: dataURL)
-                self.allDataModel = Mapper<KPDataModel>().mapArray(JSONString: data) ?? []
-            } catch {
-                print("Failed to load cafes.json file")
-            }
-        }
+//        if let dataURL = Bundle.main.url(forResource: "cafes", withExtension: "json") {
+//            do {
+//                let data = try String(contentsOf: dataURL)
+//                self.allDataModel = Mapper<KPDataModel>().mapArray(JSONString: data) ?? []
+//            } catch {
+//                print("Failed to load cafes.json file")
+//            }
+//        }
         
         let currentLocationButton = UIButton(type: .custom)
         currentLocationButton.setImage(R.image.icon_currentLocation(), for: .normal)
@@ -258,18 +259,28 @@ KPMainViewControllerDelegate {
         let currentOffset = targetContentOffset.pointee.x
         let index = floor((currentOffset + (pageWidth + 15)/2)/(pageWidth + 15))
 
-//        CATransaction.begin()
-//        CATransaction.setValue(NSNumber(floatLiteral: 0.5), forKey: kCATransactionAnimationDuration)
-//        self.mapView.animate(to: GMSCameraPosition.camera(withTarget: self.mapView.selectedMarker!.position , zoom: self.mapView.camera.zoom))
-//        CATransaction.commit()
         
         targetContentOffset.pointee.x = -30 + index * (pageWidth + 15)
         scrollView.setContentOffset(CGPoint(x: -30 + index * (pageWidth + 15), y: 0), animated: true)
         
-        currentIndexPath = collectionView.indexPathForItem(at: CGPoint(x: -30 + index * (pageWidth + 15) +
-            (UIScreen.main.bounds.size.width - 60)/2,
-                                                                       y: 40))
-
+        self.currentDataModel = self.displayDataModel[Int(index)]
+//        CATransaction.begin()
+//        CATransaction.setValue(NSNumber(floatLiteral: 0.5), forKey: kCATransactionAnimationDuration)
+//        self.mapView.animate(to: GMSCameraPosition.camera(withTarget: self.mapView.selectedMarker!.position , zoom: self.mapView.camera.zoom))
+//        CATransaction.commit()
+        if let renderer = clusterRenderer as? GMUDefaultClusterRenderer,
+            let marker = renderer.markers().filter({ (marker) -> Bool in
+                marker.userData as? KPDataModel == self.currentDataModel
+            }).first {
+            CATransaction.begin()
+            CATransaction.setValue(NSNumber(floatLiteral: 0.5), forKey: kCATransactionAnimationDuration)
+            self.mapView.animate(to: GMSCameraPosition.camera(withTarget: marker.position , zoom: self.mapView.camera.zoom))
+            CATransaction.commit()
+            CATransaction.setCompletionBlock({
+                self.teee = true
+                self.mapView.selectedMarker = marker
+            })
+        }
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -302,6 +313,8 @@ KPMainViewControllerDelegate {
         marker.icon = UIImage(named: "icon_mapMarkerSelected")
         let infoWindow = KPMainMapMarkerInfoWindow(dataModel: marker.userData as! KPDataModel)
 
+        teee = false
+        
         return infoWindow
     }
     

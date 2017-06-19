@@ -14,7 +14,13 @@ class KPMainMapViewCollectionCell: UICollectionViewCell {
     
     var dataModel: KPDataModel! {
         didSet {
-            self.shopNameLabel.text = dataModel.name
+            
+            DispatchQueue.main.async {
+                self.shopNameLabel.text = self.dataModel.name ?? "未命名"
+                self.featureContainer.featureContents = self.dataModel.featureContents
+                self.scoreLabel.score = String(format: "%.1f",
+                                               self.dataModel.rates?.average?.floatValue ?? 0)
+            }
             
             if let photoURL = dataModel.photos?["google_s"] {
                 self.shopImageView.af_setImage(withURL: URL(string: photoURL)!,
@@ -23,9 +29,8 @@ class KPMainMapViewCollectionCell: UICollectionViewCell {
                 self.shopImageView.image = R.image.icon_noImage()
             }
             
-            if let latstr = self.dataModel.latitude, let latitude = Double(latstr),
-                let longstr = self.dataModel.longitude, let longitude = Double(longstr), let currentLocation = KPLocationManager.sharedInstance().currentLocation {
-                var distance = CLLocation(latitude: latitude, longitude: longitude).distance(from: currentLocation)
+            if let currentLocation = KPLocationManager.sharedInstance().currentLocation {
+                var distance = CLLocation(latitude: dataModel.latitude, longitude: dataModel.longitude).distance(from: currentLocation)
                 var unit = "m"
                 if distance > 1000 {
                     unit = "km"
@@ -73,10 +78,12 @@ class KPMainMapViewCollectionCell: UICollectionViewCell {
         self.layer.shadowRadius = 2.0;
         self.layer.shadowOffset = CGSize.init(width: 2.0, height: 4.0);
         
-        self.shopImageView = UIImageView(image: UIImage(named: "image_shop_demo"));
-        self.shopImageView.contentMode = .scaleAspectFit;
-        self.addSubview(self.shopImageView);
-        self.shopImageView.addConstraints(fromStringArray: ["H:|-8-[$self(64)]",
+        shopImageView = UIImageView(image: UIImage(named: "demo_6"));
+        shopImageView.contentMode = .scaleAspectFill;
+        shopImageView.clipsToBounds = true
+        shopImageView.layer.cornerRadius = 2.0
+        addSubview(shopImageView);
+        shopImageView.addConstraints(fromStringArray: ["H:|-8-[$self(64)]",
                                                             "V:|-8-[$self(64)]-8-|"]);
         
         self.shopNameLabel = KPMainListCellNormalLabel();

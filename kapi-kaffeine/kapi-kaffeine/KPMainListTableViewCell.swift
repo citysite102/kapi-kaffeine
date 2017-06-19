@@ -29,9 +29,8 @@ class KPMainListTableViewCell: UITableViewCell {
                 self.shopImageView.image = R.image.icon_noImage()
             }
             
-            if let latstr = self.dataModel.latitude, let latitude = Double(latstr),
-                let longstr = self.dataModel.longitude, let longitude = Double(longstr), let currentLocation = KPLocationManager.sharedInstance().currentLocation {
-                var distance = CLLocation(latitude: latitude, longitude: longitude).distance(from: currentLocation)
+            if let currentLocation = KPLocationManager.sharedInstance().currentLocation {
+                var distance = CLLocation(latitude: dataModel.latitude, longitude: dataModel.longitude).distance(from: currentLocation)
                 var unit = "m"
                 if distance > 1000 {
                     unit = "km"
@@ -70,7 +69,7 @@ class KPMainListTableViewCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        shopImageView = UIImageView(image: UIImage(named: "demo_6"));
+        shopImageView = UIImageView(image: UIImage(named: "demo_6"));        
         shopImageView.contentMode = .scaleAspectFill;
         shopImageView.clipsToBounds = true
         shopImageView.layer.cornerRadius = 2.0

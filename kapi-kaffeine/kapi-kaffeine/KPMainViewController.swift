@@ -30,7 +30,7 @@ class KPMainViewController: KPViewController {
     var displayDataModel: [KPDataModel]! {
         didSet {
             self.mainListViewController?.displayDataModel = displayDataModel
-            self.mainMapViewController?.displayDataModel = displayDataModel
+            self.mainMapViewController?.allDataModel = displayDataModel
             KPMainViewController.allDataModel = displayDataModel
         }
     }

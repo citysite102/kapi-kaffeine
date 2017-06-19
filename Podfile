@@ -17,7 +17,7 @@ target 'kapi-kaffeine' do
   # pod 'SlideMenuControllerSwift'
   pod 'SideMenu'
   pod 'pop', '~> 1.0'
-  pod 'Shimmer'
+  pod 'Shimmer', :inhibit_warnings => true
 
 
   # Model
@@ -33,7 +33,7 @@ target 'kapi-kaffeine' do
   # Login
   pod 'FacebookCore'
   pod 'FacebookLogin'
-  pod 'FacebookShare'
+  pod 'FacebookShare', :inhibit_warnings => true
   pod 'Firebase/Core'
   pod 'Firebase/Auth'
 
