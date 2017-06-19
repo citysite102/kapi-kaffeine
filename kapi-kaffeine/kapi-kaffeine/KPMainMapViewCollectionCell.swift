@@ -40,23 +40,36 @@ class KPMainMapViewCollectionCell: UICollectionViewCell {
             } else {
                 self.shopDistanceLabel.text = "-"
             }
+            
+            if dataModel.businessHour != nil {
+                let shopStatus = dataModel.businessHour.shopStatus
+                shopStatusLabel.textColor = KPColorPalette.KPTextColor.grayColor;
+                shopStatusLabel.text = shopStatus.status
+                shopStatusHint.backgroundColor = shopStatus.isOpening ?
+                    KPColorPalette.KPShopStatusColor.opened :
+                    KPColorPalette.KPShopStatusColor.closed
+            } else {
+                shopStatusLabel.textColor = KPColorPalette.KPTextColor.grayColor_level5
+                shopStatusHint.backgroundColor = KPColorPalette.KPTextColor.grayColor_level5
+                shopStatusLabel.text = "暫無資料"
+            }
         }
     }
     
-    var shopOpened: Bool = true {
-        didSet {
-            self.shopStatusHint.backgroundColor = shopOpened ?
-                KPColorPalette.KPShopStatusColor.opened :
-                KPColorPalette.KPShopStatusColor.closed
-        }
-    }
-    var shopStatusContent: String = "營業中" {
-        didSet {
-            self.shopStatusLabel.text = self.shopOpened ?
-                "營業中"+shopStatusContent :
-                "休息中"+shopStatusContent;
-        }
-    }
+//    var shopOpened: Bool = true {
+//        didSet {
+//            self.shopStatusHint.backgroundColor = shopOpened ?
+//                KPColorPalette.KPShopStatusColor.opened :
+//                KPColorPalette.KPShopStatusColor.closed
+//        }
+//    }
+//    var shopStatusContent: String = "營業中" {
+//        didSet {
+//            self.shopStatusLabel.text = self.shopOpened ?
+//                "營業中"+shopStatusContent :
+//                "休息中"+shopStatusContent;
+//        }
+//    }
     
     var shopImageView: UIImageView!
     var shopNameLabel: KPMainListCellNormalLabel!

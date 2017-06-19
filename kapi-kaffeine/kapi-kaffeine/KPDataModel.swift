@@ -24,7 +24,7 @@ class KPDataModel: NSObject, Mappable, GMUClusterItem {
     var url: String?
     var facebookURL: String?
     var mrt: String?
-    var businessHour: [String: String]!
+    var businessHour: KPDataBusinessHourModel!
     var tags: [KPDataTagModel]?
     var rates: KPDataRateModel?
     var photos: [String: String]?
@@ -81,7 +81,7 @@ class KPDataModel: NSObject, Mappable, GMUClusterItem {
     }
     
     required init?(map: Map) {
-        
+
     }
     
     func mapping(map: Map) {
@@ -98,11 +98,22 @@ class KPDataModel: NSObject, Mappable, GMUClusterItem {
         url                 <-    map["url"]
         facebookURL         <-    map["fb_url"]
         mrt                 <-    map["mrt"]
-        businessHour        <-    map["business_hour"]
+        businessHour        <-    (map["business_hour"], businessHourTransform)
         tags                <-    map["tags"]
         rates               <-    map["rates"]
         photos              <-    map["photos"]
         isKapi              <-    map["is_kapi"]
     }
+    
+    let businessHourTransform = TransformOf<KPDataBusinessHourModel, [String: String]>(fromJSON: { (value: [String: String]?) -> KPDataBusinessHourModel? in
+        // transform value from String? to Int?
+        if value != nil {
+            return KPDataBusinessHourModel(value: value!)
+        }
+        return nil
+    }, toJSON: { (value: KPDataBusinessHourModel?) -> [String: String]? in
+        // transform value from Int? to String?
+        return nil
+    })
 
 }

@@ -103,6 +103,20 @@ class KPInformationViewController: KPViewController {
         informationView.titleLabel.text = informationDataModel.name
         informationView.locationLabel.text = informationDataModel.address
         informationView.phoneLabel.text = informationDataModel.phone
+        
+        if informationDataModel.businessHour != nil {
+            let shopStatus = informationDataModel.businessHour.shopStatus
+            informationView.openLabel.textColor = KPColorPalette.KPTextColor.grayColor_level1;
+            informationView.openLabel.text = shopStatus.status
+            informationView.openHint.backgroundColor = shopStatus.isOpening ?
+                KPColorPalette.KPShopStatusColor.opened :
+                KPColorPalette.KPShopStatusColor.closed
+        } else {
+            informationView.openLabel.textColor = KPColorPalette.KPTextColor.grayColor_level5
+            informationView.openHint.backgroundColor = KPColorPalette.KPTextColor.grayColor_level5
+            informationView.openLabel.text = "暫無資料"
+        }
+        
         shopInformationView = KPInformationSharedInfoView();
         shopInformationView.infoView = informationView;
         shopInformationView.infoTitleLabel.text = "店家資訊";
