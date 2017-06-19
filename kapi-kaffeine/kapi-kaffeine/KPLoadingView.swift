@@ -55,6 +55,7 @@ class KPLoadingView: UIView {
                 self.successView.alpha = 0
                 self.failedView.alpha = 0
                 self.indicator.alpha = 1.0
+                self.indicator.transform = .identity
                 self.indicator.startAnimating()
             }
         }

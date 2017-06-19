@@ -29,7 +29,7 @@ protocol KPModalControllerDelegate: NSObjectProtocol {
 class KPModalViewController: KPViewController {
 
     
-    static let defaultDismissDuration: CGFloat = 0.2
+    static let defaultDismissDuration: CGFloat = 0.3
     
     var keyboardIsShowing: Bool = false
     var dismissWhenTouchingOnBackground: Bool = true
@@ -131,7 +131,7 @@ class KPModalViewController: KPViewController {
     
     func setupPresentContent() {
         
-        let duration = 0.6
+        let duration = 0.7
         let damping  = 0.8
         
         if self.contentController.parent != nil {

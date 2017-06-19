@@ -53,7 +53,7 @@ class KPBounceView: UIView {
         icon.addConstraintForCenterAligningToSuperview(in: .vertical)
         icon.addConstraintForCenterAligningToSuperview(in: .horizontal)
         icon.addConstraints(fromStringArray: ["V:|[$self]|",
-                                              "H:[$self]"])
+                                              "H:|[$self]|"])
         
         selected = false
         

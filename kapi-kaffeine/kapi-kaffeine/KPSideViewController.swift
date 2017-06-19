@@ -120,29 +120,25 @@ class KPSideViewController: KPViewController {
                                                            icon:R.image.icon_cup()!,
                                                            handler:{()->() in
                                                             
-                                                            SideMenuManager.menuLeftNavigationController?.dismiss(animated: true,
-                                                                                                                  completion: nil)
-                                                            
                                                             let controller = KPModalViewController()
                                                             controller.edgeInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
                                                             let aboutUsController = KPAboutUsViewController()
                                                             let navigationController = UINavigationController.init(rootViewController: aboutUsController);
                                                             controller.contentController = navigationController;
-                                                            controller.presentModalView(UIApplication.shared.rootViewController);
+                                                            controller.presentModalView(self,
+                                                                                        UIModalPresentationStyle.fullScreen)
                                             }),
                                            informationData(title:"聯絡我們",
                                                            icon:R.image.icon_msg()!,
                                                            handler:{()->() in
-                                                            
-                                                            SideMenuManager.menuLeftNavigationController?.dismiss(animated: true,
-                                                                                                                  completion: nil)
                                                             
                                                             let controller = KPModalViewController()
                                                             controller.edgeInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
                                                             let profileController = KPUserProfileViewController()
                                                             let navigationController = UINavigationController.init(rootViewController: profileController);
                                                             controller.contentController = navigationController;
-                                                            controller.presentModalView(UIApplication.shared.rootViewController);
+                                                            controller.presentModalView(self,
+                                                                                        UIModalPresentationStyle.fullScreen)
                                            }),
                                            informationData(title:"粉絲專頁",
                                                            icon:R.image.icon_fb()!,
