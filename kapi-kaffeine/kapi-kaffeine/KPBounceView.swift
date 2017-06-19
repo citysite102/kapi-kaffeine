@@ -49,32 +49,15 @@ class KPBounceView: UIView {
         icon = UIImageView.init(image: iconImage.withRenderingMode(.alwaysTemplate))
         icon.tintColor = unSelectedColor
         addSubview(icon)
+        icon.contentMode = .scaleAspectFit
+        icon.addConstraintForCenterAligningToSuperview(in: .vertical)
+        icon.addConstraintForCenterAligningToSuperview(in: .horizontal)
         icon.addConstraints(fromStringArray: ["V:|[$self]|",
-                                              "H:|[$self]|"])
+                                              "H:[$self]"])
         
         selected = false
         
     }
-    
-//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        super.touchesBegan(touches, with: event);
-//        layer.transform = CATransform3DScale(CATransform3DIdentity, 0.8, 0.8, 1.0);
-//    }
-//    
-//    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        
-//    }
-//    
-//    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        super.touchesEnded(touches, with: event);
-//        self.performTouchEndAnimation();
-//        self.selected = true
-//    }
-//    
-//    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        super.touchesCancelled(touches, with: event)
-//        self.performTouchEndAnimation();
-//    }
     
     private func performTouchEndAnimation() {
         UIView.animate(withDuration: bounceDuration,

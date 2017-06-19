@@ -61,10 +61,7 @@ class KPServiceHandler {
                        _ completion: ((_ successed: Bool) -> Void)?) {
         let newCommentRequest = KPNewCommentRequest()
         
-        loadingView.loadingLabel.text = "新增中..."
-        loadingView.successContent = "新增成功"
-        loadingView.failContent = "新增失敗"
-        
+        loadingView.loadingContents = ("新增中...", "新增成功", "新增失敗")
         UIApplication.shared.topViewController.view.addSubview(loadingView)
         loadingView.state = .loading
         loadingView.addConstraints(fromStringArray: ["V:|[$self]|",
@@ -74,6 +71,10 @@ class KPServiceHandler {
                                   comment!).then { result -> Void in
                                     if let commentResult = result["result"].bool {
                                         self.loadingView.state = commentResult ? .successed : .failed
+                                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
+                                                                      execute: {
+                                                                        self.loadingView.removeFromSuperview()
+                                        })
                                         if completion != nil {
                                             completion!(commentResult)
                                         }
@@ -81,6 +82,10 @@ class KPServiceHandler {
                                     print("Result\(result)")
         }.catch { (error) in
             self.loadingView.state = .failed
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
+                                          execute: {
+                                            self.loadingView.removeFromSuperview()
+            })
             if completion != nil {
                 completion!(false)
             }
@@ -105,23 +110,33 @@ class KPServiceHandler {
     func addNewRating(_ wifi: NSNumber? = 0,
                       _ seat: NSNumber? = 0,
                       _ food: NSNumber? = 0,
-                      _ quite: NSNumber? = 0,
+                      _ quiet: NSNumber? = 0,
                       _ tasty: NSNumber? = 0,
                       _ cheap: NSNumber? = 0,
                       _ music: NSNumber? = 0,
                       _ completion: ((_ successed: Bool) -> Void)?) {
         let newRatingRequest = KPNewRatingRequest()
         
+        loadingView.loadingContents = ("新增中...", "新增成功", "新增失敗")
+        UIApplication.shared.KPTopViewController().view.addSubview(loadingView)
+        loadingView.state = .loading
+        loadingView.addConstraints(fromStringArray: ["V:|[$self]|",
+                                                     "H:|[$self]|"])
+        
         newRatingRequest.perform((currentDisplayModel?.identifier)!,
                                  wifi,
                                  seat,
                                  food,
-                                 quite,
+                                 quiet,
                                  tasty,
                                  cheap,
                                  music).then { result -> Void in
                                     if let commentResult = result["result"].bool {
                                         self.loadingView.state = commentResult ? .successed : .failed
+                                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
+                                                                      execute: {
+                                                                        self.loadingView.removeFromSuperview()
+                                        })
                                         if completion != nil {
                                             completion!(commentResult)
                                         }
@@ -129,6 +144,10 @@ class KPServiceHandler {
                                     print("Result\(result)")
         }.catch { (error) in
                 self.loadingView.state = .failed
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
+                                          execute: {
+                                            self.loadingView.removeFromSuperview()
+            })
                 if completion != nil {
                     completion!(false)
                 }

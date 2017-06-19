@@ -58,9 +58,27 @@ class KPRatingViewController: KPSharedSettingViewController {
         }
         
         ratingViews.last!.addConstraint(from: "V:[$self]-16-|")
-        
         sendButton.setTitle("送出評分", for: .normal)
+        sendButton.addTarget(self,
+                             action: #selector(KPRatingViewController.handleSendButtonOnTapped),
+                             for: .touchUpInside)
         
+        
+    }
+    
+    func handleSendButtonOnTapped() {
+        KPServiceHandler.sharedHandler.addNewRating(NSNumber(value: ratingViews[0].currentStarIndex),
+                                                    NSNumber(value: ratingViews[3].currentStarIndex),
+                                                    NSNumber(value: ratingViews[5].currentStarIndex),
+                                                    NSNumber(value: ratingViews[1].currentStarIndex),
+                                                    NSNumber(value: ratingViews[4].currentStarIndex),
+                                                    NSNumber(value: ratingViews[2].currentStarIndex),
+                                                    NSNumber(value: ratingViews[6].currentStarIndex)) { (successed) in
+                                                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
+                                                                                      execute: {
+                                                                                        self.appModalController()?.dismissControllerWithDefaultDuration()
+                                                        })
+        }
     }
     
     override func didReceiveMemoryWarning() {

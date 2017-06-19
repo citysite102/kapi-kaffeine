@@ -49,8 +49,13 @@ public struct NetworkClient: NetworkClientType {
         let (promise, fulfill, reject) = Promise<Data>.pending()
         Alamofire.upload(multipartFormData: { (multipartFormData) in
             for (key, value) in networkRequest.parameters! {
-                multipartFormData.append((value as! String).data(using: .utf8)!,
-                                         withName: key)
+                if value as? String != nil {
+                    multipartFormData.append((value as! String).data(using: .utf8)!,
+                                             withName: key)
+                } else if value as? NSNumber != nil {
+                    let number = value as! NSNumber
+                    multipartFormData.append("\(number.stringValue)".data(using: .utf8)!, withName: key)
+                }
             }
         }, usingThreshold: networkRequest.threshold,
            to: networkRequest.url,

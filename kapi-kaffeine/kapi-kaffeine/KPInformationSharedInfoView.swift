@@ -67,6 +67,7 @@ class KPInformationSharedInfoView: UIView {
                 actionButton.tag = index;
                 actionButton.tintColor = UIColor.white;
                 actionButton.addTarget(self, action: #selector(handleButtonOnTapped(button:)), for: .touchUpInside)
+                actionButton.imageView?.contentMode = .scaleAspectFit
                 actionButton.imageEdgeInsets = UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6)
                 actionButtons.append(actionButton);
                 buttonContainer.addSubview(actionButton);

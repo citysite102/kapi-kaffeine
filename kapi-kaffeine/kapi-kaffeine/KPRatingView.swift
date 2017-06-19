@@ -35,7 +35,7 @@ class KPRatingView: UIView {
         }
     }
     
-    var currentStarIndex: Int = 4
+    var currentStarIndex: Int = 0
     
     lazy var iconImageView: UIImageView = {
         let imageView = UIImageView()
@@ -183,10 +183,10 @@ class KPRatingView: UIView {
                 starViews.append(starView)
                 addSubview(starView)
                 if index == 0 {
-                    starView.addConstraints(fromStringArray: ["H:[$self(24)]|",
+                    starView.addConstraints(fromStringArray: ["H:[$self(28)]|",
                                                               "V:|-2-[$self(24)]-2-|"])
                 } else {
-                    starView.addConstraints(fromStringArray: ["H:[$self(24)]-4-[$view0]",
+                    starView.addConstraints(fromStringArray: ["H:[$self(28)]-0-[$view0]",
                                                               "V:|-2-[$self(24)]-2-|"],
                                             views:[starViews[index-1]])
                 }
@@ -213,6 +213,7 @@ class KPRatingView: UIView {
     
     // MARK:Star Type UI Event
     func handlePanGesture(panGesture: UIPanGestureRecognizer) {
+        var animatedIndex: Int = 5
         
         switch panGesture.state {
         case .began:
@@ -221,13 +222,14 @@ class KPRatingView: UIView {
             let touchPoint = panGesture.location(in: self)
             for (index, starView) in starViews.enumerated() {
                 if starView.frame.contains(touchPoint) {
-                    currentStarIndex = index
+                    currentStarIndex = 5 - index
+                    animatedIndex = index
                     break
                 }
             }
 
             for (index, starView) in starViews.enumerated() {
-                starView.selected = index >= currentStarIndex ? true : false
+                starView.selected = index >= animatedIndex ? true : false
             }
             
             break
@@ -241,15 +243,18 @@ class KPRatingView: UIView {
     
     func handleTapGesture(tapGesture: UITapGestureRecognizer) {
         let touchPoint = tapGesture.location(in: self)
+        var animatedIndex: Int = 5
+        
         for (index, starView) in starViews.enumerated() {
             if starView.frame.contains(touchPoint) {
-                currentStarIndex = index
+                currentStarIndex = 5 - index
+                animatedIndex = index
                 break
             }
         }
         
         for (index, starView) in starViews.enumerated() {
-            starView.selected = index >= currentStarIndex ? true : false
+            starView.selected = index >= animatedIndex ? true : false
         }
     }
     

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import BenzeneFoundation
 import UIKit
 
 public extension UIImage {
@@ -46,5 +47,27 @@ public extension UILabel {
                                        range: NSRange.init(location: 0, length: attributedString.length))
         
         self.attributedText = attributedString
+    }
+}
+
+public extension UIApplication {
+    
+    
+    public func KPTopViewController() -> UIViewController! {
+        return self.KPTopViewControllerFromController(currentViewController: UIApplication.shared.rootViewController)
+    }
+    
+    public func KPTopViewControllerFromController(currentViewController: UIViewController) -> UIViewController! {
+        if currentViewController.presentedViewController == nil {
+            return currentViewController
+        } else if currentViewController is UINavigationController {
+            if (currentViewController as! UINavigationController).topViewController?.presentedViewController != nil {
+                return self.KPTopViewControllerFromController(currentViewController:(currentViewController as! UINavigationController).topViewController!)
+            } else {
+                return (currentViewController as! UINavigationController).topViewController
+            }
+        } else {
+            return self.KPTopViewControllerFromController(currentViewController:currentViewController.presentedViewController!)
+        }
     }
 }

@@ -29,8 +29,7 @@ public class KPUserManager {
 
         // 介面
         loadingView = KPLoadingView()
-        loadingView.successContent = "登入成功"
-        loadingView.failContent = "登入失敗"
+        loadingView.loadingContents = ("登入中...", "登入成功", "登入失敗")
         
         // 屬性
         loginManager = LoginManager()

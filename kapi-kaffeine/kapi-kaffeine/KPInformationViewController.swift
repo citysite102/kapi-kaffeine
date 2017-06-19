@@ -170,7 +170,7 @@ class KPInformationViewController: KPViewController {
                                                     controller.cornerRadius = [.topRight, .topLeft]
                                                     let ratingViewController = KPRatingViewController()
                                                     controller.contentController = ratingViewController;
-                                                    controller.presentModalView();
+                                                    controller.presentModalView()
         })];
         scrollContainer.addSubview(rateInformationView);
         rateInformationView.addConstraints(fromStringArray: ["H:|[$self]|",

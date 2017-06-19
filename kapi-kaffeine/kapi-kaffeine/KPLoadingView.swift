@@ -20,11 +20,18 @@ class KPLoadingView: UIView {
     private var indicator: UIActivityIndicatorView!
     
     
-    var successContent: String! = "留言成功"
-    var successView: UIImageView!
+    var loadingContents: (loading: String, success: String, failed: String)! {
+        didSet {
+            self.loadingLabel.text = loadingContents.loading
+            self.successContent = loadingContents.success
+            self.failContent = loadingContents.failed
+        }
+    }
     
-    var failContent: String! = "留言失敗"
-    var failedView: UIImageView!
+    private var successContent: String! = "留言成功"
+    private var successView: UIImageView!
+    private var failContent: String! = "留言失敗"
+    private var failedView: UIImageView!
     
     var state: loadingState = .loading {
         didSet {
@@ -44,7 +51,11 @@ class KPLoadingView: UIView {
                     self.dismiss()
                 }
             default:
-                print("Still Nothing")
+                self.container.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                self.successView.alpha = 0
+                self.failedView.alpha = 0
+                self.indicator.alpha = 1.0
+                self.indicator.startAnimating()
             }
         }
     }

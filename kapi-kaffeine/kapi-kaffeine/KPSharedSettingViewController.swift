@@ -45,7 +45,7 @@ class KPSharedSettingViewController: KPViewController {
                                for: .normal)
         dismissButton.tintColor = KPColorPalette.KPMainColor.mainColor
         dismissButton.addTarget(self,
-                                action: #selector(KPRatingViewController.handleDismissButtonOnTapped),
+                                action: #selector(KPSharedSettingViewController.handleDismissButtonOnTapped),
                                 for: .touchUpInside)
         
         view.addSubview(dismissButton)
@@ -103,11 +103,9 @@ class KPSharedSettingViewController: KPViewController {
     }
     
     
-    
     func handleDismissButtonOnTapped() {
         self.dismiss(animated: true, completion: nil);
     }
-    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
