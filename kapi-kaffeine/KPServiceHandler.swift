@@ -53,7 +53,7 @@ class KPServiceHandler {
     }
     
     
-    // Information API
+    // Comment API
     
     var currentDisplayModel: KPDataModel?
     
@@ -98,5 +98,41 @@ class KPServiceHandler {
             
         }
         
+    }
+    
+    // Rating API
+
+    func addNewRating(_ wifi: NSNumber? = 0,
+                      _ seat: NSNumber? = 0,
+                      _ food: NSNumber? = 0,
+                      _ quite: NSNumber? = 0,
+                      _ tasty: NSNumber? = 0,
+                      _ cheap: NSNumber? = 0,
+                      _ music: NSNumber? = 0,
+                      _ completion: ((_ successed: Bool) -> Void)?) {
+        let newRatingRequest = KPNewRatingRequest()
+        
+        newRatingRequest.perform((currentDisplayModel?.identifier)!,
+                                 wifi,
+                                 seat,
+                                 food,
+                                 quite,
+                                 tasty,
+                                 cheap,
+                                 music).then { result -> Void in
+                                    if let commentResult = result["result"].bool {
+                                        self.loadingView.state = commentResult ? .successed : .failed
+                                        if completion != nil {
+                                            completion!(commentResult)
+                                        }
+                                    }
+                                    print("Result\(result)")
+        }.catch { (error) in
+                self.loadingView.state = .failed
+                if completion != nil {
+                    completion!(false)
+                }
+        }
+
     }
 }

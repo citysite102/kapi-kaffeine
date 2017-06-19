@@ -17,7 +17,7 @@ struct Action {
     let title: String
     let style: ActionStyle
     let color: UIColor
-    let icon: UIImage
+    let icon: UIImage?
     let handler: (_ infoView: KPInformationSharedInfoView) -> ()
 }
 
@@ -58,12 +58,16 @@ class KPInformationSharedInfoView: UIView {
                 actionButton.titleLabel?.font = UIFont.systemFont(ofSize: 14.0);
                 actionButton.setBackgroundImage(UIImage.init(color: action.color),
                                                 for: .normal);
-                actionButton.setImage(action.icon, for: .normal);
+                
+                if action.icon != nil {
+                    actionButton.setImage(action.icon, for: .normal);
+                }
                 actionButton.layer.cornerRadius = 2.0;
                 actionButton.layer.masksToBounds = true;
                 actionButton.tag = index;
                 actionButton.tintColor = UIColor.white;
                 actionButton.addTarget(self, action: #selector(handleButtonOnTapped(button:)), for: .touchUpInside)
+                actionButton.imageEdgeInsets = UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6)
                 actionButtons.append(actionButton);
                 buttonContainer.addSubview(actionButton);
                 

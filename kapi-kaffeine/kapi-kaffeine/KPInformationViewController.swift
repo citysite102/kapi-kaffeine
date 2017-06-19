@@ -117,7 +117,7 @@ class KPInformationViewController: KPViewController {
         locationInformationView.actions = [Action(title:"開啟導航",
                                                  style:.normal,
                                                  color:KPColorPalette.KPMainColor.mainColor!,
-                                                 icon:(R.image.icon_map()?.withRenderingMode(.alwaysTemplate))!,
+                                                 icon:(R.image.icon_navi()?.withRenderingMode(.alwaysTemplate))!,
                                                  handler:{(infoView) -> () in
                                                     print("Location button 1 Tapped");
         }),
@@ -146,7 +146,7 @@ class KPInformationViewController: KPViewController {
         rateInformationView.actions = [Action(title:"我要評分",
                                                    style:.normal,
                                                    color:KPColorPalette.KPMainColor.mainColor!,
-                                                   icon:(R.image.icon_map()?.withRenderingMode(.alwaysTemplate))!,
+                                                   icon:(R.image.icon_star()?.withRenderingMode(.alwaysTemplate))!,
                                                    handler:{(infoView) -> () in
                                                     let controller = KPModalViewController()
                                                     controller.edgeInset = UIEdgeInsets.init(top: UIDevice().isCompact ? 16 : 48,
@@ -176,7 +176,7 @@ class KPInformationViewController: KPViewController {
         commentInformationView.actions = [Action(title:"看更多評價(20)",
                                                       style:.normal,
                                                       color:KPColorPalette.KPMainColor.mainColor!,
-                                                      icon:(R.image.icon_map()?.withRenderingMode(.alwaysTemplate))!,
+                                                      icon:nil,
                                                       handler:{(infoView) -> () in
                                                         let commentViewController = KPAllCommentController()
                                                         self.navigationController?.pushViewController(viewController: commentViewController,
@@ -186,7 +186,7 @@ class KPInformationViewController: KPViewController {
                                                 Action(title:"我要留言",
                                                        style:.normal,
                                                        color:KPColorPalette.KPMainColor.mainColor!,
-                                                       icon:(R.image.icon_map()?.withRenderingMode(.alwaysTemplate))!,
+                                                       icon:(R.image.icon_comment()?.withRenderingMode(.alwaysTemplate))!,
                                                        handler:{(infoView) -> () in
                                                         let newCommentViewController = KPNewCommentController()
                                                         self.navigationController?.pushViewController(viewController: newCommentViewController,
