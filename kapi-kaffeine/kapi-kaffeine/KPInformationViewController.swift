@@ -120,6 +120,13 @@ class KPInformationViewController: KPViewController {
                                                  icon:(R.image.icon_navi()?.withRenderingMode(.alwaysTemplate))!,
                                                  handler:{(infoView) -> () in
                                                     print("Location button 1 Tapped");
+                                                    
+                                                    if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
+                                                        UIApplication.shared.open(URL(string:
+                                                            "comgooglemaps://?daddr=\(self.informationDataModel.latitude!),\(self.informationDataModel.longitude!)&mapmode=standard")!, options: [:], completionHandler: nil)
+                                                    } else {
+                                                        print("Can't use comgooglemaps://");
+                                                    }
         }),
                                                 Action(title:"街景模式",
                                                  style:.normal,
@@ -127,6 +134,13 @@ class KPInformationViewController: KPViewController {
                                                  icon:(R.image.icon_map()?.withRenderingMode(.alwaysTemplate))!,
                                                  handler:{(infoView) -> () in
                                                     print("Location button 2 Tapped");
+                                                    
+                                                    if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
+                                                        UIApplication.shared.open(URL(string:
+                                                            "comgooglemaps://?center=\(self.informationDataModel.latitude!),\(self.informationDataModel.longitude!)&mapmode=streetview")!, options: [:], completionHandler: nil)
+                                                    } else {
+                                                        print("Can't use comgooglemaps://");
+                                                    }
                                                 })
         ];
         

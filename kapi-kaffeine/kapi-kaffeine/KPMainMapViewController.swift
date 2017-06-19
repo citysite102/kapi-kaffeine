@@ -171,16 +171,7 @@ KPMainViewControllerDelegate {
         self.view.addSubview(self.collectionView)
         self.collectionView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$self(90)]"])
         self.collectionViewBottomConstraint = self.collectionView.addConstraintForAligning(to: .bottom, of: self.view, constant: 90).first as! NSLayoutConstraint
-        
-        
-//        if let dataURL = Bundle.main.url(forResource: "cafes", withExtension: "json") {
-//            do {
-//                let data = try String(contentsOf: dataURL)
-//                self.allDataModel = Mapper<KPDataModel>().mapArray(JSONString: data) ?? []
-//            } catch {
-//                print("Failed to load cafes.json file")
-//            }
-//        }
+
         
         let currentLocationButton = UIButton(type: .custom)
         currentLocationButton.setImage(R.image.icon_currentLocation(), for: .normal)
@@ -264,10 +255,7 @@ KPMainViewControllerDelegate {
         scrollView.setContentOffset(CGPoint(x: -30 + index * (pageWidth + 15), y: 0), animated: true)
         
         self.currentDataModel = self.displayDataModel[Int(index)]
-//        CATransaction.begin()
-//        CATransaction.setValue(NSNumber(floatLiteral: 0.5), forKey: kCATransactionAnimationDuration)
-//        self.mapView.animate(to: GMSCameraPosition.camera(withTarget: self.mapView.selectedMarker!.position , zoom: self.mapView.camera.zoom))
-//        CATransaction.commit()
+
         if let renderer = clusterRenderer as? GMUDefaultClusterRenderer,
             let marker = renderer.markers().filter({ (marker) -> Bool in
                 marker.userData as? KPDataModel == self.currentDataModel
@@ -290,12 +278,6 @@ KPMainViewControllerDelegate {
             let offset = fabs(centerX - (cell.frame.origin.x + cell.frame.size.width/2.0));
             cell.alpha = (pageWidth - offset) / pageWidth * 0.7 + 0.3;
         }
-        
-        print("Current Index Path: \(String(describing: currentIndexPath?.row))")
-        
-        self.mapView.animate(toLocation: CLLocationCoordinate2D(latitude: CLLocationDegrees(scrollView.contentOffset.x/1000 + 10),
-                                                                longitude: 20))
-        
     }
     
     
