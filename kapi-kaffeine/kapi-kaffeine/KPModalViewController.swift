@@ -131,7 +131,7 @@ class KPModalViewController: KPViewController {
     
     func setupPresentContent() {
         
-        let duration = 5.0
+        let duration = 0.6
         let damping  = 0.8
         
         if self.contentController.parent != nil {

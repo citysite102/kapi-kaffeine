@@ -22,6 +22,7 @@ KPMainViewControllerDelegate {
     
     var collectionView: UICollectionView!
     var collectionViewBottomConstraint: NSLayoutConstraint!
+    var currentIndexPath: IndexPath?
 
     lazy var nearestButton: KPShadowButton = {
         let shadowButton = KPShadowButton()
@@ -232,11 +233,13 @@ KPMainViewControllerDelegate {
     
     // MARK: UICollectionView DataSource
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView,
+                        numberOfItemsInSection section: Int) -> Int {
         return self.displayDataModel.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! KPMainMapViewCollectionCell
         cell.dataModel = self.displayDataModel[indexPath.row]
         return cell
@@ -247,7 +250,9 @@ KPMainViewControllerDelegate {
         self.mainController.performSegue(withIdentifier: "datailedInformationSegue", sender: self)
     }
     
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView,
+                                   withVelocity velocity: CGPoint,
+                                   targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         
         let pageWidth = UIScreen.main.bounds.size.width - 60
         let currentOffset = targetContentOffset.pointee.x
@@ -260,6 +265,10 @@ KPMainViewControllerDelegate {
         
         targetContentOffset.pointee.x = -30 + index * (pageWidth + 15)
         scrollView.setContentOffset(CGPoint(x: -30 + index * (pageWidth + 15), y: 0), animated: true)
+        
+        currentIndexPath = collectionView.indexPathForItem(at: CGPoint(x: -30 + index * (pageWidth + 15) +
+            (UIScreen.main.bounds.size.width - 60)/2,
+                                                                       y: 40))
 
     }
 
@@ -270,6 +279,12 @@ KPMainViewControllerDelegate {
             let offset = fabs(centerX - (cell.frame.origin.x + cell.frame.size.width/2.0));
             cell.alpha = (pageWidth - offset) / pageWidth * 0.7 + 0.3;
         }
+        
+        print("Current Index Path: \(String(describing: currentIndexPath?.row))")
+        
+        self.mapView.animate(toLocation: CLLocationCoordinate2D(latitude: CLLocationDegrees(scrollView.contentOffset.x/1000 + 10),
+                                                                longitude: 20))
+        
     }
     
     
