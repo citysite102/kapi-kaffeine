@@ -56,6 +56,7 @@ class KPSideViewController: KPViewController {
         var name: String
         var icon: UIImage
         var cities: [String]
+        var cityKeys: [String]
     }
     
     struct informationData {
@@ -108,13 +109,16 @@ class KPSideViewController: KPViewController {
 
         self.regionContents = [regionData(name:"北部",
                                           icon:R.image.icon_taipei()!,
-                                          cities:["台北", "中壢", "月球"]),
+                                          cities:["台北", "中壢", "月球"],
+                                          cityKeys:["taipei", "中壢", "月球"]),
                                regionData(name:"東部",
                                           icon:R.image.icon_pingtung()!,
-                                          cities:["外太空", "黑洞", "冥王星"]),
+                                          cities:["外太空", "黑洞", "冥王星"],
+                                          cityKeys:["taipei", "中壢", "月球"]),
                                regionData(name:"中南部",
                                           icon:R.image.icon_taitung()!,
-                                          cities:["台北", "台中"])];
+                                          cities:["台北", "台中"],
+                                          cityKeys:["taipei", "中壢"])];
         
         self.informationSectionContents = [informationData(title:"關於我們",
                                                            icon:R.image.icon_cup()!,
@@ -351,7 +355,7 @@ extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
                         var indexPaths = [IndexPath]()
                         for (index, _) in (regionCities?.enumerated())! {
                             indexPaths.append(NSIndexPath.init(row: indexPath.row+index+1, section: 0) as IndexPath);
-                                
+                 
                             self.regionContents.remove(at: indexPath.row+1);
                         }
                         self.tableView.deleteRows(at: indexPaths, with: .top);
@@ -361,7 +365,11 @@ extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
                  */
                 
             } else {
-                
+                let regionIndex = self.getRegionIndex(expandIndex: indexPath.row);
+                let regionContent = self.regionContents[regionIndex];
+                let cityName = regionContent?.cityKeys[indexPath.row-regionIndex-1]
+                mainController.displayDataModel = KPFilter.filterData(source: mainController.displayDataModel,
+                                                                      withCity: cityName!)
             }
         } else {
             self.informationSectionContents[indexPath.row]?.handler();

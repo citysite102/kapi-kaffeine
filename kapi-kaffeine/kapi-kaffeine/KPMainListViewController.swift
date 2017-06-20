@@ -11,7 +11,10 @@ import AlamofireImage
 import ObjectMapper
 import PromiseKit
 
-class KPMainListViewController: KPViewController, KPMainViewControllerDelegate {
+class KPMainListViewController:
+    KPViewController,
+    KPMainViewControllerDelegate,
+    KPSearchFooterViewDelegate {
     
     static let KPMainListViewCellReuseIdentifier = "cell"
     static let KPMainListViewLoadingCellReuseIdentifier = "cell_loading"
@@ -23,12 +26,12 @@ class KPMainListViewController: KPViewController, KPMainViewControllerDelegate {
     var dataLoading: Bool = true
     
     var selectedDataModel: KPDataModel? {
-        return self.currentDataModel
+        return currentDataModel
     }
     
     var displayDataModel: [KPDataModel] = [KPDataModel]() {
         didSet {
-            self.dataLoading = false
+            dataLoading = false
             self.tableView.isUserInteractionEnabled = true
             self.tableView.allowsSelection = true
             self.tableView.reloadData()
@@ -38,33 +41,39 @@ class KPMainListViewController: KPViewController, KPMainViewControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.tableView = UITableView()
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
-        self.tableView.isUserInteractionEnabled = false
-        self.view.addSubview(self.tableView)
-        self.tableView.addConstraints(fromStringArray: ["V:|-100-[$self]",
+        tableView = UITableView()
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.isUserInteractionEnabled = false
+        view.addSubview(tableView)
+        tableView.addConstraints(fromStringArray: ["V:|-100-[$self]",
                                                         "H:|[$self]|"])
-        self.tableView.register(KPMainListTableViewCell.self,
+        tableView.register(KPMainListTableViewCell.self,
                                 forCellReuseIdentifier: KPMainListViewController.KPMainListViewCellReuseIdentifier)
-        self.tableView.register(KPDefaultLoadingTableCell.self,
+        tableView.register(KPDefaultLoadingTableCell.self,
                                 forCellReuseIdentifier: KPMainListViewController.KPMainListViewLoadingCellReuseIdentifier)
-        self.tableView.allowsSelection = false
-        self.tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.allowsSelection = false
+        tableView.rowHeight = UITableViewAutomaticDimension
         
-        self.searchFooterView = KPSearchFooterView()
-        self.searchFooterView.layer.shadowColor = UIColor.black.cgColor
-        self.searchFooterView.layer.shadowOpacity = 0.15
-        self.searchFooterView.layer.shadowOffset = CGSize.init(width: 0.0, height: -1.0)
-        self.view.addSubview(searchFooterView)
-        self.searchFooterView.addConstraints(fromStringArray: ["V:[$view0][$self(40)]|", "H:|[$self]|"],
-                                             views:[self.tableView])
+        searchFooterView = KPSearchFooterView()
+        searchFooterView.delegate = self
+        searchFooterView.layer.shadowColor = UIColor.black.cgColor
+        searchFooterView.layer.shadowOpacity = 0.15
+        searchFooterView.layer.shadowOffset = CGSize.init(width: 0.0, height: -1.0)
+        view.addSubview(searchFooterView)
+        searchFooterView.addConstraints(fromStringArray: ["V:[$view0][$self(40)]|", "H:|[$self]|"],
+                                             views:[tableView])
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
         
+    }
+    
+    func searchFooterView(_ searchFooterView: KPSearchFooterView,
+                          didSelectItemWith name: String) {
+        print("Footer Name:\(name)")
     }
 }
 

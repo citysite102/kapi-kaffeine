@@ -101,7 +101,7 @@ class KPMainViewController: KPViewController {
         SideMenuManager.menuShadowOpacity = 0.6
         SideMenuManager.menuShadowRadius = 3
         SideMenuManager.menuAnimationFadeStrength = 0.5
-        SideMenuManager.menuAnimationTransformScaleFactor = 0.98
+//        SideMenuManager.menuAnimationTransformScaleFactor = 0.98
         SideMenuManager.menuAnimationBackgroundColor = UIColor.black
         SideMenuManager.menuWidth = 260
         

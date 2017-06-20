@@ -121,6 +121,7 @@ KPMainViewControllerDelegate {
         self.mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
         
         mapView.delegate = self
+        mapView.preferredFrameRate = .conservative
         
         do {
             // Set the map style by passing the URL of the local file.

@@ -17,6 +17,8 @@ class KPServiceHandler {
     private var kapiDataRequest: KPCafeRequest!
     private var loadingView: KPLoadingView!
     
+    // 目前儲存所有的咖啡店
+    var currentCafeDatas: [KPDataModel]!
     
     // MARK: Initialization
     
@@ -46,6 +48,7 @@ class KPServiceHandler {
                                             cafeDatas.append(cafeData!)
                                         }
                                     }
+                                    self.currentCafeDatas = cafeDatas
                                     completion?(cafeDatas)
             }.catch { error in
                 print("Error")
