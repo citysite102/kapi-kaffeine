@@ -198,7 +198,7 @@ class KPMainViewController: KPViewController {
                 CATransform3DRotate((self.mainMapViewController?.view.layer.transform)!,
                                     CGFloat.pi, 0, 1, 0)
             
-            UIView.animateKeyframes(withDuration: 0.8,
+            UIView.animateKeyframes(withDuration: 0.6,
                                     delay: 0,
                                     options: .calculationModeCubicPaced,
                                     animations: { 
@@ -259,7 +259,7 @@ class KPMainViewController: KPViewController {
                                     CGFloat.pi, 0, 1, 0)
             
             
-            UIView.animateKeyframes(withDuration: 0.8,
+            UIView.animateKeyframes(withDuration: 0.6,
                                     delay: 0,
                                     options: .calculationModeCubicPaced,
                                     animations: {

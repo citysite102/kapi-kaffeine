@@ -25,9 +25,9 @@ class KPInformationTranstion: NSObject, UIViewControllerAnimatedTransitioning {
         toVC.view.frame = finalFrameForVC.offsetBy(dx: 0, dy: bounds.size.height);
         container.addSubview(toVC.view);
         
-        UIView.animate(withDuration: transitionDuration(using: transitionContext)+0.1,
+        UIView.animate(withDuration: transitionDuration(using: transitionContext),
                        delay: 0,
-                       usingSpringWithDamping: 1.0,
+                       usingSpringWithDamping: 0.9,
                        initialSpringVelocity: 0.8,
                        options: UIViewAnimationOptions.curveEaseIn,
                        animations: { 
