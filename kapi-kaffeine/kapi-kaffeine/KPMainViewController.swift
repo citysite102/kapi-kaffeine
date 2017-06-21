@@ -101,13 +101,14 @@ class KPMainViewController: KPViewController {
         SideMenuManager.menuShadowOpacity = 0.6
         SideMenuManager.menuShadowRadius = 3
         SideMenuManager.menuAnimationFadeStrength = 0.5
-//        SideMenuManager.menuAnimationTransformScaleFactor = 0.98
         SideMenuManager.menuAnimationBackgroundColor = UIColor.black
         SideMenuManager.menuWidth = 260
         
         if (KPUserManager.sharedManager.currentUser != nil) {
-            KPServiceHandler.sharedHandler.fetchRemoteData() { (results: [KPDataModel]) in
-                self.displayDataModel = results
+            KPServiceHandler.sharedHandler.fetchRemoteData() { (results: [KPDataModel]?) in
+                if results != nil {
+                    self.displayDataModel = results!
+                }
             }
         }
 
@@ -164,7 +165,7 @@ class KPMainViewController: KPViewController {
     func switchSideBar() {
         
         statusBarShouldBeHidden = true
-        UIView.animate(withDuration: 0.25) {
+        UIView.animate(withDuration: 0.1) {
             self.setNeedsStatusBarAppearanceUpdate()
         }
         
@@ -268,7 +269,7 @@ class KPMainViewController: KPViewController {
                                                            animations: {
                                                             self.mainListViewController?.view.layer.transform =
                                                                 CATransform3DScale(CATransform3DRotate(transform,
-                                                                                                       -CGFloat.pi/2,
+                                                                                                       CGFloat.pi/2,
                                                                                                        0,
                                                                                                        1,
                                                                                                        0)
@@ -277,7 +278,7 @@ class KPMainViewController: KPViewController {
                                                                     , 0.8)
                                                             self.mainMapViewController?.view.layer.transform =
                                                                 CATransform3DScale(CATransform3DRotate(transform,
-                                                                                                       CGFloat.pi/2,
+                                                                                                       -CGFloat.pi/2,
                                                                                                        0,
                                                                                                        1,
                                                                                                        0)
@@ -297,11 +298,11 @@ class KPMainViewController: KPViewController {
                                                             self.mainMapViewController?.collectionView.isHidden = true
                                                             self.mainListViewController?.view.layer.transform =
                                                                 CATransform3DScale(CATransform3DRotate((self.mainListViewController?.view.layer.transform)!,
-                                                                                                       CGFloat.pi/2, 0, 1, 0), 1/0.8, 1/0.8, 1/0.8)
+                                                                                                       -CGFloat.pi/2, 0, 1, 0), 1/0.8, 1/0.8, 1/0.8)
                                                             
                                                             self.mainMapViewController?.view.layer.transform =
                                                                 CATransform3DScale(CATransform3DRotate((self.mainMapViewController?.view.layer.transform)!,
-                                                                                                       CGFloat.pi/2, 0, 1, 0), 1/0.8, 1/0.8, 1/0.8)
+                                                                                                       -CGFloat.pi/2, 0, 1, 0), 1/0.8, 1/0.8, 1/0.8)
                                                             
                                                             self.mainListViewController?.view.alpha = 1.0
                                         })

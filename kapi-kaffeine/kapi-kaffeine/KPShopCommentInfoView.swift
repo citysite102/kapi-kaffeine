@@ -14,7 +14,7 @@ class KPShopCommentInfoView: UIView {
     
     var tableView: UITableView!
     var tableViewHeightConstraint: NSLayoutConstraint!
-    var comments: [KPCommentModel]! {
+    var comments: [KPCommentModel] = [KPCommentModel]() {
         didSet {
             self.tableView.reloadData();
         }
@@ -61,7 +61,7 @@ extension KPShopCommentInfoView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3;
+        return comments.count;
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {

@@ -29,7 +29,7 @@ class KPInformationViewController: KPViewController {
     var currentScreenSnapshotImage: UIImage {
         get {
             UIGraphicsBeginImageContext(CGSize.init(width: view.frameSize.width,
-                                                    height: view.frameSize.height));
+                                                    height: view.frameSize.height))
             UIGraphicsBeginImageContextWithOptions(CGSize.init(width: view.frameSize.width,
                                                                height: view.frameSize.height),
                                                    true, 0)
@@ -40,30 +40,32 @@ class KPInformationViewController: KPViewController {
         }
     }
     
-    var scrollContainer:UIScrollView!;
-    var informationHeaderView: KPInformationHeaderView!;
-    var shopInformationView: KPInformationSharedInfoView!;
-    var locationInformationView: KPInformationSharedInfoView!;
-    var rateInformationView: KPInformationSharedInfoView!;
-    var commentInformationView: KPInformationSharedInfoView!;
-    var photoInformationView: KPInformationSharedInfoView!;
-    var recommendInformationView: KPInformationSharedInfoView!;
+    var scrollContainer:UIScrollView!
+    var informationHeaderView: KPInformationHeaderView!
+    var shopInformationView: KPInformationSharedInfoView!
+    var locationInformationView: KPInformationSharedInfoView!
+    var rateInformationView: KPInformationSharedInfoView!
+    var commentInformationView: KPInformationSharedInfoView!
+    var photoInformationView: KPInformationSharedInfoView!
+    var recommendInformationView: KPInformationSharedInfoView!
+    
+    var commentInfoView: KPShopCommentInfoView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.white;
-        navigationItem.title = informationDataModel.name;
+        view.backgroundColor = UIColor.white
+        navigationItem.title = informationDataModel.name
         navigationController?.delegate = self
         
-        dismissButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 24, height: 24));
+        dismissButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 24, height: 24))
         dismissButton.setImage(R.image.icon_close()?.withRenderingMode(.alwaysTemplate),
-                                    for: .normal);
-        dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor;
+                                    for: .normal)
+        dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor
         dismissButton.addTarget(self,
                                      action: #selector(KPInformationViewController.handleDismissButtonOnTapped),
-                                     for: .touchUpInside);
+                                     for: .touchUpInside)
 
-        let barItem = UIBarButtonItem.init(customView: dismissButton);
+        let barItem = UIBarButtonItem.init(customView: dismissButton)
         let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace,
                                              target: nil,
                                              action: nil)
@@ -71,15 +73,15 @@ class KPInformationViewController: KPViewController {
         navigationItem.leftBarButtonItems = [negativeSpacer, barItem]
         
         
-        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4);
+        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4)
         
-        scrollContainer = UIScrollView();
-        scrollContainer.backgroundColor = KPColorPalette.KPMainColor.grayColor_level7;
+        scrollContainer = UIScrollView()
+        scrollContainer.backgroundColor = KPColorPalette.KPMainColor.grayColor_level7
         scrollContainer.delegate = self
         scrollContainer.canCancelContentTouches = false
-        view.addSubview(scrollContainer);
+        view.addSubview(scrollContainer)
         scrollContainer.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                         "V:|[$self]|"]);
+                                                         "V:|[$self]|"])
         
         informationHeaderView = KPInformationHeaderView(frame: CGRect.zero,
                                                         cafeIdentifier: informationDataModel.identifier)
@@ -98,7 +100,7 @@ class KPInformationViewController: KPViewController {
                                                              for: UIControlEvents.touchUpInside)
         
         
-        let informationView: KPShopInfoView = KPShopInfoView();
+        let informationView: KPShopInfoView = KPShopInfoView()
         informationView.featureContents = informationDataModel.featureContents
         informationView.titleLabel.text = informationDataModel.name
         informationView.locationLabel.text = informationDataModel.address
@@ -106,7 +108,7 @@ class KPInformationViewController: KPViewController {
         
         if informationDataModel.businessHour != nil {
             let shopStatus = informationDataModel.businessHour.shopStatus
-            informationView.openLabel.textColor = KPColorPalette.KPTextColor.grayColor_level1;
+            informationView.openLabel.textColor = KPColorPalette.KPTextColor.grayColor_level1
             informationView.openLabel.text = shopStatus.status
             informationView.openHint.backgroundColor = shopStatus.isOpening ?
                 KPColorPalette.KPShopStatusColor.opened :
@@ -117,29 +119,29 @@ class KPInformationViewController: KPViewController {
             informationView.openLabel.text = "暫無資料"
         }
         
-        shopInformationView = KPInformationSharedInfoView();
-        shopInformationView.infoView = informationView;
-        shopInformationView.infoTitleLabel.text = "店家資訊";
-        scrollContainer.addSubview(shopInformationView);
+        shopInformationView = KPInformationSharedInfoView()
+        shopInformationView.infoView = informationView
+        shopInformationView.infoTitleLabel.text = "店家資訊"
+        scrollContainer.addSubview(shopInformationView)
         shopInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                              "V:[$view0]-16-[$self(210)]"],
-                                                      views: [informationHeaderView]);
+                                                      views: [informationHeaderView])
         
-        locationInformationView = KPInformationSharedInfoView();
-        locationInformationView.infoTitleLabel.text = "位置訊息";
-        locationInformationView.infoSupplementLabel.text = "距離 600m";
+        locationInformationView = KPInformationSharedInfoView()
+        locationInformationView.infoTitleLabel.text = "位置訊息"
+        locationInformationView.infoSupplementLabel.text = "距離 600m"
         locationInformationView.actions = [Action(title:"開啟導航",
                                                  style:.normal,
                                                  color:KPColorPalette.KPMainColor.mainColor!,
                                                  icon:(R.image.icon_navi()?.withRenderingMode(.alwaysTemplate))!,
                                                  handler:{(infoView) -> () in
-                                                    print("Location button 1 Tapped");
+                                                    print("Location button 1 Tapped")
                                                     
                                                     if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
                                                         UIApplication.shared.open(URL(string:
                                                             "comgooglemaps://?daddr=\(self.informationDataModel.latitude!),\(self.informationDataModel.longitude!)&mapmode=standard")!, options: [:], completionHandler: nil)
                                                     } else {
-                                                        print("Can't use comgooglemaps://");
+                                                        print("Can't use comgooglemaps://")
                                                     }
         }),
                                                 Action(title:"街景模式",
@@ -147,30 +149,30 @@ class KPInformationViewController: KPViewController {
                                                  color:KPColorPalette.KPMainColor.mainColor!,
                                                  icon:(R.image.icon_map()?.withRenderingMode(.alwaysTemplate))!,
                                                  handler:{(infoView) -> () in
-                                                    print("Location button 2 Tapped");
+                                                    print("Location button 2 Tapped")
                                                     
                                                     if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
                                                         UIApplication.shared.open(URL(string:
                                                             "comgooglemaps://?center=\(self.informationDataModel.latitude!),\(self.informationDataModel.longitude!)&mapmode=streetview")!, options: [:], completionHandler: nil)
                                                     } else {
-                                                        print("Can't use comgooglemaps://");
+                                                        print("Can't use comgooglemaps://")
                                                     }
                                                 })
-        ];
+        ]
         
-        scrollContainer.addSubview(locationInformationView);
+        scrollContainer.addSubview(locationInformationView)
         locationInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                                  "V:[$view0]-24-[$self(292)]"],
-                                                views: [shopInformationView]);
+                                                views: [shopInformationView])
         
-        let shopRateInfoView = KPShopRateInfoView();
+        let shopRateInfoView = KPShopRateInfoView()
         if informationDataModel.rates != nil {
             shopRateInfoView.rates = informationDataModel.rates
         }
-        rateInformationView = KPInformationSharedInfoView();
-        rateInformationView.infoView = shopRateInfoView;
-        rateInformationView.infoTitleLabel.text = "店家評分";
-        rateInformationView.infoSupplementLabel.text = "143 人已評分";
+        rateInformationView = KPInformationSharedInfoView()
+        rateInformationView.infoView = shopRateInfoView
+        rateInformationView.infoTitleLabel.text = "店家評分"
+        rateInformationView.infoSupplementLabel.text = "143 人已評分"
         rateInformationView.actions = [Action(title:"我要評分",
                                                    style:.normal,
                                                    color:KPColorPalette.KPMainColor.mainColor!,
@@ -180,27 +182,27 @@ class KPInformationViewController: KPViewController {
                                                     controller.edgeInset = UIEdgeInsets.init(top: UIDevice().isCompact ? 16 : 48,
                                                                                              left: 0,
                                                                                              bottom: 0,
-                                                                                             right: 0);
+                                                                                             right: 0)
                                                     controller.cornerRadius = [.topRight, .topLeft]
                                                     let ratingViewController = KPRatingViewController()
-                                                    controller.contentController = ratingViewController;
+                                                    controller.contentController = ratingViewController
                                                     controller.presentModalView()
-        })];
-        scrollContainer.addSubview(rateInformationView);
+        })]
+        scrollContainer.addSubview(rateInformationView)
         rateInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                              "V:[$view0]-24-[$self]"],
-                                                views: [locationInformationView]);
+                                                views: [locationInformationView])
         
         
-        let commentInfoView = KPShopCommentInfoView();
-        commentInformationView = KPInformationSharedInfoView();
-        commentInformationView.infoView = commentInfoView;
-        commentInformationView.infoTitleLabel.text = "留言評價";
-        commentInformationView.infoSupplementLabel.text = "82 人已留言";
-        scrollContainer.addSubview(commentInformationView);
+        commentInfoView = KPShopCommentInfoView()
+        commentInformationView = KPInformationSharedInfoView()
+        commentInformationView.infoView = commentInfoView
+        commentInformationView.infoTitleLabel.text = "留言評價"
+        commentInformationView.infoSupplementLabel.text = "82 人已留言"
+        scrollContainer.addSubview(commentInformationView)
         commentInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                                 "V:[$view0]-24-[$self]"],
-                                                    views: [rateInformationView]);
+                                                    views: [rateInformationView])
         commentInformationView.actions = [Action(title:"看更多評價(20)",
                                                       style:.normal,
                                                       color:KPColorPalette.KPMainColor.mainColor!,
@@ -221,49 +223,46 @@ class KPInformationViewController: KPViewController {
                                                                                                       animated: true,
                                                                                                       completion: {})
                                                 })
-        ];
+        ]
         
-        KPServiceHandler.sharedHandler.getComments { (_) in
-            
-        }
-        
-        
-        let photoInfoView = KPShopPhotoInfoView();
-        photoInformationView = KPInformationSharedInfoView();
-        photoInformationView.infoView = photoInfoView;
-        photoInformationView.infoTitleLabel.text = "店家照片";
-        scrollContainer.addSubview(photoInformationView);
+        let photoInfoView = KPShopPhotoInfoView()
+        photoInformationView = KPInformationSharedInfoView()
+        photoInformationView.infoView = photoInfoView
+        photoInformationView.infoTitleLabel.text = "店家照片"
+        scrollContainer.addSubview(photoInformationView)
         photoInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                               "V:[$view0]-24-[$self]"],
-                                                    views: [commentInformationView]);
+                                                    views: [commentInformationView])
         photoInformationView.actions = [Action(title:"上傳照片",
                                                    style:.normal,
                                                    color:KPColorPalette.KPMainColor.mainColor!,
                                                    icon:(R.image.icon_map()?.withRenderingMode(.alwaysTemplate))!,
                                                    handler:{(infoView) -> () in
-                                                    print("Photo button 1 Tapped");
+                                                    print("Photo button 1 Tapped")
         })]
         
-        let shopRecommendView = KPShopRecommendView();
+        let shopRecommendView = KPShopRecommendView()
         shopRecommendView.displayDataModel = [informationDataModel,
                                               informationDataModel,
-                                              informationDataModel];
-        recommendInformationView = KPInformationSharedInfoView();
-        recommendInformationView.infoView = shopRecommendView;
-        recommendInformationView.infoTitleLabel.text = "你可能也會喜歡";
-        scrollContainer.addSubview(recommendInformationView);
+                                              informationDataModel]
+        recommendInformationView = KPInformationSharedInfoView()
+        recommendInformationView.infoView = shopRecommendView
+        recommendInformationView.infoTitleLabel.text = "你可能也會喜歡"
+        scrollContainer.addSubview(recommendInformationView)
         recommendInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                                   "V:[$view0]-24-[$self]-32-|"],
-                                                     views: [photoInformationView]);
+                                                     views: [photoInformationView])
+        
+        syncRemoteData()
         
         
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated);
-        let shopLocationInfoView = KPShopLocationInfoView();
+        super.viewDidAppear(animated)
+        let shopLocationInfoView = KPShopLocationInfoView()
         shopLocationInfoView.dataModel = informationDataModel
-        locationInformationView.infoView = shopLocationInfoView;
+        locationInformationView.infoView = shopLocationInfoView
         
     }
     
@@ -271,7 +270,7 @@ class KPInformationViewController: KPViewController {
         super.viewDidLayoutSubviews()
         
         // Fix table view height according to fix cell
-        let commentInfoView = commentInformationView.infoView as! KPShopCommentInfoView
+        commentInfoView = commentInformationView.infoView as! KPShopCommentInfoView
         commentInfoView.tableViewHeightConstraint.constant = commentInfoView.tableView.contentSize.height
     }
     
@@ -280,6 +279,20 @@ class KPInformationViewController: KPViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    
+    // MARK: UI Update
+    
+    func syncRemoteData() {
+        
+        KPServiceHandler.sharedHandler.getComments { (successed, comments) in
+            if successed && comments != nil {
+                self.commentInfoView.comments = comments!
+            }
+        }
+        
+    }
+    
+    // MARK: UI Event
     
     func handleMorePhotoButtonOnTapped() {
         let galleryController = KPPhotoGalleryViewController()
@@ -300,7 +313,7 @@ class KPInformationViewController: KPViewController {
     }
     
     func handleDismissButtonOnTapped() {
-        dismiss(animated: true, completion: nil);
+        dismiss(animated: true, completion: nil)
     }
     
 }

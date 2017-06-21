@@ -35,7 +35,7 @@ class KPServiceHandler {
                          _ standingDesk: NSNumber? = nil,
                          _ mrt: String? = nil,
                          _ city: String? = nil,
-                         _ completion:((_ result: [KPDataModel]) -> Void)? = nil) {
+                         _ completion:((_ result: [KPDataModel]?) -> Void)? = nil) {
         kapiDataRequest.perform(limitedTime,
                                 socket,
                                 standingDesk,
@@ -50,8 +50,8 @@ class KPServiceHandler {
                                     }
                                     self.currentCafeDatas = cafeDatas
                                     completion?(cafeDatas)
-            }.catch { error in
-                print("Error")
+        }.catch { error in
+                completion?(nil)
         }
     }
     
@@ -61,7 +61,7 @@ class KPServiceHandler {
     var currentDisplayModel: KPDataModel?
     
     func addNewComment(_ comment: String? = "",
-                       _ completion: ((_ successed: Bool) -> Void)?) {
+                       _ completion: ((_ successed: Bool) -> Swift.Void)?) {
         let newCommentRequest = KPNewCommentRequest()
         
         loadingView.loadingContents = ("新增中...", "新增成功", "新增失敗")
@@ -78,9 +78,7 @@ class KPServiceHandler {
                                                                       execute: {
                                                                         self.loadingView.removeFromSuperview()
                                         })
-                                        if completion != nil {
-                                            completion!(commentResult)
-                                        }
+                                        completion?(commentResult)
                                     }
                                     print("Result\(result)")
         }.catch { (error) in
@@ -89,23 +87,34 @@ class KPServiceHandler {
                                           execute: {
                                             self.loadingView.removeFromSuperview()
             })
-            if completion != nil {
-                completion!(false)
-            }
+            completion?(false)
         }
     }
     
-    func getComments(_ completion: ((_ successed: Bool) -> Void)?) {
+    func getComments(_ completion: ((_ successed: Bool,
+                                     _ comments: [KPCommentModel]?) -> Swift.Void)?) {
         
         let getCommentRequest = KPGetCommentRequest()
         getCommentRequest.perform((currentDisplayModel?.identifier)!).then { result -> Void in
             
             print("Result\(result)")
             
-            }.catch { (error) in
-            
+            var resultComments = [KPCommentModel]()
+            if result["result"].boolValue {
+                if let commentDatas = result["data"]["comments"].arrayObject {
+                    for case let commentDataModel as Dictionary<String, Any> in commentDatas {
+                        if let commentModel = KPCommentModel(JSON: commentDataModel) {
+                            resultComments.append(commentModel)
+                        }
+                    }
+                }
+                completion?(true, resultComments)
+            } else {
+                completion?(true, nil)
+            }
+        }.catch { (error) in
+            completion?(false, nil)
         }
-        
     }
     
     // Rating API
@@ -117,7 +126,7 @@ class KPServiceHandler {
                       _ tasty: NSNumber? = 0,
                       _ cheap: NSNumber? = 0,
                       _ music: NSNumber? = 0,
-                      _ completion: ((_ successed: Bool) -> Void)?) {
+                      _ completion: ((_ successed: Bool) -> Swift.Void)?) {
         let newRatingRequest = KPNewRatingRequest()
         
         loadingView.loadingContents = ("新增中...", "新增成功", "新增失敗")
@@ -140,9 +149,7 @@ class KPServiceHandler {
                                                                       execute: {
                                                                         self.loadingView.removeFromSuperview()
                                         })
-                                        if completion != nil {
-                                            completion!(commentResult)
-                                        }
+                                        completion?(commentResult)
                                     }
                                     print("Result\(result)")
         }.catch { (error) in
@@ -151,9 +158,7 @@ class KPServiceHandler {
                                           execute: {
                                             self.loadingView.removeFromSuperview()
             })
-                if completion != nil {
-                    completion!(false)
-                }
+            completion?(false)
         }
 
     }

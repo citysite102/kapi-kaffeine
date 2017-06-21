@@ -10,8 +10,8 @@ import UIKit
 
 class KPSearchViewController: KPViewController {
 
-    static let KPSearchViewControllerDefaultCellReuseIdentifier = "cell";
-    static let KPSearchViewControllerRecentCellReuseIdentifier = "cell_recent";
+    static let KPSearchViewControllerDefaultCellReuseIdentifier = "cell"
+    static let KPSearchViewControllerRecentCellReuseIdentifier = "cell_recent"
     
     weak var mainListController: KPMainListViewController!
     
@@ -27,18 +27,18 @@ class KPSearchViewController: KPViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.view.backgroundColor = UIColor.white;
+        self.view.backgroundColor = UIColor.white
         
-        dismissButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 24, height: 24));
-        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4);
+        dismissButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 24, height: 24))
+        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4)
         dismissButton.setImage(R.image.icon_close()?.withRenderingMode(.alwaysTemplate),
-                                    for: .normal);
-        dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor;
+                                    for: .normal)
+        dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor
         dismissButton.addTarget(self,
                                 action: #selector(KPSearchViewController.handleDismissButtonOnTapped),
                                 for: .touchUpInside)
         
-//        let barItem = UIBarButtonItem.init(customView: self.dismissButton);
+//        let barItem = UIBarButtonItem.init(customView: self.dismissButton)
         let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace,
                                              target: nil,
                                              action: nil)
@@ -48,17 +48,17 @@ class KPSearchViewController: KPViewController {
                                                                                   style: .plain,
                                                                                   target: self,
                                                                                   action: #selector(KPSearchViewController.handleDismissButtonOnTapped))]
-        tableView = UITableView();
-        tableView.delegate = self;
-        tableView.dataSource = self;
-        view.addSubview(self.tableView);
+        tableView = UITableView()
+        tableView.delegate = self
+        tableView.dataSource = self
+        view.addSubview(self.tableView)
         tableView.addConstraints(fromStringArray: ["V:|[$self]|",
-                                                   "H:|[$self]|"]);
+                                                   "H:|[$self]|"])
         tableView.register(KPSearchViewDefaultCell.self,
-                           forCellReuseIdentifier: KPSearchViewController.KPSearchViewControllerDefaultCellReuseIdentifier);
+                           forCellReuseIdentifier: KPSearchViewController.KPSearchViewControllerDefaultCellReuseIdentifier)
         tableView.register(KPSearchViewRecentCell.self,
-                           forCellReuseIdentifier: KPSearchViewController.KPSearchViewControllerRecentCellReuseIdentifier);
-        tableView.allowsSelection = true;
+                           forCellReuseIdentifier: KPSearchViewController.KPSearchViewControllerRecentCellReuseIdentifier)
+        tableView.allowsSelection = true
         
         configureSearchController()
     }
@@ -67,8 +67,6 @@ class KPSearchViewController: KPViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-    
     
     func configureSearchController() {
         searchController = UISearchController(searchResultsController: nil)
@@ -141,15 +139,28 @@ extension KPSearchViewController: UITableViewDelegate, UITableViewDataSource {
             cell.shopNameLabel.text = self.displayDataModel[indexPath.row].name
         }
         
-        return cell;
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let searchTitleLabel = KPSearchViewHeaderLabel()
+        return searchTitleLabel
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return UIView()
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 48
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1;
+        return 1
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 96.0;
+        return 96.0
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
