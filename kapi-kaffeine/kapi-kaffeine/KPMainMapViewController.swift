@@ -102,7 +102,7 @@ KPMainViewControllerDelegate {
     
     var allDataModel: [KPDataModel] = [] {
         didSet {
-            self.mapView.clear()
+            self.clusterManager.clearItems()
             for datamodel in self.allDataModel  {
                 self.clusterManager.add(datamodel)
             }
