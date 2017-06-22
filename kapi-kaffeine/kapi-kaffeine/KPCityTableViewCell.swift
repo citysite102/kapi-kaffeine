@@ -20,12 +20,15 @@ class KPCityTableViewCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        self.cityLabel = UILabel();
-        self.cityLabel.font = UIFont.systemFont(ofSize: 12);
-        self.cityLabel.textColor = KPColorPalette.KPTextColor.grayColor;
-        self.addSubview(self.cityLabel);
-        self.cityLabel.addConstraints(fromStringArray: ["H:|-72-[$self]",
-                                                        "V:|-12-[$self(16)]-12-|"]);
+        cityLabel = UILabel();
+        cityLabel.font = UIFont.systemFont(ofSize: 12);
+        cityLabel.textColor = KPColorPalette.KPTextColor.grayColor;
+        cityLabel.isOpaque = true
+        cityLabel.backgroundColor = UIColor.white
+        cityLabel.layer.masksToBounds = true
+        addSubview(self.cityLabel);
+        cityLabel.addConstraints(fromStringArray: ["H:|-72-[$self]",
+                                                   "V:|-12-[$self(16)]-12-|"]);
         
     }
     

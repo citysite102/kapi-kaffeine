@@ -67,7 +67,9 @@ class KPSideViewController: KPViewController {
     
     
     var regionContents = [regionData?]()
-    var regionIconNames = ["icon_taipei", "icon_taitung", "icon_pingtung"]
+    var regionIcons = [R.image.icon_taipei(),
+                       R.image.icon_taitung(),
+                       R.image.icon_pingtung()]
     
     var informationSectionContents = [informationData?]()
     
@@ -229,6 +231,7 @@ extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
                                                          for: indexPath) as! KPRegionTableViewCell;
                 cell.selectionStyle = .none
                 cell.expandIcon.isHidden = false
+                cell.regionIcon.image = self.regionIcons[indexPath.row]
                 cell.regionLabel.text = self.regionContents[indexPath.row]?.name;
                 return cell;
             } else {
@@ -293,7 +296,6 @@ extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         if indexPath.section == 0 {
             if self.regionContents[indexPath.row] != nil {
                 

@@ -176,18 +176,22 @@ KPMainViewControllerDelegate {
         
         let currentLocationButton = UIButton(type: .custom)
         currentLocationButton.setImage(R.image.icon_currentLocation(), for: .normal)
-        currentLocationButton.addTarget(self, action: #selector(moveToMyLocation), for: .touchUpInside)
+        currentLocationButton.addTarget(self,
+                                        action: #selector(moveToMyLocation), for: .touchUpInside)
         currentLocationButton.alpha = 0.7
         self.view.addSubview(currentLocationButton)
         currentLocationButton.addConstraints(fromStringArray: ["H:[$self(40)]-16-|", "V:|-120-[$self(40)]"])
         
         view.addSubview(nearestButton)
-        nearestButton.addConstraints(fromStringArray: ["H:|-16-[$self(90)]", "V:[$self(40)]-24-[$view0]"],
+        nearestButton.addConstraints(fromStringArray: ["H:|-16-[$self(90)]",
+                                                       "V:[$self(40)]-24-[$view0]"],
                                      views: [collectionView])
         
         view.addSubview(addButton)
-        addButton.button.addTarget(self, action: #selector(handleAddButtonTapped(_:)), for: .touchUpInside)
-        addButton.addConstraints(fromStringArray: ["H:[$self(56)]-18-|", "V:[$self(56)]-24-[$view0]"],
+        addButton.button.addTarget(self,
+                                   action: #selector(handleAddButtonTapped(_:)), for: .touchUpInside)
+        addButton.addConstraints(fromStringArray: ["H:[$self(56)]-18-|",
+                                                   "V:[$self(56)]-24-[$view0]"],
                                  views: [collectionView])
     }
     

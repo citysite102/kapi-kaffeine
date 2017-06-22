@@ -47,6 +47,7 @@ class KPRegionTableViewCell: UITableViewCell {
         
         regionIcon = UIImageView.init(image: R.image.icon_taipei())
         regionIcon.tintColor = KPColorPalette.KPMainColor.mainColor_light
+        regionIcon.isOpaque = true
         addSubview(regionIcon)
         regionIcon.addConstraints(fromStringArray: ["V:|-12-[$self(24)]-12-|",
                                                          "H:|-16-[$self(24)]"])
@@ -54,6 +55,9 @@ class KPRegionTableViewCell: UITableViewCell {
         regionLabel = UILabel()
         regionLabel.font = UIFont.systemFont(ofSize: 14)
         regionLabel.textColor = KPColorPalette.KPTextColor.grayColor
+        regionLabel.isOpaque = true
+        regionLabel.backgroundColor = UIColor.white
+        regionLabel.layer.masksToBounds = true
         addSubview(regionLabel)
         regionLabel.addConstraints(fromStringArray: ["H:[$view0]-32-[$self]"],
                                         views: [regionIcon])

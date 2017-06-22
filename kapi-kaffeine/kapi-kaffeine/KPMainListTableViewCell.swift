@@ -103,7 +103,6 @@ class KPMainListTableViewCell: UITableViewCell {
         shopNameLabel.font = UIFont.systemFont(ofSize: 14.0);
         shopNameLabel.textColor = KPColorPalette.KPTextColor.grayColor;
         shopNameLabel.isOpaque = true
-        shopNameLabel.backgroundColor = UIColor.white
         shopNameLabel.layer.masksToBounds = true
         contentView.addSubview(shopNameLabel);
 
@@ -125,9 +124,8 @@ class KPMainListTableViewCell: UITableViewCell {
         shopStatusLabel = UILabel();
         shopStatusLabel.font = UIFont.systemFont(ofSize: 12.0);
         shopStatusLabel.textColor = KPColorPalette.KPTextColor.grayColor;
-        shopStatusLabel.text = "營業中 12:00-21:00";
+        shopStatusLabel.text = "營業時間 未知";
         shopStatusLabel.isOpaque = true
-        shopStatusLabel.backgroundColor = UIColor.white
         shopStatusLabel.layer.masksToBounds = true
         contentView.addSubview(shopStatusLabel);
         shopStatusLabel.addConstraints(fromStringArray: ["H:[$view0]-5-[$self($metric0)]"],
@@ -139,10 +137,9 @@ class KPMainListTableViewCell: UITableViewCell {
         shopDistanceLabel = KPMainListCellNormalLabel();
         shopDistanceLabel.font = UIFont.systemFont(ofSize: 20.0);
         shopDistanceLabel.textColor = KPColorPalette.KPTextColor.mainColor;
-        shopDistanceLabel.text = "600m";
+        shopDistanceLabel.text = "0m";
         shopDistanceLabel.isOpaque = true
         shopDistanceLabel.layer.masksToBounds = true
-        shopDistanceLabel.backgroundColor = UIColor.white
         shopDistanceLabel.layoutMargins = UIEdgeInsetsMake(0, 0, 0, 0);
         contentView.addSubview(shopDistanceLabel);
         shopDistanceLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]",
