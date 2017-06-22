@@ -71,3 +71,32 @@ public extension UIApplication {
         }
     }
 }
+
+
+// MARK: Drawing
+
+
+func drawImage(image originImage: UIImage,
+               rectSize: CGSize,
+               roundedRadius radius: CGFloat) -> UIImage? {
+    
+    let rect = CGRect(origin: CGPoint(x: 0, y: 0), size: rectSize)
+    UIGraphicsBeginImageContextWithOptions(rect.size,
+                                           false,
+                                           UIScreen.main.scale)
+    
+    let currentContext = UIGraphicsGetCurrentContext()
+    currentContext?.addPath(UIBezierPath(roundedRect: rect,
+                                         cornerRadius: radius).cgPath)
+        
+    currentContext?.clip()
+    originImage.draw(in: rect)
+    currentContext?.drawPath(using: .fillStroke)
+    
+    let rounderCornerImage = UIGraphicsGetImageFromCurrentImageContext()
+    UIGraphicsEndImageContext()
+    
+    return rounderCornerImage
+}
+
+

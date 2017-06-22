@@ -53,7 +53,7 @@ class KPMainViewController: KPViewController {
         addChildViewController(mainMapViewController!)
         view.addSubview((mainMapViewController?.view)!)
         mainMapViewController?.didMove(toParentViewController: self)
-        mainMapViewController?.view.layer.shouldRasterize = true
+//        mainMapViewController?.view.layer.shouldRasterize = true
         mainMapViewController?.view.layer.rasterizationScale = UIScreen.main.scale
         _ = mainMapViewController?.view.addConstraints(fromStringArray: ["H:|[$self]|",
                                                                          "V:|[$self]|"])
@@ -182,7 +182,6 @@ class KPMainViewController: KPViewController {
         var transform   = CATransform3DIdentity
         transform.m34 = -1.0/1000
         
-        
         mainListViewController?.view.layer.shouldRasterize = true
         mainMapViewController?.view.layer.shouldRasterize = true
         
@@ -204,7 +203,7 @@ class KPMainViewController: KPViewController {
                                     options: .calculationModeCubicPaced,
                                     animations: { 
                                         UIView.addKeyframe(withRelativeStartTime: 0,
-                                                           relativeDuration: 0.4,
+                                                           relativeDuration: 0.3,
                                                            animations: {
                                                             self.mainListViewController?.view.layer.transform =
                                                                 CATransform3DScale(CATransform3DRotate(transform,
@@ -225,13 +224,12 @@ class KPMainViewController: KPViewController {
                                                                     , 0.8
                                                                     , 0.8)
                                                             self.mainListViewController?.view.alpha = 0.0
-                                                            self.mainMapViewController?.view.alpha = 0.5
+                                                            self.mainMapViewController?.view.alpha = 0.0
                                         })
                                         
-                                        UIView.addKeyframe(withRelativeStartTime: 0.4,
-                                                           relativeDuration: 0.6,
-                                                           animations: { 
-                                                            self.currentController = self.mainMapViewController
+                                        UIView.addKeyframe(withRelativeStartTime: 0.3,
+                                                           relativeDuration: 0.7,
+                                                           animations: {
                                                             
                                                             self.searchHeaderView.styleButton.setImage(iconImage, for: .normal)
                                                             self.mainMapViewController?.collectionView.isHidden = true
@@ -249,6 +247,7 @@ class KPMainViewController: KPViewController {
             }, completion: { (_) in
                 self.mainMapViewController?.view.layer.shouldRasterize = false
                 self.mainMapViewController?.collectionView.isHidden = false
+                self.currentController = self.mainMapViewController
             })
 
         } else {
@@ -265,7 +264,7 @@ class KPMainViewController: KPViewController {
                                     options: .calculationModeCubicPaced,
                                     animations: {
                                         UIView.addKeyframe(withRelativeStartTime: 0,
-                                                           relativeDuration: 0.4,
+                                                           relativeDuration: 0.3,
                                                            animations: {
                                                             self.mainListViewController?.view.layer.transform =
                                                                 CATransform3DScale(CATransform3DRotate(transform,
@@ -285,14 +284,13 @@ class KPMainViewController: KPViewController {
                                                                     , 0.8
                                                                     , 0.8
                                                                     , 0.8)
-                                                            self.mainListViewController?.view.alpha = 0.5
+                                                            self.mainListViewController?.view.alpha = 0.0
                                                             self.mainMapViewController?.view.alpha = 0.0
                                         })
                                         
-                                        UIView.addKeyframe(withRelativeStartTime: 0.4,
-                                                           relativeDuration: 0.6,
+                                        UIView.addKeyframe(withRelativeStartTime: 0.3,
+                                                           relativeDuration: 0.7,
                                                            animations: {
-                                                            self.currentController = self.mainListViewController
                                                             
                                                             self.searchHeaderView.styleButton.setImage(iconImage, for: .normal)
                                                             self.mainMapViewController?.collectionView.isHidden = true
@@ -309,6 +307,7 @@ class KPMainViewController: KPViewController {
             }, completion: { (_) in
                 self.mainListViewController?.view.layer.shouldRasterize = false
                 self.mainMapViewController?.collectionView.isHidden = false
+                self.currentController = self.mainListViewController
             })
         }
     }
