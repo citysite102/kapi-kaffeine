@@ -91,6 +91,7 @@ class KPNewCommentController: KPViewController {
         
         
         scrollContainer = UIScrollView()
+        scrollContainer.delaysContentTouches = true
         scrollContainer.backgroundColor = KPColorPalette.KPMainColor.grayColor_level7
         scrollContainer.canCancelContentTouches = false
         view.addSubview(scrollContainer)

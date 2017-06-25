@@ -170,6 +170,7 @@ class KPRatingView: UIView {
             
             panGesture = UIPanGestureRecognizer.init(target: self,
                                                      action: #selector(handlePanGesture(panGesture:)))
+            panGesture.delegate = self
             tapGesture = UITapGestureRecognizer.init(target: self,
                                                      action: #selector(handleTapGesture(tapGesture:)))
             
@@ -259,4 +260,10 @@ class KPRatingView: UIView {
         }
     }
     
+}
+
+extension KPRatingView: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
 }
