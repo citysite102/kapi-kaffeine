@@ -17,7 +17,11 @@ class KPInformationViewController: KPViewController {
         }
     }
     
-    var dismissButton:UIButton!
+    var dismissButton: KPBounceButton!
+    var moreButton: KPBounceButton!
+    var shareButton: KPBounceButton!
+    
+    
     var snapshotPhotoView: UIView  {
         get {
             let snapShotView = UIImageView.init(image: informationHeaderView.shopPhoto.image)
@@ -40,7 +44,8 @@ class KPInformationViewController: KPViewController {
         }
     }
     
-    var scrollContainer:UIScrollView!
+    var actionController: UIAlertController!
+    var scrollContainer: UIScrollView!
     var informationHeaderView: KPInformationHeaderView!
     var shopInformationView: KPInformationSharedInfoView!
     var locationInformationView: KPInformationSharedInfoView!
@@ -57,23 +62,69 @@ class KPInformationViewController: KPViewController {
         navigationItem.title = informationDataModel.name
         navigationController?.delegate = self
         
-        dismissButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 24, height: 24))
-        dismissButton.setImage(R.image.icon_close()?.withRenderingMode(.alwaysTemplate),
+        dismissButton = KPBounceButton.init(frame: CGRect.init(x: 0, y: 0, width: 24, height: 24))
+        dismissButton.setImage(R.image.icon_close(),
                                     for: .normal)
+        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4)
         dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor
         dismissButton.addTarget(self,
-                                     action: #selector(KPInformationViewController.handleDismissButtonOnTapped),
-                                     for: .touchUpInside)
+                                action: #selector(KPInformationViewController.handleDismissButtonOnTapped),
+                                for: .touchUpInside)
+        
+        
+        moreButton = KPBounceButton.init(frame: CGRect.init(x: 0, y: 0, width: 24, height: 24))
+        moreButton.setImage(R.image.icon_grid(),
+                            for: .normal)
+        moreButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4)
+        moreButton.tintColor = KPColorPalette.KPTextColor.whiteColor
+        moreButton.addTarget(self,
+                             action: #selector(KPInformationViewController.handleMoreButtonOnTapped),
+                             for: .touchUpInside)
+        
+        shareButton = KPBounceButton.init(frame: CGRect.init(x: 0, y: 0, width: 24, height: 24))
+        shareButton.setImage(R.image.icon_grid(),
+                            for: .normal)
+        shareButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4)
+        shareButton.tintColor = KPColorPalette.KPTextColor.whiteColor
+        shareButton.addTarget(self,
+                              action: #selector(KPInformationViewController.handleShareButtonOnTapped),
+                              for: .touchUpInside)
+        
 
         let barItem = UIBarButtonItem.init(customView: dismissButton)
+        let rightBarItem = UIBarButtonItem.init(customView: moreButton)
+//        let rightBarItem2 = UIBarButtonItem.init(customView: shareButton)
         let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace,
                                              target: nil,
                                              action: nil)
         negativeSpacer.width = -8
         navigationItem.leftBarButtonItems = [negativeSpacer, barItem]
+        navigationItem.rightBarButtonItems = [negativeSpacer, rightBarItem]
         
         
-        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4)
+        actionController = UIAlertController(title: nil,
+                                             message: nil,
+                                             preferredStyle: .actionSheet)
+        actionController.view.tintColor = KPColorPalette.KPTextColor.mainColor_light
+        let editButton = UIAlertAction(title: "編輯店家資料",
+                                       style: .default) { (_) in
+                                        print("編輯店家資料")
+        }
+        
+        let reportButton = UIAlertAction(title: "回報問題",
+                                         style: .default) { (_) in
+                                           print("回報問題")
+        }
+        
+        let cancelButton = UIAlertAction(title: "取消",
+                                         style: .cancel) { (_) in
+                                            print("取消")
+        }
+        
+        actionController.addAction(editButton)
+        actionController.addAction(reportButton)
+        actionController.addAction(cancelButton)
+        
         
         scrollContainer = UIScrollView()
         scrollContainer.backgroundColor = KPColorPalette.KPMainColor.grayColor_level7
@@ -214,7 +265,7 @@ class KPInformationViewController: KPViewController {
                                                                                                       animated: true,
                                                                                                       completion: {})
         }),
-                                                Action(title:"我要留言",
+                                                Action(title:"我要評價",
                                                        style:.normal,
                                                        color:KPColorPalette.KPMainColor.mainColor!,
                                                        icon:(R.image.icon_comment()?.withRenderingMode(.alwaysTemplate))!,
@@ -315,6 +366,16 @@ class KPInformationViewController: KPViewController {
     
     func handleDismissButtonOnTapped() {
         dismiss(animated: true, completion: nil)
+    }
+    
+    func handleMoreButtonOnTapped() {
+        present(actionController,
+                animated: true,
+                completion: nil)
+    }
+    
+    func handleShareButtonOnTapped() {
+        
     }
     
 }

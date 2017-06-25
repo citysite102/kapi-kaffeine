@@ -53,7 +53,6 @@ class KPMainViewController: KPViewController {
         addChildViewController(mainMapViewController!)
         view.addSubview((mainMapViewController?.view)!)
         mainMapViewController?.didMove(toParentViewController: self)
-//        mainMapViewController?.view.layer.shouldRasterize = true
         mainMapViewController?.view.layer.rasterizationScale = UIScreen.main.scale
         _ = mainMapViewController?.view.addConstraints(fromStringArray: ["H:|[$self]|",
                                                                          "V:|[$self]|"])
@@ -183,11 +182,7 @@ class KPMainViewController: KPViewController {
         var transform   = CATransform3DIdentity
         transform.m34 = -1.0/1000
         
-//        mainListViewController?.view.layer.shouldRasterize = true
-//        mainMapViewController?.view.layer.shouldRasterize = true
-
         self.mainListViewController?.snapShotShowing = true
-        
         self.mainListViewController?.view.layer.transform = transform
         self.mainMapViewController?.view.layer.transform = transform
         
@@ -243,64 +238,10 @@ class KPMainViewController: KPViewController {
                                 
                                 self.mainMapViewController?.view.alpha = 1.0
                 }, completion: { (_) in
-                    
-//                    self.mainMapViewController?.view.layer.shouldRasterize = false
                     self.mainMapViewController?.collectionView.isHidden = false
                     self.currentController = self.mainMapViewController
                 })
             })
-            
-//            UIView.animateKeyframes(withDuration: 0.6,
-//                                    delay: 0,
-//                                    options: .calculationModePaced,
-//                                    animations: {
-//                                        UIView.addKeyframe(withRelativeStartTime: 0,
-//                                                           relativeDuration: 0.3,
-//                                                           animations: {
-//                                                            self.mainListViewController?.view.layer.transform =
-//                                                                CATransform3DScale(CATransform3DRotate(transform,
-//                                                                                                       CGFloat.pi/2,
-//                                                                                                       0,
-//                                                                                                       1,
-//                                                                                                       0)
-//                                                                    , 0.8
-//                                                                    , 0.8
-//                                                                    , 0.8)
-//                                                            self.mainMapViewController?.view.layer.transform =
-//                                                                CATransform3DScale(CATransform3DRotate(transform,
-//                                                                                                       -CGFloat.pi/2,
-//                                                                                                       0,
-//                                                                                                       1,
-//                                                                                                       0)
-//                                                                    , 0.8
-//                                                                    , 0.8
-//                                                                    , 0.8)
-//                                                            self.mainListViewController?.view.alpha = 0.0
-//                                                            self.mainMapViewController?.view.alpha = 0.0
-//                                        })
-//                                        
-//                                        UIView.addKeyframe(withRelativeStartTime: 0.3,
-//                                                           relativeDuration: 0.7,
-//                                                           animations: {
-//                                                            
-//                                                            self.searchHeaderView.styleButton.setImage(iconImage, for: .normal)
-//                                                            self.mainMapViewController?.collectionView.isHidden = true
-//                                                            
-//                                                            self.mainListViewController?.view.layer.transform =
-//                                                                CATransform3DScale(CATransform3DRotate((self.mainMapViewController?.view.layer.transform)!,
-//                                                                                                       -CGFloat.pi/2, 0, 1, 0), 1/0.8, 1/0.8, 1/0.8)
-//                                                            
-//                                                            self.mainMapViewController?.view.layer.transform =
-//                                                                CATransform3DScale(CATransform3DRotate((self.mainMapViewController?.view.layer.transform)!,
-//                                                                                                       CGFloat.pi/2, 0, 1, 0), 1/0.8, 1/0.8, 1/0.8)
-//                                                            
-//                                                            self.mainMapViewController?.view.alpha = 1.0
-//                                        })
-//            }, completion: { (_) in
-//                self.mainMapViewController?.view.layer.shouldRasterize = false
-//                self.mainMapViewController?.collectionView.isHidden = false
-//                self.currentController = self.mainMapViewController
-//            })
 
         } else {
             mainListViewController?.view.alpha = 0.0
@@ -353,64 +294,11 @@ class KPMainViewController: KPViewController {
                                 
                                 self.mainListViewController?.view.alpha = 1.0
                 }, completion: { (_) in
-//                    self.mainListViewController?.view.layer.shouldRasterize = false
                     self.mainListViewController?.snapShotShowing = false
                     self.mainMapViewController?.collectionView.isHidden = false
                     self.currentController = self.mainListViewController
                 })
             })
-            
-            
-//            UIView.animateKeyframes(withDuration: 0.6,
-//                                    delay: 0,
-//                                    options: .calculationModeCubicPaced,
-//                                    animations: {
-//                                        UIView.addKeyframe(withRelativeStartTime: 0,
-//                                                           relativeDuration: 0.3,
-//                                                           animations: {
-//                                                            self.mainListViewController?.view.layer.transform =
-//                                                                CATransform3DScale(CATransform3DRotate(transform,
-//                                                                                                       CGFloat.pi/2,
-//                                                                                                       0,
-//                                                                                                       1,
-//                                                                                                       0)
-//                                                                    , 0.8
-//                                                                    , 0.8
-//                                                                    , 0.8)
-//                                                            self.mainMapViewController?.view.layer.transform =
-//                                                                CATransform3DScale(CATransform3DRotate(transform,
-//                                                                                                       -CGFloat.pi/2,
-//                                                                                                       0,
-//                                                                                                       1,
-//                                                                                                       0)
-//                                                                    , 0.8
-//                                                                    , 0.8
-//                                                                    , 0.8)
-//                                                            self.mainListViewController?.view.alpha = 0.0
-//                                                            self.mainMapViewController?.view.alpha = 0.0
-//                                        })
-//                                        
-//                                        UIView.addKeyframe(withRelativeStartTime: 0.3,
-//                                                           relativeDuration: 0.7,
-//                                                           animations: {
-//                                                            
-//                                                            self.searchHeaderView.styleButton.setImage(iconImage, for: .normal)
-//                                                            self.mainMapViewController?.collectionView.isHidden = true
-//                                                            self.mainListViewController?.view.layer.transform =
-//                                                                CATransform3DScale(CATransform3DRotate((self.mainListViewController?.view.layer.transform)!,
-//                                                                                                       -CGFloat.pi/2, 0, 1, 0), 1/0.8, 1/0.8, 1/0.8)
-//                                                            
-//                                                            self.mainMapViewController?.view.layer.transform =
-//                                                                CATransform3DScale(CATransform3DRotate((self.mainMapViewController?.view.layer.transform)!,
-//                                                                                                       -CGFloat.pi/2, 0, 1, 0), 1/0.8, 1/0.8, 1/0.8)
-//                                                            
-//                                                            self.mainListViewController?.view.alpha = 1.0
-//                                        })
-//            }, completion: { (_) in
-//                self.mainListViewController?.view.layer.shouldRasterize = false
-//                self.mainMapViewController?.collectionView.isHidden = false
-//                self.currentController = self.mainListViewController
-//            })
         }
     }
 

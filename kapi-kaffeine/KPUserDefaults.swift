@@ -28,6 +28,7 @@ final public class KPUserDefaults {
     public static var accessToken: String? {
         didSet {
             if accessToken != nil {
+                print("Set Access Token as \(accessToken!)")
                 defaults?.set(accessToken, forKey: "accessToken")
             }
         }
@@ -49,6 +50,8 @@ final public class KPUserDefaults {
         }
         accessToken = defaults?.object(forKey: "accessToken") as? String
         userIdentifier = defaults?.object(forKey: "user_identifier") as? String
+        
+        print("Get Access Token as \(accessToken!)")
     }
     
     static func clearUserInformation() {

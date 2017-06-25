@@ -129,7 +129,7 @@ class KPLoadingView: UIView {
             }) { (_) in
                 
             }
-            UIView.animate(withDuration: 0.35,
+            UIView.animate(withDuration: 0.3,
                            delay: 0.2,
                            options: .curveEaseOut,
                            animations: {
