@@ -11,6 +11,7 @@ import BenzeneFoundation
 import UIKit
 
 public extension UIImage {
+    
     public convenience init?(color: UIColor,
                              size: CGSize = CGSize(width: 1, height: 1)) {
         
@@ -25,6 +26,75 @@ public extension UIImage {
         self.init(cgImage: cgImage)
     }
 
+    public class func kpImageWithColor(color: UIColor, size: CGSize) -> UIImage? {
+    
+        UIGraphicsBeginImageContextWithOptions(size,
+                                               false,
+                                               UIScreen.main.scale);
+        let context = UIGraphicsGetCurrentContext()
+        if context == nil {
+            return nil;
+        }
+        color.set()
+        context?.fill(CGRect(x: 0, y: 0, width: size.width, height: size.height))
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext();
+        return image;
+    }
+    
+    public class func verticalImage(imagesArray: NSArray) -> UIImage {
+        let unifiedImage: UIImage
+        let totalImageSize = self.verticalAppendedTotalImageSize(imagesArray: imagesArray)
+        UIGraphicsBeginImageContextWithOptions(totalImageSize, false, UIScreen.main.scale);
+        
+        var imageOffsetFactor: CGFloat = 0.0;
+        
+        for case let img as UIImage in imagesArray {
+            img.draw(at: CGPoint(x: 0, y: imageOffsetFactor))
+            imageOffsetFactor += img.size.height
+        }
+        
+        unifiedImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext();
+        return unifiedImage;
+    }
+    
+    private class func verticalAppendedTotalImageSize(imagesArray: NSArray) -> CGSize {
+        var totalSize = CGSize.zero
+        for case let img as UIImage in imagesArray {
+            let imSize = img.size
+            totalSize.height += imSize.height
+            totalSize.width = max(totalSize.width, imSize.width)
+        }
+        return totalSize;
+    }
+}
+
+public extension UIView {
+    
+    public func screenshot() -> UIImage? {
+        return self.screenshot(croppingRect: self.bounds)
+    }
+    
+    public func screenshot(croppingRect: CGRect) -> UIImage? {
+        UIGraphicsBeginImageContextWithOptions(croppingRect.size,
+                                               false,
+                                               UIScreen.main.scale)
+        
+        let context = UIGraphicsGetCurrentContext();
+        if context == nil {
+            return nil
+        }
+        
+        context!.translateBy(x: -croppingRect.origin.x,
+                             y: -croppingRect.origin.y)
+        self.layoutIfNeeded()
+        self.layer.render(in: context!)
+        
+        let screenshotImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return screenshotImage!
+    }
 }
 
 
@@ -52,7 +122,6 @@ public extension UILabel {
 
 public extension UIApplication {
     
-    
     public func KPTopViewController() -> UIViewController! {
         return self.KPTopViewControllerFromController(currentViewController: UIApplication.shared.rootViewController)
     }
@@ -72,10 +141,61 @@ public extension UIApplication {
     }
 }
 
+public extension UITableView {
+    
+    public override func screenshot() -> UIImage {
+        
+        let screenshots = NSMutableArray()
+        
+        for _ in 0..<self.numberOfSections {
+            
+            // 只畫出顯示出來的 Cell 整體的狀況
+            for indexPath in self.indexPathsForVisibleRows! {
+                if let cellScreenshot = self.screenshotOfCell(indexPath as NSIndexPath)  {
+                    screenshots.add(cellScreenshot)
+                }
+            }
+            
+            // 想要畫出整個 Table View 的狀況
+//            for row in 0..<self.numberOfRows(inSection: section) {
+//                let cellIndexPath = NSIndexPath(row: row,
+//                                                section: section)
+//                if let cellScreenshot = self.screenShotOfCell(cellIndexPath)  {
+//                    screenshots.add(cellScreenshot)
+//                }
+//            }
+        }
+        return UIImage.verticalImage(imagesArray: screenshots)
+    }
+    
+    public func screenshotOfCell(_ indexPath: NSIndexPath) -> UIImage? {
+        var cellScreenshot: UIImage
+        
+        let currTableViewOffset = self.contentOffset
+        
+        self.scrollToRow(at: indexPath as IndexPath,
+                         at: .top,
+                         animated: false)
+        
+        cellScreenshot = (self.cellForRow(at: indexPath as IndexPath)?.screenshot())!
+        
+        self.setContentOffset(currTableViewOffset, animated: false)
+        return cellScreenshot
+    }
+    
+    public func screenshotForVisible() -> UIImage? {
+        let visibleRect = CGRect(x: 0, y: self.contentOffset.y,
+                                 width: self.bounds.width,
+                                 height: self.bounds.height)
+        return self.screenshot(croppingRect: visibleRect)
+    }
+}
+
 
 // MARK: Drawing
 
 
+// 繪製圓角
 func drawImage(image originImage: UIImage,
                rectSize: CGSize,
                roundedRadius radius: CGFloat) -> UIImage? {

@@ -11,11 +11,11 @@ import ObjectMapper
 
 final class KPUser: NSObject, Mappable {
     
-    var accessToken: String!
-    var identifier: String!
-    var displayName: String!
+    var accessToken: String?
+    var identifier: String?
+    var displayName: String?
     var photoURL: String?
-    var defaultLocation: String!
+    var defaultLocation: String?
     var intro: String?
     var level: NSNumber?
     var exp: NSNumber?

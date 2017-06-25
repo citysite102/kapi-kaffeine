@@ -36,6 +36,7 @@ final public class KPUserDefaults {
             defaults?.set(userInformation?["id"], forKey: "user_identifier")
             
             
+            
             self.userIdentifier = userInformation?["id"] as? String
         }
     }

@@ -121,7 +121,9 @@ public class KPUserManager {
                                                                                 // 建立 Current User
                                                                                 self.currentUser =
                                                                                     Mapper<KPUser>().map(JSONObject: result["data"].dictionaryObject)
-                                                                                self.currentUser?.accessToken = result["token"].stringValue
+                                                                                self.currentUser?.accessToken = result["token"].string
+                                                                                KPUserDefaults.accessToken = result["token"].string
+                                                                                
                                                                                 self.loadingView.state = .successed
                                                                                 completion?(true)
                                                                                 

@@ -20,10 +20,39 @@ class KPMainListViewController:
     static let KPMainListViewLoadingCellReuseIdentifier = "cell_loading"
     
     weak var mainController:KPMainViewController!
-    var searchFooterView: KPSearchFooterView!
     var tableView: UITableView!
+    
     var currentDataModel:KPDataModel?
     var dataLoading: Bool = true
+    var snapShotShowing: Bool = false {
+        didSet {
+            DispatchQueue.main.async {
+                if self.snapShotShowing != oldValue && self.snapShotShowing {
+                    self.snapshotView.image = self.tableView.screenshotForVisible()
+                    self.snapshotView.isHidden = false
+                    self.tableView.isHidden = true
+                } else if self.snapShotShowing != oldValue {
+                    self.snapshotView.isHidden = true
+                    self.tableView.isHidden = false
+                }
+            }
+        }
+    }
+    
+    private var searchFooterView: KPSearchFooterView!
+    private var snapshotView: UIImageView!
+//    private var snapShot: UIImage? {
+//        get {
+//            UIGraphicsBeginImageContextWithOptions(self.tableView.bounds.size,
+//                                                   true,
+//                                                   UIScreen.main.scale)
+//            self.tableView.drawHierarchy(in: self.tableView.bounds,
+//                                         afterScreenUpdates: true)
+//            let wholeImage = UIGraphicsGetImageFromCurrentImageContext()
+//            UIGraphicsEndImageContext()
+//            return wholeImage
+//        }
+//    }
     
     var selectedDataModel: KPDataModel? {
         return currentDataModel
@@ -63,6 +92,18 @@ class KPMainListViewController:
         view.addSubview(searchFooterView)
         searchFooterView.addConstraints(fromStringArray: ["V:[$view0][$self(40)]|", "H:|[$self]|"],
                                              views:[tableView])
+        
+        snapshotView = UIImageView()
+        snapshotView.contentMode = .top
+        snapshotView.clipsToBounds = true
+        snapshotView.isHidden = true
+        view.addSubview(snapshotView)
+        snapshotView.addConstraints(fromStringArray: ["V:|-100-[$self][$view0]",
+                                                      "H:|[$self]|"],
+                                    views: [searchFooterView])
+        
+        view.bringSubview(toFront: searchFooterView)
+        
     }
 
     override func didReceiveMemoryWarning() {

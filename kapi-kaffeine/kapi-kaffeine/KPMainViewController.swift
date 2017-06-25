@@ -182,9 +182,10 @@ class KPMainViewController: KPViewController {
         var transform   = CATransform3DIdentity
         transform.m34 = -1.0/1000
         
-        mainListViewController?.view.layer.shouldRasterize = true
-        mainMapViewController?.view.layer.shouldRasterize = true
-        
+//        mainListViewController?.view.layer.shouldRasterize = true
+//        mainMapViewController?.view.layer.shouldRasterize = true
+
+        self.mainListViewController?.snapShotShowing = true
         
         self.mainListViewController?.view.layer.transform = transform
         self.mainMapViewController?.view.layer.transform = transform
@@ -242,7 +243,7 @@ class KPMainViewController: KPViewController {
                                 self.mainMapViewController?.view.alpha = 1.0
                 }, completion: { (_) in
                     
-                    self.mainMapViewController?.view.layer.shouldRasterize = false
+//                    self.mainMapViewController?.view.layer.shouldRasterize = false
                     self.mainMapViewController?.collectionView.isHidden = false
                     self.currentController = self.mainMapViewController
                 })
@@ -351,7 +352,8 @@ class KPMainViewController: KPViewController {
                                 
                                 self.mainListViewController?.view.alpha = 1.0
                 }, completion: { (_) in
-                    self.mainListViewController?.view.layer.shouldRasterize = false
+//                    self.mainListViewController?.view.layer.shouldRasterize = false
+                    self.mainListViewController?.snapShotShowing = false
                     self.mainMapViewController?.collectionView.isHidden = false
                     self.currentController = self.mainListViewController
                 })
