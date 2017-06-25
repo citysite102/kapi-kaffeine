@@ -36,7 +36,7 @@ class KPSharedIntroView: UIView {
         addSubview(introTitleLabel)
         addSubview(introDescriptionLabel)
         
-        introTitleLabel.addConstraints(fromStringArray: ["V:[$self]-176-|",
+        introTitleLabel.addConstraints(fromStringArray: ["V:[$self]-180-|",
                                                          "H:|-32-[$self]-32-|"])
         
         introDescriptionLabel.addConstraints(fromStringArray: ["V:[$view0]-16-[$self]",

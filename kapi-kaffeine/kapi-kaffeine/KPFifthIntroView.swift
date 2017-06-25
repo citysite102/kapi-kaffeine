@@ -27,9 +27,10 @@ class KPFifthIntroView: KPSharedIntroView {
         bottomImageView = UIImageView(image: R.image.image_onbroading_5())
         bottomImageView.contentMode = .scaleAspectFit
         addSubview(bottomImageView)
-        bottomImageView.addConstraints(fromStringArray: ["V:|-88-[$self]",
+        bottomImageView.addConstraints(fromStringArray: ["V:[$self]",
                                                          "H:[$self]"])
         bottomImageView.addConstraintForCenterAligningToSuperview(in: .horizontal)
+        bottomImageView.addConstraintForCenterAligningToSuperview(in: .vertical, constant: -80)
         
         firstPopImageView = UIImageView(image: R.image.image_onbroading_51())
         addSubview(firstPopImageView)

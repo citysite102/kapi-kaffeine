@@ -23,9 +23,10 @@ class KPThirdIntroView: KPSharedIntroView {
         firstPopImageView = UIImageView(image: R.image.image_onbroading_31())
         firstPopImageView.contentMode = .scaleAspectFit
         addSubview(firstPopImageView)
-        firstPopImageView.addConstraints(fromStringArray: ["V:|-80-[$self]",
+        firstPopImageView.addConstraints(fromStringArray: ["V:[$self]",
                                                            "H:[$self]"])
         firstPopImageView.addConstraintForCenterAligningToSuperview(in: .horizontal)
+        firstPopImageView.addConstraintForCenterAligningToSuperview(in: .vertical, constant: -168)
         
         secondPopImageView = UIImageView(image: R.image.image_onbroading_32())
         addSubview(secondPopImageView)

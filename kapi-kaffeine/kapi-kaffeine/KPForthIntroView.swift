@@ -32,9 +32,10 @@ class KPForthIntroView: KPSharedIntroView {
         
         container = UIView()
         addSubview(container)
-        container.addConstraints(fromStringArray: ["V:|-80-[$self]",
+        container.addConstraints(fromStringArray: ["V:[$self]",
                                                    "H:[$self(260)]"])
         container.addConstraintForCenterAligningToSuperview(in: .horizontal)
+        container.addConstraintForCenterAligningToSuperview(in: .vertical, constant: -72)
         
         firstPopImageView = UIImageView(image: R.image.image_onbroading_41())
         container.addSubview(firstPopImageView)
