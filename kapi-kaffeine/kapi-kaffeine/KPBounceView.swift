@@ -24,6 +24,12 @@ class KPBounceView: UIView {
         }
     }
     var icon: UIImageView!
+    var iconSize: CGSize! {
+        didSet {
+            self.icon.addConstraint(forWidth: iconSize.width)
+            self.icon.addConstraint(forHeight: iconSize.height)
+        }
+    }
     
     var selectedColor = KPColorPalette.KPMainColor.starColor
     var unSelectedColor = KPColorPalette.KPMainColor.grayColor_level3
@@ -52,8 +58,8 @@ class KPBounceView: UIView {
         icon.contentMode = .scaleAspectFit
         icon.addConstraintForCenterAligningToSuperview(in: .vertical)
         icon.addConstraintForCenterAligningToSuperview(in: .horizontal)
-        icon.addConstraints(fromStringArray: ["V:|[$self]|",
-                                              "H:|[$self]|"])
+//        icon.addConstraints(fromStringArray: ["V:|[$self]|",
+//                                              "H:|[$self]|"])
         
         selected = false
         

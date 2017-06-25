@@ -52,7 +52,7 @@ class KPRatingViewController: KPSharedSettingViewController {
                                                             "V:|-24-[$self]"])
             } else {
                 ratingView.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
-                                                            "V:[$view0]-24-[$self]"],
+                                                            "V:[$view0]-12-[$self]"],
                                           views: [self.ratingViews[index-1]])
             }
         }

@@ -18,43 +18,43 @@ class KPSearchHeaderView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame);
-        self.backgroundColor = KPColorPalette.KPMainColor.mainColor_light;
+        backgroundColor = KPColorPalette.KPMainColor.mainColor_light;
         
-        self.titleLabel = UILabel();
-        self.titleLabel.font = UIFont.systemFont(ofSize: 18.0);
-        self.titleLabel.textColor = KPColorPalette.KPTextColor.whiteColor;
-        self.titleLabel.text = "找咖啡";
-        self.addSubview(self.titleLabel);
-        self.titleLabel.addConstraintForCenterAligningToSuperview(in: .horizontal);
-        self.titleLabel.addConstraint(from: "V:|-32-[$self]");
+        titleLabel = UILabel();
+        titleLabel.font = UIFont.systemFont(ofSize: 18.0);
+        titleLabel.textColor = KPColorPalette.KPTextColor.whiteColor;
+        titleLabel.text = "找咖啡";
+        addSubview(titleLabel);
+        titleLabel.addConstraintForCenterAligningToSuperview(in: .horizontal);
+        titleLabel.addConstraint(from: "V:|-32-[$self]");
         
-        self.styleButton = KPBounceButton.init(frame: .zero, image: R.image.icon_map()!);
-        self.addSubview(self.styleButton);
-        self.styleButton.addConstraints(fromStringArray: ["H:[$self(24)]-8-|",
-                                                          "V:[$self(24)]"]);
-        self.styleButton.addConstraintForCenterAligning(to: self.titleLabel, in: .vertical);
-        self.styleButton.tintColor = UIColor.white;
+        styleButton = KPBounceButton.init(frame: .zero, image: R.image.icon_map()!);
+        addSubview(styleButton);
+        styleButton.addConstraints(fromStringArray: ["H:[$self(24)]-8-|",
+                                                     "V:[$self(24)]"]);
+        styleButton.addConstraintForCenterAligning(to: titleLabel, in: .vertical);
+        styleButton.tintColor = UIColor.white;
         
-        self.searchButton = KPBounceButton.init(frame: .zero, image: R.image.icon_search()!);
-        self.addSubview(self.searchButton);
-        self.searchButton.addConstraints(fromStringArray: ["H:[$self(24)]-8-[$view0]",
-                                                           "V:[$self(24)]"],
-                                         views: [self.styleButton]);
-        self.searchButton.addConstraintForCenterAligning(to: self.titleLabel, in: .vertical);
-        self.searchButton.tintColor = UIColor.white;
+        searchButton = KPBounceButton.init(frame: .zero, image: R.image.icon_search()!);
+        addSubview(searchButton);
+        searchButton.addConstraints(fromStringArray: ["H:[$self(24)]-8-[$view0]",
+                                                      "V:[$self(24)]"],
+                                         views: [styleButton]);
+        searchButton.addConstraintForCenterAligning(to: titleLabel, in: .vertical);
+        searchButton.tintColor = UIColor.white;
         
-        self.menuButton = KPBounceButton.init(frame: .zero, image: R.image.icon_menu()!);
-        self.addSubview(self.menuButton);
-        self.menuButton.addConstraints(fromStringArray: ["H:|-8-[$self(24)]",
-                                                          "V:[$self(24)]"]);
-        self.menuButton.addConstraintForCenterAligning(to: self.titleLabel, in: .vertical);
-        self.menuButton.tintColor = UIColor.white;
+        menuButton = KPBounceButton.init(frame: .zero, image: R.image.icon_menu()!);
+        addSubview(menuButton);
+        menuButton.addConstraints(fromStringArray: ["H:|-8-[$self(24)]",
+                                                    "V:[$self(24)]"]);
+        menuButton.addConstraintForCenterAligning(to: titleLabel, in: .vertical);
+        menuButton.tintColor = UIColor.white;
         
         
-        self.searchTagView = KPSearchTagView();
-        self.addSubview(self.searchTagView);
-        self.searchTagView.addConstraints(fromStringArray: ["V:[$self(40)]|",
-                                                            "H:|[$self]|"]);
+        searchTagView = KPSearchTagView();
+        addSubview(searchTagView);
+        searchTagView.addConstraints(fromStringArray: ["V:[$self(40)]|",
+                                                       "H:|[$self]|"]);
         
     }
     

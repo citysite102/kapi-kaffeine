@@ -148,6 +148,7 @@ class KPMainViewController: KPViewController {
             self.present(introController, animated: true, completion: nil)
             
         } else {
+            
             if KPUserManager.sharedManager.currentUser == nil {
                 let controller = KPModalViewController()
                 controller.edgeInset = UIEdgeInsets.init(top: 0,

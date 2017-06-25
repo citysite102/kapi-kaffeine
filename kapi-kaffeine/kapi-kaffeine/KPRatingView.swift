@@ -180,14 +180,15 @@ class KPRatingView: UIView {
             rateTitleLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
             for index in 0..<5 {
                 let starView = KPBounceView.init(R.image.icon_star()!)
+                starView.iconSize = CGSize(width: 24, height: 24)
                 starViews.append(starView)
                 addSubview(starView)
                 if index == 0 {
                     starView.addConstraints(fromStringArray: ["H:[$self(28)]|",
-                                                              "V:|-2-[$self(24)]-2-|"])
+                                                              "V:|[$self(40)]|"])
                 } else {
                     starView.addConstraints(fromStringArray: ["H:[$self(28)]-0-[$view0]",
-                                                              "V:|-2-[$self(24)]-2-|"],
+                                                              "V:|[$self(40)]|"],
                                             views:[starViews[index-1]])
                 }
             }

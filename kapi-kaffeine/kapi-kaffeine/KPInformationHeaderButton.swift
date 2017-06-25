@@ -105,13 +105,13 @@ class KPInformationHeaderButton: UIView {
     }
     
     private func performTouchBeganAnimation() {
-        UIView.animate(withDuration: 0.3,
+        UIView.animate(withDuration: 0.2,
                        delay: 0,
-                       usingSpringWithDamping: 0.8,
+                       usingSpringWithDamping: 0.7,
                        initialSpringVelocity: 1,
                        options: UIViewAnimationOptions.beginFromCurrentState,
                        animations: {
-                        self.icon.layer.transform = CATransform3DScale(CATransform3DIdentity, 0.8, 0.8, 1.0)
+                        self.icon.layer.transform = CATransform3DScale(CATransform3DIdentity, 0.7, 0.7, 1.0)
         }) { _ in
             
         }
