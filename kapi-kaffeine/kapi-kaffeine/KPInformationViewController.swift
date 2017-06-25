@@ -86,6 +86,7 @@ class KPInformationViewController: KPViewController {
         informationHeaderView = KPInformationHeaderView(frame: CGRect.zero,
                                                         cafeIdentifier: informationDataModel.identifier)
         informationHeaderView.delegate = self
+        informationHeaderView.informationController = self
         if let photoURL = informationDataModel.photos?["google_l"] {
             informationHeaderView.shopPhoto.af_setImage(withURL: URL(string: photoURL)!,
                                                         placeholderImage: R.image.demo_1())
@@ -334,22 +335,22 @@ extension KPInformationViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
         
-        scrollContainer.contentOffset = CGPoint.init(x: 0, y: scrollContainer.contentOffset.y)
-        
-        if scrollContainer.contentOffset.y < 0 && scrollContainer.contentOffset.y > -100 {
-            let scaleRatio = 1 - scrollContainer.contentOffset.y/250
-            let scaleRatioContainer = 1 - scrollContainer.contentOffset.y/250 + 0.02
-            let oldFrame = informationHeaderView.shopPhotoContainer.frame
-            informationHeaderView.shopPhotoContainer.layer.anchorPoint = CGPoint.init(x: 0.5, y: 1)
-            informationHeaderView.shopPhotoContainer.frame = oldFrame
-            informationHeaderView.shopPhotoContainer.transform = CGAffineTransform.identity
-            informationHeaderView.shopPhotoContainer.transform = CGAffineTransform.init(scaleX: scaleRatioContainer,
-                                                                                        y: scaleRatioContainer)
-            informationHeaderView.shopPhoto.transform = CGAffineTransform.identity
-            informationHeaderView.shopPhoto.transform = CGAffineTransform.init(scaleX: scaleRatio,
-                                                                               y: scaleRatio)
-            view.layoutIfNeeded()
-        }
+//        scrollContainer.contentOffset = CGPoint.init(x: 0, y: scrollContainer.contentOffset.y)
+//        
+//        if scrollContainer.contentOffset.y < 0 && scrollContainer.contentOffset.y > -100 {
+//            let scaleRatio = 1 - scrollContainer.contentOffset.y/250
+//            let scaleRatioContainer = 1 - scrollContainer.contentOffset.y/250 + 0.02
+//            let oldFrame = informationHeaderView.shopPhotoContainer.frame
+//            informationHeaderView.shopPhotoContainer.layer.anchorPoint = CGPoint.init(x: 0.5, y: 1)
+//            informationHeaderView.shopPhotoContainer.frame = oldFrame
+//            informationHeaderView.shopPhotoContainer.transform = CGAffineTransform.identity
+//            informationHeaderView.shopPhotoContainer.transform = CGAffineTransform.init(scaleX: scaleRatioContainer,
+//                                                                                        y: scaleRatioContainer)
+//            informationHeaderView.shopPhoto.transform = CGAffineTransform.identity
+//            informationHeaderView.shopPhoto.transform = CGAffineTransform.init(scaleX: scaleRatio,
+//                                                                               y: scaleRatio)
+//            view.layoutIfNeeded()
+//        }
     }
 }
 

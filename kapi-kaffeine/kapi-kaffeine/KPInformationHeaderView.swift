@@ -32,6 +32,7 @@ class KPInformationHeaderView: UIView {
     var commentButton: KPInformationHeaderButton!;
     
     weak open var delegate: KPInformationHeaderViewDelegate?
+    weak open var informationController: KPInformationViewController?
     
     convenience init (frame: CGRect,
                       cafeIdentifier: String) {
@@ -41,8 +42,6 @@ class KPInformationHeaderView: UIView {
                                                     info: "0人已收藏",
                                                     icon: R.image.icon_collect()!,
                                                     handler: { (headerButton) -> () in
-                                                        print("Test Handler");
-                                                        
                                                         headerButton.selected = !(headerButton.selected)
                                                         
                                                         if headerButton.selected {
@@ -56,21 +55,41 @@ class KPInformationHeaderView: UIView {
                                                   info: "194人來做",
                                                   icon: R.image.icon_map()!,
                                                   handler: { (headerButton) -> () in
-                                                    print("Test Handler");
+                                                    headerButton.selected = !(headerButton.selected)
+                                                    
+                                                    if headerButton.selected {
+                                                        KPUserManager.sharedManager.addVisitedCafe(self.cafeID)
+                                                    } else {
+                                                        KPUserManager.sharedManager.removeVisitedCafe(self.cafeID)
+                                                    }
         });
         
         rateButton.buttonInfo = HeaderButtonInfo(title: "我要評分",
                                                  info: "尚無評分",
                                                  icon: R.image.icon_star()!,
                                                  handler: { (headerButton) -> () in
-                                                    print("Test Handler");
+                                                    let controller = KPModalViewController()
+                                                    controller.edgeInset = UIEdgeInsets.init(top: UIDevice().isCompact ? 16 : 48,
+                                                                                             left: 0,
+                                                                                             bottom: 0,
+                                                                                             right: 0)
+                                                    controller.cornerRadius = [.topRight, .topLeft]
+                                                    let ratingViewController = KPRatingViewController()
+                                                    controller.contentController = ratingViewController
+                                                    controller.presentModalView()
         });
         
         commentButton.buttonInfo = HeaderButtonInfo(title: "已評價",
                                                     info: "29人已留言",
                                                     icon: R.image.icon_comment()!,
                                                     handler: { (headerButton) -> () in
-                                                        print("Test Handler");
+                                                        let newCommentViewController = KPNewCommentController()
+                                                        if self.informationController != nil {
+                                                            self.informationController?.navigationController?.pushViewController(viewController:
+                                                                newCommentViewController,
+                                                                                                                                 animated: true,
+                                                                                                                                 completion: {})
+                                                        }
         });
     }
     

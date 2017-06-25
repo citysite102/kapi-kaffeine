@@ -147,7 +147,7 @@ public class KPUserManager {
         KPUserDefaults.clearUserInformation()
     }
     
-    // MARK: Content
+    // MARK: User Action
     
     func addFavoriteCafe(_ cafeID: String,
                          _ completion:(() -> Void)? = nil) {
@@ -174,5 +174,16 @@ public class KPUserManager {
                 print("error\(error)")
             }
     }
+    
+    func addVisitedCafe(_ cafeID: String,
+                        _ completion:(() -> Void)? = nil) {
+        
+    }
+    
+    func removeVisitedCafe(_ cafeID: String,
+                           _ completion:(() -> Void)? = nil) {
+        
+    }
+
     
 }

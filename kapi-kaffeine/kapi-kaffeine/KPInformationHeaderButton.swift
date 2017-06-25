@@ -28,6 +28,9 @@ class KPInformationHeaderButton: UIView {
             self.icon.tintColor = selected ?
                 KPColorPalette.KPMainColor.mainColor :
                 KPColorPalette.KPMainColor.grayColor_level5
+            self.titleLabel.textColor = selected ?
+                KPColorPalette.KPTextColor.mainColor :
+                KPColorPalette.KPMainColor.grayColor_level3
         }
     }
     
@@ -43,34 +46,34 @@ class KPInformationHeaderButton: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.layer.borderWidth = 1.0
-        self.layer.borderColor = KPColorPalette.KPMainColor.borderColor?.cgColor
-        self.backgroundColor = UIColor.white
+        layer.borderWidth = 1.0
+        layer.borderColor = KPColorPalette.KPMainColor.borderColor?.cgColor
+        backgroundColor = UIColor.white
         
-        self.icon = UIImageView.init()
-        self.addSubview(self.icon)
-        self.icon.addConstraintForCenterAligningToSuperview(in: .horizontal)
-        self.icon.addConstraint(from: "V:|-12-[$self(24)]")
-        self.icon.addConstraint(from: "H:[$self(24)]")
-        self.icon.tintColor = selected ?
+        icon = UIImageView.init()
+        addSubview(icon)
+        icon.addConstraintForCenterAligningToSuperview(in: .horizontal)
+        icon.addConstraint(from: "V:|-12-[$self(24)]")
+        icon.addConstraint(from: "H:[$self(24)]")
+        icon.tintColor = selected ?
             KPColorPalette.KPMainColor.mainColor :
             KPColorPalette.KPMainColor.grayColor_level5
         
-        self.titleLabel = UILabel.init()
-        self.titleLabel.font = UIFont.systemFont(ofSize: 13)
-        self.titleLabel.textColor = KPColorPalette.KPTextColor.mainColor
-        self.addSubview(self.titleLabel)
-        self.titleLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
-        self.titleLabel.addConstraint(from: "V:[$view0]-4-[$self]",
-                                      views: [self.icon])
+        titleLabel = UILabel.init()
+        titleLabel.font = UIFont.systemFont(ofSize: 13)
+        titleLabel.textColor = KPColorPalette.KPTextColor.mainColor
+        addSubview(titleLabel)
+        titleLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
+        titleLabel.addConstraint(from: "V:[$view0]-4-[$self]",
+                                 views: [icon])
         
-        self.infoLable = UILabel.init()
-        self.infoLable.font = UIFont.systemFont(ofSize: 11)
-        self.infoLable.textColor = KPColorPalette.KPMainColor.grayColor_level3
-        self.addSubview(self.infoLable)
-        self.infoLable.addConstraintForCenterAligningToSuperview(in: .horizontal)
-        self.infoLable.addConstraint(from: "V:[$view0]-4-[$self]",
-                                     views: [self.titleLabel])
+        infoLable = UILabel.init()
+        infoLable.font = UIFont.systemFont(ofSize: 11)
+        infoLable.textColor = KPColorPalette.KPMainColor.grayColor_level3
+        addSubview(infoLable)
+        infoLable.addConstraintForCenterAligningToSuperview(in: .horizontal)
+        infoLable.addConstraint(from: "V:[$view0]-4-[$self]",
+                                views: [titleLabel])
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -79,13 +82,13 @@ class KPInformationHeaderButton: UIView {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
-        self.performTouchBeganAnimation()
+        performTouchBeganAnimation()
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
-        self.performTouchEndAnimation()
-        self.handler(self)
+        performTouchEndAnimation()
+        handler(self)
     }
     
     private func performTouchEndAnimation() {

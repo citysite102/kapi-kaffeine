@@ -11,7 +11,7 @@ import UIKit
 final public class KPUserDefaults {
 
     
-    static let defaults = UserDefaults(suiteName: AppConstant.userDefaultsSuitName)
+    static var defaults = UserDefaults(suiteName: AppConstant.userDefaultsSuitName)
     
     
     struct userInformationKey {
@@ -27,21 +27,26 @@ final public class KPUserDefaults {
     
     public static var accessToken: String? {
         didSet {
-            defaults?.set(accessToken, forKey: "accessToken")
+            if accessToken != nil {
+                defaults?.set(accessToken, forKey: "accessToken")
+            }
         }
     }
     
     public static var userInformation: NSDictionary? {
         didSet {
-            defaults?.set(userInformation?["id"], forKey: "user_identifier")
             
-            
-            
-            self.userIdentifier = userInformation?["id"] as? String
+            if let identifier = userInformation?["id"] {
+                defaults?.set(identifier as? String, forKey: "user_identifier")
+                self.userIdentifier = identifier as? String
+            }
         }
     }
     
     static func loadUserInformation() {
+        if defaults == nil {
+            defaults = UserDefaults(suiteName: AppConstant.userDefaultsSuitName)
+        }
         accessToken = defaults?.object(forKey: "accessToken") as? String
         userIdentifier = defaults?.object(forKey: "user_identifier") as? String
     }
