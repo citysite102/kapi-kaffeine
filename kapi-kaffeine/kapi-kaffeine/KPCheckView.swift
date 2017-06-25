@@ -15,13 +15,7 @@ class KPCheckView: UIView {
         case checkmark = "Scheckmarktar"
     }
 
-    lazy var titleLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16.0)
-        label.textColor = KPColorPalette.KPTextColor.grayColor_level1
-        return label
-    }()
-    
+    var titleLabel: UILabel!
     var checkBox: KPCheckBox!
     
     required init?(coder aDecoder: NSCoder) {
@@ -37,7 +31,11 @@ class KPCheckView: UIView {
         
         self.init(frame: .zero)
         
+        titleLabel = UILabel()
+        titleLabel.font = UIFont.systemFont(ofSize: 15.0)
+        titleLabel.textColor = KPColorPalette.KPTextColor.grayColor_level1
         titleLabel.text = title
+        
         checkBox = KPCheckBox()
         
         switch type {

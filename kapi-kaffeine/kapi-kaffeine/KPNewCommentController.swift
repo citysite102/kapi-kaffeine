@@ -13,11 +13,29 @@ class KPNewCommentController: KPViewController {
     
     static let commentMaximumTextLength: Int = 200
     
+    
+    var scrollContainer: UIScrollView!
     var dismissButton: KPBounceButton!
     var sendButton: UIButton!
-    var containerView: UIView!
     var textFieldContainerView: UIView!
     var tapGesture: UITapGestureRecognizer!
+    
+    var ratingHeaderLabel: UILabel!
+    var ratingContainer: UIView!
+    var ratingCheckbox: KPCheckView!
+    
+    let ratingTitles = ["Wifi穩定", "安靜程度",
+                        "價格實惠", "座位數量",
+                        "咖啡品質", "餐點美味", "環境舒適"]
+    let ratingImages = [R.image.icon_wifi(), R.image.icon_sleep(),
+                        R.image.icon_money(), R.image.icon_seat(),
+                        R.image.icon_cup(), R.image.icon_cutlery(),
+                        R.image.icon_pic()]
+    var ratingViews = [KPRatingView]()
+    
+    
+    
+    
     
     lazy var textFieldHeaderLabel: UILabel = {
         let label = UILabel()
@@ -71,17 +89,20 @@ class KPNewCommentController: KPViewController {
         navigationItem.leftBarButtonItems = [negativeSpacer, barItem]
         navigationItem.rightBarButtonItems = [negativeSpacer, rightbarItem]
         
-        containerView = UIView()
-        containerView.backgroundColor = KPColorPalette.KPMainColor.grayColor_level7
-        view.addSubview(containerView)
-        containerView.addConstraints(fromStringArray: ["V:|[$self]|",
-                                                       "H:|[$self]|"])
+        
+        scrollContainer = UIScrollView()
+        scrollContainer.backgroundColor = KPColorPalette.KPMainColor.grayColor_level7
+        scrollContainer.canCancelContentTouches = false
+        view.addSubview(scrollContainer)
+        scrollContainer.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                         "V:|[$self]|"])
         
         textFieldContainerView = UIView()
         textFieldContainerView.backgroundColor = UIColor.white
-        containerView.addSubview(textFieldContainerView)
+        scrollContainer.addSubview(textFieldContainerView)
         textFieldContainerView.addConstraints(fromStringArray: ["V:|[$self(240)]",
                                                                 "H:|[$self]|"])
+        textFieldContainerView.addConstraintForHavingSameWidth(with: view)
         
         tapGesture = UITapGestureRecognizer.init(target: self,
                                                  action: #selector(handleTapGesture(tapGesture:)))
@@ -106,6 +127,49 @@ class KPNewCommentController: KPViewController {
         textFieldContainerView.addSubview(remainingTextLabel)
         remainingTextLabel.addConstraints(fromStringArray: ["V:[$self]-16-|",
                                                             "H:[$self]-16-|"])
+        
+        ratingHeaderLabel = UILabel()
+        ratingHeaderLabel.font = UIFont.systemFont(ofSize: 13)
+        ratingHeaderLabel.textColor = KPColorPalette.KPTextColor.mainColor
+        ratingHeaderLabel.text = "為店家評分"
+        scrollContainer.addSubview(ratingHeaderLabel)
+        ratingHeaderLabel.addConstraints(fromStringArray: ["V:[$view0]-16-[$self]",
+                                                           "H:|-8-[$self]"],
+                                         views:[textFieldContainerView])
+        
+        ratingContainer = UIView()
+        ratingContainer.backgroundColor = UIColor.white
+        scrollContainer.addSubview(ratingContainer)
+        ratingContainer.addConstraints(fromStringArray: ["V:[$view0]-8-[$self]-16-|",
+                                                         "H:|[$self]|"],
+                                       views: [ratingHeaderLabel])
+        
+        
+        ratingCheckbox = KPCheckView.init(.checkmark, "暫時不評分")
+        ratingCheckbox.titleLabel.font = UIFont.systemFont(ofSize: 14.0)
+        ratingCheckbox.checkBox.boxType = .square
+        ratingContainer.addSubview(ratingCheckbox)
+        ratingCheckbox.addConstraints(fromStringArray: ["H:|-16-[$self]",
+                                                        "V:|-16-[$self]"])
+        
+        for (index, title) in ratingTitles.enumerated() {
+            let ratingView = KPRatingView.init(.star,
+                                               ratingImages[index]!,
+                                               title)
+            ratingViews.append(ratingView)
+            ratingContainer.addSubview(ratingView)
+            
+            if index == 0 {
+                ratingView.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
+                                                            "V:[$view0]-16-[$self]"],
+                                          views:[ratingCheckbox])
+            } else {
+                ratingView.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
+                                                            "V:[$view0]-12-[$self]"],
+                                          views: [self.ratingViews[index-1]])
+            }
+        }
+        ratingViews.last!.addConstraint(from: "V:[$self]-16-|")
         
     }
 

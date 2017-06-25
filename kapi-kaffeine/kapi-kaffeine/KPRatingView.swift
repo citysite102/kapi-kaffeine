@@ -46,7 +46,7 @@ class KPRatingView: UIView {
     
     lazy var rateTitleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16.0)
+        label.font = UIFont.systemFont(ofSize: 15.0)
         label.textColor = KPColorPalette.KPTextColor.grayColor_level1
         return label
     }()
@@ -131,10 +131,13 @@ class KPRatingView: UIView {
     }
     
     func makeUI() {
+        
+        iconImageView.addConstraints(fromStringArray: ["V:[$self(24)]",
+                                                       "H:|[$self(24)]"])
+        iconImageView.addConstraintForCenterAligningToSuperview(in: .vertical)
+        
         switch rateType {
         case .button:
-            iconImageView.addConstraints(fromStringArray: ["H:|[$self]"])
-            iconImageView.addConstraintForCenterAligningToSuperview(in: .vertical)
             rateTitleLabel.addConstraints(fromStringArray: ["H:[$view0]-16-[$self]"],
                                           views: [iconImageView])
             rateTitleLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
@@ -172,12 +175,9 @@ class KPRatingView: UIView {
             
             addGestureRecognizer(panGesture)
             addGestureRecognizer(tapGesture)
-            
-            iconImageView.addConstraints(fromStringArray: ["V:|[$self]|",
-                                                           "H:|[$self]"])
-            rateTitleLabel.addConstraints(fromStringArray: ["H:[$view0]-16-[$self]"],
-                                          views: [iconImageView])
             rateTitleLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
+            rateTitleLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]"],
+                                          views: [iconImageView])
             for index in 0..<5 {
                 let starView = KPBounceView.init(R.image.icon_star()!)
                 starView.iconSize = CGSize(width: 24, height: 24)

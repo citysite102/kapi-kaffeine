@@ -117,7 +117,7 @@ class KPInformationViewController: KPViewController {
         }
         
         let cancelButton = UIAlertAction(title: "取消",
-                                         style: .cancel) { (_) in
+                                         style: .destructive) { (_) in
                                             print("取消")
         }
         

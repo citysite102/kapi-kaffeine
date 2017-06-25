@@ -79,7 +79,7 @@ class KPInformationHeaderView: UIView {
                                                     controller.presentModalView()
         });
         
-        commentButton.buttonInfo = HeaderButtonInfo(title: "已評價",
+        commentButton.buttonInfo = HeaderButtonInfo(title: "我要評價",
                                                     info: "29人已留言",
                                                     icon: R.image.icon_comment()!,
                                                     handler: { (headerButton) -> () in
