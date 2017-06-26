@@ -90,9 +90,9 @@ public class KPUserManager {
                                 completion?(false)
                             case .success( _, _, let accessToken):
                                 
-                                let credential = FIRFacebookAuthProvider.credential(withAccessToken: accessToken.authenticationToken)
-                                FIRAuth.auth()?.signIn(with: credential,
-                                                       completion: { (user, error) in
+                                let credential = FacebookAuthProvider.credential(withAccessToken: accessToken.authenticationToken)
+                                Auth.auth().signIn(with: credential,
+                                                   completion: { (user, error) in
                                                         
                                                         if let error = error {
                                                             print("Login error: \(error.localizedDescription)")

@@ -35,9 +35,13 @@ target 'kapi-kaffeine' do
   # Login
   pod 'FacebookCore'
   pod 'FacebookLogin'
-  pod 'FacebookShare', :inhibit_warnings => true
+  # pod 'FacebookShare', :inhibit_warnings => true
+  pod 'FacebookShare', :git => 'https://github.com/1amageek/facebook-sdk-swift'
   pod 'Firebase/Core'
   pod 'Firebase/Auth'
+
+  # Ad
+  pod 'Google-Mobile-Ads-SDK'
 
   swift_version = "3.0"
   pod "PromiseKit", "~> 4.0"

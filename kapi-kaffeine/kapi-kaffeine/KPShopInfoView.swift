@@ -82,14 +82,15 @@ class KPShopInfoView: UIView {
         
         featureContainer = UIView.init()
         addSubview(featureContainer)
-        featureContainer.addConstraints(fromStringArray: ["V:[$view0]-8-[$self]", "H:|-16-[$self]"],
+        featureContainer.addConstraints(fromStringArray: ["V:[$view0]-8-[$self]",
+                                                          "H:|-16-[$self]"],
                                              views: [titleLabel])
         
         openTimeIcon = UIImageView.init(image: R.image.icon_tradehour())
         openTimeIcon.tintColor = KPColorPalette.KPMainColor.mainColor
         addSubview(openTimeIcon)
         openTimeIcon.addConstraints(fromStringArray: ["V:[$view0]-16-[$self(20)]",
-                                                           "H:|-16-[$self(20)]"],
+                                                      "H:|-16-[$self(20)]"],
                                          views: [featureContainer])
         
         openHint = UIView.init()
@@ -97,7 +98,7 @@ class KPShopInfoView: UIView {
         openHint.backgroundColor = KPColorPalette.KPShopStatusColor.opened
         addSubview(openHint)
         openHint.addConstraints(fromStringArray: ["V:[$self(6)]",
-                                                       "H:[$view0]-4-[$self(6)]"],
+                                                  "H:[$view0]-6-[$self(6)]"],
                                      views: [openTimeIcon])
         openHint.addConstraintForCenterAligning(to: openTimeIcon, in: .vertical)
         
@@ -106,7 +107,7 @@ class KPShopInfoView: UIView {
         openLabel.text = "測試"
         openLabel.textColor = KPColorPalette.KPTextColor.grayColor_level1
         addSubview(openLabel)
-        openLabel.addConstraints(fromStringArray: ["H:[$view0]-4-[$self]"],
+        openLabel.addConstraints(fromStringArray: ["H:[$view0]-6-[$self]"],
                                       views: [openHint])
         openLabel.addConstraintForCenterAligning(to: openTimeIcon, in: .vertical)
         
@@ -118,7 +119,8 @@ class KPShopInfoView: UIView {
         otherTimeButton.backgroundColor = KPColorPalette.KPMainColor.mainColor
         otherTimeButton.layer.cornerRadius = 4.0
         addSubview(otherTimeButton)
-        otherTimeButton.addConstraints(fromStringArray: ["H:[$view0]-8-[$self(92)]", "V:[$self(24)]"],
+        otherTimeButton.addConstraints(fromStringArray: ["H:[$view0]-8-[$self(92)]",
+                                                         "V:[$self(24)]"],
                                             views: [openLabel])
         otherTimeButton.addConstraintForCenterAligning(to: openLabel,
                                                             in: .vertical)
@@ -127,7 +129,7 @@ class KPShopInfoView: UIView {
         phoneIcon.tintColor = KPColorPalette.KPMainColor.mainColor
         addSubview(phoneIcon)
         phoneIcon.addConstraints(fromStringArray: ["V:[$view0]-8-[$self(20)]",
-                                                        "H:|-16-[$self(20)]"],
+                                                   "H:|-16-[$self(20)]"],
                                          views: [openTimeIcon])
         
         phoneLabel = UILabel.init()
@@ -135,7 +137,7 @@ class KPShopInfoView: UIView {
         phoneLabel.text = "測試"
         phoneLabel.textColor = KPColorPalette.KPTextColor.grayColor_level1
         addSubview(phoneLabel)
-        phoneLabel.addConstraints(fromStringArray: ["H:[$view0]-4-[$self]"],
+        phoneLabel.addConstraints(fromStringArray: ["H:[$view0]-6-[$self]"],
                                       views: [phoneIcon])
         phoneLabel.addConstraintForCenterAligning(to: phoneIcon,
                                                        in: .vertical)
@@ -144,7 +146,7 @@ class KPShopInfoView: UIView {
         locationIcon.tintColor = KPColorPalette.KPMainColor.mainColor
         addSubview(locationIcon)
         locationIcon.addConstraints(fromStringArray: ["V:[$view0]-8-[$self(20)]",
-                                                           "H:|-16-[$self(20)]"],
+                                                      "H:|-16-[$self(20)]"],
                                       views: [phoneIcon])
         
         locationLabel = UILabel.init()

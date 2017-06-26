@@ -18,6 +18,9 @@
 		771EECB31EBC32E4004A34B8 /* KPCheckBoxRadioPathGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771EECB21EBC32E4004A34B8 /* KPCheckBoxRadioPathGenerator.swift */; };
 		771F90B11EF1976B00D66C14 /* KPFavoriteRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771F90B01EF1976B00D66C14 /* KPFavoriteRequest.swift */; };
 		771F90B31EF2424900D66C14 /* KPShadowButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771F90B21EF2424900D66C14 /* KPShadowButton.swift */; };
+		7720D02D1F01402700E00F0B /* KPMainListNativeAppInstallAdCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7720D02C1F01402700E00F0B /* KPMainListNativeAppInstallAdCell.swift */; };
+		7720D02F1F01403900E00F0B /* KPMainListNativeContentAdCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7720D02E1F01403900E00F0B /* KPMainListNativeContentAdCell.swift */; };
+		7720D0311F01479100E00F0B /* KPMainListNativeExpressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7720D0301F01479100E00F0B /* KPMainListNativeExpressCell.swift */; };
 		772748421ED5D21A00C42FB6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 772748411ED5D21A00C42FB6 /* GoogleService-Info.plist */; };
 		772748441ED5F81300C42FB6 /* KPUserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772748431ED5F81300C42FB6 /* KPUserManager.swift */; };
 		772C538A1ECBFE5600C88798 /* KPViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772C53891ECBFE5600C88798 /* KPViewController.swift */; };
@@ -177,6 +180,9 @@
 		771EECB21EBC32E4004A34B8 /* KPCheckBoxRadioPathGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPCheckBoxRadioPathGenerator.swift; sourceTree = "<group>"; };
 		771F90B01EF1976B00D66C14 /* KPFavoriteRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPFavoriteRequest.swift; sourceTree = "<group>"; };
 		771F90B21EF2424900D66C14 /* KPShadowButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPShadowButton.swift; sourceTree = "<group>"; };
+		7720D02C1F01402700E00F0B /* KPMainListNativeAppInstallAdCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPMainListNativeAppInstallAdCell.swift; sourceTree = "<group>"; };
+		7720D02E1F01403900E00F0B /* KPMainListNativeContentAdCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPMainListNativeContentAdCell.swift; sourceTree = "<group>"; };
+		7720D0301F01479100E00F0B /* KPMainListNativeExpressCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPMainListNativeExpressCell.swift; sourceTree = "<group>"; };
 		772748411ED5D21A00C42FB6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		772748431ED5F81300C42FB6 /* KPUserManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPUserManager.swift; sourceTree = "<group>"; };
 		772C53891ECBFE5600C88798 /* KPViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPViewController.swift; sourceTree = "<group>"; };
@@ -965,6 +971,9 @@
 				776ACB051E9BE33A00B629A2 /* KPMainListTableViewCell.swift */,
 				776ACB071E9BE51600B629A2 /* KPMainListCellFeatureContainer.swift */,
 				77F718261ED1A5C800755AA2 /* KPDefaultLoadingTableCell.swift */,
+				7720D02C1F01402700E00F0B /* KPMainListNativeAppInstallAdCell.swift */,
+				7720D02E1F01403900E00F0B /* KPMainListNativeContentAdCell.swift */,
+				7720D0301F01479100E00F0B /* KPMainListNativeExpressCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -1205,8 +1214,10 @@
 				77A2019D1EBC5D1D00F3497F /* KPCheckboxCheckPathGenerator.swift in Sources */,
 				77B66FB51EAFC46B008B6652 /* KPUserProfileViewController.swift in Sources */,
 				77C0E10A1E9D493400398852 /* KPShopCommentInfoView.swift in Sources */,
+				7720D0311F01479100E00F0B /* KPMainListNativeExpressCell.swift in Sources */,
 				77F718271ED1A5C800755AA2 /* KPDefaultLoadingTableCell.swift in Sources */,
 				77C594AB1ECB170000118947 /* KPNewCommentController.swift in Sources */,
+				7720D02D1F01402700E00F0B /* KPMainListNativeAppInstallAdCell.swift in Sources */,
 				77421FB01EB8EE0C00064FF0 /* KPNomadRequest.swift in Sources */,
 				77C0E0FF1E9D48BC00398852 /* KPInformationSharedInfoView.swift in Sources */,
 				77C594B11ECB754900118947 /* KPLoadingView.swift in Sources */,
@@ -1218,6 +1229,7 @@
 				77B66FAE1EAD07F3008B6652 /* KPModalViewController.swift in Sources */,
 				77C0E1021E9D48E000398852 /* KPShopInfoView.swift in Sources */,
 				77B66FB01EAD17DA008B6652 /* KPSettingViewController.swift in Sources */,
+				7720D02F1F01403900E00F0B /* KPMainListNativeContentAdCell.swift in Sources */,
 				77C0E1051E9D48F500398852 /* KPShopLocationInfoView.swift in Sources */,
 				77BB392A1ED3DD5700958AFE /* KPThirdIntroView.swift in Sources */,
 				771F90B31EF2424900D66C14 /* KPShadowButton.swift in Sources */,

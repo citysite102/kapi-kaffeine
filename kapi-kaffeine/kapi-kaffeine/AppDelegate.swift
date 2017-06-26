@@ -11,6 +11,7 @@ import GoogleMaps
 import GooglePlaces
 import FacebookCore
 import Firebase
+import GoogleMobileAds
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -34,7 +35,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
         // Firebase
-        FIRApp.configure()
+        FirebaseApp.configure()
+        
+        // Ads
+        GADMobileAds.configure(withApplicationID: "ca-app-pub-3383422855659572~7972797640")
         
         // Navigation Custom Settings
         let navigationBarAppearace = UINavigationBar.appearance()
