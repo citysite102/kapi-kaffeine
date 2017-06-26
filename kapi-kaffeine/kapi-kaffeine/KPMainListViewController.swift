@@ -21,6 +21,7 @@ class KPMainListViewController:
     static let KPMainListViewLoadingCellReuseIdentifier = "cell_loading"
     static let KPMainListViewAdCellReuseIdentifier = "cell_ad"
     static let adInterval = 12
+    static let concurrentAdsCount = 20
     static let adViewHeight = CGFloat(135)
     
     weak var mainController:KPMainViewController!
@@ -117,17 +118,19 @@ class KPMainListViewController:
                                                     height: KPMainListViewController.adViewHeight))
 
             
-            guard let adView = GADNativeExpressAdView.init(adSize: adSize) else {
-                print("GADNativeExpressAdView failed to initialize at index \(index)")
-                return
+            if adsToLoad.count < KPMainListViewController.concurrentAdsCount {
+                guard let adView = GADNativeExpressAdView.init(adSize: adSize) else {
+                    print("GADNativeExpressAdView failed to initialize at index \(index)")
+                    return
+                }
+                adView.adUnitID = "ca-app-pub-3940256099942544/2562852117"
+                adView.rootViewController = self
+                adView.delegate = self
+                
+                displayDataModel.insert(adView, at: index)
+                adsToLoad.append(adView)
+                loadStateForAds[adView] = false
             }
-            adView.adUnitID = "ca-app-pub-3940256099942544/2562852117"
-            adView.rootViewController = self
-            adView.delegate = self
-            
-            displayDataModel.insert(adView, at: index)
-            adsToLoad.append(adView)
-            loadStateForAds[adView] = false
             index += KPMainListViewController.adInterval
         }
     }

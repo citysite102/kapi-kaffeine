@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseDatabase
 
 class KPSearchViewController: KPViewController {
 
@@ -15,6 +16,8 @@ class KPSearchViewController: KPViewController {
     
     weak var mainListController: KPMainListViewController!
     
+    var ref: DatabaseReference!
+
     var dismissButton:UIButton!
     var tableView: UITableView!
     var searchController: UISearchController!
@@ -27,7 +30,8 @@ class KPSearchViewController: KPViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.view.backgroundColor = UIColor.white
+        view.backgroundColor = UIColor.white
+        ref = Database.database().reference()
         
         dismissButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 24, height: 24))
         dismissButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4)
@@ -61,6 +65,7 @@ class KPSearchViewController: KPViewController {
         tableView.allowsSelection = true
         
         configureSearchController()
+        readSearchData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -76,6 +81,15 @@ class KPSearchViewController: KPViewController {
         searchController.searchBar.delegate = self
         searchController.hidesNavigationBarDuringPresentation = false
         self.navigationItem.titleView = searchController.searchBar
+    }
+    
+    func readSearchData() {
+        
+        ref.child("all_of_user").child("searchHistories").observeSingleEvent(of: .value, with: { (snapshot) in
+            let value = snapshot.value as? NSArray
+        }) { (error) in
+            print(error.localizedDescription)
+        }
     }
     
     

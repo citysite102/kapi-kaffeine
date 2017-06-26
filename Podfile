@@ -39,6 +39,7 @@ target 'kapi-kaffeine' do
   pod 'FacebookShare', :git => 'https://github.com/1amageek/facebook-sdk-swift'
   pod 'Firebase/Core'
   pod 'Firebase/Auth'
+  pod 'Firebase/Database'
 
   # Ad
   pod 'Google-Mobile-Ads-SDK'
