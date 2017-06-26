@@ -106,6 +106,17 @@ class KPSettingViewController: KPViewController {
                                                 cellStyle:.button,
                                                 handler:nil)];
     }
+    
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        UIView.animate(withDuration: 0.1) {
+            self.setNeedsStatusBarAppearanceUpdate()
+        }
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

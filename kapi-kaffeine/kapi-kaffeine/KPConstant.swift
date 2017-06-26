@@ -86,6 +86,11 @@ extension UIDevice {
         return size.width < 600 || size.height < 600
     }
     
+    var isSuperCompact: Bool {
+        let size = UIScreen.main.bounds.size
+        return size.width < 350 || size.height < 350
+    }
+    
     enum ScreenType: String {
         case iPhone4
         case iPhone5

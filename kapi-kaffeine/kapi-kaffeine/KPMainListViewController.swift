@@ -110,6 +110,15 @@ class KPMainListViewController:
     }
     
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.snapShotShowing = false
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+    }
+    
     func addNativeExpressAds() {
         var index = KPMainListViewController.adInterval
         tableView.layoutIfNeeded()
@@ -226,6 +235,7 @@ extension KPMainListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let dataModel = self.displayDataModel[indexPath.row] as? KPDataModel {
             self.currentDataModel = dataModel
+            self.snapShotShowing = true
             self.mainController.performSegue(withIdentifier: "datailedInformationSegue", sender: self)
         }
     }

@@ -57,7 +57,7 @@ class KPPhotoDisplayViewController: KPViewController {
     
     
     override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
-        return .slide
+        return .fade
     }
     
     override var prefersStatusBarHidden: Bool {
