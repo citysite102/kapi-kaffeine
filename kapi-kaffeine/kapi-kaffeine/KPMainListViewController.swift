@@ -117,6 +117,7 @@ class KPMainListViewController:
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        print("Appear")
     }
     
     func addNativeExpressAds() {

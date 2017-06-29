@@ -56,24 +56,9 @@ class KPMainMapViewCollectionCell: UICollectionViewCell {
         }
     }
     
-//    var shopOpened: Bool = true {
-//        didSet {
-//            self.shopStatusHint.backgroundColor = shopOpened ?
-//                KPColorPalette.KPShopStatusColor.opened :
-//                KPColorPalette.KPShopStatusColor.closed
-//        }
-//    }
-//    var shopStatusContent: String = "營業中" {
-//        didSet {
-//            self.shopStatusLabel.text = self.shopOpened ?
-//                "營業中"+shopStatusContent :
-//                "休息中"+shopStatusContent;
-//        }
-//    }
-    
     var shopImageView: UIImageView!
-    var shopNameLabel: KPMainListCellNormalLabel!
-    var shopDistanceLabel: KPMainListCellNormalLabel!
+    var shopNameLabel: KPLayerLabel!
+    var shopDistanceLabel: KPLayerLabel!
     var scoreLabel: KPMainListCellScoreLabel!
     
     private var shopStatusHint: UIView!
@@ -99,7 +84,7 @@ class KPMainMapViewCollectionCell: UICollectionViewCell {
         shopImageView.addConstraints(fromStringArray: ["H:|-8-[$self(64)]",
                                                             "V:|-8-[$self(64)]-8-|"]);
         
-        self.shopNameLabel = KPMainListCellNormalLabel();
+        self.shopNameLabel = KPLayerLabel();
         self.shopNameLabel.font = UIFont.systemFont(ofSize: 14.0);
         self.shopNameLabel.textColor = KPColorPalette.KPTextColor.grayColor;
         self.shopNameLabel.text = "覺旅咖啡";
@@ -119,7 +104,7 @@ class KPMainMapViewCollectionCell: UICollectionViewCell {
                                            views: [self.shopImageView,
                                                    self.shopNameLabel]);
         
-        self.shopStatusLabel = UILabel();
+        self.shopStatusLabel = KPLayerLabel();
         self.shopStatusLabel.font = UIFont.systemFont(ofSize: 12.0);
         self.shopStatusLabel.textColor = KPColorPalette.KPTextColor.mainColor;
         self.shopStatusLabel.text = "營業中 12:00-21:00";
@@ -130,7 +115,7 @@ class KPMainMapViewCollectionCell: UICollectionViewCell {
                                                     self.shopNameLabel]);
         self.shopStatusLabel.addConstraintForCenterAligning(to: self.shopStatusHint, in: .vertical);
         
-        self.shopDistanceLabel = KPMainListCellNormalLabel();
+        self.shopDistanceLabel = KPLayerLabel();
         self.shopDistanceLabel.font = UIFont.systemFont(ofSize: 20.0);
         self.shopDistanceLabel.textColor = KPColorPalette.KPTextColor.mainColor;
         self.shopDistanceLabel.text = "-";

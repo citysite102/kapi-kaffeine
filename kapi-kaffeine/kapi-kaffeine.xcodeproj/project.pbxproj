@@ -115,6 +115,7 @@
 		77F718251ED190AB00755AA2 /* KPCountrySelectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F718241ED190AB00755AA2 /* KPCountrySelectCell.swift */; };
 		77F718271ED1A5C800755AA2 /* KPDefaultLoadingTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F718261ED1A5C800755AA2 /* KPDefaultLoadingTableCell.swift */; };
 		77F718341ED33DF300755AA2 /* KPIntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F718331ED33DF300755AA2 /* KPIntroViewController.swift */; };
+		77FA64B21F04D9DB00D0767A /* KPLayerLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77FA64B11F04D9DA00D0767A /* KPLayerLabel.swift */; };
 		77FB63961E9AA7BB00FFC3DC /* KPDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77FB63951E9AA7BB00FFC3DC /* KPDataModel.swift */; };
 		77FBE95B1ECC926C00EBBB9B /* KPFeatureTagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77FBE95A1ECC926C00EBBB9B /* KPFeatureTagCell.swift */; };
 		77FBE95D1ECCABD000EBBB9B /* KPFeatureTagLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77FBE95C1ECCABD000EBBB9B /* KPFeatureTagLayout.swift */; };
@@ -278,6 +279,7 @@
 		77F718241ED190AB00755AA2 /* KPCountrySelectCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPCountrySelectCell.swift; sourceTree = "<group>"; };
 		77F718261ED1A5C800755AA2 /* KPDefaultLoadingTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPDefaultLoadingTableCell.swift; sourceTree = "<group>"; };
 		77F718331ED33DF300755AA2 /* KPIntroViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPIntroViewController.swift; sourceTree = "<group>"; };
+		77FA64B11F04D9DA00D0767A /* KPLayerLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPLayerLabel.swift; sourceTree = "<group>"; };
 		77FB63951E9AA7BB00FFC3DC /* KPDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPDataModel.swift; sourceTree = "<group>"; };
 		77FBE95A1ECC926C00EBBB9B /* KPFeatureTagCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPFeatureTagCell.swift; sourceTree = "<group>"; };
 		77FBE95C1ECCABD000EBBB9B /* KPFeatureTagLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPFeatureTagLayout.swift; sourceTree = "<group>"; };
@@ -702,6 +704,7 @@
 			isa = PBXGroup;
 			children = (
 				77B66FA81EACF74C008B6652 /* KPPopoverSensingView.swift */,
+				77FA64B11F04D9DA00D0767A /* KPLayerLabel.swift */,
 			);
 			name = "Shared View";
 			sourceTree = "<group>";
@@ -1248,6 +1251,7 @@
 				77BB392C1ED3DD6000958AFE /* KPForthIntroView.swift in Sources */,
 				774208F91EA675C800C78A00 /* KPCommentModel.swift in Sources */,
 				C00A6E111ECADE3700A05C9A /* KPTimePickerViewController.swift in Sources */,
+				77FA64B21F04D9DB00D0767A /* KPLayerLabel.swift in Sources */,
 				77BFC5561EB757E800610F55 /* KPResponseModel.swift in Sources */,
 				C0B49D971EA13BC100BA95D8 /* KPMainMapViewCollectionCell.swift in Sources */,
 				776ACB061E9BE33A00B629A2 /* KPMainListTableViewCell.swift in Sources */,

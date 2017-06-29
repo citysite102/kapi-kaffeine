@@ -47,7 +47,7 @@ class KPShopInfoView: UIView {
                 }
                 
                 
-                let contentLabel = UILabel.init()
+                let contentLabel = KPLayerLabel()
                 
                 contentLabel.font = UIFont.systemFont(ofSize: 12.0)
                 contentLabel.textColor = KPColorPalette.KPTextColor.mainColor
@@ -62,19 +62,18 @@ class KPShopInfoView: UIView {
     
     var openTimeIcon: UIImageView!
     var openHint: UIView!
-    var openLabel: UILabel!
+    var openLabel: KPLayerLabel!
     var otherTimeButton: UIButton!
     var phoneIcon: UIImageView!
-    var phoneLabel: UILabel!
+    var phoneLabel: KPLayerLabel!
     var locationIcon: UIImageView!
-    var locationLabel: UILabel!
+    var locationLabel: KPLayerLabel!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        titleLabel = UILabel.init()
+        titleLabel = KPLayerLabel()
         titleLabel.font = UIFont.systemFont(ofSize: 16)
-        titleLabel.text = "測試"
         titleLabel.textColor = KPColorPalette.KPTextColor.grayColor_level1
         addSubview(titleLabel)
         titleLabel.addConstraints(fromStringArray: ["V:|-16-[$self]",
@@ -102,9 +101,8 @@ class KPShopInfoView: UIView {
                                      views: [openTimeIcon])
         openHint.addConstraintForCenterAligning(to: openTimeIcon, in: .vertical)
         
-        openLabel = UILabel.init()
+        openLabel = KPLayerLabel()
         openLabel.font = UIFont.systemFont(ofSize: 14)
-        openLabel.text = "測試"
         openLabel.textColor = KPColorPalette.KPTextColor.grayColor_level1
         addSubview(openLabel)
         openLabel.addConstraints(fromStringArray: ["H:[$view0]-6-[$self]"],
@@ -132,9 +130,8 @@ class KPShopInfoView: UIView {
                                                    "H:|-16-[$self(20)]"],
                                          views: [openTimeIcon])
         
-        phoneLabel = UILabel.init()
+        phoneLabel = KPLayerLabel()
         phoneLabel.font = UIFont.systemFont(ofSize: 14)
-        phoneLabel.text = "測試"
         phoneLabel.textColor = KPColorPalette.KPTextColor.grayColor_level1
         addSubview(phoneLabel)
         phoneLabel.addConstraints(fromStringArray: ["H:[$view0]-6-[$self]"],
@@ -149,9 +146,8 @@ class KPShopInfoView: UIView {
                                                       "H:|-16-[$self(20)]"],
                                       views: [phoneIcon])
         
-        locationLabel = UILabel.init()
+        locationLabel = KPLayerLabel()
         locationLabel.font = UIFont.systemFont(ofSize: 14)
-        locationLabel.text = "測試"
         locationLabel.textColor = KPColorPalette.KPTextColor.grayColor_level1
         addSubview(locationLabel)
         locationLabel.addConstraints(fromStringArray: ["H:[$view0]-4-[$self]"],

@@ -170,6 +170,7 @@ class KPMainViewController: KPViewController {
         }
         
         self.opacityView.isHidden = false
+        self.mainListViewController?.snapShotShowing = true
         present(SideMenuManager.menuLeftNavigationController!,
                 animated: true, completion: nil)
     }
@@ -357,12 +358,13 @@ class KPMainViewController: KPViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "datailedInformationSegue" {
             let toViewController = segue.destination as UIViewController
-            toViewController.transitioningDelegate = self
             let destinationNavigationController = segue.destination as! UINavigationController
             let targetController = destinationNavigationController.topViewController as! KPInformationViewController
+            
+            toViewController.transitioningDelegate = self
             targetController.informationDataModel = (sender as! KPMainViewControllerDelegate).selectedDataModel
             
-            self.addScreenEdgePanGestureRecognizer(view: toViewController.view, edges: .left)
+            addScreenEdgePanGestureRecognizer(view: toViewController.view, edges: .left)
         }
     }
     

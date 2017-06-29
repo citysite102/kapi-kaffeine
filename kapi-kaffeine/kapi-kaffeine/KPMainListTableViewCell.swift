@@ -77,8 +77,8 @@ class KPMainListTableViewCell: UITableViewCell {
     }
     
     var shopImageView: UIImageView!
-    var shopNameLabel: KPMainListCellNormalLabel!
-    var shopDistanceLabel: KPMainListCellNormalLabel!
+    var shopNameLabel: KPLayerLabel!
+    var shopDistanceLabel: KPLayerLabel!
     var scoreLabel: KPMainListCellScoreLabel!
     
     private var shopStatusHint: UIView!
@@ -99,7 +99,7 @@ class KPMainListTableViewCell: UITableViewCell {
         shopImageView.addConstraints(fromStringArray: ["H:|-8-[$self(56)]",
                                                        "V:|-12-[$self(56)]-12-|"]);
         
-        shopNameLabel = KPMainListCellNormalLabel();
+        shopNameLabel = KPLayerLabel();
         shopNameLabel.font = UIFont.systemFont(ofSize: 14.0);
         shopNameLabel.textColor = KPColorPalette.KPTextColor.grayColor;
         shopNameLabel.isOpaque = true
@@ -121,7 +121,7 @@ class KPMainListTableViewCell: UITableViewCell {
                                           views: [shopImageView,
                                                   shopNameLabel]);
         
-        shopStatusLabel = UILabel();
+        shopStatusLabel = KPLayerLabel();
         shopStatusLabel.font = UIFont.systemFont(ofSize: 12.0);
         shopStatusLabel.textColor = KPColorPalette.KPTextColor.grayColor;
         shopStatusLabel.text = "營業時間 未知";
@@ -134,7 +134,7 @@ class KPMainListTableViewCell: UITableViewCell {
                                                     shopNameLabel]);
         shopStatusLabel.addConstraintForCenterAligning(to: shopStatusHint, in: .vertical);
         
-        shopDistanceLabel = KPMainListCellNormalLabel();
+        shopDistanceLabel = KPLayerLabel();
         shopDistanceLabel.font = UIFont.systemFont(ofSize: 20.0);
         shopDistanceLabel.textColor = KPColorPalette.KPTextColor.mainColor;
         shopDistanceLabel.text = "0m";
@@ -177,14 +177,6 @@ class KPMainListTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 }
-
-class KPMainListCellNormalLabel: UILabel {
-    
-    override func drawText(in rect: CGRect) {
-        super.drawText(in: UIEdgeInsetsInsetRect(rect, UIEdgeInsetsMake(0, 0, 0, 0)));
-    }
-}
-
 
 class KPMainListCellScoreLabel: UILabel {
     

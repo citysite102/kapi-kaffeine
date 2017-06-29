@@ -50,13 +50,14 @@ class KPInformationDismissTransition: NSObject, UIViewControllerAnimatedTransiti
                         opacityView.alpha = 0.0;
                         toVC.view.transform = CGAffineTransform(scaleX: 1.0, y: 1.0);
         }) { (finish) in
-        
-            if (transitionContext.transitionWasCancelled) {
-                opacityView.removeFromSuperview();
+            DispatchQueue.main.async {
+                if (transitionContext.transitionWasCancelled) {
+                    opacityView.removeFromSuperview();
+                }
+                transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
+                fromVC.view.layer.shouldRasterize = false
+                toVC.view.layer.shouldRasterize = false
             }
-            transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
-            fromVC.view.layer.shouldRasterize = false
-            toVC.view.layer.shouldRasterize = false
         }
     }
     
