@@ -13,7 +13,25 @@ struct KPNewStoreControllerConstants {
     static let leftPadding = 168
 }
 
-class KPNewStoreController: KPViewController {
+class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardProtocol {
+    
+    var _scrollContainerView: UIView {
+        get {
+            return containerView
+        }
+    }
+    
+    var _activeTextField: UITextField? {
+        get {
+            return activeTextField
+        }
+    }
+    
+    var _scrollView: UIScrollView {
+        get {
+            return scrollView
+        }
+    }
 
     var dismissButton: KPBounceButton!
     var sendButton: UIButton!
@@ -41,6 +59,8 @@ class KPNewStoreController: KPViewController {
     var citySubTitleView: KPSubTitleEditView!
     var featureSubTitleView: KPSubTitleEditView!
     var sizingCell: KPFeatureTagCell!
+    
+    var activeTextField: UITextField?
     
     var addressSubTitleView: KPSubTitleEditView!
     var phoneSubTitleView: KPSubTitleEditView!
@@ -276,6 +296,7 @@ class KPNewStoreController: KPViewController {
                                                       .Edited,
                                                       "店家地址")
         addressSubTitleView.placeHolderContent = "請輸入店家地址"
+        addressSubTitleView.editTextField.delegate = self
         sectionTwoContainer.addSubview(addressSubTitleView)
         addressSubTitleView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                              "V:[$view0]-16-[$self(72)]"],
@@ -286,6 +307,7 @@ class KPNewStoreController: KPViewController {
                                                     "店家電話")
         phoneSubTitleView.placeHolderContent = "請輸入店家電話"
         phoneSubTitleView.inputKeyboardType = .phonePad
+        phoneSubTitleView.editTextField.delegate = self
         sectionTwoContainer.addSubview(phoneSubTitleView)
         phoneSubTitleView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                            "V:[$view0][$self(72)]"],
@@ -295,6 +317,7 @@ class KPNewStoreController: KPViewController {
                                                        .Edited,
                                                        "Facebook 連結")
         facebookSubTitleView.placeHolderContent = "請輸入店家 Facebook 連結"
+        facebookSubTitleView.editTextField.delegate = self
         sectionTwoContainer.addSubview(facebookSubTitleView)
         facebookSubTitleView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                               "V:[$view0][$self(72)]|"],
@@ -307,6 +330,7 @@ class KPNewStoreController: KPViewController {
         containerView.addGestureRecognizer(tapGesture)
         
         
+        registerForNotification()
     }
 
     func handleDismissButtonOnTapped() {
@@ -346,7 +370,22 @@ UICollectionViewDelegateFlowLayout {
                       height: 30)
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        view.endEditing(true)
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        view.endEditing(true)
+//    }
+    
+    
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        activeTextField = textField
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
+        activeTextField = nil
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }

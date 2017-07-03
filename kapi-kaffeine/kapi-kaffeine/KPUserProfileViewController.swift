@@ -73,6 +73,11 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
         self.view.backgroundColor = UIColor.white;
         self.navigationController?.navigationBar.topItem?.title = "個人資料";
         
+//        let editButton = UIButton(type: .custom)
+//        editButton.setImage(R.image.icon_edit(), for: .normal)
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: R.image.icon_edit(), style: UIBarButtonItemStyle.plain, target: self, action: #selector(handleEditButtonOnTapped))
+        
         self.dismissButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 24, height: 24));
         self.dismissButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4);
         self.dismissButton.setImage(UIImage.init(named: "icon_close")?.withRenderingMode(.alwaysTemplate),
@@ -193,6 +198,10 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
     func handleDismissButtonOnTapped() {
         self.appModalController()?.dismissControllerWithDefaultDuration();
     }
+    
+    func handleEditButtonOnTapped() {
+        self.navigationController?.pushViewController(KPUserProfileEditorController(), animated: true)
+    }
 
     
     func tabView(_: KPTabView, didSelectIndex index: Int) {
@@ -243,6 +252,5 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
 //    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
 //       isAnimating = false
 //    }
-    
 
 }
