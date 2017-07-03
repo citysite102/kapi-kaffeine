@@ -39,7 +39,8 @@ class KPInformationHeaderView: UIView {
         self.init(frame: frame);
         self.cafeID = cafeIdentifier
         collectButton.buttonInfo = HeaderButtonInfo(title: "收藏",
-                                                    info: "0人已收藏",
+                                                    info: "%d人已收藏",
+                                                    defaultInfo: "無人收藏",
                                                     icon: R.image.icon_collect()!,
                                                     handler: { (headerButton) -> () in
                                                         headerButton.selected = !(headerButton.selected)
@@ -52,7 +53,8 @@ class KPInformationHeaderView: UIView {
         });
         
         checkButton.buttonInfo = HeaderButtonInfo(title: "我要打卡",
-                                                  info: "194人來做",
+                                                  info: "%d人來做",
+                                                  defaultInfo: "無人打卡",
                                                   icon: R.image.icon_map()!,
                                                   handler: { (headerButton) -> () in
                                                     headerButton.selected = !(headerButton.selected)
@@ -65,7 +67,8 @@ class KPInformationHeaderView: UIView {
         });
         
         rateButton.buttonInfo = HeaderButtonInfo(title: "我要評分",
-                                                 info: "尚無評分",
+                                                 info: "%d人已評分",
+                                                 defaultInfo: "尚無評分",
                                                  icon: R.image.icon_star()!,
                                                  handler: { (headerButton) -> () in
                                                     let controller = KPModalViewController()
@@ -80,7 +83,8 @@ class KPInformationHeaderView: UIView {
         });
         
         commentButton.buttonInfo = HeaderButtonInfo(title: "我要評價",
-                                                    info: "29人已留言",
+                                                    info: "%d人已留言",
+                                                    defaultInfo: "尚無評價",
                                                     icon: R.image.icon_comment()!,
                                                     handler: { (headerButton) -> () in
                                                         let newCommentViewController = KPNewCommentController()

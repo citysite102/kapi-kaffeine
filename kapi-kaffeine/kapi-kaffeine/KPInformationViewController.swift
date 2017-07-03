@@ -139,8 +139,19 @@ class KPInformationViewController: KPViewController {
         informationHeaderView.delegate = self
         informationHeaderView.informationController = self
         if let photoURL = informationDataModel.photos?["google_l"] {
+            
             informationHeaderView.shopPhoto.af_setImage(withURL: URL(string: photoURL)!,
-                                                        placeholderImage: R.image.demo_1())
+                                                        placeholderImage: R.image.demo_1()!,
+                                                        filter: nil,
+                                                        progress: nil,
+                                                            progressQueue: DispatchQueue.global(),
+                                                            imageTransition: UIImageView.ImageTransition.crossDissolve(0.2),
+                                                            runImageTransitionIfCached: true,
+                                                            completion: { response in
+                                                                if let responseImage = response.result.value {
+                                                                    self.informationHeaderView.shopPhoto.image =  responseImage
+                                                                }
+                })
         }
         //informationDataModel
         scrollContainer.addSubview(informationHeaderView)

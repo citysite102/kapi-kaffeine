@@ -30,7 +30,7 @@ class KPMainListTableViewCell: UITableViewCell {
                                                filter: nil,
                                                progress: nil,
                                                progressQueue: DispatchQueue.global(),
-                                               imageTransition: UIImageView.ImageTransition.crossDissolve(0.1),
+                                               imageTransition: UIImageView.ImageTransition.crossDissolve(0.2),
                                                runImageTransitionIfCached: true,
                                                completion: { response in
                                                 if let responseImage = response.result.value {

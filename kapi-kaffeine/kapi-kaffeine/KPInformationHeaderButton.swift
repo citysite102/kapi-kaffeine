@@ -9,8 +9,9 @@
 import UIKit
 
 struct HeaderButtonInfo {
-    let title: String
-    let info: String
+    let title: String!
+    let info: String!
+    let defaultInfo: String!
     let icon: UIImage
     let handler: (_ headerButton: KPInformationHeaderButton) -> ()
 }
@@ -21,7 +22,37 @@ class KPInformationHeaderButton: UIView {
     var bounceDuration: Double = 0.5
     var icon: UIImageView!
     var titleLabel: UILabel!
-    var infoLable: UILabel!
+    var infoLabel: UILabel!
+    
+    var numberValue: Int = 0 {
+        didSet {
+            
+            if numberValue == 0 {
+                self.infoLabel.text = self.buttonInfo.defaultInfo
+            } else {
+                let transition: CATransition = CATransition()
+                transition.type = kCATransitionPush
+                transition.duration = 0.2
+                transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+                transition.subtype = numberValue > oldValue ? kCATransitionFromTop : kCATransitionFromBottom
+                
+                self.infoLabel.layer.add(transition,
+                                         forKey: kCATransition)
+                if oldValue == 0 {
+                    self.infoLabel.text = (self.infoLabel.text! as
+                        NSString).replacingOccurrences(of: self.buttonInfo.defaultInfo,
+                                                       with:
+                            (buttonInfo.info as NSString).replacingOccurrences(of: "%d",
+                                                                               with: "\(numberValue)"))
+                } else {
+                    self.infoLabel.text = (self.infoLabel.text! as
+                        NSString).replacingOccurrences(of: "\(oldValue)",
+                            with: "\(numberValue)")
+                }
+            }
+        }
+    }
+    
     var handler: ((_ headerButton: KPInformationHeaderButton) -> ())!
     var selected: Bool = false {
         didSet {
@@ -31,14 +62,17 @@ class KPInformationHeaderButton: UIView {
             self.titleLabel.textColor = selected ?
                 KPColorPalette.KPTextColor.mainColor :
                 KPColorPalette.KPMainColor.grayColor_level3
+            self.numberValue = self.numberValue+1
         }
     }
     
-    var buttonInfo: HeaderButtonInfo? {
+    var buttonInfo: HeaderButtonInfo! {
         didSet {
             self.icon.image = buttonInfo?.icon
-            self.titleLabel.text = buttonInfo?.title
-            self.infoLable.text = buttonInfo?.info
+            self.titleLabel.text = buttonInfo.title
+            self.infoLabel.text = buttonInfo.defaultInfo
+//            self.infoLabel.text = (buttonInfo.info as NSString).replacingOccurrences(of: "%d",
+//                                                                                     with: "\(numberValue)")
             self.handler = buttonInfo?.handler
         }
     }
@@ -67,12 +101,12 @@ class KPInformationHeaderButton: UIView {
         titleLabel.addConstraint(from: "V:[$view0]-4-[$self]",
                                  views: [icon])
         
-        infoLable = UILabel.init()
-        infoLable.font = UIFont.systemFont(ofSize: 11)
-        infoLable.textColor = KPColorPalette.KPMainColor.grayColor_level3
-        addSubview(infoLable)
-        infoLable.addConstraintForCenterAligningToSuperview(in: .horizontal)
-        infoLable.addConstraint(from: "V:[$view0]-4-[$self]",
+        infoLabel = UILabel.init()
+        infoLabel.font = UIFont.systemFont(ofSize: 11)
+        infoLabel.textColor = KPColorPalette.KPMainColor.grayColor_level3
+        addSubview(infoLabel)
+        infoLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
+        infoLabel.addConstraint(from: "V:[$view0]-4-[$self]",
                                 views: [titleLabel])
     }
     
