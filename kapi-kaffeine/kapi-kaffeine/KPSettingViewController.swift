@@ -28,6 +28,7 @@ class KPSettingViewController: KPViewController {
     
     var dismissButton:UIButton!
     var tableView: UITableView!
+    var satisficationView: KPSatisficationView!
     var settingDataContents: [settingData]!
     
     static let KPSettingViewInfoCellReuseIdentifier = "cell";
@@ -99,6 +100,10 @@ class KPSettingViewController: KPViewController {
                                                                                              right: 0);
                                                     let introController = KPIntroViewController()
                                                     self.appModalController()?.present(introController, animated: true, completion: nil)
+                                                    
+                                                    if let index = self.tableView.indexPathForSelectedRow {
+                                                        self.tableView.deselectRow(at: index, animated: false)
+                                                    }
                                     }),
                                     settingData(title:"協助填寫問卷，幫助讓產品更好",
                                                 information:nil,
@@ -165,7 +170,9 @@ extension KPSettingViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.settingDataContents[indexPath.row].handler!()
+        if let handler = self.settingDataContents[indexPath.row].handler {
+            handler()
+        }
     }
     
     

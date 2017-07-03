@@ -26,6 +26,7 @@ class KPMainListViewController:
     
     weak var mainController:KPMainViewController!
     var tableView: UITableView!
+    var satisficationView: KPSatisficationView!
     var adLoader: GADAdLoader!
     
     var currentDataModel:KPDataModel?
@@ -107,6 +108,8 @@ class KPMainListViewController:
                                     views: [searchFooterView])
         
         view.bringSubview(toFront: searchFooterView)
+        
+        satisficationView = KPSatisficationView()
     }
     
     
@@ -161,6 +164,7 @@ class KPMainListViewController:
     func searchFooterView(_ searchFooterView: KPSearchFooterView,
                           didSelectItemWith name: String) {
         print("Footer Name:\(name)")
+        satisficationView.showSatisfication()
     }
 }
 

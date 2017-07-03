@@ -54,7 +54,7 @@ class KPThirdIntroView: KPSharedIntroView {
         fifthPopImageView.addConstraintForAligning(to: .top, of: forthPopImageView, constant: 0)
         fifthPopImageView.addConstraintForAligning(to: .right, of: forthPopImageView, constant: 56)
         
-        fifthPopImageView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+//        fifthPopImageView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
         
         introTitleLabel.text = "快速找到目的地"
         introDescriptionLabel.textAlignment = .center
@@ -64,16 +64,16 @@ class KPThirdIntroView: KPSharedIntroView {
     
     func showPopContents() {
         
-        UIView.animate(withDuration: 0.5,
-                       delay: 0,
-                       usingSpringWithDamping: 0.5,
-                       initialSpringVelocity: 0.8,
-                       options: .curveEaseOut,
-                       animations: {
-                        self.fifthPopImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        }) { (_) in
-            
-        }
+//        UIView.animate(withDuration: 0.5,
+//                       delay: 0,
+//                       usingSpringWithDamping: 0.5,
+//                       initialSpringVelocity: 0.8,
+//                       options: .curveEaseOut,
+//                       animations: {
+//                        self.fifthPopImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+//        }) { (_) in
+//            
+//        }
     }
     
     

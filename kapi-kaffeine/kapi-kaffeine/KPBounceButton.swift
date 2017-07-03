@@ -23,15 +23,15 @@ class KPBounceButton: UIButton {
     //----------------------------
     
     override init(frame: CGRect) {
-        super.init(frame: frame);
+        super.init(frame: frame)
     }
     
     convenience init (frame: CGRect, image: UIImage) {
-        self.init(frame: frame);
+        self.init(frame: frame)
         self.setImage(image.withRenderingMode(.alwaysTemplate),
-                      for: .normal);
+                      for: .normal)
         self.setImage(image.withRenderingMode(.alwaysTemplate),
-                      for: .highlighted);
+                      for: .highlighted)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -40,8 +40,8 @@ class KPBounceButton: UIButton {
     
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesBegan(touches, with: event);
-        layer.transform = CATransform3DScale(CATransform3DIdentity, 0.8, 0.8, 1.0);
+        super.touchesBegan(touches, with: event)
+        layer.transform = CATransform3DScale(CATransform3DIdentity, 0.8, 0.8, 1.0)
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -49,8 +49,8 @@ class KPBounceButton: UIButton {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesEnded(touches, with: event);
-        self.performTouchEndAnimation();
+        super.touchesEnded(touches, with: event)
+        self.performTouchEndAnimation()
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -64,7 +64,7 @@ class KPBounceButton: UIButton {
                        initialSpringVelocity: 1,
                        options: UIViewAnimationOptions.beginFromCurrentState,
                        animations: { 
-                        self.layer.transform = CATransform3DIdentity;
+                        self.layer.transform = CATransform3DIdentity
         }) { _ in
             
         }

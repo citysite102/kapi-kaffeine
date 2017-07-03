@@ -52,7 +52,6 @@ class KPSubTitleEditView: UIView {
     }
     
     var customInputAction: (() -> Void)!
-    
     var tapGesture: UITapGestureRecognizer!
     
     private var bType: BorderType!
