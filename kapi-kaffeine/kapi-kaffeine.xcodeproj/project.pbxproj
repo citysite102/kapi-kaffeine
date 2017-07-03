@@ -149,6 +149,7 @@
 		C0409E1F1E954F1A00C302FF /* cafes.json in Resources */ = {isa = PBXBuildFile; fileRef = C0409E1E1E954F1A00C302FF /* cafes.json */; };
 		C055B0051EF0CAEF00C651CC /* KPTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C055B0041EF0CAEF00C651CC /* KPTabView.swift */; };
 		C05CF8781EF8019800F3DF2A /* KPDataBusinessHourModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05CF8771EF8019800F3DF2A /* KPDataBusinessHourModel.swift */; };
+		C0B21FC81F05079100925A89 /* KPUserProfileEditorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B21FC71F05079100925A89 /* KPUserProfileEditorController.swift */; };
 		C0B49D971EA13BC100BA95D8 /* KPMainMapViewCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B49D961EA13BC100BA95D8 /* KPMainMapViewCollectionCell.swift */; };
 		C0EBE5431ECB29800021653E /* KPBusinessHourViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EBE5421ECB29800021653E /* KPBusinessHourViewController.swift */; };
 /* End PBXBuildFile section */
@@ -344,6 +345,7 @@
 		C0409E1E1E954F1A00C302FF /* cafes.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cafes.json; sourceTree = "<group>"; };
 		C055B0041EF0CAEF00C651CC /* KPTabView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPTabView.swift; sourceTree = "<group>"; };
 		C05CF8771EF8019800F3DF2A /* KPDataBusinessHourModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPDataBusinessHourModel.swift; sourceTree = "<group>"; };
+		C0B21FC71F05079100925A89 /* KPUserProfileEditorController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPUserProfileEditorController.swift; sourceTree = "<group>"; };
 		C0B49D961EA13BC100BA95D8 /* KPMainMapViewCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPMainMapViewCollectionCell.swift; sourceTree = "<group>"; };
 		C0EBE5421ECB29800021653E /* KPBusinessHourViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPBusinessHourViewController.swift; sourceTree = "<group>"; };
 		CA73E4544076455C6DC0C065 /* Pods-kapi-kaffeine.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kapi-kaffeine.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-kapi-kaffeine/Pods-kapi-kaffeine.debug.xcconfig"; sourceTree = "<group>"; };
@@ -735,6 +737,7 @@
 				77B66FAF1EAD17DA008B6652 /* KPSettingViewController.swift */,
 				77B66FB21EAF171D008B6652 /* KPAboutUsViewController.swift */,
 				77B66FB41EAFC46B008B6652 /* KPUserProfileViewController.swift */,
+				C0B21FC71F05079100925A89 /* KPUserProfileEditorController.swift */,
 			);
 			name = "Sub Controller";
 			sourceTree = "<group>";
@@ -1071,7 +1074,7 @@
 				TargetAttributes = {
 					C02AFE401E7D260D008FFB33 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = A43Y729CXH;
+						DevelopmentTeam = 4D7RCMZ7F7;
 						ProvisioningStyle = Automatic;
 					};
 					C02AFE541E7D260D008FFB33 = {
@@ -1314,6 +1317,7 @@
 				7776EA621F0A735B0083ECC5 /* KPPopoverView.swift in Sources */,
 				77BFC5501EB73F3E00610F55 /* NetworkRequest.swift in Sources */,
 				778521811EA3C91C00EA59D9 /* KPInformationHeaderButton.swift in Sources */,
+				C0B21FC81F05079100925A89 /* KPUserProfileEditorController.swift in Sources */,
 				77B66FA11EA91477008B6652 /* KPRegionTableViewCell.swift in Sources */,
 				77A2019B1EBC5BF800F3497F /* KPCheckBoxStrokeController.swift in Sources */,
 				773463481ED74AFE00EA78F0 /* KPNomadDataModel.swift in Sources */,
@@ -1493,7 +1497,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = A43Y729CXH;
+				DEVELOPMENT_TEAM = 4D7RCMZ7F7;
 				INFOPLIST_FILE = "kapi-kaffeine/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kapi-kaffeine";
@@ -1510,7 +1514,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = A43Y729CXH;
+				DEVELOPMENT_TEAM = 4D7RCMZ7F7;
 				INFOPLIST_FILE = "kapi-kaffeine/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kapi-kaffeine";
