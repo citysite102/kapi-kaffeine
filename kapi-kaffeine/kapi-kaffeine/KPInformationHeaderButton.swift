@@ -71,8 +71,6 @@ class KPInformationHeaderButton: UIView {
             self.icon.image = buttonInfo?.icon
             self.titleLabel.text = buttonInfo.title
             self.infoLabel.text = buttonInfo.defaultInfo
-//            self.infoLabel.text = (buttonInfo.info as NSString).replacingOccurrences(of: "%d",
-//                                                                                     with: "\(numberValue)")
             self.handler = buttonInfo?.handler
         }
     }

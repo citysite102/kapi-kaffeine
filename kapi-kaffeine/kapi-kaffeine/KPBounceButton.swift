@@ -9,6 +9,16 @@
 import UIKit
 import pop
 
+
+struct BounceRippleInfo {
+    let rippleColor: UIColor!
+    let rippleSize: CGSize!
+    let rippleRadius: CGFloat!
+    let backgroundColor: UIColor!
+    let backgroundSize: CGSize!
+    let backgroundRadius: CGFloat!
+}
+
 class KPBounceButton: UIButton {
     
     //----------------------------
@@ -17,6 +27,30 @@ class KPBounceButton: UIButton {
     
     var dampingRatio: CGFloat = 0.35
     var bounceDuration: Double = 0.8
+    var rippleView: UIView?
+    
+    var rippleInfo: BounceRippleInfo? {
+        didSet {
+            rippleView = UIView()
+            rippleView?.backgroundColor = rippleInfo?.rippleColor
+            rippleView?.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+            rippleView?.layer.cornerRadius = (rippleInfo?.rippleRadius!)!
+            insertSubview(rippleView!, belowSubview: self.imageView!)
+            let _ = rippleView?.addConstraintForCenterAligningToSuperview(in: .vertical)
+            let _ = rippleView?.addConstraintForCenterAligningToSuperview(in: .horizontal)
+            let _ = rippleView?.addConstraint(forWidth: (rippleInfo?.rippleSize.width)!)
+            let _ = rippleView?.addConstraint(forHeight: (rippleInfo?.rippleSize.height)!)
+            
+            let backgroundView = UIView()
+            backgroundView.backgroundColor = rippleInfo?.backgroundColor
+            backgroundView.layer.cornerRadius = (rippleInfo?.backgroundRadius!)!
+            insertSubview(backgroundView, belowSubview: self.imageView!)
+            let _ = backgroundView.addConstraintForCenterAligningToSuperview(in: .vertical)
+            let _ = backgroundView.addConstraintForCenterAligningToSuperview(in: .horizontal)
+            let _ = backgroundView.addConstraint(forWidth: (rippleInfo?.backgroundSize.width)!)
+            let _ = backgroundView.addConstraint(forHeight: (rippleInfo?.backgroundSize.height)!)
+        }
+    }
     
     //----------------------------
     // MARK: - Initalization
@@ -67,6 +101,24 @@ class KPBounceButton: UIButton {
                         self.layer.transform = CATransform3DIdentity
         }) { _ in
             
+        }
+        
+        if rippleView != nil {
+            self.rippleView?.alpha = 1.0
+            rippleView?.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+            UIView.animate(withDuration: bounceDuration-0.5,
+                           delay: 0,
+                           usingSpringWithDamping: 1.0,
+                           initialSpringVelocity: 0.9,
+                           options: .curveEaseInOut,
+                           animations: { 
+                            self.rippleView?.transform = .identity
+            }, completion: { (_) in
+                UIView.animate(withDuration: 0.3,
+                               animations: { 
+                                self.rippleView?.alpha = 0
+                })
+            })
         }
     }
 

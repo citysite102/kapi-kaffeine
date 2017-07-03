@@ -33,10 +33,6 @@ class KPNewCommentController: KPViewController {
                         R.image.icon_pic()]
     var ratingViews = [KPRatingView]()
     
-    
-    
-    
-    
     lazy var textFieldHeaderLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12.0)
@@ -53,7 +49,9 @@ class KPNewCommentController: KPViewController {
         return label
     }()
     
-    var inputTextField: UITextField!
+    var inputTextView: UITextView!
+    var placeholderLabel: UILabel!
+    var paragraphStyle: NSMutableParagraphStyle!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -113,17 +111,31 @@ class KPNewCommentController: KPViewController {
         textFieldHeaderLabel.addConstraints(fromStringArray: ["V:|-16-[$self]",
                                                               "H:|-16-[$self]"])
         
-        inputTextField = UITextField()
-        inputTextField.delegate = self
-        inputTextField.placeholder = "Ex:東西很好吃，環境也很舒適..."
-        inputTextField.addTarget(self,
-                                 action: #selector(textFieldDidChange(_:)),
-                                 for: .editingChanged)
+        paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 4.0
         
-        textFieldContainerView.addSubview(inputTextField)
-        inputTextField.addConstraints(fromStringArray: ["V:[$view0]-8-[$self]",
-                                                        "H:|-16-[$self]-16-|"],
-                                      views: [textFieldHeaderLabel])
+        inputTextView = UITextView()
+        inputTextView.delegate = self
+        inputTextView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
+        inputTextView.textContainerInset = UIEdgeInsetsMake(0, 0, 0, 0)
+        inputTextView.typingAttributes = [NSParagraphStyleAttributeName: paragraphStyle,
+                                          NSFontAttributeName: UIFont.systemFont(ofSize: 17),
+                                          NSForegroundColorAttributeName: KPColorPalette.KPTextColor.grayColor_level2!]
+        
+        textFieldContainerView.addSubview(inputTextView)
+        inputTextView.addConstraints(fromStringArray: ["V:[$view0]-8-[$self]|",
+                                                       "H:|-12-[$self]-16-|"],
+                                     views: [textFieldHeaderLabel])
+        
+        
+        placeholderLabel = UILabel()
+        placeholderLabel.font = UIFont.systemFont(ofSize: 17)
+        placeholderLabel.textColor = KPColorPalette.KPTextColor.grayColor_level4
+        placeholderLabel.text = "Ex:東西很好吃，環境也很舒適..."
+        textFieldContainerView.addSubview(placeholderLabel)
+        placeholderLabel.addConstraints(fromStringArray: ["V:[$view0]-8-[$self]",
+                                                          "H:|-16-[$self]-16-|"],
+                                        views: [textFieldHeaderLabel])
         
         textFieldContainerView.addSubview(remainingTextLabel)
         remainingTextLabel.addConstraints(fromStringArray: ["V:[$self]-16-|",
@@ -184,8 +196,8 @@ class KPNewCommentController: KPViewController {
     }
     
     func handleSendButtonOnTapped() {
-        inputTextField.resignFirstResponder()
-        KPServiceHandler.sharedHandler.addNewComment(inputTextField.text) { (successed) in
+        inputTextView.resignFirstResponder()
+        KPServiceHandler.sharedHandler.addNewComment(inputTextView.text) { (successed) in
             if successed {
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
                                               execute: { 
@@ -196,26 +208,46 @@ class KPNewCommentController: KPViewController {
     }
     
     func handleTapGesture(tapGesture: UITapGestureRecognizer) {
-        inputTextField.becomeFirstResponder()
+        if inputTextView.isFirstResponder {
+            inputTextView.resignFirstResponder()
+        } else {
+            inputTextView.becomeFirstResponder()
+        }
     }
     
-    func textFieldDidChange(_ textField: UITextField) {
-        remainingTextLabel.text = "\((textField.text! as NSString).length)/200"
+    func textViewDidChange(_ textView: UITextView) {
+        placeholderLabel.isHidden = textView.text.characters.count > 0 ? true : false
+        remainingTextLabel.text = "\((textView.text! as NSString).length)/200"
+    }
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        UIView.animate(withDuration: 0.1,
+                       animations: { 
+                        self.placeholderLabel.alpha = 0
+        }) { (_) in
+            self.placeholderLabel.isHidden = true
+            self.placeholderLabel.alpha = 1.0
+        }
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        placeholderLabel.isHidden = textView.text.characters.count > 0 ? true : false
     }
 }
 
-extension KPNewCommentController: UITextFieldDelegate {
+extension KPNewCommentController: UITextViewDelegate {
     
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        
-        let textContent = textField.text! as NSString
+    func textView(_ textView: UITextView,
+                  shouldChangeTextIn range: NSRange,
+                  replacementText text: String) -> Bool {
+        let textContent = textView.text! as NSString
         
         let oldLength = textContent.length
-        let replacementLength = (string as NSString).length
+        let replacementLength = (text as NSString).length
         let rangeLength = range.length
         
         let newLength = oldLength - rangeLength + replacementLength
-        let returnKey = (string as NSString).range(of: "\n").location != NSNotFound
+        let returnKey = (text as NSString).range(of: "\n").location != NSNotFound
         
         return newLength <= KPNewCommentController.commentMaximumTextLength || returnKey
     }

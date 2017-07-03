@@ -102,6 +102,7 @@ extension KPAllCommentController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier:KPShopCommentInfoView.KPShopCommentInfoCellReuseIdentifier,
                                                  for: indexPath) as! KPShopCommentCell;
+        cell.selectionStyle = .none
         return cell;
     }
     
@@ -122,9 +123,9 @@ extension KPAllCommentController: UITableViewDelegate, UITableViewDataSource {
         
         if !shownCellIndex.contains(indexPath.row) {
             displayCell.userPicture.transform = CGAffineTransform.init(scaleX: 0.1, y: 0.1).rotated(by: -CGFloat.pi/2)
-            UIView.animate(withDuration: 0.8,
+            UIView.animate(withDuration: 0.7,
                            delay: 0.2+Double(indexPath.row)*0.1,
-                           usingSpringWithDamping: 0.5,
+                           usingSpringWithDamping: 0.6,
                            initialSpringVelocity: 0.8,
                            options: .curveEaseOut,
                            animations: { 

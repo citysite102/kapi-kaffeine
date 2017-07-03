@@ -82,8 +82,8 @@ class KPShopCommentCell: UITableViewCell {
                                                     title: "9")
         voteUpButton.buttonSelected = true
         contentView.addSubview(voteUpButton)
-        voteUpButton.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]",
-                                                      "V:[$view1]-12-[$self(20)]-20-|"],
+        voteUpButton.addConstraints(fromStringArray: ["H:[$view0]-4-[$self]",
+                                                      "V:[$view1]-12-[$self]-20-|"],
                                          metrics: [UIScreen.main.bounds.size.width/2],
                                          views: [userPicture, userCommentLabel])
         
@@ -92,8 +92,8 @@ class KPShopCommentCell: UITableViewCell {
                                                       icon: R.image.icon_downvote()!,
                                                       title: "0")
         contentView.addSubview(voteDownButton)
-        voteDownButton.addConstraints(fromStringArray: ["H:[$view0]-16-[$self]",
-                                                        "V:[$view1]-12-[$self(20)]-20-|"],
+        voteDownButton.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]",
+                                                        "V:[$view1]-12-[$self]-20-|"],
                                            metrics: [UIScreen.main.bounds.size.width/2],
                                            views: [voteUpButton, userCommentLabel])
         
@@ -104,13 +104,16 @@ class KPShopCommentCell: UITableViewCell {
     }
 }
 
-class KPShopCommentCellButton: UIButton {
-
+class KPShopCommentCellButton: UIView {
+    
+    var iconButton: KPBounceButton!
+    var buttonLabel: UILabel!
     var buttonSelected: Bool = false {
         didSet {
-            tintColor = buttonSelected ? KPColorPalette.KPMainColor.mainColor :
-                KPColorPalette.KPMainColor.grayColor_level2
-            titleLabel?.textColor = KPColorPalette.KPTextColor.grayColor_level1
+            iconButton.tintColor = buttonSelected ? KPColorPalette.KPMainColor.mainColor :
+                KPColorPalette.KPMainColor.grayColor_level3
+            buttonLabel.textColor = buttonSelected ? KPColorPalette.KPMainColor.mainColor :
+                KPColorPalette.KPMainColor.grayColor_level3
         }
     }
     
@@ -123,12 +126,30 @@ class KPShopCommentCellButton: UIButton {
                              title: String) {
         self.init(frame:frame)
         
-        setImage(icon, for: .normal)
-        setTitle(title, for: .normal)
-        setTitleColor(KPColorPalette.KPTextColor.grayColor_level1, for: .normal)
-        titleLabel?.font = UIFont.systemFont(ofSize: 14)
-        tintColor = KPColorPalette.KPMainColor.grayColor_level2
-        imageView?.contentMode = .scaleAspectFit
+        iconButton = KPBounceButton()
+        iconButton.setImage(icon, for: .normal)
+        iconButton.tintColor = KPColorPalette.KPMainColor.grayColor_level3
+        addSubview(iconButton)
+        iconButton.addConstraints(fromStringArray: ["V:|-4-[$self(18)]-4-|",
+                                                    "H:|-4-[$self(18)]"])
+        iconButton.rippleInfo = BounceRippleInfo(rippleColor: KPColorPalette.KPMainColor.mainColor_light,
+                                                 rippleSize: CGSize(width: 24, height: 24),
+                                                 rippleRadius:12,
+                                                 backgroundColor: UIColor.white,
+                                                 backgroundSize: CGSize(width: 18, height: 18),
+                                                 backgroundRadius: 9)
+        
+        buttonLabel = UILabel()
+        buttonLabel.text = "0"
+        buttonLabel.font = UIFont.systemFont(ofSize: 14)
+        buttonLabel.textColor = KPColorPalette.KPMainColor.grayColor_level3
+        
+        addSubview(buttonLabel)
+        buttonLabel.addConstraints(fromStringArray: ["H:[$view0]-4-[$self]-4-|"],
+                                   views: [iconButton])
+        buttonLabel.addConstraintForCenterAligning(to: iconButton,
+                                                   in: .vertical)
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
