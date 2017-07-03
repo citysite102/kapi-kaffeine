@@ -86,6 +86,8 @@ class KPUserProfileEditorController: UIViewController, UITextFieldDelegate, UITe
     var scrollView: UIScrollView!
     var scrollContainer: UIView!
     var activeField: UITextField?
+    
+    var introTextNumberLabel: UILabel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -102,62 +104,112 @@ class KPUserProfileEditorController: UIViewController, UITextFieldDelegate, UITe
         scrollContainer.addConstraintForHavingSameWidth(with: view)
         scrollContainer.addConstraint(from: "V:|[$self]|")
         
-        let nameLabel = generateNewTitleLabel(title: "使用者名稱")
-        scrollContainer.addSubview(nameLabel)
         
-        let nameField = generateNewTextField()
-        nameField.text = "Samuel Kao"
+        let nameField = KPSubTitleEditView.init(.Both, .Edited, "使用者名稱")
+        nameField.content = "Samuel"
         scrollContainer.addSubview(nameField)
-        
-        let nameSepartor = generateSeparatorLine()
-        scrollContainer.addSubview(nameSepartor)
-        
-        
-        let emailLabel = generateNewTitleLabel(title: "E-mail信箱")
-        scrollContainer.addSubview(emailLabel)
-        
-        let emailField = generateNewTextField()
-        emailField.text = "samuel@kapi.com"
+
+        let emailField = KPSubTitleEditView.init(.Bottom, .Edited, "E-mail信箱")
+        emailField.content = "samuel@kapi.com"
         scrollContainer.addSubview(emailField)
         
-        let emailSepartor = generateSeparatorLine()
-        scrollContainer.addSubview(emailSepartor)
-        
-        
-        let regionLabel = generateNewTitleLabel(title: "地區")
-        scrollContainer.addSubview(regionLabel)
-        
-        let regionField = generateNewTextField()
-        regionField.text = "台北市"
+        let regionField = KPSubTitleEditView.init(.Bottom, .Edited, "地區")
+        regionField.content = "新北市"
         scrollContainer.addSubview(regionField)
         
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 12.0)
+        label.textColor = KPColorPalette.KPTextColor.mainColor
+        label.text = "自我介紹(30字內)"
+        scrollContainer.addSubview(label)
         
-        let regionSepartor = generateSeparatorLine()
-        scrollContainer.addSubview(regionSepartor)
         
-        let introLabel = generateNewTitleLabel(title: "自我介紹(30字內)")
-        scrollContainer.addSubview(introLabel)
+        let inputTextView = UITextView()
+        inputTextView.delegate = self
+        inputTextView.textColor = KPColorPalette.KPTextColor.grayColor_level2
+        inputTextView.font = regionField.editTextField.font
+        inputTextView.textContainerInset = UIEdgeInsets.zero
+        inputTextView.textContainer.lineFragmentPadding = 0
+        inputTextView.isScrollEnabled = false
+//        inputTextField.placeholder = "請輸入自我介紹..."
+//        inputTextField.addTarget(self,
+//                                 action: #selector(textFieldDidChange(_:)),
+//                                 for: .editingChanged)
         
-        let introTextView = UITextView()
-        introTextView.delegate = self
-        introTextView.backgroundColor = UIColor.red
-        introTextView.font = UIFont.systemFont(ofSize: 18)
-        introTextView.isEditable = true
-        scrollContainer.addSubview(introTextView)
+        scrollContainer.addSubview(inputTextView)
+
         
-        nameLabel.addConstraints(fromStringArray: ["V:|-[$self]-4-[$view0]-14-[$view1(1)]-14-[$view2]-4-[$view3]-14-[$view4(1)]-14-[$view5]-4-[$view6]-14-[$view7(1)]-14-[$view8]-4-[$view9(300)]-|",
-                                                   "H:|-[$self]-|",
-                                                   "H:|-[$view0]-|",
+        introTextNumberLabel = UILabel()
+        introTextNumberLabel.font = UIFont.systemFont(ofSize: 12)
+        introTextNumberLabel.textColor = KPColorPalette.KPTextColor.mainColor
+        introTextNumberLabel.text = "0/30"
+        scrollContainer.addSubview(introTextNumberLabel)
+        
+        
+        nameField.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                   "H:|[$view0]|",
                                                    "H:|[$view1]|",
-                                                   "H:|-[$view2]-|",
-                                                   "H:|-[$view3]-|",
-                                                   "H:|[$view4]|",
-                                                   "H:|-[$view5]-|",
-                                                   "H:|-[$view6]-|",
-                                                   "H:|[$view7]|",
-                                                   "H:|-[$view8]-|",
-                                                   "H:|-[$view9]-|"],
-                                views: [nameField, nameSepartor, emailLabel, emailField, emailSepartor, regionLabel, regionField, regionSepartor, introLabel, introTextView])
+                                                   "H:|-16-[$view2]",
+                                                   "H:|-16-[$view3]-16-|",
+                                                   "H:[$view4]-16-|",
+                                                   "V:|-16-[$self(72)][$view0(72)][$view1(72)]-16-[$view2]-8-[$view3(50)][view4]-|"],
+                                 views: [emailField, regionField, label, inputTextView, introTextNumberLabel])
+        
+//        let nameLabel = generateNewTitleLabel(title: "使用者名稱")
+//        scrollContainer.addSubview(nameLabel)
+//        
+//        let nameField = generateNewTextField()
+//        nameField.text = "Samuel Kao"
+//        scrollContainer.addSubview(nameField)
+//        
+//        let nameSepartor = generateSeparatorLine()
+//        scrollContainer.addSubview(nameSepartor)
+//        
+//        let emailLabel = generateNewTitleLabel(title: "E-mail信箱")
+//        scrollContainer.addSubview(emailLabel)
+//        
+//        let emailField = generateNewTextField()
+//        emailField.text = "samuel@kapi.com"
+//        scrollContainer.addSubview(emailField)
+//        
+//        let emailSepartor = generateSeparatorLine()
+//        scrollContainer.addSubview(emailSepartor)
+//        
+//        
+//        let regionLabel = generateNewTitleLabel(title: "地區")
+//        scrollContainer.addSubview(regionLabel)
+//        
+//        let regionField = generateNewTextField()
+//        regionField.text = "台北市"
+//        scrollContainer.addSubview(regionField)
+//        
+//        
+//        let regionSepartor = generateSeparatorLine()
+//        scrollContainer.addSubview(regionSepartor)
+//        
+//        let introLabel = generateNewTitleLabel(title: "自我介紹(30字內)")
+//        scrollContainer.addSubview(introLabel)
+//        
+//        let introTextView = UITextView()
+//        introTextView.delegate = self
+//        introTextView.backgroundColor = UIColor.red
+//        introTextView.font = UIFont.systemFont(ofSize: 18)
+//        introTextView.isEditable = true
+//        scrollContainer.addSubview(introTextView)
+//        
+//        nameLabel.addConstraints(fromStringArray: ["V:|-[$self]-4-[$view0]-14-[$view1(1)]-14-[$view2]-4-[$view3]-14-[$view4(1)]-14-[$view5]-4-[$view6]-14-[$view7(1)]-14-[$view8]-4-[$view9(300)]-|",
+//                                                   "H:|-[$self]-|",
+//                                                   "H:|-[$view0]-|",
+//                                                   "H:|[$view1]|",
+//                                                   "H:|-[$view2]-|",
+//                                                   "H:|-[$view3]-|",
+//                                                   "H:|[$view4]|",
+//                                                   "H:|-[$view5]-|",
+//                                                   "H:|-[$view6]-|",
+//                                                   "H:|[$view7]|",
+//                                                   "H:|-[$view8]-|",
+//                                                   "H:|-[$view9]-|"],
+//                                views: [nameField, nameSepartor, emailLabel, emailField, emailSepartor, regionLabel, regionField, regionSepartor, introLabel, introTextView])
         
         registerForNotification()
         
@@ -213,12 +265,25 @@ class KPUserProfileEditorController: UIViewController, UITextFieldDelegate, UITe
         return true
     }
     
+    // MARK: UITextViewDelegate
+    
     func textViewDidBeginEditing(_ textView: UITextView) {
         
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
         
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        introTextNumberLabel.text = "\(textView.text.characters.count)/30"
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if textView.text.characters.count - range.length + text.characters.count > 30 {
+            return false
+        }
+        return true
     }
 
 }
