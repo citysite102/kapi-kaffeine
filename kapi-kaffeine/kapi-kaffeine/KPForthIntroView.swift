@@ -27,6 +27,8 @@ class KPForthIntroView: KPSharedIntroView {
     
     var animateStarView: UIImageView!
     
+    private var animationHasShown: Bool!
+    
     override init(frame: CGRect) {
         super.init(frame: frame);
         
@@ -131,95 +133,97 @@ class KPForthIntroView: KPSharedIntroView {
         starImageViewThree.isHidden = true
         starImageViewFour.isHidden = true
         starImageViewFive.isHidden = true
-    
+        animationHasShown = false
     }
     
     func showPopContents() {
         
-        
-        animateSpeekBox.isHidden = false
-        animateSpeekBoxTwo.isHidden = false
-        animateSpeekBoxThree.isHidden = false
-        
-        starImageViewOne.isHidden = false
-        starImageViewTwo.isHidden = false
-        starImageViewThree.isHidden = false
-        starImageViewFour.isHidden = false
-        starImageViewFive.isHidden = false
-        
-        let oldBoxOneFrame = animateSpeekBox.frame
-        let oldBoxTwoFrame = animateSpeekBoxTwo.frame
-        let oldBoxThreeFrame = animateSpeekBoxThree.frame
-        
-        animateSpeekBox.layer.anchorPoint = CGPoint(x: 0, y: 0.5)
-        animateSpeekBox.frame = oldBoxOneFrame
-        animateSpeekBox.transform = CGAffineTransform(scaleX: 0, y: 1)
-        animateSpeekBoxTwo.layer.anchorPoint = CGPoint(x: 0, y: 0.5)
-        animateSpeekBoxTwo.frame = oldBoxTwoFrame
-        animateSpeekBoxTwo.transform = CGAffineTransform(scaleX: 0, y: 1)
-        animateSpeekBoxThree.layer.anchorPoint = CGPoint(x: 0, y: 0.5)
-        animateSpeekBoxThree.frame = oldBoxThreeFrame
-        animateSpeekBoxThree.transform = CGAffineTransform(scaleX: 0, y: 1)
-        
-        starImageViewOne.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
-        starImageViewTwo.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
-        starImageViewThree.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
-        starImageViewFour.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
-        starImageViewFive.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
-        
-        
-        UIView.animate(withDuration: 1.0,
-                       delay: 0,
-                       usingSpringWithDamping: 0.5,
-                       initialSpringVelocity: 0.8,
-                       options: .curveEaseOut,
-                       animations: {
-                        self.animateSpeekBox.transform = CGAffineTransform.identity
-        }) { (_) in
+        if !animationHasShown {
+            animationHasShown = true
+            animateSpeekBox.isHidden = false
+            animateSpeekBoxTwo.isHidden = false
+            animateSpeekBoxThree.isHidden = false
             
-        }
-        
-        UIView.animate(withDuration: 1.0,
-                       delay: 0.1,
-                       usingSpringWithDamping: 0.5,
-                       initialSpringVelocity: 0.8,
-                       options: .curveEaseOut,
-                       animations: {
-                        self.animateSpeekBoxTwo.transform = CGAffineTransform.identity
-        }) { (_) in
+            starImageViewOne.isHidden = false
+            starImageViewTwo.isHidden = false
+            starImageViewThree.isHidden = false
+            starImageViewFour.isHidden = false
+            starImageViewFive.isHidden = false
             
-        }
-        
-        UIView.animate(withDuration: 1.0,
-                       delay: 0.2,
-                       usingSpringWithDamping: 0.5,
-                       initialSpringVelocity: 0.8,
-                       options: .curveEaseOut,
-                       animations: {
-                        self.animateSpeekBoxThree.transform = CGAffineTransform.identity
-        }) { (_) in
+            let oldBoxOneFrame = animateSpeekBox.frame
+            let oldBoxTwoFrame = animateSpeekBoxTwo.frame
+            let oldBoxThreeFrame = animateSpeekBoxThree.frame
             
-            UIView.animate(withDuration: 0.2,
-                           delay: 0.0,
+            animateSpeekBox.layer.anchorPoint = CGPoint(x: 0, y: 0.5)
+            animateSpeekBox.frame = oldBoxOneFrame
+            animateSpeekBox.transform = CGAffineTransform(scaleX: 0, y: 1)
+            animateSpeekBoxTwo.layer.anchorPoint = CGPoint(x: 0, y: 0.5)
+            animateSpeekBoxTwo.frame = oldBoxTwoFrame
+            animateSpeekBoxTwo.transform = CGAffineTransform(scaleX: 0, y: 1)
+            animateSpeekBoxThree.layer.anchorPoint = CGPoint(x: 0, y: 0.5)
+            animateSpeekBoxThree.frame = oldBoxThreeFrame
+            animateSpeekBoxThree.transform = CGAffineTransform(scaleX: 0, y: 1)
+            
+            starImageViewOne.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+            starImageViewTwo.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+            starImageViewThree.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+            starImageViewFour.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+            starImageViewFive.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+            
+            
+            UIView.animate(withDuration: 1.0,
+                           delay: 0,
                            usingSpringWithDamping: 0.5,
                            initialSpringVelocity: 0.8,
                            options: .curveEaseOut,
                            animations: {
-                            self.animateStarView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+                            self.animateSpeekBox.transform = CGAffineTransform.identity
             }) { (_) in
-                UIView.animate(withDuration: 0.3,
+                
+            }
+            
+            UIView.animate(withDuration: 1.0,
+                           delay: 0.1,
+                           usingSpringWithDamping: 0.5,
+                           initialSpringVelocity: 0.8,
+                           options: .curveEaseOut,
+                           animations: {
+                            self.animateSpeekBoxTwo.transform = CGAffineTransform.identity
+            }) { (_) in
+                
+            }
+            
+            UIView.animate(withDuration: 1.0,
+                           delay: 0.2,
+                           usingSpringWithDamping: 0.5,
+                           initialSpringVelocity: 0.8,
+                           options: .curveEaseOut,
+                           animations: {
+                            self.animateSpeekBoxThree.transform = CGAffineTransform.identity
+            }) { (_) in
+                
+                UIView.animate(withDuration: 0.2,
                                delay: 0.0,
                                usingSpringWithDamping: 0.5,
                                initialSpringVelocity: 0.8,
                                options: .curveEaseOut,
                                animations: {
-                                self.animateStarView.tintColor = UIColor(rgbaHexValue: 0xF9C816FF)
-                                self.animateStarView.transform = CGAffineTransform.identity
+                                self.animateStarView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
                 }) { (_) in
-                    self.performStarAnimation(0.1)
+                    UIView.animate(withDuration: 0.3,
+                                   delay: 0.0,
+                                   usingSpringWithDamping: 0.5,
+                                   initialSpringVelocity: 0.8,
+                                   options: .curveEaseOut,
+                                   animations: {
+                                    self.animateStarView.tintColor = UIColor(rgbaHexValue: 0xF9C816FF)
+                                    self.animateStarView.transform = CGAffineTransform.identity
+                    }) { (_) in
+                        self.performStarAnimation(0.1)
+                    }
                 }
+                
             }
-            
         }
     }
     

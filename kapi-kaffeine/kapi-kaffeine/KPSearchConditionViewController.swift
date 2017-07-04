@@ -308,6 +308,7 @@ class KPSearchConditionViewController: KPViewController {
                                                  right: 0);
         let timePickerController = KPBusinessHourViewController()
         controller.contentController = timePickerController
+        controller.cornerRadius = [.topRight, .topLeft]
         controller.presentModalView()
     }
 

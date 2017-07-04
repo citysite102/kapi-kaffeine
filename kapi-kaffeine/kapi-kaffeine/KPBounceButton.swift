@@ -27,6 +27,7 @@ class KPBounceButton: UIButton {
     
     var dampingRatio: CGFloat = 0.35
     var bounceDuration: Double = 0.8
+    var adjustHitOffset: CGSize = CGSize(width: 0, height: 0)
     var rippleView: UIView?
     
     var rippleInfo: BounceRippleInfo? {
@@ -42,6 +43,7 @@ class KPBounceButton: UIButton {
             let _ = rippleView?.addConstraint(forHeight: (rippleInfo?.rippleSize.height)!)
             
             let backgroundView = UIView()
+            backgroundView.isUserInteractionEnabled = false
             backgroundView.backgroundColor = rippleInfo?.backgroundColor
             backgroundView.layer.cornerRadius = (rippleInfo?.backgroundRadius!)!
             insertSubview(backgroundView, belowSubview: self.imageView!)
@@ -91,6 +93,19 @@ class KPBounceButton: UIButton {
         
     }
     
+    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+        if adjustHitOffset.width != 0 || adjustHitOffset.height != 0 {
+            let adjustedBound = CGRect(x: bounds.origin.x-adjustHitOffset.width/2,
+                                       y: bounds.origin.y-adjustHitOffset.height/2,
+                                       width: bounds.width+adjustHitOffset.width,
+                                       height: bounds.height+adjustHitOffset.height)
+            return adjustedBound.contains(point)
+            
+        } else {
+            return super.point(inside: point, with: event)
+        }
+    }
+    
     func performTouchEndAnimation() {
         UIView.animate(withDuration: bounceDuration,
                        delay: 0,
@@ -103,7 +118,8 @@ class KPBounceButton: UIButton {
             
         }
         
-        if rippleView != nil {
+        self.isSelected = !isSelected
+        if rippleView != nil && isSelected {
             self.rippleView?.alpha = 1.0
             rippleView?.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
             UIView.animate(withDuration: bounceDuration-0.5,

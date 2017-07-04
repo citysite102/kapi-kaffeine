@@ -97,7 +97,7 @@ class KPInformationSharedInfoView: UIView {
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowOpacity = 0.1
         layer.shadowRadius = 2.0
-        layer.shadowOffset = CGSize.init(width: 0.0, height: 2.0)
+        layer.shadowOffset = CGSize(width: 0.0, height: 2.0)
         
         infoTitleLabel = UILabel()
         infoTitleLabel.font = UIFont.systemFont(ofSize: 13)

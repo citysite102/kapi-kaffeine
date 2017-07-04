@@ -56,7 +56,7 @@ class KPSatisficationView: UIView {
         contentContainer = UIView()
         container.addSubview(contentContainer)
         contentContainer.addConstraints(fromStringArray: ["H:[$view0]-($metric0)-[$self]"],
-                                        metrics :[UIDevice().isSuperCompact ? 24.0 : 30.0],
+                                        metrics :[UIDevice().isSuperCompact ? 20.0 : 30.0],
                                         views: [icon])
         contentContainer.addConstraintForCenterAligningToSuperview(in: .vertical)
         

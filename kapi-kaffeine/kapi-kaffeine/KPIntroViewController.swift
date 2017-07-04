@@ -27,15 +27,7 @@ class KPIntroViewController: KPViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-//        view.backgroundColor = UIColor.white
         view.backgroundColor = UIColor(patternImage: R.image.image_background()!)
-//        let layer = CAGradientLayer()
-//        layer.colors = [KPColorPalette.KPBackgroundColor.mainColor_top!.cgColor,
-//                        KPColorPalette.KPBackgroundColor.mainColor_bottom!.cgColor]
-//        layer.locations = [0.0, 1.0]
-//        layer.frame = UIScreen.main.bounds
-//        view.layer.addSublayer(layer)
-        
         
         scrollView = UIScrollView()
         scrollView.isPagingEnabled = true
@@ -145,7 +137,7 @@ class KPIntroViewController: KPViewController {
     }
     
     override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
-        return .slide
+        return .fade
     }
     
     override var prefersStatusBarHidden: Bool {
@@ -173,8 +165,7 @@ extension KPIntroViewController: UIScrollViewDelegate {
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let current = scrollView.contentOffset.x/UIScreen.main.bounds.size.width
         pageControl.currentPage = Int(current)
-        pageControl.isHidden = false
-        
+
         if pageControl.currentPage == 1 {
             secondIntroView.showPopContents()
         } else if pageControl.currentPage == 2 {
@@ -183,7 +174,6 @@ extension KPIntroViewController: UIScrollViewDelegate {
             forthIntroView.showPopContents()
         } else if pageControl.currentPage == 4 {
             fifthIntroView.showPopContents()
-            pageControl.isHidden = true
         }
     }
     
@@ -208,6 +198,7 @@ extension KPIntroViewController: UIScrollViewDelegate {
         if current > 1 && current < 2 {
             thirdIntroView.updateLayoutWithProgress(currentProgress)
         } else if current > 3 && current < 4 {
+            self.pageControl.alpha = 1-1*currentProgress*1.5 > 0 ? 1-1*currentProgress*1.5 : 0
             fifthIntroView.updateLayoutWithProgress(currentProgress)
         }
     }

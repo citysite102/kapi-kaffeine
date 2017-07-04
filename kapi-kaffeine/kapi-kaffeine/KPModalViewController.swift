@@ -208,7 +208,7 @@ class KPModalViewController: KPViewController {
                                                             width: contentView.frameSize.width,
                                                             height: contentView.frameSize.height),
                                     byRoundingCorners:cornerRadius!,
-                                    cornerRadii: CGSize(width: 8, height:  8))
+                                    cornerRadii: CGSize(width: 2, height:  2))
             let maskLayer = CAShapeLayer()
             maskLayer.path = path.cgPath
             contentView.layer.mask = maskLayer

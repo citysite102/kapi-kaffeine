@@ -90,26 +90,27 @@ class KPAboutUsViewController: KPViewController {
         scrollView.showsVerticalScrollIndicator = false;
         view.addSubview(scrollView);
         scrollView.addConstraints(fromStringArray: ["V:|[$self]|",
-                                                         "H:|[$self]|"]);
+                                                    "H:|[$self]|"]);
         
         containerView = UIView();
         scrollView.addSubview(containerView);
-        containerView.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|", "V:|[$self]|"]);
+        containerView.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
+                                                       "V:|[$self]|"]);
         containerView.addConstraintForHavingSameWidth(with: view,
-                                                           constant: -32);
+                                                      constant: -32);
         
         iconImageView = UIImageView();
         iconImageView.backgroundColor = KPColorPalette.KPMainColor.mainColor;
         containerView.addSubview(iconImageView);
         iconImageView.addConstraints(fromStringArray: ["V:|-($metric0)-[$self(80)]",
-                                                            "H:|[$self(80)]"],
+                                                       "H:|[$self(80)]"],
                                           metrics:[32]);
         
         iconTitleView = UIImageView();
         iconTitleView.backgroundColor = KPColorPalette.KPMainColor.grayColor_level2;
         containerView.addSubview(iconTitleView);
         iconTitleView.addConstraints(fromStringArray: ["V:|-($metric0)-[$self(24)]",
-                                                            "H:[$view0]-16-[$self(64)]"],
+                                                       "H:[$view0]-16-[$self(64)]"],
                                           metrics:[32],
                                           views:[iconImageView]);
         
@@ -117,7 +118,7 @@ class KPAboutUsViewController: KPViewController {
         iconInformationView.backgroundColor = KPColorPalette.KPMainColor.grayColor_level2;
         containerView.addSubview(iconInformationView);
         iconInformationView.addConstraints(fromStringArray: ["V:[$view0]-4-[$self(18)]",
-                                                                  "H:[$view1]-16-[$self(100)]"],
+                                                             "H:[$view1]-16-[$self(100)]"],
                                                 views:[iconTitleView, iconImageView]);
         
         moreFeatureButton = UIButton();

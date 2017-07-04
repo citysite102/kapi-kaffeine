@@ -14,10 +14,11 @@ class KPShopCommentCell: UITableViewCell {
     var userPicture: UIImageView!
     var userNameLabel: UILabel!
     var timeHintLabel: UILabel!
-    
     var userCommentLabel: UILabel!
-    var voteUpButton: KPShopCommentCellButton!
-    var voteDownButton: KPShopCommentCellButton!
+    
+    
+    private var voteUpButton: KPShopCommentCellButton!
+    private var voteDownButton: KPShopCommentCellButton!
     
     
     override func awakeFromNib() {
@@ -79,8 +80,11 @@ class KPShopCommentCell: UITableViewCell {
         
         voteUpButton = KPShopCommentCellButton.init(frame: .zero,
                                                     icon: R.image.icon_upvote()!,
-                                                    title: "9")
-        voteUpButton.buttonSelected = true
+                                                    count: 0)
+        voteUpButton.iconButton.addTarget(self,
+                                          action: #selector(KPShopCommentCell.handleVoteUpButtonOnTapped),
+                                          for: .touchUpInside);
+        
         contentView.addSubview(voteUpButton)
         voteUpButton.addConstraints(fromStringArray: ["H:[$view0]-4-[$self]",
                                                       "V:[$view1]-12-[$self]-20-|"],
@@ -90,7 +94,10 @@ class KPShopCommentCell: UITableViewCell {
         
         voteDownButton = KPShopCommentCellButton.init(frame: .zero,
                                                       icon: R.image.icon_downvote()!,
-                                                      title: "0")
+                                                      count: 5)
+        voteDownButton.iconButton.addTarget(self,
+                                            action: #selector(KPShopCommentCell.handleVoteDownButtonOnTapped),
+                                            for: .touchUpInside);
         contentView.addSubview(voteDownButton)
         voteDownButton.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]",
                                                         "V:[$view1]-12-[$self]-20-|"],
@@ -102,18 +109,55 @@ class KPShopCommentCell: UITableViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    func handleVoteUpButtonOnTapped() {
+        if voteDownButton.buttonSelected && !voteUpButton.buttonSelected {
+            voteDownButton.buttonSelected = false
+            voteDownButton.iconButton.isSelected = false
+            voteUpButton.buttonSelected = true
+        } else {
+            voteUpButton.buttonSelected = !voteUpButton.buttonSelected
+        }
+    }
+    
+    func handleVoteDownButtonOnTapped() {
+        if voteUpButton.buttonSelected && !voteDownButton.buttonSelected {
+            voteUpButton.buttonSelected = false
+            voteUpButton.iconButton.isSelected = false
+            voteDownButton.buttonSelected = true
+        } else {
+            voteDownButton.buttonSelected = !voteDownButton.buttonSelected
+        }
+    }
 }
 
 class KPShopCommentCellButton: UIView {
     
     var iconButton: KPBounceButton!
-    var buttonLabel: UILabel!
+    var countLabel: UILabel!
+    var currentCount: Int! {
+        didSet {
+            let transition: CATransition = CATransition()
+            transition.type = kCATransitionPush
+            transition.duration = 0.2
+            transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+            transition.subtype = currentCount > oldValue ? kCATransitionFromTop : kCATransitionFromBottom
+            
+            countLabel.layer.add(transition, forKey: kCATransition)
+            countLabel.text = "\(currentCount ?? 0)"
+        }
+    }
     var buttonSelected: Bool = false {
         didSet {
+            
+            if buttonSelected != oldValue {
+                currentCount = currentCount + (buttonSelected ? 1 : -1)
+            }
+            
             iconButton.tintColor = buttonSelected ? KPColorPalette.KPMainColor.mainColor :
                 KPColorPalette.KPMainColor.grayColor_level3
-            buttonLabel.textColor = buttonSelected ? KPColorPalette.KPMainColor.mainColor :
-                KPColorPalette.KPMainColor.grayColor_level3
+            countLabel.textColor = buttonSelected ? KPColorPalette.KPMainColor.mainColor :
+                    KPColorPalette.KPMainColor.grayColor_level3
         }
     }
     
@@ -123,32 +167,38 @@ class KPShopCommentCellButton: UIView {
     
     public convenience init?(frame: CGRect,
                              icon: UIImage,
-                             title: String) {
+                             count: Int) {
         self.init(frame:frame)
+        
+        buttonSelected = false
+        currentCount = count
         
         iconButton = KPBounceButton()
         iconButton.setImage(icon, for: .normal)
         iconButton.tintColor = KPColorPalette.KPMainColor.grayColor_level3
+        iconButton.isSelected = false
         addSubview(iconButton)
-        iconButton.addConstraints(fromStringArray: ["V:|-4-[$self(18)]-4-|",
+        iconButton.addConstraints(fromStringArray: ["V:|-4@999-[$self(18@999)]-4@999-|",
                                                     "H:|-4-[$self(18)]"])
-        iconButton.rippleInfo = BounceRippleInfo(rippleColor: KPColorPalette.KPMainColor.mainColor_light,
-                                                 rippleSize: CGSize(width: 24, height: 24),
-                                                 rippleRadius:12,
+        iconButton.rippleInfo = BounceRippleInfo(rippleColor: KPColorPalette.KPBackgroundColor.mainColor_ripple,
+                                                 rippleSize: CGSize(width: 32, height: 32),
+                                                 rippleRadius:16,
                                                  backgroundColor: UIColor.white,
-                                                 backgroundSize: CGSize(width: 18, height: 18),
-                                                 backgroundRadius: 9)
+                                                 backgroundSize: CGSize(width: 16, height: 16),
+                                                 backgroundRadius: 8)
+        iconButton.adjustHitOffset = CGSize(width: 60, height: 16)
         
-        buttonLabel = UILabel()
-        buttonLabel.text = "0"
-        buttonLabel.font = UIFont.systemFont(ofSize: 14)
-        buttonLabel.textColor = KPColorPalette.KPMainColor.grayColor_level3
         
-        addSubview(buttonLabel)
-        buttonLabel.addConstraints(fromStringArray: ["H:[$view0]-4-[$self]-4-|"],
-                                   views: [iconButton])
-        buttonLabel.addConstraintForCenterAligning(to: iconButton,
-                                                   in: .vertical)
+        countLabel = UILabel()
+        countLabel.text = "\(count)"
+        countLabel.font = UIFont.systemFont(ofSize: 14)
+        countLabel.textColor = KPColorPalette.KPMainColor.grayColor_level3
+        
+        addSubview(countLabel)
+        countLabel.addConstraints(fromStringArray: ["H:[$view0]-4-[$self]-4-|"],
+                                  views: [iconButton])
+        countLabel.addConstraintForCenterAligning(to: iconButton,
+                                                  in: .vertical)
         
     }
     

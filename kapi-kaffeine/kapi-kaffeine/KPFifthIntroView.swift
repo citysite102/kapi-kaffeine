@@ -58,11 +58,25 @@ class KPFifthIntroView: KPSharedIntroView {
         facebookLoginButton.addConstraintForCenterAligningToSuperview(in: .horizontal)
         facebookLoginButton.addConstraints(fromStringArray: ["V:[$self(64)]-32-|",
                                                              "H:[$self(276)]"])
+        facebookLoginButton.transform = CGAffineTransform(translationX: 0,
+                                                          y: 120)
         
     }
     
     
     func showPopContents() {
+        
+        UIView.animate(withDuration: 0.8,
+                       delay: 0.0,
+                       usingSpringWithDamping: 0.7,
+                       initialSpringVelocity: 1.0,
+                       options: .curveEaseOut,
+                       animations: {
+                        self.facebookLoginButton.transform = .identity
+                        
+        }) { (_) in
+            
+        }
         
         UIView.animateKeyframes(withDuration: 3.0,
                                 delay: 0,
@@ -124,15 +138,14 @@ class KPFifthIntroView: KPSharedIntroView {
     }
     
     func updateLayoutWithProgress(_ progress: CGFloat) {
-        print("Progress:\(320-320*progress)")
         firstPopImageView.transform = CGAffineTransform(translationX: progress == 0 ? 0 : 140-140*progress,
                                                         y: 0)
         secondPopImageView.transform = CGAffineTransform(translationX: progress == 0 ? 0 : 200-200*progress,
                                                          y: 0)
         thirdPopImageView.transform = CGAffineTransform(translationX: progress == 0 ? 0 : 260-260*progress,
                                                         y: 0)
-        facebookLoginButton.transform = CGAffineTransform(translationX: progress == 0 ? 0 : 320-320*progress,
-                                                        y: 0)
+//        facebookLoginButton.transform = CGAffineTransform(translationX: 0,
+//                                                        y: progress == 0 ? 0 : 80-80*progress)
     }
     
     required init?(coder aDecoder: NSCoder) {
