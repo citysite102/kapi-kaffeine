@@ -302,7 +302,7 @@ class KPSearchConditionViewController: KPViewController {
     
     func showTimePicker() {
         let controller = KPModalViewController()
-        controller.edgeInset = UIEdgeInsets.init(top: 50,
+        controller.edgeInset = UIEdgeInsets.init(top: 32,
                                                  left: 0,
                                                  bottom: 0,
                                                  right: 0);

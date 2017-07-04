@@ -35,7 +35,7 @@ class KPRatingViewController: KPSharedSettingViewController {
         super.viewDidLoad()
         
         titleLabel.text = "店家各項評分"
-        
+        scrollView.isScrollEnabled = true
         containerView.addSubview(scoreLabel)
         scoreLabel.addConstraints(fromStringArray: ["H:[$self(26)]-16-|", "V:[$self(20)]"])
         scoreLabel.addConstraintForCenterAligning(to: titleLabel, in: .vertical)

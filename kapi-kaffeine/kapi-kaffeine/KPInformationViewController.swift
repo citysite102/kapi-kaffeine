@@ -421,7 +421,7 @@ extension KPInformationViewController: UINavigationControllerDelegate {
 extension KPInformationViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
-        print("Offset:\(scrollContainer.contentOffset.y)")
+//        print("Offset:\(scrollContainer.contentOffset.y)")
         
         scrollContainer.contentOffset = CGPoint.init(x: 0,
                                                      y: scrollContainer.contentOffset.y <= -120 ?
@@ -429,7 +429,7 @@ extension KPInformationViewController: UIScrollViewDelegate {
                                                         scrollContainer.contentOffset.y)
         
         if scrollContainer.contentOffset.y < 0 && scrollContainer.contentOffset.y >= -120 {
-            let scaleRatio = 1 - scrollContainer.contentOffset.y/280
+            let scaleRatio = 1 - scrollContainer.contentOffset.y/300
             let scaleRatioContainer = 1 - scrollContainer.contentOffset.y/240
             let oldFrame = informationHeaderView.shopPhotoContainer.frame
             
@@ -438,26 +438,19 @@ extension KPInformationViewController: UIScrollViewDelegate {
             
             informationHeaderView.shopPhotoContainer.layer.anchorPoint = CGPoint.init(x: 0.5, y: 1)
             informationHeaderView.shopPhotoContainer.frame = oldFrame
-            informationHeaderView.shopPhotoContainer.transform = CGAffineTransform.identity
-            informationHeaderView.shopPhotoContainer.transform = CGAffineTransform.init(scaleX: scaleRatioContainer,
-                                                                                        y: scaleRatioContainer)
-            informationHeaderView.shopPhoto.transform = CGAffineTransform.identity
-            informationHeaderView.shopPhoto.transform = CGAffineTransform.init(scaleX: scaleRatio,
-                                                                               y: scaleRatio)
-            UIView.animate(withDuration: 0.1,
-                           animations: {
-                            self.view.layoutIfNeeded()
-            })
+            informationHeaderView.shopPhotoContainer.transform = .identity
+            informationHeaderView.shopPhotoContainer.transform = CGAffineTransform(scaleX: scaleRatioContainer,
+                                                                                   y: scaleRatioContainer)
+            informationHeaderView.shopPhoto.transform = .identity
+            informationHeaderView.shopPhoto.transform = CGAffineTransform(scaleX: scaleRatio,
+                                                                          y: scaleRatio)
+            self.view.layoutIfNeeded()
+        } else if scrollContainer.contentOffset.y >= 0 && scrollContainer.contentOffset.y < 150 {
+            animatedHeaderConstraint.constant = -scrollContainer.contentOffset.y*3/5
+            informationHeaderView.shopPhoto.transform = CGAffineTransform(translationX: 0,
+                                                                          y: scrollContainer.contentOffset.y*3/5)
+            self.view.layoutIfNeeded()
         }
-//        else if scrollContainer.contentOffset.y >= 0 && scrollContainer.contentOffset.y < 150 {
-//            animatedHeaderConstraint.constant = -scrollContainer.contentOffset.y*3/5
-//            informationHeaderView.shopPhoto.transform = CGAffineTransform(translationX: 0,
-//                                                                          y: scrollContainer.contentOffset.y*3/5)
-//            UIView.animate(withDuration: 0.1,
-//                           animations: { 
-//                            self.view.layoutIfNeeded()
-//            })
-//        }
     }
 }
 

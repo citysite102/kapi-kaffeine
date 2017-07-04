@@ -156,9 +156,9 @@ public class KPUserManager {
         addRequest.perform(cafeID,
                            KPFavoriteRequest.requestType.add).then { result -> Void in
                             
-                print("Result\(result)")
+                print("Add Favorite Cafe Result\(result)")
             }.catch { (error) in
-                print("error\(error)")
+                print("Remove Favorite Cafe error\(error)")
             }
     }
     

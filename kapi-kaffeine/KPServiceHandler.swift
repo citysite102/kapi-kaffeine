@@ -84,7 +84,7 @@ class KPServiceHandler {
                                         })
                                         completion?(commentResult)
                                     }
-                                    print("Result\(result)")
+                                    print("Add New Comment Result:\(result)")
         }.catch { (error) in
             self.loadingView.state = .failed
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
@@ -101,7 +101,7 @@ class KPServiceHandler {
         let getCommentRequest = KPGetCommentRequest()
         getCommentRequest.perform((currentDisplayModel?.identifier)!).then { result -> Void in
             
-            print("Result\(result)")
+            print("Get Comments Result:\(result)")
             
             var resultComments = [KPCommentModel]()
             if result["result"].boolValue {
