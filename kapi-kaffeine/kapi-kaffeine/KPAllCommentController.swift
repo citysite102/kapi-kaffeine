@@ -14,6 +14,7 @@ class KPAllCommentController: KPViewController {
     
     
     var shownCellIndex: [Int] = [Int]()
+    var animated: Bool = true
     var tableView: UITableView!
     var backButton: KPBounceButton!
     var editButton: KPBounceButton!
@@ -121,7 +122,7 @@ extension KPAllCommentController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let displayCell = cell as! KPShopCommentCell
         
-        if !shownCellIndex.contains(indexPath.row) {
+        if !shownCellIndex.contains(indexPath.row) && animated {
             displayCell.userPicture.transform = CGAffineTransform.init(scaleX: 0.1, y: 0.1).rotated(by: -CGFloat.pi/2)
             UIView.animate(withDuration: 0.7,
                            delay: 0.2+Double(indexPath.row)*0.1,

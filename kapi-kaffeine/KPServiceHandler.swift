@@ -42,14 +42,18 @@ class KPServiceHandler {
                                 mrt,
                                 city).then { result -> Void in
                                     var cafeDatas = [KPDataModel]()
-                                    for data in (result["data"].arrayObject)! {
-                                        let cafeData = KPDataModel(JSON: (data as! [String: Any]))
-                                        if cafeData != nil {
-                                            cafeDatas.append(cafeData!)
+                                    if result["data"].arrayObject != nil {
+                                        for data in (result["data"].arrayObject)! {
+                                            let cafeData = KPDataModel(JSON: (data as! [String: Any]))
+                                            if cafeData != nil {
+                                                cafeDatas.append(cafeData!)
+                                            }
                                         }
+                                        self.currentCafeDatas = cafeDatas
+                                        completion?(cafeDatas)
+                                    } else {
+                                        completion?(nil)
                                     }
-                                    self.currentCafeDatas = cafeDatas
-                                    completion?(cafeDatas)
         }.catch { error in
                 completion?(nil)
         }

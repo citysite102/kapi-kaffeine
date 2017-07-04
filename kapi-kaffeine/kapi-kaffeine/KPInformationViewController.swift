@@ -47,14 +47,17 @@ class KPInformationViewController: KPViewController {
     var actionController: UIAlertController!
     var scrollContainer: UIScrollView!
     var informationHeaderView: KPInformationHeaderView!
+    var informationHeaderButtonBar: KPInformationHeaderButtonBar!
     var shopInformationView: KPInformationSharedInfoView!
     var locationInformationView: KPInformationSharedInfoView!
     var rateInformationView: KPInformationSharedInfoView!
     var commentInformationView: KPInformationSharedInfoView!
     var photoInformationView: KPInformationSharedInfoView!
     var recommendInformationView: KPInformationSharedInfoView!
-    
     var commentInfoView: KPShopCommentInfoView!
+    
+    var allCommentHasShown: Bool = false
+    var animatedHeaderConstraint: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -134,8 +137,7 @@ class KPInformationViewController: KPViewController {
         scrollContainer.addConstraints(fromStringArray: ["H:|[$self]|",
                                                          "V:|[$self]|"])
         
-        informationHeaderView = KPInformationHeaderView(frame: CGRect.zero,
-                                                        cafeIdentifier: informationDataModel.identifier)
+        informationHeaderView = KPInformationHeaderView(frame: CGRect.zero)
         informationHeaderView.delegate = self
         informationHeaderView.informationController = self
         if let photoURL = informationDataModel.photos?["google_l"] {
@@ -155,13 +157,24 @@ class KPInformationViewController: KPViewController {
         }
         //informationDataModel
         scrollContainer.addSubview(informationHeaderView)
-        informationHeaderView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                               "V:|[$self]"])
+        informationHeaderView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]"])
+        
         informationHeaderView.addConstraintForHavingSameWidth(with: view)
         informationHeaderView.morePhotoButton.addTarget(self,
-                                                             action: #selector(KPInformationViewController.handleMorePhotoButtonOnTapped),
-                                                             for: UIControlEvents.touchUpInside)
+                                                        action: #selector(KPInformationViewController.handleMorePhotoButtonOnTapped),
+                                                        for: UIControlEvents.touchUpInside)
         
+        informationHeaderButtonBar = KPInformationHeaderButtonBar(frame: CGRect.zero,
+                                                                  cafeIdentifier: informationDataModel.identifier)
+        informationHeaderButtonBar.informationController = self
+        scrollContainer.addSubview(informationHeaderButtonBar)
+        informationHeaderButtonBar.addConstraints(fromStringArray: ["H:|[$self]|"],
+                                                  views: [informationHeaderView])
+        
+        
+        animatedHeaderConstraint =
+            informationHeaderButtonBar.addConstraint(from: "V:[$view0][$self]",
+                                                     views:[informationHeaderView]).first as! NSLayoutConstraint
         
         let informationView: KPShopInfoView = KPShopInfoView()
         informationView.featureContents = informationDataModel.featureContents
@@ -188,7 +201,7 @@ class KPInformationViewController: KPViewController {
         scrollContainer.addSubview(shopInformationView)
         shopInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                              "V:[$view0]-16-[$self(210)]"],
-                                                      views: [informationHeaderView])
+                                                      views: [informationHeaderButtonBar])
         
         locationInformationView = KPInformationSharedInfoView()
         locationInformationView.infoTitleLabel.text = "位置訊息"
@@ -272,6 +285,8 @@ class KPInformationViewController: KPViewController {
                                                       icon:nil,
                                                       handler:{(infoView) -> () in
                                                         let commentViewController = KPAllCommentController()
+                                                        commentViewController.animated = !self.allCommentHasShown
+                                                        self.allCommentHasShown = true
                                                         self.navigationController?.pushViewController(viewController: commentViewController,
                                                                                                       animated: true,
                                                                                                       completion: {})
@@ -406,22 +421,42 @@ extension KPInformationViewController: UINavigationControllerDelegate {
 extension KPInformationViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
+        print("Offset:\(scrollContainer.contentOffset.y)")
         
-//        scrollContainer.contentOffset = CGPoint.init(x: 0, y: scrollContainer.contentOffset.y)
-//        
-//        if scrollContainer.contentOffset.y < 0 && scrollContainer.contentOffset.y > -100 {
-//            let scaleRatio = 1 - scrollContainer.contentOffset.y/250
-//            let scaleRatioContainer = 1 - scrollContainer.contentOffset.y/250 + 0.02
-//            let oldFrame = informationHeaderView.shopPhotoContainer.frame
-//            informationHeaderView.shopPhotoContainer.layer.anchorPoint = CGPoint.init(x: 0.5, y: 1)
-//            informationHeaderView.shopPhotoContainer.frame = oldFrame
-//            informationHeaderView.shopPhotoContainer.transform = CGAffineTransform.identity
-//            informationHeaderView.shopPhotoContainer.transform = CGAffineTransform.init(scaleX: scaleRatioContainer,
-//                                                                                        y: scaleRatioContainer)
-//            informationHeaderView.shopPhoto.transform = CGAffineTransform.identity
-//            informationHeaderView.shopPhoto.transform = CGAffineTransform.init(scaleX: scaleRatio,
-//                                                                               y: scaleRatio)
-//            view.layoutIfNeeded()
+        scrollContainer.contentOffset = CGPoint.init(x: 0,
+                                                     y: scrollContainer.contentOffset.y <= -120 ?
+                                                        -120 :
+                                                        scrollContainer.contentOffset.y)
+        
+        if scrollContainer.contentOffset.y < 0 && scrollContainer.contentOffset.y >= -120 {
+            let scaleRatio = 1 - scrollContainer.contentOffset.y/280
+            let scaleRatioContainer = 1 - scrollContainer.contentOffset.y/240
+            let oldFrame = informationHeaderView.shopPhotoContainer.frame
+            
+            animatedHeaderConstraint.constant = 0
+            informationHeaderView.shopPhoto.transform = .identity
+            
+            informationHeaderView.shopPhotoContainer.layer.anchorPoint = CGPoint.init(x: 0.5, y: 1)
+            informationHeaderView.shopPhotoContainer.frame = oldFrame
+            informationHeaderView.shopPhotoContainer.transform = CGAffineTransform.identity
+            informationHeaderView.shopPhotoContainer.transform = CGAffineTransform.init(scaleX: scaleRatioContainer,
+                                                                                        y: scaleRatioContainer)
+            informationHeaderView.shopPhoto.transform = CGAffineTransform.identity
+            informationHeaderView.shopPhoto.transform = CGAffineTransform.init(scaleX: scaleRatio,
+                                                                               y: scaleRatio)
+            UIView.animate(withDuration: 0.1,
+                           animations: {
+                            self.view.layoutIfNeeded()
+            })
+        }
+//        else if scrollContainer.contentOffset.y >= 0 && scrollContainer.contentOffset.y < 150 {
+//            animatedHeaderConstraint.constant = -scrollContainer.contentOffset.y*3/5
+//            informationHeaderView.shopPhoto.transform = CGAffineTransform(translationX: 0,
+//                                                                          y: scrollContainer.contentOffset.y*3/5)
+//            UIView.animate(withDuration: 0.1,
+//                           animations: { 
+//                            self.view.layoutIfNeeded()
+//            })
 //        }
     }
 }

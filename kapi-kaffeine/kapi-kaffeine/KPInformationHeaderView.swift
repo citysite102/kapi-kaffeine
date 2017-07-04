@@ -12,32 +12,50 @@ protocol KPInformationHeaderViewDelegate: NSObjectProtocol {
     func headerPhotoTapped(_ headerView: KPInformationHeaderView);
 }
 
-class KPInformationHeaderView: UIView {
-
-    
-    var cafeID: String!
-    var container: UIView!
-    var shopPhotoContainer: UIView!
-    var shopPhoto: UIImageView!
-    var morePhotoButton: UIButton!;
-    var photoLongPressGesture: UILongPressGestureRecognizer!
-    
-    var scoreContainer: UIView!;
-    var facebookButton: UIButton!;
-    var otherPhotoContainer: UIView!;
+class KPInformationHeaderButtonBar: UIView {
     
     var collectButton: KPInformationHeaderButton!;
     var checkButton: KPInformationHeaderButton!;
     var rateButton: KPInformationHeaderButton!;
     var commentButton: KPInformationHeaderButton!;
-    
-    weak open var delegate: KPInformationHeaderViewDelegate?
+    var cafeID: String!
     weak open var informationController: KPInformationViewController?
     
     convenience init (frame: CGRect,
                       cafeIdentifier: String) {
         self.init(frame: frame);
         self.cafeID = cafeIdentifier
+        
+        collectButton = KPInformationHeaderButton();
+        
+        addSubview(collectButton);
+        collectButton.addConstraints(fromStringArray: ["H:|[$self($metric0)]", "V:|[$self(90)]|"],
+                                     metrics: [UIScreen.main.bounds.size.width/4]);
+        
+        
+        checkButton = KPInformationHeaderButton();
+        addSubview(checkButton);
+        checkButton.addConstraints(fromStringArray: ["H:[$view0]-(-1)-[$self($metric0)]",
+                                                     "V:|[$self(90)]|"],
+                                   metrics: [UIScreen.main.bounds.size.width/4+1],
+                                   views: [collectButton]);
+        
+        
+        rateButton = KPInformationHeaderButton();
+        addSubview(rateButton);
+        rateButton.addConstraints(fromStringArray: ["H:[$view0]-(-1)-[$self($metric0)]",
+                                                    "V:|[$self(90)]|"],
+                                  metrics: [UIScreen.main.bounds.size.width/4+1],
+                                  views: [checkButton]);
+        
+        
+        commentButton = KPInformationHeaderButton();
+        addSubview(commentButton);
+        commentButton.addConstraints(fromStringArray: ["H:[$view0]-(-1)-[$self($metric0)]",
+                                                       "V:|[$self(90)]|"],
+                                     metrics: [UIScreen.main.bounds.size.width/4+1],
+                                     views: [rateButton]);
+        
         collectButton.buttonInfo = HeaderButtonInfo(title: "收藏",
                                                     info: "%d人已收藏",
                                                     defaultInfo: "無人收藏",
@@ -51,10 +69,10 @@ class KPInformationHeaderView: UIView {
                                                                 KPPopoverView.popoverDefaultStyleContent("移除收藏",
                                                                                                          "請問你這傢伙確定要移除收藏這間超級無敵優秀的咖啡廳嗎？",
                                                                                                          "我慚愧", { (content) in
-                                                                    print("Test Content")
-                                                                    content.popoverView.dismiss()
-                                                                    headerButton.selected = false
-                                                                    KPUserManager.sharedManager.removeFavoriteCafe(self.cafeID)
+                                                                                                            print("Test Content")
+                                                                                                            content.popoverView.dismiss()
+                                                                                                            headerButton.selected = false
+                                                                                                            KPUserManager.sharedManager.removeFavoriteCafe(self.cafeID)
                                                                 })
                                                             }
                                                             
@@ -114,7 +132,35 @@ class KPInformationHeaderView: UIView {
                                                                                                                                  completion: {})
                                                         }
         });
+        
     }
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+
+class KPInformationHeaderView: UIView {
+
+    
+//    var cafeID: String!
+    var container: UIView!
+    var shopPhotoContainer: UIView!
+    var shopPhoto: UIImageView!
+    var shopSelectView: UIView!
+    var morePhotoButton: UIButton!;
+    var photoLongPressGesture: UILongPressGestureRecognizer!
+    
+    var scoreContainer: UIView!;
+    var facebookButton: UIButton!;
+    var otherPhotoContainer: UIView!;
+
+    weak open var delegate: KPInformationHeaderViewDelegate?
+    weak open var informationController: KPInformationViewController?
     
     override init(frame: CGRect) {
         super.init(frame: frame);
@@ -128,7 +174,7 @@ class KPInformationHeaderView: UIView {
         shopPhotoContainer.clipsToBounds = true
         container.addSubview(shopPhotoContainer)
         shopPhotoContainer.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                            "V:|[$self]"])
+                                                            "V:|[$self]|"])
         
         shopPhoto = UIImageView(image: UIImage(named: "demo_1"))
         shopPhoto.contentMode = .scaleToFill
@@ -136,40 +182,19 @@ class KPInformationHeaderView: UIView {
         shopPhotoContainer.addSubview(shopPhoto)
         shopPhoto.addConstraints(fromStringArray: ["H:|[$self]|",
                                                    "V:|[$self(240)]|"])
+        
+        shopSelectView = UIView()
+        shopSelectView.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level5
+        shopSelectView.isUserInteractionEnabled = false
+        shopSelectView.alpha = 0
+        shopPhoto.addSubview(shopSelectView)
+        shopSelectView.addConstraints(fromStringArray: ["V:|[$self]|",
+                                                        "H:|[$self]|"])
 
         photoLongPressGesture = UILongPressGestureRecognizer.init(target: self,
                                                                        action: #selector(handleShopPhotoLongPressed(_:)))
         photoLongPressGesture.minimumPressDuration = 0.0
         shopPhoto.addGestureRecognizer(photoLongPressGesture)
-        
-        collectButton = KPInformationHeaderButton();
-        
-        container.addSubview(collectButton);
-        collectButton.addConstraints(fromStringArray: ["H:|[$self($metric0)]", "V:[$view0][$self(90)]|"],
-                                     metrics: [UIScreen.main.bounds.size.width/4],
-                                     views: [shopPhotoContainer]);
-        
-        
-        checkButton = KPInformationHeaderButton();
-        container.addSubview(checkButton);
-        checkButton.addConstraints(fromStringArray: ["H:[$view0]-(-1)-[$self($metric0)]", "V:[$view1][$self(90)]|"],
-                                   metrics: [UIScreen.main.bounds.size.width/4+1],
-                                   views: [collectButton, shopPhotoContainer]);
-        
-        
-        rateButton = KPInformationHeaderButton();
-        container.addSubview(rateButton);
-        rateButton.addConstraints(fromStringArray: ["H:[$view0]-(-1)-[$self($metric0)]", "V:[$view1][$self(90)]|"],
-                                        metrics: [UIScreen.main.bounds.size.width/4+1],
-                                        views: [checkButton, shopPhotoContainer]);
-        
-        
-        commentButton = KPInformationHeaderButton();
-        container.addSubview(commentButton);
-        commentButton.addConstraints(fromStringArray: ["H:[$view0]-(-1)-[$self($metric0)]",
-                                                       "V:[$view1][$self(90)]|"],
-                                        metrics: [UIScreen.main.bounds.size.width/4+1],
-                                        views: [rateButton, shopPhotoContainer]);
         
         morePhotoButton = UIButton.init(type: .custom)
         morePhotoButton.setBackgroundImage(UIImage.init(color: UIColor.clear), for: .normal)
@@ -183,8 +208,7 @@ class KPInformationHeaderView: UIView {
         morePhotoButton.setTitleColor(UIColor.white, for: .normal)
         container.addSubview(morePhotoButton)
         morePhotoButton.addConstraints(fromStringArray: ["H:[$self(48)]-16-|",
-                                                         "V:[$self(48)]-16-[$view0]"],
-                                       views:[commentButton])
+                                                         "V:[$self(48)]-16-|"])
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -195,14 +219,16 @@ class KPInformationHeaderView: UIView {
         
         if sender.state == UIGestureRecognizerState.began {
             UIView.animate(withDuration: 0.2,
-                           animations: { 
-                            self.shopPhoto.transform = CGAffineTransform.init(scaleX: 0.97,
-                                                                              y: 0.97)
+                           animations: {
+                            self.shopSelectView.alpha = 1
+//                            self.shopPhoto.transform = CGAffineTransform.init(scaleX: 0.97,
+//                                                                              y: 0.97)
             })
         } else if sender.state == UIGestureRecognizerState.ended {
             UIView.animate(withDuration: 0.1,
-                           animations: { 
-                            self.shopPhoto.transform = CGAffineTransform.identity
+                           animations: {
+                            self.shopSelectView.alpha = 0
+//                            self.shopPhoto.transform = CGAffineTransform.identity
             }, completion: { (success) in
                 self.delegate?.headerPhotoTapped(self);
             })
