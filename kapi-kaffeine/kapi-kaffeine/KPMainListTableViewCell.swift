@@ -155,7 +155,7 @@ class KPMainListTableViewCell: UITableViewCell {
         featureContainer = KPMainListCellFeatureContainer();
         contentView.addSubview(featureContainer);
         featureContainer.addConstraints(fromStringArray: ["H:[$self]-8-|",
-                                                          "V:[$self]-12-|"]);
+                                                          "V:[$self]-8-|"]);
     }
     
     override func layoutSubviews() {

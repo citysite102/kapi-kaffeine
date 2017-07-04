@@ -26,9 +26,9 @@ class KPAllCommentController: KPViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = KPColorPalette.KPTextColor.whiteColor
-        self.navigationItem.title = "所有評價"
-        self.navigationItem.hidesBackButton = true
+        view.backgroundColor = KPColorPalette.KPTextColor.whiteColor
+        navigationItem.title = "所有評價"
+        navigationItem.hidesBackButton = true
         
         backButton = KPBounceButton.init(frame: CGRect.init(x: 0, y: 0, width: 24, height: 24));
         backButton.setImage(R.image.icon_back()?.withRenderingMode(.alwaysTemplate),
@@ -37,7 +37,7 @@ class KPAllCommentController: KPViewController {
         backButton.addTarget(self,
                              action: #selector(KPAllCommentController.handleBackButtonOnTapped),
                              for: .touchUpInside)
-        let barItem = UIBarButtonItem.init(customView: self.backButton);
+        let barItem = UIBarButtonItem.init(customView: backButton);
         
         editButton = KPBounceButton.init(frame: CGRect.init(x: 0, y: 0, width: 24, height: 24));
         editButton.setImage(R.image.icon_edit()?.withRenderingMode(.alwaysTemplate),
@@ -47,7 +47,7 @@ class KPAllCommentController: KPViewController {
                              action: #selector(KPAllCommentController.handleEditButtonOnTapped),
                              for: .touchUpInside)
         
-        let rightbarItem = UIBarButtonItem.init(customView: self.editButton);
+        let rightbarItem = UIBarButtonItem.init(customView: editButton);
         let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace,
                                              target: nil,
                                              action: nil)
@@ -59,7 +59,7 @@ class KPAllCommentController: KPViewController {
         tableView = UITableView()
         tableView.delegate = self
         tableView.dataSource = self
-        view.addSubview(self.tableView)
+        view.addSubview(tableView)
         tableView.addConstraints(fromStringArray: ["V:|[$self]|",
                                                    "H:|[$self]|"])
         tableView.register(KPShopCommentCell.self,
@@ -74,12 +74,12 @@ class KPAllCommentController: KPViewController {
     
 
     func handleBackButtonOnTapped() {
-        self.navigationController?.popViewController(animated: true)
+        navigationController?.popViewController(animated: true)
     }
     
     func handleEditButtonOnTapped() {
         let newCommentViewController = KPNewCommentController()
-        self.navigationController?.pushViewController(viewController: newCommentViewController,
+        navigationController?.pushViewController(viewController: newCommentViewController,
                                                       animated: true,
                                                       completion: {})
     }

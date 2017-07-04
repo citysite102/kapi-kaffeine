@@ -9,9 +9,11 @@
 import UIKit
 
 @objc protocol KPPopoverSensingViewDelegate: NSObjectProtocol {
-    @objc optional func sensingViewStartTouchAtUnavailableArea(_ popoverSensingView: KPPopoverSensingView);
-    @objc optional func sensingViewTouchBegan(_ popoverSensingView: KPPopoverSensingView);
-    @objc optional func sensingViewTouchEnd(_ popoverSensingView: KPPopoverSensingView);
+    @objc optional func sensingViewStartTouchAtUnavailableArea(_ popoverSensingView: KPPopoverSensingView)
+    @objc optional func sensingViewTouchBegan(_ popoverSensingView: KPPopoverSensingView)
+    @objc optional func sensingViewTouchEnd(_ popoverSensingView: KPPopoverSensingView)
+    
+    
 }
 
 class KPPopoverSensingView: UIView {
@@ -24,9 +26,9 @@ class KPPopoverSensingView: UIView {
     
     
     override init(frame: CGRect) {
-        super.init(frame: frame);
-        self.passTouchEventAnyway = false;
-        self.actionAvailableViews = [UIView]();
+        super.init(frame: frame)
+        passTouchEventAnyway = false
+        actionAvailableViews = [UIView]()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -34,66 +36,66 @@ class KPPopoverSensingView: UIView {
     }
     
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        let hitTestView = super.hitTest(point, with: event);
+        let hitTestView = super.hitTest(point, with: event)
         
         if hitTestView == self {
-            for actionView in self.actionAvailableViews {
-                let convertRect = self.convert(actionView.bounds, from: actionView);
+            for actionView in actionAvailableViews {
+                let convertRect = convert(actionView.bounds, from: actionView)
                 if convertRect.contains(point) {
-                    return nil;
+                    return nil
                 }
             }
             
             if passTouchEventAnyway {
-                self.delegate?.sensingViewStartTouchAtUnavailableArea!(self);
-                return nil;
+                delegate?.sensingViewStartTouchAtUnavailableArea!(self)
+                return nil
             } else {
-                return self;
+                return self
             }
         }
         
-        return hitTestView;
+        return hitTestView
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if self.isTouchNeededToBePassedThrough(touches) {
-            self.next?.touchesBegan(touches, with: event);
-            self.isPassingTouched = true;
+        if isTouchNeededToBePassedThrough(touches) {
+            next?.touchesBegan(touches, with: event)
+            isPassingTouched = true
         } else {
-            self.delegate?.sensingViewTouchBegan!(self);
-            self.isPassingTouched = false;
+            delegate?.sensingViewTouchBegan!(self)
+            isPassingTouched = false
         }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if self.isTouchNeededToBePassedThrough(touches) {
-            self.next?.touchesMoved(touches, with: event);
+        if isTouchNeededToBePassedThrough(touches) {
+            next?.touchesMoved(touches, with: event)
         }
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if self.isPassingTouched {
-            self.next?.touchesEnded(touches, with: event);
+        if isPassingTouched {
+            next?.touchesEnded(touches, with: event)
         } else {
-            self.delegate?.sensingViewTouchEnd!(self);
+            delegate?.sensingViewTouchEnd!(self)
         }
     }
     
     
     func isTouchNeededToBePassedThrough(_ touches: Set<UITouch>) -> Bool {
-        if self.actionAvailableViews.count <= 0 {
-            return false;
+        if actionAvailableViews.count <= 0 {
+            return false
         }
         
         for touch in touches {
-            for actionView in self.actionAvailableViews {
-                let convertRect = self.convert(actionView.bounds, from: actionView);
+            for actionView in actionAvailableViews {
+                let convertRect = convert(actionView.bounds, from: actionView)
                 if !convertRect.contains(touch.location(in: self)) {
-                    return false;
+                    return false
                 }
             }
         }
         
-        return true;
+        return true
     }
 }

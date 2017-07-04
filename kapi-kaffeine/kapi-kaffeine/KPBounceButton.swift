@@ -64,10 +64,10 @@ class KPBounceButton: UIButton {
     
     convenience init (frame: CGRect, image: UIImage) {
         self.init(frame: frame)
-        self.setImage(image.withRenderingMode(.alwaysTemplate),
-                      for: .normal)
-        self.setImage(image.withRenderingMode(.alwaysTemplate),
-                      for: .highlighted)
+        setImage(image.withRenderingMode(.alwaysTemplate),
+                 for: .normal)
+        setImage(image.withRenderingMode(.alwaysTemplate),
+                 for: .highlighted)
     }
     
     required init?(coder aDecoder: NSCoder) {

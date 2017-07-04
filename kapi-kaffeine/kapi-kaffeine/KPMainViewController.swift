@@ -131,7 +131,7 @@ class KPMainViewController: KPViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+    
         // 使用者第一次使用
         if UserDefaults.standard.object(forKey: AppConstant.introShownKey) == nil {
             
@@ -158,8 +158,6 @@ class KPMainViewController: KPViewController {
                 self.present(loginController, animated: true, completion: nil)
             }
         }
-        
-        
     }
     
     func switchSideBar() {
@@ -173,6 +171,7 @@ class KPMainViewController: KPViewController {
         self.mainListViewController?.snapShotShowing = true
         present(SideMenuManager.menuLeftNavigationController!,
                 animated: true, completion: nil)
+        
     }
     
     func changeStyle() {

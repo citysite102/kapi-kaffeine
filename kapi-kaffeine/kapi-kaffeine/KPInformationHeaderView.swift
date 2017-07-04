@@ -43,12 +43,21 @@ class KPInformationHeaderView: UIView {
                                                     defaultInfo: "無人收藏",
                                                     icon: R.image.icon_collect()!,
                                                     handler: { (headerButton) -> () in
-                                                        headerButton.selected = !(headerButton.selected)
-                                                        
-                                                        if headerButton.selected {
+                                                        if headerButton.selected == false {
+                                                            headerButton.selected = true
                                                             KPUserManager.sharedManager.addFavoriteCafe(self.cafeID)
                                                         } else {
-                                                            KPUserManager.sharedManager.removeFavoriteCafe(self.cafeID)
+                                                            DispatchQueue.main.asyncAfter(deadline: .now()) {
+                                                                KPPopoverView.popoverDefaultStyleContent("移除收藏",
+                                                                                                         "請問你這傢伙確定要移除收藏這間超級無敵優秀的咖啡廳嗎？",
+                                                                                                         "我慚愧", { (content) in
+                                                                    print("Test Content")
+                                                                    content.popoverView.dismiss()
+                                                                    headerButton.selected = false
+                                                                    KPUserManager.sharedManager.removeFavoriteCafe(self.cafeID)
+                                                                })
+                                                            }
+                                                            
                                                         }
         });
         
@@ -57,12 +66,22 @@ class KPInformationHeaderView: UIView {
                                                   defaultInfo: "無人打卡",
                                                   icon: R.image.icon_map()!,
                                                   handler: { (headerButton) -> () in
-                                                    headerButton.selected = !(headerButton.selected)
                                                     
-                                                    if headerButton.selected {
+                                                    if headerButton.selected == false {
+                                                        headerButton.selected = true
                                                         KPUserManager.sharedManager.addVisitedCafe(self.cafeID)
                                                     } else {
-                                                        KPUserManager.sharedManager.removeVisitedCafe(self.cafeID)
+                                                        DispatchQueue.main.asyncAfter(deadline: .now()) {
+                                                            KPPopoverView.popoverDefaultStyleContent("移除打卡",
+                                                                                                     "請問你這傢伙確定要說你沒有去過這間超級無敵優秀的咖啡廳嗎？",
+                                                                                                     "我慚愧", { (content) in
+                                                                                                        print("Test Content")
+                                                                                                        content.popoverView.dismiss()
+                                                                                                        headerButton.selected = false
+                                                                                                        KPUserManager.sharedManager.removeVisitedCafe(self.cafeID)
+                                                            })
+                                                        }
+                                                        
                                                     }
         });
         

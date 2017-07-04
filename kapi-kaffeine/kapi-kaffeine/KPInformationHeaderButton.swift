@@ -12,7 +12,7 @@ struct HeaderButtonInfo {
     let title: String!
     let info: String!
     let defaultInfo: String!
-    let icon: UIImage
+    let icon: UIImage!
     let handler: (_ headerButton: KPInformationHeaderButton) -> ()
 }
 
@@ -56,22 +56,22 @@ class KPInformationHeaderButton: UIView {
     var handler: ((_ headerButton: KPInformationHeaderButton) -> ())!
     var selected: Bool = false {
         didSet {
-            self.icon.tintColor = selected ?
+            icon.tintColor = selected ?
                 KPColorPalette.KPMainColor.mainColor :
                 KPColorPalette.KPMainColor.grayColor_level5
-            self.titleLabel.textColor = selected ?
+            titleLabel.textColor = selected ?
                 KPColorPalette.KPTextColor.mainColor :
                 KPColorPalette.KPTextColor.grayColor_level3
-            self.numberValue = self.numberValue+1
+            numberValue = self.numberValue+1
         }
     }
     
     var buttonInfo: HeaderButtonInfo! {
         didSet {
-            self.icon.image = buttonInfo?.icon
-            self.titleLabel.text = buttonInfo.title
-            self.infoLabel.text = buttonInfo.defaultInfo
-            self.handler = buttonInfo?.handler
+            icon.image = buttonInfo.icon
+            titleLabel.text = buttonInfo.title
+            infoLabel.text = buttonInfo.defaultInfo
+            handler = buttonInfo.handler
         }
     }
     

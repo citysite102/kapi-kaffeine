@@ -46,14 +46,21 @@ struct KPColorPalette {
     }
     
     struct KPBackgroundColor {
+        
+        static let mainColor_light = UIColor(hexString: "#c8955e")
+        static let mainColor = UIColor(hexString: "#784d1f")
+        
         static let cellScoreBgColor = UIColor(hexString: "#9f9426")
         static let scoreButtonColor = UIColor(hexString: "#9f9426")
         static let disabledScoreButtonColor = UIColor(hexString: "#C8C488")
         
-        static let mainColor_top = UIColor(hexString: "#D1A06B")
-        static let mainColor_bottom = UIColor(hexString: "#A67037")
-        
         static let mainColor_ripple = UIColor(rgbaHexValue: 0xc8955eaa)
+        
+        static let grayColor_level3 = UIColor.init(r: 0.2, g: 0.2, b: 0.2, a: 0.5)
+        static let grayColor_level4 = UIColor.init(r: 0.2, g: 0.2, b: 0.2, a: 0.3)
+        static let grayColor_level5 = UIColor.init(r: 0.2, g: 0.2, b: 0.2, a: 0.2)
+        static let grayColor_level6 = UIColor.init(r: 0.2, g: 0.2, b: 0.2, a: 0.1)
+        static let grayColor_level7 = UIColor.init(r: 0.2, g: 0.2, b: 0.2, a: 0.05)
     }
     
     struct KPShopStatusColor {
