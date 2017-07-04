@@ -61,8 +61,7 @@ class KPNewCommentController: KPViewController {
         navigationItem.hidesBackButton = true
         
         dismissButton = KPBounceButton.init(frame: CGRect.init(x: 0, y: 0, width: 24, height: 24));
-        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4)
-        dismissButton.setImage(R.image.icon_close()?.withRenderingMode(.alwaysTemplate),
+        dismissButton.setImage(R.image.icon_back()?.withRenderingMode(.alwaysTemplate),
                             for: .normal);
         dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor;
         dismissButton.addTarget(self,

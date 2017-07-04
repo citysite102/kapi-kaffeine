@@ -132,7 +132,7 @@ class KPModalViewController: KPViewController {
     func setupPresentContent() {
         
         let duration = 0.6
-        let damping  = 0.9
+        let damping  = 0.85
         
         if self.contentController.parent != nil {
             self.contentController.willMove(toParentViewController: nil)

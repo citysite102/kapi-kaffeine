@@ -147,7 +147,7 @@ class KPSideViewController: KPViewController {
                                                                                         UIModalPresentationStyle.fullScreen)
                                            }),
                                            informationData(title:"粉絲專頁",
-                                                           icon:R.image.icon_fb()!,
+                                                           icon:R.image.icon_fanpage()!,
                                                            handler:{()->() in
                                                             print("粉絲專頁")}),
                                            informationData(title:"幫我們評分",

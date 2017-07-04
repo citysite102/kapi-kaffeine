@@ -97,7 +97,7 @@ class KPShopInfoView: UIView {
         openHint.backgroundColor = KPColorPalette.KPShopStatusColor.opened
         addSubview(openHint)
         openHint.addConstraints(fromStringArray: ["V:[$self(6)]",
-                                                  "H:[$view0]-6-[$self(6)]"],
+                                                  "H:[$view0]-8-[$self(6)]"],
                                      views: [openTimeIcon])
         openHint.addConstraintForCenterAligning(to: openTimeIcon, in: .vertical)
         
@@ -134,7 +134,7 @@ class KPShopInfoView: UIView {
         phoneLabel.font = UIFont.systemFont(ofSize: 14)
         phoneLabel.textColor = KPColorPalette.KPTextColor.grayColor_level1
         addSubview(phoneLabel)
-        phoneLabel.addConstraints(fromStringArray: ["H:[$view0]-6-[$self]"],
+        phoneLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]"],
                                       views: [phoneIcon])
         phoneLabel.addConstraintForCenterAligning(to: phoneIcon,
                                                        in: .vertical)
@@ -150,7 +150,7 @@ class KPShopInfoView: UIView {
         locationLabel.font = UIFont.systemFont(ofSize: 14)
         locationLabel.textColor = KPColorPalette.KPTextColor.grayColor_level1
         addSubview(locationLabel)
-        locationLabel.addConstraints(fromStringArray: ["H:[$view0]-4-[$self]"],
+        locationLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]"],
                                           views: [locationIcon])
         locationLabel.addConstraintForCenterAligning(to: locationIcon,
                                                           in: .vertical)
