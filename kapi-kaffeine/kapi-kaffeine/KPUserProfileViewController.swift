@@ -10,49 +10,50 @@ import UIKit
 
 class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, KPTabViewDelegate {
 
-    var dismissButton:UIButton!
+    var dismissButton: UIButton!
+    var editButton: UIButton!
     
     let tabTitles: [(title: String, key: String)] = [("已收藏", "favorites"), ("我去過", "visits"), ("已評分", "favorites"), ("已評價", "visits")]
     
     lazy var userContainer: UIView = {
-        let containerView = UIView();
-        containerView.backgroundColor = KPColorPalette.KPMainColor.mainColor;
-        return containerView;
+        let containerView = UIView()
+        containerView.backgroundColor = KPColorPalette.KPMainColor.mainColor
+        return containerView
     }()
     
     lazy var userPhoto: UIImageView = {
-        let imageView = UIImageView();
+        let imageView = UIImageView()
         imageView.backgroundColor = KPColorPalette.KPMainColor.mainColor
-        imageView.layer.borderWidth = 2.0;
-        imageView.layer.borderColor = UIColor.white.cgColor;
-        imageView.layer.cornerRadius = 5.0;
-        imageView.layer.masksToBounds = true;
-        return imageView;
+        imageView.layer.borderWidth = 2.0
+        imageView.layer.borderColor = UIColor.white.cgColor
+        imageView.layer.cornerRadius = 5.0
+        imageView.layer.masksToBounds = true
+        return imageView
     }()
     
     lazy var userNameLabel: UILabel = {
-        let label = UILabel();
-        label.font = UIFont.systemFont(ofSize: 16.0);
-        label.textColor = KPColorPalette.KPTextColor.whiteColor;
-        label.text = "Samuel";
-        return label;
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 16.0)
+        label.textColor = KPColorPalette.KPTextColor.whiteColor
+        label.text = "Samuel"
+        return label
     }()
     
     lazy var userCityLabel: UILabel = {
-        let label = UILabel();
-        label.font = UIFont.systemFont(ofSize: 12.0);
-        label.textColor = KPColorPalette.KPTextColor.whiteColor;
-        label.text = "Taipei";
-        return label;
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 12.0)
+        label.textColor = KPColorPalette.KPTextColor.whiteColor
+        label.text = "Taipei"
+        return label
     }()
     
     lazy var userBioLabel: UILabel = {
-        let label = UILabel();
-        label.font = UIFont.systemFont(ofSize: 10.0);
-        label.textColor = KPColorPalette.KPTextColor.whiteColor;
-        label.text = "喜歡鬧，就是愛鬧，鬧到沒有極限的不停地鬧";
-        label.numberOfLines = 0;
-        return label;
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 10.0)
+        label.textColor = KPColorPalette.KPTextColor.whiteColor
+        label.text = "喜歡鬧，就是愛鬧，鬧到沒有極限的不停地鬧"
+        label.numberOfLines = 0
+        return label
     }()
     
     var tableViews: [UITableView] = []
@@ -70,57 +71,63 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor.white;
-        self.navigationController?.navigationBar.topItem?.title = "個人資料";
-        
-//        let editButton = UIButton(type: .custom)
-//        editButton.setImage(R.image.icon_edit(), for: .normal)
-        
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: R.image.icon_edit(), style: UIBarButtonItemStyle.plain, target: self, action: #selector(handleEditButtonOnTapped))
-        
-        self.dismissButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 24, height: 24));
-        self.dismissButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4);
-        self.dismissButton.setImage(UIImage.init(named: "icon_close")?.withRenderingMode(.alwaysTemplate),
-                                    for: .normal);
-        self.dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor;
+        self.view.backgroundColor = UIColor.white
+        self.navigationController?.navigationBar.topItem?.title = "個人資料"
+
+        self.dismissButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 24, height: 24))
+        self.dismissButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4)
+        self.dismissButton.setImage(R.image.icon_close(),
+                                    for: .normal)
+        self.dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor
         self.dismissButton.addTarget(self,
-                                     action: #selector(KPSettingViewController.handleDismissButtonOnTapped),
-                                     for: .touchUpInside);
+                                     action: #selector(KPUserProfileViewController.handleDismissButtonOnTapped),
+                                     for: .touchUpInside)
         
-        let barItem = UIBarButtonItem.init(customView: self.dismissButton);
-        let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
-        negativeSpacer.width = -8;
+        self.editButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 24, height: 24))
+        self.editButton.setImage(R.image.icon_edit(),
+                                 for: .normal)
+        self.editButton.tintColor = KPColorPalette.KPTextColor.whiteColor
+        self.editButton.addTarget(self,
+                                  action: #selector(KPUserProfileViewController.handleEditButtonOnTapped),
+                                  for: .touchUpInside)
+
+        
+        let barItem = UIBarButtonItem.init(customView: self.dismissButton)
+        let rightBarItem = UIBarButtonItem.init(customView: self.editButton)
+        let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace,
+                                             target: nil,
+                                             action: nil)
+        negativeSpacer.width = -8
         self.navigationItem.leftBarButtonItems = [negativeSpacer, barItem]
+        self.navigationItem.rightBarButtonItems = [negativeSpacer, rightBarItem]
         
         self.dismissButton.addTarget(self,
                                      action: #selector(KPInformationViewController.handleDismissButtonOnTapped),
-                                     for: .touchUpInside);
+                                     for: .touchUpInside)
         
-//        let navigationBarHeight = self.navigationController?.navigationBar.frame.height;
+        self.view.addSubview(self.userContainer)
+        self.userContainer.addConstraints(fromStringArray: ["V:|[$self]", "H:|[$self]|"])
         
-        self.view.addSubview(self.userContainer);
-        self.userContainer.addConstraints(fromStringArray: ["V:|[$self]", "H:|[$self]|"]);
-        
-        self.userContainer.addSubview(self.userPhoto);
+        self.userContainer.addSubview(self.userPhoto)
         self.userPhoto.addConstraints(fromStringArray: ["H:|-16-[$self(64)]",
                                                         "V:|-16-[$self(64)]-16-|"])
         
-        self.userContainer.addSubview(self.userNameLabel);
+        self.userContainer.addSubview(self.userNameLabel)
         self.userNameLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]",
                                                             "V:|-16-[$self]"],
-                                          views: [self.userPhoto]);
+                                          views: [self.userPhoto])
         
-        self.userContainer.addSubview(self.userCityLabel);
+        self.userContainer.addSubview(self.userCityLabel)
         self.userCityLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]",
                                                             "V:[$view1]-2-[$self]"],
                                           views: [self.userPhoto,
-                                                  self.userNameLabel]);
+                                                  self.userNameLabel])
         
-        self.userContainer.addSubview(self.userBioLabel);
+        self.userContainer.addSubview(self.userBioLabel)
         self.userBioLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self(150)]",
                                                             "V:[$view1]-4-[$self]"],
                                           views: [self.userPhoto,
-                                                  self.userCityLabel]);
+                                                  self.userCityLabel])
         
         
         tabView = KPTabView(titles: self.tabTitles.map {$0.title})
@@ -196,7 +203,7 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
     }
     
     func handleDismissButtonOnTapped() {
-        self.appModalController()?.dismissControllerWithDefaultDuration();
+        self.appModalController()?.dismissControllerWithDefaultDuration()
     }
     
     func handleEditButtonOnTapped() {

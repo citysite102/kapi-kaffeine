@@ -67,7 +67,7 @@ class KPNewCommentController: KPViewController {
         dismissButton.addTarget(self,
                              action: #selector(KPNewCommentController.handleDismissButtonOnTapped),
                              for: .touchUpInside)
-        let barItem = UIBarButtonItem.init(customView: self.dismissButton);
+        let barItem = UIBarButtonItem.init(customView: dismissButton);
         
         sendButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 40, height: 24));
         sendButton.setTitle("發佈", for: .normal)
@@ -77,7 +77,7 @@ class KPNewCommentController: KPViewController {
                              action: #selector(KPNewCommentController.handleSendButtonOnTapped),
                              for: .touchUpInside)
         
-        let rightbarItem = UIBarButtonItem.init(customView: self.sendButton);
+        let rightbarItem = UIBarButtonItem.init(customView: sendButton);
         
         let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace,
                                              target: nil,
@@ -191,7 +191,7 @@ class KPNewCommentController: KPViewController {
     }
 
     func handleDismissButtonOnTapped() {
-        self.navigationController?.popToRootViewController(animated: true)
+        navigationController?.popToRootViewController(animated: true)
     }
     
     func handleSendButtonOnTapped() {

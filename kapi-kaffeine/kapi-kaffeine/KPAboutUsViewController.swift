@@ -73,8 +73,7 @@ class KPAboutUsViewController: KPViewController {
         
         dismissButton = KPBounceButton.init(frame: CGRect.init(x: 0, y: 0, width: 24, height: 24));
         dismissButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4);
-        dismissButton.setImage(UIImage.init(named: "icon_close")?.withRenderingMode(.alwaysTemplate),
-                                    for: .normal);
+        dismissButton.setImage(R.image.icon_close(), for: .normal);
         dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor;
         dismissButton.addTarget(self,
                                      action: #selector(KPAboutUsViewController.handleDismissButtonOnTapped),

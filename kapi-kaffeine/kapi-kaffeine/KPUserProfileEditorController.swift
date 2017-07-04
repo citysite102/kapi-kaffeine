@@ -85,6 +85,8 @@ class KPUserProfileEditorController: UIViewController, UITextFieldDelegate, UITe
     
     var scrollView: UIScrollView!
     var scrollContainer: UIView!
+    var dismissButton: KPBounceButton!
+    var saveButton: UIButton!
     var activeField: UITextField?
     
     var introTextNumberLabel: UILabel!
@@ -93,17 +95,44 @@ class KPUserProfileEditorController: UIViewController, UITextFieldDelegate, UITe
         super.viewDidLoad()
         
         view.backgroundColor = UIColor.white
+        navigationItem.title = "資料編輯"
+        navigationItem.hidesBackButton = true
+        
+        dismissButton = KPBounceButton.init(frame: CGRect.init(x: 0, y: 0, width: 24, height: 24));
+        dismissButton.setImage(R.image.icon_back()?.withRenderingMode(.alwaysTemplate),
+                               for: .normal);
+        dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor;
+        dismissButton.addTarget(self,
+                                action: #selector(KPUserProfileEditorController.handleDismissButtonOnTapped),
+                                for: .touchUpInside)
+        let barItem = UIBarButtonItem.init(customView: dismissButton);
+        
+        saveButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 40, height: 24));
+        saveButton.setTitle("儲存", for: .normal)
+        saveButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+        saveButton.tintColor = KPColorPalette.KPTextColor.mainColor;
+        saveButton.addTarget(self,
+                             action: #selector(KPUserProfileEditorController.handleSaveButtonOnTapped),
+                             for: .touchUpInside)
+        
+        let rightbarItem = UIBarButtonItem.init(customView: saveButton);
+        
+        let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace,
+                                             target: nil,
+                                             action: nil)
+        negativeSpacer.width = -8
+        navigationItem.leftBarButtonItems = [negativeSpacer, barItem]
+        navigationItem.rightBarButtonItems = [negativeSpacer, rightbarItem]
         
         scrollView = UIScrollView()
         view.addSubview(scrollView)
-        scrollView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"])
-        
+        scrollView.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                    "V:|[$self]|"])
         
         scrollContainer = UIView()
         scrollView.addSubview(scrollContainer)
         scrollContainer.addConstraintForHavingSameWidth(with: view)
         scrollContainer.addConstraint(from: "V:|[$self]|")
-        
         
         let nameField = KPSubTitleEditView.init(.Both, .Edited, "使用者名稱")
         nameField.content = "Samuel"
@@ -161,6 +190,14 @@ class KPUserProfileEditorController: UIViewController, UITextFieldDelegate, UITe
     
     func handleTapGesture(tapGesture: UITapGestureRecognizer) {
         view.endEditing(true)
+    }
+    
+    func handleDismissButtonOnTapped() {
+        navigationController?.popToRootViewController(animated: true)
+    }
+    
+    func handleSaveButtonOnTapped() {
+        
     }
     
     fileprivate func generateNewTitleLabel(title: String) -> UILabel {
