@@ -76,53 +76,54 @@ class KPSideViewController: KPViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.white;
-        self.navigationController?.setNavigationBarHidden(true, animated: false);
+        view.backgroundColor = UIColor.white;
+        navigationController?.setNavigationBarHidden(true, animated: false);
         
-        self.view.addSubview(self.userContainer);
-        self.userContainer.addConstraints(fromStringArray: ["V:|[$self(140)]", "H:|[$self]|"]);
+        view.addSubview(userContainer);
+        userContainer.addConstraints(fromStringArray: ["V:|[$self(140)]",
+                                                       "H:|[$self]|"]);
         
-        self.userContainer.addSubview(self.userPhoto);
-        self.userPhoto.addConstraints(fromStringArray: ["H:|-16-[$self(64)]",
-                                                        "V:|-16-[$self(64)]"])
+        userContainer.addSubview(userPhoto);
+        userPhoto.addConstraints(fromStringArray: ["H:|-16-[$self(64)]",
+                                                   "V:|-16-[$self(64)]"])
         
-        self.userContainer.addSubview(self.userNameLabel);
-        self.userNameLabel.addConstraints(fromStringArray: ["H:|-16-[$self]",
-                                                            "V:[$view0]-8-[$self]"],
-                                          views: [self.userPhoto]);
+        userContainer.addSubview(userNameLabel);
+        userNameLabel.addConstraints(fromStringArray: ["H:|-16-[$self]",
+                                                       "V:[$view0]-8-[$self]"],
+                                          views: [userPhoto]);
         
-        self.view.addSubview(self.chooseLabel);
-        self.chooseLabel.addConstraints(fromStringArray: ["H:|-16-[$self]",
-                                                          "V:[$view0]-16-[$self]"],
-                                        views: [self.userContainer]);
+        view.addSubview(chooseLabel);
+        chooseLabel.addConstraints(fromStringArray: ["H:|-16-[$self]",
+                                                     "V:[$view0]-16-[$self]"],
+                                        views: [userContainer]);
         
-        self.tableView = UITableView();
-        self.tableView.delegate = self;
-        self.tableView.dataSource = self;
-        self.tableView.separatorColor = UIColor.clear;
-        self.view.addSubview(self.tableView);
-        self.tableView.addConstraints(fromStringArray: ["V:[$view0]-16-[$self]|",
-                                                        "H:|[$self]|"],
-                                      views: [self.chooseLabel]);
-        self.tableView.register(KPRegionTableViewCell.self,
+        tableView = UITableView();
+        tableView.delegate = self;
+        tableView.dataSource = self;
+        tableView.separatorColor = UIColor.clear;
+        view.addSubview(tableView);
+        tableView.addConstraints(fromStringArray: ["V:[$view0]-16-[$self]|",
+                                                   "H:|[$self]|"],
+                                      views: [chooseLabel]);
+        tableView.register(KPRegionTableViewCell.self,
                                 forCellReuseIdentifier: KPSideViewController.KPSideViewControllerRegionCellReuseIdentifier);
-        self.tableView.register(KPCityTableViewCell.self,
+        tableView.register(KPCityTableViewCell.self,
                                 forCellReuseIdentifier: KPSideViewController.KPSideViewControllerCityCellReuseIdentifier);
 
-        self.regionContents = [regionData(name:"北部",
-                                          icon:R.image.icon_taipei()!,
-                                          cities:["台北", "中壢", "月球"],
-                                          cityKeys:["taipei", "中壢", "月球"]),
-                               regionData(name:"東部",
-                                          icon:R.image.icon_pingtung()!,
-                                          cities:["外太空", "黑洞", "冥王星"],
-                                          cityKeys:["taipei", "中壢", "月球"]),
-                               regionData(name:"中南部",
-                                          icon:R.image.icon_taitung()!,
-                                          cities:["台北", "台中"],
-                                          cityKeys:["taipei", "中壢"])];
+        regionContents = [regionData(name:"北部",
+                                     icon:R.image.icon_taipei()!,
+                                    cities:["台北", "中壢", "月球"],
+                                    cityKeys:["taipei", "中壢", "月球"]),
+                          regionData(name:"東部",
+                                     icon:R.image.icon_pingtung()!,
+                                     cities:["外太空", "黑洞", "冥王星"],
+                                     cityKeys:["taipei", "中壢", "月球"]),
+                          regionData(name:"中南部",
+                                     icon:R.image.icon_taitung()!,
+                                     cities:["台北", "台中"],
+                                     cityKeys:["taipei", "中壢"])];
         
-        self.informationSectionContents = [informationData(title:"關於我們",
+        informationSectionContents = [informationData(title:"關於我們",
                                                            icon:R.image.icon_cup()!,
                                                            handler:{()->() in
                                                             
@@ -131,40 +132,40 @@ class KPSideViewController: KPViewController {
                                                             let aboutUsController = KPAboutUsViewController()
                                                             let navigationController = UINavigationController.init(rootViewController: aboutUsController);
                                                             controller.contentController = navigationController;
-                                                            controller.presentModalView(self,
-                                                                                        UIModalPresentationStyle.fullScreen)
-                                            }),
-                                           informationData(title:"聯絡我們",
-                                                           icon:R.image.icon_msg()!,
-                                                           handler:{()->() in
+                                                            controller.presentModalView(self, UIModalPresentationStyle.fullScreen)
+                                        }),
+                                        informationData(title:"聯絡我們",
+                                                      icon:R.image.icon_msg()!,
+                                                      handler:{()->() in
                                                             
-                                                            let controller = KPModalViewController()
-                                                            controller.edgeInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-                                                            let profileController = KPUserProfileViewController()
-                                                            let navigationController = UINavigationController.init(rootViewController: profileController);
-                                                            controller.contentController = navigationController;
-                                                            controller.presentModalView(self,
-                                                                                        UIModalPresentationStyle.fullScreen)
-                                           }),
-                                           informationData(title:"粉絲專頁",
-                                                           icon:R.image.icon_fanpage()!,
-                                                           handler:{()->() in
-                                                            print("粉絲專頁")}),
-                                           informationData(title:"幫我們評分",
-                                                           icon:R.image.icon_star()!,
-                                                           handler:{()->() in
-                                                            print("幫我們評分")}),
-                                           informationData(title:"設定",
-                                                           icon:R.image.icon_setting()!,
-                                                           handler:{()->() in
-                                                            let controller = KPModalViewController()
-                                                            controller.edgeInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-                                                            let settingController = KPSettingViewController()
-                                                            let navigationController = UINavigationController.init(rootViewController: settingController);
-                                                            controller.contentController = navigationController;
-                                                            controller.presentModalView(self,
-                                                                                        UIModalPresentationStyle.fullScreen)
-                                           }),
+                                                        let controller = KPModalViewController()
+                                                        controller.edgeInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+                                                        let profileController = KPUserProfileViewController()
+                                                        let navigationController = UINavigationController.init(rootViewController: profileController);
+                                                        controller.contentController = navigationController;
+                                                        controller.presentModalView(self, UIModalPresentationStyle.fullScreen)
+                                        }),
+                                        informationData(title:"粉絲專頁",
+                                                       icon:R.image.icon_fanpage()!,
+                                                       handler:{()->() in
+                                                        print("粉絲專頁")
+                                        }),
+                                        informationData(title:"幫我們評分",
+                                                       icon:R.image.icon_star()!,
+                                                       handler:{()->() in
+                                                        print("幫我們評分")
+                                        }),
+                                        informationData(title:"設定",
+                                                       icon:R.image.icon_setting()!,
+                                                       handler:{()->() in
+                                                        let controller = KPModalViewController()
+                                                        controller.edgeInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+                                                        let settingController = KPSettingViewController()
+                                                        let navigationController = UINavigationController.init(rootViewController: settingController);
+                                                        controller.contentController = navigationController;
+                                                        controller.presentModalView(self,
+                                                                                    UIModalPresentationStyle.fullScreen)
+                                       })
         ]
     }
     
@@ -178,7 +179,6 @@ class KPSideViewController: KPViewController {
         super.viewWillDisappear(animated);
         mainController.opacityView.isHidden = true
         mainController.statusBarShouldBeHidden = false
-        mainController.mainListViewController?.snapShotShowing = false
         UIView.animate(withDuration: 0.15) {
             self.mainController.setNeedsStatusBarAppearanceUpdate()
         }
@@ -190,20 +190,6 @@ class KPSideViewController: KPViewController {
 }
 
 extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
-    
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        let currentY = scrollView.contentOffset.y
-//        let currentBottomY = scrollView.frame.size.height + currentY
-//        if currentY > lastY {
-//            tableView.bounces = true
-//        } else {
-//            if currentBottomY < scrollView.contentSize.height + scrollView.contentInset.bottom {
-//                tableView.bounces = false
-//            }
-//        }
-//        lastY = scrollView.contentOffset.y < 0 ? 0 : scrollView.contentOffset.y
-//    }
-    
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if (section == 0) {
@@ -227,20 +213,20 @@ extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if (indexPath.section == 0) {
-            if self.regionContents[indexPath.row] != nil {
+            if regionContents[indexPath.row] != nil {
                 let cell = tableView.dequeueReusableCell(withIdentifier:KPSideViewController.KPSideViewControllerRegionCellReuseIdentifier,
                                                          for: indexPath) as! KPRegionTableViewCell;
                 cell.selectionStyle = .none
                 cell.expandIcon.isHidden = false
-                cell.regionIcon.image = self.regionIcons[indexPath.row]
-                cell.regionLabel.text = self.regionContents[indexPath.row]?.name;
+                cell.regionIcon.image = regionIcons[indexPath.row]
+                cell.regionLabel.text = regionContents[indexPath.row]?.name;
                 return cell;
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier:KPSideViewController.KPSideViewControllerCityCellReuseIdentifier,
                                                          for: indexPath) as! KPCityTableViewCell;
                 cell.selectionStyle = .none
-                let regionIndex = self.getRegionIndex(expandIndex: indexPath.row);
-                var regionContent = self.regionContents[regionIndex];
+                let regionIndex = getRegionIndex(expandIndex: indexPath.row);
+                var regionContent = regionContents[regionIndex];
                 cell.cityLabel.text = regionContent?.cities[indexPath.row-regionIndex-1];
                 return cell;
             }
@@ -248,8 +234,8 @@ extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier:KPSideViewController.KPSideViewControllerRegionCellReuseIdentifier,
                                                      for: indexPath) as! KPRegionTableViewCell;
             cell.selectionStyle = .none
-            cell.regionLabel.text = self.informationSectionContents[indexPath.row]?.title;
-            cell.regionIcon.image = self.informationSectionContents[indexPath.row]?.icon;
+            cell.regionLabel.text = informationSectionContents[indexPath.row]?.title;
+            cell.regionIcon.image = informationSectionContents[indexPath.row]?.icon;
             cell.expandIcon.isHidden = true
             cell.expanded = false;
             return cell;
@@ -260,7 +246,7 @@ extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
        
         var selectedIndex = expandIndex;
         while selectedIndex > 0 {
-            if (self.regionContents[selectedIndex-1] != nil) {
+            if (regionContents[selectedIndex-1] != nil) {
                 break;
             }
             selectedIndex-=1;
@@ -274,7 +260,7 @@ extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if (indexPath.section == 0) {
-            if self.regionContents[indexPath.row] != nil {
+            if regionContents[indexPath.row] != nil {
                 return 48.0;
             } else {
                 return 40.0;
@@ -287,9 +273,9 @@ extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return self.regionContents.count
+            return regionContents.count
         case 1:
-            return self.informationSectionContents.count
+            return informationSectionContents.count
         default:
             return 0
         }
@@ -298,21 +284,21 @@ extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {
-            if self.regionContents[indexPath.row] != nil {
+            if regionContents[indexPath.row] != nil {
                 
-                let regionCities = self.regionContents[indexPath.row]?.cities;
+                let regionCities = regionContents[indexPath.row]?.cities;
                 
                 let cell = tableView.cellForRow(at: indexPath) as! KPRegionTableViewCell;
                 
                 tableView.beginUpdates()
                 
                 // 若是最後一行/或是任何一個可展開的區塊 --> 展開
-                if indexPath.row + 1 >= self.regionContents.count || self.regionContents[indexPath.row+1] != nil {
+                if indexPath.row + 1 >= regionContents.count || regionContents[indexPath.row+1] != nil {
                     cell.expanded = true;
                     
                     for (index, _) in (regionCities?.enumerated())! {
-                        self.regionContents.insert(nil, at: indexPath.row+index+1);
-                        self.tableView.insertRows(at: [NSIndexPath.init(row: indexPath.row+index+1,
+                        regionContents.insert(nil, at: indexPath.row+index+1);
+                        tableView.insertRows(at: [NSIndexPath.init(row: indexPath.row+index+1,
                                                                         section: 0) as IndexPath],
                                                   with: .top);
                     }
@@ -322,34 +308,34 @@ extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
                     var indexPaths = [IndexPath]()
                     for (index, _) in (regionCities?.enumerated())! {
                         indexPaths.append(NSIndexPath.init(row: indexPath.row+index+1, section: 0) as IndexPath);
-                        self.regionContents.remove(at: indexPath.row+1);
+                        regionContents.remove(at: indexPath.row+1);
                     }
-                    self.tableView.deleteRows(at: indexPaths, with: .top);
+                    tableView.deleteRows(at: indexPaths, with: .top);
                 }
                 tableView.endUpdates()
 
             /*可調整時間的做法
-            if self.regionContents[indexPath.row] != nil {
-                if indexPath.row + 1 >= self.regionContents.count {
+            if regionContents[indexPath.row] != nil {
+                if indexPath.row + 1 >= regionContents.count {
                     for (index, _) in (regionCities?.enumerated())! {
-                        self.regionContents.insert(nil, at: indexPath.row+index+1);
-                        self.tableView.insertRows(at: [NSIndexPath.init(row: indexPath.row+index+1,
+                        regionContents.insert(nil, at: indexPath.row+index+1);
+                        tableView.insertRows(at: [NSIndexPath.init(row: indexPath.row+index+1,
                                                                         section: 0) as IndexPath],
                                                   with: .top);
                         
                     }
                 } else {
-                    if self.regionContents[indexPath.row+1] != nil {
+                    if regionContents[indexPath.row+1] != nil {
                         for (_, _) in (regionCities?.enumerated())! {
                             UIView.animateKeyframes(withDuration: 0.5, delay: 0, options: [.beginFromCurrentState, .overrideInheritedDuration], animations: {
                                 
-                                self.tableView.beginUpdates()
-                                self.regionContents.insert(nil, at: indexPath.row+1);
-                                self.tableView.insertRows(at: [NSIndexPath.init(row: indexPath.row+1,
+                                tableView.beginUpdates()
+                                regionContents.insert(nil, at: indexPath.row+1);
+                                tableView.insertRows(at: [NSIndexPath.init(row: indexPath.row+1,
                                                                                 section: 0) as IndexPath],
                                                           with: .top);
                                 
-                                self.tableView.endUpdates()
+                                tableView.endUpdates()
                                 
                             }, completion: nil)
                             
@@ -359,23 +345,23 @@ extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
                         for (index, _) in (regionCities?.enumerated())! {
                             indexPaths.append(NSIndexPath.init(row: indexPath.row+index+1, section: 0) as IndexPath);
                  
-                            self.regionContents.remove(at: indexPath.row+1);
+                            regionContents.remove(at: indexPath.row+1);
                         }
-                        self.tableView.deleteRows(at: indexPaths, with: .top);
+                        tableView.deleteRows(at: indexPaths, with: .top);
                         
                     }
                 }
                  */
                 
             } else {
-                let regionIndex = self.getRegionIndex(expandIndex: indexPath.row);
-                let regionContent = self.regionContents[regionIndex];
+                let regionIndex = getRegionIndex(expandIndex: indexPath.row);
+                let regionContent = regionContents[regionIndex];
                 let cityName = regionContent?.cityKeys[indexPath.row-regionIndex-1]
                 mainController.displayDataModel = KPFilter.filterData(source: mainController.displayDataModel,
                                                                       withCity: cityName!)
             }
         } else {
-            self.informationSectionContents[indexPath.row]?.handler();
+            informationSectionContents[indexPath.row]?.handler();
         }
     }
 }

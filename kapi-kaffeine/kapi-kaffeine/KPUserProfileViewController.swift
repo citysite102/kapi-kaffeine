@@ -13,7 +13,10 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
     var dismissButton: UIButton!
     var editButton: UIButton!
     
-    let tabTitles: [(title: String, key: String)] = [("已收藏", "favorites"), ("我去過", "visits"), ("已評分", "favorites"), ("已評價", "visits")]
+    let tabTitles: [(title: String, key: String)] = [("已收藏", "favorites"),
+                                                     ("我去過", "visits"),
+                                                     ("已評分", "favorites"),
+                                                     ("已評價", "visits")]
     
     lazy var userContainer: UIView = {
         let containerView = UIView()
@@ -155,9 +158,9 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
             tableView.delegate = self
             tableView.tag = index
             tableView.register(KPMainListTableViewCell.self,
-                                forCellReuseIdentifier: KPMainListViewController.KPMainListViewCellReuseIdentifier)
+                                forCellReuseIdentifier: "cell")
             tableView.register(KPDefaultLoadingTableCell.self,
-                                forCellReuseIdentifier: KPMainListViewController.KPMainListViewLoadingCellReuseIdentifier)
+                                forCellReuseIdentifier: "cell_loading")
             tableView.estimatedRowHeight = 80
             
             scrollContainer.addSubview(tableView)
@@ -258,15 +261,15 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if !dataLoading {
-            let cell = tableView.dequeueReusableCell(withIdentifier:KPMainListViewController.KPMainListViewCellReuseIdentifier,
+            let cell = tableView.dequeueReusableCell(withIdentifier:"cell",
                                                      for: indexPath) as! KPMainListTableViewCell
             
             cell.selectionStyle = .none
             cell.dataModel = self.displayDataModels[tableView.tag][indexPath.row]
             return cell
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier:KPMainListViewController.KPMainListViewLoadingCellReuseIdentifier,
-                                                     for: indexPath) as! KPDefaultLoadingTableCell
+            let cell = tableView.dequeueReusableCell(withIdentifier:"cell_loading",
+                                                     for: indexPath) as! KPMainListTableViewCell
             return cell
         }
     }

@@ -12,17 +12,20 @@ import ObjectMapper
 import PromiseKit
 import GoogleMobileAds
 
+
 class KPMainListViewController:
     KPViewController,
     KPMainViewControllerDelegate,
     KPSearchFooterViewDelegate {
     
-    static let KPMainListViewCellReuseIdentifier = "cell"
-    static let KPMainListViewLoadingCellReuseIdentifier = "cell_loading"
-    static let KPMainListViewAdCellReuseIdentifier = "cell_ad"
-    static let adInterval = 12
-    static let concurrentAdsCount = 20
-    static let adViewHeight = CGFloat(135)
+    struct Constant {
+        static let KPMainListViewCellReuseIdentifier = "cell"
+        static let KPMainListViewLoadingCellReuseIdentifier = "cell_loading"
+        static let KPMainListViewAdCellReuseIdentifier = "cell_ad"
+        static let adInterval = 12
+        static let concurrentAdsCount = 20
+        static let adViewHeight = CGFloat(135)
+    }
     
     weak var mainController:KPMainViewController!
     var tableView: UITableView!
@@ -62,6 +65,7 @@ class KPMainListViewController:
                 self.addNativeExpressAds()
                 self.preloadNextAd()
                 self.tableView.reloadData()
+                UIApplication.shared.isNetworkActivityIndicatorVisible = false
             }
         }
     }
@@ -80,11 +84,11 @@ class KPMainListViewController:
         tableView.addConstraints(fromStringArray: ["V:|-100-[$self]",
                                                         "H:|[$self]|"])
         tableView.register(KPMainListTableViewCell.self,
-                                forCellReuseIdentifier: KPMainListViewController.KPMainListViewCellReuseIdentifier)
+                                forCellReuseIdentifier: Constant.KPMainListViewCellReuseIdentifier)
         tableView.register(KPDefaultLoadingTableCell.self,
-                                forCellReuseIdentifier: KPMainListViewController.KPMainListViewLoadingCellReuseIdentifier)
+                                forCellReuseIdentifier: Constant.KPMainListViewLoadingCellReuseIdentifier)
         tableView.register(KPMainListNativeExpressCell.self,
-                                forCellReuseIdentifier: KPMainListViewController.KPMainListViewAdCellReuseIdentifier)
+                                forCellReuseIdentifier: Constant.KPMainListViewAdCellReuseIdentifier)
         
         tableView.allowsSelection = false
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -110,6 +114,8 @@ class KPMainListViewController:
         view.bringSubview(toFront: searchFooterView)
         
         satisficationView = KPSatisficationView()
+        
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
     }
     
     
@@ -123,14 +129,14 @@ class KPMainListViewController:
     }
     
     func addNativeExpressAds() {
-        var index = KPMainListViewController.adInterval
+        var index = Constant.adInterval
         tableView.layoutIfNeeded()
         while index < displayDataModel.count {
             let adSize = GADAdSizeFromCGSize(CGSize(width: tableView.contentSize.width,
-                                                    height: KPMainListViewController.adViewHeight))
+                                                    height: Constant.adViewHeight))
 
             
-            if adsToLoad.count < KPMainListViewController.concurrentAdsCount {
+            if adsToLoad.count < Constant.concurrentAdsCount {
                 guard let adView = GADNativeExpressAdView.init(adSize: adSize) else {
                     print("GADNativeExpressAdView failed to initialize at index \(index)")
                     return
@@ -143,7 +149,7 @@ class KPMainListViewController:
                 adsToLoad.append(adView)
                 loadStateForAds[adView] = false
             }
-            index += KPMainListViewController.adInterval
+            index += Constant.adInterval
         }
     }
     
@@ -189,7 +195,7 @@ extension KPMainListViewController: UITableViewDelegate, UITableViewDataSource {
         if !dataLoading {
             
             if let nativeExpressAdView = displayDataModel[indexPath.row] as? GADNativeExpressAdView {
-                let cell = tableView.dequeueReusableCell(withIdentifier: KPMainListViewController.KPMainListViewAdCellReuseIdentifier,
+                let cell = tableView.dequeueReusableCell(withIdentifier: Constant.KPMainListViewAdCellReuseIdentifier,
                                                          for: indexPath) as! KPMainListNativeExpressCell
                 
                 for subview in cell.contentView.subviews {
@@ -201,7 +207,7 @@ extension KPMainListViewController: UITableViewDelegate, UITableViewDataSource {
                 
                 return cell
             } else {
-                let cell = tableView.dequeueReusableCell(withIdentifier:KPMainListViewController.KPMainListViewCellReuseIdentifier,
+                let cell = tableView.dequeueReusableCell(withIdentifier:Constant.KPMainListViewCellReuseIdentifier,
                                                          for: indexPath) as! KPMainListTableViewCell
                 
                 cell.selectionStyle = .none
@@ -209,7 +215,7 @@ extension KPMainListViewController: UITableViewDelegate, UITableViewDataSource {
                 return cell
             }
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier:KPMainListViewController.KPMainListViewLoadingCellReuseIdentifier,
+            let cell = tableView.dequeueReusableCell(withIdentifier:Constant.KPMainListViewLoadingCellReuseIdentifier,
                                                      for: indexPath) as! KPDefaultLoadingTableCell
             return cell
         }
@@ -226,7 +232,7 @@ extension KPMainListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if !displayDataModel.isEmpty, let tableItem = displayDataModel[indexPath.row] as? GADNativeExpressAdView {
             let isAdLoaded = loadStateForAds[tableItem]
-            return isAdLoaded == true ? KPMainListViewController.adViewHeight : 0
+            return isAdLoaded == true ? Constant.adViewHeight : 0
         }
         return UITableViewAutomaticDimension
     }

@@ -52,7 +52,7 @@ class KPPopoverView: UIView {
     func initWithDefaultSetting() {
         
         backgroundView = KPPopoverSensingView()
-        backgroundView.backgroundColor = KPColorPalette.KPMainColor.grayColor_level5
+        backgroundView.backgroundColor = KPColorPalette.KPMainColor.grayColor_level3
         backgroundView.actionAvailableViews = [self]
         backgroundView.alpha = 0
         backgroundView.passTouchEventAnyway = false

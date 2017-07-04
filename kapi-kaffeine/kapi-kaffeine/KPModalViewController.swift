@@ -32,6 +32,7 @@ class KPModalViewController: KPViewController {
     static let defaultDismissDuration: CGFloat = 0.3
     
     var keyboardIsShowing: Bool = false
+    var statusBarShouldBeHidden = false
     var dismissWhenTouchingOnBackground: Bool = true
     var contentMoveWithKeyboard: Bool = false
     var backgroundYConstraint: NSLayoutConstraint!
@@ -122,8 +123,10 @@ class KPModalViewController: KPViewController {
         presentModalView(controller, .overFullScreen)
     }
     
-    func presentModalView(_ controller: UIViewController, _ style: UIModalPresentationStyle) {
+    func presentModalView(_ controller: UIViewController,
+                          _ style: UIModalPresentationStyle) {
         modalPresentationStyle = style
+        
         controller.present(self, animated: false) {
             self.setupPresentContent()
         }
@@ -147,7 +150,6 @@ class KPModalViewController: KPViewController {
         }
         
         self.containerSensingView.removeAllRelatedConstraintsInSuperView()
-        
         
         var containerPoint: CGPoint = CGPoint.init(x: 0, y: 0)
         var containerSize: CGSize = CGSize.init(width: 0, height: 0)
@@ -346,6 +348,18 @@ class KPModalViewController: KPViewController {
         // Dispose of any resources that can be recreated.
     }
     
+//    override var childViewControllerForStatusBarHidden: UIViewController? {
+//        return self.contentController
+//    }
+    
+    override var prefersStatusBarHidden: Bool {
+        return statusBarShouldBeHidden
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+    }
+
     
 }
 
