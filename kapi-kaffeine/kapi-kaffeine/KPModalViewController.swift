@@ -32,24 +32,19 @@ class KPModalViewController: KPViewController {
     static let defaultDismissDuration: CGFloat = 0.3
     
     var keyboardIsShowing: Bool = false
-    var statusBarShouldBeHidden = false
     var dismissWhenTouchingOnBackground: Bool = true
     var contentMoveWithKeyboard: Bool = false
     var backgroundYConstraint: NSLayoutConstraint!
+    var statusBarShouldBeHidden: Bool = false
     
     var presentationStyle: KPModalPresentationStyle = .bottom
     var layoutWithSize: Bool = true
     var layoutWithInset: Bool = false
     var cornerRadius: UIRectCorner?
-    
     var contentSize: CGSize = CGSize.init(width: 0, height: 0) {
         didSet {
-//            if self.containerSensingView != nil {
-//                self.containerWidthConstraint = self.containerSensingView.constraint(forWidth: contentSize.width)
-//                self.containerHeightConstraint = self.containerSensingView.constraint(forHeight: contentSize.height)
-                self.layoutWithSize = true
-                self.layoutWithInset = false
-//            }
+            self.layoutWithSize = true
+            self.layoutWithInset = false
         }
     }
     
@@ -60,14 +55,14 @@ class KPModalViewController: KPViewController {
         }
     }
     
-    
-    var backgroundSensingView: KPPopoverSensingView!
-    var containerSensingView: KPPopoverSensingView = {
-        let containerSensingView = KPPopoverSensingView()
-        containerSensingView.backgroundColor = UIColor.clear
-        containerSensingView.isHidden = true
-        return containerSensingView
-    }()
+    fileprivate var internalStatusBarShouldBeHidden = false
+    fileprivate var backgroundSensingView: KPPopoverSensingView!
+    fileprivate var containerSensingView: KPPopoverSensingView = {
+                let containerSensingView = KPPopoverSensingView()
+                containerSensingView.backgroundColor = UIColor.clear
+                containerSensingView.isHidden = true
+                return containerSensingView
+            }()
 //    var containerWidthConstraint: NSLayoutConstraint!
 //    var containerHeightConstraint: NSLayoutConstraint!
     
@@ -126,7 +121,7 @@ class KPModalViewController: KPViewController {
     func presentModalView(_ controller: UIViewController,
                           _ style: UIModalPresentationStyle) {
         modalPresentationStyle = style
-        
+        statusBarShouldBeHidden = true
         controller.present(self, animated: false) {
             self.setupPresentContent()
         }
@@ -358,6 +353,11 @@ class KPModalViewController: KPViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        statusBarShouldBeHidden = internalStatusBarShouldBeHidden
+        UIView.animate(withDuration: 0.4) {
+            self.setNeedsStatusBarAppearanceUpdate()
+        }
     }
 
     
@@ -382,23 +382,6 @@ private var KPMODALVIEWCONTROLLER_PROPERTY = 0
 
 extension UIViewController {
     
-//    var appModalController: KPModalViewController {
-//        get {
-//            let result = objc_getAssociatedObject(self,
-//                                                  &KPMODALVIEWCONTROLLER_PROPERTY) as? KPModalViewController
-//            if result == nil {
-//                return KPModalViewController()
-//            }
-//            return result!
-//        }
-//        set {
-//            objc_setAssociatedObject(self,
-//                                     &KPMODALVIEWCONTROLLER_PROPERTY,
-//                                     newValue,
-//                                     objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
-//        }
-//    }
-    
     func appModalController() -> KPModalViewController? {
         
         var parentController = self.parent
@@ -412,6 +395,5 @@ extension UIViewController {
         } else {
             return nil
         }
-        
     }
 }

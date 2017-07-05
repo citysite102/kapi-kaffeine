@@ -21,13 +21,27 @@ class KPShopRateInfoView: UIView {
     var rateContents = [String]()
     var rates: KPDataRateModel! {
         didSet {
-            rateContents.append(rates.wifi != nil ? "\((rates.wifi?.stringValue)!).0" : "0.0")
-            rateContents.append(rates.quite != nil ? "\((rates.quite?.stringValue)!).0" : "0.0")
-            rateContents.append(rates.cheap != nil ? "\((rates.cheap?.stringValue)!).0" : "0.0")
-            rateContents.append(rates.seat != nil ? "\((rates.seat?.stringValue)!).0" : "0.0")
-            rateContents.append(rates.tasty != nil ? "\((rates.tasty?.stringValue)!).0" : "0.0")
-            rateContents.append(rates.food != nil ? "\((rates.food?.stringValue)!).0" : "0.0")
-            rateContents.append(rates.music != nil ? "\((rates.music?.stringValue)!).0" : "0.0")
+            rateContents.append(rates.wifi != nil ?
+                (rates.wifi?.stringValue.characters.count == 1 ? "\((rates.wifi?.stringValue)!).0" : "\((rates.wifi?.stringValue)!)") :
+                "0.0")
+            rateContents.append(rates.quite != nil ?
+                (rates.quite?.stringValue.characters.count == 1 ? "\((rates.quite?.stringValue)!).0" : "\((rates.quite?.stringValue)!)") :
+                "0.0")
+            rateContents.append(rates.cheap != nil ?
+                (rates.cheap?.stringValue.characters.count == 1 ? "\((rates.cheap?.stringValue)!).0" : "\((rates.cheap?.stringValue)!)") :
+                "0.0")
+            rateContents.append(rates.seat != nil ?
+                (rates.seat?.stringValue.characters.count == 1 ? "\((rates.seat?.stringValue)!).0" : "\((rates.seat?.stringValue)!)") :
+                "0.0")
+            rateContents.append(rates.tasty != nil ?
+                (rates.tasty?.stringValue.characters.count == 1 ? "\((rates.tasty?.stringValue)!).0" : "\((rates.tasty?.stringValue)!)") :
+                "0.0")
+            rateContents.append(rates.food != nil ?
+                (rates.food?.stringValue.characters.count == 1 ? "\((rates.food?.stringValue)!).0" : "\((rates.food?.stringValue)!)") :
+                "0.0")
+            rateContents.append(rates.music != nil ?
+                (rates.music?.stringValue.characters.count == 1 ? "\((rates.music?.stringValue)!).0" : "\((rates.music?.stringValue)!)") :
+                "0.0")
             
             for (index, rateView) in rateViews.enumerated() {
                 rateView.rateContentLabel.text = rateContents[index]

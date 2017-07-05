@@ -96,8 +96,8 @@ class KPMainListTableViewCell: UITableViewCell {
         contentView.addSubview(shopImageView);
         
         
-        shopImageView.addConstraints(fromStringArray: ["H:|-8-[$self(56)]",
-                                                       "V:|-12-[$self(56)]-12-|"]);
+        shopImageView.addConstraints(fromStringArray: ["H:|-8-[$self(60)]",
+                                                       "V:|-12-[$self(60)]-12-|"]);
         
         shopNameLabel = KPLayerLabel();
         shopNameLabel.font = UIFont.systemFont(ofSize: 14.0);
@@ -116,8 +116,8 @@ class KPMainListTableViewCell: UITableViewCell {
         shopStatusHint.layer.cornerRadius = 3.0;
         shopStatusHint.isOpaque = true
         contentView.addSubview(shopStatusHint);
-        shopStatusHint.addConstraints(fromStringArray: ["H:[$view0]-9-[$self(6)]",
-                                                        "V:[$view1]-7-[$self(6)]"],
+        shopStatusHint.addConstraints(fromStringArray: ["H:[$view0]-8-[$self(6)]",
+                                                        "V:[$view1]-10-[$self(6)]"],
                                           views: [shopImageView,
                                                   shopNameLabel]);
         
@@ -132,7 +132,9 @@ class KPMainListTableViewCell: UITableViewCell {
                                             metrics: [UIScreen.main.bounds.size.width/2],
                                             views: [shopStatusHint,
                                                     shopNameLabel]);
-        shopStatusLabel.addConstraintForCenterAligning(to: shopStatusHint, in: .vertical);
+        shopStatusLabel.addConstraintForCenterAligning(to: shopStatusHint,
+                                                       in: .vertical,
+                                                       constant: -2)
         
         shopDistanceLabel = KPLayerLabel();
         shopDistanceLabel.font = UIFont.systemFont(ofSize: 20.0);
@@ -143,7 +145,7 @@ class KPMainListTableViewCell: UITableViewCell {
         shopDistanceLabel.layoutMargins = UIEdgeInsetsMake(0, 0, 0, 0);
         contentView.addSubview(shopDistanceLabel);
         shopDistanceLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]",
-                                                           "V:[$self]-10-|"],
+                                                           "V:[$self]-8-|"],
                                               views: [shopImageView,
                                                       shopStatusLabel]);
         
@@ -155,7 +157,7 @@ class KPMainListTableViewCell: UITableViewCell {
         featureContainer = KPMainListCellFeatureContainer();
         contentView.addSubview(featureContainer);
         featureContainer.addConstraints(fromStringArray: ["H:[$self]-8-|",
-                                                          "V:[$self]-8-|"]);
+                                                          "V:[$self]-10-|"]);
     }
     
     override func layoutSubviews() {

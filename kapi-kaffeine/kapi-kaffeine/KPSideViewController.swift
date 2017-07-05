@@ -179,6 +179,7 @@ class KPSideViewController: KPViewController {
         super.viewWillDisappear(animated);
         mainController.opacityView.isHidden = true
         mainController.statusBarShouldBeHidden = false
+        mainController.mainListViewController?.snapShotShowing = false
         UIView.animate(withDuration: 0.15) {
             self.mainController.setNeedsStatusBarAppearanceUpdate()
         }

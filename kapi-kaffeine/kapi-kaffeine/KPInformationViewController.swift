@@ -181,8 +181,8 @@ class KPInformationViewController: KPViewController {
         let informationView: KPShopInfoView = KPShopInfoView()
         informationView.featureContents = informationDataModel.featureContents
         informationView.titleLabel.text = informationDataModel.name
-        informationView.locationLabel.text = informationDataModel.address
-        informationView.phoneLabel.text = informationDataModel.phone
+        informationView.locationLabel.text = informationDataModel.address ?? "暫無資料"
+        informationView.phoneLabel.text = informationDataModel.phone ?? "暫無資料"
         
         if informationDataModel.businessHour != nil {
             let shopStatus = informationDataModel.businessHour.shopStatus
