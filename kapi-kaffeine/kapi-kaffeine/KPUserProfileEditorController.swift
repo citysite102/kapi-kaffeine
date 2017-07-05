@@ -7,10 +7,11 @@
 //
 
 import UIKit
+import MobileCoreServices
 
 @objc public protocol KPKeyboardProtocol: class {
     
-    var _activeTextField: UITextField? {get}
+    var _activeTextField: UIView? {get}
     var _scrollView: UIScrollView {get}
     var _scrollContainerView: UIView {get}
 
@@ -39,7 +40,7 @@ public extension KPKeyboardProtocol where Self: UIViewController {
 
         
         if let field = _activeTextField {
-            keyboardFrame.size.height += 44
+            keyboardFrame.size.height += 64
             keyboardFrame.origin.y -= 44
             let fieldFrame = _scrollContainerView.convert(field.frame, to: view)
             if (keyboardFrame.contains(fieldFrame)) {
@@ -62,7 +63,38 @@ public extension KPKeyboardProtocol where Self: UIViewController {
     }
 }
 
-class KPUserProfileEditorController: UIViewController, UITextFieldDelegate, UITextViewDelegate, KPKeyboardProtocol {
+class KPUserPhotoEditView: UIView {
+    
+    var photoImageView: UIImageView!
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        photoImageView = UIImageView(image: R.image.demo_1())
+        photoImageView.contentMode = .scaleAspectFill
+        addSubview(photoImageView)
+        photoImageView.addConstraint(from: "H:|-16-[$self(45)]")
+        photoImageView.addConstraint(forHeight: 45)
+        photoImageView.addConstraintForCenterAligningToSuperview(in: .vertical)
+        photoImageView.layer.cornerRadius = 5
+        photoImageView.clipsToBounds = true
+        
+        let photoLabel = UILabel()
+        photoLabel.font = UIFont.systemFont(ofSize: 14)
+        photoLabel.text = "更換使用者頭像"
+        photoLabel.textColor = KPColorPalette.KPTextColor.mainColor
+        addSubview(photoLabel)
+        photoLabel.addConstraint(from: "H:[$view0]-16-[$self]", views: [photoImageView])
+        photoLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+
+class KPUserProfileEditorController: UIViewController, UITextFieldDelegate, UITextViewDelegate, KPKeyboardProtocol, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     var _scrollContainerView: UIView {
         get {
@@ -70,7 +102,7 @@ class KPUserProfileEditorController: UIViewController, UITextFieldDelegate, UITe
         }
     }
     
-    var _activeTextField: UITextField? {
+    var _activeTextField: UIView? {
         get {
             return activeField
         }
@@ -87,9 +119,12 @@ class KPUserProfileEditorController: UIViewController, UITextFieldDelegate, UITe
     var scrollContainer: UIView!
     var dismissButton: KPBounceButton!
     var saveButton: UIButton!
-    var activeField: UITextField?
+    var activeField: UIView?
+    
+    var photoContainer: KPUserPhotoEditView!
     
     var introTextNumberLabel: UILabel!
+    var introTextViewPlaceHolder: UILabel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -134,6 +169,18 @@ class KPUserProfileEditorController: UIViewController, UITextFieldDelegate, UITe
         scrollContainer.addConstraintForHavingSameWidth(with: view)
         scrollContainer.addConstraint(from: "V:|[$self]|")
         
+        
+        let topline = UIView()
+        topline.backgroundColor = KPColorPalette.KPMainColor.grayColor_level6
+        scrollContainer.addSubview(topline)
+        topline.addConstraints(fromStringArray: ["H:|[$self]|", "V:|-(-1)-[$self(1)]"])
+        
+        photoContainer = KPUserPhotoEditView()
+        scrollContainer.addSubview(photoContainer)
+        
+        let photoTapGesture = UITapGestureRecognizer(target: self, action: #selector(handlePhotoTapGesture(tapGesture:)))
+        photoContainer.addGestureRecognizer(photoTapGesture)
+        
         let nameField = KPSubTitleEditView.init(.Both, .Edited, "使用者名稱")
         nameField.content = "Samuel"
         scrollContainer.addSubview(nameField)
@@ -161,7 +208,13 @@ class KPUserProfileEditorController: UIViewController, UITextFieldDelegate, UITe
         inputTextView.textContainer.lineFragmentPadding = 0
         inputTextView.isScrollEnabled = false
         scrollContainer.addSubview(inputTextView)
-
+        
+        introTextViewPlaceHolder = UILabel()
+        introTextViewPlaceHolder.font = inputTextView.font
+        introTextViewPlaceHolder.textColor = KPColorPalette.KPTextColor.grayColor_level6
+        introTextViewPlaceHolder.text = "請輸入自我介紹"
+        inputTextView.addSubview(introTextViewPlaceHolder)
+        introTextViewPlaceHolder.addConstraints(fromStringArray: ["V:|[$self]"])
         
         introTextNumberLabel = UILabel()
         introTextNumberLabel.font = UIFont.systemFont(ofSize: 12)
@@ -170,14 +223,31 @@ class KPUserProfileEditorController: UIViewController, UITextFieldDelegate, UITe
         scrollContainer.addSubview(introTextNumberLabel)
         
         
+        let bottomLine = UIView()
+        bottomLine.backgroundColor = KPColorPalette.KPMainColor.grayColor_level6
+        scrollContainer.addSubview(bottomLine)
+        bottomLine.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$self(1)]-(-1)-|"])
+        
+        
+        
+        if inputTextView.text.characters.count == 0 {
+            introTextNumberLabel.isHidden = true
+            introTextViewPlaceHolder.isHidden = false
+        } else {
+            introTextNumberLabel.isHidden = false
+            introTextViewPlaceHolder.isHidden = true
+        }
+        
+        
         nameField.addConstraints(fromStringArray: ["H:|[$self]|",
                                                    "H:|[$view0]|",
                                                    "H:|[$view1]|",
                                                    "H:|-16-[$view2]",
                                                    "H:|-16-[$view3]-16-|",
                                                    "H:[$view4]-16-|",
-                                                   "V:|-16-[$self(72)][$view0(72)][$view1(72)]-16-[$view2]-8-[$view3(50)][view4]-|"],
-                                 views: [emailField, regionField, label, inputTextView, introTextNumberLabel])
+                                                   "H:|[$view5]|",
+                                                   "V:|[$view5(72)][$self(72)][$view0(72)][$view1(72)]-16-[$view2]-8-[$view3(50)][view4]-|"],
+                                 views: [emailField, regionField, label, inputTextView, introTextNumberLabel, photoContainer])
         
         registerForNotification()
         
@@ -187,7 +257,35 @@ class KPUserProfileEditorController: UIViewController, UITextFieldDelegate, UITe
         
     }
     
-    
+    func handlePhotoTapGesture(tapGesture: UITapGestureRecognizer) {
+        view.endEditing(true)
+        let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        controller.addAction(UIAlertAction(title: "從相簿中選擇", style: .default) { (action) in
+            let imagePickerController = UIImagePickerController()
+            imagePickerController.allowsEditing = false
+            imagePickerController.sourceType = .photoLibrary
+            imagePickerController.delegate = self
+            imagePickerController.mediaTypes = [kUTTypeImage as String]
+            self.present(imagePickerController, animated: true, completion: nil)
+        })
+        controller.addAction(UIAlertAction(title: "開啟相機", style: .default) { (action) in
+            let imagePickerController = UIImagePickerController()
+            imagePickerController.allowsEditing = false
+            imagePickerController.sourceType = .camera
+            imagePickerController.delegate = self
+            imagePickerController.mediaTypes = [kUTTypeImage as String]
+            self.present(imagePickerController, animated: true, completion: nil)
+        })
+        
+        controller.addAction(UIAlertAction(title: "取消", style: .cancel) { (action) in
+
+        })
+        
+        self.present(controller, animated: true) { 
+            
+        }
+    }
+
     func handleTapGesture(tapGesture: UITapGestureRecognizer) {
         view.endEditing(true)
     }
@@ -228,6 +326,19 @@ class KPUserProfileEditorController: UIViewController, UITextFieldDelegate, UITe
         // Dispose of any resources that can be recreated.
     }
     
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        
+        self.dismiss(animated: true, completion: nil)
+        
+        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            self.photoContainer.photoImageView.image = image
+        }
+    }
+    
+    
+    // MARK: UITextFieldDelegate
+    
     func textFieldDidBeginEditing(_ textField: UITextField) {
         activeField = textField
     }
@@ -240,18 +351,26 @@ class KPUserProfileEditorController: UIViewController, UITextFieldDelegate, UITe
         textField.resignFirstResponder()
         return true
     }
+
     
     // MARK: UITextViewDelegate
     
     func textViewDidBeginEditing(_ textView: UITextView) {
-        
+        activeField = textView
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
-        
+        activeField = nil
     }
     
     func textViewDidChange(_ textView: UITextView) {
+        if textView.text.characters.count == 0 {
+            introTextNumberLabel.isHidden = true
+            introTextViewPlaceHolder.isHidden = false
+        } else {
+            introTextNumberLabel.isHidden = false
+            introTextViewPlaceHolder.isHidden = true
+        }
         introTextNumberLabel.text = "\(textView.text.characters.count)/30"
     }
     

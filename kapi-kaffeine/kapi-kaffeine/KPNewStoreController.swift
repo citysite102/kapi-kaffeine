@@ -21,7 +21,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
         }
     }
     
-    var _activeTextField: UITextField? {
+    var _activeTextField: UIView? {
         get {
             return activeTextField
         }
