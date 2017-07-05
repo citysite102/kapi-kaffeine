@@ -397,7 +397,12 @@ class KPInformationViewController: KPViewController {
     }
     
     func handleDismissButtonOnTapped() {
-        dismiss(animated: true, completion: nil)
+        
+        if self.navigationController?.viewControllers.first is KPUserProfileViewController {
+            self.navigationController?.popViewController(animated: true)
+        } else {
+            dismiss(animated: true, completion: nil)
+        }
     }
     
     func handleMoreButtonOnTapped() {

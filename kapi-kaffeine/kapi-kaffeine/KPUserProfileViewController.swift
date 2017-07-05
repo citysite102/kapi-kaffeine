@@ -72,6 +72,7 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
     }
     
     var dataLoading: Bool = false
+    var dataloaded: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -195,33 +196,36 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        dataLoading = true
-        for tableView in self.tableViews {
-            tableView.reloadData()
-        }
+        if !dataloaded {
         
-        DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + 0.5) {
-
-            for (index, tabTitle) in self.tabTitles.enumerated() {
-                if let displayModel = KPUserManager.sharedManager.currentUser?.value(forKey: tabTitle.key) as? [String],
-                    let allDataModel = KPMainViewController.allDataModel {
-                    
-                    self.displayDataModels[index] = allDataModel.filter({ (dataModel) -> Bool in
-                        displayModel.contains(dataModel.identifier)
-                    })
-                } else {
-                    self.displayDataModels[index] = []
-                }
-            }
-            self.dataLoading = false
-            DispatchQueue.main.async {
-                for tableView in self.tableViews {
-                    tableView.reloadData()
-                }
+            dataLoading = true
+            for tableView in self.tableViews {
+                tableView.reloadData()
             }
             
+            DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + 0.5) {
+
+                for (index, tabTitle) in self.tabTitles.enumerated() {
+                    if let displayModel = KPUserManager.sharedManager.currentUser?.value(forKey: tabTitle.key) as? [String],
+                        let allDataModel = KPMainViewController.allDataModel {
+                        
+                        self.displayDataModels[index] = allDataModel.filter({ (dataModel) -> Bool in
+                            displayModel.contains(dataModel.identifier)
+                        })
+                    } else {
+                        self.displayDataModels[index] = []
+                    }
+                }
+                self.dataLoading = false
+                DispatchQueue.main.async {
+                    for tableView in self.tableViews {
+                        tableView.reloadData()
+                    }
+                }
+                
+            }
+            dataloaded = true
         }
-        
         
     }
 
@@ -277,12 +281,25 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
     // MARK: UITableView Delegate
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let controller = KPInformationViewController()
+        controller.informationDataModel = self.displayDataModels[tableView.tag][indexPath.row]
+        self.navigationController?.pushViewController(controller, animated: true)
         
+        for tableView in self.tableViews {
+            if let indexPath = tableView.indexPathForSelectedRow {
+                tableView.deselectRow(at: indexPath, animated: false)
+            }
+        }
     }
     
     // MARK: UIScrollView Delegate
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        if scrollView is UITableView {
+            return
+        }
+        
         if isAnimating {
             return
         }
