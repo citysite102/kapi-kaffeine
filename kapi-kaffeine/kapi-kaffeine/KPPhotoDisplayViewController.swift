@@ -21,9 +21,9 @@ class KPPhotoDisplayViewController: KPViewController {
     var statusBarShouldBeHidden = false
     var diplayedPhotoInformations: [PhotoInformation] = [PhotoInformation]()
     
-    var collectionView:UICollectionView!;
-    var collectionLayout:UICollectionViewFlowLayout!;
-    var dismissButton:KPBounceButton!
+    var collectionView :UICollectionView!;
+    var collectionLayout: UICollectionViewFlowLayout!;
+    var dismissButton: KPBounceButton!
     var selectedIndexPath: IndexPath!
     var titleContent: String! {
         willSet {
@@ -84,6 +84,7 @@ class KPPhotoDisplayViewController: KPViewController {
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.showsVerticalScrollIndicator = false
         collectionView.delaysContentTouches = true
+        collectionView.canCancelContentTouches = false
         collectionView.isPagingEnabled = true
         collectionView.isPrefetchingEnabled = true
         collectionView.register(KPPhotoDisplayCell.self,
@@ -161,8 +162,8 @@ extension KPPhotoDisplayViewController:
     func collectionView(_ collectionView: UICollectionView,
                         didSelectItemAt indexPath: IndexPath) {
         selectedIndexPath = indexPath
-        self.dismiss(animated: true, completion: {
-        })
+//        self.dismiss(animated: true, completion: {
+//        })
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {

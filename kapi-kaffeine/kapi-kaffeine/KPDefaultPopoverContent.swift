@@ -94,7 +94,7 @@ class KPDefaultPopoverContent: UIView, PopoverProtocol {
         buttonContainer.addSubview(cancelButton)
         cancelButton.addConstraints(fromStringArray:
             ["V:|-8-[$self(36)]-8-|",
-             "H:|-8-[$self($metric0)]"], metrics: [128.0])
+             "H:|-10-[$self($metric0)]"], metrics: [125])
         
         confirmButton = UIButton(type: .custom)
         confirmButton.setTitle("確認", for: .normal)
@@ -109,8 +109,8 @@ class KPDefaultPopoverContent: UIView, PopoverProtocol {
         buttonContainer.addSubview(confirmButton)
         confirmButton.addConstraints(fromStringArray:
             ["V:|-8-[$self(36)]-8-|",
-             "H:[$view0]-8-[$self($metric0)]-8-|"],
-                                     metrics: [128.0],
+             "H:[$view0]-10-[$self($metric0)]-10-|"],
+                                     metrics: [125],
                                      views:[cancelButton])
     }
 

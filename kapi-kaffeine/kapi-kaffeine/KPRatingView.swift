@@ -56,14 +56,14 @@ class KPRatingView: UIView {
     //----------------------------
     
     lazy var minusButton: KPBounceButton = {
-        let button = KPBounceButton.init()
+        let button = KPBounceButton()
         button.layer.cornerRadius = 12
         button.layer.masksToBounds = true
         button.dampingRatio = 0.8
         button.bounceDuration = 0.5
-        button.setBackgroundImage(UIImage.init(color: KPColorPalette.KPBackgroundColor.scoreButtonColor!),
+        button.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.scoreButtonColor!),
                                   for: UIControlState.normal)
-        button.setBackgroundImage(UIImage.init(color: KPColorPalette.KPBackgroundColor.disabledScoreButtonColor!),
+        button.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.disabledScoreButtonColor!),
                                   for: UIControlState.disabled)
         button.setImage(R.image.icon_minus()?.withRenderingMode(.alwaysTemplate),
                         for: UIControlState.normal)
@@ -73,14 +73,14 @@ class KPRatingView: UIView {
     }()
     
     lazy var addButton: KPBounceButton = {
-        let button = KPBounceButton.init()
+        let button = KPBounceButton()
         button.layer.cornerRadius = 12
         button.layer.masksToBounds = true
         button.dampingRatio = 0.8
         button.bounceDuration = 0.5
-        button.setBackgroundImage(UIImage.init(color: KPColorPalette.KPBackgroundColor.scoreButtonColor!),
+        button.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.scoreButtonColor!),
                                   for: UIControlState.normal)
-        button.setBackgroundImage(UIImage.init(color: KPColorPalette.KPBackgroundColor.disabledScoreButtonColor!),
+        button.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.disabledScoreButtonColor!),
                                   for: UIControlState.disabled)
         button.setImage(R.image.icon_add()?.withRenderingMode(.alwaysTemplate),
                         for: UIControlState.normal)
@@ -168,11 +168,11 @@ class KPRatingView: UIView {
             currentRate = 1
         case .star:
             
-            panGesture = UIPanGestureRecognizer.init(target: self,
-                                                     action: #selector(handlePanGesture(panGesture:)))
+            panGesture = UIPanGestureRecognizer(target: self,
+                                                action: #selector(handlePanGesture(panGesture:)))
             panGesture.delegate = self
-            tapGesture = UITapGestureRecognizer.init(target: self,
-                                                     action: #selector(handleTapGesture(tapGesture:)))
+            tapGesture = UITapGestureRecognizer(target: self,
+      action: #selector(handleTapGesture(tapGesture:)))
             
             addGestureRecognizer(panGesture)
             addGestureRecognizer(tapGesture)
@@ -180,7 +180,7 @@ class KPRatingView: UIView {
             rateTitleLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]"],
                                           views: [iconImageView])
             for index in 0..<5 {
-                let starView = KPBounceView.init(R.image.icon_star()!)
+                let starView = KPBounceView(R.image.icon_star()!)
                 starView.iconSize = CGSize(width: 24, height: 24)
                 starViews.append(starView)
                 addSubview(starView)

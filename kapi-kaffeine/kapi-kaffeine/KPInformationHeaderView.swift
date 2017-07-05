@@ -195,8 +195,8 @@ class KPInformationHeaderView: UIView {
         shopSelectView.addConstraints(fromStringArray: ["V:|[$self]|",
                                                         "H:|[$self]|"])
 
-        photoLongPressGesture = UILongPressGestureRecognizer.init(target: self,
-                                                                       action: #selector(handleShopPhotoLongPressed(_:)))
+        photoLongPressGesture = UILongPressGestureRecognizer(target: self,
+                                                             action: #selector(handleShopPhotoLongPressed(_:)))
         photoLongPressGesture.minimumPressDuration = 0.0
         shopPhoto.addGestureRecognizer(photoLongPressGesture)
         
@@ -221,18 +221,15 @@ class KPInformationHeaderView: UIView {
     
     func handleShopPhotoLongPressed(_ sender: UILongPressGestureRecognizer) {
         
-        if sender.state == UIGestureRecognizerState.began {
+        if sender.state == .began {
             UIView.animate(withDuration: 0.2,
                            animations: {
                             self.shopSelectView.alpha = 1
-//                            self.shopPhoto.transform = CGAffineTransform.init(scaleX: 0.97,
-//                                                                              y: 0.97)
             })
-        } else if sender.state == UIGestureRecognizerState.ended {
+        } else if sender.state == .ended {
             UIView.animate(withDuration: 0.1,
                            animations: {
                             self.shopSelectView.alpha = 0
-//                            self.shopPhoto.transform = CGAffineTransform.identity
             }, completion: { (success) in
                 self.delegate?.headerPhotoTapped(self);
             })
