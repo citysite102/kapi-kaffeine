@@ -68,6 +68,8 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
         }
     }
     
+    var dataLoading: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -147,7 +149,7 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
         scrollContainer.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"])
         scrollContainer.addConstraintForHavingSameHeight(with: scrollView)
         
-        for (index, tabTitle) in tabTitles.enumerated() {
+        for (index, _) in tabTitles.enumerated() {
             let tableView = UITableView()
             tableView.dataSource = self
             tableView.delegate = self
@@ -170,17 +172,7 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
             
             tableViews.append(tableView)
             
-            
-            if let displayModel = KPUserManager.sharedManager.currentUser?.value(forKey: tabTitle.key) as? [String],
-                let allDataModel = KPMainViewController.allDataModel {
-                
-                displayDataModels.append(allDataModel.filter({ (dataModel) -> Bool in
-                    displayModel.contains(dataModel.identifier)
-                }))
-                
-            } else {
-                displayDataModels.append([])
-            }
+            displayDataModels.append([])
             
         }
         tableViews.last!.addConstraint(from: "H:[$self]|")
@@ -195,6 +187,39 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
         }
         
         view.bringSubview(toFront: tabView)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        dataLoading = true
+        for tableView in self.tableViews {
+            tableView.reloadData()
+        }
+        
+        DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + 0.5) {
+
+            for (index, tabTitle) in self.tabTitles.enumerated() {
+                if let displayModel = KPUserManager.sharedManager.currentUser?.value(forKey: tabTitle.key) as? [String],
+                    let allDataModel = KPMainViewController.allDataModel {
+                    
+                    self.displayDataModels[index] = allDataModel.filter({ (dataModel) -> Bool in
+                        displayModel.contains(dataModel.identifier)
+                    })
+                } else {
+                    self.displayDataModels[index] = []
+                }
+            }
+            self.dataLoading = false
+            DispatchQueue.main.async {
+                for tableView in self.tableViews {
+                    tableView.reloadData()
+                }
+            }
+            
+        }
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -218,7 +243,6 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
         }) { (complete) in
             self.isAnimating = false
         }
-//        scrollView.setContentOffset(CGPoint(x: UIScreen.main.bounds.width*CGFloat(index), y: 0), animated: true)
     }
 
     // MARK: UITableViewDataSource
@@ -228,16 +252,23 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.displayDataModels[tableView.tag].count
+        return dataLoading ? 6 : self.displayDataModels[tableView.tag].count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier:KPMainListViewController.KPMainListViewCellReuseIdentifier,
-                                                 for: indexPath) as! KPMainListTableViewCell
         
-        cell.selectionStyle = .none
-        cell.dataModel = self.displayDataModels[tableView.tag][indexPath.row]
-        return cell
+        if !dataLoading {
+            let cell = tableView.dequeueReusableCell(withIdentifier:KPMainListViewController.KPMainListViewCellReuseIdentifier,
+                                                     for: indexPath) as! KPMainListTableViewCell
+            
+            cell.selectionStyle = .none
+            cell.dataModel = self.displayDataModels[tableView.tag][indexPath.row]
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier:KPMainListViewController.KPMainListViewLoadingCellReuseIdentifier,
+                                                     for: indexPath) as! KPDefaultLoadingTableCell
+            return cell
+        }
     }
     
     // MARK: UITableView Delegate
@@ -255,9 +286,5 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
         let screenWidth = UIScreen.main.bounds.width
         tabView.currentIndex = Int((scrollView.contentOffset.x+screenWidth/2)/screenWidth)
     }
-    
-//    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-//       isAnimating = false
-//    }
 
 }
