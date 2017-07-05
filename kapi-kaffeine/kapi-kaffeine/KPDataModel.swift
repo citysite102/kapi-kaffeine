@@ -23,11 +23,12 @@ class KPDataModel: NSObject, Mappable, GMUClusterItem {
     var limitedTime: String?
     var url: String?
     var facebookURL: String?
+    var facebookID: String?
     var mrt: String?
     var businessHour: KPDataBusinessHourModel!
     var tags: [KPDataTagModel]?
     var rates: KPDataRateModel?
-    var photos: [String: String]?
+    var covers: [String: String]?
     var isKapi: Bool!
     
     
@@ -98,11 +99,13 @@ class KPDataModel: NSObject, Mappable, GMUClusterItem {
         limitedTime         <-    map["limited_time"]
         url                 <-    map["url"]
         facebookURL         <-    map["fb_url"]
+        facebookID          <-    map["fb_id"]
         mrt                 <-    map["mrt"]
         businessHour        <-    (map["business_hour"], businessHourTransform)
         tags                <-    map["tags"]
         rates               <-    map["rates"]
-        photos              <-    map["photos"]
+//        covers              <-    map["covers"]
+        covers              <-    map["photos"]
         isKapi              <-    map["is_kapi"]
     }
     

@@ -78,7 +78,8 @@ extension NetworkRequest {
     
     public var parameters: [String : AnyObject] { return [:] }
     public var headers: [String : String] {
-        return ["token":"eyJhbGciOiJIUzI1NiIsImlhdCI6MTQ5MjA5MjYwMCwiZXhwIjoxNDk0NzcxMDAwfQ.eyJpZCI6IjJjZmI2MDY1LWM1NTEtNDVkYy1iYjA0LTBmOGUyNTJjN2ViOSJ9.Qcozmf0jGfpso8i7L3FSoOZUJ6y8_qwx4Bv3QCUmDTQ"]
+        return [:]
+//        return ["token":"eyJhbGciOiJIUzI1NiIsImlhdCI6MTQ5MjA5MjYwMCwiZXhwIjoxNDk0NzcxMDAwfQ.eyJpZCI6IjJjZmI2MDY1LWM1NTEtNDVkYy1iYjA0LTBmOGUyNTJjN2ViOSJ9.Qcozmf0jGfpso8i7L3FSoOZUJ6y8_qwx4Bv3QCUmDTQ"]
     }
     
     public var networkClient: NetworkClientType { return NetworkClient() }

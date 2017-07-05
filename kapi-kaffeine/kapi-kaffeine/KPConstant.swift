@@ -53,8 +53,10 @@ struct KPColorPalette {
         static let cellScoreBgColor = UIColor(hexString: "#9f9426")
         static let scoreButtonColor = UIColor(hexString: "#9f9426")
         static let disabledScoreButtonColor = UIColor(hexString: "#C8C488")
+        static let exp_background = UIColor(rgbaHexValue: 0xffffff33)
         
         static let mainColor_ripple = UIColor(rgbaHexValue: 0xc8955eaa)
+        
         
         static let grayColor_level3 = UIColor.init(r: 0.2, g: 0.2, b: 0.2, a: 0.5)
         static let grayColor_level4 = UIColor.init(r: 0.2, g: 0.2, b: 0.2, a: 0.3)

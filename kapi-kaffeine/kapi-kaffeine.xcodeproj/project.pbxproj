@@ -49,6 +49,8 @@
 		77594B491EC8AEB40013BB56 /* KPBounceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77594B481EC8AEB40013BB56 /* KPBounceView.swift */; };
 		775989911EA5171A0029989C /* KPHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775989901EA5171A0029989C /* KPHelper.swift */; };
 		775D32ED1F0CCCCF005EF0CE /* KPInformationPhotoTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775D32EC1F0CCCCF005EF0CE /* KPInformationPhotoTransition.swift */; };
+		775D32EF1F0D20E4005EF0CE /* KPExpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775D32EE1F0D20E4005EF0CE /* KPExpView.swift */; };
+		775D32F11F0D21E0005EF0CE /* KPProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775D32F01F0D21E0005EF0CE /* KPProgressBar.swift */; };
 		776ACAF41E9BAFA200B629A2 /* KPSearchHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776ACAF31E9BAFA200B629A2 /* KPSearchHeaderView.swift */; };
 		776ACAF61E9BAFBF00B629A2 /* KPSearchTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776ACAF51E9BAFBF00B629A2 /* KPSearchTagView.swift */; };
 		776ACAF81E9BAFE900B629A2 /* KPSearchFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776ACAF71E9BAFE900B629A2 /* KPSearchFooterView.swift */; };
@@ -219,6 +221,8 @@
 		77594B481EC8AEB40013BB56 /* KPBounceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPBounceView.swift; sourceTree = "<group>"; };
 		775989901EA5171A0029989C /* KPHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPHelper.swift; sourceTree = "<group>"; };
 		775D32EC1F0CCCCF005EF0CE /* KPInformationPhotoTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPInformationPhotoTransition.swift; sourceTree = "<group>"; };
+		775D32EE1F0D20E4005EF0CE /* KPExpView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPExpView.swift; sourceTree = "<group>"; };
+		775D32F01F0D21E0005EF0CE /* KPProgressBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPProgressBar.swift; sourceTree = "<group>"; };
 		776ACAF31E9BAFA200B629A2 /* KPSearchHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSearchHeaderView.swift; sourceTree = "<group>"; };
 		776ACAF51E9BAFBF00B629A2 /* KPSearchTagView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSearchTagView.swift; sourceTree = "<group>"; };
 		776ACAF71E9BAFE900B629A2 /* KPSearchFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSearchFooterView.swift; sourceTree = "<group>"; };
@@ -708,6 +712,7 @@
 				77FBE95E1ECCBE9200EBBB9B /* KPItemCheckedView.swift */,
 				77421FB31EB8F82500064FF0 /* KPRatingView.swift */,
 				77E495621EC9EEF0003B7EBC /* KPTimePicker.swift */,
+				775D32EE1F0D20E4005EF0CE /* KPExpView.swift */,
 				771EECA51EBC27BE004A34B8 /* CheckBox */,
 			);
 			name = Custom;
@@ -721,6 +726,7 @@
 				771F90B21EF2424900D66C14 /* KPShadowButton.swift */,
 				77B66FA51EAA70F3008B6652 /* KPBounceButton.swift */,
 				77594B481EC8AEB40013BB56 /* KPBounceView.swift */,
+				775D32F01F0D21E0005EF0CE /* KPProgressBar.swift */,
 			);
 			name = "Shared View";
 			sourceTree = "<group>";
@@ -1321,6 +1327,7 @@
 				77C0E1081E9D491D00398852 /* KPShopRateInfoView.swift in Sources */,
 				77E495611EC9EA1F003B7EBC /* KPSearchViewRecentCell.swift in Sources */,
 				772D68281ECC81140013F802 /* KPSubTitleEditView.swift in Sources */,
+				775D32EF1F0D20E4005EF0CE /* KPExpView.swift in Sources */,
 				77DD7E3F1F0B9283007B0E17 /* KPPopoverViewUtility.swift in Sources */,
 				77E495551EC98BE0003B7EBC /* KPRatingViewController.swift in Sources */,
 				7734634A1ED74BE300EA78F0 /* KPDataTagModel.swift in Sources */,
@@ -1354,6 +1361,7 @@
 				77869E1A1EB76F690027CA98 /* NetworkErrorHandler.swift in Sources */,
 				77869E161EB75B5C0027CA98 /* NetworkClient.swift in Sources */,
 				77B66FA91EACF74C008B6652 /* KPPopoverSensingView.swift in Sources */,
+				775D32F11F0D21E0005EF0CE /* KPProgressBar.swift in Sources */,
 				779EB1441EC0DFD4008AAFF0 /* KPPhotoDisplayViewController.swift in Sources */,
 				C05CF8781EF8019800F3DF2A /* KPDataBusinessHourModel.swift in Sources */,
 				77BB39281ED3DD4300958AFE /* KPSecondIntroView.swift in Sources */,

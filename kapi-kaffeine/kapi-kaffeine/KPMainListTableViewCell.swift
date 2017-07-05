@@ -22,7 +22,7 @@ class KPMainListTableViewCell: UITableViewCell {
                                                self.dataModel.rates?.average?.floatValue ?? 0)
             }
             
-            if let photoURL = dataModel.photos?["google_s"] {
+            if let photoURL = dataModel.covers?["google_s"] {
                 self.shopImageView.af_setImage(withURL: URL(string: photoURL)!,
                                                placeholderImage: drawImage(image: R.image.icon_loading()!,
                                                                            rectSize: CGSize(width: 56, height: 56),

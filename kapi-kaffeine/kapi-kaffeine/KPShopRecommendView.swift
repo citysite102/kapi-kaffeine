@@ -26,7 +26,7 @@ class KPShopRecommendView: UIView {
         self.tableView.delegate = self;
         self.tableView.dataSource = self;
         self.addSubview(self.tableView);
-        self.tableView.addConstraints(fromStringArray: ["V:|[$self(240)]|",
+        self.tableView.addConstraints(fromStringArray: ["V:|[$self(252)]|",
                                                         "H:|[$self]|"]);
         self.tableView.register(KPMainListTableViewCell.self,
                                 forCellReuseIdentifier: KPShopRecommendView.KPShopRecommendViewCellReuseIdentifier);

@@ -11,6 +11,7 @@ import ObjectMapper
 import PromiseKit
 import Alamofire
 
+//class KPCafeRequest: NetworkRequest {
 class KPCafeRequest: NetworkUploadRequest {
 
     typealias ResponseType = RawJsonResult

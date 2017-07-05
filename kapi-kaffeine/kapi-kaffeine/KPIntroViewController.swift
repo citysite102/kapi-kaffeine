@@ -182,9 +182,6 @@ extension KPIntroViewController: UIScrollViewDelegate {
         let current = scrollView.contentOffset.x/UIScreen.main.bounds.size.width
         let currentProgress = CGFloat(Int(scrollView.contentOffset.x) - Int(current)*Int(UIScreen.main.bounds.size.width)) /
             UIScreen.main.bounds.size.width
-        print("Current:\(current), Offset:\(currentProgress)")
-        
-
         let scale = 1.0 - fabs(currentProgress)*0.2
         
         var transform = CATransform3DIdentity

@@ -15,6 +15,7 @@ target 'kapi-kaffeine' do
 
   # UI
   # pod 'SlideMenuControllerSwift'
+  pod 'M13ProgressSuite'
   pod 'SideMenu'
   pod 'pop', '~> 1.0'
   pod 'Shimmer', :inhibit_warnings => true

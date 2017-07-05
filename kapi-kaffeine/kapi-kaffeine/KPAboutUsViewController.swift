@@ -138,8 +138,7 @@ class KPAboutUsViewController: KPViewController {
         productDescriptionContentLabel = UILabel();
         productDescriptionContentLabel.font = UIFont.systemFont(ofSize: 14.0);
         productDescriptionContentLabel.textColor = KPColorPalette.KPTextColor.grayColor_level3;
-        productDescriptionContentLabel.text = "有事情嗎，有事情嗎，有事情嗎，有事情嗎，有事情嗎，有事情嗎，有事情嗎，有事情嗎，有事情嗎，" +
-        "有事情嗎。沒事。有事情嗎，有事情嗎，有事情嗎，有事情嗎，有事情嗎，有事情嗎，有事情嗎，有事情嗎，有事情嗎，有事情嗎。沒事。";
+        productDescriptionContentLabel.text = "找尋適合的咖啡店一直不是件容易的事，我們希望提供一個解決方案，讓你能輕鬆找到最適合自己的咖啡店，不論你想要去咖啡店工作、聚餐、聊天都能快速找到適合的店家。我們將持續優化產品，有任何建議也歡迎隨時來信告訴我們:D";
         productDescriptionContentLabel.textAlignment = .left;
         productDescriptionContentLabel.numberOfLines = 0;
         containerView.addSubview(productDescriptionContentLabel);
