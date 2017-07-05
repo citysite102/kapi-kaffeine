@@ -31,7 +31,7 @@ class KPPhotoGalleryViewController: KPViewController {
 //            UIGraphicsEndImageContext();
 //            return img!;
             
-            let snapShotView = UIImageView.init(image: selectedCell.shopPhoto.image)
+            let snapShotView = UIImageView(image: selectedCell.shopPhoto.image)
             snapShotView.frame = selectedCell.frame
             return snapShotView
         }
@@ -185,6 +185,7 @@ extension KPPhotoGalleryViewController: UIViewControllerTransitioningDelegate {
                                                   fromDelegate: self,
                                                   toDelegate: photoViewController)
         return transitionController
+        
     }
     
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {

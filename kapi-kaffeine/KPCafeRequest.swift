@@ -63,5 +63,6 @@ class KPCafeRequest: NetworkUploadRequest {
         self.mrt = mrt
         self.city = city
         return  networkClient.performUploadRequest(self).then(execute: responseHandler)
+//        return networkClient.performRequest(self).then(execute: responseHandler)
     }
 }

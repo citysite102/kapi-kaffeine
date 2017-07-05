@@ -181,7 +181,7 @@ class KPInformationHeaderView: UIView {
                                                             "V:|[$self]|"])
         
         shopPhoto = UIImageView(image: UIImage(named: "demo_1"))
-        shopPhoto.contentMode = .scaleToFill
+        shopPhoto.contentMode = .scaleAspectFill
         shopPhoto.isUserInteractionEnabled = true
         shopPhotoContainer.addSubview(shopPhoto)
         shopPhoto.addConstraints(fromStringArray: ["H:|[$self]|",

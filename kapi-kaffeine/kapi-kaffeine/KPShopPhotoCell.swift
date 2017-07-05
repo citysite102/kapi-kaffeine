@@ -13,19 +13,20 @@ class KPShopPhotoCell: UICollectionViewCell {
     var shopPhoto:UIImageView!
     
     override init(frame: CGRect) {
-        super.init(frame: frame);
+        super.init(frame: frame)
         
-        self.backgroundColor = UIColor.white;
-        self.alpha = 0.4;
+        backgroundColor = UIColor.white
+        alpha = 0.4
         
-        self.shopPhoto = UIImageView();
-        self.shopPhoto.layer.cornerRadius = 2.0;
-        self.shopPhoto.layer.masksToBounds = true;
-        self.shopPhoto.image = R.image.demo_1();
-        self.shopPhoto.contentMode = .scaleToFill;
-        self.addSubview(self.shopPhoto);
-        self.shopPhoto.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                      "V:|[$self]|"]);
+        shopPhoto = UIImageView()
+        shopPhoto.contentMode = .scaleAspectFit
+        shopPhoto.layer.cornerRadius = 2.0
+        shopPhoto.layer.masksToBounds = true
+        shopPhoto.image = R.image.demo_1()
+        shopPhoto.contentMode = .scaleAspectFill
+        addSubview(shopPhoto)
+        shopPhoto.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                   "V:|[$self]|"])
     }
     
     required init?(coder aDecoder: NSCoder) {

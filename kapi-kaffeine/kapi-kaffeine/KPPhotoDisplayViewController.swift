@@ -15,16 +15,31 @@ struct PhotoInformation {
 }
 
 class KPPhotoDisplayViewController: KPViewController {
-
+    
     static let KPPhotoDisplayControllerCellReuseIdentifier = "cell";
     
     var statusBarShouldBeHidden = false
     var diplayedPhotoInformations: [PhotoInformation] = [PhotoInformation]()
     
-    var collectionView :UICollectionView!;
-    var collectionLayout: UICollectionViewFlowLayout!;
+    var dismissing: Bool = false
+    var startAnchorPoint: CGPoint!
+    var centerPoint: CGPoint!
+    var lastMovePoint: CGPoint?
+    
+    var collectionView : UICollectionView!
+    var collectionLayout: UICollectionViewFlowLayout!
     var dismissButton: KPBounceButton!
     var selectedIndexPath: IndexPath!
+    var backgroundSnapshot: UIView! {
+        didSet {
+            self.view.insertSubview(backgroundSnapshot, at: 0)
+            backgroundSnapshot.addConstraints(fromStringArray: ["V:|[$self]|",
+                                                                "H:|[$self]|"])
+        }
+    }
+    var overlayCover: UIView!
+    
+    
     var titleContent: String! {
         willSet {
             let fadeTransition = CATransition()
@@ -69,6 +84,13 @@ class KPPhotoDisplayViewController: KPViewController {
 
         view.backgroundColor = UIColor.black
         
+        overlayCover = UIView()
+        overlayCover.backgroundColor = UIColor.black
+        overlayCover.alpha = 1.0
+        view.addSubview(overlayCover)
+        overlayCover.addConstraints(fromStringArray: ["V:|[$self]|",
+                                                      "H:|[$self]|"])
+        
         collectionLayout = UICollectionViewFlowLayout()
         collectionLayout.scrollDirection = .horizontal
         collectionLayout.itemSize = CGSize.init(width: UIScreen.main.bounds.size.width,
@@ -78,7 +100,7 @@ class KPPhotoDisplayViewController: KPViewController {
         
         collectionView = UICollectionView(frame: .zero,
                                           collectionViewLayout: collectionLayout)
-        collectionView.backgroundColor = UIColor.black
+        collectionView.backgroundColor = UIColor.clear
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.showsHorizontalScrollIndicator = false
@@ -140,8 +162,67 @@ class KPPhotoDisplayViewController: KPViewController {
     }
     
     func handleDismissButtonOnTapped() {
-            self.dismiss(animated: true) {
+        self.dismissing = true
+        self.dismiss(animated: true) {
+        }
+    }
+   
+    
+    func handlePhotoLongPressed(_ sender: UILongPressGestureRecognizer) {
+        let cell = collectionView.cellForItem(at: selectedIndexPath) as! KPPhotoDisplayCell
+        switch sender.state {
+        case .began:
+            startAnchorPoint = sender.location(in: cell)
+            centerPoint = view.layer.position
+        case .changed:
+            let touchPoint = sender.location(in: cell)
+            let distance = (pow(centerPoint.x-touchPoint.x , 2) + pow(centerPoint.y-touchPoint.y, 2)).squareRoot()
+            
+//            print("Distance: \(distance)")
+            print("Frame: \(cell.shopPhoto.frame)")
+            if lastMovePoint != nil {
+                cell.shopPhoto.transform = CGAffineTransform(translationX:touchPoint.x - startAnchorPoint.x,
+                                                        y: touchPoint.y - startAnchorPoint.y)
+                lastMovePoint = touchPoint
+            } else {
+                cell.shopPhoto.transform = CGAffineTransform(translationX: touchPoint.x - startAnchorPoint.x,
+                                                        y: touchPoint.y - startAnchorPoint.y)
+                lastMovePoint = touchPoint
             }
+            
+            overlayCover.alpha = ((1000 - distance < 0) ? 1 : 1000-distance) / 1000
+            dismissButton.alpha = ((700 - distance < 0) ? 1 : 700-distance) / 700
+            photoTitleLabel.alpha = ((700 - distance < 0) ? 1 : 700-distance) / 700
+        case .ended:
+            
+            let distance = (pow(centerPoint.x-(lastMovePoint?.x)! , 2) +
+                pow(centerPoint.y-(lastMovePoint?.y)!, 2)).squareRoot()
+            if distance > 150 {
+                self.dismissing = true
+                self.dismiss(animated: true) {
+                }
+            } else {
+                lastMovePoint = nil
+                UIView.animate(withDuration: 0.7,
+                               delay: 0,
+                               usingSpringWithDamping: 0.7,
+                               initialSpringVelocity: 0.8,
+                               options: UIViewAnimationOptions.curveEaseIn,
+                               animations: {
+                                cell.shopPhoto.transform = .identity
+                                self.overlayCover.alpha = 1.0
+                                self.dismissButton.alpha = 1.0
+                                self.photoTitleLabel.alpha = 1.0
+                }) { (_) in
+                    
+                }
+            }
+            
+        case .cancelled:
+            print("Cancelled")
+        default:
+            print("Default")
+        }
     }
     
 }
@@ -177,6 +258,15 @@ extension KPPhotoDisplayViewController:
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: KPPhotoDisplayViewController.KPPhotoDisplayControllerCellReuseIdentifier,
                                                       for: indexPath) as! KPPhotoDisplayCell
+        
+        if cell.longPressGesture == nil {
+            let longPressGesture = UILongPressGestureRecognizer(target: self,
+                                                                action: #selector(handlePhotoLongPressed(_:)))
+            longPressGesture.minimumPressDuration = 0.2
+            cell.longPressGesture = longPressGesture
+            cell.shopPhoto.addGestureRecognizer(longPressGesture)
+        }
+        
         cell.shopPhoto.image = self.diplayedPhotoInformations[indexPath.row].image
         return cell;
     }
@@ -215,11 +305,23 @@ extension KPPhotoDisplayViewController: ImageTransitionProtocol {
         let imageRatio = (photo?.size.width)! / (photo?.size.height)!
         
         let height = collectionView.frameSize.width / imageRatio
-        let yPoint = collectionView.frameOrigin.y + (collectionView.frameSize.height-height)/2
-        return CGRect.init(x: collectionView.frameOrigin.x,
-                           y: yPoint,
-                           width: collectionView.frameSize.width,
-                           height: height)
+        
+        if dismissing {
+            let xPoint = displayedCell.shopPhoto.frameOrigin.x
+            let yPoint = displayedCell.shopPhoto.frameOrigin.y + (collectionView.frameSize.height-height)/2
+            
+            print("frame: \(displayedCell.shopPhoto.frame)")
+            return CGRect.init(x: xPoint,
+                               y: yPoint,
+                               width: collectionView.frameSize.width,
+                               height: height)
+        } else {
+            let yPoint = collectionView.frameOrigin.y + (collectionView.frameSize.height-height)/2
+            return CGRect.init(x: collectionView.frameOrigin.x,
+                               y: yPoint,
+                               width: collectionView.frameSize.width,
+                               height: height)
+        }
     }
 }
 

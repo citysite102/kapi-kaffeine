@@ -48,6 +48,7 @@
 		77594B471EC89DAF0013BB56 /* KPPhotoAddCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77594B461EC89DAF0013BB56 /* KPPhotoAddCell.swift */; };
 		77594B491EC8AEB40013BB56 /* KPBounceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77594B481EC8AEB40013BB56 /* KPBounceView.swift */; };
 		775989911EA5171A0029989C /* KPHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775989901EA5171A0029989C /* KPHelper.swift */; };
+		775D32ED1F0CCCCF005EF0CE /* KPInformationPhotoTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775D32EC1F0CCCCF005EF0CE /* KPInformationPhotoTransition.swift */; };
 		776ACAF41E9BAFA200B629A2 /* KPSearchHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776ACAF31E9BAFA200B629A2 /* KPSearchHeaderView.swift */; };
 		776ACAF61E9BAFBF00B629A2 /* KPSearchTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776ACAF51E9BAFBF00B629A2 /* KPSearchTagView.swift */; };
 		776ACAF81E9BAFE900B629A2 /* KPSearchFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776ACAF71E9BAFE900B629A2 /* KPSearchFooterView.swift */; };
@@ -217,6 +218,7 @@
 		77594B461EC89DAF0013BB56 /* KPPhotoAddCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPPhotoAddCell.swift; sourceTree = "<group>"; };
 		77594B481EC8AEB40013BB56 /* KPBounceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPBounceView.swift; sourceTree = "<group>"; };
 		775989901EA5171A0029989C /* KPHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPHelper.swift; sourceTree = "<group>"; };
+		775D32EC1F0CCCCF005EF0CE /* KPInformationPhotoTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPInformationPhotoTransition.swift; sourceTree = "<group>"; };
 		776ACAF31E9BAFA200B629A2 /* KPSearchHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSearchHeaderView.swift; sourceTree = "<group>"; };
 		776ACAF51E9BAFBF00B629A2 /* KPSearchTagView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSearchTagView.swift; sourceTree = "<group>"; };
 		776ACAF71E9BAFE900B629A2 /* KPSearchFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSearchFooterView.swift; sourceTree = "<group>"; };
@@ -664,6 +666,7 @@
 				777DCC131EA785730055525A /* KPPhotoDisplayTransition.swift */,
 				777DCC151EA789A90055525A /* KPInformationTranstion.swift */,
 				7730B5711EA8676F00D6CD55 /* KPInformationDismissTransition.swift */,
+				775D32EC1F0CCCCF005EF0CE /* KPInformationPhotoTransition.swift */,
 			);
 			name = Transition;
 			sourceTree = "<group>";
@@ -1276,6 +1279,7 @@
 				771EECAF1EBC3177004A34B8 /* KPCheckBoxAnimationGenerator.swift in Sources */,
 				77E8CC301EC0E48300669809 /* KPPhotoDisplayCell.swift in Sources */,
 				77E4955B1EC9E9B1003B7EBC /* KPSearchViewController.swift in Sources */,
+				775D32ED1F0CCCCF005EF0CE /* KPInformationPhotoTransition.swift in Sources */,
 				77BB392C1ED3DD6000958AFE /* KPForthIntroView.swift in Sources */,
 				774208F91EA675C800C78A00 /* KPCommentModel.swift in Sources */,
 				C00A6E111ECADE3700A05C9A /* KPTimePickerViewController.swift in Sources */,

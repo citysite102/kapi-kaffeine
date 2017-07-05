@@ -15,15 +15,15 @@ public struct errorInformation {
     
     let error: Error
     let statusCode: Int?
-    let responseBody: KPErrorResponseModel
+    let responseBody: KPErrorResponseModel?
     let errorCode: String?
     
     init(error: Error, data: Data?, urlResponse: HTTPURLResponse?) {
         self.error = error
         let json = String(data: data ?? Data(), encoding: String.Encoding.utf8)
-        responseBody = KPErrorResponseModel(JSONString:json!)!;
+        responseBody = KPErrorResponseModel(JSONString:json!)
         statusCode = urlResponse?.statusCode
-        errorCode = responseBody.errorCode
+        errorCode = responseBody?.errorCode
     }
 }
 
@@ -70,7 +70,7 @@ public protocol NetworkRequest {
 extension NetworkRequest {
     
     public var url: String { return baseURL + endpoint}
-    public var baseURL: String {return "https://kapi-test.herokuapp.com/api/v1"}
+    public var baseURL: String { return "https://kapi-v2-test.herokuapp.com/api/v2" }
     public var method: Alamofire.HTTPMethod { return .get }
     public var encoding: Alamofire.ParameterEncoding { return method == .get ?
         URLEncoding.default :

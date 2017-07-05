@@ -85,6 +85,7 @@ class KPDataModel: NSObject, Mappable, GMUClusterItem {
     }
     
     func mapping(map: Map) {
+//        identifier          <-    map["cafe_id"]
         identifier          <-    map["id"]
         address             <-    map["address"]
         name                <-    map["name"]

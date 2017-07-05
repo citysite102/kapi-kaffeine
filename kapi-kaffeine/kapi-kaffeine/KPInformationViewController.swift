@@ -21,6 +21,9 @@ class KPInformationViewController: KPViewController {
     var moreButton: KPBounceButton!
     var shareButton: KPBounceButton!
     
+    var transitionController: KPPhotoDisplayTransition = KPPhotoDisplayTransition()
+    var percentDrivenTransition: UIPercentDrivenInteractiveTransition!
+    var currentPhotoIndexPath: IndexPath = IndexPath(item: 0, section: 0)
     
     var snapshotPhotoView: UIView  {
         get {
@@ -142,21 +145,21 @@ class KPInformationViewController: KPViewController {
         informationHeaderView = KPInformationHeaderView(frame: CGRect.zero)
         informationHeaderView.delegate = self
         informationHeaderView.informationController = self
-        if let photoURL = informationDataModel.photos?["google_l"] {
-            
-            informationHeaderView.shopPhoto.af_setImage(withURL: URL(string: photoURL)!,
-                                                        placeholderImage: R.image.demo_1()!,
-                                                        filter: nil,
-                                                        progress: nil,
-                                                            progressQueue: DispatchQueue.global(),
-                                                            imageTransition: UIImageView.ImageTransition.crossDissolve(0.2),
-                                                            runImageTransitionIfCached: true,
-                                                            completion: { response in
-                                                                if let responseImage = response.result.value {
-                                                                    self.informationHeaderView.shopPhoto.image =  responseImage
-                                                                }
-                })
-        }
+//        if let photoURL = informationDataModel.photos?["google_l"] {
+            informationHeaderView.shopPhoto.image = R.image.demo_1()
+//            informationHeaderView.shopPhoto.af_setImage(withURL: URL(string: photoURL)!,
+//                                                        placeholderImage: R.image.demo_1()!,
+//                                                        filter: nil,
+//                                                        progress: nil,
+//                                                            progressQueue: DispatchQueue.global(),
+//                                                            imageTransition: UIImageView.ImageTransition.crossDissolve(0.2),
+//                                                            runImageTransitionIfCached: true,
+//                                                            completion: { response in
+//                                                                if let responseImage = response.result.value {
+//                                                                    self.informationHeaderView.shopPhoto.image =  responseImage
+//                                                                }
+//                })
+//        }
         //informationDataModel
         scrollContainer.addSubview(informationHeaderView)
         informationHeaderView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]"])
@@ -343,11 +346,11 @@ class KPInformationViewController: KPViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         let shopLocationInfoView = KPShopLocationInfoView()
+        
         shopLocationInfoView.dataModel = informationDataModel
         locationInformationView.infoView = shopLocationInfoView
-        
         navBarFixBound = navigationController!.navigationBar.bounds
-        
+        informationHeaderView.shopPhoto.isHidden = false
     }
     
     override func viewDidLayoutSubviews() {
@@ -417,6 +420,53 @@ class KPInformationViewController: KPViewController {
     
 }
 
+
+// MARK: View Transition
+
+extension KPInformationViewController: UIViewControllerTransitioningDelegate {
+    
+    func animationController(forPresented presented: UIViewController,
+                             presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        if let photoViewController = presented as? KPPhotoDisplayViewController {
+            photoViewController.selectedIndexPath = currentPhotoIndexPath
+            transitionController.setupImageTransition(informationHeaderView.shopPhoto.image!,
+                                                      fromDelegate: self,
+                                                      toDelegate: photoViewController)
+            return transitionController
+        } else {
+            return nil
+        }
+    }
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        if let photoViewController = dismissed as? KPPhotoDisplayViewController {
+            currentPhotoIndexPath = photoViewController.selectedIndexPath
+            transitionController.setupImageTransition(informationHeaderView.shopPhoto.image!,
+                                                      fromDelegate: photoViewController,
+                                                      toDelegate: self)
+            return transitionController
+        } else {
+            return nil
+        }
+    }
+}
+
+extension KPInformationViewController: ImageTransitionProtocol {
+    
+    func tranisitionSetup(){
+//        hideSelectedCell = true
+    }
+    
+    func tranisitionCleanup(){
+//        hideSelectedCell = false
+    }
+    
+    // 3: return window frame of selected image
+    func imageWindowFrame() -> CGRect{
+        return view.convert(informationHeaderView.shopPhoto.frame, to: nil)
+    }
+}
+
 extension KPInformationViewController: UINavigationControllerDelegate {
     func navigationController(_ navigationController: UINavigationController,
                               willShow viewController: UIViewController,
@@ -431,9 +481,6 @@ extension KPInformationViewController: UINavigationControllerDelegate {
 
 extension KPInformationViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
-//        print("Offset:\(scrollContainer.contentOffset.y)")
-        
         scrollContainer.contentOffset = CGPoint.init(x: 0,
                                                      y: scrollContainer.contentOffset.y <= -120 ?
                                                         -120 :
@@ -462,7 +509,6 @@ extension KPInformationViewController: UIScrollViewDelegate {
             informationHeaderView.shopPhoto.transform = CGAffineTransform(translationX: 0,
                                                                           y: scrollContainer.contentOffset.y*9/20)
             
-            
 //            self.navigationController?.navigationBar.frame = CGRect(x: 0,
 //                                                                    y: 0,
 //                                                                    width: bounds.width,
@@ -485,6 +531,9 @@ extension KPInformationViewController: KPInformationHeaderViewDelegate {
         
 //        galleryController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
 //        photoDisplayController.photoGalleryController = galleryController
+        photoDisplayController.transitioningDelegate = self
+//        headerView.shopPhoto.isHidden = true
+        photoDisplayController.backgroundSnapshot = navigationController!.view.snapshotView(afterScreenUpdates: true)
         photoDisplayController.diplayedPhotoInformations =
             [PhotoInformation(title:"Title", image:R.image.demo_1()!, index:0),
              PhotoInformation(title:"Title", image:R.image.demo_2()!, index:1),
