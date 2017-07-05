@@ -59,6 +59,8 @@ class KPInformationViewController: KPViewController {
     var allCommentHasShown: Bool = false
     var animatedHeaderConstraint: NSLayoutConstraint!
     
+    var navBarFixBound: CGRect!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
@@ -215,7 +217,9 @@ class KPInformationViewController: KPViewController {
                                                     
                                                     if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
                                                         UIApplication.shared.open(URL(string:
-                                                            "comgooglemaps://?daddr=\(self.informationDataModel.latitude!),\(self.informationDataModel.longitude!)&mapmode=standard")!, options: [:], completionHandler: nil)
+                                                            "comgooglemaps://?daddr=\(self.informationDataModel.latitude!),\(self.informationDataModel.longitude!)&mapmode=standard")!,
+                                                                                  options: [:],
+                                                                                  completionHandler: nil)
                                                     } else {
                                                         print("Can't use comgooglemaps://")
                                                     }
@@ -342,6 +346,8 @@ class KPInformationViewController: KPViewController {
         shopLocationInfoView.dataModel = informationDataModel
         locationInformationView.infoView = shopLocationInfoView
         
+        navBarFixBound = navigationController!.navigationBar.bounds
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -444,11 +450,19 @@ extension KPInformationViewController: UIScrollViewDelegate {
             informationHeaderView.shopPhoto.transform = .identity
             informationHeaderView.shopPhoto.transform = CGAffineTransform(scaleX: scaleRatio,
                                                                           y: scaleRatio)
+            
             self.view.layoutIfNeeded()
-        } else if scrollContainer.contentOffset.y >= 0 && scrollContainer.contentOffset.y < 150 {
-            animatedHeaderConstraint.constant = -scrollContainer.contentOffset.y*3/5
+        } else if scrollContainer.contentOffset.y >= 0 && scrollContainer.contentOffset.y < 200 {
+            animatedHeaderConstraint.constant = -scrollContainer.contentOffset.y*9/20
             informationHeaderView.shopPhoto.transform = CGAffineTransform(translationX: 0,
-                                                                          y: scrollContainer.contentOffset.y*3/5)
+                                                                          y: scrollContainer.contentOffset.y*9/20)
+            
+            
+//            self.navigationController?.navigationBar.frame = CGRect(x: 0,
+//                                                                    y: 0,
+//                                                                    width: bounds.width,
+//                                                                    height: bounds.height - 50*scrollContainer.contentOffset.y/200)
+            
             self.view.layoutIfNeeded()
         }
     }
