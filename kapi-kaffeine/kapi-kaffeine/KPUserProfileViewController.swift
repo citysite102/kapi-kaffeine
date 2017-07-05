@@ -269,7 +269,7 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier:"cell_loading",
-                                                     for: indexPath) as! KPMainListTableViewCell
+                                                     for: indexPath) as! KPDefaultLoadingTableCell
             return cell
         }
     }
