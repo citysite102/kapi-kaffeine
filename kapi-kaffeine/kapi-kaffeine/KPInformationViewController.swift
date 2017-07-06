@@ -205,7 +205,7 @@ class KPInformationViewController: KPViewController {
         shopInformationView.infoTitleLabel.text = "店家資訊"
         scrollContainer.addSubview(shopInformationView)
         shopInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                             "V:[$view0]-16-[$self(210)]"],
+                                                             "V:[$view0]-16-[$self(190)]"],
                                                       views: [informationHeaderButtonBar])
         
         locationInformationView = KPInformationSharedInfoView()

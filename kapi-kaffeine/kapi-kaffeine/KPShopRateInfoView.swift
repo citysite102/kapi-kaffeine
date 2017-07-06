@@ -124,7 +124,7 @@ class rateStatusView: UIView {
         rateTitleLabel = UILabel.init()
         rateTitleLabel.font = UIFont.systemFont(ofSize: 13.0)
         rateTitleLabel.text = content
-        rateTitleLabel.textColor = KPColorPalette.KPTextColor.mainColor
+        rateTitleLabel.textColor = KPColorPalette.KPTextColor.grayColor_level3
         addSubview(rateTitleLabel)
         rateTitleLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]"],
                                       views: [iconImageView])

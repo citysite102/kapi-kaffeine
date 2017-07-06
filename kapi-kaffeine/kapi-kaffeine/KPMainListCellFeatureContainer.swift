@@ -53,7 +53,7 @@ class KPMainListCellFeatureContainer: UIView {
                 }
                 
                 addedTagLabel.font = UIFont.systemFont(ofSize: 10.0)
-                addedTagLabel.textColor = KPColorPalette.KPMainColor.mainColor
+                addedTagLabel.textColor = KPColorPalette.KPMainColor.mainColor_light
                 addedTagLabel.text = content
                 addedTagView.addSubview(addedTagLabel)
                 addedTagLabel.addConstraintForCenterAligningToSuperview(in: .vertical)

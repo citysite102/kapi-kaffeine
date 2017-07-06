@@ -108,7 +108,7 @@ class KPInformationSharedInfoView: UIView {
         
         infoSupplementLabel = UILabel()
         infoSupplementLabel.font = UIFont.systemFont(ofSize: 13)
-        infoSupplementLabel.textColor = KPColorPalette.KPTextColor.grayColor_level2
+        infoSupplementLabel.textColor = KPColorPalette.KPTextColor.grayColor_level3
         addSubview(self.infoSupplementLabel)
         infoSupplementLabel.addConstraints(fromStringArray: ["V:|-8-[$self]",
                                                              "H:[$self]-8-|"])
