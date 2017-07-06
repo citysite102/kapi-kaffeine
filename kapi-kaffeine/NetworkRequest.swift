@@ -114,7 +114,9 @@ extension NetworkRequest where ResponseType: Mappable {
 
 extension NetworkRequest where ResponseType == RawJsonResult {
     
-    public var responseHandler: (Data) throws -> ResponseType { return rawJsonResponseHandler }
+    public var responseHandler: (Data) throws -> ResponseType {
+        return rawJsonResponseHandler
+    }
 
     private func rawJsonResponseHandler(_ data: Data) throws -> ResponseType {
         return JSON(data: data)

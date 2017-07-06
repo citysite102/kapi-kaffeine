@@ -109,6 +109,7 @@
 		77C594AD1ECB171A00118947 /* KPAllCommentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C594AC1ECB171A00118947 /* KPAllCommentController.swift */; };
 		77C594AF1ECB6E3100118947 /* KPLoadingViewController_v1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C594AE1ECB6E3100118947 /* KPLoadingViewController_v1.swift */; };
 		77C594B11ECB754900118947 /* KPLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C594B01ECB754900118947 /* KPLoadingView.swift */; };
+		77D6BDF01F0E9A42005598B3 /* demoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77D6BDEF1F0E9A42005598B3 /* demoView.swift */; };
 		77DD7E3D1F0B7647007B0E17 /* KPDefaultPopoverContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DD7E3C1F0B7647007B0E17 /* KPDefaultPopoverContent.swift */; };
 		77DD7E3F1F0B9283007B0E17 /* KPPopoverViewUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DD7E3E1F0B9283007B0E17 /* KPPopoverViewUtility.swift */; };
 		77E495551EC98BE0003B7EBC /* KPRatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E495541EC98BE0003B7EBC /* KPRatingViewController.swift */; };
@@ -282,6 +283,7 @@
 		77C594AC1ECB171A00118947 /* KPAllCommentController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPAllCommentController.swift; sourceTree = "<group>"; };
 		77C594AE1ECB6E3100118947 /* KPLoadingViewController_v1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPLoadingViewController_v1.swift; sourceTree = "<group>"; };
 		77C594B01ECB754900118947 /* KPLoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPLoadingView.swift; sourceTree = "<group>"; };
+		77D6BDEF1F0E9A42005598B3 /* demoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = demoView.swift; sourceTree = "<group>"; };
 		77DD7E3C1F0B7647007B0E17 /* KPDefaultPopoverContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPDefaultPopoverContent.swift; sourceTree = "<group>"; };
 		77DD7E3E1F0B9283007B0E17 /* KPPopoverViewUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPPopoverViewUtility.swift; sourceTree = "<group>"; };
 		77E495541EC98BE0003B7EBC /* KPRatingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPRatingViewController.swift; sourceTree = "<group>"; };
@@ -962,6 +964,7 @@
 				C00CD5331E95234A00A3CB6F /* style.json */,
 				C0409E1E1E954F1A00C302FF /* cafes.json */,
 				C01AC60C1EAAE86E000390F7 /* kapi-kaffeine-bridging-header.h */,
+				77D6BDEF1F0E9A42005598B3 /* demoView.swift */,
 			);
 			path = "kapi-kaffeine";
 			sourceTree = "<group>";
@@ -1248,6 +1251,7 @@
 				776ACB0B1E9C783E00B629A2 /* KPInformationViewController.swift in Sources */,
 				77C0E0FA1E9D3D7500398852 /* KPSearchFooterCell.swift in Sources */,
 				77BB39261ED350AD00958AFE /* KPFirstIntroView.swift in Sources */,
+				77D6BDF01F0E9A42005598B3 /* demoView.swift in Sources */,
 				776ACB041E9BB8A900B629A2 /* KPSearchTagCell.swift in Sources */,
 				772748441ED5F81300C42FB6 /* KPUserManager.swift in Sources */,
 				77C107841F063B4F00EE97DB /* KPSatisficationView.swift in Sources */,

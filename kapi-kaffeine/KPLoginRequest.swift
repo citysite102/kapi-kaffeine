@@ -10,7 +10,8 @@ import UIKit
 import PromiseKit
 import Alamofire
 
-class KPLoginRequest: NetworkRequest {
+//class KPLoginRequest: NetworkRequest {
+class KPLoginRequest: NetworkUploadRequest {
     
     typealias ResponseType = RawJsonResult
     
@@ -23,7 +24,8 @@ class KPLoginRequest: NetworkRequest {
     
     var parameters: [String : Any]? {
         var parameters = [String : Any]()
-        parameters["member_id"] = self.identifier
+//        parameters["member_id"] = self.identifier
+        parameters["id"] = self.identifier
         parameters["display_name"] = self.displayName
         parameters["photo_url"] = self.photoURL
         parameters["email"] = self.email
@@ -44,6 +46,7 @@ class KPLoginRequest: NetworkRequest {
         self.displayName = displayName
         self.photoURL = photoURL
         self.email = email
-        return networkClient.performRequest(self).then(execute: responseHandler)
+//        return networkClient.performRequest(self).then(execute: responseHandler)
+        return networkClient.performUploadRequest(self).then(execute: responseHandler)
     }
 }
