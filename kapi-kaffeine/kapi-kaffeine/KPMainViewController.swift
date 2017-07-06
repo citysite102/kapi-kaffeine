@@ -32,6 +32,8 @@ class KPMainViewController: KPViewController {
             self.mainListViewController?.displayDataModel = displayDataModel
             self.mainMapViewController?.allDataModel = displayDataModel
             KPMainViewController.allDataModel = displayDataModel
+            searchHeaderView.searchButton.isEnabled = true
+            searchHeaderView.menuButton.isEnabled = true
         }
     }
 
@@ -67,6 +69,8 @@ class KPMainViewController: KPViewController {
         currentController = mainListViewController
         
         searchHeaderView = KPSearchHeaderView()
+        searchHeaderView.searchButton.isEnabled = false
+        searchHeaderView.menuButton.isEnabled = false
         view.addSubview(searchHeaderView)
         searchHeaderView.addConstraints(fromStringArray: ["V:|[$self(100)]",
                                                                "H:|[$self]|"])

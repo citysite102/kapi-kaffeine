@@ -31,10 +31,10 @@ struct KPColorPalette {
     
     struct KPTextColor {
         static let grayColor = UIColor(hexString: "#333333")
-//        static let mainColor_light = UIColor(hexString: "#c8955e")
-//        static let mainColor = UIColor(hexString: "#784d1f")
-        static let mainColor_light = UIColor.init(r: 0.2, g: 0.2, b: 0.2, a: 0.5)
-        static let mainColor = UIColor.init(r: 0.2, g: 0.2, b: 0.2, a: 0.7)
+        static let mainColor_light = UIColor(hexString: "#c8955e")
+        static let mainColor = UIColor(hexString: "#784d1f")
+//        static let mainColor_light = UIColor.init(r: 0.2, g: 0.2, b: 0.2, a: 0.5)
+//        static let mainColor = UIColor.init(r: 0.2, g: 0.2, b: 0.2, a: 0.7)
         static let whiteColor = UIColor(hexString: "#ffffff")
         
         static let grayColor_level1 = UIColor.init(r: 0.2, g: 0.2, b: 0.2, a: 1.0)

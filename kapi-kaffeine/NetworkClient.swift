@@ -22,6 +22,12 @@ public struct NetworkClient: NetworkClientType {
     public func performRequest<Request : NetworkRequest>(_ networkRequest: Request) -> Promise<Data> {
         
         let (promise, fulfill, reject) = Promise<Data>.pending()
+        
+        let manager = Alamofire.SessionManager.default
+        manager.session.configuration.httpAdditionalHeaders = [
+            "Content-Type": "application/x-www-form-urlencoded",
+            "User-Agent": "iReMW4K4fyWos"
+        ]
         Alamofire.request(networkRequest.url,
                           method: networkRequest.method,
                           parameters: networkRequest.parameters,

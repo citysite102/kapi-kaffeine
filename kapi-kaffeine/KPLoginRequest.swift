@@ -30,10 +30,10 @@ class KPLoginRequest: NetworkRequest {
         return parameters
     }
     
-    var headers: [String : String] {
-        return ["Content-Type": "application/x-www-form-urlencoded",
-                "User-Agent": "iReMW4K4fyWos"]
-    }
+//    var headers: [String : String] {
+//        return ["Content-Type": "application/x-www-form-urlencoded",
+//                "User-Agent": "iReMW4K4fyWos"]
+//    }
     
     
     public func perform(_ identifier: String!,
