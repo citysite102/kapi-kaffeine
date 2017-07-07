@@ -54,12 +54,12 @@ KPMainViewControllerDelegate {
         return self.currentDataModel
     }
     
-    var teee: Bool = false
+    var reloadNeeded: Bool = true
     
 
     var isCollectionViewShow: Bool = false {
         didSet {
-            if self.collectionViewBottomConstraint != nil && !self.teee {
+            if self.collectionViewBottomConstraint != nil && self.reloadNeeded {
                 let showc: Bool = isCollectionViewShow
                 DispatchQueue.main.async {
                     self.view.bringSubview(toFront: self.collectionView)
@@ -88,14 +88,31 @@ KPMainViewControllerDelegate {
         }
     }
     
-    
     var displayDataModel: [KPDataModel] = [] {
         didSet {
             self.collectionView?.reloadData()
             if  self.mapView != nil,
                 let dataModel = self.mapView.selectedMarker?.userData as? KPDataModel,
                 let selectedIndex =  self.displayDataModel.index(where: {($0.name == dataModel.name)}) {
-                self.collectionView.setContentOffset(CGPoint(x: -30 + CGFloat(selectedIndex) * (UIScreen.main.bounds.size.width - 60 + 15), y: 0), animated: false)
+                
+                DispatchQueue.main.async {
+                    UIView.animate(withDuration: 0.2, animations: {
+                        self.collectionView.alpha = 0
+                    }, completion: { (_) in
+                        self.collectionView.contentOffset = CGPoint(x: -30 + CGFloat(selectedIndex) * (UIScreen.main.bounds.size.width - 60 + 15), y: 0)
+                        self.view.layoutIfNeeded()
+                        self.view.bringSubview(toFront: self.collectionView)
+//                        UIView.animate(withDuration: 0.2, animations: {
+//                            self.collectionView.alpha = 1
+//                        })
+                    })
+                    
+                    UIView.animate(withDuration: 0.2, delay: 0.3, options: UIViewAnimationOptions.curveLinear, animations: {
+                        self.collectionView.alpha = 1
+                    }, completion: { (_) in
+                    })
+                }
+//                self.collectionView.setContentOffset(CGPoint(x: -30 + CGFloat(selectedIndex) * (UIScreen.main.bounds.size.width - 60 + 15), y: 0), animated: false)
             }
         }
     }
@@ -151,7 +168,6 @@ KPMainViewControllerDelegate {
         clusterManager.setDelegate(self, mapDelegate: self)
         
         self.mapView.isMyLocationEnabled = true
-        self.moveToMyLocation()
         
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.itemSize = CGSize(width: UIScreen.main.bounds.size.width - 60, height: 80)
@@ -183,6 +199,7 @@ KPMainViewControllerDelegate {
         currentLocationButton.addConstraints(fromStringArray: ["H:[$self(40)]-16-|", "V:|-120-[$self(40)]"])
         
         view.addSubview(nearestButton)
+        nearestButton.button.addTarget(self, action: #selector(handleNearestButtonOnTap(_:)), for: .touchUpInside)
         nearestButton.addConstraints(fromStringArray: ["H:|-16-[$self(90)]",
                                                        "V:[$self(40)]-24-[$view0]"],
                                      views: [collectionView])
@@ -193,15 +210,31 @@ KPMainViewControllerDelegate {
         addButton.addConstraints(fromStringArray: ["H:[$self(56)]-18-|",
                                                    "V:[$self(56)]-24-[$view0]"],
                                  views: [collectionView])
+        
+        KPLocationManager.sharedInstance().addObserver(self, forKeyPath: "currentLocation", options: .new, context: nil)
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
     }
+    
+    deinit {
+        KPLocationManager.sharedInstance().removeObserver(self, forKeyPath: "currentLocation")
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        if object as? KPLocationManager == KPLocationManager.sharedInstance() && keyPath == "currentLocation" {
+            self.moveToMyLocation()
+            KPLocationManager.sharedInstance().removeObserver(self, forKeyPath: "currentLocation")
+        } else {
+            super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
+        }
     }
     
     func moveToMyLocation() {
@@ -226,6 +259,41 @@ KPMainViewControllerDelegate {
         let navigationController = UINavigationController.init(rootViewController: newStoreController)
         controller.contentController = navigationController
         controller.presentModalView()
+    }
+    
+    func handleNearestButtonOnTap(_ sender: UIButton) {
+        if let renderer = clusterRenderer as? GMUDefaultClusterRenderer,
+           let currentLocation = KPLocationManager.sharedInstance().currentLocation {
+            var nearestMarker: GMSMarker?
+            
+            var nearestDistance: Double = Double.greatestFiniteMagnitude
+            for marker in renderer.markers() {
+                if nearestMarker == nil {
+                    nearestMarker = marker
+                } else {
+                    let distance = CLLocation(latitude: marker.position.latitude, longitude: marker.position.longitude).distance(from: currentLocation)
+                    if distance < nearestDistance {
+                        nearestDistance = distance
+                        nearestMarker = marker
+                    }
+                }
+            }
+
+            if nearestMarker != nil {
+                CATransaction.begin()
+                CATransaction.setValue(NSNumber(floatLiteral: 0.5), forKey: kCATransactionAnimationDuration)
+                self.mapView.animate(to: GMSCameraPosition.camera(withTarget: nearestMarker!.position , zoom: self.mapView.camera.zoom))
+                CATransaction.commit()
+                CATransaction.setCompletionBlock({
+                    self.reloadNeeded = false
+                    self.mapView.selectedMarker = nearestMarker!
+                })
+                
+                DispatchQueue.main.asyncAfter(deadline: .now()+0.5, execute: { 
+                    self.isCollectionViewShow = true
+                })
+            }
+        }
     }
     
     // MARK: UICollectionView DataSource
@@ -270,7 +338,7 @@ KPMainViewControllerDelegate {
             self.mapView.animate(to: GMSCameraPosition.camera(withTarget: marker.position , zoom: self.mapView.camera.zoom))
             CATransaction.commit()
             CATransaction.setCompletionBlock({
-                self.teee = true
+                self.reloadNeeded = false
                 self.mapView.selectedMarker = marker
             })
         }
@@ -300,7 +368,7 @@ KPMainViewControllerDelegate {
         marker.icon = UIImage(named: "icon_mapMarkerSelected")
         let infoWindow = KPMainMapMarkerInfoWindow(dataModel: marker.userData as! KPDataModel)
 
-        teee = false
+        reloadNeeded = true
         
         return infoWindow
     }
