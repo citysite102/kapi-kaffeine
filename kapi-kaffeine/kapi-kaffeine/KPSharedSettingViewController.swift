@@ -49,7 +49,7 @@ class KPSharedSettingViewController: KPViewController {
                                 for: .touchUpInside)
         
         view.addSubview(dismissButton)
-        dismissButton.addConstraints(fromStringArray: ["H:|-16-[$self(30)]",
+        dismissButton.addConstraints(fromStringArray: ["H:|-12-[$self(30)]",
                                                        "V:|-16-[$self(30)]"])
         dismissButton.contentEdgeInsets = UIEdgeInsetsMake(7, 7, 7, 7)
         

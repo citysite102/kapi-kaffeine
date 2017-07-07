@@ -51,6 +51,8 @@
 		775D32ED1F0CCCCF005EF0CE /* KPInformationPhotoTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775D32EC1F0CCCCF005EF0CE /* KPInformationPhotoTransition.swift */; };
 		775D32EF1F0D20E4005EF0CE /* KPExpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775D32EE1F0D20E4005EF0CE /* KPExpView.swift */; };
 		775D32F11F0D21E0005EF0CE /* KPProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775D32F01F0D21E0005EF0CE /* KPProgressBar.swift */; };
+		7762E33A1F0FA44F0006E205 /* KPBusinessTimeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7762E3391F0FA44F0006E205 /* KPBusinessTimeViewController.swift */; };
+		7762E33C1F0FA7A90006E205 /* KPBusinessTimeInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7762E33B1F0FA7A90006E205 /* KPBusinessTimeInfoView.swift */; };
 		776ACAF41E9BAFA200B629A2 /* KPSearchHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776ACAF31E9BAFA200B629A2 /* KPSearchHeaderView.swift */; };
 		776ACAF61E9BAFBF00B629A2 /* KPSearchTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776ACAF51E9BAFBF00B629A2 /* KPSearchTagView.swift */; };
 		776ACAF81E9BAFE900B629A2 /* KPSearchFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776ACAF71E9BAFE900B629A2 /* KPSearchFooterView.swift */; };
@@ -224,6 +226,8 @@
 		775D32EC1F0CCCCF005EF0CE /* KPInformationPhotoTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPInformationPhotoTransition.swift; sourceTree = "<group>"; };
 		775D32EE1F0D20E4005EF0CE /* KPExpView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPExpView.swift; sourceTree = "<group>"; };
 		775D32F01F0D21E0005EF0CE /* KPProgressBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPProgressBar.swift; sourceTree = "<group>"; };
+		7762E3391F0FA44F0006E205 /* KPBusinessTimeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPBusinessTimeViewController.swift; sourceTree = "<group>"; };
+		7762E33B1F0FA7A90006E205 /* KPBusinessTimeInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPBusinessTimeInfoView.swift; sourceTree = "<group>"; };
 		776ACAF31E9BAFA200B629A2 /* KPSearchHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSearchHeaderView.swift; sourceTree = "<group>"; };
 		776ACAF51E9BAFBF00B629A2 /* KPSearchTagView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSearchTagView.swift; sourceTree = "<group>"; };
 		776ACAF71E9BAFE900B629A2 /* KPSearchFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSearchFooterView.swift; sourceTree = "<group>"; };
@@ -529,6 +533,8 @@
 			isa = PBXGroup;
 			children = (
 				77C0E1011E9D48E000398852 /* KPShopInfoView.swift */,
+				7762E33B1F0FA7A90006E205 /* KPBusinessTimeInfoView.swift */,
+				7762E3391F0FA44F0006E205 /* KPBusinessTimeViewController.swift */,
 			);
 			name = Info;
 			sourceTree = "<group>";
@@ -1249,6 +1255,7 @@
 				77B66FB71EAFC9D2008B6652 /* KPSearchConditionViewController.swift in Sources */,
 				776ACAFA1E9BB01B00B629A2 /* KPMainListViewController.swift in Sources */,
 				776ACB0B1E9C783E00B629A2 /* KPInformationViewController.swift in Sources */,
+				7762E33A1F0FA44F0006E205 /* KPBusinessTimeViewController.swift in Sources */,
 				77C0E0FA1E9D3D7500398852 /* KPSearchFooterCell.swift in Sources */,
 				77BB39261ED350AD00958AFE /* KPFirstIntroView.swift in Sources */,
 				77D6BDF01F0E9A42005598B3 /* demoView.swift in Sources */,
@@ -1355,6 +1362,7 @@
 				771EECB11EBC3291004A34B8 /* KPCheckBoxPathGenerator.swift in Sources */,
 				77869E1C1EB771BC0027CA98 /* KPCafeRequest.swift in Sources */,
 				77427BE21EF7F58B005D7AE4 /* KPNewRatingRequest.swift in Sources */,
+				7762E33C1F0FA7A90006E205 /* KPBusinessTimeInfoView.swift in Sources */,
 				7730B5721EA8676F00D6CD55 /* KPInformationDismissTransition.swift in Sources */,
 				77FBE95F1ECCBE9200EBBB9B /* KPItemCheckedView.swift in Sources */,
 				7712D4E31ED72A200024C176 /* KPUserDefaults.swift in Sources */,

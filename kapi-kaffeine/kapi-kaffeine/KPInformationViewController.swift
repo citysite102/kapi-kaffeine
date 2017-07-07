@@ -186,6 +186,7 @@ class KPInformationViewController: KPViewController {
         informationView.titleLabel.text = informationDataModel.name
         informationView.locationLabel.text = informationDataModel.address ?? "暫無資料"
         informationView.phoneLabel.text = informationDataModel.phone ?? "暫無資料"
+        informationView.otherTimeButton.addTarget(self, action: #selector(KPInformationViewController.handleOtherTimeButtonOnTapped), for: .touchUpInside)
         
         if informationDataModel.businessHour != nil {
             let shopStatus = informationDataModel.businessHour.shopStatus
@@ -393,6 +394,16 @@ class KPInformationViewController: KPViewController {
                                                       animated: true,
                                                       completion: {}
         )
+    }
+    
+    func handleOtherTimeButtonOnTapped() {
+        let controller = KPModalViewController()
+        controller.contentSize = CGSize(width: 276, height: 416)
+        controller.cornerRadius = [.topRight, .topLeft, .bottomLeft, .bottomRight]
+        controller.dismissWhenTouchingOnBackground = true
+        let businessTimeViewController = KPBusinessTimeViewController()
+        controller.contentController = businessTimeViewController
+        controller.presentModalView()
     }
     
     func handleDismissButtonOnTapped() {

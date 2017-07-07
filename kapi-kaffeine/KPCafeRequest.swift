@@ -11,8 +11,7 @@ import ObjectMapper
 import PromiseKit
 import Alamofire
 
-//class KPCafeRequest: NetworkRequest {
-class KPCafeRequest: NetworkUploadRequest {
+class KPCafeRequest: NetworkRequest {
 
     typealias ResponseType = RawJsonResult
     
@@ -52,7 +51,6 @@ class KPCafeRequest: NetworkUploadRequest {
     }
     
     
-    
     public func perform(_ limitedTime: NSNumber? = nil,
                         _ socket: NSNumber? = nil,
                         _ standingDesk: NSNumber? = nil,
@@ -63,7 +61,6 @@ class KPCafeRequest: NetworkUploadRequest {
         self.standingDesk = standingDesk
         self.mrt = mrt
         self.city = city
-        return  networkClient.performUploadRequest(self).then(execute: responseHandler)
-//        return networkClient.performRequest(self).then(execute: responseHandler)
+        return networkClient.performRequest(self).then(execute: responseHandler)
     }
 }

@@ -33,7 +33,7 @@ class KPCheckView: UIView {
         
         titleLabel = UILabel()
         titleLabel.font = UIFont.systemFont(ofSize: 15.0)
-        titleLabel.textColor = KPColorPalette.KPTextColor.grayColor_level1
+        titleLabel.textColor = KPColorPalette.KPTextColor.grayColor_level2
         titleLabel.text = title
         
         checkBox = KPCheckBox()

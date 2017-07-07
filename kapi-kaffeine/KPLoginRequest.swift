@@ -10,9 +10,8 @@ import UIKit
 import PromiseKit
 import Alamofire
 
-//class KPLoginRequest: NetworkRequest {
-class KPLoginRequest: NetworkUploadRequest {
-    
+class KPLoginRequest: NetworkRequest {
+
     typealias ResponseType = RawJsonResult
     
     var endpoint: String { return "/login" }
@@ -24,18 +23,17 @@ class KPLoginRequest: NetworkUploadRequest {
     
     var parameters: [String : Any]? {
         var parameters = [String : Any]()
-//        parameters["member_id"] = self.identifier
-        parameters["id"] = self.identifier
+        parameters["member_id"] = self.identifier
         parameters["display_name"] = self.displayName
         parameters["photo_url"] = self.photoURL
         parameters["email"] = self.email
         return parameters
     }
     
-//    var headers: [String : String] {
-//        return ["Content-Type": "application/x-www-form-urlencoded",
-//                "User-Agent": "iReMW4K4fyWos"]
-//    }
+    var headers: [String : String] {
+        return ["Content-Type": "application/json",
+                "User-Agent": "iReMW4K4fyWos"]
+    }
     
     
     public func perform(_ identifier: String!,
@@ -46,7 +44,6 @@ class KPLoginRequest: NetworkUploadRequest {
         self.displayName = displayName
         self.photoURL = photoURL
         self.email = email
-//        return networkClient.performRequest(self).then(execute: responseHandler)
-        return networkClient.performUploadRequest(self).then(execute: responseHandler)
+        return networkClient.performRequest(self).then(execute: responseHandler)
     }
 }

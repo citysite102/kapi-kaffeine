@@ -86,8 +86,7 @@ class KPDataModel: NSObject, Mappable, GMUClusterItem {
     }
     
     func mapping(map: Map) {
-//        identifier          <-    map["cafe_id"]
-        identifier          <-    map["id"]
+        identifier          <-    map["cafe_id"]
         address             <-    map["address"]
         name                <-    map["name"]
         phone               <-    map["phone"]
@@ -104,8 +103,7 @@ class KPDataModel: NSObject, Mappable, GMUClusterItem {
         businessHour        <-    (map["business_hour"], businessHourTransform)
         tags                <-    map["tags"]
         rates               <-    map["rates"]
-//        covers              <-    map["covers"]
-        covers              <-    map["photos"]
+        covers              <-    map["covers"]
         isKapi              <-    map["is_kapi"]
     }
     

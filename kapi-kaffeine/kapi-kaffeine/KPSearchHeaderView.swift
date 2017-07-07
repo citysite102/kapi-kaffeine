@@ -30,7 +30,7 @@ class KPSearchHeaderView: UIView {
         
         styleButton = KPBounceButton.init(frame: .zero, image: R.image.icon_map()!);
         addSubview(styleButton);
-        styleButton.addConstraints(fromStringArray: ["H:[$self(30)]-8-|",
+        styleButton.addConstraints(fromStringArray: ["H:[$self(30)]-5-|",
                                                      "V:[$self(30)]"]);
         styleButton.contentEdgeInsets = UIEdgeInsetsMake(3, 3, 3, 3)
         styleButton.addConstraintForCenterAligning(to: titleLabel, in: .vertical);
@@ -47,7 +47,7 @@ class KPSearchHeaderView: UIView {
         
         menuButton = KPBounceButton.init(frame: .zero, image: R.image.icon_menu()!);
         addSubview(menuButton);
-        menuButton.addConstraints(fromStringArray: ["H:|-8-[$self(30)]",
+        menuButton.addConstraints(fromStringArray: ["H:|-5-[$self(30)]",
                                                     "V:[$self(30)]"]);
         menuButton.contentEdgeInsets = UIEdgeInsetsMake(3, 3, 3, 3)
         menuButton.addConstraintForCenterAligning(to: titleLabel, in: .vertical);

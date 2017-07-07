@@ -42,7 +42,6 @@ class KPMainViewController: KPViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
         view.backgroundColor = UIColor.black
         mainListViewController = KPMainListViewController()
         mainMapViewController = KPMainMapViewController()
@@ -108,7 +107,11 @@ class KPMainViewController: KPViewController {
         SideMenuManager.menuWidth = 260
         
         if (KPUserManager.sharedManager.currentUser != nil) {
-            KPServiceHandler.sharedHandler.fetchRemoteData() { (results: [KPDataModel]?) in
+            KPServiceHandler.sharedHandler.fetchRemoteData(nil,
+                                                           nil,
+                                                           nil,
+                                                           nil,
+                                                           "taipei") { (results: [KPDataModel]?) in
                 if results != nil {
                     self.displayDataModel = results!
                 }
