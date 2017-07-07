@@ -42,7 +42,7 @@ class KPRatingView: UIView {
                 minusButton.isEnabled = !(currentRate == 1)
                 addButton.isEnabled = !(currentRate == 5)
             case .star:
-                print("Do Nothing")
+                break
             }
         }
     }

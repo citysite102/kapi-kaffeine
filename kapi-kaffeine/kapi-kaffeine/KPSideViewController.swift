@@ -156,7 +156,6 @@ class KPSideViewController: KPViewController {
                                                             KPPopoverView.popoverDefaultStyleContent("尚未開放",
                                                                                                      "改天再來吧，再見。",
                                                                                                      "遵命", { (content) in
-                                                                                                        print("Test Content")
                                                                                                         content.popoverView.dismiss()
                                                             })
                                                         }
@@ -168,7 +167,6 @@ class KPSideViewController: KPViewController {
                                                             KPPopoverView.popoverDefaultStyleContent("尚未開放",
                                                                                                      "改天再來吧，再見。",
                                                                                                      "遵命", { (content) in
-                                                                                                        print("Test Content")
                                                                                                         content.popoverView.dismiss()
                                                             })
                                                         }
@@ -180,7 +178,6 @@ class KPSideViewController: KPViewController {
                                                             KPPopoverView.popoverDefaultStyleContent("尚未開放",
                                                                                                      "改天再來吧，再見。",
                                                                                                      "遵命", { (content) in
-                                                                                                        print("Test Content")
                                                                                                         content.popoverView.dismiss()
                                                             })
                                                         }

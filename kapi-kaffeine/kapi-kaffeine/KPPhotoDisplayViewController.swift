@@ -178,7 +178,6 @@ class KPPhotoDisplayViewController: KPViewController {
             let touchPoint = sender.location(in: cell)
             let distance = (pow(centerPoint.x-touchPoint.x , 2) + pow(centerPoint.y-touchPoint.y, 2)).squareRoot()
             
-//            print("Distance: \(distance)")
             print("Frame: \(cell.shopPhoto.frame)")
             if lastMovePoint != nil {
                 cell.shopPhoto.transform = CGAffineTransform(translationX:touchPoint.x - startAnchorPoint.x,

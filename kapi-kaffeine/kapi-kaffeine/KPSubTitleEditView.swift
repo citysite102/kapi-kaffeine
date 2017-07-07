@@ -148,7 +148,7 @@ class KPSubTitleEditView: UIView {
             bottomBorderView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                               "V:[$self(1)]|"])
         default:
-            print("No border")
+            break
         }
     }
     
