@@ -17,8 +17,11 @@ class KPSideViewController: KPViewController {
     weak var mainController: KPMainViewController!
     var lastY: CGFloat = 0.0
     
-    lazy var userContainer: UIView = {
-        let containerView = UIView()
+    
+    var tapGesture: UITapGestureRecognizer!
+    
+    lazy var userContainer: KPBounceView = {
+        let containerView = KPBounceView()
         containerView.backgroundColor = KPColorPalette.KPMainColor.mainColor
         return containerView
     }()
@@ -30,6 +33,8 @@ class KPSideViewController: KPViewController {
         imageView.layer.borderColor = UIColor.white.cgColor
         imageView.layer.cornerRadius = 5.0
         imageView.layer.masksToBounds = true
+        imageView.image = R.image.demo_profile()
+        imageView.contentMode = .scaleAspectFill
         return imageView
     }()
     
@@ -98,6 +103,9 @@ class KPSideViewController: KPViewController {
         userContainer.addSubview(userExpView)
         userExpView.addConstraints(fromStringArray: ["H:|-16-[$self(100)]",
                                                      "V:[$self(26)]-12-|"])
+
+        tapGesture = UITapGestureRecognizer(target: self, action: #selector(KPSideViewController.handleUserContainerOnTapped(_:)))
+        userContainer.addGestureRecognizer(tapGesture)
         
         view.addSubview(chooseLabel)
         chooseLabel.addConstraints(fromStringArray: ["H:|-16-[$self]",
@@ -144,23 +152,38 @@ class KPSideViewController: KPViewController {
                                         informationData(title:"聯絡我們",
                                                       icon:R.image.icon_msg()!,
                                                       handler:{()->() in
-                                                            
-                                                        let controller = KPModalViewController()
-                                                        controller.edgeInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-                                                        let profileController = KPUserProfileViewController()
-                                                        let navigationController = UINavigationController.init(rootViewController: profileController)
-                                                        controller.contentController = navigationController
-                                                        controller.presentModalView(self, UIModalPresentationStyle.fullScreen)
+                                                        DispatchQueue.main.asyncAfter(deadline: .now()) {
+                                                            KPPopoverView.popoverDefaultStyleContent("尚未開放",
+                                                                                                     "改天再來吧，再見。",
+                                                                                                     "遵命", { (content) in
+                                                                                                        print("Test Content")
+                                                                                                        content.popoverView.dismiss()
+                                                            })
+                                                        }
                                         }),
                                         informationData(title:"粉絲專頁",
                                                        icon:R.image.icon_fanpage()!,
                                                        handler:{()->() in
-                                                        print("粉絲專頁")
+                                                        DispatchQueue.main.asyncAfter(deadline: .now()) {
+                                                            KPPopoverView.popoverDefaultStyleContent("尚未開放",
+                                                                                                     "改天再來吧，再見。",
+                                                                                                     "遵命", { (content) in
+                                                                                                        print("Test Content")
+                                                                                                        content.popoverView.dismiss()
+                                                            })
+                                                        }
                                         }),
                                         informationData(title:"幫我們評分",
                                                        icon:R.image.icon_star()!,
                                                        handler:{()->() in
-                                                        print("幫我們評分")
+                                                        DispatchQueue.main.asyncAfter(deadline: .now()) {
+                                                            KPPopoverView.popoverDefaultStyleContent("尚未開放",
+                                                                                                     "改天再來吧，再見。",
+                                                                                                     "遵命", { (content) in
+                                                                                                        print("Test Content")
+                                                                                                        content.popoverView.dismiss()
+                                                            })
+                                                        }
                                         }),
                                         informationData(title:"設定",
                                                        icon:R.image.icon_setting()!,
@@ -195,7 +218,19 @@ class KPSideViewController: KPViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
     }
+    
+    
+    func handleUserContainerOnTapped(_ sender: UITapGestureRecognizer) {
+        let controller = KPModalViewController()
+        controller.edgeInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        let profileController = KPUserProfileViewController()
+        let navigationController = UINavigationController.init(rootViewController: profileController)
+        controller.contentController = navigationController
+        controller.presentModalView(self, UIModalPresentationStyle.fullScreen)
+    }
 }
+
+
 
 extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
     

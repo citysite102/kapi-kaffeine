@@ -117,7 +117,7 @@ class KPPhotoDisplayViewController: KPViewController {
                                                         "V:|[$self]|"]);
         
         dismissButton = KPBounceButton()
-        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4)
+        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(7, 7, 7, 7)
         dismissButton.setImage(R.image.icon_close()?.withRenderingMode(.alwaysTemplate),
                                for: .normal)
         dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor
@@ -125,8 +125,8 @@ class KPPhotoDisplayViewController: KPViewController {
                                 action: #selector(KPPhotoDisplayViewController.handleDismissButtonOnTapped),
                                 for: .touchUpInside)
         view.addSubview(self.dismissButton)
-        dismissButton.addConstraints(fromStringArray: ["H:|-8-[$self(24)]",
-                                                       "V:|-16-[$self(24)]"]);
+        dismissButton.addConstraints(fromStringArray: ["H:|-5-[$self(30)]",
+                                                       "V:|-13-[$self(30)]"]);
         
         view.addSubview(photoTitleLabel)
         photoTitleLabel.text = "覺旅咖啡 Journey Cafe"

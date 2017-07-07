@@ -70,20 +70,20 @@ class KPInformationViewController: KPViewController {
         navigationItem.title = informationDataModel.name
         navigationController?.delegate = self
         
-        dismissButton = KPBounceButton.init(frame: CGRect.init(x: 0, y: 0, width: 24, height: 24))
+        dismissButton = KPBounceButton.init(frame: CGRect.init(x: 0, y: 0, width: 30, height: 30))
         dismissButton.setImage(R.image.icon_close(),
                                     for: .normal)
-        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4)
+        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(7, 7, 7, 7)
         dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor
         dismissButton.addTarget(self,
                                 action: #selector(KPInformationViewController.handleDismissButtonOnTapped),
                                 for: .touchUpInside)
         
         
-        moreButton = KPBounceButton.init(frame: CGRect.init(x: 0, y: 0, width: 24, height: 24))
+        moreButton = KPBounceButton.init(frame: CGRect.init(x: 0, y: 0, width: 30, height: 30))
         moreButton.setImage(R.image.icon_grid(),
                             for: .normal)
-        moreButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4)
+        moreButton.contentEdgeInsets = UIEdgeInsetsMake(7, 7, 7, 7)
         moreButton.tintColor = KPColorPalette.KPTextColor.whiteColor
         moreButton.addTarget(self,
                              action: #selector(KPInformationViewController.handleMoreButtonOnTapped),
@@ -113,7 +113,7 @@ class KPInformationViewController: KPViewController {
         actionController = UIAlertController(title: nil,
                                              message: nil,
                                              preferredStyle: .actionSheet)
-        actionController.view.tintColor = KPColorPalette.KPTextColor.mainColor_light
+        actionController.view.tintColor = KPColorPalette.KPTextColor.grayColor_level2
         let editButton = UIAlertAction(title: "編輯店家資料",
                                        style: .default) { (_) in
                                         print("編輯店家資料")

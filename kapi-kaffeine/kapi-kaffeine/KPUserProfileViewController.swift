@@ -20,7 +20,7 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
     
     lazy var userContainer: UIView = {
         let containerView = UIView()
-        containerView.backgroundColor = KPColorPalette.KPMainColor.mainColor
+        containerView.backgroundColor = KPColorPalette.KPMainColor.mainColor_light
         return containerView
     }()
     
@@ -31,12 +31,14 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
         imageView.layer.borderColor = UIColor.white.cgColor
         imageView.layer.cornerRadius = 5.0
         imageView.layer.masksToBounds = true
+        imageView.image = R.image.demo_profile()
+        imageView.contentMode = .scaleAspectFill
         return imageView
     }()
     
     lazy var userNameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16.0)
+        label.font = UIFont.boldSystemFont  (ofSize: 16.0)
         label.textColor = KPColorPalette.KPTextColor.whiteColor
         label.text = "Samuel"
         return label
@@ -44,7 +46,7 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
     
     lazy var userCityLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12.0)
+        label.font = UIFont.systemFont(ofSize: 10.0)
         label.textColor = KPColorPalette.KPTextColor.whiteColor
         label.text = "Taipei"
         return label
@@ -186,8 +188,8 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
             if let photoURL = URL(string: user.photoURL ?? "") {
                 userPhoto.af_setImage(withURL: photoURL)
             }
-            userNameLabel.text = user.displayName
-            userCityLabel.text = user.defaultLocation
+            userNameLabel.text = user.displayName ?? "Samuel"
+            userCityLabel.text = user.defaultLocation ?? "滑到外太空"
         }
         
         view.bringSubview(toFront: tabView)
