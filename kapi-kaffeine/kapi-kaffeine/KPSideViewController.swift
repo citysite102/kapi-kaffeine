@@ -139,17 +139,17 @@ class KPSideViewController: KPViewController {
                                      cityKeys:["taipei", "中壢"])]
         
         informationSectionContents = [informationData(title:"關於我們",
-                                                           icon:R.image.icon_cup()!,
-                                                           handler:{()->() in
+                                                      icon:R.image.icon_cup()!,
+                                                      handler:{()->() in
                                                             
-                                                            let controller = KPModalViewController()
-                                                            controller.edgeInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-                                                            let aboutUsController = KPAboutUsViewController()
-                                                            let navigationController = UINavigationController.init(rootViewController: aboutUsController)
-                                                            controller.contentController = navigationController
-                                                            controller.presentModalView(self, UIModalPresentationStyle.fullScreen)
-                                        }),
-                                        informationData(title:"聯絡我們",
+                                                        let controller = KPModalViewController()
+                                                        controller.edgeInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+                                                        let aboutUsController = KPAboutUsViewController()
+                                                        let navigationController = UINavigationController.init(rootViewController: aboutUsController)
+                                                        controller.contentController = navigationController
+                                                        controller.presentModalView(self, UIModalPresentationStyle.fullScreen)
+                                    }),
+                                      informationData(title:"聯絡我們",
                                                       icon:R.image.icon_msg()!,
                                                       handler:{()->() in
                                                         DispatchQueue.main.asyncAfter(deadline: .now()) {

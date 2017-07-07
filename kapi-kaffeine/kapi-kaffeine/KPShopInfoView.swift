@@ -17,6 +17,9 @@ class KPShopInfoView: UIView {
     var featureContents: [String]! {
         didSet {
             
+            if featureContents.count == 0 {
+                featureContents = ["尚無特色"]
+            }
             for oldContentView in featureContentViews {
                 oldContentView.removeFromSuperview()
             }

@@ -164,6 +164,10 @@ class KPNewCommentController: KPViewController {
         ratingCheckbox.addConstraints(fromStringArray: ["H:|-16-[$self]",
                                                         "V:|-16-[$self]"])
         
+        ratingCheckbox.checkBox.addTarget(self,
+                                          action: #selector(KPNewCommentController.checkBoxValueChanged(_:)),
+                                          for: .valueChanged)
+        
         for (index, title) in ratingTitles.enumerated() {
             let ratingView = KPRatingView.init(.star,
                                                ratingImages[index]!,
@@ -188,6 +192,22 @@ class KPNewCommentController: KPViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func checkBoxValueChanged(_ sender: KPCheckBox) {
+        print("Changed.......\(sender.checkState)")
+        switch sender.checkState {
+        case .checked:
+            for rateView in ratingViews {
+                rateView.enable = true
+            }
+        case .unchecked:
+            for rateView in ratingViews {
+                rateView.enable = false
+            }
+        default:
+            print("Mixed")
+        }
     }
 
     func handleDismissButtonOnTapped() {

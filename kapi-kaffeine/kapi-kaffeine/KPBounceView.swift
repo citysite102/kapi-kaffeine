@@ -32,7 +32,7 @@ class KPBounceView: UIView {
     }
     
     var selectedColor = KPColorPalette.KPMainColor.starColor
-    var unSelectedColor = KPColorPalette.KPMainColor.grayColor_level3
+    var unSelectedColor = KPColorPalette.KPMainColor.grayColor_level4
     
     var dampingRatio: CGFloat = 0.35
     var bounceDuration: Double = 0.8

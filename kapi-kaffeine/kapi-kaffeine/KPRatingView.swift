@@ -20,8 +20,20 @@ class KPRatingView: UIView {
     // MARK: - Properties
     //----------------------------
     
+    var enable: Bool = true {
+        didSet {
+            self.isUserInteractionEnabled = enable
+            self.addButton.alpha = enable ? 1.0 : 0.5
+            self.minusButton.alpha = enable ? 1.0 : 0.5
+            self.rateScoreLabel.alpha = enable ? 1.0: 0.4
+            self.rateTitleLabel.alpha = enable ? 1.0 : 0.4
+            self.iconImageView.alpha = enable ? 1.0 : 0.4
+            for starView in self.starViews {
+                starView.alpha = enable ? 1.0 : 0.5
+            }
+        }
+    }
     var rateType: RateType = .button
-    
     var currentRate: Int = 1 {
         didSet {
             switch rateType {
@@ -30,13 +42,11 @@ class KPRatingView: UIView {
                 minusButton.isEnabled = !(currentRate == 1)
                 addButton.isEnabled = !(currentRate == 5)
             case .star:
-                print("Not Implement")
+                print("Do Nothing")
             }
         }
     }
-    
-    var currentStarIndex: Int = 0
-    
+
     lazy var iconImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.tintColor = KPColorPalette.KPMainColor.mainColor
@@ -98,10 +108,9 @@ class KPRatingView: UIView {
     }()
     
     // Star Type
-    var starViews:[KPBounceView] = [KPBounceView]()
-    var panGesture: UIPanGestureRecognizer!
-    var tapGesture: UITapGestureRecognizer!
-    
+    private var starViews:[KPBounceView] = [KPBounceView]()
+    private var panGesture: UIPanGestureRecognizer!
+    private var tapGesture: UITapGestureRecognizer!
     
     
     //----------------------------
@@ -224,7 +233,7 @@ class KPRatingView: UIView {
             let touchPoint = panGesture.location(in: self)
             for (index, starView) in starViews.enumerated() {
                 if starView.frame.contains(touchPoint) {
-                    currentStarIndex = 5 - index
+                    currentRate = 5 - index
                     animatedIndex = index
                     break
                 }
@@ -249,7 +258,7 @@ class KPRatingView: UIView {
         
         for (index, starView) in starViews.enumerated() {
             if starView.frame.contains(touchPoint) {
-                currentStarIndex = 5 - index
+                currentRate = 5 - index
                 animatedIndex = index
                 break
             }

@@ -148,6 +148,7 @@ class KPCheckBox: UIControl {
         
         tintColor = KPColorPalette.KPMainColor.mainColor
         controller.tintColor = tintColor
+        controller.secondaryTintColor = tintColor
         controller.resetLayersForState(.checked)
         
         tapGesture = UITapGestureRecognizer.init(target: self,
@@ -240,6 +241,7 @@ class KPCheckBox: UIControl {
             setCheckState(.unchecked, animated: animated)
             break
         }
+        sendActions(for: .valueChanged)
     }
     
     //----------------------------

@@ -49,6 +49,13 @@ class menu: UIView {
                              forKey: "openAnimation_1")
         
     }
+    
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if let touch = touches.first {
+            openAnimation()
+        }
+    }
 }
 
 //extension menu: CAAnimationDelegate {
@@ -66,11 +73,10 @@ class animator {
                               _ fromValue: Any,
                               _ toValue: Any) -> CAKeyframeAnimation {
         let anim = CAKeyframeAnimation(keyPath: keypath)
-        anim.values = self.basicAnimationValues(fromValue, toValue, CGFloat(duration)) as! [Any]
+        anim.values = self.basicAnimationValues(fromValue, toValue, CGFloat(duration)) as? [Any]
         anim.duration = duration
         anim.fillMode = kCAFillModeForwards
         anim.isRemovedOnCompletion = false
-        
         return anim
     }
     
@@ -79,14 +85,14 @@ class animator {
                               _ duration: CGFloat) -> NSMutableArray {
         let numberOfFrames = duration * 60
         let values = NSMutableArray(capacity: Int(numberOfFrames))
-        for _ in 0..<values.count {
+        for _ in 0..<Int(numberOfFrames) {
             values.add(0)
         }
         
-        let diff: CGFloat = CGFloat(toValue as? Double ?? 0) - CGFloat(fromValue as? Double ?? 0)
+        let diff: CGFloat = CGFloat(toValue as? Int ?? 0) - CGFloat(fromValue as? Int ?? 0)
         for i in 0..<values.count {
             let x: CGFloat = CGFloat(i)/numberOfFrames
-            let value = CGFloat(fromValue as? Double ?? 0) + x*diff
+            let value = CGFloat(fromValue as? Int ?? 0) + x*diff
             values[i] = value
         }
         return values
