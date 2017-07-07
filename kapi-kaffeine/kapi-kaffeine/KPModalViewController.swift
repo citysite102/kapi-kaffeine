@@ -156,7 +156,7 @@ class KPModalViewController: KPViewController {
             self.containerSensingView.addConstraintForCenterAligningToSuperview(in: .horizontal)
             
             containerPoint = CGPoint.init(x: (self.view.frame.width-self.contentSize.width)/2,
-                                          y: self.contentSize.height)
+                                          y: (self.view.frame.height-self.contentSize.height)/2)
             containerSize = CGSize.init(width: self.contentSize.width,
                                         height: self.contentSize.height)
         }
