@@ -289,8 +289,12 @@ KPMainViewControllerDelegate {
                     self.mapView.selectedMarker = nearestMarker!
                 })
                 
-                DispatchQueue.main.asyncAfter(deadline: .now()+0.5, execute: { 
-                    self.isCollectionViewShow = true
+                DispatchQueue.main.asyncAfter(deadline: .now()+0.5, execute: {
+                    if nearestMarker?.userData is KPDataModel {
+                        self.isCollectionViewShow = true
+                    } else {
+                        self.mapView.animate(toZoom: self.mapView.camera.zoom+1)
+                    }
                 })
             }
         }
