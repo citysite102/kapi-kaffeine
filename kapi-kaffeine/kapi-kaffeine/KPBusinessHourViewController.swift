@@ -33,7 +33,7 @@ class KPBusinessHourViewController: KPSharedSettingViewController, KPTimePickerD
         let days = ["星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"]
         
         for (index, title) in days.enumerated() {
-            let checkView = KPCheckView.init(.checkmark, title)
+            let checkView = KPCheckView(.checkmark, title)
             containerView.addSubview(checkView)
             checkBoxViews.append(checkView)
 
@@ -45,7 +45,7 @@ class KPBusinessHourViewController: KPSharedSettingViewController, KPTimePickerD
             }
             
             let startTimeButton = UIButton()
-            let attrstr = NSAttributedString.init(string: "08:00", attributes: attrs)
+            let attrstr = NSAttributedString(string: "08:00", attributes: attrs)
             startTimeButton.setAttributedTitle(attrstr, for: .normal)
             containerView.addSubview(startTimeButton)
             startTimeButton.addConstraintForCenterAligning(to: checkView, in: .vertical)
@@ -54,7 +54,7 @@ class KPBusinessHourViewController: KPSharedSettingViewController, KPTimePickerD
             startTimeButtons.append(startTimeButton)
             
             let endTimeButton = UIButton()
-            let attrstr1 = NSAttributedString.init(string: "20:00", attributes: attrs)
+            let attrstr1 = NSAttributedString(string: "20:00", attributes: attrs)
             endTimeButton.setAttributedTitle(attrstr1, for: .normal)
             containerView.addSubview(endTimeButton)
             endTimeButton.addConstraintForCenterAligning(to: checkView, in: .vertical)
@@ -106,7 +106,8 @@ class KPBusinessHourViewController: KPSharedSettingViewController, KPTimePickerD
     
     func valueUpdate(timePicker: KPTimePicker, value: String) {
         if currentSelectedButton != nil {
-            currentSelectedButton!.setAttributedTitle(NSAttributedString.init(string: value, attributes: attrs), for: .normal)
+            currentSelectedButton!.setAttributedTitle(NSAttributedString(string: value, attributes: attrs),
+                                                      for: .normal)
         }
     }
     

@@ -44,11 +44,11 @@ class KPLoadingViewController_v1: KPViewController {
         outerShape.lineCap     = kCALineCapRound;
         container.layer.addSublayer(outerShape);
         
-        outerShape.path        = UIBezierPath.init(ovalIn: CGRect.init(x: 20,
-                                                                       y: 20,
-                                                                       width: 48,
-                                                                       height: 48)).cgPath
-        outerShape.frame       = CGRect.init(x: 0, y: 0, width: 88, height: 88)
+        outerShape.path        = UIBezierPath(ovalIn: CGRect(x: 20,
+                                                             y: 20,
+                                                             width: 48,
+                                                             height: 48)).cgPath
+        outerShape.frame       = CGRect(x: 0, y: 0, width: 88, height: 88)
         
         loadingShape = CAShapeLayer();
         loadingShape.strokeColor = UIColor.white.cgColor
@@ -56,14 +56,14 @@ class KPLoadingViewController_v1: KPViewController {
         loadingShape.fillColor   = UIColor.clear.cgColor
         loadingShape.lineCap     = kCALineCapRound;
         loadingShape.strokeEnd   = 0.8;
-        loadingShape.anchorPoint = CGPoint.init(x: 0.5, y: 0.5)
+        loadingShape.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         container.layer.addSublayer(loadingShape);
         
-        loadingShape.path        = UIBezierPath.init(ovalIn: CGRect.init(x: 32,
-                                                                         y: 32,
-                                                                         width: 24,
-                                                                         height: 24)).cgPath
-        loadingShape.frame       = CGRect.init(x: 0, y: 0, width: 88, height: 88)
+        loadingShape.path        = UIBezierPath(ovalIn: CGRect(x: 32,
+                                                               y: 32,
+                                                               width: 24,
+                                                               height: 24)).cgPath
+        loadingShape.frame       = CGRect(x: 0, y: 0, width: 88, height: 88)
         
         self.performLoadingAnimation()
         // Do any additional setup after loading the view.
@@ -78,7 +78,7 @@ class KPLoadingViewController_v1: KPViewController {
         
         DispatchQueue.main.asyncAfter(deadline: .now()+1.2) {
             self.loadingShape.isHidden = false
-            let spinAnimation = CABasicAnimation.init(keyPath: "transform.rotation")
+            let spinAnimation = CABasicAnimation(keyPath: "transform.rotation")
             spinAnimation.fromValue = 0
             spinAnimation.toValue = CGFloat.pi*2
             spinAnimation.duration = 0.8

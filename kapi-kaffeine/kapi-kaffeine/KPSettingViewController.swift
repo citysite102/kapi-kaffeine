@@ -42,7 +42,7 @@ class KPSettingViewController: KPViewController {
         view.backgroundColor = UIColor.white
         navigationController?.navigationBar.topItem?.title = "設定"
         
-        dismissButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 24, height: 24))
+        dismissButton = UIButton(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
         dismissButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4)
         dismissButton.setImage(R.image.icon_close()?.withRenderingMode(.alwaysTemplate),
                                     for: .normal)
@@ -51,7 +51,7 @@ class KPSettingViewController: KPViewController {
                                      action: #selector(KPSettingViewController.handleDismissButtonOnTapped),
                                      for: .touchUpInside)
         
-        let barItem = UIBarButtonItem.init(customView: dismissButton)
+        let barItem = UIBarButtonItem(customView: dismissButton)
         let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
         negativeSpacer.width = -8
         navigationItem.leftBarButtonItems = [negativeSpacer, barItem]
@@ -180,7 +180,7 @@ extension KPSettingViewController: UITableViewDelegate, UITableViewDataSource {
         case .button:
             cell.selectionStyle = .default
         case .switchControl:
-            let switchControl = UISwitch.init()
+            let switchControl = UISwitch()
             switchControl.onTintColor = KPColorPalette.KPMainColor.mainColor
             cell.contentView.addSubview(switchControl)
             switchControl.addConstraints(fromStringArray: ["H:[$self]-12-|"])

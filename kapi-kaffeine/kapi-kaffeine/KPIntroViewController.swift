@@ -41,9 +41,9 @@ class KPIntroViewController: KPViewController {
         
         skipButton = UIButton()
         skipButton.setTitle("略過", for: .normal)
-        skipButton.setBackgroundImage(UIImage.init(color: UIColor.clear),
+        skipButton.setBackgroundImage(UIImage(color: UIColor.clear),
                                       for: .normal)
-        skipButton.setBackgroundImage(UIImage.init(color: UIColor.white),
+        skipButton.setBackgroundImage(UIImage(color: UIColor.white),
                                       for: .highlighted)
         skipButton.setTitleColor(UIColor.white, for: .normal)
         skipButton.setTitleColor(KPColorPalette.KPMainColor.mainColor,

@@ -27,6 +27,14 @@ class KPDataModel: NSObject, Mappable, GMUClusterItem {
     var mrt: String?
     var businessHour: KPDataBusinessHourModel!
     var tags: [KPDataTagModel]?
+    
+    var averageRate: NSNumber?
+    var rateCount: NSNumber?
+    var commentCount: NSNumber?
+    var favoriteCount: NSNumber?
+    var visitCount: NSNumber?
+    var photoCount: NSNumber?
+    
     var rates: KPDataRateModel?
     var covers: [String: String]?
     var isKapi: Bool!
@@ -35,42 +43,47 @@ class KPDataModel: NSObject, Mappable, GMUClusterItem {
     var featureContents: [String]! {
         get {
             var features = [String]()
-            
-            if let storeRates = self.rates {
-                
-                if (storeRates.wifi?.intValue ?? 0)! > 4 {
-                    features.append("網路快速")
+
+            if let tagContent = self.tags {
+                for tag in tagContent {
+                    features.append(tag.name)
                 }
-                
-                if (storeRates.seat?.intValue ?? 0)! > 4 {
-                    features.append("座位舒適")
-                }
-                
-                if (storeRates.music?.intValue ?? 0)! > 4 {
-                    features.append("提供音樂")
-                }
-                
-                if (storeRates.food?.intValue ?? 0)! > 4 &&
-                    features.count < 2 {
-                    features.append("提供餐點")
-                }
-                
-                if (storeRates.quite?.intValue ?? 0)! > 4 &&
-                    features.count < 2 {
-                    features.append("環境安靜")
-                }
-                
-                if (storeRates.tasty?.intValue ?? 0)! > 4 &&
-                    features.count < 2 {
-                    features.append("食物美味")
-                }
-                
-                if (storeRates.cheap?.intValue ?? 0)! > 4 &&
-                    features.count < 2 {
-                    features.append("價格實在")
-                }
-            
             }
+//            if let storeRates = self.rates {
+//                
+//                if (storeRates.wifi?.intValue ?? 0)! > 4 {
+//                    features.append("網路快速")
+//                }
+//                
+//                if (storeRates.seat?.intValue ?? 0)! > 4 {
+//                    features.append("座位舒適")
+//                }
+//                
+//                if (storeRates.music?.intValue ?? 0)! > 4 {
+//                    features.append("提供音樂")
+//                }
+//                
+//                if (storeRates.food?.intValue ?? 0)! > 4 &&
+//                    features.count < 2 {
+//                    features.append("提供餐點")
+//                }
+//                
+//                if (storeRates.quite?.intValue ?? 0)! > 4 &&
+//                    features.count < 2 {
+//                    features.append("環境安靜")
+//                }
+//                
+//                if (storeRates.tasty?.intValue ?? 0)! > 4 &&
+//                    features.count < 2 {
+//                    features.append("食物美味")
+//                }
+//                
+//                if (storeRates.cheap?.intValue ?? 0)! > 4 &&
+//                    features.count < 2 {
+//                    features.append("價格實在")
+//                }
+//            
+//            }
             return features
         }
     }
@@ -103,6 +116,12 @@ class KPDataModel: NSObject, Mappable, GMUClusterItem {
         businessHour        <-    (map["business_hours"], businessHourTransform)
         tags                <-    map["tags"]
         rates               <-    map["rates"]
+        averageRate         <-    map["rate_average"]
+        rateCount           <-    map["rate_count"]
+        commentCount        <-    map["comment_count"]
+        favoriteCount       <-    map["favorite_count"]
+        visitCount          <-    map["visit_count"]
+        photoCount          <-    map["photo_count"]
         covers              <-    map["covers"]
         isKapi              <-    map["is_kapi"]
     }

@@ -17,47 +17,48 @@ class KPSearchHeaderView: UIView {
     var searchTagView: KPSearchTagView!
     
     override init(frame: CGRect) {
-        super.init(frame: frame);
-        backgroundColor = KPColorPalette.KPMainColor.mainColor_light;
+        super.init(frame: frame)
+        backgroundColor = KPColorPalette.KPMainColor.mainColor_light
         
-        titleLabel = UILabel();
-        titleLabel.font = UIFont.systemFont(ofSize: 18.0);
-        titleLabel.textColor = KPColorPalette.KPTextColor.whiteColor;
-        titleLabel.text = "找咖啡";
-        addSubview(titleLabel);
-        titleLabel.addConstraintForCenterAligningToSuperview(in: .horizontal);
-        titleLabel.addConstraint(from: "V:|-32-[$self]");
+        titleLabel = UILabel()
+        titleLabel.font = UIFont.systemFont(ofSize: 18.0)
+        titleLabel.textColor = KPColorPalette.KPTextColor.whiteColor
+        titleLabel.text = "找咖啡"
+        addSubview(titleLabel)
+        titleLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
+        titleLabel.addConstraint(from: "V:|-32-[$self]")
         
-        styleButton = KPBounceButton.init(frame: .zero, image: R.image.icon_map()!);
-        addSubview(styleButton);
+        styleButton = KPBounceButton.init(frame: .zero, image: R.image.icon_map()!)
+        addSubview(styleButton)
         styleButton.addConstraints(fromStringArray: ["H:[$self(30)]-5-|",
-                                                     "V:[$self(30)]"]);
+                                                     "V:[$self(30)]"])
         styleButton.contentEdgeInsets = UIEdgeInsetsMake(3, 3, 3, 3)
-        styleButton.addConstraintForCenterAligning(to: titleLabel, in: .vertical);
-        styleButton.tintColor = UIColor.white;
+        styleButton.addConstraintForCenterAligning(to: titleLabel, in: .vertical)
+        styleButton.tintColor = UIColor.white
         
-        searchButton = KPBounceButton.init(frame: .zero, image: R.image.icon_search()!);
-        addSubview(searchButton);
+        searchButton = KPBounceButton.init(frame: .zero, image: R.image.icon_search()!)
+        addSubview(searchButton)
         searchButton.addConstraints(fromStringArray: ["H:[$self(30)]-5-[$view0]",
                                                       "V:[$self(30)]"],
-                                         views: [styleButton]);
+                                         views: [styleButton])
         searchButton.contentEdgeInsets = UIEdgeInsetsMake(3, 3, 3, 3)
-        searchButton.addConstraintForCenterAligning(to: titleLabel, in: .vertical);
-        searchButton.tintColor = UIColor.white;
+        searchButton.addConstraintForCenterAligning(to: titleLabel, in: .vertical)
+        searchButton.tintColor = UIColor.white
+        searchButton.imageView?.tintColor = UIColor.white
         
-        menuButton = KPBounceButton.init(frame: .zero, image: R.image.icon_menu()!);
-        addSubview(menuButton);
+        menuButton = KPBounceButton.init(frame: .zero, image: R.image.icon_menu()!)
+        addSubview(menuButton)
         menuButton.addConstraints(fromStringArray: ["H:|-5-[$self(30)]",
-                                                    "V:[$self(30)]"]);
+                                                    "V:[$self(30)]"])
         menuButton.contentEdgeInsets = UIEdgeInsetsMake(3, 3, 3, 3)
-        menuButton.addConstraintForCenterAligning(to: titleLabel, in: .vertical);
-        menuButton.tintColor = UIColor.white;
+        menuButton.addConstraintForCenterAligning(to: titleLabel, in: .vertical)
+        menuButton.tintColor = UIColor.white
         
         
-        searchTagView = KPSearchTagView();
-        addSubview(searchTagView);
+        searchTagView = KPSearchTagView()
+        addSubview(searchTagView)
         searchTagView.addConstraints(fromStringArray: ["V:[$self(40)]|",
-                                                       "H:|[$self]|"]);
+                                                       "H:|[$self]|"])
         
     }
     

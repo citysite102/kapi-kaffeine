@@ -52,7 +52,7 @@ class KPBounceView: UIView {
     convenience init(_ iconImage: UIImage) {
         self.init(frame: .zero)
         
-        icon = UIImageView.init(image: iconImage.withRenderingMode(.alwaysTemplate))
+        icon = UIImageView(image: iconImage.withRenderingMode(.alwaysTemplate))
         icon.tintColor = unSelectedColor
         addSubview(icon)
         icon.contentMode = .scaleAspectFit

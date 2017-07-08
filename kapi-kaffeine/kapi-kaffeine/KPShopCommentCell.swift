@@ -92,7 +92,7 @@ class KPShopCommentCell: UITableViewCell {
                                          views: [userPicture, userCommentLabel])
         
         
-        voteDownButton = KPShopCommentCellButton.init(frame: .zero,
+        voteDownButton = KPShopCommentCellButton(frame: .zero,
                                                       icon: R.image.icon_downvote()!,
                                                       count: 5)
         voteDownButton.iconButton.addTarget(self,

@@ -121,7 +121,7 @@ class rateStatusView: UIView {
         iconImageView.addConstraints(fromStringArray: ["V:|[$self(24)]|",
                                                        "H:|[$self(24)]"])
         
-        rateTitleLabel = UILabel.init()
+        rateTitleLabel = UILabel()
         rateTitleLabel.font = UIFont.systemFont(ofSize: 13.0)
         rateTitleLabel.text = content
         rateTitleLabel.textColor = KPColorPalette.KPTextColor.grayColor_level3
@@ -130,7 +130,7 @@ class rateStatusView: UIView {
                                       views: [iconImageView])
         rateTitleLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
         
-        rateContentLabel = UILabel.init()
+        rateContentLabel = UILabel()
         rateContentLabel.font = UIFont.systemFont(ofSize: 13.0)
         rateContentLabel.text = rateContent
         rateContentLabel.textColor = KPColorPalette.KPTextColor.mainColor_light

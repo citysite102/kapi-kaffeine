@@ -104,8 +104,8 @@ class KPSubTitleEditView: UIView {
             makeBorder()
         }
         
-        tapGesture = UITapGestureRecognizer.init(target: self,
-                                                 action: #selector(handleTapGesture(tapGesture:)))
+        tapGesture = UITapGestureRecognizer(target: self,
+                                            action: #selector(handleTapGesture(tapGesture:)))
         tapGesture.cancelsTouchesInView = false
         addGestureRecognizer(tapGesture)
     }

@@ -19,7 +19,7 @@ class KPMainListTableViewCell: UITableViewCell {
                 self.shopNameLabel.text = self.dataModel.name ?? "未命名"
                 self.featureContainer.featureContents = self.dataModel.featureContents
                 self.scoreLabel.score = String(format: "%.1f",
-                                               self.dataModel.rates?.average?.floatValue ?? 0)
+                                               (self.dataModel.averageRate?.doubleValue)!)
             }
             
             if let photoURL = dataModel.covers?["google_s"] {

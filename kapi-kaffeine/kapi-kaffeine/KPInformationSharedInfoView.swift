@@ -53,10 +53,10 @@ class KPInformationSharedInfoView: UIView {
             separator.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self(1)]"])
             
             for (index, action) in (actions?.enumerated())! {
-                let actionButton = UIButton.init(type: .custom)
+                let actionButton = UIButton(type: .custom)
                 actionButton.setTitle(action.title, for: .normal)
                 actionButton.titleLabel?.font = UIFont.systemFont(ofSize: 14.0)
-                actionButton.setBackgroundImage(UIImage.init(color: action.color),
+                actionButton.setBackgroundImage(UIImage(color: action.color),
                                                 for: .normal)
                 
                 if action.icon != nil {

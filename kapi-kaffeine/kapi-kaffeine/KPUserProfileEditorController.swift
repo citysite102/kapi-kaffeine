@@ -133,16 +133,16 @@ class KPUserProfileEditorController: UIViewController, UITextFieldDelegate, UITe
         navigationItem.title = "資料編輯"
         navigationItem.hidesBackButton = true
         
-        dismissButton = KPBounceButton.init(frame: CGRect.init(x: 0, y: 0, width: 24, height: 24));
+        dismissButton = KPBounceButton(frame: CGRect(x: 0, y: 0, width: 24, height: 24));
         dismissButton.setImage(R.image.icon_back()?.withRenderingMode(.alwaysTemplate),
                                for: .normal);
         dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor;
         dismissButton.addTarget(self,
                                 action: #selector(KPUserProfileEditorController.handleDismissButtonOnTapped),
                                 for: .touchUpInside)
-        let barItem = UIBarButtonItem.init(customView: dismissButton);
+        let barItem = UIBarButtonItem(customView: dismissButton);
         
-        saveButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 40, height: 24));
+        saveButton = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 24));
         saveButton.setTitle("儲存", for: .normal)
         saveButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         saveButton.tintColor = KPColorPalette.KPTextColor.mainColor;
@@ -150,7 +150,7 @@ class KPUserProfileEditorController: UIViewController, UITextFieldDelegate, UITe
                              action: #selector(KPUserProfileEditorController.handleSaveButtonOnTapped),
                              for: .touchUpInside)
         
-        let rightbarItem = UIBarButtonItem.init(customView: saveButton);
+        let rightbarItem = UIBarButtonItem(customView: saveButton);
         
         let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace,
                                              target: nil,
@@ -181,15 +181,15 @@ class KPUserProfileEditorController: UIViewController, UITextFieldDelegate, UITe
         let photoTapGesture = UITapGestureRecognizer(target: self, action: #selector(handlePhotoTapGesture(tapGesture:)))
         photoContainer.addGestureRecognizer(photoTapGesture)
         
-        let nameField = KPSubTitleEditView.init(.Both, .Edited, "使用者名稱")
+        let nameField = KPSubTitleEditView(.Both, .Edited, "使用者名稱")
         nameField.content = "Samuel"
         scrollContainer.addSubview(nameField)
 
-        let emailField = KPSubTitleEditView.init(.Bottom, .Edited, "E-mail信箱")
+        let emailField = KPSubTitleEditView(.Bottom, .Edited, "E-mail信箱")
         emailField.content = "samuel@kapi.com"
         scrollContainer.addSubview(emailField)
         
-        let regionField = KPSubTitleEditView.init(.Bottom, .Edited, "地區")
+        let regionField = KPSubTitleEditView(.Bottom, .Edited, "地區")
         regionField.content = "新北市"
         scrollContainer.addSubview(regionField)
         

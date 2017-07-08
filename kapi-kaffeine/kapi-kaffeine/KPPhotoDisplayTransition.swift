@@ -49,7 +49,7 @@ class KPPhotoDisplayTransition: NSObject, UIViewControllerAnimatedTransitioning 
         let imageView = UIImageView(image: image)
         imageView.contentMode = .scaleAspectFill
         imageView.frame = (fromDelegate == nil) ?
-            CGRect.init(x: 0, y: 0, width: 0, height: 0) :
+            CGRect(x: 0, y: 0, width: 0, height: 0) :
             fromDelegate!.imageWindowFrame()
         imageView.clipsToBounds = true
         containerView.addSubview(imageView)
@@ -71,7 +71,7 @@ class KPPhotoDisplayTransition: NSObject, UIViewControllerAnimatedTransitioning 
         // 7: Bring the image view to the front and get the final frame
         containerView.bringSubview(toFront: imageView)
         let toFrame = (self.toDelegate == nil) ?
-        CGRect.init(x: 0, y: 0, width: 0, height: 0) :
+        CGRect(x: 0, y: 0, width: 0, height: 0) :
             self.toDelegate!.imageWindowFrame()
         
         // 8: Animate change

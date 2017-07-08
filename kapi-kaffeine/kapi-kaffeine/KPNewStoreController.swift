@@ -32,7 +32,8 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
             return scrollView
         }
     }
-
+    
+    var oDataModel: KPDataModel?
     var dismissButton: KPBounceButton!
     var sendButton: UIButton!
     var scrollView: UIScrollView!
@@ -90,21 +91,20 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
         view.backgroundColor = UIColor.white
         navigationController?.navigationBar.topItem?.title = "新增店家"
         
-        dismissButton = KPBounceButton.init(frame: CGRect.init(x: 0,
-                                                               y: 0,
-                                                               width: 24,
-                                                               height: 24))
+        dismissButton = KPBounceButton(frame: CGRect(x: 0,
+                                                     y: 0,
+                                                     width: 24,
+                                                     height: 24),
+                                       image:R.image.icon_close()!)
         dismissButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4)
-        dismissButton.setImage(R.image.icon_close()?.withRenderingMode(.alwaysTemplate),
-                                    for: .normal)
         dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor
         dismissButton.addTarget(self,
                                 action: #selector(KPNewStoreController.handleDismissButtonOnTapped),
                                 for: .touchUpInside)
         
-        let barItem = UIBarButtonItem.init(customView: dismissButton)
+        let barItem = UIBarButtonItem(customView: dismissButton)
         
-        sendButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 40, height: 24));
+        sendButton = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 24));
         sendButton.setTitle("新增", for: .normal)
         sendButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         sendButton.tintColor = KPColorPalette.KPTextColor.mainColor;
@@ -112,7 +112,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
                              action: #selector(KPNewCommentController.handleSendButtonOnTapped),
                              for: .touchUpInside)
         
-        let rightbarItem = UIBarButtonItem.init(customView: self.sendButton);
+        let rightbarItem = UIBarButtonItem(customView: sendButton);
         
         let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace,
                                              target: nil,
@@ -155,7 +155,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
                                                              "V:[$view0]-8-[$self]"],
                                            views: [sectionOneHeaderLabel])
      
-        nameSubTitleView = KPSubTitleEditView.init(.Bottom,
+        nameSubTitleView = KPSubTitleEditView(.Bottom,
                                                    .Edited,
                                                    "店家名稱")
         nameSubTitleView.placeHolderContent = "請輸入店家名稱"
@@ -163,14 +163,14 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
         nameSubTitleView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                           "V:|[$self(72)]"])
         
-        citySubTitleView = KPSubTitleEditView.init(.Bottom,
+        citySubTitleView = KPSubTitleEditView(.Bottom,
                                                    .Fixed,
                                                    "所在城市")
         citySubTitleView.placeHolderContent = "請選擇城市"
         citySubTitleView.customInputAction = {
             () -> Void in
             let controller = KPModalViewController()
-            controller.edgeInset = UIEdgeInsets.init(top: UIDevice().isCompact ? 48 : 56,
+            controller.edgeInset = UIEdgeInsets(top: UIDevice().isCompact ? 48 : 56,
                                                      left: 0,
                                                      bottom: 0,
                                                      right: 0);
@@ -184,7 +184,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
                                                           "V:[$view0][$self(72)]"],
                                         views:[nameSubTitleView])
         
-        featureSubTitleView = KPSubTitleEditView.init(.Bottom,
+        featureSubTitleView = KPSubTitleEditView(.Bottom,
                                                       .Custom,
                                                       "選擇店家特色標籤")
         sectionOneContainer.addSubview(featureSubTitleView)
@@ -211,7 +211,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
         
         featureSubTitleView.customInfoView = featureCollectionView
     
-        rateCheckedView = KPItemCheckedView.init("幫店家評分",
+        rateCheckedView = KPItemCheckedView("幫店家評分",
                                                  "未評分",
                                                  "已評分(3.0)",
                                                  .Bottom)
@@ -221,7 +221,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
                                                          "V:[$view0][$self(64)]"],
                                            views:[featureSubTitleView])
         
-        businessHourCheckedView = KPItemCheckedView.init("填寫營業時間",
+        businessHourCheckedView = KPItemCheckedView("填寫營業時間",
                                                          "未填寫",
                                                          "已填寫",
                                                          .Bottom)
@@ -250,17 +250,17 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
         sectionTwoContainer.addSubview(timeLimitLabel)
         timeLimitLabel.addConstraints(fromStringArray: ["H:|-16-[$self]",
                                                         "V:|-16-[$self]"])
-        timeRadioBoxOne = KPCheckView.init(.radio, "不設定")
+        timeRadioBoxOne = KPCheckView(.radio, "不設定")
         sectionTwoContainer.addSubview(timeRadioBoxOne)
         timeRadioBoxOne.addConstraints(fromStringArray: ["H:|-16-[$self]",
                                                          "V:[$view0]-16-[$self]"],
                                        views: [timeLimitLabel])
-        timeRadioBoxTwo = KPCheckView.init(.radio, "客滿/人多限時")
+        timeRadioBoxTwo = KPCheckView(.radio, "客滿/人多限時")
         sectionTwoContainer.addSubview(timeRadioBoxTwo)
         timeRadioBoxTwo.addConstraints(fromStringArray: ["H:|-16-[$self]",
                                                          "V:[$view0]-16-[$self]"],
                                        views: [timeRadioBoxOne])
-        timeRadioBoxThree = KPCheckView.init(.radio, "不限時")
+        timeRadioBoxThree = KPCheckView(.radio, "不限時")
         sectionTwoContainer.addSubview(timeRadioBoxThree)
         timeRadioBoxThree.addConstraints(fromStringArray: ["H:|-16-[$self]",
                                                            "V:[$view0]-16-[$self]"],
@@ -272,19 +272,19 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
                                                      "V:|-16-[$self]"],
                                    metrics:[KPNewStoreControllerConstants.leftPadding])
         
-        socketRadioBoxOne = KPCheckView.init(.radio, "不設定")
+        socketRadioBoxOne = KPCheckView(.radio, "不設定")
         sectionTwoContainer.addSubview(socketRadioBoxOne)
         socketRadioBoxOne.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",
                                                            "V:[$view0]-16-[$self]"],
                                          metrics:[KPNewStoreControllerConstants.leftPadding],
                                          views: [socketLabel])
-        socketRadioBoxTwo = KPCheckView.init(.radio, "部分座位有")
+        socketRadioBoxTwo = KPCheckView(.radio, "部分座位有")
         sectionTwoContainer.addSubview(socketRadioBoxTwo)
         socketRadioBoxTwo.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",
                                                            "V:[$view0]-16-[$self]"],
                                          metrics:[KPNewStoreControllerConstants.leftPadding],
                                          views: [socketRadioBoxOne])
-        socketRadioBoxThree = KPCheckView.init(.radio, "很多插座")
+        socketRadioBoxThree = KPCheckView(.radio, "很多插座")
         sectionTwoContainer.addSubview(socketRadioBoxThree)
         socketRadioBoxThree.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",
                                                              "V:[$view0]-16-[$self]"],
@@ -292,7 +292,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
                                            views: [socketRadioBoxTwo])
         
         
-        addressSubTitleView = KPSubTitleEditView.init(.Both,
+        addressSubTitleView = KPSubTitleEditView(.Both,
                                                       .Edited,
                                                       "店家地址")
         addressSubTitleView.placeHolderContent = "請輸入店家地址"
@@ -302,7 +302,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
                                                              "V:[$view0]-16-[$self(72)]"],
                                            views: [socketRadioBoxThree])
         
-        phoneSubTitleView = KPSubTitleEditView.init(.Bottom,
+        phoneSubTitleView = KPSubTitleEditView(.Bottom,
                                                     .Edited,
                                                     "店家電話")
         phoneSubTitleView.placeHolderContent = "請輸入店家電話"
@@ -313,7 +313,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
                                                            "V:[$view0][$self(72)]"],
                                            views: [addressSubTitleView])
         
-        facebookSubTitleView = KPSubTitleEditView.init(.Bottom,
+        facebookSubTitleView = KPSubTitleEditView(.Bottom,
                                                        .Edited,
                                                        "Facebook 連結")
         facebookSubTitleView.placeHolderContent = "請輸入店家 Facebook 連結"
@@ -324,7 +324,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
                                          views: [phoneSubTitleView])
         
         
-        tapGesture = UITapGestureRecognizer.init(target: self,
+        tapGesture = UITapGestureRecognizer(target: self,
                                                  action: #selector(handleTapGesture(tapGesture:)))
         tapGesture.cancelsTouchesInView = false
         containerView.addGestureRecognizer(tapGesture)

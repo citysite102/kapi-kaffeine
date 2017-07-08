@@ -10,7 +10,7 @@ import UIKit
 
 class KPAllCommentController: KPViewController {
 
-    static let KPAllCommentControllerCellReuseIdentifier = "cell";
+    static let KPAllCommentControllerCellReuseIdentifier = "cell"
     
     
     var shownCellIndex: [Int] = [Int]()
@@ -20,7 +20,7 @@ class KPAllCommentController: KPViewController {
     var editButton: KPBounceButton!
     var comments: [KPCommentModel]! {
         didSet {
-            self.tableView.reloadData();
+            self.tableView.reloadData()
         }
     }
     
@@ -31,24 +31,22 @@ class KPAllCommentController: KPViewController {
         navigationItem.title = "所有評價"
         navigationItem.hidesBackButton = true
         
-        backButton = KPBounceButton.init(frame: CGRect.init(x: 0, y: 0, width: 24, height: 24));
-        backButton.setImage(R.image.icon_back()?.withRenderingMode(.alwaysTemplate),
-                               for: .normal);
-        backButton.tintColor = KPColorPalette.KPTextColor.whiteColor;
+        backButton = KPBounceButton(frame: CGRect(x: 0, y: 0, width: 24, height: 24),
+                                    image: R.image.icon_back()!)
+        backButton.tintColor = KPColorPalette.KPTextColor.whiteColor
         backButton.addTarget(self,
                              action: #selector(KPAllCommentController.handleBackButtonOnTapped),
                              for: .touchUpInside)
-        let barItem = UIBarButtonItem.init(customView: backButton);
+        let barItem = UIBarButtonItem(customView: backButton)
         
-        editButton = KPBounceButton.init(frame: CGRect.init(x: 0, y: 0, width: 24, height: 24));
-        editButton.setImage(R.image.icon_edit()?.withRenderingMode(.alwaysTemplate),
-                            for: .normal);
-        editButton.tintColor = KPColorPalette.KPTextColor.whiteColor;
+        editButton = KPBounceButton(frame: CGRect(x: 0, y: 0, width: 24, height: 24),
+                                    image: R.image.icon_edit()!)
+        editButton.tintColor = KPColorPalette.KPTextColor.whiteColor
         editButton.addTarget(self,
                              action: #selector(KPAllCommentController.handleEditButtonOnTapped),
                              for: .touchUpInside)
         
-        let rightbarItem = UIBarButtonItem.init(customView: editButton);
+        let rightbarItem = UIBarButtonItem(customView: editButton)
         let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace,
                                              target: nil,
                                              action: nil)
@@ -102,28 +100,28 @@ extension KPAllCommentController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier:KPShopCommentInfoView.KPShopCommentInfoCellReuseIdentifier,
-                                                 for: indexPath) as! KPShopCommentCell;
+                                                 for: indexPath) as! KPShopCommentCell
         cell.selectionStyle = .none
-        return cell;
+        return cell
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80;
+        return 80
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 6;
+        return 6
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1;
+        return 1
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let displayCell = cell as! KPShopCommentCell
         
         if !shownCellIndex.contains(indexPath.row) && animated {
-            displayCell.userPicture.transform = CGAffineTransform.init(scaleX: 0.1, y: 0.1).rotated(by: -CGFloat.pi/2)
+            displayCell.userPicture.transform = CGAffineTransform(scaleX: 0.1, y: 0.1).rotated(by: -CGFloat.pi/2)
             UIView.animate(withDuration: 0.7,
                            delay: 0.2+Double(indexPath.row)*0.1,
                            usingSpringWithDamping: 0.6,

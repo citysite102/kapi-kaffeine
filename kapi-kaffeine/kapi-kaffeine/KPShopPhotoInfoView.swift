@@ -25,7 +25,7 @@ class KPShopPhotoInfoView: UIView {
         self.collectionLayout.scrollDirection = .horizontal;
         self.collectionLayout.sectionInset = UIEdgeInsetsMake(8, 8, 8, 8);
         self.collectionLayout.minimumLineSpacing = 8.0;
-        self.collectionLayout.itemSize = CGSize.init(width: 96, height: 96);
+        self.collectionLayout.itemSize = CGSize(width: 96, height: 96);
         
         self.collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.collectionLayout);
         self.collectionView.backgroundColor = UIColor.clear;

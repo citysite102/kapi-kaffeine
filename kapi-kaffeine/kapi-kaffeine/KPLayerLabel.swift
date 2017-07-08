@@ -30,7 +30,7 @@ class KPLayerLabel: UILabel {
         didSet {
             super.font = font
             let fontName = font?.fontName
-            let fontRef = CGFont.init(fontName! as CFString)
+            let fontRef = CGFont(fontName! as CFString)
             self.textLayer().font = fontRef
             self.textLayer().fontSize = (font?.pointSize)!
         }

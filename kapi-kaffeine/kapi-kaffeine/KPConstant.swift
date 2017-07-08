@@ -20,29 +20,29 @@ struct KPColorPalette {
         static let starColor = UIColor(hexString: "#f9c816")
         
         
-        static let grayColor_level1 = UIColor.init(r: 0.2, g: 0.2, b: 0.2, a: 1.0)
-        static let grayColor_level2 = UIColor.init(r: 0.2, g: 0.2, b: 0.2, a: 0.7)
-        static let grayColor_level3 = UIColor.init(r: 0.2, g: 0.2, b: 0.2, a: 0.5)
-        static let grayColor_level4 = UIColor.init(r: 0.2, g: 0.2, b: 0.2, a: 0.3)
-        static let grayColor_level5 = UIColor.init(r: 0.2, g: 0.2, b: 0.2, a: 0.2)
-        static let grayColor_level6 = UIColor.init(r: 0.2, g: 0.2, b: 0.2, a: 0.1)
-        static let grayColor_level7 = UIColor.init(r: 0.2, g: 0.2, b: 0.2, a: 0.05)
+        static let grayColor_level1 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 1.0)
+        static let grayColor_level2 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.7)
+        static let grayColor_level3 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.5)
+        static let grayColor_level4 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.3)
+        static let grayColor_level5 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.2)
+        static let grayColor_level6 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.1)
+        static let grayColor_level7 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.05)
     }
     
     struct KPTextColor {
         static let grayColor = UIColor(hexString: "#333333")
         static let mainColor_light = UIColor(hexString: "#c8955e")
         static let mainColor = UIColor(hexString: "#784d1f")
-//        static let mainColor_light = UIColor.init(r: 0.2, g: 0.2, b: 0.2, a: 0.5)
-//        static let mainColor = UIColor.init(r: 0.2, g: 0.2, b: 0.2, a: 0.7)
+//        static let mainColor_light = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.5)
+//        static let mainColor = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.7)
         static let whiteColor = UIColor(hexString: "#ffffff")
         
-        static let grayColor_level1 = UIColor.init(r: 0.2, g: 0.2, b: 0.2, a: 1.0)
-        static let grayColor_level2 = UIColor.init(r: 0.2, g: 0.2, b: 0.2, a: 0.7)
-        static let grayColor_level3 = UIColor.init(r: 0.2, g: 0.2, b: 0.2, a: 0.5)
-        static let grayColor_level4 = UIColor.init(r: 0.2, g: 0.2, b: 0.2, a: 0.3)
-        static let grayColor_level5 = UIColor.init(r: 0.2, g: 0.2, b: 0.2, a: 0.2)
-        static let grayColor_level6 = UIColor.init(r: 0.2, g: 0.2, b: 0.2, a: 0.1)
+        static let grayColor_level1 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 1.0)
+        static let grayColor_level2 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.7)
+        static let grayColor_level3 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.5)
+        static let grayColor_level4 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.3)
+        static let grayColor_level5 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.2)
+        static let grayColor_level6 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.1)
     }
     
     struct KPBackgroundColor {
@@ -58,11 +58,11 @@ struct KPColorPalette {
         static let mainColor_ripple = UIColor(rgbaHexValue: 0xc8955eaa)
         
         
-        static let grayColor_level3 = UIColor.init(r: 0.2, g: 0.2, b: 0.2, a: 0.5)
-        static let grayColor_level4 = UIColor.init(r: 0.2, g: 0.2, b: 0.2, a: 0.3)
-        static let grayColor_level5 = UIColor.init(r: 0.2, g: 0.2, b: 0.2, a: 0.2)
-        static let grayColor_level6 = UIColor.init(r: 0.2, g: 0.2, b: 0.2, a: 0.1)
-        static let grayColor_level7 = UIColor.init(r: 0.2, g: 0.2, b: 0.2, a: 0.05)
+        static let grayColor_level3 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.5)
+        static let grayColor_level4 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.3)
+        static let grayColor_level5 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.2)
+        static let grayColor_level6 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.1)
+        static let grayColor_level7 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.05)
     }
     
     struct KPShopStatusColor {

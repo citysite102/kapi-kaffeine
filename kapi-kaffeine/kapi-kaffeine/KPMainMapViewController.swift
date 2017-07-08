@@ -251,12 +251,12 @@ KPMainViewControllerDelegate {
     
     func handleAddButtonTapped(_ sender: UIButton) {
         let controller = KPModalViewController()
-        controller.edgeInset = UIEdgeInsets.init(top: 0,
-                                                 left: 0,
-                                                 bottom: 0,
-                                                 right: 0)
+        controller.edgeInset = UIEdgeInsets(top: 0,
+                                            left: 0,
+                                            bottom: 0,
+                                            right: 0)
         let newStoreController = KPNewStoreController()
-        let navigationController = UINavigationController.init(rootViewController: newStoreController)
+        let navigationController = UINavigationController(rootViewController: newStoreController)
         controller.contentController = navigationController
         controller.presentModalView()
     }

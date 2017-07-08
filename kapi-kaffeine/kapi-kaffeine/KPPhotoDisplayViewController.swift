@@ -93,8 +93,8 @@ class KPPhotoDisplayViewController: KPViewController {
         
         collectionLayout = UICollectionViewFlowLayout()
         collectionLayout.scrollDirection = .horizontal
-        collectionLayout.itemSize = CGSize.init(width: UIScreen.main.bounds.size.width,
-                                                     height: UIScreen.main.bounds.size.height);
+        collectionLayout.itemSize = CGSize(width: UIScreen.main.bounds.size.width,
+                                           height: UIScreen.main.bounds.size.height);
         collectionLayout.minimumLineSpacing = 0
         collectionLayout.minimumInteritemSpacing = 0
         
@@ -229,8 +229,8 @@ class KPPhotoDisplayViewController: KPViewController {
 extension KPPhotoDisplayViewController: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        selectedIndexPath = IndexPath.init(row: (Int)(collectionView.contentOffset.x/collectionView.frameSize.width),
-                                           section: 0)
+        selectedIndexPath = IndexPath(row: (Int)(collectionView.contentOffset.x/collectionView.frameSize.width),
+                                      section: 0)
     }
 }
 

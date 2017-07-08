@@ -41,14 +41,14 @@ class KPModalViewController: KPViewController {
     var layoutWithSize: Bool = true
     var layoutWithInset: Bool = false
     var cornerRadius: UIRectCorner?
-    var contentSize: CGSize = CGSize.init(width: 0, height: 0) {
+    var contentSize: CGSize = CGSize(width: 0, height: 0) {
         didSet {
             self.layoutWithSize = true
             self.layoutWithInset = false
         }
     }
     
-    var edgeInset: UIEdgeInsets = UIEdgeInsets.init(top: 0, left: 0, bottom: 0, right: 0) {
+    var edgeInset: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0) {
         didSet {
             self.layoutWithSize = false
             self.layoutWithInset = true
@@ -146,8 +146,8 @@ class KPModalViewController: KPViewController {
         
         self.containerSensingView.removeAllRelatedConstraintsInSuperView()
         
-        var containerPoint: CGPoint = CGPoint.init(x: 0, y: 0)
-        var containerSize: CGSize = CGSize.init(width: 0, height: 0)
+        var containerPoint: CGPoint = CGPoint(x: 0, y: 0)
+        var containerSize: CGSize = CGSize(width: 0, height: 0)
         
         if self.layoutWithSize {
             self.containerSensingView.addConstraint(forWidth: contentSize.width)
@@ -155,9 +155,9 @@ class KPModalViewController: KPViewController {
             self.containerSensingView.addConstraintForCenterAligningToSuperview(in: .vertical)
             self.containerSensingView.addConstraintForCenterAligningToSuperview(in: .horizontal)
             
-            containerPoint = CGPoint.init(x: (self.view.frame.width-self.contentSize.width)/2,
+            containerPoint = CGPoint(x: (self.view.frame.width-self.contentSize.width)/2,
                                           y: (self.view.frame.height-self.contentSize.height)/2)
-            containerSize = CGSize.init(width: self.contentSize.width,
+            containerSize = CGSize(width: self.contentSize.width,
                                         height: self.contentSize.height)
         }
         
@@ -168,9 +168,9 @@ class KPModalViewController: KPViewController {
                                                                edgeInset.bottom,
                                                                edgeInset.left,
                                                                edgeInset.right])
-            containerPoint = CGPoint.init(x: edgeInset.left,
+            containerPoint = CGPoint(x: edgeInset.left,
                                           y: edgeInset.top)
-            containerSize = CGSize.init(width: backgroundSensingView.frame.size.width - edgeInset.left - edgeInset.right,
+            containerSize = CGSize(width: backgroundSensingView.frame.size.width - edgeInset.left - edgeInset.right,
                                         height: backgroundSensingView.frame.size.height - edgeInset.top - edgeInset.bottom)
         }
         
@@ -191,17 +191,17 @@ class KPModalViewController: KPViewController {
             print("Not Implement")
         }
         
-        let containerFrame = CGRect.init(origin: containerPoint,
+        let containerFrame = CGRect(origin: containerPoint,
                                          size: containerSize)
         
         self.containerSensingView.frame = containerFrame
-        self.contentView.frame = CGRect.init(origin: CGPoint.init(x: 0, y: 0),
+        self.contentView.frame = CGRect(origin: CGPoint(x: 0, y: 0),
                                              size: containerSize)
         
         self.contentView.layoutIfNeeded()
         
         if cornerRadius != nil {
-            let path = UIBezierPath(roundedRect:CGRect.init(x: 0, y: 0,
+            let path = UIBezierPath(roundedRect:CGRect(x: 0, y: 0,
                                                             width: contentView.frameSize.width,
                                                             height: contentView.frameSize.height),
                                     byRoundingCorners:cornerRadius!,
@@ -212,7 +212,7 @@ class KPModalViewController: KPViewController {
         }
         
         if presentationStyle == .popout {
-            self.containerSensingView.transform = CGAffineTransform.init(scaleX: 0.5, y: 0.5)
+            self.containerSensingView.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
         }
         
         UIView.animate(withDuration: duration,
@@ -256,19 +256,19 @@ class KPModalViewController: KPViewController {
                        animations: {
             switch self.presentationStyle {
             case KPModalPresentationStyle.top:
-                self.containerSensingView.frameOrigin = CGPoint.init(x: self.containerSensingView.frame.minX,
-                                                                     y: -self.view.frame.height)
+                self.containerSensingView.frameOrigin = CGPoint(x: self.containerSensingView.frame.minX,
+                                                                y: -self.view.frame.height)
             case KPModalPresentationStyle.bottom:
-                self.containerSensingView.frameOrigin = CGPoint.init(x: self.containerSensingView.frame.minX,
-                                                                     y: self.view.frame.height)
+                self.containerSensingView.frameOrigin = CGPoint(x: self.containerSensingView.frame.minX,
+                                                                y: self.view.frame.height)
             case KPModalPresentationStyle.left:
-                self.containerSensingView.frameOrigin = CGPoint.init(x: -self.view.frame.width,
-                                                                     y: self.containerSensingView.frame.minY)
+                self.containerSensingView.frameOrigin = CGPoint(x: -self.view.frame.width,
+                                                                y: self.containerSensingView.frame.minY)
             case KPModalPresentationStyle.right:
-                self.containerSensingView.frameOrigin = CGPoint.init(x: self.view.frame.width,
-                                                                     y: self.containerSensingView.frame.minY)
+                self.containerSensingView.frameOrigin = CGPoint(x: self.view.frame.width,
+                                                                y: self.containerSensingView.frame.minY)
             case KPModalPresentationStyle.popout:
-                self.containerSensingView.transform = CGAffineTransform.init(scaleX: 0.5, y: 0.5)
+                self.containerSensingView.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
                 self.containerSensingView.alpha = 0.0
             default:
                 print("Not Implement")

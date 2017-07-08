@@ -43,7 +43,7 @@ class KPTimePickerViewController: UIViewController, KPTimePickerDelegate {
         let doneButton = UIButton()
         doneButton.setTitle("完成", for: .normal)
         doneButton.setTitleColor(UIColor.white, for: .normal)
-        doneButton.setBackgroundImage(UIImage.init(color: KPColorPalette.KPMainColor.mainColor!),
+        doneButton.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor.mainColor!),
                                         for: .normal)
         doneButton.layer.cornerRadius = 4.0
         doneButton.layer.masksToBounds = true

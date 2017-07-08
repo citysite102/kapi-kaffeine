@@ -109,14 +109,10 @@ class KPInformationHeaderButtonBar: UIView {
                                                  icon: R.image.icon_star()!,
                                                  handler: { (headerButton) -> () in
                                                     let controller = KPModalViewController()
-//                                                    controller.edgeInset = UIEdgeInsets.init(top: 0,
-//                                                                                             left: 0,
-//                                                                                             bottom: 0,
-//                                                                                             right: 0)
-                                                    controller.edgeInset = UIEdgeInsets.init(top: UIDevice().isCompact ? 32 : 40,
-                                                                                             left: 0,
-                                                                                             bottom: 0,
-                                                                                             right: 0)
+                                                    controller.edgeInset = UIEdgeInsets(top: UIDevice().isCompact ? 32 : 40,
+                                                                                        left: 0,
+                                                                                        bottom: 0,
+                                                                                        right: 0)
                                                     controller.cornerRadius = [.topRight, .topLeft, .bottomLeft, .bottomRight]
                                                     let ratingViewController = KPRatingViewController()
                                                     controller.contentController = ratingViewController
@@ -200,8 +196,8 @@ class KPInformationHeaderView: UIView {
         photoLongPressGesture.minimumPressDuration = 0.0
         shopPhoto.addGestureRecognizer(photoLongPressGesture)
         
-        morePhotoButton = UIButton.init(type: .custom)
-        morePhotoButton.setBackgroundImage(UIImage.init(color: UIColor.clear), for: .normal)
+        morePhotoButton = UIButton(type: .custom)
+        morePhotoButton.setBackgroundImage(UIImage(color: UIColor.clear), for: .normal)
         morePhotoButton.layer.cornerRadius = 2.0
         morePhotoButton.layer.borderWidth = 1.0
         morePhotoButton.layer.borderColor = UIColor.white.cgColor

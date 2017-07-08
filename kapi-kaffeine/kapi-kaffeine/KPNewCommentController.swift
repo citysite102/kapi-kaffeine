@@ -60,16 +60,16 @@ class KPNewCommentController: KPViewController {
         navigationItem.title = "新增評價"
         navigationItem.hidesBackButton = true
         
-        dismissButton = KPBounceButton.init(frame: CGRect.init(x: 0, y: 0, width: 24, height: 24));
+        dismissButton = KPBounceButton(frame: CGRect(x: 0, y: 0, width: 24, height: 24));
         dismissButton.setImage(R.image.icon_back()?.withRenderingMode(.alwaysTemplate),
                             for: .normal);
         dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor;
         dismissButton.addTarget(self,
                              action: #selector(KPNewCommentController.handleDismissButtonOnTapped),
                              for: .touchUpInside)
-        let barItem = UIBarButtonItem.init(customView: dismissButton);
+        let barItem = UIBarButtonItem(customView: dismissButton);
         
-        sendButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 40, height: 24));
+        sendButton = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 24));
         sendButton.setTitle("發佈", for: .normal)
         sendButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         sendButton.tintColor = KPColorPalette.KPTextColor.mainColor;
@@ -77,7 +77,7 @@ class KPNewCommentController: KPViewController {
                              action: #selector(KPNewCommentController.handleSendButtonOnTapped),
                              for: .touchUpInside)
         
-        let rightbarItem = UIBarButtonItem.init(customView: sendButton);
+        let rightbarItem = UIBarButtonItem(customView: sendButton);
         
         let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace,
                                              target: nil,
@@ -102,7 +102,7 @@ class KPNewCommentController: KPViewController {
                                                                 "H:|[$self]|"])
         textFieldContainerView.addConstraintForHavingSameWidth(with: view)
         
-        tapGesture = UITapGestureRecognizer.init(target: self,
+        tapGesture = UITapGestureRecognizer(target: self,
                                                  action: #selector(handleTapGesture(tapGesture:)))
         textFieldContainerView.addGestureRecognizer(tapGesture)
         
@@ -157,7 +157,7 @@ class KPNewCommentController: KPViewController {
                                        views: [ratingHeaderLabel])
         
         
-        ratingCheckbox = KPCheckView.init(.checkmark, "暫時不評分")
+        ratingCheckbox = KPCheckView(.checkmark, "暫時不評分")
         ratingCheckbox.titleLabel.font = UIFont.systemFont(ofSize: 14.0)
         ratingCheckbox.checkBox.boxType = .square
         ratingContainer.addSubview(ratingCheckbox)
@@ -169,7 +169,7 @@ class KPNewCommentController: KPViewController {
                                           for: .valueChanged)
         
         for (index, title) in ratingTitles.enumerated() {
-            let ratingView = KPRatingView.init(.star,
+            let ratingView = KPRatingView(.star,
                                                ratingImages[index]!,
                                                title)
             ratingViews.append(ratingView)

@@ -146,10 +146,10 @@ class KPMainViewController: KPViewController {
                                       forKey: AppConstant.introShownKey)
             
             let controller = KPModalViewController()
-            controller.edgeInset = UIEdgeInsets.init(top: 0,
-                                                     left: 0,
-                                                     bottom: 0,
-                                                     right: 0);
+            controller.edgeInset = UIEdgeInsets(top: 0,
+                                                left: 0,
+                                                bottom: 0,
+                                                right: 0);
             let introController = KPIntroViewController()
             self.present(introController, animated: true, completion: nil)
             
@@ -157,10 +157,10 @@ class KPMainViewController: KPViewController {
             
             if KPUserManager.sharedManager.currentUser == nil {
                 let controller = KPModalViewController()
-                controller.edgeInset = UIEdgeInsets.init(top: 0,
-                                                         left: 0,
-                                                         bottom: 0,
-                                                         right: 0);
+                controller.edgeInset = UIEdgeInsets(top: 0,
+                                                    left: 0,
+                                                    bottom: 0,
+     right: 0);
                 let loginController = KPLoginViewController()
                 self.present(loginController, animated: true, completion: nil)
             }
@@ -311,15 +311,15 @@ class KPMainViewController: KPViewController {
 
     func search() {
         let controller = KPModalViewController()
-        controller.edgeInset = UIEdgeInsets.init(top: 0,
-                                                 left: 0,
-                                                 bottom: 0,
-                                                 right: 0)
+        controller.edgeInset = UIEdgeInsets(top: 0,
+                                            left: 0,
+                                            bottom: 0,
+                                            right: 0)
         controller.presentationStyle = .right
         let searchController = KPSearchViewController()
         searchController.displayDataModel = displayDataModel
         searchController.mainListController = mainListViewController
-        let navigationController = UINavigationController.init(rootViewController: searchController)
+        let navigationController = UINavigationController(rootViewController: searchController)
         controller.contentController = navigationController
         controller.presentModalView()
     }

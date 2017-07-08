@@ -27,7 +27,7 @@ class KPInformationViewController: KPViewController {
     
     var snapshotPhotoView: UIView  {
         get {
-            let snapShotView = UIImageView.init(image: informationHeaderView.shopPhoto.image)
+            let snapShotView = UIImageView(image: informationHeaderView.shopPhoto.image)
             snapShotView.frame = informationHeaderView.shopPhoto.frame
             return snapShotView
         }
@@ -35,10 +35,10 @@ class KPInformationViewController: KPViewController {
     
     var currentScreenSnapshotImage: UIImage {
         get {
-            UIGraphicsBeginImageContext(CGSize.init(width: view.frameSize.width,
-                                                    height: view.frameSize.height))
-            UIGraphicsBeginImageContextWithOptions(CGSize.init(width: view.frameSize.width,
-                                                               height: view.frameSize.height),
+            UIGraphicsBeginImageContext(CGSize(width: view.frameSize.width,
+                                               height: view.frameSize.height))
+            UIGraphicsBeginImageContextWithOptions(CGSize(width: view.frameSize.width,
+                                                          height: view.frameSize.height),
                                                    true, 0)
             view.layer.render(in: UIGraphicsGetCurrentContext()!)
             let screenshotImage = UIGraphicsGetImageFromCurrentImageContext()
@@ -70,9 +70,8 @@ class KPInformationViewController: KPViewController {
         navigationItem.title = informationDataModel.name
         navigationController?.delegate = self
         
-        dismissButton = KPBounceButton.init(frame: CGRect.init(x: 0, y: 0, width: 30, height: 30))
-        dismissButton.setImage(R.image.icon_close(),
-                                    for: .normal)
+        dismissButton = KPBounceButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30),
+                                       image: R.image.icon_close()!)
         dismissButton.contentEdgeInsets = UIEdgeInsetsMake(7, 7, 7, 7)
         dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor
         dismissButton.addTarget(self,
@@ -80,28 +79,26 @@ class KPInformationViewController: KPViewController {
                                 for: .touchUpInside)
         
         
-        moreButton = KPBounceButton.init(frame: CGRect.init(x: 0, y: 0, width: 30, height: 30))
-        moreButton.setImage(R.image.icon_grid(),
-                            for: .normal)
-        moreButton.contentEdgeInsets = UIEdgeInsetsMake(7, 7, 7, 7)
+        moreButton = KPBounceButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30),
+                                    image: R.image.icon_more()!)
+        moreButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4)
         moreButton.tintColor = KPColorPalette.KPTextColor.whiteColor
         moreButton.addTarget(self,
                              action: #selector(KPInformationViewController.handleMoreButtonOnTapped),
                              for: .touchUpInside)
         
-        shareButton = KPBounceButton.init(frame: CGRect.init(x: 0, y: 0, width: 24, height: 24))
-        shareButton.setImage(R.image.icon_grid(),
-                            for: .normal)
-        shareButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4)
+        shareButton = KPBounceButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30),
+                                     image: R.image.icon_share()!)
+        shareButton.contentEdgeInsets = UIEdgeInsetsMake(6, 6, 6, 6)
         shareButton.tintColor = KPColorPalette.KPTextColor.whiteColor
         shareButton.addTarget(self,
                               action: #selector(KPInformationViewController.handleShareButtonOnTapped),
                               for: .touchUpInside)
         
 
-        let barItem = UIBarButtonItem.init(customView: dismissButton)
-        let rightBarItem = UIBarButtonItem.init(customView: moreButton)
-//        let rightBarItem2 = UIBarButtonItem.init(customView: shareButton)
+        let barItem = UIBarButtonItem(customView: dismissButton)
+        let rightBarItem = UIBarButtonItem(customView: moreButton)
+        let rightBarItem2 = UIBarButtonItem(customView: shareButton)
         let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace,
                                              target: nil,
                                              action: nil)
@@ -116,7 +113,16 @@ class KPInformationViewController: KPViewController {
         actionController.view.tintColor = KPColorPalette.KPTextColor.grayColor_level2
         let editButton = UIAlertAction(title: "編輯店家資料",
                                        style: .default) { (_) in
-                                        print("編輯店家資料")
+                                        let controller = KPModalViewController()
+                                        controller.edgeInset = UIEdgeInsets(top: 0,
+                                                                            left: 0,
+                                                                            bottom: 0,
+                                                                            right: 0)
+                                        let newStoreController = KPNewStoreController()
+                                        let navigationController =
+                                            UINavigationController(rootViewController: newStoreController)
+                                        controller.contentController = navigationController
+                                        controller.presentModalView()
         }
         
         let reportButton = UIAlertAction(title: "回報問題",
@@ -259,10 +265,10 @@ class KPInformationViewController: KPViewController {
                                                    icon:(R.image.icon_star()?.withRenderingMode(.alwaysTemplate))!,
                                                    handler:{(infoView) -> () in
                                                     let controller = KPModalViewController()
-                                                    controller.edgeInset = UIEdgeInsets.init(top: UIDevice().isCompact ? 16 : 48,
-                                                                                             left: 0,
-                                                                                             bottom: 0,
-                                                                                             right: 0)
+                                                    controller.edgeInset = UIEdgeInsets(top: UIDevice().isCompact ? 16 : 48,
+                                                                                        left: 0,
+                                                                                        bottom: 0,
+                                                                                        right: 0)
                                                     controller.cornerRadius = [.topRight, .topLeft]
                                                     let ratingViewController = KPRatingViewController()
                                                     controller.contentController = ratingViewController
@@ -490,10 +496,10 @@ extension KPInformationViewController: UINavigationControllerDelegate {
 
 extension KPInformationViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        scrollContainer.contentOffset = CGPoint.init(x: 0,
-                                                     y: scrollContainer.contentOffset.y <= -120 ?
-                                                        -120 :
-                                                        scrollContainer.contentOffset.y)
+        scrollContainer.contentOffset = CGPoint(x: 0,
+                                                y: scrollContainer.contentOffset.y <= -120 ?
+                                                    -120 :
+                                                    scrollContainer.contentOffset.y)
         
         if scrollContainer.contentOffset.y < 0 && scrollContainer.contentOffset.y >= -120 {
             let scaleRatio = 1 - scrollContainer.contentOffset.y/300
@@ -503,7 +509,7 @@ extension KPInformationViewController: UIScrollViewDelegate {
             animatedHeaderConstraint.constant = 0
             informationHeaderView.shopPhoto.transform = .identity
             
-            informationHeaderView.shopPhotoContainer.layer.anchorPoint = CGPoint.init(x: 0.5, y: 1)
+            informationHeaderView.shopPhotoContainer.layer.anchorPoint = CGPoint(x: 0.5, y: 1)
             informationHeaderView.shopPhotoContainer.frame = oldFrame
             informationHeaderView.shopPhotoContainer.transform = .identity
             informationHeaderView.shopPhotoContainer.transform = CGAffineTransform(scaleX: scaleRatioContainer,

@@ -83,7 +83,7 @@ class KPLoadingView: UIView {
         container.addConstraintForCenterAligningToSuperview(in: .vertical)
         container.addConstraintForCenterAligningToSuperview(in: .horizontal)
         
-        indicator = UIActivityIndicatorView.init(activityIndicatorStyle: .whiteLarge)
+        indicator = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
         container.addSubview(indicator)
         indicator.addConstraints(fromStringArray: ["V:|-16-[$self]"])
         indicator.addConstraintForCenterAligningToSuperview(in: .horizontal)
@@ -95,20 +95,20 @@ class KPLoadingView: UIView {
                                     views: [indicator])
         loadingLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
         
-        successView = UIImageView.init(image: R.image.icon_loading_success()?.withRenderingMode(.alwaysTemplate))
+        successView = UIImageView(image: R.image.icon_loading_success()?.withRenderingMode(.alwaysTemplate))
         successView.tintColor = UIColor.white
         container.addSubview(successView)
         successView.addConstraints(fromStringArray: ["V:|-20-[$self]"])
         successView.addConstraintForCenterAligningToSuperview(in: .horizontal)
-        successView.transform = CGAffineTransform.init(translationX: 0, y: 24)
+        successView.transform = CGAffineTransform(translationX: 0, y: 24)
         successView.alpha = 0
         
-        failedView = UIImageView.init(image: R.image.icon_loading_success()?.withRenderingMode(.alwaysTemplate))
+        failedView = UIImageView(image: R.image.icon_loading_success()?.withRenderingMode(.alwaysTemplate))
         failedView.tintColor = UIColor.white
         container.addSubview(failedView)
         failedView.addConstraints(fromStringArray: ["V:|-20-[$self]"])
         failedView.addConstraintForCenterAligningToSuperview(in: .horizontal)
-        failedView.transform = CGAffineTransform.init(translationX: 0, y: 24)
+        failedView.transform = CGAffineTransform(translationX: 0, y: 24)
         failedView.alpha = 0
 
     }
@@ -125,7 +125,7 @@ class KPLoadingView: UIView {
                            options: .curveEaseOut,
                            animations: {
                             self.indicator.alpha = 0
-                            self.indicator.transform = CGAffineTransform.init(translationX: 0, y: -24)
+                            self.indicator.transform = CGAffineTransform(translationX: 0, y: -24)
             }) { (_) in
                 
             }
@@ -152,7 +152,7 @@ class KPLoadingView: UIView {
                            options: .curveEaseOut,
                            animations: {
                             self.indicator.alpha = 0
-                            self.indicator.transform = CGAffineTransform.init(translationX: 0, y: -24)
+                            self.indicator.transform = CGAffineTransform(translationX: 0, y: -24)
             }) { (_) in
                 
             }

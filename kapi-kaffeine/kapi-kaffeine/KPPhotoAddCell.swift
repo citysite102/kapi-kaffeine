@@ -10,7 +10,7 @@ import UIKit
 
 class KPPhotoAddCell: UICollectionViewCell {
     
-    let iconCamera = UIImageView.init(image: R.image.icon_camero()?.withRenderingMode(.alwaysTemplate))
+    let iconCamera = UIImageView(image: R.image.icon_camero()?.withRenderingMode(.alwaysTemplate))
     lazy var addPhotoLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12.0)

@@ -82,7 +82,7 @@ class KPInformationHeaderButton: UIView {
         layer.borderColor = KPColorPalette.KPMainColor.borderColor?.cgColor
         backgroundColor = UIColor.white
         
-        icon = UIImageView.init()
+        icon = UIImageView()
         addSubview(icon)
         icon.addConstraintForCenterAligningToSuperview(in: .horizontal)
         icon.addConstraint(from: "V:|-12-[$self(24)]")
@@ -91,7 +91,7 @@ class KPInformationHeaderButton: UIView {
             KPColorPalette.KPMainColor.mainColor :
             KPColorPalette.KPMainColor.grayColor_level5
         
-        titleLabel = UILabel.init()
+        titleLabel = UILabel()
         titleLabel.font = UIFont.systemFont(ofSize: 13)
         titleLabel.textColor = KPColorPalette.KPTextColor.mainColor
         addSubview(titleLabel)
@@ -99,7 +99,7 @@ class KPInformationHeaderButton: UIView {
         titleLabel.addConstraint(from: "V:[$view0]-4-[$self]",
                                  views: [icon])
         
-        infoLabel = UILabel.init()
+        infoLabel = UILabel()
         infoLabel.font = UIFont.systemFont(ofSize: 11)
         infoLabel.textColor = KPColorPalette.KPMainColor.grayColor_level3
         addSubview(infoLabel)

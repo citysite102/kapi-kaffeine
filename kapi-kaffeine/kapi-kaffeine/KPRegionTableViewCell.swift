@@ -20,7 +20,7 @@ class KPRegionTableViewCell: UITableViewCell {
                                delay: 0,
                                options: .curveEaseIn,
                                animations: {
-                                self.expandIcon.transform = CGAffineTransform.init(rotationAngle: .pi)
+                                self.expandIcon.transform = CGAffineTransform(rotationAngle: .pi)
                 }, completion: { (_) in
                     
                 })
@@ -45,7 +45,7 @@ class KPRegionTableViewCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        regionIcon = UIImageView.init(image: R.image.icon_taipei())
+        regionIcon = UIImageView(image: R.image.icon_taipei())
         regionIcon.tintColor = KPColorPalette.KPMainColor.mainColor_light
         regionIcon.isOpaque = true
         addSubview(regionIcon)
@@ -63,7 +63,7 @@ class KPRegionTableViewCell: UITableViewCell {
                                         views: [regionIcon])
         regionLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
         
-        expandIcon = UIImageView.init(image: R.image.icon_down())
+        expandIcon = UIImageView(image: R.image.icon_down())
         expandIcon.tintColor = KPColorPalette.KPMainColor.mainColor
         addSubview(expandIcon)
         expandIcon.addConstraints(fromStringArray: ["V:|-12-[$self(24)]-12-|",

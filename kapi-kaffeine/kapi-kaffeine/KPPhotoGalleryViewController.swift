@@ -40,45 +40,45 @@ class KPPhotoGalleryViewController: KPViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = KPColorPalette.KPTextColor.whiteColor
-        self.navigationItem.title = "店家照片"
-        self.navigationItem.hidesBackButton = true
+        view.backgroundColor = KPColorPalette.KPTextColor.whiteColor
+        navigationItem.title = "店家照片"
+        navigationItem.hidesBackButton = true
         
         let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace,
                                              target: nil,
                                              action: nil)
         negativeSpacer.width = -8
         
-        self.navigationItem.leftBarButtonItems = [negativeSpacer, UIBarButtonItem.init(image: R.image.icon_back(),
-                                                                                       style: .plain,
-                                                                                       target: self,
-                                                                                       action: #selector(KPPhotoGalleryViewController.handleBackButtonOnTapped))]
+        navigationItem.leftBarButtonItems = [negativeSpacer, UIBarButtonItem(image: R.image.icon_back(),
+                                                                                  style: .plain,
+                                                                                  target: self,
+                                                                                  action: #selector(KPPhotoGalleryViewController.handleBackButtonOnTapped))]
         
         let itemSize = (UIScreen.main.bounds.size.width-(12*4))/3
         
         //Collection view
-        self.collectionLayout = UICollectionViewFlowLayout()
-        self.collectionLayout.scrollDirection = .vertical
-        self.collectionLayout.minimumLineSpacing = 16.0
-        self.collectionLayout.sectionInset = UIEdgeInsetsMake(12, 12, 12, 12)
-        self.collectionLayout.itemSize = CGSize.init(width: itemSize, height: itemSize)
+        collectionLayout = UICollectionViewFlowLayout()
+        collectionLayout.scrollDirection = .vertical
+        collectionLayout.minimumLineSpacing = 16.0
+        collectionLayout.sectionInset = UIEdgeInsetsMake(12, 12, 12, 12)
+        collectionLayout.itemSize = CGSize(width: itemSize, height: itemSize)
         
-        self.collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.collectionLayout)
-        self.collectionView.backgroundColor = UIColor.clear
-        self.collectionView.dataSource = self
-        self.collectionView.delegate = self
-        self.collectionView.showsHorizontalScrollIndicator = false
-        self.collectionView.showsVerticalScrollIndicator = false
-        self.collectionView.delaysContentTouches = true
-        self.collectionView.register(KPShopPhotoCell.self,
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionLayout)
+        collectionView.backgroundColor = UIColor.clear
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.delaysContentTouches = true
+        collectionView.register(KPShopPhotoCell.self,
                                      forCellWithReuseIdentifier:
             KPPhotoGalleryViewController.KPPhotoGalleryViewControllerCellReuseIdentifier)
-        self.collectionView.register(KPPhotoAddCell.self,
+        collectionView.register(KPPhotoAddCell.self,
                                      forCellWithReuseIdentifier:
             KPPhotoGalleryViewController.KPPhotoGalleryViewControllerCellAddIdentifier)
         
-        self.view.addSubview(self.collectionView)
-        self.collectionView.addConstraints(fromStringArray: ["H:|[$self]|",
+        view.addSubview(collectionView)
+        collectionView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                              "V:|[$self]|"])
 
     }
@@ -89,7 +89,7 @@ class KPPhotoGalleryViewController: KPViewController {
     }
     
     func handleBackButtonOnTapped() {
-        self.navigationController?.popViewController(animated: true)
+        navigationController?.popViewController(animated: true)
     }
     
 //    override var prefersStatusBarHidden: Bool {
@@ -125,7 +125,7 @@ extension KPPhotoGalleryViewController: UICollectionViewDelegate, UICollectionVi
                                                           for: indexPath) as! KPShopPhotoCell;
             cell.layer.cornerRadius = 4.0
             cell.layer.masksToBounds = true
-            cell.shopPhoto.image = self.diplayedPhotoInformations[indexPath.row].image
+            cell.shopPhoto.image = diplayedPhotoInformations[indexPath.row].image
             return cell;
         }
     }
@@ -137,7 +137,7 @@ extension KPPhotoGalleryViewController: UICollectionViewDelegate, UICollectionVi
             let imagePicker = UIImagePickerController()
             imagePicker.delegate = self
             imagePicker.sourceType = .photoLibrary
-            self.present(imagePicker, animated: true, completion: {
+            present(imagePicker, animated: true, completion: {
             })
             
         } else {
@@ -151,7 +151,7 @@ extension KPPhotoGalleryViewController: UICollectionViewDelegate, UICollectionVi
                  PhotoInformation(title:"Title", image:R.image.demo_5()!, index:4),
                  PhotoInformation(title:"Title", image:R.image.demo_6()!, index:5)]
             
-            self.present(photoDisplayController, animated: true, completion: {
+                present(photoDisplayController, animated: true, completion: {
             })
         }
         

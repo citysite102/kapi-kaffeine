@@ -74,7 +74,7 @@ class KPMainMapViewCollectionCell: UICollectionViewCell {
         self.layer.shadowColor = UIColor.black.cgColor;
         self.layer.shadowOpacity = 0.3;
         self.layer.shadowRadius = 2.0;
-        self.layer.shadowOffset = CGSize.init(width: 2.0, height: 4.0);
+        self.layer.shadowOffset = CGSize(width: 2.0, height: 4.0);
         
         shopImageView = UIImageView(image: UIImage(named: "demo_6"));
         shopImageView.contentMode = .scaleAspectFill;
@@ -82,7 +82,7 @@ class KPMainMapViewCollectionCell: UICollectionViewCell {
         shopImageView.layer.cornerRadius = 2.0
         addSubview(shopImageView);
         shopImageView.addConstraints(fromStringArray: ["H:|-8-[$self(64)]",
-                                                            "V:|-8-[$self(64)]-8-|"]);
+                                                       "V:|-8-[$self(64)]-8-|"]);
         
         self.shopNameLabel = KPLayerLabel();
         self.shopNameLabel.font = UIFont.systemFont(ofSize: 14.0);

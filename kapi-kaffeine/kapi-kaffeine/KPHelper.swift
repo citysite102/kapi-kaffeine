@@ -114,7 +114,7 @@ public extension UILabel {
         
         let attributedString = NSMutableAttributedString(string: text)
         attributedString.addAttributes([NSParagraphStyleAttributeName: descriptionStyle],
-                                       range: NSRange.init(location: 0, length: attributedString.length))
+                                       range: NSRange(location: 0, length: attributedString.length))
         
         self.attributedText = attributedString
     }

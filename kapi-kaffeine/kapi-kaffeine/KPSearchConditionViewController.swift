@@ -86,9 +86,9 @@ class KPSearchConditionViewController: KPViewController {
                              for: .normal)
         button.setTitleColor(UIColor.white,
                              for: .selected)
-        button.setBackgroundImage(UIImage.init(color: UIColor.white),
+        button.setBackgroundImage(UIImage(color: UIColor.white),
                                   for: .normal)
-        button.setBackgroundImage(UIImage.init(color: KPColorPalette.KPMainColor.mainColor!),
+        button.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor.mainColor!),
                                   for: .selected)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         button.layer.cornerRadius = 18.0
@@ -111,7 +111,7 @@ class KPSearchConditionViewController: KPViewController {
         view.backgroundColor = UIColor.white;
         navigationController?.navigationBar.topItem?.title = "篩選偏好設定";
         
-        dismissButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 24, height: 24));
+        dismissButton = UIButton(frame: CGRect(x: 0, y: 0, width: 24, height: 24));
         dismissButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4);
         dismissButton.setImage(R.image.icon_close()?.withRenderingMode(.alwaysTemplate),
                                     for: .normal);
@@ -120,7 +120,7 @@ class KPSearchConditionViewController: KPViewController {
                                      action: #selector(KPSearchConditionViewController.handleDismissButtonOnTapped),
                                      for: .touchUpInside);
         
-        let barItem = UIBarButtonItem.init(customView: dismissButton);
+        let barItem = UIBarButtonItem(customView: dismissButton);
         navigationItem.leftBarButtonItem = barItem;
         
         dismissButton.addTarget(self,
@@ -177,7 +177,7 @@ class KPSearchConditionViewController: KPViewController {
                                              views: [seperator_one])
         
         for (index, title) in ratingTitles.enumerated() {
-            let ratingView = KPRatingView.init(.button,
+            let ratingView = KPRatingView(.button,
                                                ratingImages[index]!,
                                                title)
             ratingViews.append(ratingView)
@@ -206,17 +206,17 @@ class KPSearchConditionViewController: KPViewController {
         timeLimitLabel.addConstraints(fromStringArray: ["H:|-16-[$self]",
                                                              "V:[$view0]-16-[$self]"],
                                            views: [seperator_two])
-        timeRadioBoxOne = KPCheckView.init(.radio, "不設定")
+        timeRadioBoxOne = KPCheckView(.radio, "不設定")
         containerView.addSubview(timeRadioBoxOne)
         timeRadioBoxOne.addConstraints(fromStringArray: ["H:|-16-[$self]",
                                                               "V:[$view0]-16-[$self]"],
                                             views: [timeLimitLabel])
-        timeRadioBoxTwo = KPCheckView.init(.radio, "客滿/人多限時")
+        timeRadioBoxTwo = KPCheckView(.radio, "客滿/人多限時")
         containerView.addSubview(timeRadioBoxTwo)
         timeRadioBoxTwo.addConstraints(fromStringArray: ["H:|-16-[$self]",
                                                               "V:[$view0]-16-[$self]"],
                                             views: [timeRadioBoxOne])
-        timeRadioBoxThree = KPCheckView.init(.radio, "不限時")
+        timeRadioBoxThree = KPCheckView(.radio, "不限時")
         containerView.addSubview(timeRadioBoxThree)
         timeRadioBoxThree.addConstraints(fromStringArray: ["H:|-16-[$self]",
                                                                 "V:[$view0]-16-[$self]"],
@@ -229,19 +229,19 @@ class KPSearchConditionViewController: KPViewController {
                                         metrics:[KPSearchConditionViewControllerConstants.leftPadding],
                                         views: [seperator_two])
         
-        socketRadioBoxOne = KPCheckView.init(.radio, "不設定")
+        socketRadioBoxOne = KPCheckView(.radio, "不設定")
         containerView.addSubview(socketRadioBoxOne)
         socketRadioBoxOne.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",
                                                                 "V:[$view0]-16-[$self]"],
                                               metrics:[KPSearchConditionViewControllerConstants.leftPadding],
                                               views: [socketLabel])
-        socketRadioBoxTwo = KPCheckView.init(.radio, "部分座位有")
+        socketRadioBoxTwo = KPCheckView(.radio, "部分座位有")
         containerView.addSubview(socketRadioBoxTwo)
         socketRadioBoxTwo.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",
                                                                 "V:[$view0]-16-[$self]"],
                                               metrics:[KPSearchConditionViewControllerConstants.leftPadding],
                                               views: [socketRadioBoxOne])
-        socketRadioBoxThree = KPCheckView.init(.radio, "很多插座")
+        socketRadioBoxThree = KPCheckView(.radio, "很多插座")
         containerView.addSubview(socketRadioBoxThree)
         socketRadioBoxThree.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",
                                                                   "V:[$view0]-16-[$self]"],
@@ -254,13 +254,13 @@ class KPSearchConditionViewController: KPViewController {
                                                                 "V:[$view0]-24-[$self]"],
                                               views: [timeRadioBoxThree])
         
-        businessCheckBoxOne = KPCheckView.init(.checkmark, "目前營業中")
+        businessCheckBoxOne = KPCheckView(.checkmark, "目前營業中")
         containerView.addSubview(businessCheckBoxOne)
         businessCheckBoxOne.addConstraints(fromStringArray: ["H:|-16-[$self]",
                                                                   "V:[$view0]-16-[$self]"],
                                                 views: [businessHourLabel])
         
-        businessCheckBoxTwo = KPCheckView.init(.checkmark, "特定營業時段")
+        businessCheckBoxTwo = KPCheckView(.checkmark, "特定營業時段")
         containerView.addSubview(businessCheckBoxTwo)
         businessCheckBoxTwo.addConstraints(fromStringArray: ["H:|-16-[$self]",
                                                                   "V:[$view0]-16-[$self]"],
@@ -273,7 +273,7 @@ class KPSearchConditionViewController: KPViewController {
                                                           "V:[$view0]-24-[$self]"],
                                         metrics:[KPSearchConditionViewControllerConstants.leftPadding],
                                         views: [timeRadioBoxThree])
-        othersCheckBoxOne = KPCheckView.init(.checkmark, "可站立工作")
+        othersCheckBoxOne = KPCheckView(.checkmark, "可站立工作")
         containerView.addSubview(othersCheckBoxOne)
         othersCheckBoxOne.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",
                                                                 "V:[$view0]-16-[$self]"],
@@ -288,7 +288,7 @@ class KPSearchConditionViewController: KPViewController {
         searchButton = UIButton()
         searchButton.setTitle("開始搜尋", for: .normal)
         searchButton.setTitleColor(UIColor.white, for: .normal)
-        searchButton.setBackgroundImage(UIImage.init(color: KPColorPalette.KPMainColor.mainColor!),
+        searchButton.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor.mainColor!),
                                              for: .normal)
         searchButton.layer.cornerRadius = 4.0
         searchButton.layer.masksToBounds = true
@@ -302,7 +302,7 @@ class KPSearchConditionViewController: KPViewController {
     
     func showTimePicker() {
         let controller = KPModalViewController()
-        controller.edgeInset = UIEdgeInsets.init(top: 32,
+        controller.edgeInset = UIEdgeInsets(top: 32,
                                                  left: 0,
                                                  bottom: 0,
                                                  right: 0);

@@ -54,6 +54,14 @@ class KPBounceButton: UIButton {
         }
     }
     
+//    override var isHighlighted: Bool {
+//        didSet {
+//            tintColor = UIColor.red
+//            setImage(R.image.icon_cup(),
+//                     for: .normal)
+//        }
+//    }
+    
     //----------------------------
     // MARK: - Initalization
     //----------------------------
@@ -64,10 +72,8 @@ class KPBounceButton: UIButton {
     
     convenience init (frame: CGRect, image: UIImage) {
         self.init(frame: frame)
-        setImage(image.withRenderingMode(.alwaysTemplate),
-                 for: .normal)
-        setImage(image.withRenderingMode(.alwaysTemplate),
-                 for: .highlighted)
+        setImage(image, for: .normal)
+        adjustsImageWhenHighlighted = false
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -90,7 +96,8 @@ class KPBounceButton: UIButton {
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
+        super.touchesCancelled(touches, with: event)
+        self.performTouchEndAnimation()
     }
     
     override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {

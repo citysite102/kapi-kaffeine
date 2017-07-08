@@ -28,7 +28,7 @@ class KPShopInfoView: UIView {
             
             for (index, content) in featureContents.enumerated() {
                 
-                let featureView = UIView.init()
+                let featureView = UIView()
                 
                 featureView.layer.borderWidth = 1.0
                 featureView.layer.borderColor = KPColorPalette.KPMainColor.mainColor?.cgColor
@@ -82,20 +82,20 @@ class KPShopInfoView: UIView {
         titleLabel.addConstraints(fromStringArray: ["V:|-16-[$self]",
                                                          "H:|-16-[$self]"])
         
-        featureContainer = UIView.init()
+        featureContainer = UIView()
         addSubview(featureContainer)
         featureContainer.addConstraints(fromStringArray: ["V:[$view0]-8-[$self]",
                                                           "H:|-16-[$self]"],
                                              views: [titleLabel])
         
-        openTimeIcon = UIImageView.init(image: R.image.icon_tradehour())
+        openTimeIcon = UIImageView(image: R.image.icon_tradehour())
         openTimeIcon.tintColor = KPColorPalette.KPMainColor.mainColor
         addSubview(openTimeIcon)
         openTimeIcon.addConstraints(fromStringArray: ["V:[$view0]-16-[$self(20)]",
                                                       "H:|-16-[$self(20)]"],
                                          views: [featureContainer])
         
-        openHint = UIView.init()
+        openHint = UIView()
         openHint.layer.cornerRadius = 3.0
         openHint.backgroundColor = KPColorPalette.KPShopStatusColor.opened
         addSubview(openHint)
@@ -112,7 +112,7 @@ class KPShopInfoView: UIView {
                                       views: [openHint])
         openLabel.addConstraintForCenterAligning(to: openTimeIcon, in: .vertical)
         
-        otherTimeButton = UIButton.init(type: .custom)
+        otherTimeButton = UIButton(type: .custom)
         otherTimeButton.tintColor = KPColorPalette.KPMainColor.mainColor
         otherTimeButton.setTitle("其他營業時間", for: .normal)
         otherTimeButton.setTitleColor(UIColor.white, for: .normal)
@@ -126,7 +126,7 @@ class KPShopInfoView: UIView {
         otherTimeButton.addConstraintForCenterAligning(to: openLabel,
                                                             in: .vertical)
         
-        phoneIcon = UIImageView.init(image: R.image.icon_phone())
+        phoneIcon = UIImageView(image: R.image.icon_phone())
         phoneIcon.tintColor = KPColorPalette.KPMainColor.mainColor
         addSubview(phoneIcon)
         phoneIcon.addConstraints(fromStringArray: ["V:[$view0]-8-[$self(20)]",
@@ -142,7 +142,7 @@ class KPShopInfoView: UIView {
         phoneLabel.addConstraintForCenterAligning(to: phoneIcon,
                                                        in: .vertical)
         
-        locationIcon = UIImageView.init(image: R.image.icon_pin())
+        locationIcon = UIImageView(image: R.image.icon_pin())
         locationIcon.tintColor = KPColorPalette.KPMainColor.mainColor
         addSubview(locationIcon)
         locationIcon.addConstraints(fromStringArray: ["V:[$view0]-8-[$self(20)]",

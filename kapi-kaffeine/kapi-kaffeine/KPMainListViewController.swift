@@ -97,10 +97,11 @@ class KPMainListViewController:
         searchFooterView.delegate = self
         searchFooterView.layer.shadowColor = UIColor.black.cgColor
         searchFooterView.layer.shadowOpacity = 0.15
-        searchFooterView.layer.shadowOffset = CGSize.init(width: 0.0, height: -1.0)
+        searchFooterView.layer.shadowOffset = CGSize(width: 0.0, height: -1.0)
         view.addSubview(searchFooterView)
-        searchFooterView.addConstraints(fromStringArray: ["V:[$view0][$self(40)]|", "H:|[$self]|"],
-                                             views:[tableView])
+        searchFooterView.addConstraints(fromStringArray: ["V:[$view0][$self(40)]|",
+                                                          "H:|[$self]|"],
+                                        views:[tableView])
         
         snapshotView = UIImageView()
         snapshotView.contentMode = .top
@@ -137,7 +138,7 @@ class KPMainListViewController:
 
             
             if adsToLoad.count < Constant.concurrentAdsCount {
-                guard let adView = GADNativeExpressAdView.init(adSize: adSize) else {
+                guard let adView = GADNativeExpressAdView(adSize: adSize) else {
                     print("GADNativeExpressAdView failed to initialize at index \(index)")
                     return
                 }

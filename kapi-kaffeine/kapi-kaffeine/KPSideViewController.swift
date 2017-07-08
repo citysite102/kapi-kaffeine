@@ -145,7 +145,7 @@ class KPSideViewController: KPViewController {
                                                         let controller = KPModalViewController()
                                                         controller.edgeInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
                                                         let aboutUsController = KPAboutUsViewController()
-                                                        let navigationController = UINavigationController.init(rootViewController: aboutUsController)
+                                                        let navigationController = UINavigationController(rootViewController: aboutUsController)
                                                         controller.contentController = navigationController
                                                         controller.presentModalView(self, UIModalPresentationStyle.fullScreen)
                                     }),
@@ -188,7 +188,7 @@ class KPSideViewController: KPViewController {
                                                         let controller = KPModalViewController()
                                                         controller.edgeInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
                                                         let settingController = KPSettingViewController()
-                                                        let navigationController = UINavigationController.init(rootViewController: settingController)
+                                                        let navigationController = UINavigationController(rootViewController: settingController)
                                                         controller.contentController = navigationController
                                                         controller.presentModalView(self,
                                                                                     UIModalPresentationStyle.fullScreen)
@@ -221,7 +221,7 @@ class KPSideViewController: KPViewController {
         let controller = KPModalViewController()
         controller.edgeInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         let profileController = KPUserProfileViewController()
-        let navigationController = UINavigationController.init(rootViewController: profileController)
+        let navigationController = UINavigationController(rootViewController: profileController)
         controller.contentController = navigationController
         controller.presentModalView(self, UIModalPresentationStyle.fullScreen)
     }
@@ -240,7 +240,7 @@ extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let footerView = UIView.init(frame: CGRect(x: 0, y: 0, width: 1, height: 10))
+        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: 1, height: 10))
         let separator = UIView()
         separator.backgroundColor = KPColorPalette.KPMainColor.grayColor_level6
         footerView.addSubview(separator)
@@ -338,7 +338,7 @@ extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
                     
                     for (index, _) in (regionCities?.enumerated())! {
                         regionContents.insert(nil, at: indexPath.row+index+1)
-                        tableView.insertRows(at: [NSIndexPath.init(row: indexPath.row+index+1,
+                        tableView.insertRows(at: [NSIndexPath(row: indexPath.row+index+1,
                                                                         section: 0) as IndexPath],
                                                   with: .top)
                     }
@@ -347,7 +347,7 @@ extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
                     
                     var indexPaths = [IndexPath]()
                     for (index, _) in (regionCities?.enumerated())! {
-                        indexPaths.append(NSIndexPath.init(row: indexPath.row+index+1, section: 0) as IndexPath)
+                        indexPaths.append(NSIndexPath(row: indexPath.row+index+1, section: 0) as IndexPath)
                         regionContents.remove(at: indexPath.row+1)
                     }
                     tableView.deleteRows(at: indexPaths, with: .top)
@@ -359,7 +359,7 @@ extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
                 if indexPath.row + 1 >= regionContents.count {
                     for (index, _) in (regionCities?.enumerated())! {
                         regionContents.insert(nil, at: indexPath.row+index+1)
-                        tableView.insertRows(at: [NSIndexPath.init(row: indexPath.row+index+1,
+                        tableView.insertRows(at: [NSIndexPath(row: indexPath.row+index+1,
                                                                         section: 0) as IndexPath],
                                                   with: .top)
                         
@@ -371,7 +371,7 @@ extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
                                 
                                 tableView.beginUpdates()
                                 regionContents.insert(nil, at: indexPath.row+1)
-                                tableView.insertRows(at: [NSIndexPath.init(row: indexPath.row+1,
+                                tableView.insertRows(at: [NSIndexPath(row: indexPath.row+1,
                                                                                 section: 0) as IndexPath],
                                                           with: .top)
                                 
@@ -383,7 +383,7 @@ extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
                     } else {
                         var indexPaths = [IndexPath]()
                         for (index, _) in (regionCities?.enumerated())! {
-                            indexPaths.append(NSIndexPath.init(row: indexPath.row+index+1, section: 0) as IndexPath)
+                            indexPaths.append(NSIndexPath(row: indexPath.row+index+1, section: 0) as IndexPath)
                  
                             regionContents.remove(at: indexPath.row+1)
                         }

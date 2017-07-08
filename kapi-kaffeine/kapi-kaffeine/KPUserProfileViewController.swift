@@ -82,7 +82,7 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
         self.view.backgroundColor = UIColor.white
         self.navigationController?.navigationBar.topItem?.title = "個人資料"
 
-        self.dismissButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 24, height: 24))
+        self.dismissButton = UIButton(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
         self.dismissButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4)
         self.dismissButton.setImage(R.image.icon_close(),
                                     for: .normal)
@@ -91,7 +91,7 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
                                      action: #selector(KPUserProfileViewController.handleDismissButtonOnTapped),
                                      for: .touchUpInside)
         
-        self.editButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 24, height: 24))
+        self.editButton = UIButton(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
         self.editButton.setImage(R.image.icon_edit(),
                                  for: .normal)
         self.editButton.tintColor = KPColorPalette.KPTextColor.whiteColor
@@ -100,8 +100,8 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
                                   for: .touchUpInside)
 
         
-        let barItem = UIBarButtonItem.init(customView: self.dismissButton)
-        let rightBarItem = UIBarButtonItem.init(customView: self.editButton)
+        let barItem = UIBarButtonItem(customView: self.dismissButton)
+        let rightBarItem = UIBarButtonItem(customView: self.editButton)
         let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace,
                                              target: nil,
                                              action: nil)

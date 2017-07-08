@@ -80,7 +80,7 @@ class KPAboutUsViewController: KPViewController {
                                      for: .touchUpInside)
         
         
-        let barItem = UIBarButtonItem.init(customView: dismissButton)
+        let barItem = UIBarButtonItem(customView: dismissButton)
         let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
         negativeSpacer.width = -8
         navigationItem.leftBarButtonItems = [negativeSpacer, barItem]
@@ -262,10 +262,10 @@ class KPAboutUsViewController: KPViewController {
     
     func handleMoreFeatureButtonOnTapped() {
         let controller = KPModalViewController()
-        controller.edgeInset = UIEdgeInsets.init(top: 0,
-                                                 left: 0,
-                                                 bottom: 0,
-                                                 right: 0)
+        controller.edgeInset = UIEdgeInsets(top: 0,
+                                            left: 0,
+                                            bottom: 0,
+                                            right: 0)
         let introController = KPIntroViewController()
         appModalController()?.present(introController, animated: true, completion: nil)
         
