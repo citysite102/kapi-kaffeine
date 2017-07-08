@@ -27,6 +27,8 @@ class KPBusinessTimeViewController: UIViewController {
         return label
     }()
     
+    var businessTime: KPDataBusinessHourModel?
+    
     private var shopStatusHint: UIView!
     private var shopStatusLabel: UILabel!
     private var dayInfoViews: [KPBusinessTimeInfoView] = [KPBusinessTimeInfoView]()
@@ -82,9 +84,20 @@ class KPBusinessTimeViewController: UIViewController {
                                                        in: .vertical,
                                                        constant: -2)
         
+        if businessTime != nil {
+            let shopStatus = businessTime!.shopStatus
+            shopStatusLabel.text = "營業時間 \(shopStatus.status)"
+            shopStatusHint.backgroundColor = shopStatus.isOpening ?
+                KPColorPalette.KPShopStatusColor.opened :
+                KPColorPalette.KPShopStatusColor.closed
+        } else {
+            shopStatusHint.backgroundColor = KPColorPalette.KPTextColor.grayColor_level5
+            shopStatusLabel.text = "營業時間 未知"
+        }
+        
         
         for (index, content) in dayContents.enumerated() {
-            let dayInfoView = KPBusinessTimeInfoView(content, "9:30-11:45")
+            let dayInfoView = KPBusinessTimeInfoView(content, businessTime==nil ? "尚無資料" : businessTime!.getTimeString(withDay: content))
             view.addSubview(dayInfoView)
             dayInfoViews.append(dayInfoView)
             if index == 0 {

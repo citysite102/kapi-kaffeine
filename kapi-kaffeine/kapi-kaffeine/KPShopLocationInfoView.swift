@@ -18,9 +18,16 @@ class KPShopLocationInfoView: UIView, GMSMapViewDelegate {
             let position = CLLocationCoordinate2DMake(dataModel.latitude, dataModel.longitude)
             let marker = GMSMarker(position: position)
             marker.title = dataModel.name
-            marker.icon = UIImage(named: "icon_mapMarker")
+            marker.icon = R.image.icon_mapMarker()
             marker.map = self.mapView
             marker.userData = dataModel
+            
+            let circle = GMSCircle(position: CLLocationCoordinate2DMake(dataModel.latitude+0.000073, dataModel.longitude), radius: 25)
+            circle.strokeWidth = 2
+            circle.strokeColor = KPColorPalette.KPMainColor.mainColor?.withAlphaComponent(0.8)
+            circle.fillColor = KPColorPalette.KPMainColor.mainColor_light?.withAlphaComponent(0.3)
+            circle.map = mapView
+            
             self.mapView.selectedMarker = marker
             self.mapView.camera = GMSCameraPosition.camera(withTarget: position, zoom: self.mapView.camera.zoom)
         }
@@ -33,17 +40,6 @@ class KPShopLocationInfoView: UIView, GMSMapViewDelegate {
         self.mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
         
         mapView.delegate = self
-        
-        do {
-            // Set the map style by passing the URL of the local file.
-            if let styleURL = Bundle.main.url(forResource: "style", withExtension: "json") {
-                mapView.mapStyle = try GMSMapStyle(contentsOfFileURL: styleURL)
-            } else {
-                NSLog("Unable to find style.json")
-            }
-        } catch {
-            NSLog("One or more of the map styles failed to load. \(error)")
-        }
         
         self.addSubview(mapView)
         
@@ -58,13 +54,13 @@ class KPShopLocationInfoView: UIView, GMSMapViewDelegate {
     
     
     func mapView(_ mapView: GMSMapView, markerInfoWindow marker: GMSMarker) -> UIView? {
-        marker.icon = UIImage(named: "icon_mapMarkerSelected")
+        marker.icon = R.image.icon_mapMarkerSelected()
         let infoWindow = KPMainMapMarkerInfoWindow(dataModel: marker.userData as! KPDataModel)
         return infoWindow
     }
     
     func mapView(_ mapView: GMSMapView, didCloseInfoWindowOf marker: GMSMarker) {
-        marker.icon = UIImage(named: "icon_mapMarker")
+        marker.icon = R.image.icon_mapMarker()
     }
 
 }

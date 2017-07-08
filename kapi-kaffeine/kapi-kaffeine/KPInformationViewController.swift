@@ -402,6 +402,8 @@ class KPInformationViewController: KPViewController {
         controller.cornerRadius = [.topRight, .topLeft, .bottomLeft, .bottomRight]
         controller.dismissWhenTouchingOnBackground = true
         let businessTimeViewController = KPBusinessTimeViewController()
+        businessTimeViewController.businessTime = informationDataModel.businessHour
+        businessTimeViewController.titleLabel.text = informationDataModel.name
         controller.contentController = businessTimeViewController
         controller.presentModalView()
     }

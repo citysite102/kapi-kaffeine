@@ -46,20 +46,21 @@ class KPMainMapMarkerInfoWindow: UIView {
         
         self.layer.addSublayer(shapeLayer)
         
-        let imageView = UIImageView(image: UIImage(named: "icon_house"))
+        let imageView = UIImageView(image: R.image.icon_house())
         imageView.contentMode = .scaleAspectFit
         
         let titleLabel = UILabel()
         titleLabel.font = UIFont.systemFont(ofSize: 12)
         titleLabel.text = dataModel.name
         
-        let starImageView = UIImageView(image: UIImage(named: "icon_mapMarker"))
+        let starImageView = UIImageView(image: R.image.icon_star())
+        starImageView.tintColor = KPColorPalette.KPMainColor.starColor
         starImageView.contentMode = .scaleAspectFit
 
         let scoreLabel = UILabel()
         scoreLabel.font = UIFont.boldSystemFont(ofSize: 12)
-        scoreLabel.text = "4.3"
-        scoreLabel.textColor = UIColor(hexString: "784d1f")
+        scoreLabel.text = "\(dataModel.rates?.average ?? NSNumber(value: 0.0))"
+        scoreLabel.textColor = KPColorPalette.KPMainColor.mainColor
         
         self.contentView.addSubview(imageView)
         self.contentView.addSubview(titleLabel)

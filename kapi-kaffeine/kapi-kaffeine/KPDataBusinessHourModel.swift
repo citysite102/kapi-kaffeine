@@ -113,4 +113,40 @@ class KPDataBusinessHourModel: NSObject {
         return result
     }
     
+    func getTimeString(withDay day: String) -> String {
+        var timeArray: [(startHour: String, endHour: String)]
+        switch day {
+        case "星期一":
+            timeArray = businessTime[KPDay.Monday]!
+            break
+        case "星期二":
+            timeArray = businessTime[KPDay.Tuesday]!
+            break
+        case "星期三":
+            timeArray = businessTime[KPDay.Wednesday]!
+            break
+        case "星期四":
+            timeArray = businessTime[KPDay.Thursday]!
+            break
+        case "星期五":
+            timeArray = businessTime[KPDay.Friday]!
+            break
+        case "星期六":
+            timeArray = businessTime[KPDay.Saturday]!
+            break
+        case "星期日":
+            timeArray = businessTime[KPDay.Sunday]!
+            break
+        default:
+            fatalError()
+            break
+        }
+        
+        var result = ""
+        for (start, end) in timeArray {
+            result += "\(start)~\(end)\t"
+        }
+        return result == "" ? "休息" : result
+    }
+    
 }

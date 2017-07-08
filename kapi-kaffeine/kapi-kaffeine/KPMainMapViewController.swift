@@ -369,7 +369,7 @@ KPMainViewControllerDelegate {
         
         self.isCollectionViewShow = true
         
-        marker.icon = UIImage(named: "icon_mapMarkerSelected")
+        marker.icon = R.image.icon_mapMarkerSelected()
         let infoWindow = KPMainMapMarkerInfoWindow(dataModel: marker.userData as! KPDataModel)
 
         reloadNeeded = true
@@ -378,7 +378,7 @@ KPMainViewControllerDelegate {
     }
     
     func mapView(_ mapView: GMSMapView, didCloseInfoWindowOf marker: GMSMarker) {
-        marker.icon = UIImage(named: "icon_mapMarker")
+        marker.icon = R.image.icon_mapMarker()
     }
     
     func mapView(_ mapView: GMSMapView, didTapInfoWindowOf marker: GMSMarker) {
