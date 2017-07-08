@@ -100,7 +100,7 @@ class KPDataModel: NSObject, Mappable, GMUClusterItem {
         facebookURL         <-    map["fb_url"]
         facebookID          <-    map["fb_id"]
         mrt                 <-    map["mrt"]
-        businessHour        <-    (map["business_hour"], businessHourTransform)
+        businessHour        <-    (map["business_hours"], businessHourTransform)
         tags                <-    map["tags"]
         rates               <-    map["rates"]
         covers              <-    map["covers"]
