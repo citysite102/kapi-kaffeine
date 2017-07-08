@@ -12,6 +12,8 @@ import GooglePlaces
 import FacebookCore
 import Firebase
 import GoogleMobileAds
+import Fabric
+import Crashlytics
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -39,6 +41,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Ads
         GADMobileAds.configure(withApplicationID: "ca-app-pub-3383422855659572~7972797640")
+        
+        // Crashlytics
+        Fabric.with([Crashlytics.self])
         
         // Navigation Custom Settings
         let navigationBarAppearace = UINavigationBar.appearance()

@@ -1042,12 +1042,13 @@
 			buildConfigurationList = C02AFE691E7D260D008FFB33 /* Build configuration list for PBXNativeTarget "kapi-kaffeine" */;
 			buildPhases = (
 				58F90679B69E9D32C74F8BAF /* [CP] Check Pods Manifest.lock */,
-				770AB5D11EB70DF600EE8A3B /* ShellScript */,
+				770AB5D11EB70DF600EE8A3B /* Run Script */,
 				C02AFE3D1E7D260D008FFB33 /* Sources */,
 				C02AFE3E1E7D260D008FFB33 /* Frameworks */,
 				C02AFE3F1E7D260D008FFB33 /* Resources */,
 				5C7BF539A61DEDBAA160731E /* [CP] Embed Pods Frameworks */,
 				1C2519745C54F46C9A5A4965 /* [CP] Copy Pods Resources */,
+				7762E33D1F10BB040006E205 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1218,7 +1219,22 @@
 			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-kapi-kaffeine/Pods-kapi-kaffeine-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		770AB5D11EB70DF600EE8A3B /* ShellScript */ = {
+		770AB5D11EB70DF600EE8A3B /* Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"$PODS_ROOT/R.swift/rswift\" \"$SRCROOT\"";
+			showEnvVarsInLog = 0;
+		};
+		7762E33D1F10BB040006E205 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1229,8 +1245,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"$PODS_ROOT/R.swift/rswift\" \"$SRCROOT\"";
-			showEnvVarsInLog = 0;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" f73735474efb32726dc0190d195c0bc62ee8532b 654dec8c258f721a4b8fa5e51d12250dc2a4c120294cf33cd45d1733f0df86e7";
 		};
 /* End PBXShellScriptBuildPhase section */
 

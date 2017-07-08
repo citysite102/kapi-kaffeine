@@ -37,10 +37,15 @@ target 'kapi-kaffeine' do
   pod 'FacebookCore'
   pod 'FacebookLogin'
   # pod 'FacebookShare', :inhibit_warnings => true
-  pod 'FacebookShare', :git => 'https://github.com/1amageek/facebook-sdk-swift', :inhibit_warnings => true
+  pod 'FacebookShare', :git => 'https://github.com/1amageek/facebook-sdk-swift'
   pod 'Firebase/Core'
   pod 'Firebase/Auth'
   pod 'Firebase/Database'
+
+
+  # Analytics
+  pod 'Fabric'
+  pod 'Crashlytics'
 
   # Ad
   pod 'Google-Mobile-Ads-SDK'
