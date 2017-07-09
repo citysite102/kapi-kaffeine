@@ -53,6 +53,9 @@
 		775D32F11F0D21E0005EF0CE /* KPProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775D32F01F0D21E0005EF0CE /* KPProgressBar.swift */; };
 		7762E33A1F0FA44F0006E205 /* KPBusinessTimeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7762E3391F0FA44F0006E205 /* KPBusinessTimeViewController.swift */; };
 		7762E33C1F0FA7A90006E205 /* KPBusinessTimeInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7762E33B1F0FA7A90006E205 /* KPBusinessTimeInfoView.swift */; };
+		7762E33F1F12017D0006E205 /* KPCafeDetailedInfoRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7762E33E1F12017D0006E205 /* KPCafeDetailedInfoRequest.swift */; };
+		7762E3411F12028A0006E205 /* KPDetailedDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7762E3401F12028A0006E205 /* KPDetailedDataModel.swift */; };
+		7762E3431F1211770006E205 /* KPGetRatingRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7762E3421F1211770006E205 /* KPGetRatingRequest.swift */; };
 		776ACAF41E9BAFA200B629A2 /* KPSearchHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776ACAF31E9BAFA200B629A2 /* KPSearchHeaderView.swift */; };
 		776ACAF61E9BAFBF00B629A2 /* KPSearchTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776ACAF51E9BAFBF00B629A2 /* KPSearchTagView.swift */; };
 		776ACAF81E9BAFE900B629A2 /* KPSearchFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776ACAF71E9BAFE900B629A2 /* KPSearchFooterView.swift */; };
@@ -228,6 +231,9 @@
 		775D32F01F0D21E0005EF0CE /* KPProgressBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPProgressBar.swift; sourceTree = "<group>"; };
 		7762E3391F0FA44F0006E205 /* KPBusinessTimeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPBusinessTimeViewController.swift; sourceTree = "<group>"; };
 		7762E33B1F0FA7A90006E205 /* KPBusinessTimeInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPBusinessTimeInfoView.swift; sourceTree = "<group>"; };
+		7762E33E1F12017D0006E205 /* KPCafeDetailedInfoRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPCafeDetailedInfoRequest.swift; sourceTree = "<group>"; };
+		7762E3401F12028A0006E205 /* KPDetailedDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPDetailedDataModel.swift; sourceTree = "<group>"; };
+		7762E3421F1211770006E205 /* KPGetRatingRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPGetRatingRequest.swift; sourceTree = "<group>"; };
 		776ACAF31E9BAFA200B629A2 /* KPSearchHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSearchHeaderView.swift; sourceTree = "<group>"; };
 		776ACAF51E9BAFBF00B629A2 /* KPSearchTagView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSearchTagView.swift; sourceTree = "<group>"; };
 		776ACAF71E9BAFE900B629A2 /* KPSearchFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSearchFooterView.swift; sourceTree = "<group>"; };
@@ -487,6 +493,7 @@
 			isa = PBXGroup;
 			children = (
 				77FB63951E9AA7BB00FFC3DC /* KPDataModel.swift */,
+				7762E3401F12028A0006E205 /* KPDetailedDataModel.swift */,
 				773463491ED74BE300EA78F0 /* KPDataTagModel.swift */,
 				7734634C1ED74C5400EA78F0 /* KPDataRateModel.swift */,
 				C05CF8771EF8019800F3DF2A /* KPDataBusinessHourModel.swift */,
@@ -502,9 +509,9 @@
 				771F90AF1EF1973400D66C14 /* Favorite */,
 				77869E181EB76EDD0027CA98 /* Basic */,
 				77869E171EB75F1E0027CA98 /* Model */,
-				77869E1D1EB79CF40027CA98 /* KPSimpleRequest.swift */,
 				77952EF21EFAEC850012445F /* KPAddNewCafeRequest.swift */,
 				77869E1B1EB771BC0027CA98 /* KPCafeRequest.swift */,
+				7762E33E1F12017D0006E205 /* KPCafeDetailedInfoRequest.swift */,
 				77421FAF1EB8EE0C00064FF0 /* KPNomadRequest.swift */,
 				773463511ED7547B00EA78F0 /* KPLoginRequest.swift */,
 			);
@@ -604,6 +611,7 @@
 			isa = PBXGroup;
 			children = (
 				77427BE11EF7F58B005D7AE4 /* KPNewRatingRequest.swift */,
+				7762E3421F1211770006E205 /* KPGetRatingRequest.swift */,
 			);
 			name = Rate;
 			sourceTree = "<group>";
@@ -695,6 +703,7 @@
 		77869E181EB76EDD0027CA98 /* Basic */ = {
 			isa = PBXGroup;
 			children = (
+				77869E1D1EB79CF40027CA98 /* KPSimpleRequest.swift */,
 				77BFC54F1EB73F3E00610F55 /* NetworkRequest.swift */,
 				77869E151EB75B5C0027CA98 /* NetworkClient.swift */,
 				77869E191EB76F690027CA98 /* NetworkErrorHandler.swift */,
@@ -1323,6 +1332,7 @@
 				771EECA41EBC217B004A34B8 /* KPCheckBox.swift in Sources */,
 				77A201991EBC5BE600F3497F /* KPCheckBoxFillController.swift in Sources */,
 				77B66FB31EAF171E008B6652 /* KPAboutUsViewController.swift in Sources */,
+				7762E33F1F12017D0006E205 /* KPCafeDetailedInfoRequest.swift in Sources */,
 				77BB392F1ED3DD7100958AFE /* KPFifthIntroView.swift in Sources */,
 				77594B471EC89DAF0013BB56 /* KPPhotoAddCell.swift in Sources */,
 				773463521ED7547B00EA78F0 /* KPLoginRequest.swift in Sources */,
@@ -1341,6 +1351,7 @@
 				77F718231ED18A0B00755AA2 /* KPCountrySelectController.swift in Sources */,
 				774208FE1EA679CB00C78A00 /* KPSideViewController.swift in Sources */,
 				C00A6E131ECB0B7F00A05C9A /* KPSharedSettingViewController.swift in Sources */,
+				7762E3411F12028A0006E205 /* KPDetailedDataModel.swift in Sources */,
 				C01AC62C1EAAEA0A000390F7 /* GMUWrappingDictionaryKey.m in Sources */,
 				77C594AD1ECB171A00118947 /* KPAllCommentController.swift in Sources */,
 				777DCC161EA789A90055525A /* KPInformationTranstion.swift in Sources */,
@@ -1394,6 +1405,7 @@
 				77BB39281ED3DD4300958AFE /* KPSecondIntroView.swift in Sources */,
 				77FB63961E9AA7BB00FFC3DC /* KPDataModel.swift in Sources */,
 				77FBE95D1ECCABD000EBBB9B /* KPFeatureTagLayout.swift in Sources */,
+				7762E3431F1211770006E205 /* KPGetRatingRequest.swift in Sources */,
 				C01AC62F1EAAEA0A000390F7 /* GMUDefaultClusterIconGenerator.m in Sources */,
 				77BFC5581EB7586F00610F55 /* KPErrorResponseModel.swift in Sources */,
 				776ACAFF1E9BB1DE00B629A2 /* KPConstant.swift in Sources */,

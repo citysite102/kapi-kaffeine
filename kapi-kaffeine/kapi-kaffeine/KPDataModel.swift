@@ -39,6 +39,9 @@ class KPDataModel: NSObject, Mappable, GMUClusterItem {
     var covers: [String: String]?
     var isKapi: Bool!
     
+    var createdTime: NSNumber?
+    var modifiedTime: NSNumber?
+    
     
     var featureContents: [String]! {
         get {
@@ -49,41 +52,6 @@ class KPDataModel: NSObject, Mappable, GMUClusterItem {
                     features.append(tag.name)
                 }
             }
-//            if let storeRates = self.rates {
-//                
-//                if (storeRates.wifi?.intValue ?? 0)! > 4 {
-//                    features.append("網路快速")
-//                }
-//                
-//                if (storeRates.seat?.intValue ?? 0)! > 4 {
-//                    features.append("座位舒適")
-//                }
-//                
-//                if (storeRates.music?.intValue ?? 0)! > 4 {
-//                    features.append("提供音樂")
-//                }
-//                
-//                if (storeRates.food?.intValue ?? 0)! > 4 &&
-//                    features.count < 2 {
-//                    features.append("提供餐點")
-//                }
-//                
-//                if (storeRates.quite?.intValue ?? 0)! > 4 &&
-//                    features.count < 2 {
-//                    features.append("環境安靜")
-//                }
-//                
-//                if (storeRates.tasty?.intValue ?? 0)! > 4 &&
-//                    features.count < 2 {
-//                    features.append("食物美味")
-//                }
-//                
-//                if (storeRates.cheap?.intValue ?? 0)! > 4 &&
-//                    features.count < 2 {
-//                    features.append("價格實在")
-//                }
-//            
-//            }
             return features
         }
     }
@@ -95,7 +63,9 @@ class KPDataModel: NSObject, Mappable, GMUClusterItem {
     }
     
     required init?(map: Map) {
-
+        if map.JSON["cafe_id"] == nil {
+            return nil
+        }
     }
     
     func mapping(map: Map) {
@@ -124,6 +94,8 @@ class KPDataModel: NSObject, Mappable, GMUClusterItem {
         photoCount          <-    map["photo_count"]
         covers              <-    map["covers"]
         isKapi              <-    map["is_kapi"]
+        createdTime         <-    map["created_time"]
+        modifiedTime        <-    map["modified_time"]
     }
     
     let businessHourTransform = TransformOf<KPDataBusinessHourModel, [String: String]>(fromJSON: { (value: [String: String]?) -> KPDataBusinessHourModel? in

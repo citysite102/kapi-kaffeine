@@ -75,7 +75,7 @@ class KPShopInfoView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        titleLabel = KPLayerLabel()
+        titleLabel = UILabel()
         titleLabel.font = UIFont.systemFont(ofSize: 16)
         titleLabel.textColor = KPColorPalette.KPTextColor.grayColor_level1
         addSubview(titleLabel)

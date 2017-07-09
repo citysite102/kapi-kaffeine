@@ -54,14 +54,6 @@ class KPBounceButton: UIButton {
         }
     }
     
-//    override var isHighlighted: Bool {
-//        didSet {
-//            tintColor = UIColor.red
-//            setImage(R.image.icon_cup(),
-//                     for: .normal)
-//        }
-//    }
-    
     //----------------------------
     // MARK: - Initalization
     //----------------------------

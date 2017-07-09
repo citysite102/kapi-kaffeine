@@ -205,6 +205,7 @@ class KPInformationViewController: KPViewController {
             informationView.openLabel.textColor = KPColorPalette.KPTextColor.grayColor_level5
             informationView.openHint.backgroundColor = KPColorPalette.KPTextColor.grayColor_level5
             informationView.openLabel.text = "暫無資料"
+            informationView.otherTimeButton.isHidden = true
         }
         
         shopInformationView = KPInformationSharedInfoView()
@@ -252,13 +253,10 @@ class KPInformationViewController: KPViewController {
                                                 views: [shopInformationView])
         
         let shopRateInfoView = KPShopRateInfoView()
-        if informationDataModel.rates != nil {
-            shopRateInfoView.rates = informationDataModel.rates
-        }
         rateInformationView = KPInformationSharedInfoView()
         rateInformationView.infoView = shopRateInfoView
         rateInformationView.infoTitleLabel.text = "店家評分"
-        rateInformationView.infoSupplementLabel.text = "143 人已評分"
+        rateInformationView.infoSupplementLabel.text = "\(informationDataModel.rateCount ?? 0) 人已評分"
         rateInformationView.actions = [Action(title:"我要評分",
                                                    style:.normal,
                                                    color:KPColorPalette.KPMainColor.mainColor!,
@@ -284,39 +282,56 @@ class KPInformationViewController: KPViewController {
         commentInformationView = KPInformationSharedInfoView()
         commentInformationView.infoView = commentInfoView
         commentInformationView.infoTitleLabel.text = "留言評價"
-        commentInformationView.infoSupplementLabel.text = "82 人已留言"
+        commentInformationView.infoSupplementLabel.text = "\(informationDataModel.commentCount ?? 0) 人已留言"
         scrollContainer.addSubview(commentInformationView)
         commentInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                                 "V:[$view0]-24-[$self]"],
                                                     views: [rateInformationView])
-        commentInformationView.actions = [Action(title:"看更多評價(20)",
-                                                      style:.normal,
-                                                      color:KPColorPalette.KPMainColor.mainColor!,
-                                                      icon:nil,
-                                                      handler:{(infoView) -> () in
-                                                        let commentViewController = KPAllCommentController()
-                                                        commentViewController.animated = !self.allCommentHasShown
-                                                        self.allCommentHasShown = true
-                                                        self.navigationController?.pushViewController(viewController: commentViewController,
-                                                                                                      animated: true,
-                                                                                                      completion: {})
-        }),
-                                                Action(title:"我要評價",
-                                                       style:.normal,
-                                                       color:KPColorPalette.KPMainColor.mainColor!,
-                                                       icon:(R.image.icon_comment()?.withRenderingMode(.alwaysTemplate))!,
-                                                       handler:{(infoView) -> () in
+        
+        if informationDataModel.commentCount == nil {
+            commentInformationView.actions = [Action(title:"我要評價",
+                                                     style:.normal,
+                                                     color:KPColorPalette.KPMainColor.mainColor!,
+                                                     icon:(R.image.icon_comment()?.withRenderingMode(.alwaysTemplate))!,
+                                                     handler:{(infoView) -> () in
                                                         let newCommentViewController = KPNewCommentController()
                                                         self.navigationController?.pushViewController(viewController: newCommentViewController,
                                                                                                       animated: true,
                                                                                                       completion: {})
-                                                })
-        ]
+                                              })
+            ]
+        } else {
+            commentInformationView.actions = [Action(title:"看更多評價(\(informationDataModel.commentCount ?? 0))",
+                                                          style:.normal,
+                                                          color:KPColorPalette.KPMainColor.mainColor!,
+                                                          icon:nil,
+                                                          handler:{(infoView) -> () in
+                                                            let commentViewController = KPAllCommentController()
+                                                            commentViewController.comments = self.commentInfoView.comments
+                                                            commentViewController.animated = !self.allCommentHasShown
+                                                            self.allCommentHasShown = true
+                                                            self.navigationController?.pushViewController(viewController: commentViewController,
+                                                                                                          animated: true,
+                                                                                                          completion: {})
+            }),
+                                                    Action(title:"我要評價",
+                                                           style:.normal,
+                                                           color:KPColorPalette.KPMainColor.mainColor!,
+                                                           icon:(R.image.icon_comment()?.withRenderingMode(.alwaysTemplate))!,
+                                                           handler:{(infoView) -> () in
+                                                            let newCommentViewController = KPNewCommentController()
+                                                            self.navigationController?.pushViewController(viewController: newCommentViewController,
+                                                                                                          animated: true,
+                                                                                                          completion: {})
+                                                    })
+            ]
+        }
         
         let photoInfoView = KPShopPhotoInfoView()
         photoInformationView = KPInformationSharedInfoView()
         photoInformationView.infoView = photoInfoView
         photoInformationView.infoTitleLabel.text = "店家照片"
+        photoInformationView.infoSupplementLabel.text = "\(informationDataModel.photoCount ?? 0) 張照片"
         scrollContainer.addSubview(photoInformationView)
         photoInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                               "V:[$view0]-24-[$self]"],
@@ -374,11 +389,26 @@ class KPInformationViewController: KPViewController {
     
     func syncRemoteData() {
         
+//        KPServiceHandler.sharedHandler.fetchStoreInformation(informationDataModel.identifier) {
+//            (result) in
+//                if result != nil, let comments = result?.comments {
+//                    self.commentInfoView.comments = comments
+//                }
+//        }
+        
+        // 取得 Comment 資料
         KPServiceHandler.sharedHandler.getComments { (successed, comments) in
             if successed && comments != nil {
                 self.commentInfoView.comments = comments!
+                self.view.layoutIfNeeded()
             }
         }
+        
+        // 取得 Rating 資料
+        KPServiceHandler.sharedHandler.getRatings { (successed, rating) in
+            
+        }
+
         
     }
     
@@ -523,13 +553,7 @@ extension KPInformationViewController: UIScrollViewDelegate {
             animatedHeaderConstraint.constant = -scrollContainer.contentOffset.y*9/20
             informationHeaderView.shopPhoto.transform = CGAffineTransform(translationX: 0,
                                                                           y: scrollContainer.contentOffset.y*9/20)
-            
-//            self.navigationController?.navigationBar.frame = CGRect(x: 0,
-//                                                                    y: 0,
-//                                                                    width: bounds.width,
-//                                                                    height: bounds.height - 50*scrollContainer.contentOffset.y/200)
-            
-            self.view.layoutIfNeeded()
+            view.layoutIfNeeded()
         }
     }
 }

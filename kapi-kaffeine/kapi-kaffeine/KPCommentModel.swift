@@ -11,24 +11,33 @@ import ObjectMapper
 
 class KPCommentModel: Mappable {
     
+    
+    var commentID: String!
+    var content: String!
+    var createdTime: NSNumber!
+    var dislikeCount: NSNumber? = 0
+    var displayName: String!
+    var likeCount: NSNumber? = 0
+    var likes: [String: Any]?
     var memberID: String!
-    var comment: String!
-    var updateDate: Date?
-    
-    
-//    var voteUpCount: NSNumber?
-//    var voteDownCount: NSNumber?
+    var photoURL: String!
     
     required init?(map: Map) {
-        
+        if map.JSON["comment_id"] == nil {
+            return nil
+        }
     }
     
     func mapping(map: Map) {
-        memberID          <-    map["member_id"]
-        comment           <-    map["comment"]
-        updateDate        <-    (map["date"], DateTransform())
-//        voteUpCount       <-    map["voteUpCount"]
-//        voteDownCount     <-    map["voteDownCount"]
+        commentID           <-    map["comment_id"]
+        content             <-    map["content"]
+        createdTime         <-    map["created_time"]
+        dislikeCount        <-    map["dislike_count"]
+        displayName         <-    map["display_name"]
+        likeCount           <-    map["like_count"]
+        likes               <-    map["likes"]
+        memberID            <-    map["member_id"]
+        photoURL            <-    map["photo_url"]
     }
     
 }

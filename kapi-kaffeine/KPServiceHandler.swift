@@ -15,6 +15,7 @@ class KPServiceHandler {
     static let sharedHandler = KPServiceHandler()
     
     private var kapiDataRequest: KPCafeRequest!
+    private var kapiDetailedInfoRequest: KPCafeDetailedInfoRequest!
     private var loadingView: KPLoadingView!
     
     // 目前儲存所有的咖啡店
@@ -24,6 +25,7 @@ class KPServiceHandler {
     
     private init() {
         kapiDataRequest = KPCafeRequest()
+        kapiDetailedInfoRequest = KPCafeDetailedInfoRequest()
         loadingView = KPLoadingView()
     }
     
@@ -35,7 +37,7 @@ class KPServiceHandler {
                          _ standingDesk: NSNumber? = nil,
                          _ mrt: String? = nil,
                          _ city: String? = nil,
-                         _ completion:((_ result: [KPDataModel]?) -> Void)? = nil) {
+                         _ completion:((_ result: [KPDataModel]?) -> Void)!) {
         kapiDataRequest.perform(limitedTime,
                                 socket,
                                 standingDesk,
@@ -44,9 +46,8 @@ class KPServiceHandler {
                                     var cafeDatas = [KPDataModel]()
                                     if result["data"].arrayObject != nil {
                                         for data in (result["data"].arrayObject)! {
-                                            let cafeData = KPDataModel(JSON: (data as! [String: Any]))
-                                            if cafeData != nil {
-                                                cafeDatas.append(cafeData!)
+                                            if let cafeData = KPDataModel(JSON: (data as! [String: Any])) {
+                                                cafeDatas.append(cafeData)
                                             }
                                         }
                                         self.currentCafeDatas = cafeDatas
@@ -56,6 +57,20 @@ class KPServiceHandler {
                                     }
         }.catch { error in
                 completion?(nil)
+        }
+    }
+    
+    
+    func fetchStoreInformation(_ cafeID: String!,
+                               _ completion:((_ result: KPDetailedDataModel?) -> Void)!) {
+        kapiDetailedInfoRequest.perform(cafeID).then {result -> Void in
+            if let data = result["data"].dictionaryObject {
+                if let cafeData = KPDetailedDataModel(JSON: data) {
+                    completion(cafeData)
+                }
+            }
+        }.catch { error in
+            completion(nil)
         }
     }
     
@@ -164,6 +179,17 @@ class KPServiceHandler {
             })
             completion?(false)
         }
-
     }
+    
+    func getRatings(_ completion: ((_ successed: Bool,
+        _ comments: KPCommentModel?) -> Swift.Void)?) {
+        
+        let getRatingRequest = KPGetRatingRequest()
+        getRatingRequest.perform((currentDisplayModel?.identifier)!).then { result -> Void in
+            print("Get Rating Result:\(result)")
+        }.catch { (error) in
+            completion?(false, nil)
+        }
+    }
+    
 }

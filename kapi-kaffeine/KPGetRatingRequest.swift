@@ -1,8 +1,8 @@
 //
-//  KPGetCommentRequest.swift
+//  KPGetRatingRequest.swift
 //  kapi-kaffeine
 //
-//  Created by YU CHONKAO on 2017/6/19.
+//  Created by YU CHONKAO on 2017/7/9.
 //  Copyright © 2017年 kapi-kaffeine. All rights reserved.
 //
 
@@ -11,20 +11,18 @@ import ObjectMapper
 import PromiseKit
 import Alamofire
 
-class KPGetCommentRequest: NetworkRequest {
-
+class KPGetRatingRequest: NetworkRequest {
+    
     typealias ResponseType = RawJsonResult
     private var cafeID: String?
     
-    var endpoint: String { return "/reviews" }
+    var endpoint: String { return "/rates" }
     
     var parameters: [String : Any]? {
         var parameters = [String : Any]()
         parameters["cafe_id"] = cafeID
-        
         return parameters
     }
-    
     
     var headers: [String : String] {
         return ["token": (KPUserManager.sharedManager.currentUser?.accessToken)!]
@@ -34,5 +32,5 @@ class KPGetCommentRequest: NetworkRequest {
         self.cafeID = cafeID
         return  networkClient.performRequest(self).then(execute: responseHandler)
     }
-    
+
 }

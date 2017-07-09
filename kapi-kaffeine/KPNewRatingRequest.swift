@@ -11,7 +11,7 @@ import ObjectMapper
 import PromiseKit
 import Alamofire
 
-class KPNewRatingRequest: NetworkUploadRequest {
+class KPNewRatingRequest: NetworkRequest {
     
     typealias ResponseType = RawJsonResult
     private var cafeID: String?
@@ -61,7 +61,7 @@ class KPNewRatingRequest: NetworkUploadRequest {
         self.tasty = tasty
         self.cheap = cheap
         self.music = music
-        return  networkClient.performUploadRequest(self).then(execute: responseHandler)
+        return  networkClient.performRequest(self).then(execute: responseHandler)
     }
     
 }
