@@ -1,5 +1,5 @@
 //
-//  KPDataRateModel.swift
+//  KPRateDataModel.swift
 //  kapi-kaffeine
 //
 //  Created by YU CHONKAO on 2017/5/26.
@@ -9,29 +9,29 @@
 import Foundation
 import ObjectMapper
 
-class KPDataRateModel: NSObject, Mappable {
+class KPRateDataModel: NSObject, Mappable {
 
-    var wifi: NSNumber? = 0
-    var seat: NSNumber? = 0
-    var food: NSNumber? = 0
-    var quite: NSNumber? = 0
-    var tasty: NSNumber? = 0
-    var cheap: NSNumber? = 0
-    var music: NSNumber? = 0
-    var average: NSNumber? = 0
+    var cafeID: String!
+    var cheapAverage: NSNumber? = 0
+    var foodAverage: NSNumber? = 0
+    var quietAverage: NSNumber? = 0
+    var seatAverage: NSNumber? = 0
+    var tastyAverage: NSNumber? = 0
+    var musicAverage: NSNumber? = 0
+    var wifiAverage: NSNumber? = 0
     
+
     required init?(map: Map) {
     }
-    
+
     func mapping(map: Map) {
-        wifi    <- map["wifi"]
-        seat    <- map["seat"]
-        food    <- map["food"]
-        quite   <- map["quite"]
-        tasty   <- map["tasty"]
-        cheap   <- map["cheap"]
-        music   <- map["music"]
-        average <- map["average"]
-        
+        cafeID          <- map["cafe_id"]
+        cheapAverage    <- map["cheap_avg"]
+        foodAverage     <- map["food_avg"]
+        quietAverage    <- map["quiet_avg"]
+        seatAverage     <- map["seat_avg"]
+        tastyAverage    <- map["tasty_avg"]
+        musicAverage    <- map["music_avg"]
+        wifiAverage     <- map["wifi_avg"]
     }
 }

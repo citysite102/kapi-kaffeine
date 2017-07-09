@@ -98,13 +98,13 @@ class KPInformationViewController: KPViewController {
 
         let barItem = UIBarButtonItem(customView: dismissButton)
         let rightBarItem = UIBarButtonItem(customView: moreButton)
-        let rightBarItem2 = UIBarButtonItem(customView: shareButton)
+//        let rightBarItem2 = UIBarButtonItem(customView: shareButton)
         let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace,
                                              target: nil,
                                              action: nil)
         negativeSpacer.width = -8
         navigationItem.leftBarButtonItems = [negativeSpacer, barItem]
-        navigationItem.rightBarButtonItems = [negativeSpacer, rightBarItem, rightBarItem2]
+        navigationItem.rightBarButtonItems = [negativeSpacer, rightBarItem]
         
         
         actionController = UIAlertController(title: nil,
@@ -405,7 +405,9 @@ class KPInformationViewController: KPViewController {
         
         // 取得 Rating 資料
         KPServiceHandler.sharedHandler.getRatings { (successed, rating) in
-            
+            if successed {
+                (self.rateInformationView.infoView as! KPShopRateInfoView).rateData = rating
+            }
         }
         
         // 取得 Photo 資料

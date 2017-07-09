@@ -35,7 +35,7 @@ class KPDataModel: NSObject, Mappable, GMUClusterItem {
     var visitCount: NSNumber?
     var photoCount: NSNumber?
     
-    var rates: KPDataRateModel?
+    var rates: KPRateDataModel?
     var covers: [String: String]?
     var isKapi: Bool!
     

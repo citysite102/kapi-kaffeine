@@ -166,6 +166,7 @@ public class KPUserManager {
                             self.currentUser?.favorites?.append(cafeData)
                             self.storeUserInformation()
                             completion?(true)
+                            print("Result\(result)")
             }.catch { error in
                 print("Add Favorite Cafe error\(error)")
                 completion?(false)
@@ -184,7 +185,7 @@ public class KPUserManager {
                                 }
                                 self.storeUserInformation()
                                 completion?(true)
-                print("Result\(result)")
+                                print("Result\(result)")
             }.catch { (error) in
                 print("error\(error)")
                 completion?(false)
@@ -199,6 +200,7 @@ public class KPUserManager {
                             self.currentUser?.visits?.append(cafeData)
                             self.storeUserInformation()
                             completion?(true)
+                            print("Result\(result)")
             }.catch { (error) in
                 print("Remove Visited Cafe error\(error)")
                 completion?(false)
@@ -215,6 +217,7 @@ public class KPUserManager {
                                 }
                                 self.storeUserInformation()
                                 completion?(true)
+                                print("Result\(result)")
             }.catch { (error) in
                 print("Remove Visited Error \(error)")
                 completion?(false)

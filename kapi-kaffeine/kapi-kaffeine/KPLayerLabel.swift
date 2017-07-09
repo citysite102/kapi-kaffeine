@@ -46,6 +46,7 @@ class KPLayerLabel: UILabel {
     
     func setUp() {
         textLayer().alignmentMode = kCAAlignmentLeft
+        textLayer().truncationMode = kCATruncationEnd
         textLayer().isWrapped = true
         textLayer().display()
     }

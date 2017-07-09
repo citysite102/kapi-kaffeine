@@ -72,7 +72,7 @@ class KPMainViewController: KPViewController {
         searchHeaderView.menuButton.isEnabled = false
         view.addSubview(searchHeaderView)
         searchHeaderView.addConstraints(fromStringArray: ["V:|[$self(100)]",
-                                                               "H:|[$self]|"])
+                                                          "H:|[$self]|"])
         
         opacityView = UIView()
         opacityView.backgroundColor = UIColor.black
@@ -80,7 +80,7 @@ class KPMainViewController: KPViewController {
         opacityView.isHidden = true
         view.addSubview(opacityView)
         opacityView.addConstraints(fromStringArray: ["V:|[$self]|",
-                                                          "H:|[$self]|"])
+                                                     "H:|[$self]|"])
         
         searchHeaderView.menuButton.addTarget(self,
                                               action: #selector(switchSideBar),

@@ -19,28 +19,42 @@ class KPShopRateInfoView: UIView {
     
     var rateViews: [rateStatusView] = [rateStatusView]()
     var rateContents = [String]()
-    var rates: KPDataRateModel! {
+    var rateData: KPRateDataModel! {
         didSet {
-            rateContents.append(rates.wifi != nil ?
-                (rates.wifi?.stringValue.characters.count == 1 ? "\((rates.wifi?.stringValue)!).0" : "\((rates.wifi?.stringValue)!)") :
+            rateContents.append(rateData.wifiAverage != nil ?
+                (rateData.wifiAverage?.stringValue.characters.count == 1 ?
+                    "\((rateData.wifiAverage?.stringValue)!).0" :
+                    "\((rateData.wifiAverage?.stringValue)!)") :
                 "0.0")
-            rateContents.append(rates.quite != nil ?
-                (rates.quite?.stringValue.characters.count == 1 ? "\((rates.quite?.stringValue)!).0" : "\((rates.quite?.stringValue)!)") :
+            rateContents.append(rateData.quietAverage != nil ?
+                (rateData.quietAverage?.stringValue.characters.count == 1 ?
+                    "\((rateData.quietAverage?.stringValue)!).0" :
+                    "\((rateData.quietAverage?.stringValue)!)") :
                 "0.0")
-            rateContents.append(rates.cheap != nil ?
-                (rates.cheap?.stringValue.characters.count == 1 ? "\((rates.cheap?.stringValue)!).0" : "\((rates.cheap?.stringValue)!)") :
+            rateContents.append(rateData.cheapAverage != nil ?
+                (rateData.cheapAverage?.stringValue.characters.count == 1 ?
+                    "\((rateData.cheapAverage?.stringValue)!).0" :
+                    "\((rateData.cheapAverage?.stringValue)!)") :
                 "0.0")
-            rateContents.append(rates.seat != nil ?
-                (rates.seat?.stringValue.characters.count == 1 ? "\((rates.seat?.stringValue)!).0" : "\((rates.seat?.stringValue)!)") :
+            rateContents.append(rateData.seatAverage != nil ?
+                (rateData.seatAverage?.stringValue.characters.count == 1 ?
+                    "\((rateData.seatAverage?.stringValue)!).0" :
+                    "\((rateData.seatAverage?.stringValue)!)") :
                 "0.0")
-            rateContents.append(rates.tasty != nil ?
-                (rates.tasty?.stringValue.characters.count == 1 ? "\((rates.tasty?.stringValue)!).0" : "\((rates.tasty?.stringValue)!)") :
+            rateContents.append(rateData.tastyAverage != nil ?
+                (rateData.tastyAverage?.stringValue.characters.count == 1 ?
+                    "\((rateData.tastyAverage?.stringValue)!).0" :
+                    "\((rateData.tastyAverage?.stringValue)!)") :
                 "0.0")
-            rateContents.append(rates.food != nil ?
-                (rates.food?.stringValue.characters.count == 1 ? "\((rates.food?.stringValue)!).0" : "\((rates.food?.stringValue)!)") :
+            rateContents.append(rateData.foodAverage != nil ?
+                (rateData.foodAverage?.stringValue.characters.count == 1 ?
+                    "\((rateData.foodAverage?.stringValue)!).0" :
+                    "\((rateData.foodAverage?.stringValue)!)") :
                 "0.0")
-            rateContents.append(rates.music != nil ?
-                (rates.music?.stringValue.characters.count == 1 ? "\((rates.music?.stringValue)!).0" : "\((rates.music?.stringValue)!)") :
+            rateContents.append(rateData.musicAverage != nil ?
+                (rateData.musicAverage?.stringValue.characters.count == 1 ?
+                    "\((rateData.musicAverage?.stringValue)!).0" :
+                    "\((rateData.musicAverage?.stringValue)!)") :
                 "0.0")
             
             for (index, rateView) in rateViews.enumerated() {
@@ -48,7 +62,6 @@ class KPShopRateInfoView: UIView {
             }
         }
     }
-    
     
     override init(frame: CGRect) {
         super.init(frame: frame) // calls designated initializer

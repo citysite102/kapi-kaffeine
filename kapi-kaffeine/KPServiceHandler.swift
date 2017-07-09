@@ -182,11 +182,14 @@ class KPServiceHandler {
     }
     
     func getRatings(_ completion: ((_ successed: Bool,
-        _ comments: KPCommentModel?) -> Swift.Void)?) {
+        _ rating: KPRateDataModel?) -> Swift.Void)?) {
         
         let getRatingRequest = KPGetRatingRequest()
         getRatingRequest.perform((currentDisplayModel?.identifier)!).then { result -> Void in
-            print("Get Rating Result:\(result)")
+            if let ratingResult = KPRateDataModel(JSON: result["data"].dictionaryObject!) {
+                completion?(true, ratingResult)
+            }
+            completion?(false, nil)
         }.catch { (error) in
             completion?(false, nil)
         }

@@ -62,10 +62,8 @@ class KPInformationHeaderButtonBar: UIView {
                                                     handler: { (headerButton) -> () in
                                                         if headerButton.selected == false {
                                                             headerButton.selected = true
+                                                            headerButton.numberValue = headerButton.numberValue + 1
                                                             KPUserManager.sharedManager.addFavoriteCafe(self.informationDataModel, { (successed) in
-//                                                                if successed {
-//                                                                    headerButton.numberValue = headerButton.numberValue + 1
-//                                                                }
                                                             })
                                                         } else {
                                                             DispatchQueue.main.asyncAfter(deadline: .now()) {
@@ -75,10 +73,8 @@ class KPInformationHeaderButtonBar: UIView {
                                                                     "我慚愧", { (content) in
                                                                         content.popoverView.dismiss()
                                                                         headerButton.selected = false
-                                                                        KPUserManager.sharedManager.removeVisitedCafe(self.informationDataModel.identifier, { (successed) in
-//                                                                            if successed {
-//                                                                                headerButton.numberValue = headerButton.numberValue - 1
-//                                                                            }
+                                                                        headerButton.numberValue = headerButton.numberValue - 1
+                                                                        KPUserManager.sharedManager.removeFavoriteCafe(self.informationDataModel.identifier, { (successed) in
                                                                         })
                                                                 })
                                                             }
@@ -94,10 +90,8 @@ class KPInformationHeaderButtonBar: UIView {
                                                     
                                                     if headerButton.selected == false {
                                                         headerButton.selected = true
+                                                        headerButton.numberValue = headerButton.numberValue + 1
                                                         KPUserManager.sharedManager.addVisitedCafe(self.informationDataModel, { (successed) in
-//                                                            if successed {
-//                                                                headerButton.numberValue = headerButton.numberValue + 1
-//                                                            }
                                                         })
                                                     } else {
                                                         DispatchQueue.main.asyncAfter(deadline: .now()) {
@@ -107,10 +101,8 @@ class KPInformationHeaderButtonBar: UIView {
                                                                 "我慚愧", { (content) in
                                                                     content.popoverView.dismiss()
                                                                     headerButton.selected = false
+                                                                    headerButton.numberValue = headerButton.numberValue - 1
                                                                     KPUserManager.sharedManager.removeVisitedCafe(self.informationDataModel.identifier, { (successed) in
-//                                                                        if successed {
-//                                                                            headerButton.numberValue = headerButton.numberValue - 1
-//                                                                        }
                                                                     })
                                                             })
                                                         }
@@ -149,27 +141,27 @@ class KPInformationHeaderButtonBar: UIView {
         })
         
         
-        
         if let favoriteValue = informationDataModel.favoriteCount?.intValue {
             collectButton.numberValue = favoriteValue
         }
         
         if let visitValue = informationDataModel.visitCount?.intValue {
-            collectButton.numberValue = visitValue
+            visitButton.numberValue = visitValue
         }
         
         if let rateValue = informationDataModel.rateCount?.intValue {
-            collectButton.numberValue = rateValue
+            rateButton.numberValue = rateValue
         }
         
         if let commentValue = informationDataModel.commentCount?.intValue {
-            collectButton.numberValue = commentValue
+            commentButton.numberValue = commentValue
         }
         
         collectButton.selected = (KPUserManager.sharedManager.currentUser?.hasFavorited(self.informationDataModel.identifier))!
         visitButton.selected = (KPUserManager.sharedManager.currentUser?.hasVisited(self.informationDataModel.identifier))!
         rateButton.selected = (KPUserManager.sharedManager.currentUser?.hasRated(self.informationDataModel.identifier))!
         commentButton.selected = (KPUserManager.sharedManager.currentUser?.hasReviewed(self.informationDataModel.identifier))!
+        
     }
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -232,7 +224,8 @@ class KPInformationHeaderView: UIView {
         shopPhoto.addGestureRecognizer(photoLongPressGesture)
         
         morePhotoButton = UIButton(type: .custom)
-        morePhotoButton.setBackgroundImage(UIImage(color: UIColor.clear), for: .normal)
+        morePhotoButton.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.mainColor_60!),
+                                           for: .normal)
         morePhotoButton.layer.cornerRadius = 2.0
         morePhotoButton.layer.borderWidth = 1.0
         morePhotoButton.layer.borderColor = UIColor.white.cgColor

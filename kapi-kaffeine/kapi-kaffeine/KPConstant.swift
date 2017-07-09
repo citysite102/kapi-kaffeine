@@ -49,6 +49,7 @@ struct KPColorPalette {
         
         static let mainColor_light = UIColor(hexString: "#c8955e")
         static let mainColor = UIColor(hexString: "#784d1f")
+        static let mainColor_60 = UIColor(hexString: "#784d1f99")
         
         static let cellScoreBgColor = UIColor(hexString: "#9f9426")
         static let scoreButtonColor = UIColor(hexString: "#9f9426")
