@@ -36,9 +36,11 @@ public class KPUserManager {
      
         // 建立Current User
         if KPUserDefaults.accessToken != nil {
-            let currentUserInfo = ["access_token": KPUserDefaults.accessToken,
-                                   "member_id": KPUserDefaults.userIdentifier]
-            self.currentUser = Mapper<KPUser>().map(JSONObject: currentUserInfo)
+            var currentUserInfo: [String: Any] = ["access_token": KPUserDefaults.accessToken!]
+            if let userInformation = KPUserDefaults.userInformation {
+                currentUserInfo.merge(dict: userInformation)
+                self.currentUser = Mapper<KPUser>().map(JSONObject: currentUserInfo)
+            }
         }
     }
     
@@ -48,18 +50,14 @@ public class KPUserManager {
     var currentUser: KPUser? {
         didSet {
             let userInformationString = currentUser?.toJSONString()
-            let userInformation: NSDictionary?
-            
             if let jsonData = userInformationString?.data(using: .utf8) {
                 do {
-                    userInformation = try JSONSerialization.jsonObject(with: jsonData,
-                                                                       options: []) as? NSDictionary
+                    let userInformation = try? JSONSerialization.jsonObject(with: jsonData,
+                                                                            options: [])
                     
                     if userInformation != nil {
-                        KPUserDefaults.userInformation = userInformation
+                        KPUserDefaults.userInformation = userInformation as? Dictionary<String, Any>
                     }
-                } catch let error as NSError {
-                    print(error)
                 }
             }
         }

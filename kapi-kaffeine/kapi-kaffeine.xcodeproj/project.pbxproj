@@ -47,7 +47,7 @@
 		7745C0821EF050D100244541 /* KPLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7745C0811EF050D100244541 /* KPLoginViewController.swift */; };
 		77594B471EC89DAF0013BB56 /* KPPhotoAddCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77594B461EC89DAF0013BB56 /* KPPhotoAddCell.swift */; };
 		77594B491EC8AEB40013BB56 /* KPBounceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77594B481EC8AEB40013BB56 /* KPBounceView.swift */; };
-		775989911EA5171A0029989C /* KPHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775989901EA5171A0029989C /* KPHelper.swift */; };
+		775989911EA5171A0029989C /* KPHelper+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775989901EA5171A0029989C /* KPHelper+UI.swift */; };
 		775D32ED1F0CCCCF005EF0CE /* KPInformationPhotoTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775D32EC1F0CCCCF005EF0CE /* KPInformationPhotoTransition.swift */; };
 		775D32EF1F0D20E4005EF0CE /* KPExpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775D32EE1F0D20E4005EF0CE /* KPExpView.swift */; };
 		775D32F11F0D21E0005EF0CE /* KPProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775D32F01F0D21E0005EF0CE /* KPProgressBar.swift */; };
@@ -58,6 +58,7 @@
 		7762E3431F1211770006E205 /* KPGetRatingRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7762E3421F1211770006E205 /* KPGetRatingRequest.swift */; };
 		7762E3451F12185C0006E205 /* KPVisitedRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7762E3441F12185C0006E205 /* KPVisitedRequest.swift */; };
 		7762E3481F1220A60006E205 /* KPGetPhotoRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7762E3471F1220A60006E205 /* KPGetPhotoRequest.swift */; };
+		7762E34A1F1225B20006E205 /* KPHelper+Foundation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7762E3491F1225B20006E205 /* KPHelper+Foundation.swift */; };
 		776ACAF41E9BAFA200B629A2 /* KPSearchHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776ACAF31E9BAFA200B629A2 /* KPSearchHeaderView.swift */; };
 		776ACAF61E9BAFBF00B629A2 /* KPSearchTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776ACAF51E9BAFBF00B629A2 /* KPSearchTagView.swift */; };
 		776ACAF81E9BAFE900B629A2 /* KPSearchFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776ACAF71E9BAFE900B629A2 /* KPSearchFooterView.swift */; };
@@ -227,7 +228,7 @@
 		7745C0811EF050D100244541 /* KPLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPLoginViewController.swift; sourceTree = "<group>"; };
 		77594B461EC89DAF0013BB56 /* KPPhotoAddCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPPhotoAddCell.swift; sourceTree = "<group>"; };
 		77594B481EC8AEB40013BB56 /* KPBounceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPBounceView.swift; sourceTree = "<group>"; };
-		775989901EA5171A0029989C /* KPHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPHelper.swift; sourceTree = "<group>"; };
+		775989901EA5171A0029989C /* KPHelper+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "KPHelper+UI.swift"; sourceTree = "<group>"; };
 		775D32EC1F0CCCCF005EF0CE /* KPInformationPhotoTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPInformationPhotoTransition.swift; sourceTree = "<group>"; };
 		775D32EE1F0D20E4005EF0CE /* KPExpView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPExpView.swift; sourceTree = "<group>"; };
 		775D32F01F0D21E0005EF0CE /* KPProgressBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPProgressBar.swift; sourceTree = "<group>"; };
@@ -238,6 +239,7 @@
 		7762E3421F1211770006E205 /* KPGetRatingRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPGetRatingRequest.swift; sourceTree = "<group>"; };
 		7762E3441F12185C0006E205 /* KPVisitedRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPVisitedRequest.swift; sourceTree = "<group>"; };
 		7762E3471F1220A60006E205 /* KPGetPhotoRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPGetPhotoRequest.swift; sourceTree = "<group>"; };
+		7762E3491F1225B20006E205 /* KPHelper+Foundation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "KPHelper+Foundation.swift"; sourceTree = "<group>"; };
 		776ACAF31E9BAFA200B629A2 /* KPSearchHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSearchHeaderView.swift; sourceTree = "<group>"; };
 		776ACAF51E9BAFBF00B629A2 /* KPSearchTagView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSearchTagView.swift; sourceTree = "<group>"; };
 		776ACAF71E9BAFE900B629A2 /* KPSearchFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSearchFooterView.swift; sourceTree = "<group>"; };
@@ -667,7 +669,8 @@
 				777DCC121EA785430055525A /* Transition */,
 				77FB63941E9AA75900FFC3DC /* Model */,
 				776ACAFE1E9BB1DE00B629A2 /* KPConstant.swift */,
-				775989901EA5171A0029989C /* KPHelper.swift */,
+				775989901EA5171A0029989C /* KPHelper+UI.swift */,
+				7762E3491F1225B20006E205 /* KPHelper+Foundation.swift */,
 				C031E9061EA5F0BF00E87FB1 /* KPLocationManager.swift */,
 			);
 			name = "Shared Class";
@@ -1358,7 +1361,7 @@
 				77A2019F1EBE23D100F3497F /* KPCheckView.swift in Sources */,
 				771EECAA1EBC3106004A34B8 /* KPCheckBoxController.swift in Sources */,
 				7734634F1ED74FE000EA78F0 /* KPServiceHandler.swift in Sources */,
-				775989911EA5171A0029989C /* KPHelper.swift in Sources */,
+				775989911EA5171A0029989C /* KPHelper+UI.swift in Sources */,
 				77594B491EC8AEB40013BB56 /* KPBounceView.swift in Sources */,
 				77DD7E3D1F0B7647007B0E17 /* KPDefaultPopoverContent.swift in Sources */,
 				779EB1461EC0DFE2008AAFF0 /* KPPhotoGalleryViewController.swift in Sources */,
@@ -1381,6 +1384,7 @@
 				772D68281ECC81140013F802 /* KPSubTitleEditView.swift in Sources */,
 				775D32EF1F0D20E4005EF0CE /* KPExpView.swift in Sources */,
 				77DD7E3F1F0B9283007B0E17 /* KPPopoverViewUtility.swift in Sources */,
+				7762E34A1F1225B20006E205 /* KPHelper+Foundation.swift in Sources */,
 				77E495551EC98BE0003B7EBC /* KPRatingViewController.swift in Sources */,
 				7734634A1ED74BE300EA78F0 /* KPDataTagModel.swift in Sources */,
 				774208ED1EA5B97300C78A00 /* KPShopCommentCell.swift in Sources */,
@@ -1578,7 +1582,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CA73E4544076455C6DC0C065 /* Pods-kapi-kaffeine.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = A43Y729CXH;
 				INFOPLIST_FILE = "kapi-kaffeine/Info.plist";
@@ -1596,7 +1600,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 605CB2E5F236FDDFFE502CB5 /* Pods-kapi-kaffeine.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = A43Y729CXH;
 				INFOPLIST_FILE = "kapi-kaffeine/Info.plist";

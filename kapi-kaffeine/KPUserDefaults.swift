@@ -20,11 +20,6 @@ final public class KPUserDefaults {
         static let userIdentifier = "user_identifier"
     }
     
-    public static var userIdentifier: String?
-    public static var userDisplayName: String?
-    public static var userIntro: String?
-    public static var userEmail: String?
-    
     public static var accessToken: String? {
         didSet {
             if accessToken != nil {
@@ -36,23 +31,16 @@ final public class KPUserDefaults {
         }
     }
     
-    public static var userInformation: NSDictionary? {
+    public static var userInformation: Dictionary<String, Any>? = nil {
         didSet {
-            
-            if let identifier = userInformation?["member_id"] {
-                UserDefaults.standard.set(identifier as? String, forKey: "user_identifier")
-                self.userIdentifier = identifier as? String
-            }
+            UserDefaults.standard.set(userInformation, forKey: "user_information")
         }
     }
     
     static func loadUserInformation() {
-//        if defaults == nil {
-//            defaults = UserDefaults(suiteName: AppConstant.userDefaultsSuitName)
-//        }
-        accessToken = UserDefaults.standard.object(forKey: "accessToken") as? String
-        userIdentifier = UserDefaults.standard.object(forKey: "user_identifier") as? String
         
+        userInformation = UserDefaults.standard.object(forKey: "user_information") as? Dictionary
+        accessToken = UserDefaults.standard.object(forKey: "accessToken") as? String
         if accessToken != nil {
             print("Get Access Token as \(accessToken!)")
         }
