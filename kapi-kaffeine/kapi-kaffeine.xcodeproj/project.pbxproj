@@ -56,6 +56,7 @@
 		7762E33F1F12017D0006E205 /* KPCafeDetailedInfoRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7762E33E1F12017D0006E205 /* KPCafeDetailedInfoRequest.swift */; };
 		7762E3411F12028A0006E205 /* KPDetailedDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7762E3401F12028A0006E205 /* KPDetailedDataModel.swift */; };
 		7762E3431F1211770006E205 /* KPGetRatingRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7762E3421F1211770006E205 /* KPGetRatingRequest.swift */; };
+		7762E3451F12185C0006E205 /* KPVisitedRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7762E3441F12185C0006E205 /* KPVisitedRequest.swift */; };
 		776ACAF41E9BAFA200B629A2 /* KPSearchHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776ACAF31E9BAFA200B629A2 /* KPSearchHeaderView.swift */; };
 		776ACAF61E9BAFBF00B629A2 /* KPSearchTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776ACAF51E9BAFBF00B629A2 /* KPSearchTagView.swift */; };
 		776ACAF81E9BAFE900B629A2 /* KPSearchFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776ACAF71E9BAFE900B629A2 /* KPSearchFooterView.swift */; };
@@ -234,6 +235,7 @@
 		7762E33E1F12017D0006E205 /* KPCafeDetailedInfoRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPCafeDetailedInfoRequest.swift; sourceTree = "<group>"; };
 		7762E3401F12028A0006E205 /* KPDetailedDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPDetailedDataModel.swift; sourceTree = "<group>"; };
 		7762E3421F1211770006E205 /* KPGetRatingRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPGetRatingRequest.swift; sourceTree = "<group>"; };
+		7762E3441F12185C0006E205 /* KPVisitedRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPVisitedRequest.swift; sourceTree = "<group>"; };
 		776ACAF31E9BAFA200B629A2 /* KPSearchHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSearchHeaderView.swift; sourceTree = "<group>"; };
 		776ACAF51E9BAFBF00B629A2 /* KPSearchTagView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSearchTagView.swift; sourceTree = "<group>"; };
 		776ACAF71E9BAFE900B629A2 /* KPSearchFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSearchFooterView.swift; sourceTree = "<group>"; };
@@ -460,12 +462,13 @@
 			name = "Animation Generator";
 			sourceTree = "<group>";
 		};
-		771F90AF1EF1973400D66C14 /* Favorite */ = {
+		771F90AF1EF1973400D66C14 /* UserAction */ = {
 			isa = PBXGroup;
 			children = (
 				771F90B01EF1976B00D66C14 /* KPFavoriteRequest.swift */,
+				7762E3441F12185C0006E205 /* KPVisitedRequest.swift */,
 			);
-			name = Favorite;
+			name = UserAction;
 			sourceTree = "<group>";
 		};
 		772748401ED5D18B00C42FB6 /* kapi-user */ = {
@@ -506,7 +509,7 @@
 			children = (
 				77427BE01EF7F575005D7AE4 /* Rate */,
 				77427BDB1EF6E572005D7AE4 /* Comment */,
-				771F90AF1EF1973400D66C14 /* Favorite */,
+				771F90AF1EF1973400D66C14 /* UserAction */,
 				77869E181EB76EDD0027CA98 /* Basic */,
 				77869E171EB75F1E0027CA98 /* Model */,
 				77952EF21EFAEC850012445F /* KPAddNewCafeRequest.swift */,
@@ -1403,6 +1406,7 @@
 				779EB1441EC0DFD4008AAFF0 /* KPPhotoDisplayViewController.swift in Sources */,
 				C05CF8781EF8019800F3DF2A /* KPDataBusinessHourModel.swift in Sources */,
 				77BB39281ED3DD4300958AFE /* KPSecondIntroView.swift in Sources */,
+				7762E3451F12185C0006E205 /* KPVisitedRequest.swift in Sources */,
 				77FB63961E9AA7BB00FFC3DC /* KPDataModel.swift in Sources */,
 				77FBE95D1ECCABD000EBBB9B /* KPFeatureTagLayout.swift in Sources */,
 				7762E3431F1211770006E205 /* KPGetRatingRequest.swift in Sources */,

@@ -1,8 +1,8 @@
 //
-//  KPAddFavoriteRequest.swift
+//  KPVisitedRequest.swift
 //  kapi-kaffeine
 //
-//  Created by YU CHONKAO on 2017/6/15.
+//  Created by YU CHONKAO on 2017/7/9.
 //  Copyright © 2017年 kapi-kaffeine. All rights reserved.
 //
 
@@ -11,7 +11,7 @@ import ObjectMapper
 import PromiseKit
 import Alamofire
 
-class KPFavoriteRequest: NetworkRequest {
+class KPVisitedRequest: NetworkRequest {
 
     enum requestType {
         case delete
@@ -22,7 +22,7 @@ class KPFavoriteRequest: NetworkRequest {
     private var cafeID: String?
     private var type: requestType?
     
-    var endpoint: String { return "/favorites" }
+    var endpoint: String { return "/visits" }
     
     var parameters: [String : Any]? {
         var parameters = [String : Any]()
@@ -35,8 +35,8 @@ class KPFavoriteRequest: NetworkRequest {
     
     var method: Alamofire.HTTPMethod {
         return self.type == requestType.add ?
-        .post :
-        .delete }
+            .post :
+            .delete }
     
     var headers: [String : String] {
         return ["Content-Type": "application/json",
@@ -51,5 +51,6 @@ class KPFavoriteRequest: NetworkRequest {
         self.type = type
         return  networkClient.performRequest(self).then(execute: responseHandler)
     }
+
     
 }

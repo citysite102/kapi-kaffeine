@@ -54,6 +54,7 @@ class KPFifthIntroView: KPSharedIntroView {
         
         facebookLoginButton = UIButton()
         facebookLoginButton.setImage(R.image.facebook_login(), for: .normal)
+        facebookLoginButton.isHidden = KPUserManager.sharedManager.currentUser != nil ? true : false
         addSubview(facebookLoginButton)
         facebookLoginButton.addConstraintForCenterAligningToSuperview(in: .horizontal)
         facebookLoginButton.addConstraints(fromStringArray: ["V:[$self(64)]-32-|",

@@ -39,7 +39,7 @@ final public class KPUserDefaults {
     public static var userInformation: NSDictionary? {
         didSet {
             
-            if let identifier = userInformation?["id"] {
+            if let identifier = userInformation?["member_id"] {
                 UserDefaults.standard.set(identifier as? String, forKey: "user_identifier")
                 self.userIdentifier = identifier as? String
             }

@@ -37,7 +37,7 @@ public class KPUserManager {
         // 建立Current User
         if KPUserDefaults.accessToken != nil {
             let currentUserInfo = ["access_token": KPUserDefaults.accessToken,
-                                   "id": KPUserDefaults.userIdentifier]
+                                   "member_id": KPUserDefaults.userIdentifier]
             self.currentUser = Mapper<KPUser>().map(JSONObject: currentUserInfo)
         }
     }
@@ -177,12 +177,25 @@ public class KPUserManager {
     
     func addVisitedCafe(_ cafeID: String,
                         _ completion:(() -> Void)? = nil) {
-        
+        let addRequest = KPVisitedRequest()
+        addRequest.perform(cafeID,
+                           KPVisitedRequest.requestType.add).then { result -> Void in
+                            
+                            print("Add Visited Cafe Result\(result)")
+            }.catch { (error) in
+                print("Remove Visited Cafe error\(error)")
+        }
     }
     
     func removeVisitedCafe(_ cafeID: String,
                            _ completion:(() -> Void)? = nil) {
-        
+        let removeRequest = KPVisitedRequest()
+        removeRequest.perform(cafeID,
+                              KPVisitedRequest.requestType.delete).then { result -> Void in
+                                print("Remove Visited \(result)")
+            }.catch { (error) in
+                print("Remove Visited Error \(error)")
+        }
     }
 
     

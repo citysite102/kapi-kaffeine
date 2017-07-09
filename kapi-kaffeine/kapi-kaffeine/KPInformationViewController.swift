@@ -104,7 +104,7 @@ class KPInformationViewController: KPViewController {
                                              action: nil)
         negativeSpacer.width = -8
         navigationItem.leftBarButtonItems = [negativeSpacer, barItem]
-        navigationItem.rightBarButtonItems = [negativeSpacer, rightBarItem]
+        navigationItem.rightBarButtonItems = [negativeSpacer, rightBarItem, rightBarItem2]
         
         
         actionController = UIAlertController(title: nil,
