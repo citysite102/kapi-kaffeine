@@ -10,7 +10,6 @@ import UIKit
 
 final public class KPUserDefaults {
 
-    
 //    static var defaults = UserDefaults(suiteName: AppConstant.userDefaultsSuitName)
     static var defaults = UserDefaults.standard
     
@@ -23,10 +22,7 @@ final public class KPUserDefaults {
     public static var accessToken: String? {
         didSet {
             if accessToken != nil {
-                print("Set Access Token as \(accessToken!)")
                 UserDefaults.standard.set(accessToken, forKey: "accessToken")
-                print("Stored Access Token \(UserDefaults.standard.object(forKey: "accessToken") as! String)")
-                
             }
         }
     }
@@ -41,9 +37,9 @@ final public class KPUserDefaults {
         
         userInformation = UserDefaults.standard.object(forKey: "user_information") as? Dictionary
         accessToken = UserDefaults.standard.object(forKey: "accessToken") as? String
-        if accessToken != nil {
-            print("Get Access Token as \(accessToken!)")
-        }
+//        if accessToken != nil {
+//            print("Get Access Token as \(accessToken!)")
+//        }
     }
     
     static func clearUserInformation() {

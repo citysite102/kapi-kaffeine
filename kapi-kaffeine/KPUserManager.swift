@@ -47,22 +47,7 @@ public class KPUserManager {
     
     // MARK: Properties
     
-    var currentUser: KPUser? {
-        didSet {
-            let userInformationString = currentUser?.toJSONString()
-            if let jsonData = userInformationString?.data(using: .utf8) {
-                do {
-                    let userInformation = try? JSONSerialization.jsonObject(with: jsonData,
-                                                                            options: [])
-                    
-                    if userInformation != nil {
-                        KPUserDefaults.userInformation = userInformation as? Dictionary<String, Any>
-                    }
-                }
-            }
-        }
-    }
-    
+    var currentUser: KPUser?
     var loginManager: LoginManager!
     var loadingView: KPLoadingView!
     
@@ -121,6 +106,7 @@ public class KPUserManager {
                                                                                     Mapper<KPUser>().map(JSONObject: result["data"].dictionaryObject)
                                                                                 self.currentUser?.accessToken = result["token"].string
                                                                                 KPUserDefaults.accessToken = result["token"].string
+                                                                                self.storeUserInformation()
                                                                                 
                                                                                 self.loadingView.state = .successed
                                                                                 completion?(true)
@@ -145,54 +131,93 @@ public class KPUserManager {
         KPUserDefaults.clearUserInformation()
     }
     
+    func updateUserInformation() {
+        let userRequest = KPUserInformationRequest()
+        userRequest.perform(nil, nil, nil, nil, nil, .get).then {
+            result -> Void in
+            print("Updated Result:\(result)")
+        }.catch { error in
+                
+        }
+    }
+    
+    func storeUserInformation() {
+        let userInformationString = currentUser?.toJSONString()
+        if let jsonData = userInformationString?.data(using: .utf8) {
+            do {
+                let userInformation = try? JSONSerialization.jsonObject(with: jsonData,
+                                                                        options: [])
+                
+                if userInformation != nil {
+                    KPUserDefaults.userInformation = userInformation as? Dictionary<String, Any>
+                }
+            }
+        }
+    }
+    
     // MARK: User Action
     
-    func addFavoriteCafe(_ cafeID: String,
-                         _ completion:(() -> Void)? = nil) {
+    func addFavoriteCafe(_ cafeData: KPDataModel,
+                         _ completion: ((Bool) -> Swift.Void)? = nil) {
         
         let addRequest = KPFavoriteRequest()
-        addRequest.perform(cafeID,
+        addRequest.perform(cafeData.identifier,
                            KPFavoriteRequest.requestType.add).then { result -> Void in
-                            
-                print("Add Favorite Cafe Result\(result)")
-            }.catch { (error) in
-                print("Remove Favorite Cafe error\(error)")
+                            self.currentUser?.favorites?.append(cafeData)
+                            self.storeUserInformation()
+                            completion?(true)
+            }.catch { error in
+                print("Add Favorite Cafe error\(error)")
+                completion?(false)
             }
     }
     
     func removeFavoriteCafe(_ cafeID: String,
-                            _ completion:(() -> Void)? = nil) {
+                            _ completion: ((Bool) -> Swift.Void)? = nil) {
         
         let removeRequest = KPFavoriteRequest()
         removeRequest.perform(cafeID,
                               KPFavoriteRequest.requestType.delete).then { result -> Void in
-                            
+//                                if let found = self.currentUser?.favorites?.first(where: {$0.identifier == cafeID}) {
+                                if let foundOffset = self.currentUser?.favorites?.index(where: {$0.identifier == cafeID}) {
+                                    self.currentUser?.favorites?.remove(at: foundOffset)
+                                }
+                                self.storeUserInformation()
+                                completion?(true)
                 print("Result\(result)")
             }.catch { (error) in
                 print("error\(error)")
+                completion?(false)
             }
     }
     
-    func addVisitedCafe(_ cafeID: String,
-                        _ completion:(() -> Void)? = nil) {
+    func addVisitedCafe(_ cafeData: KPDataModel,
+                        _ completion: ((Bool) -> Swift.Void)? = nil) {
         let addRequest = KPVisitedRequest()
-        addRequest.perform(cafeID,
+        addRequest.perform(cafeData.identifier,
                            KPVisitedRequest.requestType.add).then { result -> Void in
-                            
-                            print("Add Visited Cafe Result\(result)")
+                            self.currentUser?.visits?.append(cafeData)
+                            self.storeUserInformation()
+                            completion?(true)
             }.catch { (error) in
                 print("Remove Visited Cafe error\(error)")
+                completion?(false)
         }
     }
     
     func removeVisitedCafe(_ cafeID: String,
-                           _ completion:(() -> Void)? = nil) {
+                           _ completion: ((Bool) -> Swift.Void)? = nil) {
         let removeRequest = KPVisitedRequest()
         removeRequest.perform(cafeID,
                               KPVisitedRequest.requestType.delete).then { result -> Void in
-                                print("Remove Visited \(result)")
+                                if let foundOffset = self.currentUser?.visits?.index(where: {$0.identifier == cafeID}) {
+                                    self.currentUser?.visits?.remove(at: foundOffset)
+                                }
+                                self.storeUserInformation()
+                                completion?(true)
             }.catch { (error) in
                 print("Remove Visited Error \(error)")
+                completion?(false)
         }
     }
 

@@ -151,21 +151,20 @@ class KPInformationViewController: KPViewController {
         informationHeaderView = KPInformationHeaderView(frame: CGRect.zero)
         informationHeaderView.delegate = self
         informationHeaderView.informationController = self
-//        if let photoURL = informationDataModel.photos?["google_l"] {
-            informationHeaderView.shopPhoto.image = R.image.demo_1()
-//            informationHeaderView.shopPhoto.af_setImage(withURL: URL(string: photoURL)!,
-//                                                        placeholderImage: R.image.demo_1()!,
-//                                                        filter: nil,
-//                                                        progress: nil,
-//                                                            progressQueue: DispatchQueue.global(),
-//                                                            imageTransition: UIImageView.ImageTransition.crossDissolve(0.2),
-//                                                            runImageTransitionIfCached: true,
-//                                                            completion: { response in
-//                                                                if let responseImage = response.result.value {
-//                                                                    self.informationHeaderView.shopPhoto.image =  responseImage
-//                                                                }
-//                })
-//        }
+        if let photoURL = informationDataModel.covers?["google_l"] {
+            informationHeaderView.shopPhoto.af_setImage(withURL: URL(string: photoURL)!,
+                                                        placeholderImage: R.image.demo_1()!,
+                                                        filter: nil,
+                                                        progress: nil,
+                                                            progressQueue: DispatchQueue.global(),
+                                                            imageTransition: UIImageView.ImageTransition.crossDissolve(0.2),
+                                                            runImageTransitionIfCached: true,
+                                                            completion: { response in
+                                                                if let responseImage = response.result.value {
+                                                                    self.informationHeaderView.shopPhoto.image =  responseImage
+                                                                }
+                })
+        }
         //informationDataModel
         scrollContainer.addSubview(informationHeaderView)
         informationHeaderView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]"])
@@ -175,8 +174,8 @@ class KPInformationViewController: KPViewController {
                                                         action: #selector(KPInformationViewController.handleMorePhotoButtonOnTapped),
                                                         for: UIControlEvents.touchUpInside)
         
-        informationHeaderButtonBar = KPInformationHeaderButtonBar(frame: CGRect.zero,
-                                                                  cafeIdentifier: informationDataModel.identifier)
+        informationHeaderButtonBar = KPInformationHeaderButtonBar(frame: .zero,
+                                                                  informationDataModel: informationDataModel)
         informationHeaderButtonBar.informationController = self
         scrollContainer.addSubview(informationHeaderButtonBar)
         informationHeaderButtonBar.addConstraints(fromStringArray: ["H:|[$self]|"],

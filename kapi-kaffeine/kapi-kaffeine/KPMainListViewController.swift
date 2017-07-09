@@ -81,8 +81,8 @@ class KPMainListViewController:
         tableView.dataSource = self
         tableView.isUserInteractionEnabled = false
         view.addSubview(tableView)
-        tableView.addConstraints(fromStringArray: ["V:|-100-[$self]",
-                                                        "H:|[$self]|"])
+        tableView.addConstraints(fromStringArray: ["V:|-100-[$self]|",
+                                                   "H:|[$self]|"])
         tableView.register(KPMainListTableViewCell.self,
                                 forCellReuseIdentifier: Constant.KPMainListViewCellReuseIdentifier)
         tableView.register(KPDefaultLoadingTableCell.self,
@@ -93,26 +93,26 @@ class KPMainListViewController:
         tableView.allowsSelection = false
         tableView.rowHeight = UITableViewAutomaticDimension
         
-        searchFooterView = KPSearchFooterView()
-        searchFooterView.delegate = self
-        searchFooterView.layer.shadowColor = UIColor.black.cgColor
-        searchFooterView.layer.shadowOpacity = 0.15
-        searchFooterView.layer.shadowOffset = CGSize(width: 0.0, height: -1.0)
-        view.addSubview(searchFooterView)
-        searchFooterView.addConstraints(fromStringArray: ["V:[$view0][$self(40)]|",
-                                                          "H:|[$self]|"],
-                                        views:[tableView])
+//        searchFooterView = KPSearchFooterView()
+//        searchFooterView.delegate = self
+//        searchFooterView.layer.shadowColor = UIColor.black.cgColor
+//        searchFooterView.layer.shadowOpacity = 0.15
+//        searchFooterView.layer.shadowOffset = CGSize(width: 0.0, height: -1.0)
+//        searchFooterView.isHidden = true
+//        view.addSubview(searchFooterView)
+//        searchFooterView.addConstraints(fromStringArray: ["V:[$view0][$self(40)]|",
+//                                                          "H:|[$self]|"],
+//                                        views:[tableView])
         
         snapshotView = UIImageView()
         snapshotView.contentMode = .top
         snapshotView.clipsToBounds = true
         snapshotView.isHidden = true
         view.addSubview(snapshotView)
-        snapshotView.addConstraints(fromStringArray: ["V:|-100-[$self][$view0]",
-                                                      "H:|[$self]|"],
-                                    views: [searchFooterView])
+        snapshotView.addConstraints(fromStringArray: ["V:|-100-[$self]|",
+                                                      "H:|[$self]|"])
         
-        view.bringSubview(toFront: searchFooterView)
+//        view.bringSubview(toFront: searchFooterView)
         
         satisficationView = KPSatisficationView()
         

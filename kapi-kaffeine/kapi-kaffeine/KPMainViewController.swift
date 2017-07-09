@@ -107,11 +107,12 @@ class KPMainViewController: KPViewController {
         SideMenuManager.menuWidth = 260
         
         if (KPUserManager.sharedManager.currentUser != nil) {
+            KPUserManager.sharedManager.updateUserInformation()
             KPServiceHandler.sharedHandler.fetchRemoteData(nil,
                                                            nil,
                                                            nil,
                                                            nil,
-                                                           "taipei") { (results: [KPDataModel]?) in
+                                                           KPUserManager.sharedManager.currentUser?.defaultLocation ?? "taipei") { (results: [KPDataModel]?) in
                 if results != nil {
                     self.displayDataModel = results!
                 }
@@ -154,13 +155,12 @@ class KPMainViewController: KPViewController {
             self.present(introController, animated: true, completion: nil)
             
         } else {
-            
             if KPUserManager.sharedManager.currentUser == nil {
                 let controller = KPModalViewController()
                 controller.edgeInset = UIEdgeInsets(top: 0,
                                                     left: 0,
                                                     bottom: 0,
-     right: 0);
+                                                    right: 0);
                 let loginController = KPLoginViewController()
                 self.present(loginController, animated: true, completion: nil)
             }
