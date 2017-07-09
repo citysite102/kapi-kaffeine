@@ -388,12 +388,13 @@ class KPInformationViewController: KPViewController {
     
     func syncRemoteData() {
         
-//        KPServiceHandler.sharedHandler.fetchStoreInformation(informationDataModel.identifier) {
-//            (result) in
+        KPServiceHandler.sharedHandler.fetchStoreInformation(informationDataModel.identifier) {
+            (result) in
+            self.informationHeaderButtonBar.informationDataModel = result
 //                if result != nil, let comments = result?.comments {
 //                    self.commentInfoView.comments = comments
 //                }
-//        }
+        }
         
         // 取得 Comment 資料
         KPServiceHandler.sharedHandler.getComments { (successed, comments) in

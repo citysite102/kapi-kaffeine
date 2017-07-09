@@ -115,6 +115,7 @@ class KPNewCommentController: KPViewController {
         
         inputTextView = UITextView()
         inputTextView.delegate = self
+        inputTextView.returnKeyType = .done
         inputTextView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
         inputTextView.textContainerInset = UIEdgeInsetsMake(0, 0, 0, 0)
         inputTextView.typingAttributes = [NSParagraphStyleAttributeName: paragraphStyle,
@@ -282,8 +283,13 @@ extension KPNewCommentController: UITextViewDelegate {
         let rangeLength = range.length
         
         let newLength = oldLength - rangeLength + replacementLength
-        let returnKey = (text as NSString).range(of: "\n").location != NSNotFound
+        let returnKey = (text as NSString).range(of: "\n").location == NSNotFound
         
-        return newLength <= KPNewCommentController.commentMaximumTextLength || returnKey
+        if !returnKey {
+            textView.resignFirstResponder()
+            return false
+        }
+        
+        return newLength <= KPNewCommentController.commentMaximumTextLength && returnKey
     }
 }

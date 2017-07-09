@@ -29,6 +29,8 @@ class KPInformationHeaderButton: UIView {
             
             if numberValue == 0 {
                 self.infoLabel.text = self.buttonInfo.defaultInfo
+            } else if numberValue == oldValue {
+                self.infoLabel.text = self.infoLabel.text
             } else {
                 let transition: CATransition = CATransition()
                 transition.type = kCATransitionPush

@@ -10,8 +10,10 @@ import UIKit
 
 class KPMainListCellFeatureContainer: UIView {
 
-    var container:UIView!
-    var tagViews:[UIView] = []
+    
+    let maximumTagCount: Int = UIDevice().isSuperCompact ? 2 : 3
+    var container: UIView!
+    var tagViews: [UIView] = []
     
     var featureContents:Array<String>! {
         didSet {
@@ -34,33 +36,35 @@ class KPMainListCellFeatureContainer: UIView {
                 addedTagView.layer.borderWidth = 1.0
                 addedTagView.layer.borderColor = KPColorPalette.KPMainColor.mainColor_light?.cgColor
                 
-                if index == 0 {
-                    if index == featureContents.count-1 {
+                if index < maximumTagCount {
+                    if index == 0 {
+                        if index == featureContents.count-1 {
+                            addedTagView.addConstraints(fromStringArray:
+                                ["V:|[$self(20)]|", "H:|[$self]|"])
+                        } else {
+                            addedTagView.addConstraints(fromStringArray:
+                                ["V:|[$self(20)]|", "H:|[$self]"])
+                        }
+                    } else if index == maximumTagCount-1 {
                         addedTagView.addConstraints(fromStringArray:
-                            ["V:|[$self(20)]|", "H:|[$self]|"])
+                            ["V:|[$self(20)]|", "H:[$view0]-4-[$self]|"],
+                                                      views: [self.tagViews[index-1]])
                     } else {
                         addedTagView.addConstraints(fromStringArray:
-                            ["V:|[$self(20)]|", "H:|[$self]"])
+                            ["V:|[$self(20)]|", "H:[$view0]-4-[$self]"],
+                                                    views: [self.tagViews[index-1]])
                     }
-                } else if index == featureContents.count-1 {
-                    addedTagView.addConstraints(fromStringArray:
-                        ["V:|[$self(20)]|", "H:[$view0]-4-[$self]|"],
-                                                  views: [self.tagViews[index-1]])
-                } else {
-                    addedTagView.addConstraints(fromStringArray:
-                        ["V:|[$self(20)]|", "H:[$view0]-4-[$self]"],
-                                                views: [self.tagViews[index-1]])
+                    
+                    addedTagLabel.font = UIFont.systemFont(ofSize: 10.0)
+                    addedTagLabel.textColor = KPColorPalette.KPMainColor.mainColor_light
+                    addedTagLabel.text = content
+                    addedTagView.addSubview(addedTagLabel)
+                    addedTagLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
+                    addedTagLabel.addConstraints(fromStringArray:
+                        ["H:|-4-[$self]-4-|"])
+                    
+                    self.tagViews.append(addedTagView)
                 }
-                
-                addedTagLabel.font = UIFont.systemFont(ofSize: 10.0)
-                addedTagLabel.textColor = KPColorPalette.KPMainColor.mainColor_light
-                addedTagLabel.text = content
-                addedTagView.addSubview(addedTagLabel)
-                addedTagLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
-                addedTagLabel.addConstraints(fromStringArray:
-                    ["H:|-4-[$self]-4-|"])
-                
-                self.tagViews.append(addedTagView)
             }
         }
     }

@@ -18,7 +18,25 @@ class KPInformationHeaderButtonBar: UIView {
     var visitButton: KPInformationHeaderButton!
     var rateButton: KPInformationHeaderButton!
     var commentButton: KPInformationHeaderButton!
-    var informationDataModel: KPDataModel!
+    var informationDataModel: KPDataModel! {
+        didSet {
+            if let favoriteValue = informationDataModel.favoriteCount?.intValue {
+                collectButton.numberValue = favoriteValue
+            }
+            
+            if let visitValue = informationDataModel.visitCount?.intValue {
+                visitButton.numberValue = visitValue
+            }
+            
+            if let rateValue = informationDataModel.rateCount?.intValue {
+                rateButton.numberValue = rateValue
+            }
+            
+            if let commentValue = informationDataModel.commentCount?.intValue {
+                commentButton.numberValue = commentValue
+            }
+        }
+    }
     weak open var informationController: KPInformationViewController?
     
     convenience init (frame: CGRect,
@@ -139,7 +157,6 @@ class KPInformationHeaderButtonBar: UIView {
                                                                                                                                  completion: {})
                                                         }
         })
-        
         
         if let favoriteValue = informationDataModel.favoriteCount?.intValue {
             collectButton.numberValue = favoriteValue
