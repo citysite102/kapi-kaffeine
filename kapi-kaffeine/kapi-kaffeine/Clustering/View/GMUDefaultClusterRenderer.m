@@ -23,6 +23,7 @@
 
 #import "GMUClusterIconGenerator.h"
 #import "GMUWrappingDictionaryKey.h"
+#import "kapi_kaffeine-Swift.h"
 
 // Clusters smaller than this threshold will be expanded.
 static const NSUInteger kGMUMinClusterSize = 4;
@@ -310,7 +311,19 @@ static const double kGMUAnimationDuration = 0.5;  // seconds.
     marker.groundAnchor = CGPointMake(0.5, 0.5);
   }
   else {
-      marker.icon = [UIImage imageNamed:@"icon_mapMarker"];
+//      marker.icon = [UIImage imageNamed:@"icon_mapMarker"];
+      marker.iconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_mapMarker"]];
+      if ([marker.userData isKindOfClass:[KPDataModel class]]) {
+          KPDataModel *model = marker.userData;
+          if (!model.businessHour || model.businessHour.isOpening) {
+              marker.iconView.alpha = 1;
+          } else {
+              marker.iconView.alpha = 0.5;
+          }
+              
+      } else {
+          
+      }
   }
   marker.zIndex = _zIndex;
 

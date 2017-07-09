@@ -78,6 +78,12 @@ class KPDataBusinessHourModel: NSObject {
         }
     }
     
+    var isOpening: Bool {
+        get {
+            return self.shopStatus.isOpening
+        }
+    }
+    
     func getDayOfWeek() -> KPDay {
         let todayDate = NSDate()
         let myCalendar = NSCalendar(calendarIdentifier: NSCalendar.Identifier.gregorian)

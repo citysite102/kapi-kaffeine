@@ -21,7 +21,7 @@ PODS:
   - Bolts/Tasks (1.8.4)
   - Crashlytics (3.8.5):
     - Fabric (~> 1.6.3)
-  - Fabric (1.6.11)
+  - Fabric (1.6.12)
   - FacebookCore (0.2.0):
     - Bolts (~> 1.8)
     - FBSDKCoreKit (~> 4.15)
@@ -35,22 +35,22 @@ PODS:
     - FacebookCore (~> 0.2)
     - FBSDKCoreKit (~> 4.21)
     - FBSDKShareKit (~> 4.21)
-  - FBSDKCoreKit (4.23.0):
+  - FBSDKCoreKit (4.24.0):
     - Bolts (~> 1.7)
-  - FBSDKLoginKit (4.23.0):
+  - FBSDKLoginKit (4.24.0):
     - FBSDKCoreKit
-  - FBSDKShareKit (4.23.0):
+  - FBSDKShareKit (4.24.0):
     - FBSDKCoreKit
-  - Firebase/Auth (4.0.2):
+  - Firebase/Auth (4.0.3):
     - Firebase/Core
     - FirebaseAuth (= 4.0.0)
-  - Firebase/Core (4.0.2):
-    - FirebaseAnalytics (= 4.0.1)
-    - FirebaseCore (= 4.0.2)
-  - Firebase/Database (4.0.2):
+  - Firebase/Core (4.0.3):
+    - FirebaseAnalytics (= 4.0.2)
+    - FirebaseCore (= 4.0.3)
+  - Firebase/Database (4.0.3):
     - Firebase/Core
     - FirebaseDatabase (= 4.0.0)
-  - FirebaseAnalytics (4.0.1):
+  - FirebaseAnalytics (4.0.2):
     - FirebaseCore (~> 4.0)
     - FirebaseInstanceID (~> 2.0)
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
@@ -58,7 +58,7 @@ PODS:
     - FirebaseAnalytics (~> 4.0)
     - GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)
     - GTMSessionFetcher/Core (~> 1.1)
-  - FirebaseCore (4.0.2):
+  - FirebaseCore (4.0.3):
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
   - FirebaseDatabase (4.0.0):
     - FirebaseAnalytics (~> 4.0)
@@ -137,7 +137,7 @@ PODS:
     - R.swift.Library (~> 3.0.2)
   - R.swift.Library (3.0.2)
   - Shimmer (1.0.2)
-  - SideMenu (2.3.2)
+  - SideMenu (2.3.3)
   - SwiftyJSON (3.1.4)
 
 DEPENDENCIES:
@@ -182,17 +182,17 @@ SPEC CHECKSUMS:
   BenzeneFoundation: 7a44807ff32cd32d8776deccf2b7fd2f92ed8159
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
   Crashlytics: dfbae35ef22ca189240d230ad501feea4ee85d2d
-  Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
+  Fabric: f050464eac45a2ce5a8e6e6a07e977c0df32fe28
   FacebookCore: 2cb3f0fbff218e9d3119cec84bae983b232412de
   FacebookLogin: c9d606504735780a9e3002465a615512e0a691a5
   FacebookShare: d086f7a4610bbbca9cec5e774de450a9b3e1a20b
-  FBSDKCoreKit: d7829f5a69901cd7296105328e4c3c3fc7da6518
-  FBSDKLoginKit: 6b92bd65f319d669d2b0730e49db495ef1660566
-  FBSDKShareKit: 65751c3b9937ab9d594e6c37611ecc115ceeb448
-  Firebase: c7ad0731eab26d18a3fc547dd048b0f7cd9c63ae
-  FirebaseAnalytics: 4d7040fefc3cd8b291cde35f12cf063d7963f15d
+  FBSDKCoreKit: f8c9eb0dd34a9cd277c7b60da4b32226d142502d
+  FBSDKLoginKit: 1214c6d5a1c4995b694d8db8a9ba6910c6028acf
+  FBSDKShareKit: a2ed9d7781a4eda9ac20d7404305e795b10251ac
+  Firebase: 9e33fdfbca37cab635c693883caa90a4475b842b
+  FirebaseAnalytics: ad41720e3e67fc63fbe3d2948d3e26932a8de311
   FirebaseAuth: ebb6abcbabae00fc47446d690c19ce68d8484fde
-  FirebaseCore: 1a8bf6c795ad07d2918278657954ffd2552e9c17
+  FirebaseCore: c709067051de07bdaffdc4e735cd7299a23c463a
   FirebaseDatabase: d829b3a8c3e2ac7a16773c5df226966b0805dfc2
   FirebaseInstanceID: 9fbf536668f4d3f0880e7438456dabd1376e294b
   Google-Mobile-Ads-SDK: 4a6f1b43c8cc0e1e95a3b59d9f52a01671c6f9f3
@@ -209,9 +209,9 @@ SPEC CHECKSUMS:
   R.swift: bde9704d50ff36820f49e266bc88ef545e1e9b36
   R.swift.Library: fbdec16c9802ad104fc1ba53415dc190e6ec5c73
   Shimmer: c5374be1c2b0c9e292fb05b339a513cf291cac86
-  SideMenu: 3fa07dd05d4bade2b6f9889fb1877e312e1ba319
+  SideMenu: a447554ae5c982e8077666389e1c8b0c8656e065
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
 
-PODFILE CHECKSUM: 68e6a6d343f3ed7e9949868fd1ea16c80d1f6c10
+PODFILE CHECKSUM: 9047ea47433f9539f46ae67e5102bbe06c45c222
 
 COCOAPODS: 1.1.1
