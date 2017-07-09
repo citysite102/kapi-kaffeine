@@ -408,6 +408,11 @@ class KPInformationViewController: KPViewController {
         KPServiceHandler.sharedHandler.getRatings { (successed, rating) in
             
         }
+        
+        // 取得 Photo 資料
+        KPServiceHandler.sharedHandler.getPhotos { (successed, photos) in
+            
+        }
 
         
     }

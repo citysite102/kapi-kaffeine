@@ -157,7 +157,7 @@ class KPNewCommentController: KPViewController {
                                        views: [ratingHeaderLabel])
         
         
-        ratingCheckbox = KPCheckView(.checkmark, "暫時不評分")
+        ratingCheckbox = KPCheckView(.checkmark, "評分")
         ratingCheckbox.titleLabel.font = UIFont.systemFont(ofSize: 14.0)
         ratingCheckbox.checkBox.boxType = .square
         ratingContainer.addSubview(ratingCheckbox)
@@ -195,7 +195,6 @@ class KPNewCommentController: KPViewController {
     }
     
     func checkBoxValueChanged(_ sender: KPCheckBox) {
-        print("Changed.......\(sender.checkState)")
         switch sender.checkState {
         case .checked:
             for rateView in ratingViews {
@@ -218,10 +217,27 @@ class KPNewCommentController: KPViewController {
         inputTextView.resignFirstResponder()
         KPServiceHandler.sharedHandler.addNewComment(inputTextView.text) { (successed) in
             if successed {
-                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
-                                              execute: { 
-                                            self.navigationController?.popViewController(animated: true)
-                })
+                if self.ratingCheckbox.checkBox.checkState == .checked {
+                    KPServiceHandler.sharedHandler.addNewRating(NSNumber(value: self.ratingViews[0].currentRate),
+                                                                NSNumber(value: self.ratingViews[3].currentRate),
+                                                                NSNumber(value: self.ratingViews[5].currentRate),
+                                                                NSNumber(value: self.ratingViews[1].currentRate),
+                                                                NSNumber(value: self.ratingViews[4].currentRate),
+                                                                NSNumber(value: self.ratingViews[2].currentRate),
+                                                                NSNumber(value: self.ratingViews[6].currentRate), { (successed) in
+                                                                    if successed {
+                                                                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
+                                                                                                      execute: {
+                                                                                                        self.navigationController?.popViewController(animated: true)
+                                                                        })
+                                                                    }
+                    })
+                } else {
+                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
+                                                  execute: { 
+                                                self.navigationController?.popViewController(animated: true)
+                    })
+                }
             }
         }
     }

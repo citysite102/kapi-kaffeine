@@ -57,6 +57,7 @@
 		7762E3411F12028A0006E205 /* KPDetailedDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7762E3401F12028A0006E205 /* KPDetailedDataModel.swift */; };
 		7762E3431F1211770006E205 /* KPGetRatingRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7762E3421F1211770006E205 /* KPGetRatingRequest.swift */; };
 		7762E3451F12185C0006E205 /* KPVisitedRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7762E3441F12185C0006E205 /* KPVisitedRequest.swift */; };
+		7762E3481F1220A60006E205 /* KPGetPhotoRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7762E3471F1220A60006E205 /* KPGetPhotoRequest.swift */; };
 		776ACAF41E9BAFA200B629A2 /* KPSearchHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776ACAF31E9BAFA200B629A2 /* KPSearchHeaderView.swift */; };
 		776ACAF61E9BAFBF00B629A2 /* KPSearchTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776ACAF51E9BAFBF00B629A2 /* KPSearchTagView.swift */; };
 		776ACAF81E9BAFE900B629A2 /* KPSearchFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776ACAF71E9BAFE900B629A2 /* KPSearchFooterView.swift */; };
@@ -236,6 +237,7 @@
 		7762E3401F12028A0006E205 /* KPDetailedDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPDetailedDataModel.swift; sourceTree = "<group>"; };
 		7762E3421F1211770006E205 /* KPGetRatingRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPGetRatingRequest.swift; sourceTree = "<group>"; };
 		7762E3441F12185C0006E205 /* KPVisitedRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPVisitedRequest.swift; sourceTree = "<group>"; };
+		7762E3471F1220A60006E205 /* KPGetPhotoRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPGetPhotoRequest.swift; sourceTree = "<group>"; };
 		776ACAF31E9BAFA200B629A2 /* KPSearchHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSearchHeaderView.swift; sourceTree = "<group>"; };
 		776ACAF51E9BAFBF00B629A2 /* KPSearchTagView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSearchTagView.swift; sourceTree = "<group>"; };
 		776ACAF71E9BAFE900B629A2 /* KPSearchFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSearchFooterView.swift; sourceTree = "<group>"; };
@@ -507,6 +509,7 @@
 		773463501ED74FE500EA78F0 /* Request */ = {
 			isa = PBXGroup;
 			children = (
+				7762E3461F12208E0006E205 /* Photo */,
 				77427BE01EF7F575005D7AE4 /* Rate */,
 				77427BDB1EF6E572005D7AE4 /* Comment */,
 				771F90AF1EF1973400D66C14 /* UserAction */,
@@ -617,6 +620,14 @@
 				7762E3421F1211770006E205 /* KPGetRatingRequest.swift */,
 			);
 			name = Rate;
+			sourceTree = "<group>";
+		};
+		7762E3461F12208E0006E205 /* Photo */ = {
+			isa = PBXGroup;
+			children = (
+				7762E3471F1220A60006E205 /* KPGetPhotoRequest.swift */,
+			);
+			name = Photo;
 			sourceTree = "<group>";
 		};
 		776ACAED1E9BAE0200B629A2 /* Search */ = {
@@ -1294,6 +1305,7 @@
 				77C0E10A1E9D493400398852 /* KPShopCommentInfoView.swift in Sources */,
 				7720D0311F01479100E00F0B /* KPMainListNativeExpressCell.swift in Sources */,
 				77F718271ED1A5C800755AA2 /* KPDefaultLoadingTableCell.swift in Sources */,
+				7762E3481F1220A60006E205 /* KPGetPhotoRequest.swift in Sources */,
 				77C594AB1ECB170000118947 /* KPNewCommentController.swift in Sources */,
 				7720D02D1F01402700E00F0B /* KPMainListNativeAppInstallAdCell.swift in Sources */,
 				77421FB01EB8EE0C00064FF0 /* KPNomadRequest.swift in Sources */,

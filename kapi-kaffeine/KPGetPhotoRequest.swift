@@ -1,45 +1,34 @@
 //
-//  KPNewCommentRequest.swift
+//  KPGetPhotoRequest.swift
 //  kapi-kaffeine
 //
-//  Created by YU CHONKAO on 2017/6/19.
+//  Created by YU CHONKAO on 2017/7/9.
 //  Copyright © 2017年 kapi-kaffeine. All rights reserved.
 //
 
 import UIKit
-import ObjectMapper
 import PromiseKit
 import Alamofire
 
-class KPNewCommentRequest: NetworkRequest {
+class KPGetPhotoRequest: NetworkRequest {
 
     typealias ResponseType = RawJsonResult
     private var cafeID: String?
-    private var content: String?
     
-    var endpoint: String { return "/comments" }
+    var endpoint: String { return "/photos" }
     
     var parameters: [String : Any]? {
         var parameters = [String : Any]()
-        
-        parameters["member_id"] = KPUserManager.sharedManager.currentUser?.identifier
         parameters["cafe_id"] = cafeID
-        parameters["content"] = content
-        
         return parameters
     }
-    
     
     var headers: [String : String] {
         return ["token": (KPUserManager.sharedManager.currentUser?.accessToken)!]
     }
     
-    
-    
-    public func perform(_ cafeID: String,
-                        _ content: String) -> Promise<(ResponseType)> {
+    public func perform(_ cafeID: String) -> Promise<(ResponseType)> {
         self.cafeID = cafeID
-        self.content = content
         return  networkClient.performRequest(self).then(execute: responseHandler)
     }
     
