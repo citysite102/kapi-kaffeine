@@ -15,7 +15,17 @@ class KPShopCommentCell: UITableViewCell {
     var userNameLabel: UILabel!
     var timeHintLabel: UILabel!
     var userCommentLabel: UILabel!
+    var voteUpCount: NSNumber! {
+        didSet {
+            self.voteUpButton.currentCount = voteUpCount.intValue
+        }
+    }
     
+    var voteDownCount: NSNumber! {
+        didSet {
+            self.voteDownButton.currentCount = voteDownCount.intValue
+        }
+    }
     
     private var voteUpButton: KPShopCommentCellButton!
     private var voteDownButton: KPShopCommentCellButton!
@@ -35,7 +45,7 @@ class KPShopCommentCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        userPicture = UIImageView(image: R.image.demo_1())
+        userPicture = UIImageView(image: R.image.demo_profile())
         userPicture.contentMode = .scaleAspectFit
         userPicture.layer.cornerRadius = 10.0
         userPicture.layer.borderWidth = 1.0
@@ -49,7 +59,6 @@ class KPShopCommentCell: UITableViewCell {
         userNameLabel = UILabel()
         userNameLabel.font = UIFont.systemFont(ofSize: 14.0)
         userNameLabel.textColor = KPColorPalette.KPTextColor.grayColor_level1
-        userNameLabel.text = "Simon Lin"
         contentView.addSubview(userNameLabel)
         userNameLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self(190)]",
                                                        "V:|-16-[$self]"],
@@ -59,7 +68,6 @@ class KPShopCommentCell: UITableViewCell {
         timeHintLabel = UILabel()
         timeHintLabel.font = UIFont.systemFont(ofSize: 12.0)
         timeHintLabel.textColor = KPColorPalette.KPTextColor.grayColor_level4
-        timeHintLabel.text = "25 分鐘前"
         contentView.addSubview(timeHintLabel)
         timeHintLabel.addConstraints(fromStringArray: ["H:[$self]-16-|",
                                                        "V:|-16-[$self]"],
@@ -70,8 +78,6 @@ class KPShopCommentCell: UITableViewCell {
         userCommentLabel.font = UIFont.systemFont(ofSize: 14.0)
         userCommentLabel.numberOfLines = 0
         userCommentLabel.textColor = KPColorPalette.KPTextColor.grayColor_level3
-        userCommentLabel.setText(text: "時間, 天氣, 溫度(°C), 體感溫度(°C), 降雨機率, 蒲福風級, 風向, 相對濕度 .... 今天（16日）受鋒面影響，天氣不穩定，隨著雲系一波波移入",
-                                 lineSpacing: 2.4)
         contentView.addSubview(userCommentLabel)
         userCommentLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]-16-|",
                                                           "V:[$view1]-4-[$self]"],
@@ -87,20 +93,20 @@ class KPShopCommentCell: UITableViewCell {
         
         contentView.addSubview(voteUpButton)
         voteUpButton.addConstraints(fromStringArray: ["H:[$view0]-4-[$self]",
-                                                      "V:[$view1]-12-[$self]-20-|"],
+                                                      "V:[$view1]-12-[$self]-8-|"],
                                          metrics: [UIScreen.main.bounds.size.width/2],
                                          views: [userPicture, userCommentLabel])
         
         
         voteDownButton = KPShopCommentCellButton(frame: .zero,
-                                                      icon: R.image.icon_downvote()!,
-                                                      count: 5)
+                                                 icon: R.image.icon_downvote()!,
+                                                 count: 0)
         voteDownButton.iconButton.addTarget(self,
                                             action: #selector(KPShopCommentCell.handleVoteDownButtonOnTapped),
                                             for: .touchUpInside);
         contentView.addSubview(voteDownButton)
         voteDownButton.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]",
-                                                        "V:[$view1]-12-[$self]-20-|"],
+                                                        "V:[$view1]-12-[$self]-8-|"],
                                            metrics: [UIScreen.main.bounds.size.width/2],
                                            views: [voteUpButton, userCommentLabel])
         

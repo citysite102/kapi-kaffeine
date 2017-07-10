@@ -17,6 +17,7 @@ class KPNewCommentRequest: NetworkRequest {
     private var cafeID: String?
     private var content: String?
     
+    var method: Alamofire.HTTPMethod { return .post }
     var endpoint: String { return "/comments" }
     
     var parameters: [String : Any]? {

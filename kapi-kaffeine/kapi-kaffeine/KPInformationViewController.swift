@@ -402,8 +402,8 @@ class KPInformationViewController: KPViewController {
         super.viewDidLayoutSubviews()
         
         // Fix table view height according to fix cell
-        commentInfoView = commentInformationView.infoView as! KPShopCommentInfoView
-        commentInfoView.tableViewHeightConstraint.constant = commentInfoView.tableView.contentSize.height
+//        commentInfoView = commentInformationView.infoView as! KPShopCommentInfoView
+//        commentInfoView.tableViewHeightConstraint.constant = commentInfoView.tableView.contentSize.height
     }
     
     override func didReceiveMemoryWarning() {
@@ -431,7 +431,11 @@ class KPInformationViewController: KPViewController {
         KPServiceHandler.sharedHandler.getComments { (successed, comments) in
             if successed && comments != nil {
                 self.commentInfoView.comments = comments!
-                self.view.layoutIfNeeded()
+                self.commentInformationView.setNeedsLayout()
+                self.commentInformationView.layoutIfNeeded()
+                
+                let commentInfoView = self.commentInformationView.infoView as! KPShopCommentInfoView
+                commentInfoView.tableViewHeightConstraint.constant = commentInfoView.tableView.contentSize.height
             }
         }
         
@@ -509,11 +513,13 @@ class KPInformationViewController: KPViewController {
     }
     
     func handleOtherTimeButtonOnTapped() {
+        
         let controller = KPModalViewController()
+        let businessTimeViewController = KPBusinessTimeViewController()
+        
         controller.contentSize = CGSize(width: 276, height: 416)
         controller.cornerRadius = [.topRight, .topLeft, .bottomLeft, .bottomRight]
         controller.dismissWhenTouchingOnBackground = true
-        let businessTimeViewController = KPBusinessTimeViewController()
         businessTimeViewController.businessTime = informationDataModel.businessHour
         businessTimeViewController.titleLabel.text = informationDataModel.name
         controller.contentController = businessTimeViewController

@@ -16,7 +16,8 @@ class KPShopCommentInfoView: UIView {
     var tableViewHeightConstraint: NSLayoutConstraint!
     var comments: [KPCommentModel] = [KPCommentModel]() {
         didSet {
-            self.tableView.reloadData();
+            self.tableView.invalidateIntrinsicContentSize()
+            self.tableView.reloadData()
         }
     }
     
@@ -28,7 +29,9 @@ class KPShopCommentInfoView: UIView {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.isUserInteractionEnabled = false
-        addSubview(self.tableView)
+        tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 1))
+        tableView.rowHeight = UITableViewAutomaticDimension
+        addSubview(tableView)
         tableView.addConstraints(fromStringArray: ["V:|[$self]|",
                                                    "H:|[$self]|"])
         tableViewHeightConstraint = tableView.addConstraint(forHeight: 340)
@@ -53,6 +56,15 @@ extension KPShopCommentInfoView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier:KPShopCommentInfoView.KPShopCommentInfoCellReuseIdentifier,
                                                  for: indexPath) as! KPShopCommentCell;
+        
+        let comment = comments[indexPath.row] 
+        cell.userNameLabel.text = comment.displayName
+        cell.timeHintLabel.text = comment.createdModifiedContent
+        cell.userCommentLabel.setText(text: comment.content,
+                                      lineSpacing: 2.4)
+        cell.voteUpCount = comment.likeCount ?? 0
+        cell.voteDownCount = comment.dislikeCount ?? 0
+        
         return cell;
     }
     

@@ -135,7 +135,7 @@ public class KPUserManager {
         let userRequest = KPUserInformationRequest()
         userRequest.perform(nil, nil, nil, nil, nil, .get).then {
             result -> Void in
-            print("Updated Result:\(result)")
+            print("取得更新後的使用者資料")
         }.catch { error in
                 
         }
@@ -161,6 +161,7 @@ public class KPUserManager {
                          _ completion: ((Bool) -> Swift.Void)? = nil) {
         
         let addRequest = KPFavoriteRequest()
+        
         addRequest.perform(cafeData.identifier,
                            KPFavoriteRequest.requestType.add).then { result -> Void in
                             self.currentUser?.favorites?.append(cafeData)

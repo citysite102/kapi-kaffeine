@@ -18,11 +18,7 @@ class KPAllCommentController: KPViewController {
     var tableView: UITableView!
     var backButton: KPBounceButton!
     var editButton: KPBounceButton!
-    var comments: [KPCommentModel]! {
-        didSet {
-            self.tableView.reloadData()
-        }
-    }
+    var comments: [KPCommentModel]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,6 +54,7 @@ class KPAllCommentController: KPViewController {
         tableView = UITableView()
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.rowHeight = UITableViewAutomaticDimension
         view.addSubview(tableView)
         tableView.addConstraints(fromStringArray: ["V:|[$self]|",
                                                    "H:|[$self]|"])
@@ -99,9 +96,16 @@ extension KPAllCommentController: UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier:KPShopCommentInfoView.KPShopCommentInfoCellReuseIdentifier,
+        let cell = tableView.dequeueReusableCell(withIdentifier: KPAllCommentController.KPAllCommentControllerCellReuseIdentifier,
                                                  for: indexPath) as! KPShopCommentCell
         cell.selectionStyle = .none
+        
+        let comment = comments[indexPath.row]
+        cell.userNameLabel.text = comment.displayName
+        cell.timeHintLabel.text = comment.createdModifiedContent
+        cell.userCommentLabel.setText(text: comment.content, lineSpacing: 2.4)
+        cell.voteUpCount = comment.likeCount ?? 0
+        cell.voteDownCount = comment.dislikeCount ?? 0
         return cell
     }
     
@@ -110,7 +114,7 @@ extension KPAllCommentController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 6
+        return comments.count
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -118,6 +122,7 @@ extension KPAllCommentController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
         let displayCell = cell as! KPShopCommentCell
         
         if !shownCellIndex.contains(indexPath.row) && animated {

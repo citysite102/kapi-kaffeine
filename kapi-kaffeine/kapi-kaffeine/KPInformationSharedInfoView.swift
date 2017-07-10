@@ -45,11 +45,11 @@ class KPInformationSharedInfoView: UIView {
             let totalWidth = (Int(UIScreen.main.bounds.size.width)-((actions?.count)!-1)*8 - 16)
             let buttonWidth = Double(totalWidth)/Double((actions?.count)!)
             
-            self.actionButtons.removeAll()
+            actionButtons.removeAll()
             
             let separator = UIView()
             separator.backgroundColor = KPColorPalette.KPMainColor.grayColor_level6
-            self.buttonContainer.addSubview(separator)
+            buttonContainer.addSubview(separator)
             separator.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self(1)]"])
             
             for (index, action) in (actions?.enumerated())! {
