@@ -68,9 +68,9 @@ KPMainViewControllerDelegate {
                             let bounds = GMSCoordinateBounds(region: self.mapView.projection.visibleRegion())
                             return bounds.contains(dataModel.position)
                         }
-                        self.collectionViewBottomConstraint.constant = -15
+                        self.collectionViewBottomConstraint.constant = -16
                     } else {
-                        self.collectionViewBottomConstraint.constant = 90
+                        self.collectionViewBottomConstraint.constant = 100
                     }
                     
                     UIView.animate(withDuration: 0.5,
@@ -186,9 +186,10 @@ KPMainViewControllerDelegate {
                                      forCellWithReuseIdentifier: "cell")
         
         self.view.addSubview(self.collectionView)
-        self.collectionView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$self(90)]"])
-        self.collectionViewBottomConstraint = self.collectionView.addConstraintForAligning(to: .bottom, of: self.view, constant: 90).first as! NSLayoutConstraint
-
+        self.collectionView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$self(100)]"])
+        self.collectionViewBottomConstraint = self.collectionView.addConstraintForAligning(to: .bottom,
+                                                                                           of: self.view,
+                                                                                           constant: 100).first as! NSLayoutConstraint
         
         let currentLocationButton = UIButton(type: .custom)
         currentLocationButton.setImage(R.image.icon_currentLocation(), for: .normal)
@@ -196,19 +197,20 @@ KPMainViewControllerDelegate {
                                         action: #selector(moveToMyLocation), for: .touchUpInside)
         currentLocationButton.alpha = 0.7
         self.view.addSubview(currentLocationButton)
-        currentLocationButton.addConstraints(fromStringArray: ["H:[$self(40)]-16-|", "V:|-120-[$self(40)]"])
+        currentLocationButton.addConstraints(fromStringArray: ["H:[$self(40)]-16-|",
+                                                               "V:|-120-[$self(40)]"])
         
         view.addSubview(nearestButton)
         nearestButton.button.addTarget(self, action: #selector(handleNearestButtonOnTap(_:)), for: .touchUpInside)
         nearestButton.addConstraints(fromStringArray: ["H:|-16-[$self(90)]",
-                                                       "V:[$self(40)]-24-[$view0]"],
+                                                       "V:[$self(40)]-16-[$view0]"],
                                      views: [collectionView])
         
         view.addSubview(addButton)
         addButton.button.addTarget(self,
                                    action: #selector(handleAddButtonTapped(_:)), for: .touchUpInside)
         addButton.addConstraints(fromStringArray: ["H:[$self(56)]-18-|",
-                                                   "V:[$self(56)]-24-[$view0]"],
+                                                   "V:[$self(56)]-16-[$view0]"],
                                  views: [collectionView])
         
         KPLocationManager.sharedInstance().addObserver(self, forKeyPath: "currentLocation", options: .new, context: nil)
@@ -353,7 +355,7 @@ KPMainViewControllerDelegate {
         let pageWidth = UIScreen.main.bounds.size.width - 30;
         for cell in self.collectionView.visibleCells {
             let offset = fabs(centerX - (cell.frame.origin.x + cell.frame.size.width/2.0));
-            cell.alpha = (pageWidth - offset) / pageWidth * 0.7 + 0.3;
+            cell.alpha = (pageWidth - offset) / pageWidth * 0.7 + 0.5;
         }
     }
     

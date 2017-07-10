@@ -183,8 +183,14 @@ class KPMainListTableViewCell: UITableViewCell {
 class KPMainListCellScoreLabel: UILabel {
     
     
-    var scoreLabel:UILabel!;
-    var score:String! {
+    var scoreLabel: UILabel!
+    var contentBackgroundColor: UIColor! {
+        didSet {
+            backgroundColor = contentBackgroundColor
+            scoreLabel.backgroundColor = contentBackgroundColor
+        }
+    }
+    var score: String! {
         didSet {
             scoreLabel.text = score;
         }

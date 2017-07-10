@@ -457,6 +457,13 @@ class KPInformationViewController: KPViewController {
         informationHeaderButtonBar.isHidden = false
         shopInformationView.isHidden = false
 
+        
+        CATransaction.begin()
+        CATransaction.setCompletionBlock { 
+            self.informationHeaderButtonBar.layer.transform = CATransform3DMakeTranslation(0, 0, 0)
+            self.shopInformationView.layer.transform = CATransform3DMakeTranslation(0, 0, 0)
+        }
+        
         let timingFunction = CAMediaTimingFunction(controlPoints: 0.51, 0.98, 0.43, 1)
         let translateAnimation = CABasicAnimation(keyPath: "transform.translation.y")
         translateAnimation.duration = 0.65
@@ -464,7 +471,6 @@ class KPInformationViewController: KPViewController {
         translateAnimation.isRemovedOnCompletion = false
         translateAnimation.fillMode = kCAFillModeBoth
         translateAnimation.timingFunction = timingFunction
-        
         
         informationHeaderButtonBar.layer.add(translateAnimation, forKey: nil)
         shopInformationView.layer.add(translateAnimation, forKey: nil)
@@ -478,6 +484,8 @@ class KPInformationViewController: KPViewController {
         }) { (_) in
             self.scrollContainer.isUserInteractionEnabled = true
         }
+        
+        CATransaction.commit()
     }
     
     // MARK: UI Event
