@@ -16,10 +16,15 @@ class KPMainMapMarkerInfoWindow: UIView {
         
         let textRect = NSString(string: dataModel.name).boundingRect(with: CGSize(width: 300, height: 30),
                                                                      options: .usesFontLeading,
-                                                                     attributes: [:],
+                                                                     attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 12)],
                                                                      context: nil)
         
-        super.init(frame: CGRect(x: 0, y: 0, width: 40 + textRect.width  + 50 , height: 30))
+        let scoreRect = NSString(string: "\(dataModel.averageRate ?? 0)").boundingRect(with: CGSize(width: 200, height: 30),
+                                                                     options: .usesFontLeading,
+                                                                     attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 12)],
+                                                                     context: nil)
+        
+        super.init(frame: CGRect(x: 0, y: 0, width: textRect.width + scoreRect.width + 63 + 7 , height: 30))
         
         self.contentView = UIView(frame: CGRect(x: 0, y: 0, width: self.frame.size.width, height: self.frame.size.height - 5))
         self.contentView.backgroundColor = UIColor.white
@@ -67,7 +72,7 @@ class KPMainMapMarkerInfoWindow: UIView {
         self.contentView.addSubview(starImageView)
         self.contentView.addSubview(scoreLabel)
         
-        imageView.addConstraints(fromStringArray: ["H:|-[$self(19)]-4-[$view0]-4-[$view1(16)]-4-[$view2]-|",
+        imageView.addConstraints(fromStringArray: ["H:|-8-[$self(19)]-4-[$view0]-4-[$view1(16)]-4-[$view2]-8-|",
                                                    "V:|-3-[$self(19)]-3-|",
                                                    "V:|[$view0]|",
                                                    "V:|-4-[$view1]-4-|",
