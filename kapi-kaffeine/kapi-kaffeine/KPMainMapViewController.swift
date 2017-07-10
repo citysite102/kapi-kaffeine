@@ -194,7 +194,7 @@ KPMainViewControllerDelegate {
         let currentLocationButton = UIButton(type: .custom)
         currentLocationButton.setImage(R.image.icon_currentLocation(), for: .normal)
         currentLocationButton.addTarget(self,
-                                        action: #selector(moveToMyLocation), for: .touchUpInside)
+                                        action: #selector(moveToMyLocation as (Void) -> Void), for: .touchUpInside)
         currentLocationButton.alpha = 0.7
         self.view.addSubview(currentLocationButton)
         currentLocationButton.addConstraints(fromStringArray: ["H:[$self(40)]-16-|",
@@ -232,7 +232,7 @@ KPMainViewControllerDelegate {
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if object as? KPLocationManager == KPLocationManager.sharedInstance() && keyPath == "currentLocation" {
-            self.moveToMyLocation()
+            self.moveToMyLocation(completion: nil)
             KPLocationManager.sharedInstance().removeObserver(self, forKeyPath: "currentLocation")
         } else {
             super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
@@ -240,12 +240,26 @@ KPMainViewControllerDelegate {
     }
     
     func moveToMyLocation() {
+        moveToMyLocation(completion: nil)
+    }
+    
+    func moveToMyLocation(completion: ((_ success: Bool) -> Void)?) {
         if let location = KPLocationManager.sharedInstance().currentLocation?.coordinate {
             CATransaction.begin()
+            CATransaction.setCompletionBlock({
+                if let ddddd = completion {
+                    ddddd(true)
+                }
+            })
             CATransaction.setValue(NSNumber(floatLiteral: 0.5), forKey: kCATransactionAnimationDuration)
             self.mapView.animate(to: GMSCameraPosition.camera(withTarget: location,
-                                                              zoom: self.mapView.camera.zoom))
+                                                              zoom: 18))
             CATransaction.commit()
+            
+        } else {
+            if completion != nil {
+                completion!(false)
+            }
         }
     }
     
@@ -264,42 +278,88 @@ KPMainViewControllerDelegate {
     }
     
     func handleNearestButtonOnTap(_ sender: UIButton) {
-        if let renderer = clusterRenderer as? GMUDefaultClusterRenderer,
-           let currentLocation = KPLocationManager.sharedInstance().currentLocation {
-            var nearestMarker: GMSMarker?
-            
-            var nearestDistance: Double = Double.greatestFiniteMagnitude
-            for marker in renderer.markers() {
-                if nearestMarker == nil {
-                    nearestMarker = marker
-                } else {
-                    let distance = CLLocation(latitude: marker.position.latitude, longitude: marker.position.longitude).distance(from: currentLocation)
-                    if distance < nearestDistance {
-                        nearestDistance = distance
-                        nearestMarker = marker
+        
+        moveToMyLocation { (success) in
+            if success {
+                self.reloadNeeded = false
+                let test = self.isCollectionViewShow
+                self.isCollectionViewShow = test
+                if let renderer = self.clusterRenderer as? GMUDefaultClusterRenderer,
+                    let currentLocation = KPLocationManager.sharedInstance().currentLocation {
+                    var nearestMarker: GMSMarker?
+                    
+                    var nearestDistance: Double = Double.greatestFiniteMagnitude
+                    for marker in renderer.markers() {
+                        if nearestMarker == nil {
+                            nearestMarker = marker
+                        } else {
+                            let distance = CLLocation(latitude: marker.position.latitude, longitude: marker.position.longitude).distance(from: currentLocation)
+                            if distance < nearestDistance {
+                                nearestDistance = distance
+                                nearestMarker = marker
+                            }
+                        }
+                    }
+                    
+                    if nearestMarker != nil {
+                        CATransaction.begin()
+                        CATransaction.setValue(NSNumber(floatLiteral: 0.5), forKey: kCATransactionAnimationDuration)
+                        self.mapView.animate(to: GMSCameraPosition.camera(withTarget: nearestMarker!.position , zoom: self.mapView.camera.zoom))
+                        CATransaction.commit()
+                        CATransaction.setCompletionBlock({
+                            self.reloadNeeded = false
+                            self.mapView.selectedMarker = nearestMarker!
+                        })
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now()+0.5, execute: {
+                            if nearestMarker?.userData is KPDataModel {
+                                self.isCollectionViewShow = true
+                            } else {
+                                self.mapView.animate(toZoom: self.mapView.camera.zoom+1)
+                            }
+                        })
                     }
                 }
-            }
 
-            if nearestMarker != nil {
-                CATransaction.begin()
-                CATransaction.setValue(NSNumber(floatLiteral: 0.5), forKey: kCATransactionAnimationDuration)
-                self.mapView.animate(to: GMSCameraPosition.camera(withTarget: nearestMarker!.position , zoom: self.mapView.camera.zoom))
-                CATransaction.commit()
-                CATransaction.setCompletionBlock({
-                    self.reloadNeeded = false
-                    self.mapView.selectedMarker = nearestMarker!
-                })
-                
-                DispatchQueue.main.asyncAfter(deadline: .now()+0.5, execute: {
-                    if nearestMarker?.userData is KPDataModel {
-                        self.isCollectionViewShow = true
-                    } else {
-                        self.mapView.animate(toZoom: self.mapView.camera.zoom+1)
-                    }
-                })
             }
         }
+        
+//        if let renderer = clusterRenderer as? GMUDefaultClusterRenderer,
+//           let currentLocation = KPLocationManager.sharedInstance().currentLocation {
+//            var nearestMarker: GMSMarker?
+//            
+//            var nearestDistance: Double = Double.greatestFiniteMagnitude
+//            for marker in renderer.markers() {
+//                if nearestMarker == nil {
+//                    nearestMarker = marker
+//                } else {
+//                    let distance = CLLocation(latitude: marker.position.latitude, longitude: marker.position.longitude).distance(from: currentLocation)
+//                    if distance < nearestDistance {
+//                        nearestDistance = distance
+//                        nearestMarker = marker
+//                    }
+//                }
+//            }
+//
+//            if nearestMarker != nil {
+//                CATransaction.begin()
+//                CATransaction.setValue(NSNumber(floatLiteral: 0.5), forKey: kCATransactionAnimationDuration)
+//                self.mapView.animate(to: GMSCameraPosition.camera(withTarget: nearestMarker!.position , zoom: self.mapView.camera.zoom))
+//                CATransaction.commit()
+//                CATransaction.setCompletionBlock({
+//                    self.reloadNeeded = false
+//                    self.mapView.selectedMarker = nearestMarker!
+//                })
+//                
+//                DispatchQueue.main.asyncAfter(deadline: .now()+0.5, execute: {
+//                    if nearestMarker?.userData is KPDataModel {
+//                        self.isCollectionViewShow = true
+//                    } else {
+//                        self.mapView.animate(toZoom: self.mapView.camera.zoom+1)
+//                    }
+//                })
+//            }
+//        }
     }
     
     // MARK: UICollectionView DataSource
