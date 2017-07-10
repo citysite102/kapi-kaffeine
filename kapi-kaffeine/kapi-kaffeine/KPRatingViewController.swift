@@ -67,17 +67,18 @@ class KPRatingViewController: KPSharedSettingViewController {
     }
     
     func handleSendButtonOnTapped() {
-        KPServiceHandler.sharedHandler.addNewRating(NSNumber(value: ratingViews[0].currentRate),
-                                                    NSNumber(value: ratingViews[3].currentRate),
-                                                    NSNumber(value: ratingViews[5].currentRate),
-                                                    NSNumber(value: ratingViews[1].currentRate),
-                                                    NSNumber(value: ratingViews[4].currentRate),
-                                                    NSNumber(value: ratingViews[2].currentRate),
-                                                    NSNumber(value: ratingViews[6].currentRate)) { (successed) in
-                                                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
-                                                                                      execute: {
-                                                                                        self.appModalController()?.dismissControllerWithDefaultDuration()
-                                                        })
+        
+        KPServiceHandler.sharedHandler.addRating(NSNumber(value: ratingViews[0].currentRate),
+                                                 NSNumber(value: ratingViews[3].currentRate),
+                                                 NSNumber(value: ratingViews[5].currentRate),
+                                                 NSNumber(value: ratingViews[1].currentRate),
+                                                 NSNumber(value: ratingViews[4].currentRate),
+                                                 NSNumber(value: ratingViews[2].currentRate),
+                                                NSNumber(value: ratingViews[6].currentRate)) { (successed) in
+                                                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
+                                                                                  execute: {
+                                                                                    self.appModalController()?.dismissControllerWithDefaultDuration()
+                                                    })
         }
     }
     

@@ -79,9 +79,10 @@ class KPServiceHandler {
     
     var currentDisplayModel: KPDataModel?
     
-    func addNewComment(_ comment: String? = "",
-                       _ completion: ((_ successed: Bool) -> Swift.Void)?) {
-        let newCommentRequest = KPNewCommentRequest()
+    func addComment(_ comment: String? = "",
+                    _ completion: ((_ successed: Bool) -> Swift.Void)?) {
+        
+        let commentRequest = KPNewCommentRequest()
         
         loadingView.loadingContents = ("新增中...", "新增成功", "新增失敗")
         UIApplication.shared.topViewController.view.addSubview(loadingView)
@@ -89,16 +90,18 @@ class KPServiceHandler {
         loadingView.addConstraints(fromStringArray: ["V:|[$self]|",
                                                      "H:|[$self]|"])
         
-        newCommentRequest.perform((currentDisplayModel?.identifier)!,
-                                  comment!).then { result -> Void in
-                                    if let commentResult = result["result"].bool {
-                                        self.loadingView.state = commentResult ? .successed : .failed
-                                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
-                                                                      execute: {
-                                                                        self.loadingView.removeFromSuperview()
-                                        })
-                                        completion?(commentResult)
-                                    }
+        commentRequest.perform((currentDisplayModel?.identifier)!,
+                               comment!).then { result -> Void in
+                                if let commentResult = result["result"].bool {
+                                    self.loadingView.state = commentResult ? .successed : .failed
+                                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
+                                                                  execute: {
+                                                                    self.loadingView.removeFromSuperview()
+                                    })
+                                    KPUserManager.sharedManager.currentUser?.reviews?.append(self.currentDisplayModel!)
+                                    KPUserManager.sharedManager.storeUserInformation()
+                                    completion?(true)
+                                }
                                     print("Add New Comment Result:\(result)")
         }.catch { (error) in
             self.loadingView.state = .failed
@@ -113,11 +116,8 @@ class KPServiceHandler {
     func getComments(_ completion: ((_ successed: Bool,
                                      _ comments: [KPCommentModel]?) -> Swift.Void)?) {
         
-        let getCommentRequest = KPGetCommentRequest()
-        getCommentRequest.perform((currentDisplayModel?.identifier)!).then { result -> Void in
-            
-            print("Get Comments Result:\(result)")
-            
+        let commentRequest = KPGetCommentRequest()
+        commentRequest.perform((currentDisplayModel?.identifier)!).then { result -> Void in
             var resultComments = [KPCommentModel]()
             if result["result"].boolValue {
                 if let commentDatas = result["data"]["comments"].arrayObject {
@@ -138,14 +138,14 @@ class KPServiceHandler {
     
     // Rating API
 
-    func addNewRating(_ wifi: NSNumber? = 0,
-                      _ seat: NSNumber? = 0,
-                      _ food: NSNumber? = 0,
-                      _ quiet: NSNumber? = 0,
-                      _ tasty: NSNumber? = 0,
-                      _ cheap: NSNumber? = 0,
-                      _ music: NSNumber? = 0,
-                      _ completion: ((_ successed: Bool) -> Swift.Void)?) {
+    func addRating(_ wifi: NSNumber? = 0,
+                   _ seat: NSNumber? = 0,
+                   _ food: NSNumber? = 0,
+                   _ quiet: NSNumber? = 0,
+                   _ tasty: NSNumber? = 0,
+                   _ cheap: NSNumber? = 0,
+                   _ music: NSNumber? = 0,
+                   _ completion: ((_ successed: Bool) -> Swift.Void)?) {
         let newRatingRequest = KPNewRatingRequest()
         
         loadingView.loadingContents = ("新增中...", "新增成功", "新增失敗")
@@ -208,4 +208,73 @@ class KPServiceHandler {
         }
     }
     
+    
+    // Favorite / Visit
+    
+    func addFavoriteCafe(_ completion: ((Bool) -> Swift.Void)? = nil) {
+        
+        let addRequest = KPFavoriteRequest()
+        
+        addRequest.perform((currentDisplayModel?.identifier)!,
+                           KPFavoriteRequest.requestType.add).then { result -> Void in
+                            KPUserManager.sharedManager.currentUser?.favorites?.append(self.currentDisplayModel!)
+                            KPUserManager.sharedManager.storeUserInformation()
+                            completion?(true)
+                            print("Result\(result)")
+            }.catch { error in
+                print("Add Favorite Cafe error\(error)")
+                completion?(false)
+        }
+    }
+    
+    func removeFavoriteCafe(_ cafeID: String,
+                            _ completion: ((Bool) -> Swift.Void)? = nil) {
+        
+        let removeRequest = KPFavoriteRequest()
+        removeRequest.perform(cafeID,
+                              KPFavoriteRequest.requestType.delete).then { result -> Void in
+                                //                                if let found = self.currentUser?.favorites?.first(where: {$0.identifier == cafeID}) {
+                                if let foundOffset = KPUserManager.sharedManager.currentUser?.favorites?.index(where: {$0.identifier == cafeID}) {
+                                    KPUserManager.sharedManager.currentUser?.favorites?.remove(at: foundOffset)
+                                }
+                                KPUserManager.sharedManager.storeUserInformation()
+                                completion?(true)
+                                print("Result\(result)")
+            }.catch { (error) in
+                print("error\(error)")
+                completion?(false)
+        }
+    }
+    
+    func addVisitedCafe(_ completion: ((Bool) -> Swift.Void)? = nil) {
+        let addRequest = KPVisitedRequest()
+        addRequest.perform((currentDisplayModel?.identifier)!,
+                           KPVisitedRequest.requestType.add).then { result -> Void in
+                            KPUserManager.sharedManager.currentUser?.visits?.append(self.currentDisplayModel!)
+                            KPUserManager.sharedManager.storeUserInformation()
+                            completion?(true)
+                            print("Result\(result)")
+            }.catch { (error) in
+                print("Remove Visited Cafe error\(error)")
+                completion?(false)
+        }
+    }
+    
+    func removeVisitedCafe(_ cafeID: String,
+                           _ completion: ((Bool) -> Swift.Void)? = nil) {
+        let removeRequest = KPVisitedRequest()
+        removeRequest.perform(cafeID,
+                              KPVisitedRequest.requestType.delete).then { result -> Void in
+                                if let foundOffset = KPUserManager.sharedManager.currentUser?.visits?.index(where: {$0.identifier == cafeID}) {
+                                    KPUserManager.sharedManager.currentUser?.visits?.remove(at: foundOffset)
+                                }
+                                KPUserManager.sharedManager.storeUserInformation()
+                                completion?(true)
+                                print("Result\(result)")
+            }.catch { (error) in
+                print("Remove Visited Error \(error)")
+                completion?(false)
+        }
+    }
+
 }

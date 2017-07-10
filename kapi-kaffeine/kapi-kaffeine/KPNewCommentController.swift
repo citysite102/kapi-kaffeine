@@ -216,22 +216,22 @@ class KPNewCommentController: KPViewController {
     
     func handleSendButtonOnTapped() {
         inputTextView.resignFirstResponder()
-        KPServiceHandler.sharedHandler.addNewComment(inputTextView.text) { (successed) in
+        KPServiceHandler.sharedHandler.addComment(inputTextView.text) { (successed) in
             if successed {
                 if self.ratingCheckbox.checkBox.checkState == .checked {
-                    KPServiceHandler.sharedHandler.addNewRating(NSNumber(value: self.ratingViews[0].currentRate),
-                                                                NSNumber(value: self.ratingViews[3].currentRate),
-                                                                NSNumber(value: self.ratingViews[5].currentRate),
-                                                                NSNumber(value: self.ratingViews[1].currentRate),
-                                                                NSNumber(value: self.ratingViews[4].currentRate),
-                                                                NSNumber(value: self.ratingViews[2].currentRate),
-                                                                NSNumber(value: self.ratingViews[6].currentRate), { (successed) in
-                                                                    if successed {
-                                                                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
-                                                                                                      execute: {
-                                                                                                        self.navigationController?.popViewController(animated: true)
-                                                                        })
-                                                                    }
+                    KPServiceHandler.sharedHandler.addRating(NSNumber(value: self.ratingViews[0].currentRate),
+                                                             NSNumber(value: self.ratingViews[3].currentRate),
+                                                             NSNumber(value: self.ratingViews[5].currentRate),
+                                                             NSNumber(value: self.ratingViews[1].currentRate),
+                                                             NSNumber(value: self.ratingViews[4].currentRate),
+                                                             NSNumber(value: self.ratingViews[2].currentRate),
+                                                             NSNumber(value: self.ratingViews[6].currentRate), { (successed) in
+                                                                if successed {
+                                                                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
+                                                                                                  execute: {
+                                                                                                    self.navigationController?.popViewController(animated: true)
+                                                                    })
+                                                                }
                     })
                 } else {
                     DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,

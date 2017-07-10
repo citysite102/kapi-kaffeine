@@ -81,8 +81,7 @@ class KPInformationHeaderButtonBar: UIView {
                                                         if headerButton.selected == false {
                                                             headerButton.selected = true
                                                             headerButton.numberValue = headerButton.numberValue + 1
-                                                            KPUserManager.sharedManager.addFavoriteCafe(self.informationDataModel, { (successed) in
-                                                            })
+                                                            KPServiceHandler.sharedHandler.addFavoriteCafe()
                                                         } else {
                                                             DispatchQueue.main.asyncAfter(deadline: .now()) {
                                                                 KPPopoverView.popoverDefaultStyleContent(
@@ -92,7 +91,7 @@ class KPInformationHeaderButtonBar: UIView {
                                                                         content.popoverView.dismiss()
                                                                         headerButton.selected = false
                                                                         headerButton.numberValue = headerButton.numberValue - 1
-                                                                        KPUserManager.sharedManager.removeFavoriteCafe(self.informationDataModel.identifier, { (successed) in
+                                                                        KPServiceHandler.sharedHandler.removeFavoriteCafe(self.informationDataModel.identifier, { (successed) in
                                                                         })
                                                                 })
                                                             }
@@ -109,8 +108,7 @@ class KPInformationHeaderButtonBar: UIView {
                                                     if headerButton.selected == false {
                                                         headerButton.selected = true
                                                         headerButton.numberValue = headerButton.numberValue + 1
-                                                        KPUserManager.sharedManager.addVisitedCafe(self.informationDataModel, { (successed) in
-                                                        })
+                                                        KPServiceHandler.sharedHandler.addVisitedCafe()
                                                     } else {
                                                         DispatchQueue.main.asyncAfter(deadline: .now()) {
                                                             KPPopoverView.popoverDefaultStyleContent(
@@ -120,7 +118,7 @@ class KPInformationHeaderButtonBar: UIView {
                                                                     content.popoverView.dismiss()
                                                                     headerButton.selected = false
                                                                     headerButton.numberValue = headerButton.numberValue - 1
-                                                                    KPUserManager.sharedManager.removeVisitedCafe(self.informationDataModel.identifier, { (successed) in
+                                                                    KPServiceHandler.sharedHandler.removeVisitedCafe(self.informationDataModel.identifier, { (successed) in
                                                                     })
                                                             })
                                                         }
