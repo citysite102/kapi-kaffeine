@@ -202,7 +202,8 @@ class KPInformationHeaderView: UIView {
         shopPhotoContainer.addConstraints(fromStringArray: ["H:|[$self]|",
                                                             "V:|[$self]|"])
         
-        shopPhoto = UIImageView(image: UIImage(color:KPColorPalette.KPMainColor.borderColor!))
+//        shopPhoto = UIImageView(image: UIImage(color:KPColorPalette.KPMainColor.borderColor!))
+        shopPhoto = UIImageView(image: R.image.demo_2())
         shopPhoto.contentMode = .scaleAspectFill
         shopPhoto.isUserInteractionEnabled = true
         shopPhotoContainer.addSubview(shopPhoto)
@@ -223,12 +224,12 @@ class KPInformationHeaderView: UIView {
         shopPhoto.addGestureRecognizer(photoLongPressGesture)
         
         morePhotoButton = UIButton(type: .custom)
-        morePhotoButton.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.mainColor_60!),
+        morePhotoButton.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.grayColor_level5!),
                                            for: .normal)
         morePhotoButton.layer.cornerRadius = 2.0
         morePhotoButton.layer.masksToBounds = true
         morePhotoButton.layer.borderWidth = 1.0
-        morePhotoButton.layer.borderColor = UIColor.white.cgColor
+        morePhotoButton.layer.borderColor = KPColorPalette.KPMainColor.whiteColor_level1?.cgColor
         morePhotoButton.setTitle("99+\n張照片", for: .normal)
         morePhotoButton.titleLabel?.font = UIFont.systemFont(ofSize: 13)
         morePhotoButton.titleLabel?.numberOfLines = 0

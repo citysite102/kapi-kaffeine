@@ -172,7 +172,6 @@ class KPMainViewController: KPViewController {
         }
         
         self.opacityView.isHidden = false
-        self.mainListViewController?.snapShotShowing = true
         present(SideMenuManager.menuLeftNavigationController!,
                 animated: true, completion: nil)
         

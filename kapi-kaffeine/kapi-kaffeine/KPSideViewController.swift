@@ -13,6 +13,26 @@ class KPSideViewController: KPViewController {
 
     static let KPSideViewControllerRegionCellReuseIdentifier = "regionCell"
     static let KPSideViewControllerCityCellReuseIdentifier = "cityCell"
+    static let defaultRegionContent = [regionData(name:"北部",
+                                                  icon:R.image.icon_taipei()!,
+                                                  cities:["台北", "基隆", "桃園", "新竹"],
+                                                  cityKeys:["taipei", "keelung", "taoyuan", "hsinchu"]),
+                                       regionData(name:"東部",
+                                                  icon:R.image.icon_taitung()!,
+                                                  cities:["宜蘭", "花蓮", "台東"],
+                                                  cityKeys:["yilan", "hualien", "taitung"]),
+                                       regionData(name:"中部",
+                                                  icon:R.image.icon_taitung()!,
+                                                  cities:["苗栗", "台中", "南投", "彰化", "雲林"],
+                                                  cityKeys:["miaoli", "taichung", "nantou", "changhua", "yunlin"]),
+                                       regionData(name:"南部",
+                                                  icon:R.image.icon_pingtung()!,
+                                                  cities:["嘉義", "台南", "高雄", "屏東"],
+                                                  cityKeys:["chiayi", "tainan", "kaohsiung", "pingtung"]),
+                                       regionData(name:"邊疆",
+                                                  icon:R.image.icon_taitung()!,
+                                                  cities:["澎湖"],
+                                                  cityKeys:["penghu"])]
     
     weak var mainController: KPMainViewController!
     var lastY: CGFloat = 0.0
@@ -73,8 +93,9 @@ class KPSideViewController: KPViewController {
     }
     
     
-    var regionContents = [regionData?]()
     
+    
+    var regionContents = [regionData?]()
     var informationSectionContents = [informationData?]()
     
     
@@ -122,26 +143,7 @@ class KPSideViewController: KPViewController {
         tableView.register(KPCityTableViewCell.self,
                                 forCellReuseIdentifier: KPSideViewController.KPSideViewControllerCityCellReuseIdentifier)
 
-        regionContents = [regionData(name:"北部",
-                                     icon:R.image.icon_taipei()!,
-                                    cities:["台北", "基隆", "桃園", "新竹"],
-                                    cityKeys:["taipei", "keelung", "taoyuan", "hsinchu"]),
-                          regionData(name:"東部",
-                                     icon:R.image.icon_taitung()!,
-                                     cities:["宜蘭", "花蓮", "台東"],
-                                     cityKeys:["yilan", "hualien", "taitung"]),
-                          regionData(name:"中部",
-                                     icon:R.image.icon_taitung()!,
-                                     cities:["苗栗", "台中", "南投", "彰化", "雲林"],
-                                     cityKeys:["miaoli", "taichung", "nantou", "changhua", "yunlin"]),
-                          regionData(name:"南部",
-                                     icon:R.image.icon_pingtung()!,
-                                     cities:["嘉義", "台南", "高雄", "屏東"],
-                                     cityKeys:["chiayi", "tainan", "kaohsiung", "pingtung"]),
-                          regionData(name:"邊疆",
-                                     icon:R.image.icon_taitung()!,
-                                     cities:["澎湖"],
-                                     cityKeys:["penghu"])]
+        regionContents = KPSideViewController.defaultRegionContent
         
         informationSectionContents = [informationData(title:"關於我們",
                                                       icon:R.image.icon_cup()!,
@@ -219,7 +221,6 @@ class KPSideViewController: KPViewController {
         super.viewWillDisappear(animated)
         mainController.opacityView.isHidden = true
         mainController.statusBarShouldBeHidden = false
-        mainController.mainListViewController?.snapShotShowing = false
         UIView.animate(withDuration: 0.15) {
             self.mainController.setNeedsStatusBarAppearanceUpdate()
         }
@@ -270,6 +271,7 @@ extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
                 let cell = tableView.dequeueReusableCell(withIdentifier:KPSideViewController.KPSideViewControllerRegionCellReuseIdentifier,
                                                          for: indexPath) as! KPRegionTableViewCell
                 cell.selectionStyle = .none
+                cell.expanded = false
                 cell.expandIcon.isHidden = false
                 cell.regionIcon.image = regionContents[indexPath.row]?.icon
                 cell.regionLabel.text = regionContents[indexPath.row]?.name
@@ -413,10 +415,17 @@ extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
                 mainController.mainListViewController?.dataLoading = true
                 mainController.displayDataModel = KPFilter.filterData(source: KPMainViewController.allDataModel,
                                                                       withCity: cityName!)
+                dismiss(animated: true, completion: nil)
+                resetTableview()
             }
         } else {
             informationSectionContents[indexPath.row]?.handler()
         }
+    }
+    
+    func resetTableview() {
+        regionContents = KPSideViewController.defaultRegionContent
+        tableView.reloadData()
     }
 }
 

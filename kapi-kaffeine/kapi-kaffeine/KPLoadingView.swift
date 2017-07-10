@@ -116,7 +116,7 @@ class KPLoadingView: UIView {
     func performStateAnimation(_ state: loadingState) {
         
         let fadeTransition = CATransition()
-        fadeTransition.duration = 0.35
+        fadeTransition.duration = 0.2
         
         switch state {
         case .successed:
@@ -130,7 +130,7 @@ class KPLoadingView: UIView {
                 
             }
             UIView.animate(withDuration: 0.3,
-                           delay: 0.2,
+                           delay: 0.1,
                            options: .curveEaseOut,
                            animations: {
                             self.successView.alpha = 1.0
@@ -157,7 +157,7 @@ class KPLoadingView: UIView {
                 
             }
             UIView.animate(withDuration: 0.3,
-                           delay: 0.2,
+                           delay: 0.1,
                            options: .curveEaseOut,
                            animations: {
                             self.failedView.alpha = 1.0
