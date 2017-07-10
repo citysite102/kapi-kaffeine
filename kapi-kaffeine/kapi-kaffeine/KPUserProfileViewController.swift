@@ -15,8 +15,8 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
     
     let tabTitles: [(title: String, key: String)] = [("已收藏", "favorites"),
                                                      ("我去過", "visits"),
-                                                     ("已評分", "favorites"),
-                                                     ("已評價", "visits")]
+                                                     ("已評分", "rates"),
+                                                     ("已評價", "reviews")]
     
     lazy var userContainer: UIView = {
         let containerView = UIView()
@@ -209,11 +209,8 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
             DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + 0.5) {
 
                 for (index, tabTitle) in self.tabTitles.enumerated() {
-                    if let displayModel = KPUserManager.sharedManager.currentUser?.value(forKey: tabTitle.key) as? [String] {
-                        
-                        self.displayDataModels[index] = KPMainViewController.allDataModel.filter({ (dataModel) -> Bool in
-                            displayModel.contains(dataModel.identifier)
-                        })
+                    if let displayModel = KPUserManager.sharedManager.currentUser?.value(forKey: tabTitle.key) as? [KPDataModel] {
+                        self.displayDataModels[index] = displayModel
                     } else {
                         self.displayDataModels[index] = []
                     }
