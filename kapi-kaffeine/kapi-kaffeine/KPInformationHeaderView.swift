@@ -220,7 +220,7 @@ class KPInformationHeaderView: UIView {
         shopPhotoContainer.addConstraints(fromStringArray: ["H:|[$self]|",
                                                             "V:|[$self]|"])
         
-        shopPhoto = UIImageView(image: UIImage(named: "demo_1"))
+        shopPhoto = UIImageView(image: UIImage(color:KPColorPalette.KPMainColor.borderColor!))
         shopPhoto.contentMode = .scaleAspectFill
         shopPhoto.isUserInteractionEnabled = true
         shopPhotoContainer.addSubview(shopPhoto)
@@ -244,6 +244,7 @@ class KPInformationHeaderView: UIView {
         morePhotoButton.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.mainColor_60!),
                                            for: .normal)
         morePhotoButton.layer.cornerRadius = 2.0
+        morePhotoButton.layer.masksToBounds = true
         morePhotoButton.layer.borderWidth = 1.0
         morePhotoButton.layer.borderColor = UIColor.white.cgColor
         morePhotoButton.setTitle("99+\n張照片", for: .normal)

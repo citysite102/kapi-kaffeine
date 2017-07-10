@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import BenzeneFoundation
 
 class KPInformationViewController: KPViewController {
 
@@ -58,8 +59,28 @@ class KPInformationViewController: KPViewController {
     var photoInformationView: KPInformationSharedInfoView!
     var recommendInformationView: KPInformationSharedInfoView!
     var commentInfoView: KPShopCommentInfoView!
+    var loadingIndicator: UIActivityIndicatorView!
     
     var allCommentHasShown: Bool = false
+    var dataLoading: Bool = true {
+        didSet {
+            if dataLoading {
+                self.informationHeaderButtonBar.isHidden = true
+                self.informationHeaderButtonBar.alpha = 0.0
+                
+                self.shopInformationView.isHidden = true
+                self.shopInformationView.alpha = 0.0
+                
+                self.informationHeaderButtonBar.layer.transform = CATransform3DMakeTranslation(0, 55, 0)
+                self.shopInformationView.layer.transform = CATransform3DMakeTranslation(0, 75, 0)
+                
+                self.scrollContainer.isUserInteractionEnabled = false
+            } else {
+                self.loadingIndicator.stopAnimating()
+                self.showInformationContents(true)
+            }
+        }
+    }
     var animatedHeaderConstraint: NSLayoutConstraint!
     
     var navBarFixBound: CGRect!
@@ -98,7 +119,6 @@ class KPInformationViewController: KPViewController {
 
         let barItem = UIBarButtonItem(customView: dismissButton)
         let rightBarItem = UIBarButtonItem(customView: moreButton)
-//        let rightBarItem2 = UIBarButtonItem(customView: shareButton)
         let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace,
                                              target: nil,
                                              action: nil)
@@ -153,7 +173,7 @@ class KPInformationViewController: KPViewController {
         informationHeaderView.informationController = self
         if let photoURL = informationDataModel.covers?["google_l"] {
             informationHeaderView.shopPhoto.af_setImage(withURL: URL(string: photoURL)!,
-                                                        placeholderImage: R.image.demo_1()!,
+                                                        placeholderImage: UIImage(color:KPColorPalette.KPBackgroundColor.grayColor_level6!),
                                                         filter: nil,
                                                         progress: nil,
                                                             progressQueue: DispatchQueue.global(),
@@ -173,6 +193,14 @@ class KPInformationViewController: KPViewController {
         informationHeaderView.morePhotoButton.addTarget(self,
                                                         action: #selector(KPInformationViewController.handleMorePhotoButtonOnTapped),
                                                         for: UIControlEvents.touchUpInside)
+        
+        loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+        loadingIndicator.tintColor = KPColorPalette.KPMainColor.mainColor
+        scrollContainer.addSubview(loadingIndicator)
+        loadingIndicator.addConstraints(fromStringArray: ["V:[$view0]-16-[$self]"],
+                                        views:[informationHeaderView])
+        loadingIndicator.addConstraintForCenterAligningToSuperview(in: .horizontal)
+        loadingIndicator.startAnimating()
         
         informationHeaderButtonBar = KPInformationHeaderButtonBar(frame: .zero,
                                                                   informationDataModel: informationDataModel)
@@ -388,9 +416,12 @@ class KPInformationViewController: KPViewController {
     
     func syncRemoteData() {
         
+        dataLoading = true
+        
         KPServiceHandler.sharedHandler.fetchStoreInformation(informationDataModel.identifier) {
             (result) in
             self.informationHeaderButtonBar.informationDataModel = result
+            self.dataLoading = false
 //                if result != nil, let comments = result?.comments {
 //                    self.commentInfoView.comments = comments
 //                }
@@ -417,6 +448,36 @@ class KPInformationViewController: KPViewController {
         }
 
         
+    }
+    
+    // MARK: Animation
+    
+    func showInformationContents(_ animated: Bool) {
+        
+        informationHeaderButtonBar.isHidden = false
+        shopInformationView.isHidden = false
+
+        let timingFunction = CAMediaTimingFunction(controlPoints: 0.51, 0.98, 0.43, 1)
+        let translateAnimation = CABasicAnimation(keyPath: "transform.translation.y")
+        translateAnimation.duration = 0.65
+        translateAnimation.toValue = 0
+        translateAnimation.isRemovedOnCompletion = false
+        translateAnimation.fillMode = kCAFillModeBoth
+        translateAnimation.timingFunction = timingFunction
+        
+        
+        informationHeaderButtonBar.layer.add(translateAnimation, forKey: nil)
+        shopInformationView.layer.add(translateAnimation, forKey: nil)
+        
+        UIView.animate(withDuration: 0.5,
+                       delay: 0,
+                       options: .curveEaseOut,
+                       animations: {
+                        self.informationHeaderButtonBar.alpha = 1.0
+                        self.shopInformationView.alpha = 1.0
+        }) { (_) in
+            self.scrollContainer.isUserInteractionEnabled = true
+        }
     }
     
     // MARK: UI Event

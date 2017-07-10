@@ -77,7 +77,7 @@ class KPPhotoDisplayTransition: NSObject, UIViewControllerAnimatedTransitioning 
         // 8: Animate change
         UIView.animate(withDuration: 0.5,
                        delay: 0,
-                       usingSpringWithDamping: 0.7,
+                       usingSpringWithDamping: 0.85,
                        initialSpringVelocity: 0.3,
                        options: .curveEaseOut,
                        animations: { 
