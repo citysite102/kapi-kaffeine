@@ -127,6 +127,7 @@
 		77E495631EC9EEF0003B7EBC /* KPTimePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E495621EC9EEF0003B7EBC /* KPTimePicker.swift */; };
 		77E495651ECA04F5003B7EBC /* KPSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E495641ECA04F5003B7EBC /* KPSearchBar.swift */; };
 		77E6BAA51F12392D00802992 /* KPUserInformationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E6BAA41F12392D00802992 /* KPUserInformationRequest.swift */; };
+		77E6BAA71F13D22600802992 /* KPSimpleRateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E6BAA61F13D22600802992 /* KPSimpleRateModel.swift */; };
 		77E8CC301EC0E48300669809 /* KPPhotoDisplayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E8CC2F1EC0E48300669809 /* KPPhotoDisplayCell.swift */; };
 		77F718231ED18A0B00755AA2 /* KPCountrySelectController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F718221ED18A0A00755AA2 /* KPCountrySelectController.swift */; };
 		77F718251ED190AB00755AA2 /* KPCountrySelectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F718241ED190AB00755AA2 /* KPCountrySelectCell.swift */; };
@@ -310,6 +311,7 @@
 		77E495621EC9EEF0003B7EBC /* KPTimePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPTimePicker.swift; sourceTree = "<group>"; };
 		77E495641ECA04F5003B7EBC /* KPSearchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSearchBar.swift; sourceTree = "<group>"; };
 		77E6BAA41F12392D00802992 /* KPUserInformationRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPUserInformationRequest.swift; sourceTree = "<group>"; };
+		77E6BAA61F13D22600802992 /* KPSimpleRateModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSimpleRateModel.swift; sourceTree = "<group>"; };
 		77E8CC2F1EC0E48300669809 /* KPPhotoDisplayCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPPhotoDisplayCell.swift; sourceTree = "<group>"; };
 		77F718221ED18A0A00755AA2 /* KPCountrySelectController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPCountrySelectController.swift; sourceTree = "<group>"; };
 		77F718241ED190AB00755AA2 /* KPCountrySelectCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPCountrySelectCell.swift; sourceTree = "<group>"; };
@@ -505,6 +507,7 @@
 				7762E3401F12028A0006E205 /* KPDetailedDataModel.swift */,
 				773463491ED74BE300EA78F0 /* KPDataTagModel.swift */,
 				7734634C1ED74C5400EA78F0 /* KPDataRateModel.swift */,
+				77E6BAA61F13D22600802992 /* KPSimpleRateModel.swift */,
 				C05CF8771EF8019800F3DF2A /* KPDataBusinessHourModel.swift */,
 			);
 			name = "Data Model";
@@ -1361,6 +1364,7 @@
 				776ACAFC1E9BB02D00B629A2 /* KPMainMapViewController.swift in Sources */,
 				771EECA41EBC217B004A34B8 /* KPCheckBox.swift in Sources */,
 				77A201991EBC5BE600F3497F /* KPCheckBoxFillController.swift in Sources */,
+				77E6BAA71F13D22600802992 /* KPSimpleRateModel.swift in Sources */,
 				77B66FB31EAF171E008B6652 /* KPAboutUsViewController.swift in Sources */,
 				7762E33F1F12017D0006E205 /* KPCafeDetailedInfoRequest.swift in Sources */,
 				77BB392F1ED3DD7100958AFE /* KPFifthIntroView.swift in Sources */,

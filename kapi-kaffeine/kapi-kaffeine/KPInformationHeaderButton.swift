@@ -26,32 +26,35 @@ class KPInformationHeaderButton: UIView {
     
     var numberValue: Int = 0 {
         didSet {
-            
-            if numberValue == 0 {
-                self.infoLabel.text = self.buttonInfo.defaultInfo
-            } else if numberValue == oldValue {
-                self.infoLabel.text = self.infoLabel.text
-            } else {
-                let transition: CATransition = CATransition()
-                transition.type = kCATransitionPush
-                transition.duration = 0.2
-                transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-                transition.subtype = numberValue > oldValue ? kCATransitionFromTop : kCATransitionFromBottom
-                
-                self.infoLabel.layer.add(transition,
-                                         forKey: kCATransition)
-                if oldValue == 0 {
-                    self.infoLabel.text = (self.infoLabel.text! as
-                        NSString).replacingOccurrences(of: self.buttonInfo.defaultInfo,
-                                                       with:
-                            (buttonInfo.info as NSString).replacingOccurrences(of: "%d",
-                                                                               with: "\(numberValue)"))
+//            DispatchQueue.main.async {
+                if self.numberValue == 0 {
+                    self.infoLabel.text = self.buttonInfo.defaultInfo
+                } else if self.numberValue == oldValue {
+                    self.infoLabel.text = self.infoLabel.text
                 } else {
-                    self.infoLabel.text = (self.infoLabel.text! as
-                        NSString).replacingOccurrences(of: "\(oldValue)",
-                            with: "\(numberValue)")
+                    let transition: CATransition = CATransition()
+                    transition.type = kCATransitionPush
+                    transition.duration = 0.2
+                    transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+                    transition.subtype = self.numberValue > oldValue ? kCATransitionFromTop : kCATransitionFromBottom
+                    
+                    self.infoLabel.layer.add(transition,
+                                             forKey: kCATransition)
+                    if oldValue == 0 {
+                        self.infoLabel.text = (self.infoLabel.text! as
+                            NSString).replacingOccurrences(of: self.buttonInfo.defaultInfo,
+                                                           with:
+                                (self.buttonInfo.info as NSString).replacingOccurrences(of: "%d",
+                                                                                   with: "\(self.numberValue)"))
+                    } else {
+                        self.infoLabel.text = (self.infoLabel.text! as
+                            NSString).replacingOccurrences(of: "\(oldValue)",
+                                with: "\(self.numberValue)")
+                    }
                 }
-            }
+                
+                print("目前的內容:\(self.infoLabel.text)")
+//            }
         }
     }
     

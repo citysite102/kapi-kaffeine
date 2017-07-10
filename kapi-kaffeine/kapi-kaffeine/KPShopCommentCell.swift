@@ -143,14 +143,19 @@ class KPShopCommentCellButton: UIView {
     var countLabel: UILabel!
     var currentCount: Int! {
         didSet {
-            let transition: CATransition = CATransition()
-            transition.type = kCATransitionPush
-            transition.duration = 0.2
-            transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-            transition.subtype = currentCount > oldValue ? kCATransitionFromTop : kCATransitionFromBottom
             
-            countLabel.layer.add(transition, forKey: kCATransition)
-            countLabel.text = "\(currentCount ?? 0)"
+            if currentCount != oldValue {
+                let transition: CATransition = CATransition()
+                transition.type = kCATransitionPush
+                transition.duration = 0.2
+                transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+                transition.subtype = currentCount > oldValue ? kCATransitionFromTop : kCATransitionFromBottom
+                
+                countLabel.layer.add(transition, forKey: kCATransition)
+                countLabel.text = "\(currentCount ?? 0)"
+            } else {
+                countLabel.text = "\(currentCount ?? 0)"
+            }
         }
     }
     var buttonSelected: Bool = false {

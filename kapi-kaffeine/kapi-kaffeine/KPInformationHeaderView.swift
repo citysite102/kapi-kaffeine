@@ -143,7 +143,7 @@ class KPInformationHeaderButtonBar: UIView {
         })
         
         commentButton.buttonInfo = HeaderButtonInfo(title: "我要評價",
-                                                    info: "%d人已留言",
+                                                    info: "%d人已評價",
                                                     defaultInfo: "尚無評價",
                                                     icon: R.image.icon_comment()!,
                                                     handler: { (headerButton) -> () in
@@ -155,22 +155,6 @@ class KPInformationHeaderButtonBar: UIView {
                                                                                                                                  completion: {})
                                                         }
         })
-        
-        if let favoriteValue = informationDataModel.favoriteCount?.intValue {
-            collectButton.numberValue = favoriteValue
-        }
-        
-        if let visitValue = informationDataModel.visitCount?.intValue {
-            visitButton.numberValue = visitValue
-        }
-        
-        if let rateValue = informationDataModel.rateCount?.intValue {
-            rateButton.numberValue = rateValue
-        }
-        
-        if let commentValue = informationDataModel.commentCount?.intValue {
-            commentButton.numberValue = commentValue
-        }
         
         collectButton.selected = (KPUserManager.sharedManager.currentUser?.hasFavorited(self.informationDataModel.identifier))!
         visitButton.selected = (KPUserManager.sharedManager.currentUser?.hasVisited(self.informationDataModel.identifier))!

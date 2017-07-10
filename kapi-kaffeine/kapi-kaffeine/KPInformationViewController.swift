@@ -396,14 +396,20 @@ class KPInformationViewController: KPViewController {
         locationInformationView.infoView = shopLocationInfoView
         navBarFixBound = navigationController!.navigationBar.bounds
         informationHeaderView.shopPhoto.isHidden = false
+        
+        
+        if dataLoading {
+            refreshComments()
+            refreshRatings()
+        }
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
         // Fix table view height according to fix cell
-//        commentInfoView = commentInformationView.infoView as! KPShopCommentInfoView
-//        commentInfoView.tableViewHeightConstraint.constant = commentInfoView.tableView.contentSize.height
+        commentInfoView = commentInformationView.infoView as! KPShopCommentInfoView
+        commentInfoView.tableViewHeightConstraint.constant = commentInfoView.tableView.contentSize.height
     }
     
     override func didReceiveMemoryWarning() {
@@ -422,9 +428,6 @@ class KPInformationViewController: KPViewController {
             (result) in
             self.informationHeaderButtonBar.informationDataModel = result
             self.dataLoading = false
-//                if result != nil, let comments = result?.comments {
-//                    self.commentInfoView.comments = comments
-//                }
         }
         
         // 取得 Comment 資料
@@ -440,9 +443,12 @@ class KPInformationViewController: KPViewController {
         }
         
         // 取得 Rating 資料
-        KPServiceHandler.sharedHandler.getRatings { (successed, rating) in
-            if successed {
-                (self.rateInformationView.infoView as! KPShopRateInfoView).rateData = rating
+        KPServiceHandler.sharedHandler.getRatings { (successed, rate) in
+            if successed && rate != nil {
+                (self.rateInformationView.infoView as! KPShopRateInfoView).rateData = rate
+                self.informationHeaderButtonBar.rateButton.numberValue = (rate?.rates?.count)!
+                self.informationHeaderButtonBar.rateButton.selected =
+                    (KPUserManager.sharedManager.currentUser?.hasRated(self.informationDataModel.identifier))!
             }
         }
         
@@ -450,8 +456,38 @@ class KPInformationViewController: KPViewController {
         KPServiceHandler.sharedHandler.getPhotos { (successed, photos) in
             
         }
-
+    }
+    
+    
+    func refreshRatings() {
+        KPServiceHandler.sharedHandler.getRatings { (successed, rate) in
+            if successed && rate != nil {
+                (self.rateInformationView.infoView as! KPShopRateInfoView).rateData = rate
+                self.informationHeaderButtonBar.rateButton.numberValue = (rate?.rates?.count)!
+                self.informationHeaderButtonBar.rateButton.selected =
+                    (KPUserManager.sharedManager.currentUser?.hasRated(self.informationDataModel.identifier))!
+            }
+        }
+    }
+    
+    func refreshComments() {
         
+        // 取得 Comment 資料
+        KPServiceHandler.sharedHandler.getComments { (successed, comments) in
+            if successed && comments != nil {
+                self.commentInfoView.comments = comments!
+                self.commentInformationView.setNeedsLayout()
+                self.commentInformationView.layoutIfNeeded()
+                let commentInfoView = self.commentInformationView.infoView as! KPShopCommentInfoView
+                commentInfoView.tableViewHeightConstraint.constant = commentInfoView.tableView.contentSize.height
+                
+                if let commentCountValue = comments?.count {
+                    self.informationHeaderButtonBar.commentButton.numberValue = commentCountValue
+                    self.informationHeaderButtonBar.commentButton.selected =
+                        (KPUserManager.sharedManager.currentUser?.hasReviewed(self.informationDataModel.identifier))!
+                }
+            }
+        }
     }
     
     // MARK: Animation
@@ -613,13 +649,14 @@ extension KPInformationViewController: UIScrollViewDelegate {
                                                     -120 :
                                                     scrollContainer.contentOffset.y)
         
-        if scrollContainer.contentOffset.y < 0 && scrollContainer.contentOffset.y >= -120 {
+        if scrollContainer.contentOffset.y <= 0 && scrollContainer.contentOffset.y >= -120 {
             let scaleRatio = 1 - scrollContainer.contentOffset.y/300
             let scaleRatioContainer = 1 - scrollContainer.contentOffset.y/240
             let oldFrame = informationHeaderView.shopPhotoContainer.frame
             
             animatedHeaderConstraint.constant = 0
             informationHeaderView.shopPhoto.transform = .identity
+            informationHeaderView.isUserInteractionEnabled = true
             
             informationHeaderView.shopPhotoContainer.layer.anchorPoint = CGPoint(x: 0.5, y: 1)
             informationHeaderView.shopPhotoContainer.frame = oldFrame
@@ -631,10 +668,11 @@ extension KPInformationViewController: UIScrollViewDelegate {
                                                                           y: scaleRatio)
             
             self.view.layoutIfNeeded()
-        } else if scrollContainer.contentOffset.y >= 0 && scrollContainer.contentOffset.y < 200 {
+        } else if scrollContainer.contentOffset.y > 0 && scrollContainer.contentOffset.y < 200 {
             animatedHeaderConstraint.constant = -scrollContainer.contentOffset.y*9/20
             informationHeaderView.shopPhoto.transform = CGAffineTransform(translationX: 0,
                                                                           y: scrollContainer.contentOffset.y*9/20)
+            informationHeaderView.isUserInteractionEnabled = false
             view.layoutIfNeeded()
         }
     }

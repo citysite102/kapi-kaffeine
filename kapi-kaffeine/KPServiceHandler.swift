@@ -20,6 +20,7 @@ class KPServiceHandler {
     
     // 目前儲存所有的咖啡店
     var currentCafeDatas: [KPDataModel]!
+    var currentDisplayModel: KPDataModel?
     
     // MARK: Initialization
     
@@ -77,8 +78,6 @@ class KPServiceHandler {
     
     // Comment API
     
-    var currentDisplayModel: KPDataModel?
-    
     func addComment(_ comment: String? = "",
                     _ completion: ((_ successed: Bool) -> Swift.Void)?) {
         
@@ -127,7 +126,12 @@ class KPServiceHandler {
                         }
                     }
                 }
-                completion?(true, resultComments)
+                
+                let sortedComments = resultComments.sorted(by: { (comment1, comment2) -> Bool in
+                    return comment1.createdTime.intValue > comment2.createdTime.intValue
+                })
+                
+                completion?(true, sortedComments)
             } else {
                 completion?(true, nil)
             }
@@ -168,6 +172,8 @@ class KPServiceHandler {
                                                                       execute: {
                                                                         self.loadingView.removeFromSuperview()
                                         })
+                                        KPUserManager.sharedManager.currentUser?.rates?.append(self.currentDisplayModel!)
+                                        KPUserManager.sharedManager.storeUserInformation()
                                         completion?(commentResult)
                                     }
                                     print("Result\(result)")
