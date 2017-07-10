@@ -112,7 +112,7 @@ class KPSubTitleEditView: UIView {
     
     func makeUI() {
         makeTitleUI()
-        editTextField.addConstraints(fromStringArray: ["H:|-16-[$self]",
+        editTextField.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
                                                        "V:[$view0]-8-[$self]"],
                                      views:[subTitleLabel])
         makeBorder()
