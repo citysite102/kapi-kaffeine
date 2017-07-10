@@ -208,10 +208,9 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
             DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + 0.5) {
 
                 for (index, tabTitle) in self.tabTitles.enumerated() {
-                    if let displayModel = KPUserManager.sharedManager.currentUser?.value(forKey: tabTitle.key) as? [String],
-                        let allDataModel = KPMainViewController.allDataModel {
+                    if let displayModel = KPUserManager.sharedManager.currentUser?.value(forKey: tabTitle.key) as? [String] {
                         
-                        self.displayDataModels[index] = allDataModel.filter({ (dataModel) -> Bool in
+                        self.displayDataModels[index] = KPMainViewController.allDataModel.filter({ (dataModel) -> Bool in
                             displayModel.contains(dataModel.identifier)
                         })
                     } else {

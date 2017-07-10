@@ -66,6 +66,8 @@ class KPMainListViewController:
                 self.preloadNextAd()
                 self.tableView.reloadData()
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            } else {
+                self.tableView.reloadData()
             }
         }
     }

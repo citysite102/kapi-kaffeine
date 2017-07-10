@@ -25,13 +25,12 @@ class KPMainViewController: KPViewController {
     var mainMapViewController:KPMainMapViewController?
     
     
-    static var allDataModel: [KPDataModel]?
+    static var allDataModel: [KPDataModel] = []
     
     var displayDataModel: [KPDataModel]! {
         didSet {
             self.mainListViewController?.displayDataModel = displayDataModel
             self.mainMapViewController?.allDataModel = displayDataModel
-            KPMainViewController.allDataModel = displayDataModel
             searchHeaderView.searchButton.isEnabled = true
             searchHeaderView.menuButton.isEnabled = true
         }
@@ -108,12 +107,10 @@ class KPMainViewController: KPViewController {
         
         if (KPUserManager.sharedManager.currentUser != nil) {
             KPUserManager.sharedManager.updateUserInformation()
-            KPServiceHandler.sharedHandler.fetchRemoteData(nil,
-                                                           nil,
-                                                           nil,
-                                                           nil,
-                                                           KPUserManager.sharedManager.currentUser?.defaultLocation ?? "taipei") { (results: [KPDataModel]?) in
+            KPServiceHandler.sharedHandler.fetchRemoteData() { (results: [KPDataModel]?) in
                 if results != nil {
+                    print(Set(results!.map({$0.city})))
+                    KPMainViewController.allDataModel = results!
                     self.displayDataModel = results!
                 }
             }

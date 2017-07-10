@@ -74,9 +74,6 @@ class KPSideViewController: KPViewController {
     
     
     var regionContents = [regionData?]()
-    var regionIcons = [R.image.icon_taipei(),
-                       R.image.icon_taitung(),
-                       R.image.icon_pingtung()]
     
     var informationSectionContents = [informationData?]()
     
@@ -127,16 +124,24 @@ class KPSideViewController: KPViewController {
 
         regionContents = [regionData(name:"北部",
                                      icon:R.image.icon_taipei()!,
-                                    cities:["台北", "中壢", "月球"],
-                                    cityKeys:["taipei", "中壢", "月球"]),
+                                    cities:["台北", "基隆", "桃園", "新竹"],
+                                    cityKeys:["taipei", "keelung", "taoyuan", "hsinchu"]),
                           regionData(name:"東部",
-                                     icon:R.image.icon_pingtung()!,
-                                     cities:["外太空", "黑洞", "冥王星"],
-                                     cityKeys:["taipei", "中壢", "月球"]),
-                          regionData(name:"中南部",
                                      icon:R.image.icon_taitung()!,
-                                     cities:["台北", "台中"],
-                                     cityKeys:["taipei", "中壢"])]
+                                     cities:["宜蘭", "花蓮", "台東"],
+                                     cityKeys:["yilan", "hualien", "taitung"]),
+                          regionData(name:"中部",
+                                     icon:R.image.icon_taitung()!,
+                                     cities:["苗栗", "台中", "南投", "彰化", "雲林"],
+                                     cityKeys:["miaoli", "taichung", "nantou", "changhua", "yunlin"]),
+                          regionData(name:"南部",
+                                     icon:R.image.icon_pingtung()!,
+                                     cities:["嘉義", "台南", "高雄", "屏東"],
+                                     cityKeys:["chiayi", "tainan", "kaohsiung", "pingtung"]),
+                          regionData(name:"邊疆",
+                                     icon:R.image.icon_taitung()!,
+                                     cities:["澎湖"],
+                                     cityKeys:["penghu"])]
         
         informationSectionContents = [informationData(title:"關於我們",
                                                       icon:R.image.icon_cup()!,
@@ -153,10 +158,9 @@ class KPSideViewController: KPViewController {
                                                       icon:R.image.icon_msg()!,
                                                       handler:{()->() in
                                                         DispatchQueue.main.asyncAfter(deadline: .now()) {
-                                                            KPPopoverView.popoverDefaultStyleContent("尚未開放",
-                                                                                                     "改天再來吧，再見。",
-                                                                                                     "遵命", { (content) in
-                                                                                                        content.popoverView.dismiss()
+                                                            UIApplication.shared.open(URL(string: "fb-messenger://user-thread/KAPIFind")!,
+                                                                                      options: [:], completionHandler: { (completion) in
+                                                                                        
                                                             })
                                                         }
                                         }),
@@ -164,11 +168,20 @@ class KPSideViewController: KPViewController {
                                                        icon:R.image.icon_fanpage()!,
                                                        handler:{()->() in
                                                         DispatchQueue.main.asyncAfter(deadline: .now()) {
-                                                            KPPopoverView.popoverDefaultStyleContent("尚未開放",
-                                                                                                     "改天再來吧，再見。",
-                                                                                                     "遵命", { (content) in
-                                                                                                        content.popoverView.dismiss()
-                                                            })
+                                                            
+                                                            if let pageURL = URL(string: "fb://profile/255181958274780"),
+                                                                UIApplication.shared.canOpenURL(pageURL) {
+                                                                UIApplication.shared.open(pageURL,
+                                                                                          options: [:],
+                                                                                          completionHandler: { (completion) in
+                                                                                            
+                                                                })
+                                                            } else {
+                                                                UIApplication.shared.open(URL(string: "https://facebook.com")!,
+                                                                                          options: [:],
+                                                                                          completionHandler: nil)
+                                                            }
+                                                            
                                                         }
                                         }),
                                         informationData(title:"幫我們評分",
@@ -258,7 +271,7 @@ extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
                                                          for: indexPath) as! KPRegionTableViewCell
                 cell.selectionStyle = .none
                 cell.expandIcon.isHidden = false
-                cell.regionIcon.image = regionIcons[indexPath.row]
+                cell.regionIcon.image = regionContents[indexPath.row]?.icon
                 cell.regionLabel.text = regionContents[indexPath.row]?.name
                 return cell
             } else {
@@ -397,7 +410,7 @@ extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
                 let regionIndex = getRegionIndex(expandIndex: indexPath.row)
                 let regionContent = regionContents[regionIndex]
                 let cityName = regionContent?.cityKeys[indexPath.row-regionIndex-1]
-                mainController.displayDataModel = KPFilter.filterData(source: mainController.displayDataModel,
+                mainController.displayDataModel = KPFilter.filterData(source: KPMainViewController.allDataModel,
                                                                       withCity: cityName!)
             }
         } else {
