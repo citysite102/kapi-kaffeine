@@ -188,8 +188,9 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
             if let photoURL = URL(string: user.photoURL ?? "") {
                 userPhoto.af_setImage(withURL: photoURL)
             }
-            userNameLabel.text = user.displayName ?? "Samuel"
-            userCityLabel.text = user.defaultLocation ?? "滑到外太空"
+            userNameLabel.text = user.displayName ?? ""
+            userCityLabel.text = user.defaultLocation ?? ""
+            userBioLabel.text = user.intro ?? ""
         }
         
         view.bringSubview(toFront: tabView)

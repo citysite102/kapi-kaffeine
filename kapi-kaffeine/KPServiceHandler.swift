@@ -227,6 +227,42 @@ class KPServiceHandler {
         }
     }
     
+    // User API
+    
+    func modifyRemoteUserData(_ user: KPUser, _ completion:((_ successed: Bool) -> Void)?) {
+        let request = KPUserInformationRequest()
+        
+        loadingView.loadingContents = ("修改中...", "修改成功", "修改失敗")
+        UIApplication.shared.KPTopViewController().view.addSubview(loadingView)
+        loadingView.state = .loading
+        loadingView.addConstraints(fromStringArray: ["V:|[$self]|",
+                                                     "H:|[$self]|"])
+
+        request.perform(user.displayName,
+                        user.photoURL,
+                        user.defaultLocation,
+                        user.intro,
+                        user.email,
+                        .put).then { result -> Void in
+                            print(result)
+                            KPUserManager.sharedManager.storeUserInformation()
+                            self.loadingView.state = result["result"].boolValue ? .successed : .failed
+                            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
+                                                          execute: {
+                                                            self.loadingView.removeFromSuperview()
+                            })
+                            completion?(result["result"].boolValue)
+            }.catch { error in
+                print(error)
+                self.loadingView.state = .failed
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
+                                              execute: {
+                                                self.loadingView.removeFromSuperview()
+                })
+                completion?(false)
+        }
+    }
+    
     func removeFavoriteCafe(_ cafeID: String,
                             _ completion: ((Bool) -> Swift.Void)? = nil) {
         
@@ -276,5 +312,4 @@ class KPServiceHandler {
                 completion?(false)
         }
     }
-
 }

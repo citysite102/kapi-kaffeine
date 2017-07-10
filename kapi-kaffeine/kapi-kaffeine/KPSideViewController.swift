@@ -410,6 +410,7 @@ extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
                 let regionIndex = getRegionIndex(expandIndex: indexPath.row)
                 let regionContent = regionContents[regionIndex]
                 let cityName = regionContent?.cityKeys[indexPath.row-regionIndex-1]
+                mainController.mainListViewController?.dataLoading = true
                 mainController.displayDataModel = KPFilter.filterData(source: KPMainViewController.allDataModel,
                                                                       withCity: cityName!)
             }

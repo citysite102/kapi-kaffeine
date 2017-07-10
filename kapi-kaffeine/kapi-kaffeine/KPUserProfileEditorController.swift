@@ -67,6 +67,8 @@ class KPUserPhotoEditView: UIView {
     
     var photoImageView: UIImageView!
     
+    var userPhoto: UIImageView!
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -121,8 +123,12 @@ class KPUserProfileEditorController: UIViewController, UITextFieldDelegate, UITe
     var saveButton: UIButton!
     var activeField: UIView?
     
-    var photoContainer: KPUserPhotoEditView!
+    var photoEditView: KPUserPhotoEditView!
+    var nameField: KPSubTitleEditView!
+    var emailField: KPSubTitleEditView!
+    var regionField: KPSubTitleEditView!
     
+    var introTextView: UITextView!
     var introTextNumberLabel: UILabel!
     var introTextViewPlaceHolder: UILabel!
 
@@ -175,22 +181,22 @@ class KPUserProfileEditorController: UIViewController, UITextFieldDelegate, UITe
         scrollContainer.addSubview(topline)
         topline.addConstraints(fromStringArray: ["H:|[$self]|", "V:|-(-1)-[$self(1)]"])
         
-        photoContainer = KPUserPhotoEditView()
-        scrollContainer.addSubview(photoContainer)
+        photoEditView = KPUserPhotoEditView()
+        scrollContainer.addSubview(photoEditView)
         
         let photoTapGesture = UITapGestureRecognizer(target: self, action: #selector(handlePhotoTapGesture(tapGesture:)))
-        photoContainer.addGestureRecognizer(photoTapGesture)
+        photoEditView.addGestureRecognizer(photoTapGesture)
         
-        let nameField = KPSubTitleEditView(.Both, .Edited, "使用者名稱")
-        nameField.content = "Samuel"
+        nameField = KPSubTitleEditView(.Both, .Edited, "使用者名稱")
+        nameField.content = ""
         scrollContainer.addSubview(nameField)
 
-        let emailField = KPSubTitleEditView(.Bottom, .Edited, "E-mail信箱")
-        emailField.content = "samuel@kapi.com"
+        emailField = KPSubTitleEditView(.Bottom, .Edited, "E-mail信箱")
+        emailField.content = ""
         scrollContainer.addSubview(emailField)
         
-        let regionField = KPSubTitleEditView(.Bottom, .Edited, "地區")
-        regionField.content = "新北市"
+        regionField = KPSubTitleEditView(.Bottom, .Edited, "地區")
+        regionField.content = ""
         scrollContainer.addSubview(regionField)
         
         let label = UILabel()
@@ -200,26 +206,25 @@ class KPUserProfileEditorController: UIViewController, UITextFieldDelegate, UITe
         scrollContainer.addSubview(label)
         
         
-        let inputTextView = UITextView()
-        inputTextView.delegate = self
-        inputTextView.textColor = KPColorPalette.KPTextColor.grayColor_level2
-        inputTextView.font = regionField.editTextField.font
-        inputTextView.textContainerInset = UIEdgeInsets.zero
-        inputTextView.textContainer.lineFragmentPadding = 0
-        inputTextView.isScrollEnabled = false
-        scrollContainer.addSubview(inputTextView)
+        introTextView = UITextView()
+        introTextView.delegate = self
+        introTextView.textColor = KPColorPalette.KPTextColor.grayColor_level2
+        introTextView.font = regionField.editTextField.font
+        introTextView.textContainerInset = UIEdgeInsets.zero
+        introTextView.textContainer.lineFragmentPadding = 0
+        introTextView.isScrollEnabled = false
+        scrollContainer.addSubview(introTextView)
         
         introTextViewPlaceHolder = UILabel()
-        introTextViewPlaceHolder.font = inputTextView.font
+        introTextViewPlaceHolder.font = introTextView.font
         introTextViewPlaceHolder.textColor = KPColorPalette.KPTextColor.grayColor_level6
         introTextViewPlaceHolder.text = "請輸入自我介紹"
-        inputTextView.addSubview(introTextViewPlaceHolder)
+        introTextView.addSubview(introTextViewPlaceHolder)
         introTextViewPlaceHolder.addConstraints(fromStringArray: ["V:|[$self]"])
         
         introTextNumberLabel = UILabel()
         introTextNumberLabel.font = UIFont.systemFont(ofSize: 12)
         introTextNumberLabel.textColor = KPColorPalette.KPTextColor.mainColor
-        introTextNumberLabel.text = "0/30"
         scrollContainer.addSubview(introTextNumberLabel)
         
         
@@ -230,10 +235,23 @@ class KPUserProfileEditorController: UIViewController, UITextFieldDelegate, UITe
         
         
         
-        if inputTextView.text.characters.count == 0 {
+        if let user =  KPUserManager.sharedManager.currentUser {
+            nameField.content = user.displayName
+            emailField.content = user.email
+            regionField.content = user.defaultLocation
+            introTextView.text = user.intro
+            if let photoURLString = user.photoURL,
+               let photoURL = URL(string: photoURLString) {
+                photoEditView.photoImageView.af_setImage(withURL: photoURL)
+            }
+        }
+        
+        
+        if introTextView.text.characters.count == 0 {
             introTextNumberLabel.isHidden = true
             introTextViewPlaceHolder.isHidden = false
         } else {
+            introTextNumberLabel.text = "\(introTextView.text.characters.count)/30"
             introTextNumberLabel.isHidden = false
             introTextViewPlaceHolder.isHidden = true
         }
@@ -247,7 +265,7 @@ class KPUserProfileEditorController: UIViewController, UITextFieldDelegate, UITe
                                                    "H:[$view4]-16-|",
                                                    "H:|[$view5]|",
                                                    "V:|[$view5(72)][$self(72)][$view0(72)][$view1(72)]-16-[$view2]-8-[$view3(50)][view4]-|"],
-                                 views: [emailField, regionField, label, inputTextView, introTextNumberLabel, photoContainer])
+                                 views: [emailField, regionField, label, introTextView, introTextNumberLabel, photoEditView])
         
         registerForNotification()
         
@@ -296,6 +314,23 @@ class KPUserProfileEditorController: UIViewController, UITextFieldDelegate, UITe
     
     func handleSaveButtonOnTapped() {
         
+        if let user = KPUserManager.sharedManager.currentUser {
+            
+            user.displayName = nameField.editTextField.text
+            user.email = emailField.editTextField.text
+            user.defaultLocation = regionField.editTextField.text
+            user.intro = introTextView.text
+            // TODO: Photo
+            
+            KPServiceHandler.sharedHandler.modifyRemoteUserData(user, { (successed) in
+                if successed == true {
+                    self.navigationController?.popToRootViewController(animated: true)
+                }
+            })
+            
+            
+        }
+        
     }
     
     fileprivate func generateNewTitleLabel(title: String) -> UILabel {
@@ -332,7 +367,7 @@ class KPUserProfileEditorController: UIViewController, UITextFieldDelegate, UITe
         self.dismiss(animated: true, completion: nil)
         
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            self.photoContainer.photoImageView.image = image
+            photoEditView.photoImageView.image = image
         }
     }
     
