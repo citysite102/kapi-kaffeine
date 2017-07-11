@@ -136,8 +136,14 @@ public class KPUserManager {
         userRequest.perform(nil, nil, nil, nil, nil, .get).then {
             result -> Void in
             print("取得更新後的使用者資料")
+            self.currentUser =
+                Mapper<KPUser>().map(JSONObject: result["data"].dictionaryObject)
+            self.currentUser?.accessToken = result["token"].string
+            KPUserDefaults.accessToken = result["token"].string
+            self.storeUserInformation()
+            
         }.catch { error in
-                
+            
         }
     }
     

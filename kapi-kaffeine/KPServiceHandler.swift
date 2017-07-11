@@ -96,8 +96,13 @@ class KPServiceHandler {
                                                                   execute: {
                                                                     loadingView.removeFromSuperview()
                                     })
-                                    KPUserManager.sharedManager.currentUser?.reviews?.append(self.currentDisplayModel!)
-                                    KPUserManager.sharedManager.storeUserInformation()
+                                    
+                                    guard let _ = KPUserManager.sharedManager.currentUser?.reviews?.first(where: {$0.identifier == self.currentDisplayModel?.identifier}) else {
+                                        KPUserManager.sharedManager.currentUser?.reviews?.append(self.currentDisplayModel!)
+                                        KPUserManager.sharedManager.storeUserInformation()
+                                        return
+                                    }
+                                    
                                     completion?(true)
                                 }
         }.catch { (error) in
@@ -171,8 +176,11 @@ class KPServiceHandler {
                                                                       execute: {
                                                                         loadingView.removeFromSuperview()
                                         })
-                                        KPUserManager.sharedManager.currentUser?.rates?.append(self.currentDisplayModel!)
-                                        KPUserManager.sharedManager.storeUserInformation()
+                                        guard let _ = KPUserManager.sharedManager.currentUser?.rates?.first(where: {$0.identifier == self.currentDisplayModel?.identifier}) else {
+                                            KPUserManager.sharedManager.currentUser?.rates?.append(self.currentDisplayModel!)
+                                            KPUserManager.sharedManager.storeUserInformation()
+                                            return
+                                        }
                                         completion?(commentResult)
                                     }
                                     print("Result\(result)")
@@ -222,10 +230,13 @@ class KPServiceHandler {
         
         addRequest.perform((currentDisplayModel?.identifier)!,
                            KPFavoriteRequest.requestType.add).then { result -> Void in
-                            KPUserManager.sharedManager.currentUser?.favorites?.append(self.currentDisplayModel!)
-                            KPUserManager.sharedManager.storeUserInformation()
+                            
+                            guard let _ = KPUserManager.sharedManager.currentUser?.favorites?.first(where: {$0.identifier == self.currentDisplayModel?.identifier}) else {
+                                KPUserManager.sharedManager.currentUser?.favorites?.append(self.currentDisplayModel!)
+                                KPUserManager.sharedManager.storeUserInformation()
+                                return
+                            }
                             completion?(true)
-                            print("Result\(result)")
             }.catch { error in
                 print("Add Favorite Cafe error\(error)")
                 completion?(false)
@@ -292,8 +303,12 @@ class KPServiceHandler {
         let addRequest = KPVisitedRequest()
         addRequest.perform((currentDisplayModel?.identifier)!,
                            KPVisitedRequest.requestType.add).then { result -> Void in
-                            KPUserManager.sharedManager.currentUser?.visits?.append(self.currentDisplayModel!)
-                            KPUserManager.sharedManager.storeUserInformation()
+                            
+                            guard let _ = KPUserManager.sharedManager.currentUser?.visits?.first(where: {$0.identifier == self.currentDisplayModel?.identifier}) else {
+                                KPUserManager.sharedManager.currentUser?.visits?.append(self.currentDisplayModel!)
+                                KPUserManager.sharedManager.storeUserInformation()
+                                return
+                            }
                             completion?(true)
                             print("Result\(result)")
             }.catch { (error) in
