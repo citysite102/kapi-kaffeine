@@ -13,12 +13,18 @@ class KPBusinessHourViewController: KPSharedSettingViewController, KPTimePickerD
     var checkBoxViews = [KPCheckView]()
     var startTimeButtons = [UIButton]()
     var endTimeButtons = [UIButton]()
+    var subContainers = [UIView]()
     
     var currentSelectedButton: UIButton?
     
     var attrs = [
         NSFontAttributeName : UIFont.systemFont(ofSize: 19.0),
         NSForegroundColorAttributeName : KPColorPalette.KPTextColor.grayColor_level3!,
+        NSUnderlineStyleAttributeName : 1] as [String : Any]
+    
+    var editAttrs = [
+        NSFontAttributeName : UIFont.systemFont(ofSize: 19.0),
+        NSForegroundColorAttributeName : KPColorPalette.KPTextColor.mainColor!,
         NSUnderlineStyleAttributeName : 1] as [String : Any]
     
     override func viewDidLoad() {
@@ -33,21 +39,28 @@ class KPBusinessHourViewController: KPSharedSettingViewController, KPTimePickerD
         let days = ["星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"]
         
         for (index, title) in days.enumerated() {
+            let container = UIView()
+            container.backgroundColor = UIColor.clear
+            containerView.addSubview(container)
+            subContainers.append(container)
+            
             let checkView = KPCheckView(.checkmark, title)
-            containerView.addSubview(checkView)
+            container.addSubview(checkView)
             checkBoxViews.append(checkView)
+            checkView.checkBox.addTarget(self, action: #selector(handleCheckBoxOnTap(checkBox:)), for: .valueChanged)
+            checkView.checkBox.tag = index
 
             if index == 0 {
-                checkView.addConstraints(fromStringArray: ["H:|-16-[$self]", "V:|-24-[$self]"])
+                container.addConstraints(fromStringArray: ["H:|[$self]|", "V:|-24-[$self]"])
             } else {
-                checkView.addConstraints(fromStringArray: ["H:|-16-[$self]", "V:[$view0]-32-[$self]"],
-                                         views: [checkBoxViews[index-1]])
+                container.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$view0]-32-[$self]"],
+                                         views: [subContainers[index-1]])
             }
             
             let startTimeButton = UIButton()
             let attrstr = NSAttributedString(string: "08:00", attributes: attrs)
             startTimeButton.setAttributedTitle(attrstr, for: .normal)
-            containerView.addSubview(startTimeButton)
+            container.addSubview(startTimeButton)
             startTimeButton.addConstraintForCenterAligning(to: checkView, in: .vertical)
             startTimeButton.addTarget(self, action: #selector(startTimeSelectButtonOnTap(button:)), for: .touchUpInside)
             startTimeButton.tag = index
@@ -56,7 +69,7 @@ class KPBusinessHourViewController: KPSharedSettingViewController, KPTimePickerD
             let endTimeButton = UIButton()
             let attrstr1 = NSAttributedString(string: "20:00", attributes: attrs)
             endTimeButton.setAttributedTitle(attrstr1, for: .normal)
-            containerView.addSubview(endTimeButton)
+            container.addSubview(endTimeButton)
             endTimeButton.addConstraintForCenterAligning(to: checkView, in: .vertical)
             endTimeButton.addTarget(self, action: #selector(endTimeSelectButtonOnTap(button:)), for: .touchUpInside)
             endTimeButton.tag = index
@@ -66,16 +79,17 @@ class KPBusinessHourViewController: KPSharedSettingViewController, KPTimePickerD
             label.text = "至"
             label.textAlignment = .center
             label.textColor = KPColorPalette.KPMainColor.mainColor
-            containerView.addSubview(label)
+            container.addSubview(label)
             label.addConstraintForCenterAligning(to: checkView, in: .vertical)
             
-            startTimeButton.addConstraints(fromStringArray: ["H:[$view0]-(>=0)-[$self]-[$view1]-[$view2]-16-|"],
+            startTimeButton.addConstraints(fromStringArray: ["H:|-16-[$view0]-(>=0)-[$self]-[$view1]-[$view2]-16-|",
+                                                             "V:|[$view0]|"],
                                            views: [checkView, label, endTimeButton])
             
         }
         
 
-        checkBoxViews.last!.addConstraint(from: "V:[$self]-16-|")
+        subContainers.last!.addConstraint(from: "V:[$self]-16-|")
         
         sendButton.setTitle("確認送出", for: .normal)
         sendButton.addTarget(self,
@@ -92,6 +106,18 @@ class KPBusinessHourViewController: KPSharedSettingViewController, KPTimePickerD
     func endTimeSelectButtonOnTap(button: UIButton) {
         currentSelectedButton = button
         showTimePicker()
+    }
+    
+    func handleCheckBoxOnTap(checkBox: KPCheckBox) {
+        if checkBox.checkState == .checked {
+            startTimeButtons[checkBox.tag].isEnabled = true
+            endTimeButtons[checkBox.tag].isEnabled = true
+            subContainers[checkBox.tag].alpha = 1
+        } else {
+            startTimeButtons[checkBox.tag].isEnabled = false
+            endTimeButtons[checkBox.tag].isEnabled = false
+            subContainers[checkBox.tag].alpha = 0.6
+        }
     }
     
     func showTimePicker() {
@@ -112,7 +138,7 @@ class KPBusinessHourViewController: KPSharedSettingViewController, KPTimePickerD
     
     func valueUpdate(timePicker: KPTimePicker, value: String) {
         if currentSelectedButton != nil {
-            currentSelectedButton!.setAttributedTitle(NSAttributedString(string: value, attributes: attrs),
+            currentSelectedButton!.setAttributedTitle(NSAttributedString(string: value, attributes: editAttrs),
                                                       for: .normal)
         }
     }

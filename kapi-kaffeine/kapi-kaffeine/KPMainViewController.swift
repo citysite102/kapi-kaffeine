@@ -171,7 +171,6 @@ class KPMainViewController: KPViewController {
     func updateData() {
         KPServiceHandler.sharedHandler.fetchRemoteData() { (results: [KPDataModel]?) in
             if results != nil {
-                print(Set(results!.map({$0.city})))
                 KPMainViewController.allDataModel = results!
                 self.displayDataModel = results!
             }

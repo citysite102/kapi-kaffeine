@@ -57,7 +57,6 @@ class KPTimePicker: UIView, UIPickerViewDataSource, UIPickerViewDelegate {
         let separatorLine = UIView()
         separatorLine.backgroundColor = KPColorPalette.KPMainColor.mainColor
         pickerView.addSubview(separatorLine)
-//        pickerView.addConstraint(NSLayoutConstraint(item: pickerView, attribute: .centerY, relatedBy: .equal, toItem: separatorLine, attribute: .centerY, multiplier: 1, constant: pickerRowHeight/2))
         pickerView.addConstraint(NSLayoutConstraint(item: separatorLine, attribute: .bottom, relatedBy: .equal, toItem: pickerView, attribute: .bottom, multiplier: 0.357, constant: 0))
         separatorLine.addConstraintForCenterAligningToSuperview(in: .horizontal)
         separatorLine.addConstraint(forWidth: 50)
@@ -66,7 +65,6 @@ class KPTimePicker: UIView, UIPickerViewDataSource, UIPickerViewDelegate {
         let separatorLine1 = UIView()
         separatorLine1.backgroundColor = KPColorPalette.KPMainColor.mainColor
         pickerView.addSubview(separatorLine1)
-//        pickerView.addConstraint(NSLayoutConstraint(item: separatorLine1, attribute: .centerY, relatedBy: .equal, toItem: pickerView, attribute: .centerY, multiplier: 1, constant: pickerRowHeight/2))
         pickerView.addConstraint(NSLayoutConstraint(item: separatorLine1, attribute: .bottom, relatedBy: .equal, toItem: pickerView, attribute: .bottom, multiplier: 0.643, constant: 0))
         separatorLine1.addConstraintForCenterAligningToSuperview(in: .horizontal)
         separatorLine1.addConstraint(forWidth: 50)
@@ -75,19 +73,17 @@ class KPTimePicker: UIView, UIPickerViewDataSource, UIPickerViewDelegate {
         let separatorLine2 = UIView()
         separatorLine2.backgroundColor = KPColorPalette.KPMainColor.mainColor
         pickerView.addSubview(separatorLine2)
-//        pickerView.addConstraint(NSLayoutConstraint(item: separatorLine2, attribute: .centerY, relatedBy: .equal, toItem: pickerView, attribute: .centerY, multiplier: 1, constant: pickerRowHeight/2))
         pickerView.addConstraint(NSLayoutConstraint(item: separatorLine2, attribute: .bottom, relatedBy: .equal, toItem: pickerView, attribute: .bottom, multiplier: 0.357, constant: 0))
 
-        separatorLine2.addConstraint(from: "H:|-(\(6.66+25))-[$self]")
+        separatorLine2.addConstraint(from: "H:|-(\(42))-[$self]")
         separatorLine2.addConstraint(forWidth: 50)
         separatorLine2.addConstraint(forHeight: 2)
         
         let separatorLine3 = UIView()
         separatorLine3.backgroundColor = KPColorPalette.KPMainColor.mainColor
         pickerView.addSubview(separatorLine3)
-//        pickerView.addConstraint(NSLayoutConstraint(item: pickerView, attribute: .centerY, relatedBy: .equal, toItem: separatorLine3, attribute: .centerY, multiplier: 1, constant: pickerRowHeight/2))
         pickerView.addConstraint(NSLayoutConstraint(item: separatorLine3, attribute: .bottom, relatedBy: .equal, toItem: pickerView, attribute: .bottom, multiplier: 0.643, constant: 0))
-        separatorLine3.addConstraint(from: "H:|-(\(6.66+25))-[$self]")
+        separatorLine3.addConstraint(from: "H:|-(\(42))-[$self]")
         separatorLine3.addConstraint(forWidth: 50)
         separatorLine3.addConstraint(forHeight: 2)
         
@@ -95,18 +91,16 @@ class KPTimePicker: UIView, UIPickerViewDataSource, UIPickerViewDelegate {
         let separatorLine3_top = UIView()
         separatorLine3_top.backgroundColor = KPColorPalette.KPMainColor.mainColor
         pickerView.addSubview(separatorLine3_top)
-//        pickerView.addConstraint(NSLayoutConstraint(item: separatorLine3_top, attribute: .centerY, relatedBy: .equal, toItem: pickerView, attribute: .centerY, multiplier: 1, constant: pickerRowHeight/2))
         pickerView.addConstraint(NSLayoutConstraint(item: separatorLine3_top, attribute: .bottom, relatedBy: .equal, toItem: pickerView, attribute: .bottom, multiplier: 0.357, constant: 0))
-        separatorLine3_top.addConstraint(from: "H:[$self]-(\(6.66+25))-|")
+        separatorLine3_top.addConstraint(from: "H:[$self]-(\(42))-|")
         separatorLine3_top.addConstraint(forWidth: 50)
         separatorLine3_top.addConstraint(forHeight: 2)
         
         let separatorLine3_bottom = UIView()
         separatorLine3_bottom.backgroundColor = KPColorPalette.KPMainColor.mainColor
         pickerView.addSubview(separatorLine3_bottom)
-//        pickerView.addConstraint(NSLayoutConstraint(item: pickerView, attribute: .centerY, relatedBy: .equal, toItem: separatorLine3_bottom, attribute: .centerY, multiplier: 1, constant: pickerRowHeight/2))
         pickerView.addConstraint(NSLayoutConstraint(item: separatorLine3_bottom, attribute: .bottom, relatedBy: .equal, toItem: pickerView, attribute: .bottom, multiplier: 0.643, constant: 0))
-        separatorLine3_bottom.addConstraint(from: "H:[$self]-(\(6.66+25))-|")
+        separatorLine3_bottom.addConstraint(from: "H:[$self]-(\(42))-|")
         separatorLine3_bottom.addConstraint(forWidth: 50)
         separatorLine3_bottom.addConstraint(forHeight: 2)
         
