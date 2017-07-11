@@ -10,7 +10,7 @@ import UIKit
 
 class KPShopCommentInfoView: UIView {
 
-    static let KPShopCommentInfoCellReuseIdentifier = "cell";
+    static let KPShopCommentInfoCellReuseIdentifier = "cell"
     
     var tableView: UITableView!
     var tableViewHeightConstraint: NSLayoutConstraint!
@@ -55,7 +55,7 @@ extension KPShopCommentInfoView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier:KPShopCommentInfoView.KPShopCommentInfoCellReuseIdentifier,
-                                                 for: indexPath) as! KPShopCommentCell;
+                                                 for: indexPath) as! KPShopCommentCell
         
         let comment = comments[indexPath.row] 
         cell.userNameLabel.text = comment.displayName
@@ -65,18 +65,18 @@ extension KPShopCommentInfoView: UITableViewDelegate, UITableViewDataSource {
         cell.voteUpCount = comment.likeCount ?? 0
         cell.voteDownCount = comment.dislikeCount ?? 0
         
-        return cell;
+        return cell
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80;
+        return 80
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return comments.count;
+        return comments.count > 3 ? 3 : comments.count
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1;
+        return 1
     }
 }

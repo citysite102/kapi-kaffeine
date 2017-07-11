@@ -16,7 +16,6 @@ class KPServiceHandler {
     
     private var kapiDataRequest: KPCafeRequest!
     private var kapiDetailedInfoRequest: KPCafeDetailedInfoRequest!
-    private var loadingView: KPLoadingView!
     
     // 目前儲存所有的咖啡店
     var currentCafeDatas: [KPDataModel]!
@@ -27,7 +26,6 @@ class KPServiceHandler {
     private init() {
         kapiDataRequest = KPCafeRequest()
         kapiDetailedInfoRequest = KPCafeDetailedInfoRequest()
-        loadingView = KPLoadingView()
     }
     
     
@@ -83,30 +81,30 @@ class KPServiceHandler {
         
         let commentRequest = KPNewCommentRequest()
         
+        let loadingView = KPLoadingView()
         loadingView.loadingContents = ("新增中...", "新增成功", "新增失敗")
-        UIApplication.shared.topViewController.view.addSubview(loadingView)
         loadingView.state = .loading
+        UIApplication.shared.topViewController.view.addSubview(loadingView)
         loadingView.addConstraints(fromStringArray: ["V:|[$self]|",
                                                      "H:|[$self]|"])
         
         commentRequest.perform((currentDisplayModel?.identifier)!,
                                comment!).then { result -> Void in
                                 if let commentResult = result["result"].bool {
-                                    self.loadingView.state = commentResult ? .successed : .failed
-                                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
+                                    loadingView.state = commentResult ? .successed : .failed
+                                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2.5,
                                                                   execute: {
-                                                                    self.loadingView.removeFromSuperview()
+                                                                    loadingView.removeFromSuperview()
                                     })
                                     KPUserManager.sharedManager.currentUser?.reviews?.append(self.currentDisplayModel!)
                                     KPUserManager.sharedManager.storeUserInformation()
                                     completion?(true)
                                 }
-                                    print("Add New Comment Result:\(result)")
         }.catch { (error) in
-            self.loadingView.state = .failed
+            loadingView.state = .failed
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
                                           execute: {
-                                            self.loadingView.removeFromSuperview()
+                                            loadingView.removeFromSuperview()
             })
             completion?(false)
         }
@@ -152,6 +150,7 @@ class KPServiceHandler {
                    _ completion: ((_ successed: Bool) -> Swift.Void)?) {
         let newRatingRequest = KPNewRatingRequest()
         
+        let loadingView = KPLoadingView()
         loadingView.loadingContents = ("新增中...", "新增成功", "新增失敗")
         UIApplication.shared.KPTopViewController().view.addSubview(loadingView)
         loadingView.state = .loading
@@ -167,10 +166,10 @@ class KPServiceHandler {
                                  cheap,
                                  music).then { result -> Void in
                                     if let commentResult = result["result"].bool {
-                                        self.loadingView.state = commentResult ? .successed : .failed
+                                        loadingView.state = commentResult ? .successed : .failed
                                         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
                                                                       execute: {
-                                                                        self.loadingView.removeFromSuperview()
+                                                                        loadingView.removeFromSuperview()
                                         })
                                         KPUserManager.sharedManager.currentUser?.rates?.append(self.currentDisplayModel!)
                                         KPUserManager.sharedManager.storeUserInformation()
@@ -178,10 +177,10 @@ class KPServiceHandler {
                                     }
                                     print("Result\(result)")
         }.catch { (error) in
-                self.loadingView.state = .failed
+                loadingView.state = .failed
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
                                           execute: {
-                                            self.loadingView.removeFromSuperview()
+                                            loadingView.removeFromSuperview()
             })
             completion?(false)
         }
@@ -238,6 +237,7 @@ class KPServiceHandler {
     func modifyRemoteUserData(_ user: KPUser, _ completion:((_ successed: Bool) -> Void)?) {
         let request = KPUserInformationRequest()
         
+        let loadingView = KPLoadingView()
         loadingView.loadingContents = ("修改中...", "修改成功", "修改失敗")
         UIApplication.shared.KPTopViewController().view.addSubview(loadingView)
         loadingView.state = .loading
@@ -252,18 +252,18 @@ class KPServiceHandler {
                         .put).then { result -> Void in
                             print(result)
                             KPUserManager.sharedManager.storeUserInformation()
-                            self.loadingView.state = result["result"].boolValue ? .successed : .failed
+                            loadingView.state = result["result"].boolValue ? .successed : .failed
                             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
                                                           execute: {
-                                                            self.loadingView.removeFromSuperview()
+                                                            loadingView.removeFromSuperview()
                             })
                             completion?(result["result"].boolValue)
             }.catch { error in
                 print(error)
-                self.loadingView.state = .failed
+                loadingView.state = .failed
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
                                               execute: {
-                                                self.loadingView.removeFromSuperview()
+                                                loadingView.removeFromSuperview()
                 })
                 completion?(false)
         }

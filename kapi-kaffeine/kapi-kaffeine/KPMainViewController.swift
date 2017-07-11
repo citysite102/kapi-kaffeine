@@ -105,17 +105,13 @@ class KPMainViewController: KPViewController {
         SideMenuManager.menuAnimationBackgroundColor = UIColor.black
         SideMenuManager.menuWidth = 260
         
-        if (KPUserManager.sharedManager.currentUser != nil) {
-            KPUserManager.sharedManager.updateUserInformation()
-            KPServiceHandler.sharedHandler.fetchRemoteData() { (results: [KPDataModel]?) in
-                if results != nil {
-                    print(Set(results!.map({$0.city})))
-                    KPMainViewController.allDataModel = results!
-                    self.displayDataModel = results!
-                }
-            }
-        }
-
+        updateData()
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(updateData),
+                                               name: NSNotification.Name.UIApplicationDidBecomeActive,
+                                               object: nil)
+        
     }
     
     override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
@@ -164,6 +160,26 @@ class KPMainViewController: KPViewController {
         }
     }
     
+    
+    
+    // MARK: Data
+    
+    func updateData() {
+        KPServiceHandler.sharedHandler.fetchRemoteData() { (results: [KPDataModel]?) in
+            if results != nil {
+                print(Set(results!.map({$0.city})))
+                KPMainViewController.allDataModel = results!
+                self.displayDataModel = results!
+            }
+        }
+        
+        if (KPUserManager.sharedManager.currentUser != nil) {
+            KPUserManager.sharedManager.updateUserInformation()
+        }
+    }
+    
+    // MARK: UI Event
+    
     func switchSideBar() {
         
         statusBarShouldBeHidden = true
@@ -174,7 +190,6 @@ class KPMainViewController: KPViewController {
         self.opacityView.isHidden = false
         present(SideMenuManager.menuLeftNavigationController!,
                 animated: true, completion: nil)
-        
     }
     
     func changeStyle() {

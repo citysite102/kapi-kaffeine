@@ -19,8 +19,8 @@ enum KPModalPresentationStyle: String, RawRepresentable {
 }
 
 protocol KPModalControllerDelegate: NSObjectProtocol {
-    func modalControllerWillDissmiss(_ modalViewController: KPModalViewController)
-    func modalControllerDidDissmiss(_ modalViewController: KPModalViewController)
+    func modalControllerWillDismiss(_ modalViewController: KPModalViewController)
+    func modalControllerDidDismiss(_ modalViewController: KPModalViewController)
     func modalControllerWillPresent(_ modalViewController: KPModalViewController)
     func modalControllerDidPresent(_ modalViewController: KPModalViewController)
     func modalControllerBackgroundOnTouched(_ modalViewController: KPModalViewController)
@@ -30,6 +30,7 @@ class KPModalViewController: KPViewController {
 
     
     static let defaultDismissDuration: CGFloat = 0.3
+    static let defaultPopoutDismissDuration: CGFloat = 0.15
     
     var keyboardIsShowing: Bool = false
     var dismissWhenTouchingOnBackground: Bool = true
@@ -129,8 +130,8 @@ class KPModalViewController: KPViewController {
     
     func setupPresentContent() {
         
-        let duration = 0.6
-        let damping  = 0.85
+        var duration = 0.6
+        var damping  = 0.85
         
         if self.contentController.parent != nil {
             self.contentController.willMove(toParentViewController: nil)
@@ -213,12 +214,14 @@ class KPModalViewController: KPViewController {
         
         if presentationStyle == .popout {
             self.containerSensingView.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
+            duration = 0.3
+            damping = 0.7
         }
         
         UIView.animate(withDuration: duration,
                        delay: 0,
                        usingSpringWithDamping: CGFloat(damping),
-                       initialSpringVelocity: 1.0,
+                       initialSpringVelocity: 0.8,
                        options: UIViewAnimationOptions.curveEaseIn,
                        animations: {
                         self.containerSensingView.transform = CGAffineTransform.identity
@@ -236,7 +239,9 @@ class KPModalViewController: KPViewController {
     
     
     func dismissControllerWithDefaultDuration() {
-        self.dismissController(duration: KPModalViewController.defaultDismissDuration)
+        self.dismissController(duration: presentationStyle == .popout ?
+            KPModalViewController.defaultPopoutDismissDuration :
+            KPModalViewController.defaultDismissDuration)
     }
     
     func dismissController(duration: CGFloat) {

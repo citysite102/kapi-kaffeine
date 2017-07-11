@@ -214,12 +214,10 @@ class KPInformationViewController: KPViewController {
             informationHeaderButtonBar.addConstraint(from: "V:[$view0][$self]",
                                                      views:[informationHeaderView]).first as! NSLayoutConstraint
         
-        let informationView: KPShopInfoView = KPShopInfoView()
-        informationView.featureContents = informationDataModel.featureContents
-        informationView.titleLabel.text = informationDataModel.name
-        informationView.locationLabel.text = informationDataModel.address ?? "暫無資料"
-        informationView.phoneLabel.text = informationDataModel.phone ?? "暫無資料"
-        informationView.otherTimeButton.addTarget(self, action: #selector(KPInformationViewController.handleOtherTimeButtonOnTapped), for: .touchUpInside)
+        let informationView: KPShopInfoView = KPShopInfoView(informationDataModel)
+        informationView.otherTimeButton.addTarget(self,
+                                                  action: #selector(KPInformationViewController.handleOtherTimeButtonOnTapped),
+                                                  for: .touchUpInside)
         
         if informationDataModel.businessHour != nil {
             let shopStatus = informationDataModel.businessHour.shopStatus
@@ -240,7 +238,7 @@ class KPInformationViewController: KPViewController {
         shopInformationView.infoTitleLabel.text = "店家資訊"
         scrollContainer.addSubview(shopInformationView)
         shopInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                             "V:[$view0]-16-[$self(210)]"],
+                                                             "V:[$view0]-16-[$self]"],
                                                       views: [informationHeaderButtonBar])
         
         locationInformationView = KPInformationSharedInfoView()
@@ -398,7 +396,7 @@ class KPInformationViewController: KPViewController {
         informationHeaderView.shopPhoto.isHidden = false
         
         
-        if dataLoading {
+        if !dataLoading {
             refreshComments()
             refreshRatings()
         }
@@ -553,6 +551,7 @@ class KPInformationViewController: KPViewController {
         let controller = KPModalViewController()
         let businessTimeViewController = KPBusinessTimeViewController()
         
+        controller.presentationStyle = .popout
         controller.contentSize = CGSize(width: 276, height: 416)
         controller.cornerRadius = [.topRight, .topLeft, .bottomLeft, .bottomRight]
         controller.dismissWhenTouchingOnBackground = true

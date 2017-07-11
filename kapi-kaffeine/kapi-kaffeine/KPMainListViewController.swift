@@ -30,6 +30,7 @@ class KPMainListViewController:
     weak var mainController:KPMainViewController!
     var tableView: UITableView!
     var satisficationView: KPSatisficationView!
+    var expNotificationView: KPExpNotificationView!
     var adLoader: GADAdLoader!
     
     var currentDataModel:KPDataModel?
@@ -115,7 +116,7 @@ class KPMainListViewController:
 //        view.bringSubview(toFront: searchFooterView)
         
         satisficationView = KPSatisficationView()
-        
+        expNotificationView = KPExpNotificationView()
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
     }
     

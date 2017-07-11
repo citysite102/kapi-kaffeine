@@ -43,7 +43,6 @@ class KPExpView: UIView {
                                                   "H:[$self]|"])
         
         progressView = M13ProgressViewBar(frame: .zero)
-//        progressView = M13ProgressViewBar(frame: CGRect(x: 0, y: 13, width: 80, height: 10))
         progressView.showPercentage = false
         progressView.progressBarThickness = 4
         progressView.progressBarCornerRadius = 2
