@@ -18,7 +18,11 @@ class KPShopLocationInfoView: UIView, GMSMapViewDelegate {
             let position = CLLocationCoordinate2DMake(dataModel.latitude, dataModel.longitude)
             let marker = GMSMarker(position: position)
             marker.title = dataModel.name
-            marker.icon = R.image.icon_mapMarker()
+            if let rate = dataModel.averageRate?.doubleValue, rate >= 4.5 {
+                marker.icon = R.image.icon_mapMarkerSelected()
+            } else {
+                marker.icon = R.image.icon_mapMarker()
+            }
             marker.map = self.mapView
             marker.userData = dataModel
             
@@ -54,13 +58,12 @@ class KPShopLocationInfoView: UIView, GMSMapViewDelegate {
     
     
     func mapView(_ mapView: GMSMapView, markerInfoWindow marker: GMSMarker) -> UIView? {
-        marker.icon = R.image.icon_mapMarkerSelected()
         let infoWindow = KPMainMapMarkerInfoWindow(dataModel: marker.userData as! KPDataModel)
         return infoWindow
     }
     
-    func mapView(_ mapView: GMSMapView, didCloseInfoWindowOf marker: GMSMarker) {
-        marker.icon = R.image.icon_mapMarker()
-    }
+//    func mapView(_ mapView: GMSMapView, didCloseInfoWindowOf marker: GMSMarker) {
+//        marker.icon = R.image.icon_mapMarker()
+//    }
 
 }

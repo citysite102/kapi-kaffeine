@@ -311,17 +311,20 @@ static const double kGMUAnimationDuration = 0.5;  // seconds.
     marker.groundAnchor = CGPointMake(0.5, 0.5);
   }
   else {
-      marker.iconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_mapMarker"]];
       if ([marker.userData isKindOfClass:[KPDataModel class]]) {
           KPDataModel *model = marker.userData;
+          
+          if (model.averageRate.floatValue >= 4.5) {
+              marker.iconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_mapMarkerSelected"]];
+          } else {
+              marker.iconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_mapMarker"]];
+          }
+          
           if (!model.businessHour || model.businessHour.isOpening) {
               marker.iconView.alpha = 1;
           } else {
-              marker.iconView.alpha = 0.5;
+              marker.iconView.alpha = 0.6;
           }
-              
-      } else {
-          
       }
   }
   marker.zIndex = _zIndex;
