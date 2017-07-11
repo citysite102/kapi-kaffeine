@@ -18,32 +18,29 @@ class KPRatingViewController: KPSharedSettingViewController {
                         R.image.icon_cup(), R.image.icon_cutlery(),
                         R.image.icon_pic()]
     var ratingViews = [KPRatingView]()
-
-    lazy var scoreLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14.0)
-        label.textColor = KPColorPalette.KPTextColor.whiteColor
-        label.text = "4.3"
-        label.backgroundColor = KPColorPalette.KPBackgroundColor.cellScoreBgColor;
-        label.layer.cornerRadius = 2.0;
-        label.layer.masksToBounds = true;
-        label.textAlignment = .center
-        return label
-    }()
+    var scoreLabel: KPMainListCellScoreLabel!
+    var averageRate: CGFloat!
+    var isRemote: Bool = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         titleLabel.text = "店家各項評分"
         scrollView.isScrollEnabled = true
-        containerView.addSubview(scoreLabel)
-        scoreLabel.addConstraints(fromStringArray: ["H:[$self(26)]-16-|", "V:[$self(20)]"])
+        
+        scoreLabel = KPMainListCellScoreLabel()
+        scoreLabel.score = "0.0"
+        view.addSubview(scoreLabel)
+        scoreLabel.addConstraints(fromStringArray: ["H:[$self(32)]-16-|",
+                                                    "V:[$self(24)]"])
         scoreLabel.addConstraintForCenterAligning(to: titleLabel, in: .vertical)
         
         for (index, title) in ratingTitles.enumerated() {
             let ratingView = KPRatingView.init(.star,
                                                ratingImages[index]!,
                                                title)
+            ratingView.delegate = self
+            ratingView.tag = index
             ratingViews.append(ratingView)
             containerView.addSubview(ratingView)
             
@@ -67,23 +64,44 @@ class KPRatingViewController: KPSharedSettingViewController {
     }
     
     func handleSendButtonOnTapped() {
-        
-        KPServiceHandler.sharedHandler.addRating(NSNumber(value: ratingViews[0].currentRate),
-                                                 NSNumber(value: ratingViews[3].currentRate),
-                                                 NSNumber(value: ratingViews[5].currentRate),
-                                                 NSNumber(value: ratingViews[1].currentRate),
-                                                 NSNumber(value: ratingViews[4].currentRate),
-                                                 NSNumber(value: ratingViews[2].currentRate),
-                                                NSNumber(value: ratingViews[6].currentRate)) { (successed) in
-                                                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
-                                                                                  execute: {
-                                                                                    self.appModalController()?.dismissControllerWithDefaultDuration()
-                                                    })
+        setValue = averageRate
+        delegate?.sendButtonTapped(self)
+        if isRemote {
+            KPServiceHandler.sharedHandler.addRating(NSNumber(value: ratingViews[0].currentRate),
+                                                     NSNumber(value: ratingViews[3].currentRate),
+                                                     NSNumber(value: ratingViews[5].currentRate),
+                                                     NSNumber(value: ratingViews[1].currentRate),
+                                                     NSNumber(value: ratingViews[4].currentRate),
+                                                     NSNumber(value: ratingViews[2].currentRate),
+                                                     NSNumber(value: ratingViews[6].currentRate)) { (successed) in
+                                                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
+                                                                                      execute: {
+                                                                                        self.appModalController()?.dismissControllerWithDefaultDuration()
+                                                        })
+            }
+        } else {
+            appModalController()?.dismissControllerWithDefaultDuration()
         }
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+}
+
+extension KPRatingViewController: KPRatingViewDelegate {
+    
+    func rateValueDidChanged(_ ratingView: KPRatingView) {
+        
+        var totalRate: CGFloat = 0
+        var availableRateCount: CGFloat = 0
+        
+        for rateView in ratingViews {
+            totalRate += CGFloat(rateView.currentRate)
+            availableRateCount = availableRateCount + ((rateView.currentRate != 0) ? 1 : 0)
+        }
+        averageRate = totalRate/availableRateCount
+        scoreLabel.score = String(format: "%.1f", averageRate)
     }
 }

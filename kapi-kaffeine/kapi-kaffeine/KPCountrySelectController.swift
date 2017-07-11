@@ -30,6 +30,9 @@ class KPCountrySelectController: KPSharedSettingViewController {
         tableView.tableFooterView = UIView()
         
         sendButton.setTitle("確認送出", for: .normal)
+        sendButton.addTarget(self,
+                             action: #selector(KPCountrySelectController.handleSendButtonOnTapped),
+                             for: .touchUpInside)
     }
 
     override func didReceiveMemoryWarning() {
@@ -37,16 +40,11 @@ class KPCountrySelectController: KPSharedSettingViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func handleSendButtonOnTapped() {
+        delegate?.sendButtonTapped(self)
+        appModalController()?.dismissControllerWithDefaultDuration()
     }
-    */
+    
 
 }
 
@@ -60,6 +58,9 @@ extension KPCountrySelectController: UITableViewDelegate, UITableViewDataSource 
         return cell;
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        setValue = countries[indexPath.row]
+    }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 64

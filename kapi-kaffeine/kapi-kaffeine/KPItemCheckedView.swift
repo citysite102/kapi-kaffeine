@@ -24,6 +24,9 @@ class KPItemCheckedView: UIView {
     var checked: Bool = false {
         didSet {
             stateLabel.text = checked ? checkContent : uncheckContent
+            stateLabel.textColor = checked ?
+                KPColorPalette.KPTextColor.grayColor_level2 :
+                KPColorPalette.KPTextColor.grayColor_level4
         }
     }
     
@@ -56,6 +59,7 @@ class KPItemCheckedView: UIView {
                      _ uncheckTitle: String,
                      _ checkTitle: String,
                      _ borderType: BorderType) {
+        
         self.init(frame: .zero)
         
         uncheckContent = uncheckTitle

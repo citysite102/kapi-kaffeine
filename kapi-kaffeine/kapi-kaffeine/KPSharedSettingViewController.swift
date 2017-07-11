@@ -8,13 +8,21 @@
 
 import UIKit
 
+
+protocol KPSharedSettingDelegate: NSObjectProtocol {
+    func sendButtonTapped(_ controller: KPSharedSettingViewController)
+}
+
 class KPSharedSettingViewController: KPViewController {
 
+    weak open var delegate: KPSharedSettingDelegate?
     var dismissButton: KPBounceButton!
     var scrollView: UIScrollView!
     var containerView: UIView!
     var sendButton: UIButton!
-
+    
+    var identifiedKey: String?
+    var setValue: Any!
     
     lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -101,7 +109,6 @@ class KPSharedSettingViewController: KPViewController {
                                      views: [sendButton])
         
     }
-    
     
     func handleDismissButtonOnTapped() {
         self.dismiss(animated: true, completion: nil);

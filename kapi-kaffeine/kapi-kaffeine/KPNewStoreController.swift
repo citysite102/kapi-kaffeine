@@ -176,6 +176,8 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
                                                      right: 0);
             controller.cornerRadius = [.topRight, .topLeft]
             let countryController = KPCountrySelectController()
+            countryController.identifiedKey = "country"
+            countryController.delegate = self
             controller.contentController = countryController;
             controller.presentModalView();
         }
@@ -228,6 +230,9 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
                                                 right: 0)
             controller.cornerRadius = [.topRight, .topLeft, .bottomLeft, .bottomRight]
             let ratingViewController = KPRatingViewController()
+            ratingViewController.identifiedKey = "rate"
+            ratingViewController.isRemote = false
+            ratingViewController.delegate = self
             controller.contentController = ratingViewController
             controller.presentModalView()
         }
@@ -248,6 +253,8 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
                                                 bottom: 0,
                                                 right: 0);
             let timePickerController = KPBusinessHourViewController()
+            timePickerController.identifiedKey = "time"
+            timePickerController.delegate = self
             controller.contentController = timePickerController
             controller.cornerRadius = [.topRight, .topLeft]
             controller.presentModalView()
@@ -368,8 +375,22 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
     }
 }
 
-extension KPNewStoreController: UICollectionViewDelegate, UICollectionViewDataSource,
-UICollectionViewDelegateFlowLayout {
+extension KPNewStoreController: KPSharedSettingDelegate {
+    
+    func sendButtonTapped(_ controller: KPSharedSettingViewController) {
+        if controller.identifiedKey == "country" {
+            self.citySubTitleView.content = controller.setValue as! String
+        } else if controller.identifiedKey == "rate" {
+            self.rateCheckedView.checkContent = String(format: "已評分(%.1f)",
+                                                       controller.setValue as! CGFloat)
+            self.rateCheckedView.checked = true
+        } else if controller.identifiedKey == "time" {
+            self.businessHourCheckedView.checked = true
+        }
+    }
+}
+
+extension KPNewStoreController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -391,10 +412,13 @@ UICollectionViewDelegateFlowLayout {
     }
     
 //    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        view.endEditing(true)
+//        featureSubTitleView.layer.shouldRasterize = true
+//        featureSubTitleView.layer.rasterizationScale = UIScreen.main.scale
 //    }
-    
-    
+//    
+//    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+//        featureSubTitleView.layer.shouldRasterize = true
+//    }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         activeTextField = textField

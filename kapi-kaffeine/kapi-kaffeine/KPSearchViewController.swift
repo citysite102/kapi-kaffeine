@@ -18,7 +18,7 @@ class KPSearchViewController: KPViewController {
     
     var ref: DatabaseReference!
 
-    var dismissButton:UIButton!
+    var dismissButton: KPBounceButton!
     var tableView: UITableView!
     var searchController: UISearchController!
 
@@ -33,10 +33,9 @@ class KPSearchViewController: KPViewController {
         view.backgroundColor = UIColor.white
         ref = Database.database().reference()
         
-        dismissButton = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 24, height: 24))
-        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4)
-        dismissButton.setImage(R.image.icon_close()?.withRenderingMode(.alwaysTemplate),
-                                    for: .normal)
+        dismissButton = KPBounceButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30),
+                                       image: R.image.icon_back()!)
+        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(7, 7, 7, 7)
         dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor
         dismissButton.addTarget(self,
                                 action: #selector(KPSearchViewController.handleDismissButtonOnTapped),
@@ -46,7 +45,7 @@ class KPSearchViewController: KPViewController {
         let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace,
                                              target: nil,
                                              action: nil)
-        negativeSpacer.width = -8
+        negativeSpacer.width = -5
 //        navigationItem.rightBarButtonItems = [negativeSpacer, barItem]
         navigationItem.leftBarButtonItems = [negativeSpacer, UIBarButtonItem.init(image: R.image.icon_back(),
                                                                                   style: .plain,

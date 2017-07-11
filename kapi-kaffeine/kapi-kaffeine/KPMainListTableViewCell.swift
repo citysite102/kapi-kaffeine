@@ -183,7 +183,7 @@ class KPMainListTableViewCell: UITableViewCell {
 class KPMainListCellScoreLabel: UILabel {
     
     
-    var scoreLabel: UILabel!
+    private var scoreLabel: UILabel!
     var contentBackgroundColor: UIColor! {
         didSet {
             backgroundColor = contentBackgroundColor

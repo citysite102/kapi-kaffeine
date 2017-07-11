@@ -77,6 +77,11 @@ class KPBusinessHourViewController: KPSharedSettingViewController, KPTimePickerD
 
         checkBoxViews.last!.addConstraint(from: "V:[$self]-16-|")
         
+        sendButton.setTitle("確認送出", for: .normal)
+        sendButton.addTarget(self,
+                             action: #selector(KPCountrySelectController.handleSendButtonOnTapped),
+                             for: .touchUpInside)
+        
     }
     
     func startTimeSelectButtonOnTap(button: UIButton) {
@@ -116,5 +121,11 @@ class KPBusinessHourViewController: KPSharedSettingViewController, KPTimePickerD
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    func handleSendButtonOnTapped() {
+        delegate?.sendButtonTapped(self)
+        appModalController()?.dismissControllerWithDefaultDuration()
+    }
+    
 
 }

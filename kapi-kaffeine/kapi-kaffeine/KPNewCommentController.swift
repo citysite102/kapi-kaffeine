@@ -71,6 +71,7 @@ class KPNewCommentController: KPViewController {
         
         sendButton = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 24));
         sendButton.setTitle("發佈", for: .normal)
+        sendButton.isEnabled = false
         sendButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         sendButton.tintColor = KPColorPalette.KPTextColor.mainColor;
         sendButton.addTarget(self,
@@ -291,6 +292,8 @@ extension KPNewCommentController: UITextViewDelegate {
         let newLength = oldLength - rangeLength + replacementLength
         let returnKey = (text as NSString).range(of: "\n").location == NSNotFound
         
+        sendButton.isEnabled = newLength > 0
+        
         if !returnKey {
             textView.resignFirstResponder()
             return false
@@ -298,4 +301,5 @@ extension KPNewCommentController: UITextViewDelegate {
         
         return newLength <= KPNewCommentController.commentMaximumTextLength && returnKey
     }
+    
 }

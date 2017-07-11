@@ -15,7 +15,7 @@ struct KPSearchConditionViewControllerConstants {
 
 class KPSearchConditionViewController: KPViewController {
 
-    var dismissButton:UIButton!
+    var dismissButton: UIButton!
     var scrollView: UIScrollView!
     var containerView: UIView!
     
@@ -102,43 +102,45 @@ class KPSearchConditionViewController: KPViewController {
         label.font = UIFont.systemFont(ofSize: 14.0)
         label.textColor = KPColorPalette.KPMainColor.mainColor
         label.text = title
-        return label;
+        return label
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = UIColor.white;
-        navigationController?.navigationBar.topItem?.title = "篩選偏好設定";
-        
-        dismissButton = UIButton(frame: CGRect(x: 0, y: 0, width: 24, height: 24));
-        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4);
-        dismissButton.setImage(R.image.icon_close()?.withRenderingMode(.alwaysTemplate),
-                                    for: .normal);
-        dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor;
+        view.backgroundColor = UIColor.white
+        navigationController?.navigationBar.topItem?.title = "篩選偏好設定"
+
+        dismissButton = KPBounceButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30),
+                                       image: R.image.icon_close()!)
+        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(7, 7, 7, 7)
         dismissButton.addTarget(self,
                                      action: #selector(KPSearchConditionViewController.handleDismissButtonOnTapped),
-                                     for: .touchUpInside);
+                                     for: .touchUpInside)
         
-        let barItem = UIBarButtonItem(customView: dismissButton);
-        navigationItem.leftBarButtonItem = barItem;
+        let barItem = UIBarButtonItem(customView: dismissButton)
+        let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace,
+                                             target: nil,
+                                             action: nil)
+        negativeSpacer.width = -8
+        navigationItem.leftBarButtonItems = [negativeSpacer, barItem]
         
         dismissButton.addTarget(self,
-                                     action: #selector(KPInformationViewController.handleDismissButtonOnTapped),
-                                     for: .touchUpInside);
+                                action: #selector(KPInformationViewController.handleDismissButtonOnTapped),
+                                for: .touchUpInside)
         
-        scrollView = UIScrollView();
-        scrollView.showsVerticalScrollIndicator = false;
-        view.addSubview(scrollView);
+        scrollView = UIScrollView()
+        scrollView.showsVerticalScrollIndicator = false
+        view.addSubview(scrollView)
         scrollView.addConstraints(fromStringArray: ["V:|[$self]|",
-                                                         "H:|[$self]|"]);
-        scrollView.addConstraintForCenterAligningToSuperview(in: .horizontal);
+                                                         "H:|[$self]|"])
+        scrollView.addConstraintForCenterAligningToSuperview(in: .horizontal)
         
         
-        containerView = UIView();
-        scrollView.addSubview(containerView);
-        containerView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"]);
-        containerView.addConstraintForHavingSameWidth(with: view);
+        containerView = UIView()
+        scrollView.addSubview(containerView)
+        containerView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"])
+        containerView.addConstraintForHavingSameWidth(with: view)
         
         
         // Section 1
@@ -305,7 +307,7 @@ class KPSearchConditionViewController: KPViewController {
         controller.edgeInset = UIEdgeInsets(top: 32,
                                                  left: 0,
                                                  bottom: 0,
-                                                 right: 0);
+                                                 right: 0)
         let timePickerController = KPBusinessHourViewController()
         controller.contentController = timePickerController
         controller.cornerRadius = [.topRight, .topLeft]
@@ -318,7 +320,7 @@ class KPSearchConditionViewController: KPViewController {
     }
     
     func handleDismissButtonOnTapped() {
-        appModalController()?.dismissControllerWithDefaultDuration();
+        appModalController()?.dismissControllerWithDefaultDuration()
     }
 
 }

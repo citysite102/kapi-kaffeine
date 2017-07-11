@@ -8,9 +8,12 @@
 
 import UIKit
 
-class KPRatingView: UIView {
 
-    
+protocol KPRatingViewDelegate: NSObjectProtocol {
+    func rateValueDidChanged(_ ratingView: KPRatingView)
+}
+
+class KPRatingView: UIView {
     enum RateType: String, RawRepresentable {
         case button = "Button"
         case star = "Star"
@@ -20,6 +23,7 @@ class KPRatingView: UIView {
     // MARK: - Properties
     //----------------------------
     
+    weak open var delegate: KPRatingViewDelegate?
     var enable: Bool = true {
         didSet {
             self.isUserInteractionEnabled = enable
@@ -34,7 +38,7 @@ class KPRatingView: UIView {
         }
     }
     var rateType: RateType = .button
-    var currentRate: Int = 1 {
+    var currentRate: Int = 0 {
         didSet {
             switch rateType {
             case .button:
@@ -44,6 +48,8 @@ class KPRatingView: UIView {
             case .star:
                 break
             }
+            
+            delegate?.rateValueDidChanged(self)
         }
     }
 
