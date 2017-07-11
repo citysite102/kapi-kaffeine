@@ -311,7 +311,6 @@ static const double kGMUAnimationDuration = 0.5;  // seconds.
     marker.groundAnchor = CGPointMake(0.5, 0.5);
   }
   else {
-//      marker.icon = [UIImage imageNamed:@"icon_mapMarker"];
       marker.iconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_mapMarker"]];
       if ([marker.userData isKindOfClass:[KPDataModel class]]) {
           KPDataModel *model = marker.userData;

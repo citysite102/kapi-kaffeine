@@ -46,7 +46,7 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
     
     lazy var userCityLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 10.0)
+        label.font = UIFont.systemFont(ofSize: 12.0)
         label.textColor = KPColorPalette.KPTextColor.whiteColor
         label.text = "Taipei"
         return label
@@ -54,7 +54,7 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
     
     lazy var userBioLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 10.0)
+        label.font = UIFont.systemFont(ofSize: 12.0)
         label.textColor = KPColorPalette.KPTextColor.whiteColor
         label.text = "喜歡鬧，就是愛鬧，鬧到沒有極限的不停地鬧"
         label.numberOfLines = 0
@@ -191,6 +191,13 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
             userNameLabel.text = user.displayName ?? ""
             userCityLabel.text = user.defaultLocation ?? ""
             userBioLabel.text = user.intro ?? ""
+            
+            for (index, tabTitle) in self.tabTitles.enumerated() {
+                
+                if let displayModel = KPUserManager.sharedManager.currentUser?.value(forKey: tabTitle.key) as? [KPDataModel] {
+                    tabView.tabs[index].setTitle("\(tabTitle.title) \(displayModel.count)", for: .normal)
+                }
+            }
         }
         
         view.bringSubview(toFront: tabView)
