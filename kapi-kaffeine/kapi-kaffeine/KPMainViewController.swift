@@ -29,10 +29,14 @@ class KPMainViewController: KPViewController {
     
     var displayDataModel: [KPDataModel]! {
         didSet {
-            self.mainListViewController?.displayDataModel = displayDataModel
-            self.mainMapViewController?.allDataModel = displayDataModel
-            searchHeaderView.searchButton.isEnabled = true
-            searchHeaderView.menuButton.isEnabled = true
+            self.mainListViewController?.dataLoading = true
+            self.mainListViewController?.tableView.reloadData()
+            DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
+                self.mainListViewController?.displayDataModel = self.displayDataModel
+                self.mainMapViewController?.allDataModel = self.displayDataModel
+                self.searchHeaderView.searchButton.isEnabled = true
+                self.searchHeaderView.menuButton.isEnabled = true
+            }
         }
     }
 

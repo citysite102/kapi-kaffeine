@@ -156,16 +156,16 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
                                            views: [sectionOneHeaderLabel])
      
         nameSubTitleView = KPSubTitleEditView(.Bottom,
-                                                   .Edited,
-                                                   "店家名稱")
+                                              .Edited,
+                                              "店家名稱")
         nameSubTitleView.placeHolderContent = "請輸入店家名稱"
         sectionOneContainer.addSubview(nameSubTitleView)
         nameSubTitleView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                           "V:|[$self(72)]"])
         
         citySubTitleView = KPSubTitleEditView(.Bottom,
-                                                   .Fixed,
-                                                   "所在城市")
+                                              .Fixed,
+                                              "所在城市")
         citySubTitleView.placeHolderContent = "請選擇城市"
         citySubTitleView.customInputAction = {
             () -> Void in
@@ -185,8 +185,8 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
                                         views:[nameSubTitleView])
         
         featureSubTitleView = KPSubTitleEditView(.Bottom,
-                                                      .Custom,
-                                                      "選擇店家特色標籤")
+                                                 .Custom,
+                                                 "選擇店家特色標籤")
         sectionOneContainer.addSubview(featureSubTitleView)
         featureSubTitleView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                              "V:[$view0][$self(200)]"],
@@ -212,26 +212,46 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
         featureSubTitleView.customInfoView = featureCollectionView
     
         rateCheckedView = KPItemCheckedView("幫店家評分",
-                                                 "未評分",
-                                                 "已評分(3.0)",
-                                                 .Bottom)
-        
+                                            "未評分",
+                                            "已評分(3.0)",
+                                            .Bottom)
         sectionOneContainer.addSubview(rateCheckedView)
         rateCheckedView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                          "V:[$view0][$self(64)]"],
                                            views:[featureSubTitleView])
+        rateCheckedView.customInputAction = {
+            () -> Void in
+            let controller = KPModalViewController()
+            controller.edgeInset = UIEdgeInsets(top: UIDevice().isCompact ? 32 : 40,
+                                                left: 0,
+                                                bottom: 0,
+                                                right: 0)
+            controller.cornerRadius = [.topRight, .topLeft, .bottomLeft, .bottomRight]
+            let ratingViewController = KPRatingViewController()
+            controller.contentController = ratingViewController
+            controller.presentModalView()
+        }
         
         businessHourCheckedView = KPItemCheckedView("填寫營業時間",
-                                                         "未填寫",
-                                                         "已填寫",
-                                                         .Bottom)
-        
+                                                    "未填寫",
+                                                    "已填寫",
+                                                    .Bottom)
         sectionOneContainer.addSubview(businessHourCheckedView)
         businessHourCheckedView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                                  "V:[$view0][$self(64)]|"],
                                                views:[rateCheckedView])
-        
-        
+        businessHourCheckedView.customInputAction = {
+            () -> Void in
+            let controller = KPModalViewController()
+            controller.edgeInset = UIEdgeInsets(top: 32,
+                                                left: 0,
+                                                bottom: 0,
+                                                right: 0);
+            let timePickerController = KPBusinessHourViewController()
+            controller.contentController = timePickerController
+            controller.cornerRadius = [.topRight, .topLeft]
+            controller.presentModalView()
+        }
         
         sectionTwoHeaderLabel = headerLabel("其他選項")
         containerView.addSubview(sectionTwoHeaderLabel)
@@ -293,8 +313,8 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
         
         
         addressSubTitleView = KPSubTitleEditView(.Both,
-                                                      .Edited,
-                                                      "店家地址")
+                                                 .Edited,
+                                                 "店家地址")
         addressSubTitleView.placeHolderContent = "請輸入店家地址"
         addressSubTitleView.editTextField.delegate = self
         sectionTwoContainer.addSubview(addressSubTitleView)
@@ -303,8 +323,8 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
                                            views: [socketRadioBoxThree])
         
         phoneSubTitleView = KPSubTitleEditView(.Bottom,
-                                                    .Edited,
-                                                    "店家電話")
+                                               .Edited,
+                                               "店家電話")
         phoneSubTitleView.placeHolderContent = "請輸入店家電話"
         phoneSubTitleView.inputKeyboardType = .phonePad
         phoneSubTitleView.editTextField.delegate = self
@@ -314,8 +334,8 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
                                            views: [addressSubTitleView])
         
         facebookSubTitleView = KPSubTitleEditView(.Bottom,
-                                                       .Edited,
-                                                       "Facebook 連結")
+                                                  .Edited,
+                                                  "Facebook 連結")
         facebookSubTitleView.placeHolderContent = "請輸入店家 Facebook 連結"
         facebookSubTitleView.editTextField.delegate = self
         sectionTwoContainer.addSubview(facebookSubTitleView)

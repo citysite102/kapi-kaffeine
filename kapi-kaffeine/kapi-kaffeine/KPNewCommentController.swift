@@ -60,9 +60,9 @@ class KPNewCommentController: KPViewController {
         navigationItem.title = "新增評價"
         navigationItem.hidesBackButton = true
         
-        dismissButton = KPBounceButton(frame: CGRect(x: 0, y: 0, width: 24, height: 24));
-        dismissButton.setImage(R.image.icon_back()?.withRenderingMode(.alwaysTemplate),
-                            for: .normal);
+        dismissButton = KPBounceButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30),
+                                       image: R.image.icon_back()!)
+        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(3, 3, 3, 3)
         dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor;
         dismissButton.addTarget(self,
                              action: #selector(KPNewCommentController.handleDismissButtonOnTapped),
@@ -78,13 +78,19 @@ class KPNewCommentController: KPViewController {
                              for: .touchUpInside)
         
         let rightbarItem = UIBarButtonItem(customView: sendButton);
-        
         let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace,
                                              target: nil,
                                              action: nil)
-        negativeSpacer.width = -8
+
+        let rightNegativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace,
+                                                  target: nil,
+                                                  action: nil)
+
+        
+        negativeSpacer.width = -5
+        rightNegativeSpacer.width = -8
         navigationItem.leftBarButtonItems = [negativeSpacer, barItem]
-        navigationItem.rightBarButtonItems = [negativeSpacer, rightbarItem]
+        navigationItem.rightBarButtonItems = [rightNegativeSpacer, rightbarItem]
         
         
         scrollContainer = UIScrollView()

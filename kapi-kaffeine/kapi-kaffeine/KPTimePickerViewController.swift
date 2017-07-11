@@ -37,7 +37,8 @@ class KPTimePickerViewController: UIViewController, KPTimePickerDelegate {
         let seporator = UIView()
         seporator.backgroundColor = KPColorPalette.KPMainColor.grayColor_level6
         view.addSubview(seporator)
-        seporator.addConstraints(fromStringArray: ["H:|-8-[$self]-8-|", "V:[$view0]-16-[$self(1)]"],
+        seporator.addConstraints(fromStringArray: ["H:|-8-[$self]-8-|",
+                                                   "V:[$view0]-16-[$self(1)]"],
                                  views:[timePicker])
         
         let doneButton = UIButton()
@@ -49,7 +50,9 @@ class KPTimePickerViewController: UIViewController, KPTimePickerDelegate {
         doneButton.layer.masksToBounds = true
         doneButton.titleLabel?.font = UIFont.systemFont(ofSize: 15.0)
         view.addSubview(doneButton)
-        doneButton.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|", "V:[$view0]-16-[$self(40)]-16-|"], views: [seporator])
+        doneButton.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
+                                                    "V:[$view0]-16-[$self(40)]-16-|"],
+                                  views: [seporator])
         doneButton.addTarget(self, action: #selector(handleDoneButtonOnTap(sender:)), for: .touchUpInside)
         
     }

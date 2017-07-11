@@ -35,10 +35,9 @@ class KPSatisficationView: UIView {
         container.addConstraint(forWidth: UIDevice().isSuperCompact ? 320 : 360)
         container.addConstraintForCenterAligningToSuperview(in: .horizontal)
         
-        dismissButton = KPBounceButton()
-        dismissButton.setImage(R.image.icon_close(),
-                               for: .normal)
-        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4)
+        dismissButton = KPBounceButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30),
+                                       image: R.image.icon_close()!)
+        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(7, 7, 7, 7)
         dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor
         dismissButton.addTarget(self,
                                 action: #selector(KPSatisficationView.handleDismissButtonOnTapped),

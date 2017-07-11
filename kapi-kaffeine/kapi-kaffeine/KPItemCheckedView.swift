@@ -20,14 +20,15 @@ class KPItemCheckedView: UIView {
     private var bType: BorderType!
     var uncheckContent: String!
     var checkContent: String!
-    
+    var checkedIconView: KPCheckBox!
     var checked: Bool = false {
         didSet {
             stateLabel.text = checked ? checkContent : uncheckContent
         }
     }
     
-    var checkedIconView: KPCheckBox!
+    var customInputAction: (() -> Void)?
+    var tapGesture: UITapGestureRecognizer!
     
     lazy var itemLabel: UILabel = {
         let label = UILabel()
@@ -74,6 +75,11 @@ class KPItemCheckedView: UIView {
         stateLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
         
         makeBorder()
+        
+        tapGesture = UITapGestureRecognizer(target: self,
+                                            action: #selector(handleTapGesture(tapGesture:)))
+        tapGesture.cancelsTouchesInView = false
+        addGestureRecognizer(tapGesture)
     }
     
     func makeBorder() {
@@ -103,5 +109,8 @@ class KPItemCheckedView: UIView {
             print("No border")
         }
     }
-
+    
+    func handleTapGesture(tapGesture: UITapGestureRecognizer) {
+        customInputAction?()
+    }
 }

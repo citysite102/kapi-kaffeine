@@ -140,43 +140,11 @@ class KPTimePicker: UIView, UIPickerViewDataSource, UIPickerViewDelegate {
     
     // MARK: UIPickerViewDelegate
     
-//    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-//        switch component {
-//        case 0:
-//            return "\(row+1)"
-//        case 1:
-//            if row == 0 {
-//                return "\(0)"
-//            } else if row == 1 {
-//                return "\(15)"
-//            } else if row == 2 {
-//                return "\(30)"
-//            } else if row == 3 {
-//                return "\(45)"
-//            }
-//        case 2:
-//            if row == 0 {
-//                return "AM"
-//            } else {
-//                return "PM"
-//            }
-//        default:
-//            return ""
-//        }
-//        return ""
-//    }
-    
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
         
         let label = UILabel()
         label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 32)
-        
-//        let test = UIView()
-//        label.addSubview(test)
-//        test.backgroundColor = KPColorPalette.KPMainColor.mainColor
-//        test.addConstraints(fromStringArray: ["H:[$self(50)]", "V:[$self(2)]|"])
-//        test.addConstraintForCenterAligningToSuperview(in: .horizontal)
+        label.font = UIFont.systemFont(ofSize: 28)
         
         switch component {
         case 0:
@@ -213,11 +181,11 @@ class KPTimePicker: UIView, UIPickerViewDataSource, UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
         switch component {
         case 0:
-            return 100
+            return 88
         case 1:
-            return 100
+            return 88
         case 2:
-            return 100
+            return 88
         default:
             return 0
         }

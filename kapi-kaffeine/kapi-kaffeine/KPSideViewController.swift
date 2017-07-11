@@ -415,6 +415,7 @@ extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
                 mainController.mainListViewController?.dataLoading = true
                 mainController.displayDataModel = KPFilter.filterData(source: KPMainViewController.allDataModel,
                                                                       withCity: cityName!)
+                mainController.searchHeaderView.titleLabel.text = regionContent?.cities[indexPath.row-regionIndex-1]
                 dismiss(animated: true, completion: nil)
                 resetTableview()
             }
