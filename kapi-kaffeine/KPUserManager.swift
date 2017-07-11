@@ -30,6 +30,7 @@ public class KPUserManager {
         // 介面
         loadingView = KPLoadingView()
         loadingView.loadingContents = ("登入中...", "登入成功", "登入失敗")
+        loadingView.state = .loading
         
         // 屬性
         loginManager = LoginManager()
@@ -136,10 +137,12 @@ public class KPUserManager {
         userRequest.perform(nil, nil, nil, nil, nil, .get).then {
             result -> Void in
             print("取得更新後的使用者資料")
+            let token = self.currentUser?.accessToken
+            
             self.currentUser =
                 Mapper<KPUser>().map(JSONObject: result["data"].dictionaryObject)
-            self.currentUser?.accessToken = result["token"].string
-            KPUserDefaults.accessToken = result["token"].string
+            self.currentUser?.accessToken = token
+            KPUserDefaults.accessToken = token
             self.storeUserInformation()
             
         }.catch { error in
