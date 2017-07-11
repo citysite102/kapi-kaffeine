@@ -80,10 +80,10 @@ class KPSharedSettingViewController: KPViewController {
                                                     "H:|[$self]|"],
                                   views: [seperator_one])
         
-        
         containerView = UIView()
         scrollView.addSubview(self.containerView)
-        containerView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"])
+        containerView.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                       "V:|[$self]|"])
         containerView.addConstraintForHavingSameWidth(with: scrollView)
         
         

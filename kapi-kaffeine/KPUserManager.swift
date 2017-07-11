@@ -151,19 +151,28 @@ public class KPUserManager {
     }
     
     func storeUserInformation() {
-        let userInformationString = currentUser?.toJSONString()
-        if let jsonData = userInformationString?.data(using: .utf8) {
-            do {
-                let userInformation = try? JSONSerialization.jsonObject(with: jsonData,
-                                                                        options: [])
-                
-                if userInformation != nil {
-                    KPUserDefaults.userInformation = userInformation as? Dictionary<String, Any>
+        synchronized(lock: self) { 
+            let userInformationString = currentUser?.toJSONString()
+            if let jsonData = userInformationString?.data(using: .utf8) {
+                do {
+                    let userInformation = try? JSONSerialization.jsonObject(with: jsonData,
+                                                                            options: [])
+                    
+                    if userInformation != nil {
+                        KPUserDefaults.userInformation = userInformation as? Dictionary<String, Any>
+                    }
                 }
             }
         }
     }
     
-    // MARK: User Action
+    // MARK: Thread Issue
+    
+    func synchronized(lock: AnyObject,
+                      closure: () -> ()) {
+        objc_sync_enter(lock)
+        closure()
+        objc_sync_exit(lock)
+    }
     
 }

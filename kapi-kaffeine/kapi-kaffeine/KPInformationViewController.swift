@@ -82,7 +82,6 @@ class KPInformationViewController: KPViewController {
         }
     }
     var animatedHeaderConstraint: NSLayoutConstraint!
-    
     var navBarFixBound: CGRect!
     
     override func viewDidLoad() {
@@ -158,7 +157,7 @@ class KPInformationViewController: KPViewController {
         actionController.addAction(editButton)
         actionController.addAction(reportButton)
         actionController.addAction(cancelButton)
-        
+
         
         scrollContainer = UIScrollView()
         scrollContainer.backgroundColor = KPColorPalette.KPMainColor.grayColor_level7
@@ -176,13 +175,13 @@ class KPInformationViewController: KPViewController {
                                                         placeholderImage: UIImage(color:KPColorPalette.KPBackgroundColor.grayColor_level6!),
                                                         filter: nil,
                                                         progress: nil,
-                                                            progressQueue: DispatchQueue.global(),
-                                                            imageTransition: UIImageView.ImageTransition.crossDissolve(0.2),
-                                                            runImageTransitionIfCached: true,
-                                                            completion: { response in
-                                                                if let responseImage = response.result.value {
-                                                                    self.informationHeaderView.shopPhoto.image =  responseImage
-                                                                }
+                                                        progressQueue: DispatchQueue.global(),
+                                                        imageTransition: UIImageView.ImageTransition.crossDissolve(0.2),
+                                                        runImageTransitionIfCached: true,
+                                                        completion: { response in
+                                                            if let responseImage = response.result.value {
+                                                                self.informationHeaderView.shopPhoto.image =  responseImage
+                                                            }
                 })
         }
         //informationDataModel
@@ -193,7 +192,7 @@ class KPInformationViewController: KPViewController {
         informationHeaderView.morePhotoButton.addTarget(self,
                                                         action: #selector(KPInformationViewController.handleMorePhotoButtonOnTapped),
                                                         for: UIControlEvents.touchUpInside)
-        
+
         loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
         loadingIndicator.tintColor = KPColorPalette.KPMainColor.mainColor
         scrollContainer.addSubview(loadingIndicator)
@@ -240,7 +239,7 @@ class KPInformationViewController: KPViewController {
         shopInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                              "V:[$view0]-16-[$self]"],
                                                       views: [informationHeaderButtonBar])
-        
+
         locationInformationView = KPInformationSharedInfoView()
         locationInformationView.infoTitleLabel.text = "位置訊息"
         locationInformationView.infoSupplementLabel.text = "距離 600m"
@@ -248,7 +247,7 @@ class KPInformationViewController: KPViewController {
                                                  style:.normal,
                                                  color:KPColorPalette.KPMainColor.mainColor!,
                                                  icon:(R.image.icon_navi()?.withRenderingMode(.alwaysTemplate))!,
-                                                 handler:{(infoView) -> () in
+                                                 handler:{ [unowned self] (infoView) -> () in
                                                     if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
                                                         UIApplication.shared.open(URL(string:
                                                             "comgooglemaps://?daddr=\(self.informationDataModel.latitude!),\(self.informationDataModel.longitude!)&mapmode=standard")!,
@@ -262,7 +261,7 @@ class KPInformationViewController: KPViewController {
                                                  style:.normal,
                                                  color:KPColorPalette.KPMainColor.mainColor!,
                                                  icon:(R.image.icon_map()?.withRenderingMode(.alwaysTemplate))!,
-                                                 handler:{(infoView) -> () in
+                                                 handler:{ [unowned self] (infoView) -> () in
                                                     if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
                                                         UIApplication.shared.open(URL(string:
                                                             "comgooglemaps://?center=\(self.informationDataModel.latitude!),\(self.informationDataModel.longitude!)&mapmode=streetview")!, options: [:], completionHandler: nil)
@@ -276,7 +275,7 @@ class KPInformationViewController: KPViewController {
         locationInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                                  "V:[$view0]-24-[$self(292)]"],
                                                 views: [shopInformationView])
-        
+
         let shopRateInfoView = KPShopRateInfoView()
         rateInformationView = KPInformationSharedInfoView()
         rateInformationView.infoView = shopRateInfoView
@@ -318,7 +317,7 @@ class KPInformationViewController: KPViewController {
                                                      style:.normal,
                                                      color:KPColorPalette.KPMainColor.mainColor!,
                                                      icon:(R.image.icon_comment()?.withRenderingMode(.alwaysTemplate))!,
-                                                     handler:{(infoView) -> () in
+                                                     handler:{ [unowned self] (infoView) -> () in
                                                         let newCommentViewController = KPNewCommentController()
                                                         self.navigationController?.pushViewController(viewController: newCommentViewController,
                                                                                                       animated: true,
@@ -330,7 +329,7 @@ class KPInformationViewController: KPViewController {
                                                           style:.normal,
                                                           color:KPColorPalette.KPMainColor.mainColor!,
                                                           icon:nil,
-                                                          handler:{(infoView) -> () in
+                                                          handler:{ [unowned self] (infoView) -> () in
                                                             let commentViewController = KPAllCommentController()
                                                             commentViewController.comments = self.commentInfoView.comments
                                                             commentViewController.animated = !self.allCommentHasShown
@@ -343,7 +342,7 @@ class KPInformationViewController: KPViewController {
                                                            style:.normal,
                                                            color:KPColorPalette.KPMainColor.mainColor!,
                                                            icon:(R.image.icon_comment()?.withRenderingMode(.alwaysTemplate))!,
-                                                           handler:{(infoView) -> () in
+                                                           handler:{ [unowned self] (infoView) -> () in
                                                             let newCommentViewController = KPNewCommentController()
                                                             self.navigationController?.pushViewController(viewController: newCommentViewController,
                                                                                                           animated: true,
@@ -394,7 +393,7 @@ class KPInformationViewController: KPViewController {
         locationInformationView.infoView = shopLocationInfoView
         navBarFixBound = navigationController!.navigationBar.bounds
         informationHeaderView.shopPhoto.isHidden = false
-        
+
         
         if !dataLoading {
             refreshComments()
@@ -406,8 +405,8 @@ class KPInformationViewController: KPViewController {
         super.viewDidLayoutSubviews()
         
         // Fix table view height according to fix cell
-        commentInfoView = commentInformationView.infoView as! KPShopCommentInfoView
-        commentInfoView.tableViewHeightConstraint.constant = commentInfoView.tableView.contentSize.height
+//        commentInfoView = commentInformationView.infoView as! KPShopCommentInfoView
+//        commentInfoView.tableViewHeightConstraint.constant = commentInfoView.tableView.contentSize.height
     }
     
     override func didReceiveMemoryWarning() {

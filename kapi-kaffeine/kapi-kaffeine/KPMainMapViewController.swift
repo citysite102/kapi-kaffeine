@@ -19,7 +19,7 @@ UICollectionViewDelegateFlowLayout,
 KPMainViewControllerDelegate {
     
     weak var mainController:KPMainViewController!
-    
+    private var snapshotView: UIImageView!
     var collectionView: UICollectionView!
     var collectionViewBottomConstraint: NSLayoutConstraint!
     var clusterRenderer: GMUClusterRenderer!
@@ -48,7 +48,6 @@ KPMainViewControllerDelegate {
     private var clusterManager: GMUClusterManager!
     
     var mapView: GMSMapView!
-    
     var currentDataModel:KPDataModel?
     var selectedDataModel: KPDataModel? {
         return self.currentDataModel
@@ -57,6 +56,23 @@ KPMainViewControllerDelegate {
     var reloadNeeded: Bool = true
     
 
+    var snapShotShowing: Bool = false {
+        didSet {
+            DispatchQueue.main.async {
+                if self.snapShotShowing != oldValue && self.snapShotShowing {
+                    self.snapshotView.image = self.view.screenshot()
+                    self.snapshotView.isHidden = false
+                    self.mapView.isHidden = true
+                    self.collectionView.isHidden = true
+                } else if self.snapShotShowing != oldValue {
+                    self.snapshotView.isHidden = true
+                    self.mapView.isHidden = false
+                    self.collectionView.isHidden = false
+                }
+            }
+        }
+    }
+    
     var isCollectionViewShow: Bool = false {
         didSet {
             if self.collectionViewBottomConstraint != nil && self.reloadNeeded {
@@ -214,6 +230,14 @@ KPMainViewControllerDelegate {
                                  views: [collectionView])
         
         KPLocationManager.sharedInstance().addObserver(self, forKeyPath: "currentLocation", options: .new, context: nil)
+        
+        snapshotView = UIImageView()
+        snapshotView.contentMode = .top
+        snapshotView.clipsToBounds = true
+        snapshotView.isHidden = true
+        view.addSubview(snapshotView)
+        snapshotView.addConstraints(fromStringArray: ["V:|-100-[$self]|",
+                                                      "H:|[$self]|"])
         
     }
     

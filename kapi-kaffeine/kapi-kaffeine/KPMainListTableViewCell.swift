@@ -63,7 +63,7 @@ class KPMainListTableViewCell: UITableViewCell {
             
             if dataModel.businessHour != nil {
                 let shopStatus = dataModel.businessHour.shopStatus
-                shopStatusLabel.textColor = KPColorPalette.KPTextColor.grayColor;
+                shopStatusLabel.textColor = KPColorPalette.KPTextColor.grayColor
                 shopStatusLabel.text = shopStatus.status
                 shopStatusHint.backgroundColor = shopStatus.isOpening ?
                     KPColorPalette.KPShopStatusColor.opened :
@@ -90,74 +90,74 @@ class KPMainListTableViewCell: UITableViewCell {
         
         shopImageView = UIImageView(image: drawImage(image: R.image.demo_6()!,
                                                      rectSize: CGSize(width: 56, height: 56),
-                                                     roundedRadius: 2));
-        shopImageView.contentMode = .scaleAspectFill;
+                                                     roundedRadius: 2))
+        shopImageView.contentMode = .scaleAspectFill
         shopImageView.clipsToBounds = true
-        contentView.addSubview(shopImageView);
+        contentView.addSubview(shopImageView)
         
         
         shopImageView.addConstraints(fromStringArray: ["H:|-8-[$self(60)]",
-                                                       "V:|-12-[$self(60)]-12-|"]);
+                                                       "V:|-12-[$self(60)]-12-|"])
         
-        shopNameLabel = KPLayerLabel();
-        shopNameLabel.font = UIFont.systemFont(ofSize: 14.0);
-        shopNameLabel.textColor = KPColorPalette.KPTextColor.grayColor;
+        shopNameLabel = KPLayerLabel()
+        shopNameLabel.font = UIFont.systemFont(ofSize: 14.0)
+        shopNameLabel.textColor = KPColorPalette.KPTextColor.grayColor
         shopNameLabel.isOpaque = true
         shopNameLabel.layer.masksToBounds = true
-        contentView.addSubview(shopNameLabel);
+        contentView.addSubview(shopNameLabel)
 
         shopNameLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self($metric0)]",
                                                        "V:|-12-[$self]"],
                                           metrics: [UIScreen.main.bounds.size.width/2],
-                                          views: [shopImageView]);
+                                          views: [shopImageView])
         
-        shopStatusHint = UIView();
-        shopStatusHint.backgroundColor = KPColorPalette.KPShopStatusColor.opened;
-        shopStatusHint.layer.cornerRadius = 3.0;
+        shopStatusHint = UIView()
+        shopStatusHint.backgroundColor = KPColorPalette.KPShopStatusColor.opened
+        shopStatusHint.layer.cornerRadius = 3.0
         shopStatusHint.isOpaque = true
-        contentView.addSubview(shopStatusHint);
+        contentView.addSubview(shopStatusHint)
         shopStatusHint.addConstraints(fromStringArray: ["H:[$view0]-8-[$self(6)]",
                                                         "V:[$view1]-10-[$self(6)]"],
                                           views: [shopImageView,
-                                                  shopNameLabel]);
+                                                  shopNameLabel])
         
-        shopStatusLabel = KPLayerLabel();
-        shopStatusLabel.font = UIFont.systemFont(ofSize: 12.0);
-        shopStatusLabel.textColor = KPColorPalette.KPTextColor.grayColor;
-        shopStatusLabel.text = "營業時間 未知";
+        shopStatusLabel = KPLayerLabel()
+        shopStatusLabel.font = UIFont.systemFont(ofSize: 12.0)
+        shopStatusLabel.textColor = KPColorPalette.KPTextColor.grayColor
+        shopStatusLabel.text = "營業時間 未知"
         shopStatusLabel.isOpaque = true
         shopStatusLabel.layer.masksToBounds = true
-        contentView.addSubview(shopStatusLabel);
+        contentView.addSubview(shopStatusLabel)
         shopStatusLabel.addConstraints(fromStringArray: ["H:[$view0]-5-[$self($metric0)]"],
                                             metrics: [UIScreen.main.bounds.size.width/2],
                                             views: [shopStatusHint,
-                                                    shopNameLabel]);
+                                                    shopNameLabel])
         shopStatusLabel.addConstraintForCenterAligning(to: shopStatusHint,
                                                        in: .vertical,
                                                        constant: -2)
         
-        shopDistanceLabel = KPLayerLabel();
-        shopDistanceLabel.font = UIFont.systemFont(ofSize: 20.0);
-        shopDistanceLabel.textColor = KPColorPalette.KPTextColor.mainColor;
-        shopDistanceLabel.text = "0m";
+        shopDistanceLabel = KPLayerLabel()
+        shopDistanceLabel.font = UIFont.systemFont(ofSize: 20.0)
+        shopDistanceLabel.textColor = KPColorPalette.KPTextColor.mainColor
+        shopDistanceLabel.text = "0m"
         shopDistanceLabel.isOpaque = true
         shopDistanceLabel.layer.masksToBounds = true
-        shopDistanceLabel.layoutMargins = UIEdgeInsetsMake(0, 0, 0, 0);
-        contentView.addSubview(shopDistanceLabel);
+        shopDistanceLabel.layoutMargins = UIEdgeInsetsMake(0, 0, 0, 0)
+        contentView.addSubview(shopDistanceLabel)
         shopDistanceLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]",
                                                            "V:[$self]-8-|"],
                                               views: [shopImageView,
-                                                      shopStatusLabel]);
+                                                      shopStatusLabel])
         
-        scoreLabel = KPMainListCellScoreLabel();
-        contentView.addSubview(scoreLabel);
+        scoreLabel = KPMainListCellScoreLabel()
+        contentView.addSubview(scoreLabel)
         scoreLabel.addConstraints(fromStringArray: ["H:[$self(30)]-8-|",
-                                                    "V:|-12-[$self(22)]"]);
+                                                    "V:|-12-[$self(22)]"])
         
-        featureContainer = KPMainListCellFeatureContainer();
-        contentView.addSubview(featureContainer);
+        featureContainer = KPMainListCellFeatureContainer()
+        contentView.addSubview(featureContainer)
         featureContainer.addConstraints(fromStringArray: ["H:[$self]-8-|",
-                                                          "V:[$self]-10-|"]);
+                                                          "V:[$self]-10-|"])
     }
     
     override func layoutSubviews() {
@@ -175,13 +175,12 @@ class KPMainListTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        backgroundColor = selected ? KPColorPalette.KPMainColor.grayColor_level6 : UIColor.white;
+        backgroundColor = selected ? KPColorPalette.KPMainColor.grayColor_level6 : UIColor.white
         // Configure the view for the selected state
     }
 }
 
 class KPMainListCellScoreLabel: UILabel {
-    
     
     private var scoreLabel: UILabel!
     var contentBackgroundColor: UIColor! {
@@ -192,24 +191,24 @@ class KPMainListCellScoreLabel: UILabel {
     }
     var score: String! {
         didSet {
-            scoreLabel.text = score;
+            scoreLabel.text = score
         }
-    };
+    }
     
     override init(frame: CGRect) {
-        super.init(frame: frame);
-        backgroundColor = KPColorPalette.KPBackgroundColor.cellScoreBgColor;
-        layer.cornerRadius = 2.0;
-        layer.masksToBounds = true;
+        super.init(frame: frame)
+        backgroundColor = KPColorPalette.KPBackgroundColor.cellScoreBgColor
+        layer.cornerRadius = 2.0
+        layer.masksToBounds = true
         
-        scoreLabel = UILabel();
-        scoreLabel.textColor = KPColorPalette.KPTextColor.whiteColor;
-        scoreLabel.font = UIFont.systemFont(ofSize: 14.0);
+        scoreLabel = UILabel()
+        scoreLabel.textColor = KPColorPalette.KPTextColor.whiteColor
+        scoreLabel.font = UIFont.systemFont(ofSize: 14.0)
         scoreLabel.isOpaque = true
-        scoreLabel.backgroundColor = KPColorPalette.KPBackgroundColor.cellScoreBgColor;
-        addSubview(scoreLabel);
-        scoreLabel.addConstraintForCenterAligningToSuperview(in: .vertical);
-        scoreLabel.addConstraintForCenterAligningToSuperview(in: .horizontal);
+        scoreLabel.backgroundColor = KPColorPalette.KPBackgroundColor.cellScoreBgColor
+        addSubview(scoreLabel)
+        scoreLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
+        scoreLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
     }
     
     required init?(coder aDecoder: NSCoder) {
