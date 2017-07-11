@@ -18,6 +18,7 @@ class KPRatingViewController: KPSharedSettingViewController {
                         R.image.icon_cup(), R.image.icon_cutlery(),
                         R.image.icon_pic()]
     var ratingViews = [KPRatingView]()
+    var defaultRateModel: KPSimpleRateModel?
     var scoreLabel: KPMainListCellScoreLabel!
     var averageRate: CGFloat!
     var isRemote: Bool = true
@@ -53,8 +54,19 @@ class KPRatingViewController: KPSharedSettingViewController {
                                           views: [self.ratingViews[index-1]])
             }
         }
-        
         ratingViews.last!.addConstraint(from: "V:[$self]-16-|")
+        
+        
+        if defaultRateModel != nil {
+            ratingViews[0].currentRate = defaultRateModel?.wifi?.intValue ?? 0
+            ratingViews[1].currentRate = defaultRateModel?.quiet?.intValue ?? 0
+            ratingViews[2].currentRate = defaultRateModel?.cheap?.intValue ?? 0
+            ratingViews[3].currentRate = defaultRateModel?.seat?.intValue ?? 0
+            ratingViews[4].currentRate = defaultRateModel?.tasty?.intValue ?? 0
+            ratingViews[5].currentRate = defaultRateModel?.food?.intValue ?? 0
+            ratingViews[6].currentRate = defaultRateModel?.music?.intValue ?? 0
+        }
+        
         sendButton.setTitle("送出評分", for: .normal)
         sendButton.addTarget(self,
                              action: #selector(KPRatingViewController.handleSendButtonOnTapped),

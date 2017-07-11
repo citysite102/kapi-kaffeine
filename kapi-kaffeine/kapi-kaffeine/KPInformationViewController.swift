@@ -184,6 +184,7 @@ class KPInformationViewController: KPViewController {
                                                             }
                 })
         }
+        
         //informationDataModel
         scrollContainer.addSubview(informationHeaderView)
         informationHeaderView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]"])
@@ -285,7 +286,8 @@ class KPInformationViewController: KPViewController {
                                                    style:.normal,
                                                    color:KPColorPalette.KPMainColor.mainColor!,
                                                    icon:(R.image.icon_star()?.withRenderingMode(.alwaysTemplate))!,
-                                                   handler:{(infoView) -> () in
+                                                   handler:{ [unowned self] (infoView) -> () in
+                                                    
                                                     let controller = KPModalViewController()
                                                     controller.edgeInset = UIEdgeInsets(top: UIDevice().isCompact ? 16 : 48,
                                                                                         left: 0,
@@ -293,6 +295,12 @@ class KPInformationViewController: KPViewController {
                                                                                         right: 0)
                                                     controller.cornerRadius = [.topRight, .topLeft]
                                                     let ratingViewController = KPRatingViewController()
+                                                    
+                                                    if ((KPUserManager.sharedManager.currentUser?.hasRated) != nil) {
+                                                        if let rate = self.informationDataModel.rates?.rates?.first(where: {$0.memberID == KPUserManager.sharedManager.currentUser?.identifier}) {
+                                                            ratingViewController.defaultRateModel = rate
+                                                        }
+                                                    }
                                                     controller.contentController = ratingViewController
                                                     controller.presentModalView()
         })]

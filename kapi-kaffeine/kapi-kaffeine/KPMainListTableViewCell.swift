@@ -94,8 +94,7 @@ class KPMainListTableViewCell: UITableViewCell {
         shopImageView.contentMode = .scaleAspectFill
         shopImageView.clipsToBounds = true
         contentView.addSubview(shopImageView)
-        
-        
+            
         shopImageView.addConstraints(fromStringArray: ["H:|-8-[$self(60)]",
                                                        "V:|-12-[$self(60)]-12-|"])
         

@@ -46,7 +46,10 @@ class KPRatingView: UIView {
                 minusButton.isEnabled = !(currentRate == 1)
                 addButton.isEnabled = !(currentRate == 5)
             case .star:
-                break
+                let animatedIndex = 5 - currentRate
+                for (index, starView) in starViews.enumerated() {
+                    starView.selected = index >= animatedIndex ? true : false
+                }
             }
             
             delegate?.rateValueDidChanged(self)
@@ -230,8 +233,6 @@ class KPRatingView: UIView {
     
     // MARK:Star Type UI Event
     func handlePanGesture(panGesture: UIPanGestureRecognizer) {
-        var animatedIndex: Int = 5
-        
         switch panGesture.state {
         case .began:
             break
@@ -240,15 +241,9 @@ class KPRatingView: UIView {
             for (index, starView) in starViews.enumerated() {
                 if starView.frame.contains(touchPoint) {
                     currentRate = 5 - index
-                    animatedIndex = index
                     break
                 }
             }
-
-            for (index, starView) in starViews.enumerated() {
-                starView.selected = index >= animatedIndex ? true : false
-            }
-            
             break
         case .ended, .cancelled:
             break
@@ -260,18 +255,11 @@ class KPRatingView: UIView {
     
     func handleTapGesture(tapGesture: UITapGestureRecognizer) {
         let touchPoint = tapGesture.location(in: self)
-        var animatedIndex: Int = 5
-        
         for (index, starView) in starViews.enumerated() {
             if starView.frame.contains(touchPoint) {
                 currentRate = 5 - index
-                animatedIndex = index
                 break
             }
-        }
-        
-        for (index, starView) in starViews.enumerated() {
-            starView.selected = index >= animatedIndex ? true : false
         }
     }
     

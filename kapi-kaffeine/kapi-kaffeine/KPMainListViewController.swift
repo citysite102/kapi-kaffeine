@@ -63,8 +63,8 @@ class KPMainListViewController:
                 dataLoading = false
                 self.tableView.isUserInteractionEnabled = true
                 self.tableView.allowsSelection = true
-                self.addNativeExpressAds()
-                self.preloadNextAd()
+//                self.addNativeExpressAds()
+//                self.preloadNextAd()
                 self.tableView.reloadData()
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
             }
@@ -134,11 +134,11 @@ class KPMainListViewController:
         var index = Constant.adInterval
         tableView.layoutIfNeeded()
         while index < displayDataModel.count {
-            let adSize = GADAdSizeFromCGSize(CGSize(width: tableView.contentSize.width,
-                                                    height: Constant.adViewHeight))
-
-            
             if adsToLoad.count < Constant.concurrentAdsCount {
+                
+                let adSize = GADAdSizeFromCGSize(CGSize(width: tableView.contentSize.width,
+                                                        height: Constant.adViewHeight))
+                
                 guard let adView = GADNativeExpressAdView(adSize: adSize) else {
                     print("GADNativeExpressAdView failed to initialize at index \(index)")
                     return
@@ -157,6 +157,7 @@ class KPMainListViewController:
     
     func preloadNextAd() {
         if !adsToLoad.isEmpty {
+            print("Count:\(adsToLoad.count)")
             let ad = adsToLoad.removeFirst()
             ad.load(GADRequest())
         }

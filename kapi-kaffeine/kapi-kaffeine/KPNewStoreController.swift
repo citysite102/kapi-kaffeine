@@ -33,7 +33,6 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
         }
     }
     
-    var oDataModel: KPDataModel?
     var dismissButton: KPBounceButton!
     var sendButton: UIButton!
     var scrollView: UIScrollView!
@@ -66,6 +65,11 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
     var addressSubTitleView: KPSubTitleEditView!
     var phoneSubTitleView: KPSubTitleEditView!
     var facebookSubTitleView: KPSubTitleEditView!
+    
+    
+    var ratingController: KPRatingViewController!
+    var countrySelectController: KPCountrySelectController!
+    var businessHourController: KPBusinessHourViewController!
     
     let tags = ["工業風", "藝術", "文青", "老屋", "美式風",
                 "服務佳", "有寵物", "開很晚", "手沖單品", "好停車",
@@ -104,15 +108,15 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
         
         let barItem = UIBarButtonItem(customView: dismissButton)
         
-        sendButton = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 24));
+        sendButton = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 24))
         sendButton.setTitle("新增", for: .normal)
         sendButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
-        sendButton.tintColor = KPColorPalette.KPTextColor.mainColor;
+        sendButton.tintColor = KPColorPalette.KPTextColor.mainColor
         sendButton.addTarget(self,
                              action: #selector(KPNewCommentController.handleSendButtonOnTapped),
                              for: .touchUpInside)
         
-        let rightbarItem = UIBarButtonItem(customView: sendButton);
+        let rightbarItem = UIBarButtonItem(customView: sendButton)
         
         let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace,
                                              target: nil,
@@ -168,18 +172,20 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
                                               "所在城市")
         citySubTitleView.placeHolderContent = "請選擇城市"
         citySubTitleView.customInputAction = {
-            () -> Void in
+            [unowned self] () -> Void in
             let controller = KPModalViewController()
             controller.edgeInset = UIEdgeInsets(top: UIDevice().isCompact ? 48 : 56,
                                                      left: 0,
                                                      bottom: 0,
-                                                     right: 0);
+                                                     right: 0)
             controller.cornerRadius = [.topRight, .topLeft]
-            let countryController = KPCountrySelectController()
-            countryController.identifiedKey = "country"
-            countryController.delegate = self
-            controller.contentController = countryController;
-            controller.presentModalView();
+            if self.countrySelectController == nil {
+                self.countrySelectController = KPCountrySelectController()
+                self.countrySelectController.identifiedKey = "country"
+                self.countrySelectController.delegate = self
+            }
+            controller.contentController = self.countrySelectController
+            controller.presentModalView()
         }
         sectionOneContainer.addSubview(citySubTitleView)
         citySubTitleView.addConstraints(fromStringArray: ["H:|[$self]|",
@@ -222,18 +228,20 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
                                                          "V:[$view0][$self(64)]"],
                                            views:[featureSubTitleView])
         rateCheckedView.customInputAction = {
-            () -> Void in
+            [unowned self] () -> Void in
             let controller = KPModalViewController()
             controller.edgeInset = UIEdgeInsets(top: UIDevice().isCompact ? 32 : 40,
                                                 left: 0,
                                                 bottom: 0,
                                                 right: 0)
             controller.cornerRadius = [.topRight, .topLeft, .bottomLeft, .bottomRight]
-            let ratingViewController = KPRatingViewController()
-            ratingViewController.identifiedKey = "rate"
-            ratingViewController.isRemote = false
-            ratingViewController.delegate = self
-            controller.contentController = ratingViewController
+            if self.ratingController == nil {
+                self.ratingController = KPRatingViewController()
+                self.ratingController.identifiedKey = "rate"
+                self.ratingController.isRemote = false
+                self.ratingController.delegate = self
+            }
+            controller.contentController = self.ratingController
             controller.presentModalView()
         }
         
@@ -246,16 +254,18 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
                                                                  "V:[$view0][$self(64)]|"],
                                                views:[rateCheckedView])
         businessHourCheckedView.customInputAction = {
-            () -> Void in
+            [unowned self] () -> Void in
             let controller = KPModalViewController()
             controller.edgeInset = UIEdgeInsets(top: 32,
                                                 left: 0,
                                                 bottom: 0,
-                                                right: 0);
-            let timePickerController = KPBusinessHourViewController()
-            timePickerController.identifiedKey = "time"
-            timePickerController.delegate = self
-            controller.contentController = timePickerController
+                                                right: 0)
+            if self.businessHourController == nil {
+                self.businessHourController = KPBusinessHourViewController()
+                self.businessHourController.identifiedKey = "time"
+                self.businessHourController.delegate = self
+            }
+            controller.contentController = self.businessHourController
             controller.cornerRadius = [.topRight, .topLeft]
             controller.presentModalView()
         }
@@ -361,7 +371,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
     }
 
     func handleDismissButtonOnTapped() {
-        appModalController()?.dismissControllerWithDefaultDuration();
+        appModalController()?.dismissControllerWithDefaultDuration()
     }
     
     func handleTapGesture(tapGesture: UITapGestureRecognizer) {
@@ -400,9 +410,9 @@ extension KPNewStoreController: UICollectionViewDelegate, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier:"cell",
-                                                          for: indexPath) as! KPFeatureTagCell;
+                                                          for: indexPath) as! KPFeatureTagCell
             cell.featureLabel.text = self.tags[indexPath.row]
-            return cell;
+            return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

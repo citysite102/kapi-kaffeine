@@ -17,6 +17,7 @@ class KPSimpleRateModel: NSObject {
     var seat: NSNumber? = 0
     var wifi: NSNumber? = 0
     var tasty: NSNumber? = 0
+    var music: NSNumber? = 0
     var createdTime: NSNumber? = 0
     var modifiedTime: NSNumber? = 0
     var memberID: String?
@@ -32,6 +33,7 @@ class KPSimpleRateModel: NSObject {
         seat            <- map["seat"]
         wifi            <- map["wifi"]
         tasty           <- map["tasty"]
+        music           <- map["music"]
         createdTime     <- map["created_time"]
         modifiedTime    <- map["modified_time"]
         memberID        <- map["member_id"]
