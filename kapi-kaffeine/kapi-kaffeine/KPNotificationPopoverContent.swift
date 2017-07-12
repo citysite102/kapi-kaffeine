@@ -1,17 +1,17 @@
 //
-//  KPDefaultPopoverContent.swift
+//  KPNotificationPopoverContent.swift
 //  kapi-kaffeine
 //
-//  Created by YU CHONKAO on 2017/7/4.
+//  Created by YU CHONKAO on 2017/7/13.
 //  Copyright © 2017年 kapi-kaffeine. All rights reserved.
 //
 
 import UIKit
 
-class KPDefaultPopoverContent: UIView, PopoverProtocol {
-    
+class KPNotificationPopoverContent: UIView, PopoverProtocol {
+
     var popoverView: KPPopoverView!
-    var confirmAction: ((_ content: KPDefaultPopoverContent) -> Swift.Void)?
+    var confirmAction: ((_ content: KPNotificationPopoverContent) -> Swift.Void)?
     var confirmButton: UIButton!
     
     lazy var titleLabel: UILabel = {
@@ -37,10 +37,9 @@ class KPDefaultPopoverContent: UIView, PopoverProtocol {
     }()
     
     private var buttonContainer: UIView!
-    private var cancelButton: UIButton!
     
     override var intrinsicContentSize: CGSize {
-        return CGSize(width: 280, height: 180)
+        return CGSize(width: 280, height: 200)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -66,32 +65,16 @@ class KPDefaultPopoverContent: UIView, PopoverProtocol {
                                         views: [titleLabel])
         
         
-        
         buttonContainer = UIView()
         addSubview(buttonContainer)
         buttonContainer.addConstraintForCenterAligningToSuperview(in: .horizontal)
         buttonContainer.addConstraint(from: "V:[$self]|")
-        
+        buttonContainer.addConstraint(from: "H:|[$self]|")
         
         addSubview(seperator)
         seperator.addConstraints(fromStringArray: ["V:[$self(1)]",
                                                    "H:|[$self]|"])
         seperator.addConstraintForAligning(to: .top, of: buttonContainer)
-        
-        cancelButton = UIButton(type: .custom)
-        cancelButton.setTitle("取消", for: .normal)
-        cancelButton.layer.cornerRadius = 2.0
-        cancelButton.layer.masksToBounds = true
-        cancelButton.titleLabel?.font = UIFont.systemFont(ofSize: UIDevice().isSuperCompact ? 13.0 : 15.0)
-        cancelButton.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.grayColor_level4!),
-                                        for: .normal)
-        cancelButton.addTarget(self,
-                               action: #selector(KPDefaultPopoverContent.handleCancelButtonOnTapped),
-                               for: .touchUpInside);
-        buttonContainer.addSubview(cancelButton)
-        cancelButton.addConstraints(fromStringArray:
-            ["V:|-8-[$self(36)]-8-|",
-             "H:|-10-[$self($metric0)]"], metrics: [125])
         
         confirmButton = UIButton(type: .custom)
         confirmButton.setTitle("確認", for: .normal)
@@ -99,25 +82,23 @@ class KPDefaultPopoverContent: UIView, PopoverProtocol {
         confirmButton.layer.masksToBounds = true
         confirmButton.titleLabel?.font = UIFont.systemFont(ofSize: 15.0)
         confirmButton.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.mainColor_light!),
-                                        for: .normal)
+                                         for: .normal)
         confirmButton.addTarget(self,
-                                action: #selector(KPDefaultPopoverContent.handleConfirmButtonOnTapped),
+                                action: #selector(KPNotificationPopoverContent.handleConfirmButtonOnTapped),
                                 for: .touchUpInside);
         buttonContainer.addSubview(confirmButton)
         confirmButton.addConstraints(fromStringArray:
             ["V:|-8-[$self(36)]-8-|",
-             "H:[$view0]-10-[$self($metric0)]-10-|"],
-                                     metrics: [125],
-                                     views:[cancelButton])
+             "H:|-10-[$self]-10-|"])
     }
-
-    func handleCancelButtonOnTapped() {
-        popoverView.dismiss()
-    }
+    
     
     func handleConfirmButtonOnTapped() {
         if confirmAction != nil {
             confirmAction!(self)
+        } else {
+            popoverView.dismiss()
         }
     }
+
 }

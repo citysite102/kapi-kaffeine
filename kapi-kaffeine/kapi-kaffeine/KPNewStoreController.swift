@@ -115,7 +115,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
         sendButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         sendButton.tintColor = KPColorPalette.KPTextColor.mainColor
         sendButton.addTarget(self,
-                             action: #selector(KPNewCommentController.handleSendButtonOnTapped),
+                             action: #selector(KPNewStoreController.handleSendButtonOnTapped),
                              for: .touchUpInside)
         
         let rightbarItem = UIBarButtonItem(customView: sendButton)
@@ -419,6 +419,12 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
     
     func handleTapGesture(tapGesture: UITapGestureRecognizer) {
         view.endEditing(true)
+    }
+    
+    func handleSendButtonOnTapped() {
+        KPPopoverView.popoverNotification("新增成功",
+                                          "感謝您提交資訊，我們將儘速進行審查:D 這將會需要1-3天的審核時間確認店家的資訊是否無誤，給我好好的等。",
+                                          nil)
     }
     
     

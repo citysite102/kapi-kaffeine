@@ -118,6 +118,7 @@
 		77C594AD1ECB171A00118947 /* KPAllCommentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C594AC1ECB171A00118947 /* KPAllCommentController.swift */; };
 		77C594AF1ECB6E3100118947 /* KPLoadingViewController_v1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C594AE1ECB6E3100118947 /* KPLoadingViewController_v1.swift */; };
 		77C594B11ECB754900118947 /* KPLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C594B01ECB754900118947 /* KPLoadingView.swift */; };
+		77CACF4D1F168F2F00093147 /* KPNotificationPopoverContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CACF4C1F168F2F00093147 /* KPNotificationPopoverContent.swift */; };
 		77D6BDF01F0E9A42005598B3 /* demoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77D6BDEF1F0E9A42005598B3 /* demoView.swift */; };
 		77DD7E3D1F0B7647007B0E17 /* KPDefaultPopoverContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DD7E3C1F0B7647007B0E17 /* KPDefaultPopoverContent.swift */; };
 		77DD7E3F1F0B9283007B0E17 /* KPPopoverViewUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DD7E3E1F0B9283007B0E17 /* KPPopoverViewUtility.swift */; };
@@ -304,6 +305,7 @@
 		77C594AC1ECB171A00118947 /* KPAllCommentController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPAllCommentController.swift; sourceTree = "<group>"; };
 		77C594AE1ECB6E3100118947 /* KPLoadingViewController_v1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPLoadingViewController_v1.swift; sourceTree = "<group>"; };
 		77C594B01ECB754900118947 /* KPLoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPLoadingView.swift; sourceTree = "<group>"; };
+		77CACF4C1F168F2F00093147 /* KPNotificationPopoverContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPNotificationPopoverContent.swift; sourceTree = "<group>"; };
 		77D6BDEF1F0E9A42005598B3 /* demoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = demoView.swift; sourceTree = "<group>"; };
 		77DD7E3C1F0B7647007B0E17 /* KPDefaultPopoverContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPDefaultPopoverContent.swift; sourceTree = "<group>"; };
 		77DD7E3E1F0B9283007B0E17 /* KPPopoverViewUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPPopoverViewUtility.swift; sourceTree = "<group>"; };
@@ -825,13 +827,22 @@
 			name = "Sub Group";
 			sourceTree = "<group>";
 		};
+		77CACF4B1F168F0700093147 /* Content */ = {
+			isa = PBXGroup;
+			children = (
+				77DD7E3C1F0B7647007B0E17 /* KPDefaultPopoverContent.swift */,
+				77CACF4C1F168F2F00093147 /* KPNotificationPopoverContent.swift */,
+			);
+			name = Content;
+			sourceTree = "<group>";
+		};
 		77DD7E3B1F0B762C007B0E17 /* Popover */ = {
 			isa = PBXGroup;
 			children = (
+				77CACF4B1F168F0700093147 /* Content */,
 				77B66FA81EACF74C008B6652 /* KPPopoverSensingView.swift */,
 				7776EA611F0A735B0083ECC5 /* KPPopoverView.swift */,
 				77DD7E3E1F0B9283007B0E17 /* KPPopoverViewUtility.swift */,
-				77DD7E3C1F0B7647007B0E17 /* KPDefaultPopoverContent.swift */,
 			);
 			name = Popover;
 			sourceTree = "<group>";
@@ -1405,6 +1416,7 @@
 				77C0E1081E9D491D00398852 /* KPShopRateInfoView.swift in Sources */,
 				77E495611EC9EA1F003B7EBC /* KPSearchViewRecentCell.swift in Sources */,
 				772D68281ECC81140013F802 /* KPSubTitleEditView.swift in Sources */,
+				77CACF4D1F168F2F00093147 /* KPNotificationPopoverContent.swift in Sources */,
 				775D32EF1F0D20E4005EF0CE /* KPExpView.swift in Sources */,
 				77DD7E3F1F0B9283007B0E17 /* KPPopoverViewUtility.swift in Sources */,
 				7762E34A1F1225B20006E205 /* KPHelper+Foundation.swift in Sources */,

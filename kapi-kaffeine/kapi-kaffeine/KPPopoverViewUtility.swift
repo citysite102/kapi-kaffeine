@@ -34,6 +34,18 @@ extension KPPopoverView {
         KPPopoverView.sharedPopoverView.popoverContent()
     }
     
+    class func popoverNotification(_ title: String,
+                                   _ description: String,
+                                   _ confirmAction: ((_ content: KPNotificationPopoverContent) -> Swift.Void)?) {
+        
+        let content = KPNotificationPopoverContent()
+        content.confirmAction = confirmAction
+        content.titleLabel.text = title
+        content.descriptionLabel.setText(text: description, lineSpacing: 3.6)
+        KPPopoverView.sharedPopoverView.contentView = content
+        KPPopoverView.sharedPopoverView.popoverContent()
+    }
+    
     class func popoverDefaultStyleContent(_ title: String,
                                           _ description: String,
                                           _ buttonTitle: String,
@@ -42,7 +54,7 @@ extension KPPopoverView {
             let content = KPDefaultPopoverContent()
             content.confirmAction = confirmAction
             content.titleLabel.text = title
-            content.descriptionLabel.text = description
+            content.descriptionLabel.setText(text: description, lineSpacing: 3.6)
             content.confirmButton.setTitle(buttonTitle,
                                            for: .normal)
             KPPopoverView.sharedPopoverView.contentView = content
