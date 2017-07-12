@@ -53,7 +53,7 @@ class KPCheckView: UIView {
         
         addSubview(checkBox)
         addSubview(titleLabel)
-        
+        checkBox.checkState = .unchecked
         checkBox.addConstraints(fromStringArray: ["V:|[$self(20)]|",
                                                   "H:|[$self(20)]"])
         

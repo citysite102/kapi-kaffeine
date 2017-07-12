@@ -127,6 +127,7 @@ class KPCheckBox: UIControl {
     /// The default animation is a stroke.
     fileprivate var controller: KPCheckBoxController = KPCheckBoxBounceController()
     var tapGesture: UITapGestureRecognizer!
+    var deselectCheckBoxs: [KPCheckBox]?
     
     //----------------------------
     // MARK: - Initalization
@@ -208,6 +209,12 @@ class KPCheckBox: UIControl {
     func setCheckState(_ newState: CheckState, animated: Bool) {
         if checkState == newState {
             return
+        }
+        
+        if newState == .checked && deselectCheckBoxs != nil {
+            for checkBox in deselectCheckBoxs! {
+                checkBox.checkState = .unchecked
+            }
         }
         
         if animated {

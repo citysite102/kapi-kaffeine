@@ -217,7 +217,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
         sectionOneContainer.addSubview(priceSubTitleView)
         priceSubTitleView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                            "V:[$view0][$self(72)]"],
-                                         views:[nameSubTitleView])
+                                         views:[citySubTitleView])
         
         
         featureSubTitleView = KPSubTitleEditView(.Bottom,

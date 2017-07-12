@@ -10,7 +10,7 @@ import UIKit
 
 class KPPriceSelectController: KPSharedSettingViewController {
 
-    var priceRanges = ["0-49元", "50-99元", "100-149元", "150-199元", ">200元"]
+    var priceRanges = ["0 - 49元", "50 - 99元", "100 - 149元", "150 - 199元", ">200元"]
     var tableView: UITableView!
     
     override func viewDidLoad() {

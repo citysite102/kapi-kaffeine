@@ -137,7 +137,7 @@ class KPCheckBoxBounceController: KPCheckBoxController {
         if pathGenerator.pathForMark(toState) == nil && pathGenerator.pathForMark(fromState) != nil {
             
             let amplitude: CGFloat = pathGenerator.boxType == .square ? 0.20 : 0.35
-            let wiggleAnimation = animationGenerator.fillAnimation(1, amplitude: amplitude, reverse: true)
+            let wiggleAnimation = animationGenerator.fillAnimation(2, amplitude: amplitude, reverse: true)
             let opacityAnimation = animationGenerator.opacityAnimation(true)
             opacityAnimation.duration = opacityAnimation.duration / 1.5
             opacityAnimation.beginTime = CACurrentMediaTime() + animationGenerator.animationDuration - opacityAnimation.duration
