@@ -206,6 +206,16 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        
+        if let user = KPUserManager.sharedManager.currentUser {
+            if let photoURL = URL(string: user.photoURL ?? "") {
+                userPhoto.af_setImage(withURL: photoURL)
+            }
+            userNameLabel.text = user.displayName ?? ""
+            userCityLabel.text = user.defaultLocation ?? ""
+            userBioLabel.text = user.intro ?? ""
+        }
+        
         if !dataloaded {
         
             dataLoading = true
