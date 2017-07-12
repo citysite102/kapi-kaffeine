@@ -68,6 +68,8 @@ class KPSubTitleEditView: UIView {
         let textField = UITextField()
         textField.textColor = KPColorPalette.KPTextColor.grayColor_level2
         textField.placeholder = "請輸入..."
+        textField.delegate = self
+        textField.returnKeyType = .done
         return textField
     }()
     
@@ -160,3 +162,20 @@ class KPSubTitleEditView: UIView {
         }
     }
 }
+
+extension KPSubTitleEditView: UITextFieldDelegate {
+    
+    func textField(_ textField: UITextField,
+                   shouldChangeCharactersIn range: NSRange,
+                   replacementString string: String) -> Bool {
+        let returnKey = (string as NSString).range(of: "\n").location == NSNotFound
+        
+        if !returnKey {
+            textField.resignFirstResponder()
+            return false
+        }
+        return true
+    }
+    
+}
+

@@ -57,6 +57,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
     
     var nameSubTitleView: KPSubTitleEditView!
     var citySubTitleView: KPSubTitleEditView!
+    var priceSubTitleView: KPSubTitleEditView!
     var featureSubTitleView: KPSubTitleEditView!
     var sizingCell: KPFeatureTagCell!
     
@@ -69,6 +70,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
     
     var ratingController: KPRatingViewController!
     var countrySelectController: KPCountrySelectController!
+    var priceSelectController: KPPriceSelectController!
     var businessHourController: KPBusinessHourViewController!
     
     let tags = ["工業風", "藝術", "文青", "老屋", "美式風",
@@ -192,13 +194,39 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
                                                           "V:[$view0][$self(72)]"],
                                         views:[nameSubTitleView])
         
+        priceSubTitleView = KPSubTitleEditView(.Bottom,
+                                               .Fixed,
+                                               "價格區間")
+        priceSubTitleView.placeHolderContent = "請選擇價格區間"
+        priceSubTitleView.customInputAction = {
+            [unowned self] () -> Void in
+            let controller = KPModalViewController()
+            controller.edgeInset = UIEdgeInsets(top: UIDevice().isCompact ? 48 : 56,
+                                                left: 0,
+                                                bottom: 0,
+                                                right: 0)
+            controller.cornerRadius = [.topRight, .topLeft]
+            if self.priceSelectController == nil {
+                self.priceSelectController = KPPriceSelectController()
+                self.priceSelectController.identifiedKey = "price"
+                self.priceSelectController.delegate = self
+            }
+            controller.contentController = self.priceSelectController
+            controller.presentModalView()
+        }
+        sectionOneContainer.addSubview(priceSubTitleView)
+        priceSubTitleView.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                           "V:[$view0][$self(72)]"],
+                                         views:[nameSubTitleView])
+        
+        
         featureSubTitleView = KPSubTitleEditView(.Bottom,
                                                  .Custom,
                                                  "選擇店家特色標籤")
         sectionOneContainer.addSubview(featureSubTitleView)
         featureSubTitleView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                              "V:[$view0][$self(200)]"],
-                                        views:[citySubTitleView])
+                                        views:[priceSubTitleView])
         
         sizingCell = KPFeatureTagCell()
         
@@ -390,6 +418,8 @@ extension KPNewStoreController: KPSharedSettingDelegate {
     func sendButtonTapped(_ controller: KPSharedSettingViewController) {
         if controller.identifiedKey == "country" {
             self.citySubTitleView.content = controller.setValue as! String
+        } else if controller.identifiedKey == "price" {
+            self.priceSubTitleView.content = controller.setValue as! String
         } else if controller.identifiedKey == "rate" {
             self.rateCheckedView.checkContent = String(format: "已評分(%.1f)",
                                                        controller.setValue as! CGFloat)

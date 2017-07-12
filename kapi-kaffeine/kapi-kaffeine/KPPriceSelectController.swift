@@ -1,24 +1,22 @@
 //
-//  KPCountrySelectController.swift
+//  KPPriceSelectController.swift
 //  kapi-kaffeine
 //
-//  Created by YU CHONKAO on 2017/5/21.
+//  Created by YU CHONKAO on 2017/7/12.
 //  Copyright © 2017年 kapi-kaffeine. All rights reserved.
 //
 
 import UIKit
 
-class KPCountrySelectController: KPSharedSettingViewController {
+class KPPriceSelectController: KPSharedSettingViewController {
 
-    var countries = ["台北 Taipei", "基隆 Keelung", "台中 Taichung", "火星 Mars"]
+    var priceRanges = ["0-49元", "50-99元", "100-149元", "150-199元", ">200元"]
     var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        titleLabel.text = "店家所在城市"
         
-        
+        titleLabel.text = "價格區間"
         tableView = UITableView()
         tableView.delegate = self
         tableView.dataSource = self
@@ -34,7 +32,7 @@ class KPCountrySelectController: KPSharedSettingViewController {
                              action: #selector(KPCountrySelectController.handleSendButtonOnTapped),
                              for: .touchUpInside)
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -44,22 +42,21 @@ class KPCountrySelectController: KPSharedSettingViewController {
         delegate?.sendButtonTapped(self)
         appModalController()?.dismissControllerWithDefaultDuration()
     }
-    
-
 }
 
-extension KPCountrySelectController: UITableViewDelegate, UITableViewDataSource {
+
+extension KPPriceSelectController: UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier:"cell",
                                                  for: indexPath) as! KPSelectCell;
-        cell.contentLabel.text = self.countries[indexPath.row]
+        cell.contentLabel.text = self.priceRanges[indexPath.row]
         return cell;
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        setValue = countries[indexPath.row]
+        setValue = priceRanges[indexPath.row]
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -67,12 +64,11 @@ extension KPCountrySelectController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return countries.count
+        return priceRanges.count
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 }
-
 

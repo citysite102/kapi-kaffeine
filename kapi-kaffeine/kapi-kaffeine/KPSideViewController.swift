@@ -19,20 +19,16 @@ class KPSideViewController: KPViewController {
                                                   cityKeys:["taipei", "keelung", "taoyuan", "hsinchu"]),
                                        regionData(name:"東部",
                                                   icon:R.image.icon_taitung()!,
-                                                  cities:["宜蘭", "花蓮", "台東"],
-                                                  cityKeys:["yilan", "hualien", "taitung"]),
+                                                  cities:["宜蘭", "花蓮", "台東", "澎湖"],
+                                                  cityKeys:["yilan", "hualien", "taitung", "penghu"]),
                                        regionData(name:"中部",
-                                                  icon:R.image.icon_taitung()!,
+                                                  icon:R.image.icon_taichung()!,
                                                   cities:["苗栗", "台中", "南投", "彰化", "雲林"],
                                                   cityKeys:["miaoli", "taichung", "nantou", "changhua", "yunlin"]),
                                        regionData(name:"南部",
                                                   icon:R.image.icon_pingtung()!,
                                                   cities:["嘉義", "台南", "高雄", "屏東"],
-                                                  cityKeys:["chiayi", "tainan", "kaohsiung", "pingtung"]),
-                                       regionData(name:"邊疆",
-                                                  icon:R.image.icon_taitung()!,
-                                                  cities:["澎湖"],
-                                                  cityKeys:["penghu"])]
+                                                  cityKeys:["chiayi", "tainan", "kaohsiung", "pingtung"])]
     
     weak var mainController: KPMainViewController!
     var lastY: CGFloat = 0.0
