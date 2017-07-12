@@ -228,18 +228,18 @@ static const double kGMUAnimationDuration = 0.5;  // seconds.
 
   for (id<GMUCluster> cluster in clusters) {
     if ([_renderedClusters containsObject:cluster]) continue;
-
+//
     BOOL shouldShowCluster = [visibleBounds containsCoordinate:cluster.position];
-    if (!shouldShowCluster && animated) {
-      for (id<GMUClusterItem> item in cluster.items) {
-        GMUWrappingDictionaryKey *key = [[GMUWrappingDictionaryKey alloc] initWithObject:item];
-        id<GMUCluster> oldCluster = [_itemToOldClusterMap objectForKey:key];
-        if (oldCluster != nil && [visibleBounds containsCoordinate:oldCluster.position]) {
-          shouldShowCluster = YES;
-          break;
-        }
-      }
-    }
+//    if (!shouldShowCluster && animated) {
+//      for (id<GMUClusterItem> item in cluster.items) {
+//        GMUWrappingDictionaryKey *key = [[GMUWrappingDictionaryKey alloc] initWithObject:item];
+//        id<GMUCluster> oldCluster = [_itemToOldClusterMap objectForKey:key];
+//        if (oldCluster != nil && [visibleBounds containsCoordinate:oldCluster.position]) {
+//          shouldShowCluster = YES;
+//          break;
+//        }
+//      }
+//    }
     if (shouldShowCluster) {
       [self renderCluster:cluster animated:animated];
     }
@@ -310,23 +310,23 @@ static const double kGMUAnimationDuration = 0.5;  // seconds.
     marker.icon = clusterIcon;
     marker.groundAnchor = CGPointMake(0.5, 0.5);
   }
-  else {
-      if ([marker.userData isKindOfClass:[KPDataModel class]]) {
-          KPDataModel *model = marker.userData;
-          
-          if (model.averageRate.floatValue >= 4.5) {
-              marker.iconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_mapMarkerSelected"]];
-          } else {
-              marker.iconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_mapMarker"]];
-          }
-          
-          if (!model.businessHour || model.businessHour.isOpening) {
-              marker.iconView.alpha = 1;
-          } else {
-              marker.iconView.alpha = 0.6;
-          }
-      }
-  }
+//  else {
+//      if ([marker.userData isKindOfClass:[KPDataModel class]]) {
+//          KPDataModel *model = marker.userData;
+//          
+//          if (model.averageRate.floatValue >= 4.5) {
+//              marker.iconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_mapMarkerSelected"]];
+//          } else {
+//              marker.iconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_mapMarker"]];
+//          }
+//          
+//          if (!model.businessHour || model.businessHour.isOpening) {
+//              marker.iconView.alpha = 1;
+//          } else {
+//              marker.iconView.alpha = 0.6;
+//          }
+//      }
+//  }
   marker.zIndex = _zIndex;
 
   if ([_delegate respondsToSelector:@selector(renderer:willRenderMarker:)]) {

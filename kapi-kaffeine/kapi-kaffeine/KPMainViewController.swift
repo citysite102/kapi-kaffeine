@@ -24,9 +24,6 @@ class KPMainViewController: KPViewController {
     var mainListViewController:KPMainListViewController?
     var mainMapViewController:KPMainMapViewController?
     
-    
-    static var allDataModel: [KPDataModel] = []
-    
     var displayDataModel: [KPDataModel]! {
         didSet {
             self.mainListViewController?.dataLoading = true
@@ -172,7 +169,6 @@ class KPMainViewController: KPViewController {
     func updateData() {
         KPServiceHandler.sharedHandler.fetchRemoteData() { (results: [KPDataModel]?) in
             if results != nil {
-                KPMainViewController.allDataModel = results!
                 self.displayDataModel = results!
             }
         }

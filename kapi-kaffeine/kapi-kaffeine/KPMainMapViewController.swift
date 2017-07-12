@@ -16,13 +16,14 @@ GMUClusterManagerDelegate,
 UICollectionViewDataSource,
 UICollectionViewDelegate,
 UICollectionViewDelegateFlowLayout,
-KPMainViewControllerDelegate {
+KPMainViewControllerDelegate,
+GMUClusterRendererDelegate {
     
     weak var mainController:KPMainViewController!
     private var snapshotView: UIImageView!
     var collectionView: UICollectionView!
     var collectionViewBottomConstraint: NSLayoutConstraint!
-    var clusterRenderer: GMUClusterRenderer!
+    var clusterRenderer: GMUDefaultClusterRenderer!
 
     lazy var nearestButton: KPShadowButton = {
         let shadowButton = KPShadowButton()
@@ -118,17 +119,14 @@ KPMainViewControllerDelegate {
                         self.collectionView.contentOffset = CGPoint(x: -30 + CGFloat(selectedIndex) * (UIScreen.main.bounds.size.width - 60 + 15), y: 0)
                         self.view.layoutIfNeeded()
                         self.view.bringSubview(toFront: self.collectionView)
-//                        UIView.animate(withDuration: 0.2, animations: {
-//                            self.collectionView.alpha = 1
-//                        })
                     })
                     
                     UIView.animate(withDuration: 0.2, delay: 0.3, options: UIViewAnimationOptions.curveLinear, animations: {
                         self.collectionView.alpha = 1
                     }, completion: { (_) in
+                        
                     })
                 }
-//                self.collectionView.setContentOffset(CGPoint(x: -30 + CGFloat(selectedIndex) * (UIScreen.main.bounds.size.width - 60 + 15), y: 0), animated: false)
             }
         }
     }
@@ -177,6 +175,7 @@ KPMainViewControllerDelegate {
         let algorithm = GMUNonHierarchicalDistanceBasedAlgorithm()
         clusterRenderer = GMUDefaultClusterRenderer(mapView: mapView,
                                                  clusterIconGenerator: iconGenerator)
+        clusterRenderer.delegate = self
         clusterManager = GMUClusterManager(map: mapView, algorithm: algorithm,
                                            renderer: clusterRenderer)
         
@@ -303,47 +302,52 @@ KPMainViewControllerDelegate {
     
     func handleNearestButtonOnTap(_ sender: UIButton) {
         
+        clusterRenderer.animatesClusters = false
+        
         moveToMyLocation { (success) in
             if success {
-                self.reloadNeeded = false
-                let test = self.isCollectionViewShow
-                self.isCollectionViewShow = test
-                if let renderer = self.clusterRenderer as? GMUDefaultClusterRenderer,
-                    let currentLocation = KPLocationManager.sharedInstance().currentLocation {
-                    var nearestMarker: GMSMarker?
-                    
-                    var nearestDistance: Double = Double.greatestFiniteMagnitude
-                    for marker in renderer.markers() {
-                        if nearestMarker == nil {
-                            nearestMarker = marker
-                        } else {
-                            let distance = CLLocation(latitude: marker.position.latitude, longitude: marker.position.longitude).distance(from: currentLocation)
-                            if distance < nearestDistance {
-                                nearestDistance = distance
+                self.clusterRenderer.animatesClusters = true
+                DispatchQueue.main.asyncAfter(deadline: .now()+0.5, execute: {
+                    self.reloadNeeded = false
+                    let test = self.isCollectionViewShow
+                    self.isCollectionViewShow = test
+                    if let renderer = self.clusterRenderer,
+                        let currentLocation = KPLocationManager.sharedInstance().currentLocation {
+                        var nearestMarker: GMSMarker?
+                        
+                        var nearestDistance: Double = Double.greatestFiniteMagnitude
+                        for marker in renderer.markers() {
+                            if nearestMarker == nil {
                                 nearestMarker = marker
+                            } else {
+                                let distance = CLLocation(latitude: marker.position.latitude, longitude: marker.position.longitude).distance(from: currentLocation)
+                                if distance < nearestDistance {
+                                    nearestDistance = distance
+                                    nearestMarker = marker
+                                }
                             }
                         }
-                    }
-                    
-                    if nearestMarker != nil {
-                        CATransaction.begin()
-                        CATransaction.setValue(NSNumber(floatLiteral: 0.5), forKey: kCATransactionAnimationDuration)
-                        self.mapView.animate(to: GMSCameraPosition.camera(withTarget: nearestMarker!.position , zoom: self.mapView.camera.zoom))
-                        CATransaction.commit()
-                        CATransaction.setCompletionBlock({
-                            self.reloadNeeded = false
-                            self.mapView.selectedMarker = nearestMarker!
-                        })
                         
-                        DispatchQueue.main.asyncAfter(deadline: .now()+0.5, execute: {
-                            if nearestMarker?.userData is KPDataModel {
-                                self.isCollectionViewShow = true
-                            } else {
-                                self.mapView.animate(toZoom: self.mapView.camera.zoom+1)
-                            }
-                        })
+                        if nearestMarker != nil {
+                            CATransaction.begin()
+                            CATransaction.setValue(NSNumber(floatLiteral: 0.5), forKey: kCATransactionAnimationDuration)
+                            self.mapView.animate(to: GMSCameraPosition.camera(withTarget: nearestMarker!.position , zoom: self.mapView.camera.zoom))
+                            CATransaction.commit()
+                            CATransaction.setCompletionBlock({
+                                self.reloadNeeded = false
+                                self.mapView.selectedMarker = nearestMarker!
+                            })
+                            
+                            DispatchQueue.main.asyncAfter(deadline: .now()+0.5, execute: {
+                                if nearestMarker?.userData is KPDataModel {
+                                    self.isCollectionViewShow = true
+                                } else {
+                                    self.mapView.animate(toZoom: self.mapView.camera.zoom+1)
+                                }
+                            })
+                        }
                     }
-                }
+                })
 
             }
         }
@@ -419,7 +423,7 @@ KPMainViewControllerDelegate {
         
         self.currentDataModel = self.displayDataModel[Int(index)]
 
-        if let renderer = clusterRenderer as? GMUDefaultClusterRenderer,
+        if let renderer = clusterRenderer,
             let marker = renderer.markers().filter({ (marker) -> Bool in
                 marker.userData as? KPDataModel == self.currentDataModel
             }).first {
@@ -492,6 +496,24 @@ KPMainViewControllerDelegate {
                                                           zoom: self.mapView.camera.zoom + 1))
         CATransaction.commit()
         return true
+    }
+    
+    
+    func renderer(_ renderer: GMUClusterRenderer, didRenderMarker marker: GMSMarker) {
+        if let model = marker.userData as? KPDataModel {
+            if let averageRate = model.averageRate,
+                averageRate.doubleValue >= 4.5 {
+                marker.iconView = UIImageView(image: R.image.icon_mapMarkerSelected())
+            } else {
+                marker.iconView = UIImageView(image: R.image.icon_mapMarker())
+            }
+            
+            if model.businessHour == nil || model.businessHour.isOpening == true {
+                marker.iconView?.alpha = 1
+            } else {
+                marker.iconView?.alpha = 0.6
+            }
+        }
     }
     
     

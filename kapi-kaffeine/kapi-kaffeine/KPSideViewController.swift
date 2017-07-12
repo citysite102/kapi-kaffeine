@@ -409,7 +409,7 @@ extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
                 let regionContent = regionContents[regionIndex]
                 let cityName = regionContent?.cityKeys[indexPath.row-regionIndex-1]
                 mainController.mainListViewController?.dataLoading = true
-                mainController.displayDataModel = KPFilter.filterData(source: KPMainViewController.allDataModel,
+                mainController.displayDataModel = KPFilter.filterData(source: KPServiceHandler.sharedHandler.currentCafeDatas,
                                                                       withCity: cityName!)
                 mainController.searchHeaderView.titleLabel.text = regionContent?.cities[indexPath.row-regionIndex-1]
                 dismiss(animated: true, completion: nil)
