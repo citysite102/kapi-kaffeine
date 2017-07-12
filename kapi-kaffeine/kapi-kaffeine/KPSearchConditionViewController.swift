@@ -58,7 +58,6 @@ class KPSearchConditionViewController: KPViewController {
     var timeRadioBoxTwo: KPCheckView!
     var timeRadioBoxThree: KPCheckView!
     
-    
     var socketLabel: UILabel!
     var socketRadioBoxOne: KPCheckView!
     var socketRadioBoxTwo: KPCheckView!
@@ -77,6 +76,7 @@ class KPSearchConditionViewController: KPViewController {
         return view
     }()
     
+    var searchButtonContainer: UIView!
     var searchButton: UIButton!
     
     func buttonWithTitle(title: String) -> UIButton {
@@ -94,6 +94,7 @@ class KPSearchConditionViewController: KPViewController {
         button.layer.cornerRadius = 18.0
         button.layer.borderWidth = 1.0
         button.layer.borderColor = KPColorPalette.KPMainColor.mainColor?.cgColor
+        button.layer.masksToBounds = true
         return button
     }
     
@@ -147,27 +148,36 @@ class KPSearchConditionViewController: KPViewController {
         quickSettingLabel = titleLabel("使用快速設定")
         containerView.addSubview(quickSettingLabel)
         quickSettingLabel.addConstraints(fromStringArray: ["H:|-16-[$self]",
-                                                                "V:|-16-[$self]"])
+                                                           "V:|-16-[$self]"])
         
         quickSettingButtonOne = buttonWithTitle(title: "適合讀書工作")
+        quickSettingButtonOne.addTarget(self,
+                                        action: #selector(handleQuickSettingButtonOnTap(_:)),
+                                        for: .touchUpInside)
         quickSettingButtonTwo = buttonWithTitle(title: "C/P值高")
+        quickSettingButtonTwo.addTarget(self,
+                                        action: #selector(handleQuickSettingButtonOnTap(_:)),
+                                        for: .touchUpInside)
         quickSettingButtonThree = buttonWithTitle(title: "平均四分")
+        quickSettingButtonThree.addTarget(self,
+                                          action: #selector(handleQuickSettingButtonOnTap(_:)),
+                                          for: .touchUpInside)
         containerView.addSubview(quickSettingButtonOne)
         containerView.addSubview(quickSettingButtonTwo)
         containerView.addSubview(quickSettingButtonThree)
         
         quickSettingButtonOne.addConstraints(fromStringArray: ["H:|-16-[$self(110)]",
-                                                                    "V:[$view0]-8-[$self(36)]"],
+                                                               "V:[$view0]-8-[$self(36)]"],
                                                   views: [quickSettingLabel])
         quickSettingButtonTwo.addConstraints(fromStringArray: ["H:[$view1]-8-[$self(80)]",
-                                                                    "V:[$view0]-8-[$self(36)]"],
+                                                               "V:[$view0]-8-[$self(36)]"],
                                                   views: [quickSettingLabel, quickSettingButtonOne])
         quickSettingButtonThree.addConstraints(fromStringArray: ["H:[$view1]-8-[$self(80)]",
-                                                                      "V:[$view0]-8-[$self(36)]"],
+                                                                 "V:[$view0]-8-[$self(36)]"],
                                                     views: [quickSettingLabel, quickSettingButtonTwo])
         containerView.addSubview(seperator_one)
         seperator_one.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                            "V:[$view0]-16-[$self(1)]"],
+                                                       "V:[$view0]-16-[$self(1)]"],
                                           views: [quickSettingButtonOne])
         
         
@@ -175,7 +185,7 @@ class KPSearchConditionViewController: KPViewController {
         adjustPointLabel = titleLabel("調整分數至你的需求")
         containerView.addSubview(adjustPointLabel)
         adjustPointLabel.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
-                                                               "V:[$view0]-16-[$self]"],
+                                                          "V:[$view0]-16-[$self]"],
                                              views: [seperator_one])
         
         for (index, title) in ratingTitles.enumerated() {
@@ -200,7 +210,7 @@ class KPSearchConditionViewController: KPViewController {
         
         containerView.addSubview(seperator_two)
         seperator_two.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                            "V:[$view0]-16-[$self(1)]"],
+                                                       "V:[$view0]-16-[$self(1)]"],
                                           views: [ratingViews.last!])
         
         
@@ -208,22 +218,23 @@ class KPSearchConditionViewController: KPViewController {
         timeLimitLabel = titleLabel("有無時間限制")
         containerView.addSubview(timeLimitLabel)
         timeLimitLabel.addConstraints(fromStringArray: ["H:|-16-[$self]",
-                                                             "V:[$view0]-16-[$self]"],
+                                                        "V:[$view0]-16-[$self]"],
                                            views: [seperator_two])
         timeRadioBoxOne = KPCheckView(.radio, "不設定")
+        timeRadioBoxOne.checkBox.checkState = .checked
         containerView.addSubview(timeRadioBoxOne)
         timeRadioBoxOne.addConstraints(fromStringArray: ["H:|-16-[$self]",
-                                                              "V:[$view0]-16-[$self]"],
+                                                         "V:[$view0]-16-[$self]"],
                                             views: [timeLimitLabel])
         timeRadioBoxTwo = KPCheckView(.radio, "客滿/人多限時")
         containerView.addSubview(timeRadioBoxTwo)
         timeRadioBoxTwo.addConstraints(fromStringArray: ["H:|-16-[$self]",
-                                                              "V:[$view0]-16-[$self]"],
+                                                         "V:[$view0]-16-[$self]"],
                                             views: [timeRadioBoxOne])
         timeRadioBoxThree = KPCheckView(.radio, "不限時")
         containerView.addSubview(timeRadioBoxThree)
         timeRadioBoxThree.addConstraints(fromStringArray: ["H:|-16-[$self]",
-                                                                "V:[$view0]-16-[$self]"],
+                                                           "V:[$view0]-16-[$self]"],
                                               views: [timeRadioBoxTwo])
         
         timeRadioBoxOne.checkBox.deselectCheckBoxs = [timeRadioBoxTwo.checkBox,
@@ -236,26 +247,27 @@ class KPSearchConditionViewController: KPViewController {
         socketLabel = titleLabel("插座數量")
         containerView.addSubview(socketLabel)
         socketLabel.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",
-                                                          "V:[$view0]-16-[$self]"],
+                                                     "V:[$view0]-16-[$self]"],
                                         metrics:[KPSearchConditionViewControllerConstants.leftPadding],
                                         views: [seperator_two])
         
         socketRadioBoxOne = KPCheckView(.radio, "不設定")
+        socketRadioBoxOne.checkBox.checkState = .checked
         containerView.addSubview(socketRadioBoxOne)
         socketRadioBoxOne.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",
-                                                                "V:[$view0]-16-[$self]"],
+                                                           "V:[$view0]-16-[$self]"],
                                               metrics:[KPSearchConditionViewControllerConstants.leftPadding],
                                               views: [socketLabel])
         socketRadioBoxTwo = KPCheckView(.radio, "部分座位有")
         containerView.addSubview(socketRadioBoxTwo)
         socketRadioBoxTwo.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",
-                                                                "V:[$view0]-16-[$self]"],
+                                                           "V:[$view0]-16-[$self]"],
                                               metrics:[KPSearchConditionViewControllerConstants.leftPadding],
                                               views: [socketRadioBoxOne])
         socketRadioBoxThree = KPCheckView(.radio, "很多插座")
         containerView.addSubview(socketRadioBoxThree)
         socketRadioBoxThree.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",
-                                                                  "V:[$view0]-16-[$self]"],
+                                                             "V:[$view0]-16-[$self]"],
                                                 metrics:[KPSearchConditionViewControllerConstants.leftPadding],
                                                 views: [socketRadioBoxTwo])
         
@@ -269,19 +281,20 @@ class KPSearchConditionViewController: KPViewController {
         businessHourLabel = titleLabel("營業時間")
         containerView.addSubview(businessHourLabel)
         businessHourLabel.addConstraints(fromStringArray: ["H:|-16-[$self]",
-                                                                "V:[$view0]-24-[$self]"],
+                                                           "V:[$view0]-24-[$self]"],
                                               views: [timeRadioBoxThree])
         
         businessCheckBoxOne = KPCheckView(.radio, "目前營業中")
+        businessCheckBoxOne.checkBox.checkState = .checked
         containerView.addSubview(businessCheckBoxOne)
         businessCheckBoxOne.addConstraints(fromStringArray: ["H:|-16-[$self]",
-                                                                  "V:[$view0]-16-[$self]"],
+                                                             "V:[$view0]-16-[$self]"],
                                                 views: [businessHourLabel])
         
         businessCheckBoxTwo = KPCheckView(.radio, "特定營業時段")
         containerView.addSubview(businessCheckBoxTwo)
         businessCheckBoxTwo.addConstraints(fromStringArray: ["H:|-16-[$self]",
-                                                                  "V:[$view0]-16-[$self]"],
+                                                             "V:[$view0]-16-[$self]-88-|"],
                                                 views: [businessCheckBoxOne])
         
         businessCheckBoxOne.checkBox.deselectCheckBoxs = [businessCheckBoxTwo.checkBox]
@@ -289,32 +302,38 @@ class KPSearchConditionViewController: KPViewController {
         othersLabel = titleLabel("其他選項")
         containerView.addSubview(othersLabel)
         othersLabel.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",
-                                                          "V:[$view0]-24-[$self]"],
+                                                     "V:[$view0]-24-[$self]"],
                                         metrics:[KPSearchConditionViewControllerConstants.leftPadding],
                                         views: [timeRadioBoxThree])
         othersCheckBoxOne = KPCheckView(.checkmark, "可站立工作")
         containerView.addSubview(othersCheckBoxOne)
         othersCheckBoxOne.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",
-                                                                "V:[$view0]-16-[$self]"],
+                                                           "V:[$view0]-16-[$self]"],
                                               metrics:[KPSearchConditionViewControllerConstants.leftPadding],
                                               views: [othersLabel])
         
-        containerView.addSubview(seperator_three)
+        
+        searchButtonContainer = UIView()
+        searchButtonContainer.backgroundColor = UIColor.white
+        view.addSubview(searchButtonContainer)
+        searchButtonContainer.addConstraints(fromStringArray: ["V:[$self]|",
+                                                               "H:|[$self]|"])
+        searchButtonContainer.addSubview(seperator_three)
         seperator_three.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                              "V:[$view0]-16-[$self(1)]"],
-                                            views: [businessCheckBoxTwo])
+                                                         "V:|[$self(1)]"],
+                                       views: [businessCheckBoxTwo])
         
         searchButton = UIButton()
         searchButton.setTitle("開始搜尋", for: .normal)
         searchButton.setTitleColor(UIColor.white, for: .normal)
         searchButton.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor.mainColor!),
-                                             for: .normal)
+                                                for: .normal)
         searchButton.layer.cornerRadius = 4.0
         searchButton.layer.masksToBounds = true
         searchButton.titleLabel?.font = UIFont.systemFont(ofSize: 15.0)
-        containerView.addSubview(searchButton)
+        searchButtonContainer.addSubview(searchButton)
         searchButton.addConstraints(fromStringArray: ["V:[$view0]-16-[$self(40)]-16-|",
-                                                           "H:|-16-[$self]-16-|"],
+                                                      "H:|-16-[$self]-16-|"],
                                          views: [seperator_three])
         searchButton.addTarget(self, action: #selector(showTimePicker), for: .touchUpInside)
     }
@@ -322,9 +341,9 @@ class KPSearchConditionViewController: KPViewController {
     func showTimePicker() {
         let controller = KPModalViewController()
         controller.edgeInset = UIEdgeInsets(top: 32,
-                                                 left: 0,
-                                                 bottom: 0,
-                                                 right: 0)
+                                            left: 0,
+                                            bottom: 0,
+                                            right: 0)
         let timePickerController = KPBusinessHourViewController()
         controller.contentController = timePickerController
         controller.cornerRadius = [.topRight, .topLeft]
@@ -339,5 +358,43 @@ class KPSearchConditionViewController: KPViewController {
     func handleDismissButtonOnTapped() {
         appModalController()?.dismissControllerWithDefaultDuration()
     }
+    
+    func handleQuickSettingButtonOnTap(_ sender: UIButton) {
+        if sender == quickSettingButtonOne {
+            quickSettingButtonOne.isSelected = true
+            quickSettingButtonTwo.isSelected = false
+            quickSettingButtonThree.isSelected = false
+            ratingViews[0].currentRate = 4
+            ratingViews[1].currentRate = 3
+            ratingViews[2].currentRate = 3
+            ratingViews[3].currentRate = 4
+            ratingViews[4].currentRate = 3
+            ratingViews[5].currentRate = 3
+            ratingViews[6].currentRate = 4
+        } else if sender == quickSettingButtonTwo {
+            quickSettingButtonOne.isSelected = false
+            quickSettingButtonTwo.isSelected = true
+            quickSettingButtonThree.isSelected = false
+            ratingViews[0].currentRate = 3
+            ratingViews[1].currentRate = 3
+            ratingViews[2].currentRate = 4
+            ratingViews[3].currentRate = 3
+            ratingViews[4].currentRate = 4
+            ratingViews[5].currentRate = 3
+            ratingViews[6].currentRate = 4
+        } else if sender == quickSettingButtonThree {
+            quickSettingButtonOne.isSelected = false
+            quickSettingButtonTwo.isSelected = false
+            quickSettingButtonThree.isSelected = true
+            ratingViews[0].currentRate = 4
+            ratingViews[1].currentRate = 4
+            ratingViews[2].currentRate = 4
+            ratingViews[3].currentRate = 4
+            ratingViews[4].currentRate = 4
+            ratingViews[5].currentRate = 4
+            ratingViews[6].currentRate = 4
+        }
+    }
+    
 
 }

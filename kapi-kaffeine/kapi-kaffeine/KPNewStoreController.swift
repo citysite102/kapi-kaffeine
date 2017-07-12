@@ -316,6 +316,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
         timeLimitLabel.addConstraints(fromStringArray: ["H:|-16-[$self]",
                                                         "V:|-16-[$self]"])
         timeRadioBoxOne = KPCheckView(.radio, "不設定")
+        timeRadioBoxOne.checkBox.checkState = .checked
         sectionTwoContainer.addSubview(timeRadioBoxOne)
         timeRadioBoxOne.addConstraints(fromStringArray: ["H:|-16-[$self]",
                                                          "V:[$view0]-16-[$self]"],
@@ -331,6 +332,13 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
                                                            "V:[$view0]-16-[$self]"],
                                          views: [timeRadioBoxTwo])
         
+        timeRadioBoxOne.checkBox.deselectCheckBoxs = [timeRadioBoxTwo.checkBox,
+                                                      timeRadioBoxThree.checkBox]
+        timeRadioBoxTwo.checkBox.deselectCheckBoxs = [timeRadioBoxOne.checkBox,
+                                                      timeRadioBoxThree.checkBox]
+        timeRadioBoxThree.checkBox.deselectCheckBoxs = [timeRadioBoxTwo.checkBox,
+                                                        timeRadioBoxOne.checkBox]
+        
         socketLabel = headerLabel("插座數量")
         sectionTwoContainer.addSubview(socketLabel)
         socketLabel.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",
@@ -338,6 +346,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
                                    metrics:[KPNewStoreControllerConstants.leftPadding])
         
         socketRadioBoxOne = KPCheckView(.radio, "不設定")
+        socketRadioBoxOne.checkBox.checkState = .checked
         sectionTwoContainer.addSubview(socketRadioBoxOne)
         socketRadioBoxOne.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",
                                                            "V:[$view0]-16-[$self]"],
@@ -356,6 +365,12 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
                                            metrics:[KPNewStoreControllerConstants.leftPadding],
                                            views: [socketRadioBoxTwo])
         
+        socketRadioBoxOne.checkBox.deselectCheckBoxs = [socketRadioBoxTwo.checkBox,
+                                                        socketRadioBoxThree.checkBox]
+        socketRadioBoxTwo.checkBox.deselectCheckBoxs = [socketRadioBoxOne.checkBox,
+                                                        socketRadioBoxThree.checkBox]
+        socketRadioBoxThree.checkBox.deselectCheckBoxs = [socketRadioBoxOne.checkBox,
+                                                          socketRadioBoxTwo.checkBox]
         
         addressSubTitleView = KPSubTitleEditView(.Both,
                                                  .Edited,
@@ -385,7 +400,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
         facebookSubTitleView.editTextField.delegate = self
         sectionTwoContainer.addSubview(facebookSubTitleView)
         facebookSubTitleView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                              "V:[$view0][$self(72)]|"],
+                                                              "V:[$view0][$self(72)]-16-|"],
                                          views: [phoneSubTitleView])
         
         

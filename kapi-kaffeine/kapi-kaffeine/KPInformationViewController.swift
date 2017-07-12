@@ -158,7 +158,6 @@ class KPInformationViewController: KPViewController {
         actionController.addAction(reportButton)
         actionController.addAction(cancelButton)
 
-        
         scrollContainer = UIScrollView()
         scrollContainer.backgroundColor = KPColorPalette.KPMainColor.grayColor_level7
         scrollContainer.delegate = self
@@ -359,21 +358,21 @@ class KPInformationViewController: KPViewController {
                                                             self.navigationController?.pushViewController(viewController: commentViewController,
                                                                                                           animated: true,
                                                                                                           completion: {})
-            }),
-                                                    Action(title:"我要評價",
-                                                           style:.normal,
-                                                           color:KPColorPalette.KPMainColor.mainColor!,
-                                                           icon:(R.image.icon_comment()?.withRenderingMode(.alwaysTemplate))!,
-                                                           handler:{ [unowned self] (infoView) -> () in
-                                                            if KPUserManager.sharedManager.currentUser == nil {
-                                                                KPPopoverView.popoverLoginView()
-                                                            } else {
-                                                                let newCommentViewController = KPNewCommentController()
-                                                                self.navigationController?.pushViewController(viewController: newCommentViewController,
-                                                                                                              animated: true,
-                                                                                                              completion: {})
-                                                            }
-                                                    })
+                                                }),
+                                              Action(title:"我要評價",
+                                                     style:.normal,
+                                                     color:KPColorPalette.KPMainColor.mainColor!,
+                                                     icon:(R.image.icon_comment()?.withRenderingMode(.alwaysTemplate))!,
+                                                     handler:{ [unowned self] (infoView) -> () in
+                                                        if KPUserManager.sharedManager.currentUser == nil {
+                                                            KPPopoverView.popoverLoginView()
+                                                        } else {
+                                                            let newCommentViewController = KPNewCommentController()
+                                                            self.navigationController?.pushViewController(viewController: newCommentViewController,
+                                                                                                          animated: true,
+                                                                                                          completion: {})
+                                                        }
+                                              })
             ]
         }
         
