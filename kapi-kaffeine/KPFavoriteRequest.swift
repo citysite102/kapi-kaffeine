@@ -40,7 +40,7 @@ class KPFavoriteRequest: NetworkRequest {
     
     var headers: [String : String] {
         return ["Content-Type": "application/json",
-                "token": (KPUserManager.sharedManager.currentUser?.accessToken)!]
+                "token": (KPUserManager.sharedManager.currentUser?.accessToken) ?? ""]
     }
     
     

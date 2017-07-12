@@ -30,13 +30,6 @@ class KPNewCommentRequest: NetworkRequest {
         return parameters
     }
     
-    
-    var headers: [String : String] {
-        return ["token": (KPUserManager.sharedManager.currentUser?.accessToken)!]
-    }
-    
-    
-    
     public func perform(_ cafeID: String,
                         _ content: String) -> Promise<(ResponseType)> {
         self.cafeID = cafeID

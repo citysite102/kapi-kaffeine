@@ -46,10 +46,6 @@ class KPCafeRequest: NetworkRequest {
     
     var method: Alamofire.HTTPMethod { return .get }
     
-//    var headers: [String : String] {
-//        return ["token": (KPUserManager.sharedManager.currentUser?.accessToken)!]
-//    }
-    
     
     public func perform(_ limitedTime: NSNumber? = nil,
                         _ socket: NSNumber? = nil,

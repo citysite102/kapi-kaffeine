@@ -35,7 +35,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         SDKApplicationDelegate.shared.application(application,
                                                   didFinishLaunchingWithOptions: launchOptions)
         
-        
         // Firebase
         FirebaseApp.configure()
         
@@ -44,6 +43,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Crashlytics
         Fabric.with([Crashlytics.self])
+        
+        // Remove Login cancel
+        UserDefaults.standard.set(false,
+                                  forKey: AppConstant.cancelLogInKey)
         
         // Navigation Custom Settings
         let navigationBarAppearace = UINavigationBar.appearance()

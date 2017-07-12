@@ -77,6 +77,9 @@ class KPLoginViewController: KPViewController {
     
     func skipButtonOnTapped(_ sender: UIButton) {
         
+        UserDefaults.standard.set(true,
+                                  forKey: AppConstant.cancelLogInKey)
+        
         if appModalController() != nil {
             appModalController()?.dismissControllerWithDefaultDuration()
         } else {

@@ -41,10 +41,6 @@ class KPNewRatingRequest: NetworkRequest {
         return parameters
     }
     
-    var headers: [String : String] {
-        return ["token": (KPUserManager.sharedManager.currentUser?.accessToken)!]
-    }
-    
     public func perform(_ cafeID: String,
                         _ wifi: NSNumber? = 0,
                         _ seat: NSNumber? = 0,

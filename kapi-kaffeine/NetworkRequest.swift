@@ -78,7 +78,7 @@ extension NetworkRequest {
     
     public var parameters: [String : AnyObject] { return [:] }
     public var headers: [String : String] {
-        return [:]
+        return ["token": (KPUserManager.sharedManager.currentUser?.accessToken) ?? ""]
     }
     
     public var networkClient: NetworkClientType { return NetworkClient() }

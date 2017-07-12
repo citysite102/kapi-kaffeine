@@ -161,10 +161,10 @@ class KPInformationHeaderButtonBar: UIView {
                                                         }
         })
         
-        collectButton.selected = (KPUserManager.sharedManager.currentUser?.hasFavorited(self.informationDataModel.identifier))!
-        visitButton.selected = (KPUserManager.sharedManager.currentUser?.hasVisited(self.informationDataModel.identifier))!
-        rateButton.selected = (KPUserManager.sharedManager.currentUser?.hasRated(self.informationDataModel.identifier))!
-        commentButton.selected = (KPUserManager.sharedManager.currentUser?.hasReviewed(self.informationDataModel.identifier))!
+        collectButton.selected = (KPUserManager.sharedManager.currentUser?.hasFavorited(self.informationDataModel.identifier)) ?? false
+        visitButton.selected = (KPUserManager.sharedManager.currentUser?.hasVisited(self.informationDataModel.identifier)) ?? false
+        rateButton.selected = (KPUserManager.sharedManager.currentUser?.hasRated(self.informationDataModel.identifier)) ?? false
+        commentButton.selected = (KPUserManager.sharedManager.currentUser?.hasReviewed(self.informationDataModel.identifier)) ?? false
         
     }
     override init(frame: CGRect) {

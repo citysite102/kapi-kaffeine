@@ -288,21 +288,26 @@ class KPInformationViewController: KPViewController {
                                                    icon:(R.image.icon_star()?.withRenderingMode(.alwaysTemplate))!,
                                                    handler:{ [unowned self] (infoView) -> () in
                                                     
-                                                    let controller = KPModalViewController()
-                                                    controller.edgeInset = UIEdgeInsets(top: UIDevice().isCompact ? 16 : 48,
-                                                                                        left: 0,
-                                                                                        bottom: 0,
-                                                                                        right: 0)
-                                                    controller.cornerRadius = [.topRight, .topLeft]
-                                                    let ratingViewController = KPRatingViewController()
-                                                    
-                                                    if ((KPUserManager.sharedManager.currentUser?.hasRated) != nil) {
-                                                        if let rate = self.informationDataModel.rates?.rates?.first(where: {$0.memberID == KPUserManager.sharedManager.currentUser?.identifier}) {
-                                                            ratingViewController.defaultRateModel = rate
+                                                    if KPUserManager.sharedManager.currentUser == nil {
+                                                        KPPopoverView.popoverLoginView()
+                                                    } else {
+                                                        let controller = KPModalViewController()
+                                                        controller.edgeInset = UIEdgeInsets(top: UIDevice().isCompact ? 16 : 48,
+                                                                                            left: 0,
+                                                                                            bottom: 0,
+                                                                                            right: 0)
+                                                        controller.cornerRadius = [.topRight, .topLeft]
+                                                        let ratingViewController = KPRatingViewController()
+                                                        
+                                                        if ((KPUserManager.sharedManager.currentUser?.hasRated) != nil) {
+                                                            if let rate = self.informationDataModel.rates?.rates?.first(where:
+                                                                {$0.memberID == KPUserManager.sharedManager.currentUser?.identifier}) {
+                                                                ratingViewController.defaultRateModel = rate
+                                                            }
                                                         }
+                                                        controller.contentController = ratingViewController
+                                                        controller.presentModalView()
                                                     }
-                                                    controller.contentController = ratingViewController
-                                                    controller.presentModalView()
         })]
         scrollContainer.addSubview(rateInformationView)
         rateInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
@@ -326,10 +331,19 @@ class KPInformationViewController: KPViewController {
                                                      color:KPColorPalette.KPMainColor.mainColor!,
                                                      icon:(R.image.icon_comment()?.withRenderingMode(.alwaysTemplate))!,
                                                      handler:{ [unowned self] (infoView) -> () in
-                                                        let newCommentViewController = KPNewCommentController()
-                                                        self.navigationController?.pushViewController(viewController: newCommentViewController,
-                                                                                                      animated: true,
-                                                                                                      completion: {})
+                                                        
+                                                        if KPUserManager.sharedManager.currentUser == nil {
+                                                            KPPopoverView.popoverLoginView()
+                                                        } else {
+                                                            if KPUserManager.sharedManager.currentUser == nil {
+                                                                KPPopoverView.popoverLoginView()
+                                                            } else {
+                                                                let newCommentViewController = KPNewCommentController()
+                                                                self.navigationController?.pushViewController(viewController: newCommentViewController,
+                                                                                                              animated: true,
+                                                                                                              completion: {})
+                                                            }
+                                                        }
                                               })
             ]
         } else {
@@ -351,10 +365,14 @@ class KPInformationViewController: KPViewController {
                                                            color:KPColorPalette.KPMainColor.mainColor!,
                                                            icon:(R.image.icon_comment()?.withRenderingMode(.alwaysTemplate))!,
                                                            handler:{ [unowned self] (infoView) -> () in
-                                                            let newCommentViewController = KPNewCommentController()
-                                                            self.navigationController?.pushViewController(viewController: newCommentViewController,
-                                                                                                          animated: true,
-                                                                                                          completion: {})
+                                                            if KPUserManager.sharedManager.currentUser == nil {
+                                                                KPPopoverView.popoverLoginView()
+                                                            } else {
+                                                                let newCommentViewController = KPNewCommentController()
+                                                                self.navigationController?.pushViewController(viewController: newCommentViewController,
+                                                                                                              animated: true,
+                                                                                                              completion: {})
+                                                            }
                                                     })
             ]
         }
@@ -373,7 +391,11 @@ class KPInformationViewController: KPViewController {
                                                    color:KPColorPalette.KPMainColor.mainColor!,
                                                    icon:(R.image.icon_map()?.withRenderingMode(.alwaysTemplate))!,
                                                    handler:{(infoView) -> () in
-                                                    print("Photo button 1 Tapped")
+                                                    if KPUserManager.sharedManager.currentUser == nil {
+                                                        KPPopoverView.popoverLoginView()
+                                                    } else {
+                                                        print("Photo button 1 Tapped")
+                                                    }
         })]
         
         let shopRecommendView = KPShopRecommendView()
@@ -428,7 +450,6 @@ class KPInformationViewController: KPViewController {
     func syncRemoteData() {
         
         dataLoading = true
-        
         KPServiceHandler.sharedHandler.fetchStoreInformation(informationDataModel.identifier) {
             (result) in
             self.informationHeaderButtonBar.informationDataModel = result
@@ -439,12 +460,13 @@ class KPInformationViewController: KPViewController {
         KPServiceHandler.sharedHandler.getComments { (successed, comments) in
             if successed && comments != nil {
                 self.commentInfoView.comments = comments!
-                self.commentInformationView.setNeedsLayout()
-                self.commentInformationView.layoutIfNeeded()
-                
-                let commentInfoView = self.commentInformationView.infoView as! KPShopCommentInfoView
-                commentInfoView.tableViewHeightConstraint.constant = commentInfoView.tableView.contentSize.height
             }
+            
+            self.commentInformationView.setNeedsLayout()
+            self.commentInformationView.layoutIfNeeded()
+            
+            let commentInfoView = self.commentInformationView.infoView as! KPShopCommentInfoView
+            commentInfoView.tableViewHeightConstraint.constant = commentInfoView.tableView.contentSize.height
         }
         
         // 取得 Rating 資料

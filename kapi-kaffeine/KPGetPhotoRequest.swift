@@ -23,10 +23,6 @@ class KPGetPhotoRequest: NetworkRequest {
         return parameters
     }
     
-    var headers: [String : String] {
-        return ["token": (KPUserManager.sharedManager.currentUser?.accessToken)!]
-    }
-    
     public func perform(_ cafeID: String) -> Promise<(ResponseType)> {
         self.cafeID = cafeID
         return  networkClient.performRequest(self).then(execute: responseHandler)

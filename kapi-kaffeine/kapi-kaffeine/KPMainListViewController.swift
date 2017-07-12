@@ -242,7 +242,7 @@ extension KPMainListViewController: UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataLoading ? 8 : 20//displayDataModel.count
+        return dataLoading ? 8 : displayDataModel.count
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

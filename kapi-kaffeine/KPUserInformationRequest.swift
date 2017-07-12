@@ -52,10 +52,6 @@ class KPUserInformationRequest: NetworkRequest {
             .get :
             .put }
     
-    var headers: [String : String] {
-        return ["token": (KPUserManager.sharedManager.currentUser?.accessToken)!]
-    }
-    
     public func perform(_ displayName: String?,
                         _ photoURL: String?,
                         _ defaultLocation: String?,

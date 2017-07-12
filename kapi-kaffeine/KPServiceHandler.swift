@@ -199,8 +199,8 @@ class KPServiceHandler {
         
         let getRatingRequest = KPGetRatingRequest()
         getRatingRequest.perform((currentDisplayModel?.identifier)!).then { result -> Void in
-            if let ratingResult = KPRateDataModel(JSON: result["data"].dictionaryObject!) {
-                completion?(true, ratingResult)
+            if let ratingResult = result["data"].dictionaryObject {
+                completion?(true, KPRateDataModel(JSON: ratingResult))
             }
             completion?(false, nil)
         }.catch { (error) in

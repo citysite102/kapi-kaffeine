@@ -119,7 +119,12 @@ class KPInformationHeaderButton: UIView {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
         performTouchEndAnimation()
-        handler(self)
+        
+        if KPUserManager.sharedManager.currentUser == nil {
+            KPPopoverView.popoverLoginView()
+        } else {
+            handler(self)
+        }
     }
     
     private func performTouchEndAnimation() {

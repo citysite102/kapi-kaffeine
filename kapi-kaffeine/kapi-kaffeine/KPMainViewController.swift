@@ -138,7 +138,7 @@ class KPMainViewController: KPViewController {
         super.viewDidAppear(animated)
     
         // 使用者第一次使用
-        if UserDefaults.standard.object(forKey: AppConstant.introShownKey) == nil {
+        if !UserDefaults.standard.bool(forKey: AppConstant.introShownKey) {
             
             UserDefaults.standard.set(true,
                                       forKey: AppConstant.introShownKey)
@@ -152,7 +152,8 @@ class KPMainViewController: KPViewController {
             self.present(introController, animated: true, completion: nil)
             
         } else {
-            if KPUserManager.sharedManager.currentUser == nil {
+            if KPUserManager.sharedManager.currentUser == nil &&
+                !UserDefaults.standard.bool(forKey: AppConstant.cancelLogInKey) {
                 let controller = KPModalViewController()
                 controller.edgeInset = UIEdgeInsets(top: 0,
                                                     left: 0,

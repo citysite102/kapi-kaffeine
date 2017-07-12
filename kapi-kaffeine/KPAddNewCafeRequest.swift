@@ -16,10 +16,6 @@ class KPAddNewCafeRequest: NetworkUploadRequest {
     var parameters: [String : Any]? {
         return nil
     }
-    var headers: [String : String] {
-        return ["token": (KPUserManager.sharedManager.currentUser?.accessToken)!]
-    }
-    
     
     private var name: String?
     private var address: String?

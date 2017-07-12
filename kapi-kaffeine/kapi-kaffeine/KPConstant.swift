@@ -87,6 +87,7 @@ struct KPFactorConstant {
 
 struct AppConstant {
     static let introShownKey = "KPIntroHasShownKey"
+    static let cancelLogInKey = "KPCancelLogInKey"
     static let userDefaultsSuitName = "kapi-userdefault"
 }
 
