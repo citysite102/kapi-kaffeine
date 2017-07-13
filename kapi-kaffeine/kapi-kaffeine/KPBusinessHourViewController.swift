@@ -93,7 +93,7 @@ class KPBusinessHourViewController: KPSharedSettingViewController, KPTimePickerD
         
         sendButton.setTitle("確認送出", for: .normal)
         sendButton.addTarget(self,
-                             action: #selector(KPCountrySelectController.handleSendButtonOnTapped),
+                             action: #selector(handleSendButtonOnTapped),
                              for: .touchUpInside)
         
     }
@@ -149,6 +149,15 @@ class KPBusinessHourViewController: KPSharedSettingViewController, KPTimePickerD
     }
     
     func handleSendButtonOnTapped() {
+        var value: [String: String] = [:]
+        for (index, checkBoxView) in checkBoxViews.enumerated() {
+            if checkBoxView.checkBox.checkState == .checked {
+                let dayShortHands = KPDataBusinessHourModel.getShortHands(withDay: checkBoxView.titleLabel.text!).rawValue
+                value["\(dayShortHands)_1_open"] = self.startTimeButtons[index].titleLabel?.text
+                value["\(dayShortHands)_1_close"] = self.endTimeButtons[index].titleLabel?.text
+            }
+        }
+        setValue = value
         delegate?.sendButtonTapped(self)
         appModalController()?.dismissControllerWithDefaultDuration()
     }

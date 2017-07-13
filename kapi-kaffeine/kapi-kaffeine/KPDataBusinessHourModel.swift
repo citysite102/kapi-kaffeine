@@ -120,39 +120,45 @@ class KPDataBusinessHourModel: NSObject {
     }
     
     func getTimeString(withDay day: String) -> String {
-        var timeArray: [(startHour: String, endHour: String)]
-        switch day {
-        case "星期一":
-            timeArray = businessTime[KPDay.Monday]!
-            break
-        case "星期二":
-            timeArray = businessTime[KPDay.Tuesday]!
-            break
-        case "星期三":
-            timeArray = businessTime[KPDay.Wednesday]!
-            break
-        case "星期四":
-            timeArray = businessTime[KPDay.Thursday]!
-            break
-        case "星期五":
-            timeArray = businessTime[KPDay.Friday]!
-            break
-        case "星期六":
-            timeArray = businessTime[KPDay.Saturday]!
-            break
-        case "星期日":
-            timeArray = businessTime[KPDay.Sunday]!
-            break
-        default:
-            fatalError()
-            break
-        }
-        
+        let timeArray = businessTime[KPDataBusinessHourModel.getShortHands(withDay: day)]
         var result = ""
-        for (start, end) in timeArray {
+        for (start, end) in timeArray! {
             result += "\(start)~\(end)\t"
         }
         return result == "" ? "休息" : result
+    }
+    
+    static func getShortHands(withDay day: String) -> KPDay {
+        
+        if day == "星期一" {
+            return KPDay.Monday
+        } else if day == "星期二" {
+            return KPDay.Tuesday
+        } else if day == "星期三" {
+            return KPDay.Wednesday
+        } else if day == "星期四" {
+            return KPDay.Thursday
+        } else if day == "星期五" {
+            return KPDay.Friday
+        } else if day == "星期六" {
+            return KPDay.Saturday
+        } else if day == "星期日" {
+            return KPDay.Sunday
+        } else {
+            fatalError()
+        }
+        
+    }
+    
+    func getOutputData() -> [String: String] {
+        var output:[String:String] = [:]
+        for (key, value) in businessTime {
+            for (index, time) in value.enumerated() {
+                output["\(key.rawValue)_\(index)_open"] = time.startHour
+                output["\(key.rawValue)_\(index)_close"] = time.endHour
+            }
+        }
+        return output
     }
     
 }
