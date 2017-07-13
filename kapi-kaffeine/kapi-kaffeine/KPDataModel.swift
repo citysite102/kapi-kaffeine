@@ -18,9 +18,9 @@ class KPDataModel: NSObject, Mappable, GMUClusterItem {
     var city: String!
     var latitude: Double!
     var longitude: Double!
-    var standingDesk: String?
-    var socket: String?
-    var limitedTime: String?
+    var standingDesk: NSNumber?
+    var socket: NSNumber?
+    var limitedTime: NSNumber?
     var url: String?
     var facebookURL: String?
     var facebookID: String?

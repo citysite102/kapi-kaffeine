@@ -71,6 +71,7 @@ class KPMainViewController: KPViewController {
         searchHeaderView = KPSearchHeaderView()
         searchHeaderView.searchButton.isEnabled = false
         searchHeaderView.menuButton.isEnabled = false
+        searchHeaderView.searchTagView.delegate = self
         view.addSubview(searchHeaderView)
         searchHeaderView.addConstraints(fromStringArray: ["V:|[$self(100)]",
                                                           "H:|[$self]|"])
@@ -420,4 +421,39 @@ extension KPMainViewController: UIViewControllerTransitioningDelegate {
         UIViewControllerInteractiveTransitioning? {
             return self.percentDrivenTransition
     }
+}
+
+extension KPMainViewController: KPSearchTagViewDelegate {
+    
+    func searchTagDidSelect(_ searchTags: [searchTagType]) {
+        
+        var currentCafeDatas = KPServiceHandler.sharedHandler.currentCafeDatas
+        for searchTag in searchTags {
+            switch searchTag {
+            case .standDesk:
+                currentCafeDatas = currentCafeDatas?.filter {
+                    return $0.standingDesk?.intValue ?? 0 >= 3
+                }
+            case .socket:
+                currentCafeDatas = currentCafeDatas?.filter {
+                    return $0.socket?.intValue ?? 0 >= 3
+                }
+            case .limitTime:
+                currentCafeDatas = currentCafeDatas?.filter {
+                    return $0.limitedTime?.intValue ?? 0 >= 3
+                }
+            case .opening:
+                currentCafeDatas = currentCafeDatas?.filter {
+                    return $0.businessHour.shopStatus.isOpening == true
+                }
+            case .highRate:
+                currentCafeDatas = currentCafeDatas?.filter {
+                    return $0.averageRate?.doubleValue ?? 0.0 > 4.0
+                }
+            }
+        }
+        
+        displayDataModel = currentCafeDatas
+    }
+    
 }

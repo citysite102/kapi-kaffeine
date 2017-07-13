@@ -149,7 +149,7 @@ public class KPUserManager {
             
             self.currentUser =
                 Mapper<KPUser>().map(JSONObject: result["data"].dictionaryObject)
-            self.currentUser?.accessToken = token
+            self.currentUser?.accessToken = result["token"].string ?? token
             KPUserDefaults.accessToken = token
             self.storeUserInformation()
             

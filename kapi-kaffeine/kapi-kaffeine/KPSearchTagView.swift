@@ -8,20 +8,41 @@
 
 import UIKit
 
+enum searchTagType: String {
+//    case wifi       = "Wifi穩"
+    case socket     = "插座多"
+    case limitTime  = "不限時"
+    case opening    = "營業中"
+    case highRate   = "評分高"
+    case standDesk  = "有站桌"
+}
+
+protocol KPSearchTagViewDelegate: NSObjectProtocol {
+    func searchTagDidSelect(_ searchTags: [searchTagType])
+}
+
 class KPSearchTagView: UIView {
     
     static let KPSearchTagViewCellReuseIdentifier = "cell"
 
+    weak open var delegate: KPSearchTagViewDelegate?
+    
     var collectionView:UICollectionView!
     var collectionLayout:UICollectionViewFlowLayout!
     
     var preferenceHintView: UIView!
     var preferenceHintIcon: UIImageView!
     var preferenceHintLabel: UILabel!
-    var headerTagContents = ["Wifi穩", "插座多", "不限時", "營業中", "評分高"]
+    var currentSelectTags: [searchTagType]! = [searchTagType]()
+    var headerTagContents = [searchTagType.standDesk,
+                             searchTagType.socket,
+                             searchTagType.limitTime,
+                             searchTagType.opening,
+                             searchTagType.highRate]
     var headerTagImages = [R.image.icon_wifi(), R.image.icon_socket(),
                            R.image.icon_clock(), R.image.icon_door(),
                            R.image.icon_star()]
+
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -110,7 +131,7 @@ extension KPSearchTagView: UICollectionViewDelegate, UICollectionViewDataSource,
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: KPSearchTagView.KPSearchTagViewCellReuseIdentifier,
                                                       for: indexPath) as! KPSearchTagCell
-        cell.tagTitle.text = self.headerTagContents[indexPath.row]
+        cell.tagTitle.text = self.headerTagContents[indexPath.row].rawValue
         cell.tagIcon.image = self.headerTagImages[indexPath.row]
         cell.layer.cornerRadius = 2.0
         cell.layer.masksToBounds = true
@@ -121,20 +142,24 @@ extension KPSearchTagView: UICollectionViewDelegate, UICollectionViewDataSource,
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath)
+        currentSelectTags.append(headerTagContents[indexPath.row])
+        delegate?.searchTagDidSelect(currentSelectTags)
         cell?.alpha = 1.0
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath)
+        currentSelectTags.remove(at: currentSelectTags.index(of: headerTagContents[indexPath.row])!)
+        delegate?.searchTagDidSelect(currentSelectTags)
         cell?.alpha = 0.4
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let contentSize = NSString.init(string: self.headerTagContents[indexPath.row]).boundingRect(with: CGSize.init(width: Double.greatestFiniteMagnitude, height: 32),
-                                                                                                        options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 13)],
-                                                                                                        context: nil).size
+        let contentSize = NSString.init(string: self.headerTagContents[indexPath.row].rawValue).boundingRect(with: CGSize.init(width: Double.greatestFiniteMagnitude, height: 32),
+                                                                                                             options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 13)],
+                                                                                                             context: nil).size
 
         
         return CGSize.init(width: contentSize.width + 42, height: 32)
