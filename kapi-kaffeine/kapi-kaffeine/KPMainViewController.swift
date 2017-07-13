@@ -427,33 +427,40 @@ extension KPMainViewController: KPSearchTagViewDelegate {
     
     func searchTagDidSelect(_ searchTags: [searchTagType]) {
         
-        var currentCafeDatas = KPServiceHandler.sharedHandler.currentCafeDatas
-        for searchTag in searchTags {
-            switch searchTag {
-            case .standDesk:
-                currentCafeDatas = currentCafeDatas?.filter {
-                    return $0.standingDesk?.intValue ?? 0 >= 3
-                }
-            case .socket:
-                currentCafeDatas = currentCafeDatas?.filter {
-                    return $0.socket?.intValue ?? 0 >= 3
-                }
-            case .limitTime:
-                currentCafeDatas = currentCafeDatas?.filter {
-                    return $0.limitedTime?.intValue ?? 0 >= 3
-                }
-            case .opening:
-                currentCafeDatas = currentCafeDatas?.filter {
-                    return ($0.businessHour?.shopStatus.isOpening ?? false) == true
-                }
-            case .highRate:
-                currentCafeDatas = currentCafeDatas?.filter {
-                    return $0.averageRate?.doubleValue ?? 0.0 > 4.0
+        mainListViewController?.state = .loading
+        mainListViewController?.tableView.reloadData()
+        
+        DispatchQueue.global().async {
+            var currentCafeDatas = KPServiceHandler.sharedHandler.currentCafeDatas
+            for searchTag in searchTags {
+                switch searchTag {
+                case .standDesk:
+                    currentCafeDatas = currentCafeDatas?.filter {
+                        return $0.standingDesk?.intValue ?? 0 >= 3
+                    }
+                case .socket:
+                    currentCafeDatas = currentCafeDatas?.filter {
+                        return $0.socket?.intValue ?? 0 >= 3
+                    }
+                case .limitTime:
+                    currentCafeDatas = currentCafeDatas?.filter {
+                        return $0.limitedTime?.intValue ?? 0 >= 3
+                    }
+                case .opening:
+                    currentCafeDatas = currentCafeDatas?.filter {
+                        return ($0.businessHour?.shopStatus.isOpening ?? false) == true
+                    }
+                case .highRate:
+                    currentCafeDatas = currentCafeDatas?.filter {
+                        return $0.averageRate?.doubleValue ?? 0.0 > 4.0
+                    }
                 }
             }
+            
+            DispatchQueue.main.async {
+                self.displayDataModel = currentCafeDatas
+            }
         }
-        
-        displayDataModel = currentCafeDatas
     }
     
 }
