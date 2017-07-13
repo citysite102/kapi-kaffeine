@@ -12,7 +12,6 @@ import ObjectMapper
 import PromiseKit
 import GoogleMobileAds
 
-
 class KPMainListViewController:
     KPViewController,
     KPMainViewControllerDelegate,
@@ -27,14 +26,42 @@ class KPMainListViewController:
         static let adViewHeight = CGFloat(135)
     }
     
-    weak var mainController:KPMainViewController!
+    public enum ControllerState {
+        case normal
+        case loading
+        case noInternet
+    }
+    
+    weak var mainController: KPMainViewController!
+    
+    var statusContainerView: UIView!
+    var statusErrorImageView: UIImageView!
+    var statusErrorDescriptionLabel: UILabel!
+    var statusErrorButton: KPLoadingButton!
+    
+    
     var tableView: UITableView!
     var satisficationView: KPSatisficationView!
     var expNotificationView: KPExpNotificationView!
     var adLoader: GADAdLoader!
     
-    var currentDataModel:KPDataModel?
-    var dataLoading: Bool = true
+    var currentDataModel: KPDataModel?
+    var state: ControllerState! = .loading
+    {
+        didSet {
+            if state == .noInternet {
+                statusContainerView.isHidden = false
+                tableView.isHidden = true
+            } else if state == .normal {
+                statusContainerView.isHidden = true
+                tableView.isHidden = false
+            } else if state == .loading {
+                statusContainerView.isHidden = true
+                tableView.isHidden = false
+            }
+        }
+    }
+    
     var snapShotShowing: Bool = false {
         didSet {
             DispatchQueue.main.async {
@@ -44,7 +71,7 @@ class KPMainListViewController:
                     self.tableView.isHidden = true
                 } else if self.snapShotShowing != oldValue {
                     self.snapshotView.isHidden = true
-                    self.tableView.isHidden = false
+                    self.tableView.isHidden = (self.state == .noInternet ? true : false)
                 }
             }
         }
@@ -59,12 +86,14 @@ class KPMainListViewController:
     
     var displayDataModel: [AnyObject] = [AnyObject]() {
         didSet {
-            if dataLoading {
-                dataLoading = false
+            if state == .noInternet {
+                self.dismissStatusErrorContent({ 
+                    self.state = .normal
+                })
+            } else {
+                state = .normal
                 self.tableView.isUserInteractionEnabled = true
                 self.tableView.allowsSelection = true
-//                self.addNativeExpressAds()
-//                self.preloadNextAd()
                 self.tableView.reloadData()
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
             }
@@ -76,6 +105,50 @@ class KPMainListViewController:
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        statusContainerView = UIView()
+        statusContainerView.backgroundColor = UIColor.white
+        view.addSubview(statusContainerView)
+        statusContainerView.addConstraints(fromStringArray: ["V:|-100-[$self]|",
+                                                             "H:|[$self]|"])
+        
+        statusErrorImageView = UIImageView(image: R.image.image_sorry())
+        statusContainerView.addSubview(statusErrorImageView)
+        statusErrorImageView.addConstraint(forHeight: 130)
+        statusErrorImageView.contentMode = .scaleAspectFit
+        statusErrorImageView.addConstraintForCenterAligningToSuperview(in: .horizontal, constant: 4)
+        statusErrorImageView.addConstraintForCenterAligningToSuperview(in: .vertical, constant: -88)
+        
+        
+        statusErrorDescriptionLabel = UILabel()
+        statusErrorDescriptionLabel.font = UIFont.systemFont(ofSize: 16.0)
+        statusErrorDescriptionLabel.numberOfLines = 0
+        statusErrorDescriptionLabel.textColor = KPColorPalette.KPTextColor.mainColor
+        statusErrorDescriptionLabel.textAlignment = .center
+        statusContainerView.addSubview(statusErrorDescriptionLabel)
+        statusErrorDescriptionLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
+        statusErrorDescriptionLabel.addConstraints(fromStringArray: ["V:[$view0]-20-[$self]",
+                                                                     "H:[$self(200)]"],
+                                                   views: [statusErrorImageView])
+        statusErrorDescriptionLabel.setText(text: "你的網路實在太糟糕，快去升級台灣之星5G吧!",
+                                            lineSpacing: 3.0)
+        
+        statusErrorButton = KPLoadingButton(image: nil, title: "讓我再試試")
+        statusErrorButton.setTitleColor(UIColor.white, for: .normal)
+        statusErrorButton.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.mainColor!),
+                                        for: .normal)
+        statusErrorButton.layer.cornerRadius = 3.0
+        statusErrorButton.layer.masksToBounds = true
+        statusErrorButton.replaceText = true
+        statusErrorButton.titleLabel?.font = UIFont.systemFont(ofSize: 16.0)
+        statusErrorButton.addTarget(self,
+                                    action: #selector(KPMainListViewController.handleStatusErrorButtonOnTapped),
+                                    for: .touchUpInside)
+        statusContainerView.addSubview(statusErrorButton)
+        statusErrorButton.addConstraintForCenterAligningToSuperview(in: .horizontal)
+        statusErrorButton.addConstraints(fromStringArray: ["V:[$view0]-72-[$self(36)]",
+                                                           "H:[$self(160)]"],
+                                         views: [statusErrorImageView])
         
         tableView = UITableView()
         tableView.delegate = self
@@ -129,6 +202,51 @@ class KPMainListViewController:
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
     }
+    
+    
+    // MARK: Animation
+    func dismissStatusErrorContent(_ completion:(() -> Void)?) {
+        UIView.animate(withDuration: 0.2,
+                       delay: 0,
+                       options: .curveEaseOut,
+                       animations: { 
+                        self.statusErrorImageView.transform = CGAffineTransform(translationX: 0, y: -30)
+                        self.statusErrorDescriptionLabel.transform = CGAffineTransform(translationX: 0, y: -30)
+                        self.statusErrorButton.transform = CGAffineTransform(translationX: 0, y: -30)
+                        self.statusErrorImageView.alpha = 0
+                        self.statusErrorDescriptionLabel.alpha = 0
+                        self.statusErrorButton.alpha = 0
+        }) { (_) in
+            completion?()
+            self.statusErrorImageView.transform = .identity
+            self.statusErrorDescriptionLabel.transform = .identity
+            self.statusErrorButton.transform = .identity
+            self.statusErrorImageView.alpha = 1.0
+            self.statusErrorDescriptionLabel.alpha = 1.0
+            self.statusErrorButton.alpha = 1.0
+        }
+    }
+    
+    
+    // MARK: UI Event
+    
+    func handleStatusErrorButtonOnTapped() {
+        statusErrorButton.isLoading = true
+        let fadeTransition = CATransition()
+        fadeTransition.duration = 0.2
+        CATransaction.begin()
+        CATransaction.setCompletionBlock({
+            self.statusErrorDescriptionLabel.setText(text: "你以為按了就用麻？傻子？快去換台灣之星5G吧",
+                                                     lineSpacing: 3.0)
+            self.statusErrorDescriptionLabel.layer.add(fadeTransition, forKey: nil)
+            self.statusErrorButton.isLoading = false
+        })
+        statusErrorDescriptionLabel.text = ""
+        statusErrorDescriptionLabel.layer.add(fadeTransition, forKey: nil)
+        CATransaction.commit()
+    }
+    
+    // MARK: Ads
     
     func addNativeExpressAds() {
         var index = Constant.adInterval
@@ -195,8 +313,7 @@ extension KPMainListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if !dataLoading {
-            
+        if state == .normal {
             if let nativeExpressAdView = displayDataModel[indexPath.row] as? GADNativeExpressAdView {
                 let cell = tableView.dequeueReusableCell(withIdentifier: Constant.KPMainListViewAdCellReuseIdentifier,
                                                          for: indexPath) as! KPMainListNativeExpressCell
@@ -242,7 +359,7 @@ extension KPMainListViewController: UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataLoading ? 8 : displayDataModel.count
+        return state == .normal ? displayDataModel.count : 8
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

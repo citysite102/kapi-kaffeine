@@ -9,6 +9,7 @@
 import UIKit
 import SideMenu
 import PromiseKit
+import Alamofire
 
 protocol KPMainViewControllerDelegate {
     var selectedDataModel: KPDataModel? { get }
@@ -26,7 +27,7 @@ class KPMainViewController: KPViewController {
     
     var displayDataModel: [KPDataModel]! {
         didSet {
-            self.mainListViewController?.dataLoading = true
+            self.mainListViewController?.state = .normal
             self.mainListViewController?.tableView.reloadData()
             DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
                 self.mainListViewController?.displayDataModel = self.displayDataModel
@@ -106,10 +107,21 @@ class KPMainViewController: KPViewController {
         SideMenuManager.menuAnimationBackgroundColor = UIColor.black
         SideMenuManager.menuWidth = 260
         
-        updateData()
+        
+        let reachabilityManager = NetworkReachabilityManager()
+        reachabilityManager?.startListening()
+        reachabilityManager?.listener = {
+            status in
+            if reachabilityManager?.isReachable ?? false {
+                self.mainListViewController?.state =
+                    self.mainListViewController?.state == .normal ? .normal : .loading
+            } else {
+                self.mainListViewController?.state = .noInternet
+            }
+        }
         
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(updateData),
+                                               selector: #selector(fetchRemoteData),
                                                name: NSNotification.Name.UIApplicationDidBecomeActive,
                                                object: nil)
         
@@ -166,10 +178,17 @@ class KPMainViewController: KPViewController {
     
     // MARK: Data
     
-    func updateData() {
-        KPServiceHandler.sharedHandler.fetchRemoteData() { (results: [KPDataModel]?) in
+    func fetchRemoteData() {
+        KPServiceHandler.sharedHandler.fetchRemoteData() { (results: [KPDataModel]?, error: NetworkRequestError?) in
             if results != nil {
                 self.displayDataModel = results!
+            } else if let requestError = error {
+                switch requestError {
+                    case .noNetworkConnection:
+                        self.mainListViewController?.state = .noInternet
+                    default:
+                        print("錯誤萬歲")
+                }
             }
         }
         

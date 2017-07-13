@@ -36,7 +36,7 @@ class KPServiceHandler {
                          _ standingDesk: NSNumber? = nil,
                          _ mrt: String? = nil,
                          _ city: String? = nil,
-                         _ completion:((_ result: [KPDataModel]?) -> Void)!) {
+                         _ completion:((_ result: [KPDataModel]?, _ error: NetworkRequestError?) -> Void)!) {
         kapiDataRequest.perform(limitedTime,
                                 socket,
                                 standingDesk,
@@ -50,12 +50,12 @@ class KPServiceHandler {
                                             }
                                         }
                                         self.currentCafeDatas = cafeDatas
-                                        completion?(cafeDatas)
+                                        completion?(cafeDatas, nil)
                                     } else {
-                                        completion?(nil)
+                                        completion?(nil, nil)
                                     }
         }.catch { error in
-                completion?(nil)
+            completion?(nil, error as! NetworkRequestError)
         }
     }
     
