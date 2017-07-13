@@ -54,7 +54,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
     var socketRadioBoxOne: KPCheckView!
     var socketRadioBoxTwo: KPCheckView!
     var socketRadioBoxThree: KPCheckView!
-    
+        
     var nameSubTitleView: KPSubTitleEditView!
     var citySubTitleView: KPSubTitleEditView!
     var priceSubTitleView: KPSubTitleEditView!
@@ -422,9 +422,25 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
     }
     
     func handleSendButtonOnTapped() {
-        KPPopoverView.popoverNotification("新增成功",
-                                          "感謝您提交資訊，我們將儘速進行審查:D 這將會需要1-3天的審核時間確認店家的資訊是否無誤，給我好好的等。",
-                                          nil)
+        
+        KPServiceHandler.sharedHandler.addNewShop(nameSubTitleView.editTextField.text ?? "",
+                                                  addressSubTitleView.editTextField.text ?? "",
+                                                  citySubTitleView.editTextField.text ?? "",
+                                                  facebookSubTitleView.editTextField.text ?? "",
+                                                  "1",
+                                                  "1",
+                                                  phoneSubTitleView.editTextField.text ?? "",
+                                                  (businessHourController.setValue as? [String: String]) ?? [:]) { (success) in
+                                                    if success == true {
+                                                        KPPopoverView.popoverNotification("新增成功",
+                                                                                          "感謝您提交資訊，我們將儘速進行審查:D 這將會需要1-3天的審核時間確認店家的資訊是否無誤，給我好好的等。",
+                                                                                          nil)
+                                                    }
+                                                    
+        }
+        
+        
+        
     }
     
     

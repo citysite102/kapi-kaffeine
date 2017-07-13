@@ -73,6 +73,60 @@ class KPServiceHandler {
         }
     }
     
+    func addNewShop(_ name:String,
+                    _ address:String,
+                    _ city:String,
+                    _ fb_url:String,
+                    _ limited_time: String,
+                    _ socket: String,
+                    _ phone: String,
+                    _ business_hour: [String: String],
+                    _ completion: ((_ successed: Bool) -> Swift.Void)?) {
+        
+        
+        let newShopRequest = KPAddNewCafeRequest()
+        
+        let loadingView = KPLoadingView()
+        loadingView.loadingContents = ("新增中...", "新增成功", "新增失敗")
+        loadingView.state = .loading
+        UIApplication.shared.topViewController.view.addSubview(loadingView)
+        loadingView.addConstraints(fromStringArray: ["V:|[$self]|",
+                                                     "H:|[$self]|"])
+        
+        newShopRequest.perform(name,
+                               address,
+                               city,
+                               fb_url,
+                               limited_time,
+                               socket,
+                               phone,
+                               business_hour).then { result -> Void in
+                                if let addResult = result["result"].bool {
+                                    loadingView.state = addResult ? .successed : .failed
+                                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2.5,
+                                                                  execute: {
+                                                                    loadingView.removeFromSuperview()
+                                    })
+                                    completion?(addResult)
+                                } else {
+                                    loadingView.state = .failed
+                                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
+                                                                  execute: {
+                                                                    loadingView.removeFromSuperview()
+                                    })
+                                    completion?(false)
+                                }
+        }.catch { (error) in
+            loadingView.state = .failed
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
+                                          execute: {
+                                            loadingView.removeFromSuperview()
+            })
+            completion?(false)
+        }
+        
+    }
+    
     
     // Comment API
     
