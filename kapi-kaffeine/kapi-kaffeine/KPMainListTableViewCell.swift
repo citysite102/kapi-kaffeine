@@ -62,7 +62,7 @@ class KPMainListTableViewCell: UITableViewCell {
             }
             
             if dataModel.businessHour != nil {
-                let shopStatus = dataModel.businessHour.shopStatus
+                let shopStatus = dataModel.businessHour!.shopStatus
                 shopStatusLabel.textColor = KPColorPalette.KPTextColor.grayColor
                 shopStatusLabel.text = shopStatus.status
                 shopStatusHint.backgroundColor = shopStatus.isOpening ?

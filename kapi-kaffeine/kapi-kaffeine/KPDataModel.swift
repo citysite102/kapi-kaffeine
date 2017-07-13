@@ -25,7 +25,7 @@ class KPDataModel: NSObject, Mappable, GMUClusterItem {
     var facebookURL: String?
     var facebookID: String?
     var mrt: String?
-    var businessHour: KPDataBusinessHourModel!
+    var businessHour: KPDataBusinessHourModel?
     var tags: [KPDataTagModel]?
     
     var averageRate: NSNumber?

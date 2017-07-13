@@ -239,7 +239,7 @@ class KPInformationViewController: KPViewController {
                                                   for: .touchUpInside)
         
         if informationDataModel.businessHour != nil {
-            let shopStatus = informationDataModel.businessHour.shopStatus
+            let shopStatus = informationDataModel.businessHour!.shopStatus
             informationView.openLabel.textColor = KPColorPalette.KPTextColor.grayColor_level1
             informationView.openLabel.text = shopStatus.status
             informationView.openHint.backgroundColor = shopStatus.isOpening ?

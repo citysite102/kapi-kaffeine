@@ -511,7 +511,7 @@ GMUClusterRendererDelegate {
                 marker.iconView = UIImageView(image: R.image.icon_mapMarker())
             }
             
-            if model.businessHour == nil || model.businessHour.isOpening == true {
+            if model.businessHour == nil || model.businessHour!.isOpening == true {
                 marker.iconView?.alpha = 1
             } else {
                 marker.iconView?.alpha = 0.6

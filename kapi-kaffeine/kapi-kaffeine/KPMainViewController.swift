@@ -444,7 +444,7 @@ extension KPMainViewController: KPSearchTagViewDelegate {
                 }
             case .opening:
                 currentCafeDatas = currentCafeDatas?.filter {
-                    return $0.businessHour.shopStatus.isOpening == true
+                    return ($0.businessHour?.shopStatus.isOpening ?? false) == true
                 }
             case .highRate:
                 currentCafeDatas = currentCafeDatas?.filter {
