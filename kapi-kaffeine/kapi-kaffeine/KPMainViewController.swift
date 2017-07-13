@@ -27,7 +27,7 @@ class KPMainViewController: KPViewController {
     
     var displayDataModel: [KPDataModel]! {
         didSet {
-            self.mainListViewController?.state = .normal
+            self.mainListViewController?.state = .loading
             self.mainListViewController?.tableView.reloadData()
             DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
                 self.mainListViewController?.displayDataModel = self.displayDataModel
