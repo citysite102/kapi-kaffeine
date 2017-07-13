@@ -35,7 +35,7 @@ class KPTimePickerViewController: UIViewController, KPTimePickerDelegate {
         timePicker.delegate = self
         
         let seporator = UIView()
-        seporator.backgroundColor = KPColorPalette.KPMainColor.grayColor_level6
+        seporator.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
         view.addSubview(seporator)
         seporator.addConstraints(fromStringArray: ["H:|-8-[$self]-8-|",
                                                    "V:[$view0]-16-[$self(1)]"],
@@ -44,7 +44,7 @@ class KPTimePickerViewController: UIViewController, KPTimePickerDelegate {
         let doneButton = UIButton()
         doneButton.setTitle("完成", for: .normal)
         doneButton.setTitleColor(UIColor.white, for: .normal)
-        doneButton.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor.mainColor!),
+        doneButton.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.mainColor!),
                                         for: .normal)
         doneButton.layer.cornerRadius = 4.0
         doneButton.layer.masksToBounds = true

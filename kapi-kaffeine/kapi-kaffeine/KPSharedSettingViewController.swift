@@ -33,13 +33,13 @@ class KPSharedSettingViewController: KPViewController {
     
     lazy var seperator_one: UIView = {
         let view = UIView()
-        view.backgroundColor = KPColorPalette.KPMainColor.grayColor_level6
+        view.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
         return view
     }()
     
     lazy var seperator_two: UIView = {
         let view = UIView()
-        view.backgroundColor = KPColorPalette.KPMainColor.grayColor_level6
+        view.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
         return view
     }()
     
@@ -59,7 +59,7 @@ class KPSharedSettingViewController: KPViewController {
         view.addSubview(dismissButton)
         dismissButton.addConstraints(fromStringArray: ["H:|-12-[$self(30)]",
                                                        "V:|-16-[$self(30)]"])
-        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(7, 7, 7, 7)
+        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(6, 6, 6, 6)
         
         
         view.addSubview(titleLabel)

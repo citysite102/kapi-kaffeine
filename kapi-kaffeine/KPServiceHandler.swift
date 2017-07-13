@@ -92,11 +92,6 @@ class KPServiceHandler {
                                comment!).then { result -> Void in
                                 if let commentResult = result["result"].bool {
                                     loadingView.state = commentResult ? .successed : .failed
-                                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2.5,
-                                                                  execute: {
-                                                                    loadingView.removeFromSuperview()
-                                    })
-                                    
                                     guard let _ = KPUserManager.sharedManager.currentUser?.reviews?.first(where: {$0.identifier == self.currentDisplayModel?.identifier}) else {
                                         KPUserManager.sharedManager.currentUser?.reviews?.append(self.currentDisplayModel!)
                                         KPUserManager.sharedManager.storeUserInformation()
@@ -107,10 +102,6 @@ class KPServiceHandler {
                                 }
         }.catch { (error) in
             loadingView.state = .failed
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
-                                          execute: {
-                                            loadingView.removeFromSuperview()
-            })
             completion?(false)
         }
     }
@@ -172,10 +163,6 @@ class KPServiceHandler {
                                  music).then { result -> Void in
                                     if let commentResult = result["result"].bool {
                                         loadingView.state = commentResult ? .successed : .failed
-                                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
-                                                                      execute: {
-                                                                        loadingView.removeFromSuperview()
-                                        })
                                         guard let _ = KPUserManager.sharedManager.currentUser?.rates?.first(where: {$0.identifier == self.currentDisplayModel?.identifier}) else {
                                             KPUserManager.sharedManager.currentUser?.rates?.append(self.currentDisplayModel!)
                                             KPUserManager.sharedManager.storeUserInformation()
@@ -184,14 +171,10 @@ class KPServiceHandler {
                                         completion?(commentResult)
                                     }
                                     print("Result\(result)")
-        }.catch { (error) in
+            }.catch { (error) in
                 loadingView.state = .failed
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
-                                          execute: {
-                                            loadingView.removeFromSuperview()
-            })
-            completion?(false)
-        }
+                completion?(false)
+            }
     }
     
     func getRatings(_ completion: ((_ successed: Bool,
@@ -264,18 +247,10 @@ class KPServiceHandler {
                             print(result)
                             KPUserManager.sharedManager.storeUserInformation()
                             loadingView.state = result["result"].boolValue ? .successed : .failed
-                            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
-                                                          execute: {
-                                                            loadingView.removeFromSuperview()
-                            })
                             completion?(result["result"].boolValue)
             }.catch { error in
                 print(error)
                 loadingView.state = .failed
-                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
-                                              execute: {
-                                                loadingView.removeFromSuperview()
-                })
                 completion?(false)
         }
     }
@@ -331,6 +306,23 @@ class KPServiceHandler {
             }.catch { (error) in
                 print("Remove Visited Error \(error)")
                 completion?(false)
+        }
+    }
+    
+    
+    // Repost
+    
+    func sendReport(_ content: String,
+                    _ completion: ((Bool) -> Swift.Void)? = nil) {
+        let loadingView = KPLoadingView()
+        loadingView.loadingContents = ("回報中...", "回報成功", "回報失敗")
+        loadingView.state = .loading
+        UIApplication.shared.topViewController.view.addSubview(loadingView)
+        loadingView.addConstraints(fromStringArray: ["V:|[$self]|",
+                                                     "H:|[$self]|"])
+        DispatchQueue.main.asyncAfter(deadline: .now()+2.0) {
+            loadingView.state = .successed
+            completion?(true)
         }
     }
 }

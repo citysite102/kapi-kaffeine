@@ -78,7 +78,7 @@ class KPBusinessHourViewController: KPSharedSettingViewController, KPTimePickerD
             let label = UILabel()
             label.text = "至"
             label.textAlignment = .center
-            label.textColor = KPColorPalette.KPMainColor.mainColor
+            label.textColor = KPColorPalette.KPTextColor.mainColor
             container.addSubview(label)
             label.addConstraintForCenterAligning(to: checkView, in: .vertical)
             

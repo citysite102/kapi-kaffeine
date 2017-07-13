@@ -141,7 +141,7 @@ class KPUserProfileEditorController: UIViewController, UITextFieldDelegate, UITe
         
         dismissButton = KPBounceButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30),
                                        image: R.image.icon_close()!)
-        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(7, 7, 7, 7)
+        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(6, 6, 6, 6)
         dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor;
         dismissButton.addTarget(self,
                                 action: #selector(KPUserProfileEditorController.handleDismissButtonOnTapped),
@@ -183,7 +183,7 @@ class KPUserProfileEditorController: UIViewController, UITextFieldDelegate, UITe
         
         
         let topline = UIView()
-        topline.backgroundColor = KPColorPalette.KPMainColor.grayColor_level6
+        topline.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
         scrollContainer.addSubview(topline)
         topline.addConstraints(fromStringArray: ["H:|[$self]|", "V:|-(-1)-[$self(1)]"])
         
@@ -235,7 +235,7 @@ class KPUserProfileEditorController: UIViewController, UITextFieldDelegate, UITe
         
         
         let bottomLine = UIView()
-        bottomLine.backgroundColor = KPColorPalette.KPMainColor.grayColor_level6
+        bottomLine.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
         scrollContainer.addSubview(bottomLine)
         bottomLine.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$self(1)]-(-1)-|"])
         
@@ -358,7 +358,7 @@ class KPUserProfileEditorController: UIViewController, UITextFieldDelegate, UITe
     
     fileprivate func generateSeparatorLine() -> UIView {
         let view = UIView()
-        view.backgroundColor = KPColorPalette.KPMainColor.grayColor_level7
+        view.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7
         return view
     }
 

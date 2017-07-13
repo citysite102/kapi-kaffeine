@@ -28,10 +28,10 @@ GMUClusterRendererDelegate {
     lazy var nearestButton: KPShadowButton = {
         let shadowButton = KPShadowButton()
         shadowButton.button.setTitle("離我最近", for: .normal)
-        shadowButton.button.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor.mainColor!), for: .normal)
+        shadowButton.button.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.mainColor!), for: .normal)
         shadowButton.button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         shadowButton.layer.cornerRadius = 5
-        shadowButton.backgroundColor = KPColorPalette.KPMainColor.mainColor!
+        shadowButton.backgroundColor = KPColorPalette.KPBackgroundColor.mainColor!
         return shadowButton
     }()
     

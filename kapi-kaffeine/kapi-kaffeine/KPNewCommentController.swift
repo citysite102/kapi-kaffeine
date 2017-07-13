@@ -13,11 +13,13 @@ class KPNewCommentController: KPViewController {
     
     static let commentMaximumTextLength: Int = 200
     
-    
     var scrollContainer: UIScrollView!
     var dismissButton: KPBounceButton!
     var sendButton: UIButton!
     var textFieldContainerView: UIView!
+    var inputTextView: UITextView!
+    var placeholderLabel: UILabel!
+    var paragraphStyle: NSMutableParagraphStyle!
     var tapGesture: UITapGestureRecognizer!
     
     var ratingHeaderLabel: UILabel!
@@ -49,9 +51,6 @@ class KPNewCommentController: KPViewController {
         return label
     }()
     
-    var inputTextView: UITextView!
-    var placeholderLabel: UILabel!
-    var paragraphStyle: NSMutableParagraphStyle!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -96,7 +95,7 @@ class KPNewCommentController: KPViewController {
         
         scrollContainer = UIScrollView()
         scrollContainer.delaysContentTouches = true
-        scrollContainer.backgroundColor = KPColorPalette.KPMainColor.grayColor_level7
+        scrollContainer.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7
         scrollContainer.canCancelContentTouches = false
         view.addSubview(scrollContainer)
         scrollContainer.addConstraints(fromStringArray: ["H:|[$self]|",
@@ -301,5 +300,4 @@ extension KPNewCommentController: UITextViewDelegate {
         
         return newLength <= KPNewCommentController.commentMaximumTextLength && returnKey
     }
-    
 }

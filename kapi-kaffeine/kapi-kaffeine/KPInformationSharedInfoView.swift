@@ -48,7 +48,7 @@ class KPInformationSharedInfoView: UIView {
             actionButtons.removeAll()
             
             let separator = UIView()
-            separator.backgroundColor = KPColorPalette.KPMainColor.grayColor_level6
+            separator.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
             buttonContainer.addSubview(separator)
             separator.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self(1)]"])
             

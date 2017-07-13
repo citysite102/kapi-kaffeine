@@ -35,7 +35,7 @@ class KPSearchViewController: KPViewController {
         
         dismissButton = KPBounceButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30),
                                        image: R.image.icon_back()!)
-        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(7, 7, 7, 7)
+        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(6, 6, 6, 6)
         dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor
         dismissButton.addTarget(self,
                                 action: #selector(KPSearchViewController.handleDismissButtonOnTapped),

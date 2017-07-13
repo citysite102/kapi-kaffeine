@@ -121,7 +121,7 @@ class KPShopInfoView: UIView {
         otherTimeButton.setTitle("其他營業時間", for: .normal)
         otherTimeButton.setTitleColor(UIColor.white, for: .normal)
         otherTimeButton.titleLabel?.font = UIFont.systemFont(ofSize: 12)
-        otherTimeButton.backgroundColor = KPColorPalette.KPMainColor.mainColor
+        otherTimeButton.backgroundColor = KPColorPalette.KPBackgroundColor.mainColor
         otherTimeButton.layer.cornerRadius = 4.0
         addSubview(otherTimeButton)
         otherTimeButton.addConstraints(fromStringArray: ["H:[$view0]-8-[$self(92)]",

@@ -27,7 +27,7 @@ class KPSatisficationView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        backgroundColor = KPColorPalette.KPMainColor.mainColor
+        backgroundColor = KPColorPalette.KPBackgroundColor.mainColor
         
         container = UIView()
         addSubview(container)
@@ -37,7 +37,7 @@ class KPSatisficationView: UIView {
         
         dismissButton = KPBounceButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30),
                                        image: R.image.icon_close()!)
-        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(7, 7, 7, 7)
+        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(6, 6, 6, 6)
         dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor
         dismissButton.addTarget(self,
                                 action: #selector(KPSatisficationView.handleDismissButtonOnTapped),
@@ -100,7 +100,7 @@ class KPSatisficationView: UIView {
         likeButton.layer.cornerRadius = 2.0
         likeButton.layer.masksToBounds = true
         likeButton.titleLabel?.font = UIFont.systemFont(ofSize: UIDevice().isSuperCompact ? 13.0 : 15.0)
-        likeButton.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor.mainColor_light!),
+        likeButton.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.mainColor_light!),
         for: .normal)
         contentContainer.addSubview(likeButton)
         likeButton.addConstraints(fromStringArray:

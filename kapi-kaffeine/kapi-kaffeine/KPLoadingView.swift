@@ -91,7 +91,7 @@ class KPLoadingView: UIView {
         super.init(frame: frame)
         
         container = UIView()
-        container.backgroundColor = KPColorPalette.KPMainColor.grayColor_level3
+        container.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level3
         container.layer.cornerRadius = 8.0
         container.layer.masksToBounds = true
         addSubview(container)

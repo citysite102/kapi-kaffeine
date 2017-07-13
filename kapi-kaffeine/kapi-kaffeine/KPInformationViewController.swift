@@ -92,7 +92,7 @@ class KPInformationViewController: KPViewController {
         
         dismissButton = KPBounceButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30),
                                        image: R.image.icon_close()!)
-        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(7, 7, 7, 7)
+        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(6, 6, 6, 6)
         dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor
         dismissButton.addTarget(self,
                                 action: #selector(KPInformationViewController.handleDismissButtonOnTapped),
@@ -145,8 +145,13 @@ class KPInformationViewController: KPViewController {
         }
         
         let reportButton = UIAlertAction(title: "回報問題",
-                                         style: .default) { (_) in
-                                           print("回報問題")
+                                         style: .default) {(_) in
+                                            let controller = KPModalViewController()
+                                            controller.edgeInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+                                            let settingController = KPReportController()
+                                            let navigationController = UINavigationController(rootViewController: settingController)
+                                            controller.contentController = navigationController
+                                            controller.presentModalView()
         }
         
         let cancelButton = UIAlertAction(title: "取消",
@@ -159,7 +164,7 @@ class KPInformationViewController: KPViewController {
         actionController.addAction(cancelButton)
 
         scrollContainer = UIScrollView()
-        scrollContainer.backgroundColor = KPColorPalette.KPMainColor.grayColor_level7
+        scrollContainer.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7
         scrollContainer.delegate = self
         scrollContainer.canCancelContentTouches = false
         view.addSubview(scrollContainer)

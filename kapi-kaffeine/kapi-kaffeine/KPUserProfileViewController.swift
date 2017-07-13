@@ -20,13 +20,13 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
     
     lazy var userContainer: UIView = {
         let containerView = UIView()
-        containerView.backgroundColor = KPColorPalette.KPMainColor.mainColor_light
+        containerView.backgroundColor = KPColorPalette.KPBackgroundColor.mainColor_light
         return containerView
     }()
     
     lazy var userPhoto: UIImageView = {
         let imageView = UIImageView()
-        imageView.backgroundColor = KPColorPalette.KPMainColor.mainColor
+        imageView.backgroundColor = KPColorPalette.KPBackgroundColor.mainColor
         imageView.layer.borderWidth = 2.0
         imageView.layer.borderColor = UIColor.white.cgColor
         imageView.layer.cornerRadius = 5.0

@@ -85,7 +85,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
     func headerLabel(_ title: String) -> UILabel {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14.0)
-        label.textColor = KPColorPalette.KPMainColor.mainColor
+        label.textColor = KPColorPalette.KPTextColor.mainColor
         label.text = title
         return label
     }
@@ -134,7 +134,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
                                 for: .touchUpInside)
         
         scrollView = UIScrollView()
-        scrollView.backgroundColor = KPColorPalette.KPMainColor.grayColor_level7
+        scrollView.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7
         scrollView.showsVerticalScrollIndicator = false
         scrollView.delegate = self
         view.addSubview(scrollView)

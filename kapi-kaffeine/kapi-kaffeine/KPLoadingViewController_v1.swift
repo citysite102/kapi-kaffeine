@@ -27,7 +27,7 @@ class KPLoadingViewController_v1: KPViewController {
         self.view.backgroundColor = UIColor.clear
         
         container = UIView()
-        container.backgroundColor = KPColorPalette.KPMainColor.grayColor_level3
+        container.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level3
         container.layer.cornerRadius = 4.0
         container.layer.masksToBounds = true
         view.addSubview(container)

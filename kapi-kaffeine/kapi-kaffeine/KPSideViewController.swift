@@ -38,13 +38,13 @@ class KPSideViewController: KPViewController {
     
     lazy var userContainer: KPBounceView = {
         let containerView = KPBounceView()
-        containerView.backgroundColor = KPColorPalette.KPMainColor.mainColor
+        containerView.backgroundColor = KPColorPalette.KPBackgroundColor.mainColor
         return containerView
     }()
     
     lazy var userPhoto: UIImageView = {
         let imageView = UIImageView()
-        imageView.backgroundColor = KPColorPalette.KPMainColor.mainColor
+        imageView.backgroundColor = KPColorPalette.KPBackgroundColor.mainColor
         imageView.layer.borderWidth = 2.0
         imageView.layer.borderColor = UIColor.white.cgColor
         imageView.layer.cornerRadius = 5.0
@@ -67,7 +67,7 @@ class KPSideViewController: KPViewController {
     lazy var chooseLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12.0)
-        label.textColor = KPColorPalette.KPMainColor.mainColor
+        label.textColor = KPColorPalette.KPTextColor.mainColor
         label.text = "請選擇你所在的城市"
         return label
     }()
@@ -274,7 +274,7 @@ extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let footerView = UIView(frame: CGRect(x: 0, y: 0, width: 1, height: 10))
         let separator = UIView()
-        separator.backgroundColor = KPColorPalette.KPMainColor.grayColor_level6
+        separator.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
         footerView.addSubview(separator)
         separator.addConstraints(fromStringArray: ["V:|-10-[$self(1)]-13-|",
                                                    "H:|[$self]|"])

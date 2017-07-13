@@ -130,8 +130,8 @@ class KPSubTitleEditView: UIView {
         let topBorderView = UIView()
         let bottomBorderView = UIView()
         
-        topBorderView.backgroundColor = KPColorPalette.KPMainColor.grayColor_level6
-        bottomBorderView.backgroundColor = KPColorPalette.KPMainColor.grayColor_level6
+        topBorderView.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
+        bottomBorderView.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
         
         switch bType! {
         case .Bottom:

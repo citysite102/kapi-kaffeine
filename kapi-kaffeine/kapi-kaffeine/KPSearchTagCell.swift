@@ -27,7 +27,7 @@ class KPSearchTagCell: UICollectionViewCell {
         
         tagTitle = UILabel()
         tagTitle.font = UIFont.systemFont(ofSize: 13.0)
-        tagTitle.textColor = KPColorPalette.KPMainColor.mainColor
+        tagTitle.textColor = KPColorPalette.KPTextColor.mainColor
         addSubview(tagTitle)
         tagTitle.addConstraints(fromStringArray: ["H:[$view0]-4-[$self]-6-|"],
                                      views: [tagIcon])

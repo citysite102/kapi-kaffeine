@@ -25,10 +25,10 @@ class KPSearchTagView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = KPColorPalette.KPMainColor.mainColor_light
+        self.backgroundColor = KPColorPalette.KPBackgroundColor.mainColor_light
         
         self.preferenceHintView = UIView()
-        self.preferenceHintView.backgroundColor = KPColorPalette.KPMainColor.mainColor
+        self.preferenceHintView.backgroundColor = KPColorPalette.KPBackgroundColor.mainColor
         self.preferenceHintView.layer.cornerRadius = 3.0
         self.addSubview(self.preferenceHintView)
         self.preferenceHintView.addConstraints(fromStringArray: ["V:|-4-[$self]-4-|",

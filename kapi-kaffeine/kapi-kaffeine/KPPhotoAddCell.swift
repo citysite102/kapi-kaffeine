@@ -21,7 +21,7 @@ class KPPhotoAddCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame);
 
-        backgroundColor = KPColorPalette.KPMainColor.mainColor
+        backgroundColor = KPColorPalette.KPBackgroundColor.mainColor
         
         addSubview(iconCamera)
         iconCamera.tintColor = UIColor.white

@@ -16,7 +16,7 @@ class KPSearchFooterCell: UICollectionViewCell {
         didSet {
             if self.isSelected {
                 self.locationLabel.alpha = 1.0;
-                self.backgroundColor = KPColorPalette.KPMainColor.mainColor;
+                self.backgroundColor = KPColorPalette.KPBackgroundColor.mainColor;
             } else {
                 self.locationLabel.alpha = 0.5;
                 self.backgroundColor = UIColor.clear;

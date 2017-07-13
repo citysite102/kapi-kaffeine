@@ -233,7 +233,7 @@ class KPModalViewController: KPViewController {
         }
         
         UIView.animate(withDuration: 0.3) { 
-            self.view.backgroundColor = KPColorPalette.KPMainColor.grayColor_level3
+            self.view.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level3
         }
     }
     

@@ -174,7 +174,7 @@ class KPMainListTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        backgroundColor = selected ? KPColorPalette.KPMainColor.grayColor_level6 : UIColor.white
+        backgroundColor = selected ? KPColorPalette.KPBackgroundColor.grayColor_level6 : UIColor.white
         // Configure the view for the selected state
     }
 }

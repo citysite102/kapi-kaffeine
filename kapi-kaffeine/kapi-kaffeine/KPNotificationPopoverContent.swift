@@ -18,7 +18,7 @@ class KPNotificationPopoverContent: UIView, PopoverProtocol {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 18.0)
         label.textAlignment = .center
-        label.textColor = KPColorPalette.KPMainColor.mainColor
+        label.textColor = KPColorPalette.KPTextColor.mainColor
         return label
     }()
     
@@ -32,7 +32,7 @@ class KPNotificationPopoverContent: UIView, PopoverProtocol {
     
     lazy private  var seperator: UIView = {
         let view = UIView()
-        view.backgroundColor = KPColorPalette.KPMainColor.grayColor_level6
+        view.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
         return view
     }()
     

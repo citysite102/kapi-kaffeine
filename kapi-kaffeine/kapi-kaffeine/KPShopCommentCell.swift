@@ -167,8 +167,8 @@ class KPShopCommentCellButton: UIView {
             
             iconButton.tintColor = buttonSelected ? KPColorPalette.KPMainColor.mainColor :
                 KPColorPalette.KPMainColor.grayColor_level3
-            countLabel.textColor = buttonSelected ? KPColorPalette.KPMainColor.mainColor :
-                    KPColorPalette.KPMainColor.grayColor_level3
+            countLabel.textColor = buttonSelected ? KPColorPalette.KPTextColor.mainColor :
+                    KPColorPalette.KPTextColor.grayColor_level3
         }
     }
     
@@ -203,7 +203,7 @@ class KPShopCommentCellButton: UIView {
         countLabel = UILabel()
         countLabel.text = "\(count)"
         countLabel.font = UIFont.systemFont(ofSize: 14)
-        countLabel.textColor = KPColorPalette.KPMainColor.grayColor_level3
+        countLabel.textColor = KPColorPalette.KPTextColor.grayColor_level3
         
         addSubview(countLabel)
         countLabel.addConstraints(fromStringArray: ["H:[$view0]-4-[$self]-4-|"],

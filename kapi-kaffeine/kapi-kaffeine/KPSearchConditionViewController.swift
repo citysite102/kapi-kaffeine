@@ -39,7 +39,7 @@ class KPSearchConditionViewController: KPViewController {
     
     lazy var seperator_one: UIView = {
         let view = UIView()
-        view.backgroundColor = KPColorPalette.KPMainColor.grayColor_level6
+        view.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
         return view
     }()
     
@@ -48,7 +48,7 @@ class KPSearchConditionViewController: KPViewController {
     
     lazy var seperator_two: UIView = {
         let view = UIView()
-        view.backgroundColor = KPColorPalette.KPMainColor.grayColor_level6
+        view.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
         return view
     }()
     
@@ -72,7 +72,7 @@ class KPSearchConditionViewController: KPViewController {
     
     lazy var seperator_three: UIView = {
         let view = UIView()
-        view.backgroundColor = KPColorPalette.KPMainColor.grayColor_level6
+        view.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
         return view
     }()
     
@@ -82,13 +82,13 @@ class KPSearchConditionViewController: KPViewController {
     func buttonWithTitle(title: String) -> UIButton {
         let button = UIButton()
         button.setTitle(title, for: .normal)
-        button.setTitleColor(KPColorPalette.KPMainColor.mainColor!,
+        button.setTitleColor(KPColorPalette.KPTextColor.mainColor!,
                              for: .normal)
         button.setTitleColor(UIColor.white,
                              for: .selected)
         button.setBackgroundImage(UIImage(color: UIColor.white),
                                   for: .normal)
-        button.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor.mainColor!),
+        button.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.mainColor!),
                                   for: .selected)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         button.layer.cornerRadius = 18.0
@@ -101,7 +101,7 @@ class KPSearchConditionViewController: KPViewController {
     func titleLabel(_ title: String) -> UILabel {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14.0)
-        label.textColor = KPColorPalette.KPMainColor.mainColor
+        label.textColor = KPColorPalette.KPTextColor.mainColor
         label.text = title
         return label
     }
@@ -114,7 +114,7 @@ class KPSearchConditionViewController: KPViewController {
 
         dismissButton = KPBounceButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30),
                                        image: R.image.icon_close()!)
-        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(7, 7, 7, 7)
+        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(6, 6, 6, 6)
         dismissButton.addTarget(self,
                                      action: #selector(KPSearchConditionViewController.handleDismissButtonOnTapped),
                                      for: .touchUpInside)
@@ -326,7 +326,7 @@ class KPSearchConditionViewController: KPViewController {
         searchButton = UIButton()
         searchButton.setTitle("開始搜尋", for: .normal)
         searchButton.setTitleColor(UIColor.white, for: .normal)
-        searchButton.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor.mainColor!),
+        searchButton.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.mainColor!),
                                                 for: .normal)
         searchButton.layer.cornerRadius = 4.0
         searchButton.layer.masksToBounds = true

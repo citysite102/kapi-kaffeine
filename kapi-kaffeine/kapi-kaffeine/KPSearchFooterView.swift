@@ -30,7 +30,7 @@ class KPSearchFooterView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = KPColorPalette.KPMainColor.mainColor
+        self.backgroundColor = KPColorPalette.KPBackgroundColor.mainColor
         
         //Collection view
         self.collectionLayout = UICollectionViewFlowLayout()
@@ -52,7 +52,7 @@ class KPSearchFooterView: UIView {
         self.collectionView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"])
         
         self.hotSpotView = UIView()
-        self.hotSpotView.backgroundColor = KPColorPalette.KPMainColor.mainColor
+        self.hotSpotView.backgroundColor = KPColorPalette.KPBackgroundColor.mainColor
         self.hotSpotView.layer.shadowColor = UIColor.black.cgColor
         self.hotSpotView.layer.shadowOpacity = 0.2
         self.hotSpotView.layer.shadowOffset = CGSize.init(width: 1.0, height: 0)

@@ -31,7 +31,7 @@ class KPFeatureTagCell: UICollectionViewCell {
     
     override var isSelected: Bool {
         didSet {
-            layer.backgroundColor = isSelected ? KPColorPalette.KPMainColor.mainColor_light?.cgColor : UIColor.white.cgColor
+            layer.backgroundColor = isSelected ? KPColorPalette.KPBackgroundColor.mainColor_light?.cgColor : UIColor.white.cgColor
             self.featureLabel.textColor = isSelected ? UIColor.white : KPColorPalette.KPMainColor.mainColor_light
         }
     }

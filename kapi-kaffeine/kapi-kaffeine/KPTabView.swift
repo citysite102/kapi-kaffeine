@@ -18,7 +18,7 @@ class KPTabView: UIView {
     
     lazy var hintView: UIView = {
         let view = UIView()
-        view.backgroundColor = KPColorPalette.KPMainColor.mainColor
+        view.backgroundColor = KPColorPalette.KPBackgroundColor.mainColor
         return view
     }()
     

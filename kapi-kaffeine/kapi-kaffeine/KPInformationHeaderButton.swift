@@ -100,7 +100,7 @@ class KPInformationHeaderButton: UIView {
         
         infoLabel = UILabel()
         infoLabel.font = UIFont.systemFont(ofSize: 11)
-        infoLabel.textColor = KPColorPalette.KPMainColor.grayColor_level3
+        infoLabel.textColor = KPColorPalette.KPTextColor.grayColor_level3
         addSubview(infoLabel)
         infoLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
         infoLabel.addConstraint(from: "V:[$view0]-4-[$self]",

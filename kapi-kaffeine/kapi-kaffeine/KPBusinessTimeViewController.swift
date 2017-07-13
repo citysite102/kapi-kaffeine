@@ -54,7 +54,7 @@ class KPBusinessTimeViewController: UIViewController {
 //        view.addSubview(dismissButton)
 //        dismissButton.addConstraints(fromStringArray: ["H:|-20-[$self(30)]",
 //                                                       "V:|-16-[$self(30)]"])
-//        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(7, 7, 7, 7)
+//        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(6, 6, 6, 6)
         
         
         view.addSubview(titleLabel)

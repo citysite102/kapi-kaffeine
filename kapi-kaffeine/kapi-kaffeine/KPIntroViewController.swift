@@ -46,7 +46,7 @@ class KPIntroViewController: KPViewController {
         skipButton.setBackgroundImage(UIImage(color: UIColor.white),
                                       for: .highlighted)
         skipButton.setTitleColor(UIColor.white, for: .normal)
-        skipButton.setTitleColor(KPColorPalette.KPMainColor.mainColor,
+        skipButton.setTitleColor(KPColorPalette.KPTextColor.mainColor,
                                  for: .highlighted)
         skipButton.layer.borderColor = UIColor.white.cgColor
         skipButton.layer.borderWidth = 1.0

@@ -22,7 +22,7 @@ class KPExpNotificationView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        layer.backgroundColor = KPColorPalette.KPMainColor.grayColor_level3?.cgColor
+        layer.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level3?.cgColor
         layer.cornerRadius = 4.0
         layer.masksToBounds = true
         
