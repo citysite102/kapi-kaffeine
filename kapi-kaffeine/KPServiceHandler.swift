@@ -134,28 +134,17 @@ class KPServiceHandler {
                     _ completion: ((_ successed: Bool) -> Swift.Void)?) {
         
         let commentRequest = KPNewCommentRequest()
-        
-        let loadingView = KPLoadingView()
-        loadingView.loadingContents = ("新增中...", "新增成功", "新增失敗")
-        loadingView.state = .loading
-        UIApplication.shared.topViewController.view.addSubview(loadingView)
-        loadingView.addConstraints(fromStringArray: ["V:|[$self]|",
-                                                     "H:|[$self]|"])
-        
         commentRequest.perform((currentDisplayModel?.identifier)!,
                                comment!).then { result -> Void in
                                 if let commentResult = result["result"].bool {
-                                    loadingView.state = commentResult ? .successed : .failed
+                                    completion?(commentResult)
                                     guard let _ = KPUserManager.sharedManager.currentUser?.reviews?.first(where: {$0.identifier == self.currentDisplayModel?.identifier}) else {
                                         KPUserManager.sharedManager.currentUser?.reviews?.append(self.currentDisplayModel!)
                                         KPUserManager.sharedManager.storeUserInformation()
                                         return
                                     }
-                                    
-                                    completion?(true)
                                 }
         }.catch { (error) in
-            loadingView.state = .failed
             completion?(false)
         }
     }
@@ -197,15 +186,19 @@ class KPServiceHandler {
                    _ tasty: NSNumber? = 0,
                    _ cheap: NSNumber? = 0,
                    _ music: NSNumber? = 0,
+                   _ showLoading: Bool = true,
                    _ completion: ((_ successed: Bool) -> Swift.Void)?) {
         let newRatingRequest = KPNewRatingRequest()
         
         let loadingView = KPLoadingView()
-        loadingView.loadingContents = ("新增中...", "新增成功", "新增失敗")
-        UIApplication.shared.KPTopViewController().view.addSubview(loadingView)
-        loadingView.state = .loading
-        loadingView.addConstraints(fromStringArray: ["V:|[$self]|",
-                                                     "H:|[$self]|"])
+        
+        if showLoading {
+            loadingView.loadingContents = ("新增中...", "新增成功", "新增失敗")
+            UIApplication.shared.KPTopViewController().view.addSubview(loadingView)
+            loadingView.state = .loading
+            loadingView.addConstraints(fromStringArray: ["V:|[$self]|",
+                                                         "H:|[$self]|"])
+        }
         
         newRatingRequest.perform((currentDisplayModel?.identifier)!,
                                  wifi,
@@ -217,12 +210,12 @@ class KPServiceHandler {
                                  music).then { result -> Void in
                                     if let commentResult = result["result"].bool {
                                         loadingView.state = commentResult ? .successed : .failed
+                                        completion?(commentResult)
                                         guard let _ = KPUserManager.sharedManager.currentUser?.rates?.first(where: {$0.identifier == self.currentDisplayModel?.identifier}) else {
                                             KPUserManager.sharedManager.currentUser?.rates?.append(self.currentDisplayModel!)
                                             KPUserManager.sharedManager.storeUserInformation()
                                             return
                                         }
-                                        completion?(commentResult)
                                     }
                                     print("Result\(result)")
             }.catch { (error) in

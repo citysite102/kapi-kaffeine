@@ -60,6 +60,13 @@ class KPInformationViewController: KPViewController {
     var recommendInformationView: KPInformationSharedInfoView!
     var commentInfoView: KPShopCommentInfoView!
     var loadingIndicator: UIActivityIndicatorView!
+    lazy var loadingLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 13.0)
+        label.textColor = KPColorPalette.KPTextColor.grayColor_level5
+        label.text = "載入中..."
+        return label
+    }()
     
     var allCommentHasShown: Bool = false
     var dataLoading: Bool = true {
@@ -77,6 +84,7 @@ class KPInformationViewController: KPViewController {
                 self.scrollContainer.isUserInteractionEnabled = false
             } else {
                 self.loadingIndicator.stopAnimating()
+                self.loadingLabel.isHidden = true
                 self.showInformationContents(true)
             }
         }
@@ -201,10 +209,17 @@ class KPInformationViewController: KPViewController {
         loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
         loadingIndicator.tintColor = KPColorPalette.KPMainColor.mainColor
         scrollContainer.addSubview(loadingIndicator)
-        loadingIndicator.addConstraints(fromStringArray: ["V:[$view0]-16-[$self]"],
+        loadingIndicator.addConstraints(fromStringArray: ["V:[$view0]-24-[$self]"],
                                         views:[informationHeaderView])
         loadingIndicator.addConstraintForCenterAligningToSuperview(in: .horizontal)
         loadingIndicator.startAnimating()
+        
+        scrollContainer.addSubview(loadingLabel)
+        loadingLabel.isHidden = true
+        loadingLabel.addConstraints(fromStringArray: ["V:[$view0]-10-[$self]"],
+                                    views:[loadingIndicator])
+        loadingLabel.addConstraintForCenterAligningToSuperview(in: .horizontal,
+                                                               constant:2)
         
         informationHeaderButtonBar = KPInformationHeaderButtonBar(frame: .zero,
                                                                   informationDataModel: informationDataModel)

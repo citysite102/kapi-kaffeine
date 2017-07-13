@@ -123,6 +123,8 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
         let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace,
                                              target: nil,
                                              action: nil)
+        
+        rightbarItem.isEnabled = false
         negativeSpacer.width = -8
         navigationItem.leftBarButtonItems = [negativeSpacer, barItem]
         navigationItem.rightBarButtonItems = [negativeSpacer, rightbarItem]

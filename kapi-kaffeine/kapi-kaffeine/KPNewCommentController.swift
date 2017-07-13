@@ -86,7 +86,7 @@ class KPNewCommentController: KPViewController {
                                                   target: nil,
                                                   action: nil)
 
-        
+        rightbarItem.isEnabled = false
         negativeSpacer.width = -5
         rightNegativeSpacer.width = -8
         navigationItem.leftBarButtonItems = [negativeSpacer, barItem]
@@ -222,31 +222,54 @@ class KPNewCommentController: KPViewController {
     
     func handleSendButtonOnTapped() {
         inputTextView.resignFirstResponder()
-        KPServiceHandler.sharedHandler.addComment(inputTextView.text) { (successed) in
-            if successed {
-                if self.ratingCheckbox.checkBox.checkState == .checked {
+        
+        let loadingView = KPLoadingView()
+        loadingView.loadingContents = ("新增中..", "新增成功", "新增失敗")
+        UIApplication.shared.KPTopViewController().view.addSubview(loadingView)
+        loadingView.state = .loading
+        loadingView.addConstraints(fromStringArray: ["V:|[$self]|",
+                                                     "H:|[$self]|"])
+
+        
+        if self.ratingCheckbox.checkBox.checkState == .checked {
+            KPServiceHandler.sharedHandler.addComment(inputTextView.text) { (successed) in
+                if successed {
                     KPServiceHandler.sharedHandler.addRating(NSNumber(value: self.ratingViews[0].currentRate),
                                                              NSNumber(value: self.ratingViews[3].currentRate),
                                                              NSNumber(value: self.ratingViews[5].currentRate),
                                                              NSNumber(value: self.ratingViews[1].currentRate),
                                                              NSNumber(value: self.ratingViews[4].currentRate),
                                                              NSNumber(value: self.ratingViews[2].currentRate),
-                                                             NSNumber(value: self.ratingViews[6].currentRate), { (successed) in
+                                                             NSNumber(value: self.ratingViews[6].currentRate),
+                                                             false, { (successed) in
                                                                 if successed {
+                                                                    loadingView.state = .successed
                                                                     DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
                                                                                                   execute: {
                                                                                                     self.navigationController?.popViewController(animated: true)
                                                                     })
+                                                                } else {
+                                                                    loadingView.state = .failed
                                                                 }
                     })
                 } else {
-                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
-                                                  execute: { 
-                                                self.navigationController?.popViewController(animated: true)
-                    })
+                    loadingView.state = .failed
                 }
             }
+        } else {
+            KPServiceHandler.sharedHandler.addComment(inputTextView.text, { (successed) in
+                if successed {
+                    loadingView.state = .successed
+                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
+                                                  execute: {
+                                                    self.navigationController?.popViewController(animated: true)
+                    })
+                } else {
+                    loadingView.state = .failed
+                }
+            })
         }
+        
     }
     
     func handleTapGesture(tapGesture: UITapGestureRecognizer) {

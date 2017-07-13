@@ -208,7 +208,7 @@ class KPInformationHeaderView: UIView {
                                                             "V:|[$self]|"])
         
 //        shopPhoto = UIImageView(image: UIImage(color:KPColorPalette.KPMainColor.borderColor!))
-        shopPhoto = UIImageView(image: R.image.demo_2())
+        shopPhoto = UIImageView(image: R.image.demo_6())
         shopPhoto.contentMode = .scaleAspectFill
         shopPhoto.isUserInteractionEnabled = true
         shopPhotoContainer.addSubview(shopPhoto)
