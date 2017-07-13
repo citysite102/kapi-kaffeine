@@ -13,6 +13,10 @@ import FacebookLogin
 import FacebookCore
 import ObjectMapper
 
+extension NSNotification.Name {
+    public static let KPCurrentUserDidChange: NSNotification.Name = NSNotification.Name(rawValue: "KPCurrentUserDidChange")
+}
+
 public class KPUserManager {
     
     
@@ -48,7 +52,11 @@ public class KPUserManager {
     
     // MARK: Properties
     
-    var currentUser: KPUser?
+    var currentUser: KPUser? {
+        didSet {
+            NotificationCenter.default.post(name: NSNotification.Name.KPCurrentUserDidChange, object: nil)
+        }
+    }
     var loginManager: LoginManager!
     var loadingView: KPLoadingView!
     

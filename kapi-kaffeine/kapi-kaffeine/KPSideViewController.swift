@@ -205,6 +205,9 @@ class KPSideViewController: KPViewController {
                                                                                     UIModalPresentationStyle.fullScreen)
                                        })
         ]
+        
+        setCurrentUser(KPUserManager.sharedManager.currentUser)
+        NotificationCenter.default.addObserver(self, selector: #selector(userDidChanged(notification:)), name: .KPCurrentUserDidChange, object: nil)
     }
     
     
@@ -224,6 +227,25 @@ class KPSideViewController: KPViewController {
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    
+    func userDidChanged(notification: Notification) {
+        setCurrentUser(KPUserManager.sharedManager.currentUser)
+    }
+    
+    func setCurrentUser(_ user: KPUser?) {
+        if user == nil {
+            userPhoto.image = R.image.demo_profile()
+            userNameLabel.text = "訪客一號"
+        } else {
+            userPhoto.af_setImage(withURL: URL(string: user!.photoURL ?? "")!)
+            userNameLabel.text = user!.displayName ?? ""
+        }
     }
     
     
