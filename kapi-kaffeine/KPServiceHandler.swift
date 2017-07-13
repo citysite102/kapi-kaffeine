@@ -55,7 +55,7 @@ class KPServiceHandler {
                                         completion?(nil, nil)
                                     }
         }.catch { error in
-            completion?(nil, error as! NetworkRequestError)
+            completion?(nil, (error as! NetworkRequestError))
         }
     }
     

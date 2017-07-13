@@ -152,7 +152,7 @@ GMUClusterRendererDelegate {
         self.mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
         
         mapView.delegate = self
-        mapView.preferredFrameRate = .conservative
+        mapView.preferredFrameRate = .maximum
         
         do {
             // Set the map style by passing the URL of the local file.
@@ -500,6 +500,9 @@ GMUClusterRendererDelegate {
     
     
     func renderer(_ renderer: GMUClusterRenderer, didRenderMarker marker: GMSMarker) {
+        
+        marker.tracksViewChanges = false
+        marker.tracksInfoWindowChanges = false
         if let model = marker.userData as? KPDataModel {
             if let averageRate = model.averageRate,
                 averageRate.doubleValue >= 4.5 {
