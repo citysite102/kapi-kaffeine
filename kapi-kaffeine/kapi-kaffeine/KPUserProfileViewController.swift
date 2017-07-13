@@ -18,6 +18,11 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
                                                      ("已評分", "rates"),
                                                      ("已評價", "reviews")]
     
+    let statusContents:[(icon: UIImage, content: String)] = [(R.image.status_collect()!, "收藏你喜愛的店家吧!"),
+                                                             (R.image.status_location()!, "你有去過哪些店家呢?"),
+                                                             (R.image.status_star()!, "快給你喜愛的店家一些正面的評價吧!"),
+                                                             (R.image.status_comment()!, "跟更多夥伴聊聊你喜愛的店家吧!")]
+    
     lazy var userContainer: UIView = {
         let containerView = UIView()
         containerView.backgroundColor = KPColorPalette.KPBackgroundColor.mainColor_light
@@ -62,6 +67,7 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
     }()
     
     var tableViews: [UITableView] = []
+    var statusViews: [KPStatusView] = []
     var displayDataModels: [[KPDataModel]] = []
     var scrollView: UIScrollView!
     var scrollContainer: UIView!
@@ -170,6 +176,15 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
             tableView.addConstraint(from: "V:|[$self]|")
             tableView.addConstraintForHavingSameWidth(with: view)
             
+            let statusView = KPStatusView.init(statusContents[index].icon,
+                                               statusContents[index].content)
+            statusView.isHidden = true
+            scrollContainer.addSubview(statusView)
+            statusView.addConstraint(from: "V:|-72-[$self]")
+            statusView.addConstraint(forWidth: 220)
+            statusView.addConstraintForCenterAligning(to: tableView,
+                                                      in: .horizontal)
+            
             if tableViews.count > 0 {
                 tableView.addConstraint(from: "H:[$view0][$self]", views: [tableViews[index-1]])
             } else {
@@ -177,6 +192,7 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
             }
             
             tableViews.append(tableView)
+            statusViews.append(statusView)
             
             displayDataModels.append([])
             
@@ -228,8 +244,16 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
                 for (index, tabTitle) in self.tabTitles.enumerated() {
                     if let displayModel = KPUserManager.sharedManager.currentUser?.value(forKey: tabTitle.key) as? [KPDataModel] {
                         self.displayDataModels[index] = displayModel
+                        DispatchQueue.main.async {
+                            self.tableViews[index].isHidden = displayModel.count == 0
+                            self.statusViews[index].isHidden = (displayModel.count != 0)
+                        }
                     } else {
                         self.displayDataModels[index] = []
+                        DispatchQueue.main.async {
+                            self.tableViews[index].isHidden = true
+                            self.statusViews[index].isHidden = false
+                        }
                     }
                 }
                 self.dataLoading = false

@@ -51,7 +51,6 @@
 		775989911EA5171A0029989C /* KPHelper+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775989901EA5171A0029989C /* KPHelper+UI.swift */; };
 		775D32ED1F0CCCCF005EF0CE /* KPInformationPhotoTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775D32EC1F0CCCCF005EF0CE /* KPInformationPhotoTransition.swift */; };
 		775D32EF1F0D20E4005EF0CE /* KPExpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775D32EE1F0D20E4005EF0CE /* KPExpView.swift */; };
-		775D32F11F0D21E0005EF0CE /* KPProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775D32F01F0D21E0005EF0CE /* KPProgressBar.swift */; };
 		7762E33A1F0FA44F0006E205 /* KPBusinessTimeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7762E3391F0FA44F0006E205 /* KPBusinessTimeViewController.swift */; };
 		7762E33C1F0FA7A90006E205 /* KPBusinessTimeInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7762E33B1F0FA7A90006E205 /* KPBusinessTimeInfoView.swift */; };
 		7762E33F1F12017D0006E205 /* KPCafeDetailedInfoRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7762E33E1F12017D0006E205 /* KPCafeDetailedInfoRequest.swift */; };
@@ -82,6 +81,7 @@
 		77952EF51EFAEE110012445F /* KPSearchViewHeaderLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77952EF41EFAEE110012445F /* KPSearchViewHeaderLabel.swift */; };
 		779EB1441EC0DFD4008AAFF0 /* KPPhotoDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779EB1431EC0DFD3008AAFF0 /* KPPhotoDisplayViewController.swift */; };
 		779EB1461EC0DFE2008AAFF0 /* KPPhotoGalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779EB1451EC0DFE2008AAFF0 /* KPPhotoGalleryViewController.swift */; };
+		779F9E6C1F17E13800B8DC25 /* KPStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779F9E6B1F17E13800B8DC25 /* KPStatusView.swift */; };
 		77A201991EBC5BE600F3497F /* KPCheckBoxFillController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A201981EBC5BE600F3497F /* KPCheckBoxFillController.swift */; };
 		77A2019B1EBC5BF800F3497F /* KPCheckBoxStrokeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A2019A1EBC5BF800F3497F /* KPCheckBoxStrokeController.swift */; };
 		77A2019D1EBC5D1D00F3497F /* KPCheckboxCheckPathGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A2019C1EBC5D1D00F3497F /* KPCheckboxCheckPathGenerator.swift */; };
@@ -239,7 +239,6 @@
 		775989901EA5171A0029989C /* KPHelper+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "KPHelper+UI.swift"; sourceTree = "<group>"; };
 		775D32EC1F0CCCCF005EF0CE /* KPInformationPhotoTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPInformationPhotoTransition.swift; sourceTree = "<group>"; };
 		775D32EE1F0D20E4005EF0CE /* KPExpView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPExpView.swift; sourceTree = "<group>"; };
-		775D32F01F0D21E0005EF0CE /* KPProgressBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPProgressBar.swift; sourceTree = "<group>"; };
 		7762E3391F0FA44F0006E205 /* KPBusinessTimeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPBusinessTimeViewController.swift; sourceTree = "<group>"; };
 		7762E33B1F0FA7A90006E205 /* KPBusinessTimeInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPBusinessTimeInfoView.swift; sourceTree = "<group>"; };
 		7762E33E1F12017D0006E205 /* KPCafeDetailedInfoRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPCafeDetailedInfoRequest.swift; sourceTree = "<group>"; };
@@ -271,6 +270,7 @@
 		77952EF41EFAEE110012445F /* KPSearchViewHeaderLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSearchViewHeaderLabel.swift; sourceTree = "<group>"; };
 		779EB1431EC0DFD3008AAFF0 /* KPPhotoDisplayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPPhotoDisplayViewController.swift; sourceTree = "<group>"; };
 		779EB1451EC0DFE2008AAFF0 /* KPPhotoGalleryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPPhotoGalleryViewController.swift; sourceTree = "<group>"; };
+		779F9E6B1F17E13800B8DC25 /* KPStatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPStatusView.swift; sourceTree = "<group>"; };
 		77A201981EBC5BE600F3497F /* KPCheckBoxFillController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPCheckBoxFillController.swift; sourceTree = "<group>"; };
 		77A2019A1EBC5BF800F3497F /* KPCheckBoxStrokeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPCheckBoxStrokeController.swift; sourceTree = "<group>"; };
 		77A2019C1EBC5D1D00F3497F /* KPCheckboxCheckPathGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPCheckboxCheckPathGenerator.swift; sourceTree = "<group>"; };
@@ -777,9 +777,9 @@
 				771F90B21EF2424900D66C14 /* KPShadowButton.swift */,
 				77B66FA51EAA70F3008B6652 /* KPBounceButton.swift */,
 				77594B481EC8AEB40013BB56 /* KPBounceView.swift */,
-				775D32F01F0D21E0005EF0CE /* KPProgressBar.swift */,
 				77A980E01F17334B002010EC /* KPLoadingButton.h */,
 				77A980E11F17334B002010EC /* KPLoadingButton.m */,
+				779F9E6B1F17E13800B8DC25 /* KPStatusView.swift */,
 			);
 			name = "Shared View";
 			sourceTree = "<group>";
@@ -1172,7 +1172,7 @@
 				TargetAttributes = {
 					C02AFE401E7D260D008FFB33 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = 4D7RCMZ7F7;
+						DevelopmentTeam = A43Y729CXH;
 						ProvisioningStyle = Automatic;
 					};
 					C02AFE541E7D260D008FFB33 = {
@@ -1411,6 +1411,7 @@
 				771EECAC1EBC3124004A34B8 /* KPCheckBoxBounceController.swift in Sources */,
 				77F718231ED18A0B00755AA2 /* KPCountrySelectController.swift in Sources */,
 				774208FE1EA679CB00C78A00 /* KPSideViewController.swift in Sources */,
+				779F9E6C1F17E13800B8DC25 /* KPStatusView.swift in Sources */,
 				C00A6E131ECB0B7F00A05C9A /* KPSharedSettingViewController.swift in Sources */,
 				7762E3411F12028A0006E205 /* KPDetailedDataModel.swift in Sources */,
 				C01AC62C1EAAEA0A000390F7 /* GMUWrappingDictionaryKey.m in Sources */,
@@ -1464,7 +1465,6 @@
 				77869E1A1EB76F690027CA98 /* NetworkErrorHandler.swift in Sources */,
 				77869E161EB75B5C0027CA98 /* NetworkClient.swift in Sources */,
 				77B66FA91EACF74C008B6652 /* KPPopoverSensingView.swift in Sources */,
-				775D32F11F0D21E0005EF0CE /* KPProgressBar.swift in Sources */,
 				779EB1441EC0DFD4008AAFF0 /* KPPhotoDisplayViewController.swift in Sources */,
 				C05CF8781EF8019800F3DF2A /* KPDataBusinessHourModel.swift in Sources */,
 				77BB39281ED3DD4300958AFE /* KPSecondIntroView.swift in Sources */,
@@ -1632,7 +1632,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 4D7RCMZ7F7;
+				DEVELOPMENT_TEAM = A43Y729CXH;
 				INFOPLIST_FILE = "kapi-kaffeine/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kapi-kaffeine";
@@ -1652,7 +1652,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 4D7RCMZ7F7;
+				DEVELOPMENT_TEAM = A43Y729CXH;
 				INFOPLIST_FILE = "kapi-kaffeine/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kapi-kaffeine";
