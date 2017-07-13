@@ -64,6 +64,9 @@ class KPSideViewController: KPViewController {
     
     var userExpView: KPExpView!
     
+    var loginButton: UILabel!
+    
+    
     lazy var chooseLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12.0)
@@ -118,6 +121,18 @@ class KPSideViewController: KPViewController {
         userExpView.addConstraints(fromStringArray: ["H:|-16-[$self(100)]",
                                                      "V:[$self(26)]-12-|"])
 
+        loginButton = UILabel()
+        loginButton.backgroundColor = KPColorPalette.KPBackgroundColor.mainColor_light
+        loginButton.text = "登入"
+        loginButton.textAlignment = .center
+        loginButton.font = UIFont.systemFont(ofSize: 14.0)
+        loginButton.textColor = KPColorPalette.KPTextColor.whiteColor
+        loginButton.layer.cornerRadius = 13
+        loginButton.clipsToBounds = true
+        userContainer.addSubview(loginButton)
+        loginButton.addConstraints(fromStringArray: ["H:|-16-[$self(64)]",
+                                                     "V:[$self(26)]-12-|"])
+        
         tapGesture = UITapGestureRecognizer(target: self, action: #selector(KPSideViewController.handleUserContainerOnTapped(_:)))
         userContainer.addGestureRecognizer(tapGesture)
         
@@ -242,20 +257,36 @@ class KPSideViewController: KPViewController {
         if user == nil {
             userPhoto.image = R.image.demo_profile()
             userNameLabel.text = "訪客一號"
+            userExpView.isHidden = true
+            loginButton.isHidden = false
         } else {
             userPhoto.af_setImage(withURL: URL(string: user!.photoURL ?? "")!)
             userNameLabel.text = user!.displayName ?? ""
+            userExpView.isHidden = false
+            loginButton.isHidden = true
         }
     }
     
     
     func handleUserContainerOnTapped(_ sender: UITapGestureRecognizer) {
-        let controller = KPModalViewController()
-        controller.edgeInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        let profileController = KPUserProfileViewController()
-        let navigationController = UINavigationController(rootViewController: profileController)
-        controller.contentController = navigationController
-        controller.presentModalView(self, UIModalPresentationStyle.fullScreen)
+        if KPUserManager.sharedManager.currentUser == nil {
+            let controller = KPModalViewController()
+            controller.edgeInset = UIEdgeInsets(top: 0,
+                                                left: 0,
+                                                bottom: 0,
+                                                right: 0);
+            let loginController = KPLoginViewController()
+            UIApplication.shared.KPTopViewController().present(loginController,
+                                                               animated: true,
+                                                               completion: nil)
+        } else {
+            let controller = KPModalViewController()
+            controller.edgeInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            let profileController = KPUserProfileViewController()
+            let navigationController = UINavigationController(rootViewController: profileController)
+            controller.contentController = navigationController
+            controller.presentModalView(self, UIModalPresentationStyle.fullScreen)
+        }
     }
 }
 
