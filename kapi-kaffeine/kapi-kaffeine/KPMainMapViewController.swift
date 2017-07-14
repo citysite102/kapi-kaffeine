@@ -484,11 +484,11 @@ GMUClusterRendererDelegate {
     }
     
     func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
-        if !isCollectionViewShow && self.nearestButton.alpha != 0.5 {
+        if !isCollectionViewShow && self.nearestButton.alpha != 0.75 {
             UIView.animate(withDuration: 0.15,
                            animations: {
-                            self.nearestButton.alpha = 0.5
-                            self.addButton.alpha = 0.5
+                            self.nearestButton.alpha = 0.75
+                            self.addButton.alpha = 0.75
             })
         }
     }
