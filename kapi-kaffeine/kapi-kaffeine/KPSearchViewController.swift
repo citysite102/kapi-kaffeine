@@ -191,8 +191,6 @@ extension KPSearchViewController: UITableViewDelegate, UITableViewDataSource {
         } else {
             infoController.informationDataModel = displayDataModel[indexPath.row]
         }
-        
-        view.endEditing(true)
         self.navigationController?.pushViewController(infoController, animated: true)
     }
 }

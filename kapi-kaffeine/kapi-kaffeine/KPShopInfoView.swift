@@ -85,18 +85,28 @@ class KPShopInfoView: UIView {
         titleLabel.addConstraints(fromStringArray: ["V:|-16-[$self]",
                                                     "H:|-16-[$self]"])
         
-        featureContainer = UIView()
-        addSubview(featureContainer)
-        featureContainer.addConstraints(fromStringArray: ["V:[$view0]-8-[$self]",
-                                                          "H:|-16-[$self]"],
+        if informationDataModel.featureContents.count > 0 {
+            featureContainer = UIView()
+            addSubview(featureContainer)
+            featureContainer.addConstraints(fromStringArray: ["V:[$view0]-8-[$self]",
+                                                              "H:|-16-[$self]"],
+                                            views: [titleLabel])
+            featureContents = informationDataModel.featureContents
+            
+            openTimeIcon = UIImageView(image: R.image.icon_tradehour())
+            openTimeIcon.tintColor = KPColorPalette.KPMainColor.mainColor
+            addSubview(openTimeIcon)
+            openTimeIcon.addConstraints(fromStringArray: ["V:[$view0]-16-[$self(20)]",
+                                                          "H:|-16-[$self(20)]"],
+                                        views: [featureContainer])
+        } else {
+            openTimeIcon = UIImageView(image: R.image.icon_tradehour())
+            openTimeIcon.tintColor = KPColorPalette.KPMainColor.mainColor
+            addSubview(openTimeIcon)
+            openTimeIcon.addConstraints(fromStringArray: ["V:[$view0]-8-[$self(20)]",
+                                                          "H:|-16-[$self(20)]"],
                                         views: [titleLabel])
-        
-        openTimeIcon = UIImageView(image: R.image.icon_tradehour())
-        openTimeIcon.tintColor = KPColorPalette.KPMainColor.mainColor
-        addSubview(openTimeIcon)
-        openTimeIcon.addConstraints(fromStringArray: ["V:[$view0]-16-[$self(20)]",
-                                                      "H:|-16-[$self(20)]"],
-                                    views: [featureContainer])
+        }
         
         openHint = UIView()
         openHint.layer.cornerRadius = 3.0
@@ -166,7 +176,6 @@ class KPShopInfoView: UIView {
         locationLabel.addConstraintForCenterAligning(to: locationIcon,
                                                      in: .vertical)
         
-        featureContents = informationDataModel.featureContents
         titleLabel.text = informationDataModel.name
         locationLabel.text = informationDataModel.address ?? "暫無資料"
         phoneLabel.text = informationDataModel.phone ?? "暫無資料"
