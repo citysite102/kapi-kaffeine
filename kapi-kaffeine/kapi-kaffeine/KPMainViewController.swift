@@ -22,8 +22,8 @@ class KPMainViewController: KPViewController {
     var sideBarController: KPSideViewController!
     var opacityView: UIView!
     var percentDrivenTransition: UIPercentDrivenInteractiveTransition!
-    var mainListViewController:KPMainListViewController?
-    var mainMapViewController:KPMainMapViewController?
+    var mainListViewController: KPMainListViewController?
+    var mainMapViewController: KPMainMapViewController?
     
     var displayDataModel: [KPDataModel]! {
         didSet {

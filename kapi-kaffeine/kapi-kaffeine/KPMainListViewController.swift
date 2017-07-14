@@ -22,7 +22,7 @@ class KPMainListViewController:
         static let KPMainListViewLoadingCellReuseIdentifier = "cell_loading"
         static let KPMainListViewAdCellReuseIdentifier = "cell_ad"
         static let adInterval = 12
-        static let concurrentAdsCount = 20
+        static let concurrentAdsCount = 8
         static let adViewHeight = CGFloat(135)
     }
     
@@ -62,6 +62,7 @@ class KPMainListViewController:
         }
     }
     
+    var adsAdded: Bool = false
     var snapShotShowing: Bool = false {
         didSet {
             DispatchQueue.main.async {
@@ -96,11 +97,15 @@ class KPMainListViewController:
                 self.tableView.allowsSelection = true
                 self.tableView.reloadData()
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                if !adsAdded {
+                    self.addNativeExpressAds()
+                }
             }
         }
     }
     
     var adsToLoad: [GADNativeExpressAdView] = [GADNativeExpressAdView]()
+    var adsLoaded: [GADNativeExpressAdView] = [GADNativeExpressAdView]()
     var loadStateForAds = [GADNativeExpressAdView: Bool]()
     
     override func viewDidLoad() {
@@ -249,27 +254,50 @@ class KPMainListViewController:
     // MARK: Ads
     
     func addNativeExpressAds() {
-        var index = Constant.adInterval
-        tableView.layoutIfNeeded()
-        while index < displayDataModel.count {
-            if adsToLoad.count < Constant.concurrentAdsCount {
-                
-                let adSize = GADAdSizeFromCGSize(CGSize(width: tableView.contentSize.width,
-                                                        height: Constant.adViewHeight))
-                
-                guard let adView = GADNativeExpressAdView(adSize: adSize) else {
-                    print("GADNativeExpressAdView failed to initialize at index \(index)")
-                    return
+        
+        adsAdded = true
+        if adsToLoad.isEmpty && adsLoaded.count == 0 {
+            var index = Constant.adInterval
+            var copiedDisplayDataModel = displayDataModel
+            tableView.layoutIfNeeded()
+            
+            while index < displayDataModel.count {
+                if adsToLoad.count < Constant.concurrentAdsCount {
+                    
+                    let adSize = GADAdSizeFromCGSize(CGSize(width: tableView.contentSize.width,
+                                                            height: Constant.adViewHeight))
+                    
+                    guard let adView = GADNativeExpressAdView(adSize: adSize) else {
+                        print("GADNativeExpressAdView failed to initialize at index \(index)")
+                        return
+                    }
+                    adView.adUnitID = "ca-app-pub-3940256099942544/2562852117"
+                    adView.rootViewController = self
+                    adView.delegate = self
+                    
+                    adsToLoad.append(adView)
+                    loadStateForAds[adView] = false
+                    
+                    copiedDisplayDataModel.insert(adView, at: index)
                 }
-                adView.adUnitID = "ca-app-pub-3940256099942544/2562852117"
-                adView.rootViewController = self
-                adView.delegate = self
-                
-                displayDataModel.insert(adView, at: index)
-                adsToLoad.append(adView)
-                loadStateForAds[adView] = false
+                index += Constant.adInterval
             }
-            index += Constant.adInterval
+            displayDataModel = copiedDisplayDataModel
+            adsAdded = false
+            preloadNextAd()
+        } else if !adsLoaded.isEmpty {
+            var index = Constant.adInterval
+            var copiedDisplayDataModel = displayDataModel
+            for position in 0..<adsLoaded.count {
+                if index < displayDataModel.count {
+                    copiedDisplayDataModel.insert(adsLoaded[position], at: index)
+                    index += Constant.adInterval
+                } else {
+                    break
+                }
+            }
+            displayDataModel = copiedDisplayDataModel
+            adsAdded = false
         }
     }
     
@@ -278,6 +306,7 @@ class KPMainListViewController:
             print("Count:\(adsToLoad.count)")
             let ad = adsToLoad.removeFirst()
             ad.load(GADRequest())
+            adsLoaded.append(ad)
         }
     }
 

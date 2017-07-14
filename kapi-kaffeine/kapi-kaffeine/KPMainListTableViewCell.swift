@@ -22,25 +22,6 @@ class KPMainListTableViewCell: UITableViewCell {
                                                (self.dataModel.averageRate?.doubleValue) ?? 0)
             }
             
-//            let randomImageArray = [R.image.demo_1(),
-//                                    R.image.demo_2(),
-//                                    R.image.demo_3(),
-//                                    R.image.demo_4(),
-//                                    R.image.demo_5(),
-//                                    R.image.demo_6(),
-//                                    R.image.demo_7(),
-//                                    R.image.demo_8(),
-//                                    R.image.demo_9(),
-//                                    R.image.demo_10(),
-//                                    R.image.demo_11(),
-//                                    R.image.icon_noImage()]
-//            
-//            let index: Int = Int(arc4random()%12)
-//            self.shopImageView.image = drawImage(image: randomImageArray[index]!,
-//                                                 rectSize: CGSize(width: 56, height: 56),
-//                                                 roundedRadius: 2)
-            
-            
             if let photoURL = dataModel.covers?["google_s"] {
                 self.shopImageView.af_setImage(withURL: URL(string: photoURL)!,
                                                placeholderImage: drawImage(image: R.image.icon_loading()!,
