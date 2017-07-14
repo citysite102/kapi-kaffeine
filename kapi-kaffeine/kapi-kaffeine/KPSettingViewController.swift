@@ -42,8 +42,8 @@ class KPSettingViewController: KPViewController {
         view.backgroundColor = UIColor.white
         navigationController?.navigationBar.topItem?.title = "設定"
         
-        dismissButton = UIButton(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
-        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4)
+        dismissButton = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(6, 7, 8, 7)
         dismissButton.setImage(R.image.icon_close()?.withRenderingMode(.alwaysTemplate),
                                     for: .normal)
         dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor
@@ -53,7 +53,7 @@ class KPSettingViewController: KPViewController {
         
         let barItem = UIBarButtonItem(customView: dismissButton)
         let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
-        negativeSpacer.width = -8
+        negativeSpacer.width = -7
         navigationItem.leftBarButtonItems = [negativeSpacer, barItem]
         
         dismissButton.addTarget(self,
