@@ -213,9 +213,14 @@ class KPInformationHeaderView: UIView {
                                 R.image.demo_3(),
                                 R.image.demo_4(),
                                 R.image.demo_5(),
-                                R.image.demo_6()]
+                                R.image.demo_6(),
+                                R.image.demo_7(),
+                                R.image.demo_8(),
+                                R.image.demo_9(),
+                                R.image.demo_10(),
+                                R.image.demo_11()]
         
-        let index: Int = Int(arc4random()%6)
+        let index: Int = Int(arc4random()%11)
         shopPhoto = UIImageView(image: randomImageArray[index])
         shopPhoto.contentMode = .scaleAspectFill
         shopPhoto.isUserInteractionEnabled = true

@@ -109,6 +109,7 @@ class KPMainViewController: KPViewController {
         SideMenuManager.menuWidth = 260
         
         
+        
         let reachabilityManager = NetworkReachabilityManager()
         reachabilityManager?.startListening()
         reachabilityManager?.listener = {

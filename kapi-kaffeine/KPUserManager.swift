@@ -12,6 +12,7 @@ import FirebaseAuth
 import FacebookLogin
 import FacebookCore
 import ObjectMapper
+import PromiseKit
 
 extension NSNotification.Name {
     public static let KPCurrentUserDidChange: NSNotification.Name = NSNotification.Name(rawValue: "KPCurrentUserDidChange")

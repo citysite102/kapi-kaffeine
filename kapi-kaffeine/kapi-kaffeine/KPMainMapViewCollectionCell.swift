@@ -22,12 +22,31 @@ class KPMainMapViewCollectionCell: UICollectionViewCell {
                                                self.dataModel.averageRate?.floatValue ?? 0)
             }
             
-            if let photoURL = dataModel.covers?["google_s"] {
-                self.shopImageView.af_setImage(withURL: URL(string: photoURL)!,
-                                               placeholderImage: R.image.icon_loading())
-            } else {
-                self.shopImageView.image = R.image.icon_noImage()
-            }
+            let randomImageArray = [R.image.demo_1(),
+                                    R.image.demo_2(),
+                                    R.image.demo_3(),
+                                    R.image.demo_4(),
+                                    R.image.demo_5(),
+                                    R.image.demo_6(),
+                                    R.image.demo_7(),
+                                    R.image.demo_8(),
+                                    R.image.demo_9(),
+                                    R.image.demo_10(),
+                                    R.image.demo_11(),
+                                    R.image.icon_noImage()]
+            
+            let index: Int = Int(arc4random()%12)
+            self.shopImageView.image = drawImage(image: randomImageArray[index]!,
+                                                 rectSize: CGSize(width: 64, height: 64),
+                                                 roundedRadius: 2)
+            
+            
+//            if let photoURL = dataModel.covers?["google_s"] {
+//                self.shopImageView.af_setImage(withURL: URL(string: photoURL)!,
+//                                               placeholderImage: R.image.icon_loading())
+//            } else {
+//                self.shopImageView.image = R.image.icon_noImage()
+//            }
             
             if let currentLocation = KPLocationManager.sharedInstance().currentLocation {
                 var distance = CLLocation(latitude: dataModel.latitude, longitude: dataModel.longitude).distance(from: currentLocation)
@@ -78,8 +97,6 @@ class KPMainMapViewCollectionCell: UICollectionViewCell {
         
         shopImageView = UIImageView(image: UIImage(named: "demo_6"))
         shopImageView.contentMode = .scaleAspectFill
-        shopImageView.clipsToBounds = true
-        shopImageView.layer.cornerRadius = 2.0
         addSubview(shopImageView)
         shopImageView.addConstraints(fromStringArray: ["H:|-8-[$self(64)]",
                                                        "V:|-8-[$self(64)]-8-|"])

@@ -511,7 +511,7 @@ class KPInformationViewController: KPViewController {
                 (self.rateInformationView.infoView as! KPShopRateInfoView).rateData = rate
                 self.informationHeaderButtonBar.rateButton.numberValue = (rate?.rates?.count)!
                 self.informationHeaderButtonBar.rateButton.selected =
-                    (KPUserManager.sharedManager.currentUser?.hasRated(self.informationDataModel.identifier))!
+                    (KPUserManager.sharedManager.currentUser?.hasRated(self.informationDataModel.identifier)) ?? false  
             }
         }
     }
@@ -530,7 +530,7 @@ class KPInformationViewController: KPViewController {
                 if let commentCountValue = comments?.count {
                     self.informationHeaderButtonBar.commentButton.numberValue = commentCountValue
                     self.informationHeaderButtonBar.commentButton.selected =
-                        (KPUserManager.sharedManager.currentUser?.hasReviewed(self.informationDataModel.identifier))!
+                        (KPUserManager.sharedManager.currentUser?.hasReviewed(self.informationDataModel.identifier)) ?? false
                 }
             }
         }
