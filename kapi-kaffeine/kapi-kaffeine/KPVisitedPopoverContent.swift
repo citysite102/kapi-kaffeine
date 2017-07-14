@@ -26,7 +26,16 @@ class KPVisitedPopoverContent: UIView, PopoverProtocol {
         label.font = UIFont.boldSystemFont(ofSize: 18.0)
         label.textAlignment = .center
         label.textColor = KPColorPalette.KPTextColor.mainColor
-        label.text = "有誰來過?"
+        label.text = "有誰來過這間咖啡?"
+        return label
+    }()
+    
+    lazy var peopleLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 12.0)
+        label.textAlignment = .center
+        label.textColor = KPColorPalette.KPTextColor.grayColor_level4
+        label.text = "共有13人來過"
         return label
     }()
     
@@ -40,7 +49,7 @@ class KPVisitedPopoverContent: UIView, PopoverProtocol {
     private var cancelButton: UIButton!
     
     override var intrinsicContentSize: CGSize {
-        return CGSize(width: 280, height: 220)
+        return CGSize(width: 280, height: 230)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -57,6 +66,12 @@ class KPVisitedPopoverContent: UIView, PopoverProtocol {
         titleLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
         titleLabel.addConstraints(fromStringArray: ["V:|-16-[$self]",
                                                     "H:|-16-[$self]-16-|"])
+        
+        addSubview(peopleLabel)
+        peopleLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
+        peopleLabel.addConstraints(fromStringArray: ["V:[$view0]-6-[$self]",
+                                                     "H:|-16-[$self]-16-|"],
+                                   views: [titleLabel])
         
         buttonContainer = UIView()
         addSubview(buttonContainer)
@@ -84,7 +99,8 @@ class KPVisitedPopoverContent: UIView, PopoverProtocol {
         self.addSubview(self.collectionView)
         self.collectionView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                              "V:[$view0]-8-[$self][$view1]"],
-                                           views:[titleLabel, buttonContainer])
+                                           views:[peopleLabel,
+                                                  buttonContainer])
         
         addSubview(seperator)
         seperator.addConstraints(fromStringArray: ["V:[$self(1)]",
@@ -152,7 +168,7 @@ UICollectionViewDelegateFlowLayout {
         let displayCell = cell as! KPShopPhotoCell
         
         if !shownCellIndex.contains(indexPath.row) && animated {
-            displayCell.shopPhoto.transform = CGAffineTransform(scaleX: 0.01, y: 0.01).rotated(by: -CGFloat.pi/2)
+            displayCell.shopPhoto.transform = CGAffineTransform(scaleX: 0.01, y: 0.01).rotated(by: -CGFloat.pi/3)
             UIView.animate(withDuration: 0.7,
                            delay: 0.1+Double(indexPath.row)*0.02,
                            usingSpringWithDamping: 0.6,
