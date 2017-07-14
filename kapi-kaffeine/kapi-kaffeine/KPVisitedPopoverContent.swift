@@ -49,7 +49,7 @@ class KPVisitedPopoverContent: UIView, PopoverProtocol {
     private var cancelButton: UIButton!
     
     override var intrinsicContentSize: CGSize {
-        return CGSize(width: 280, height: 230)
+        return CGSize(width: 280, height: 250)
     }
     
     required init?(coder aDecoder: NSCoder) {

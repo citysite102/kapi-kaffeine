@@ -483,6 +483,24 @@ GMUClusterRendererDelegate {
         }
     }
     
+    func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
+        if !isCollectionViewShow && self.nearestButton.alpha != 0.5 {
+            UIView.animate(withDuration: 0.15,
+                           animations: {
+                            self.nearestButton.alpha = 0.5
+                            self.addButton.alpha = 0.5
+            })
+        }
+    }
+    
+    func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition) {
+        UIView.animate(withDuration: 0.15,
+                       animations: {
+                        self.nearestButton.alpha = 1.0
+                        self.addButton.alpha = 1.0
+        })
+    }
+    
     func clusterManager(_ clusterManager: GMUClusterManager, didTap cluster: GMUCluster) -> Bool {
         
         if self.isCollectionViewShow {
