@@ -58,13 +58,12 @@ class KPServiceHandler {
                                         self.currentCafeDatas = cafeDatas
                                         completion?(cafeDatas, nil)
                                     } else {
-                                        completion?(nil, nil)
+                                        completion?(nil, NetworkRequestError.resultUnavailable)
                                     }
         }.catch { error in
             completion?(nil, (error as! NetworkRequestError))
         }
     }
-    
     
     func fetchStoreInformation(_ cafeID: String!,
                                _ completion:((_ result: KPDataModel?) -> Void)!) {
@@ -92,9 +91,7 @@ class KPServiceHandler {
         
         let newShopRequest = KPAddNewCafeRequest()
         
-        let loadingView = KPLoadingView()
-        loadingView.loadingContents = ("新增中...", "新增成功", "新增失敗")
-        loadingView.state = .loading
+        let loadingView = KPLoadingView(("新增中..", "新增成功", "新增失敗"))
         UIApplication.shared.topViewController.view.addSubview(loadingView)
         loadingView.addConstraints(fromStringArray: ["V:|[$self]|",
                                                      "H:|[$self]|"])
@@ -134,15 +131,21 @@ class KPServiceHandler {
     }
     
     
-    // Comment API
+    // MARK: Comment API
     
     func addComment(_ comment: String? = "",
                     _ completion: ((_ successed: Bool) -> Swift.Void)?) {
+        
+        let loadingView = KPLoadingView(("新增中..", "新增成功", "新增失敗"))
+        UIApplication.shared.KPTopViewController().view.addSubview(loadingView)
+        loadingView.addConstraints(fromStringArray: ["V:|[$self]|",
+                                                     "H:|[$self]|"])
         
         let commentRequest = KPNewCommentRequest()
         commentRequest.perform((currentDisplayModel?.identifier)!,
                                comment!).then { result -> Void in
                                 if let commentResult = result["result"].bool {
+                                    loadingView.state = commentResult ? .successed : .failed
                                     completion?(commentResult)
                                     guard let _ = KPUserManager.sharedManager.currentUser?.reviews?.first(where: {$0.identifier == self.currentDisplayModel?.identifier}) else {
                                         KPUserManager.sharedManager.currentUser?.reviews?.append(self.currentDisplayModel!)
@@ -183,7 +186,7 @@ class KPServiceHandler {
         }
     }
     
-    // Rating API
+    // MARK: Rating API
 
     func addRating(_ wifi: NSNumber? = 0,
                    _ seat: NSNumber? = 0,
@@ -192,38 +195,30 @@ class KPServiceHandler {
                    _ tasty: NSNumber? = 0,
                    _ cheap: NSNumber? = 0,
                    _ music: NSNumber? = 0,
-                   _ showLoading: Bool = true,
                    _ completion: ((_ successed: Bool) -> Swift.Void)?) {
-        let newRatingRequest = KPNewRatingRequest()
         
-        let loadingView = KPLoadingView()
-        
-        if showLoading {
-            loadingView.loadingContents = ("新增中...", "新增成功", "新增失敗")
-            UIApplication.shared.KPTopViewController().view.addSubview(loadingView)
-            loadingView.state = .loading
-            loadingView.addConstraints(fromStringArray: ["V:|[$self]|",
-                                                         "H:|[$self]|"])
-        }
-        
-        newRatingRequest.perform((currentDisplayModel?.identifier)!,
-                                 wifi,
-                                 seat,
-                                 food,
-                                 quiet,
-                                 tasty,
-                                 cheap,
-                                 music).then { result -> Void in
-                                    if let commentResult = result["result"].bool {
-                                        loadingView.state = commentResult ? .successed : .failed
-                                        completion?(commentResult)
-                                        guard let _ = KPUserManager.sharedManager.currentUser?.rates?.first(where: {$0.identifier == self.currentDisplayModel?.identifier}) else {
-                                            KPUserManager.sharedManager.currentUser?.rates?.append(self.currentDisplayModel!)
-                                            KPUserManager.sharedManager.storeUserInformation()
-                                            return
-                                        }
+        let loadingView = KPLoadingView(("新增中..", "新增成功", "新增失敗"))
+        UIApplication.shared.KPTopViewController().view.addSubview(loadingView)
+        loadingView.addConstraints(fromStringArray: ["V:|[$self]|",
+                                                     "H:|[$self]|"])
+        let ratingRequest = KPNewRatingRequest()
+        ratingRequest.perform((currentDisplayModel?.identifier)!,
+                              wifi,
+                              seat,
+                              food,
+                              quiet,
+                              tasty,
+                              cheap,
+                              music).then { result -> Void in
+                                if let commentResult = result["result"].bool {
+                                    loadingView.state = commentResult ? .successed : .failed
+                                    completion?(commentResult)
+                                    guard let _ = KPUserManager.sharedManager.currentUser?.rates?.first(where: {$0.identifier == self.currentDisplayModel?.identifier}) else {
+                                        KPUserManager.sharedManager.currentUser?.rates?.append(self.currentDisplayModel!)
+                                        KPUserManager.sharedManager.storeUserInformation()
+                                        return
                                     }
-                                    print("Result\(result)")
+                                }
             }.catch { (error) in
                 loadingView.state = .failed
                 completion?(false)
@@ -244,7 +239,46 @@ class KPServiceHandler {
         }
     }
     
-    // Photo API
+    // MARK: Mix
+    
+    func addCommentAndRatings(_ comment: String? = "",
+                              _ wifi: NSNumber? = 0,
+                              _ seat: NSNumber? = 0,
+                              _ food: NSNumber? = 0,
+                              _ quiet: NSNumber? = 0,
+                              _ tasty: NSNumber? = 0,
+                              _ cheap: NSNumber? = 0,
+                              _ music: NSNumber? = 0,
+                              _ completion: ((_ successed: Bool) -> Swift.Void)?) {
+        
+        
+        let loadingView = KPLoadingView(("新增中..", "新增成功", "新增失敗"))
+        UIApplication.shared.KPTopViewController().view.addSubview(loadingView)
+        loadingView.addConstraints(fromStringArray: ["V:|[$self]|",
+                                                     "H:|[$self]|"])
+        
+        let commentRequest = KPNewCommentRequest()
+        let ratingRequest = KPNewRatingRequest()
+        
+        when(fulfilled:
+                commentRequest.perform((currentDisplayModel?.identifier)!, comment!),
+                ratingRequest.perform((currentDisplayModel?.identifier)!,
+                                      wifi,
+                                      seat,
+                                      food,
+                                      quiet,
+                                      tasty,
+                                      cheap,
+                                      music)).then { (response1, response2) -> Void in
+                                        loadingView.state = .successed
+                                        completion?(true)
+        }.catch { (error) in
+            loadingView.state = .failed
+            completion?(false)
+        }
+    }
+    
+    // MARK: Photo API
     
     func getPhotos(_ completion: ((_ successed: Bool,
         _ photos: [String]?) -> Swift.Void)?) {
@@ -258,12 +292,11 @@ class KPServiceHandler {
     }
     
     
-    // Favorite / Visit
+    // MARK: Favorite / Visit
     
     func addFavoriteCafe(_ completion: ((Bool) -> Swift.Void)? = nil) {
         
         let addRequest = KPFavoriteRequest()
-        
         addRequest.perform((currentDisplayModel?.identifier)!,
                            KPFavoriteRequest.requestType.add).then { result -> Void in
                             
@@ -279,18 +312,16 @@ class KPServiceHandler {
         }
     }
     
-    // User API
+    // MARK: User API
     
     func modifyRemoteUserData(_ user: KPUser, _ completion:((_ successed: Bool) -> Void)?) {
-        let request = KPUserInformationRequest()
         
-        let loadingView = KPLoadingView()
-        loadingView.loadingContents = ("修改中...", "修改成功", "修改失敗")
+        let loadingView = KPLoadingView(("修改中...", "修改成功", "修改失敗"))
         UIApplication.shared.KPTopViewController().view.addSubview(loadingView)
-        loadingView.state = .loading
         loadingView.addConstraints(fromStringArray: ["V:|[$self]|",
                                                      "H:|[$self]|"])
 
+        let request = KPUserInformationRequest()
         request.perform(user.displayName,
                         user.photoURL,
                         user.defaultLocation,
@@ -363,13 +394,11 @@ class KPServiceHandler {
     }
     
     
-    // Repost
+    // MARK: Report
     
     func sendReport(_ content: String,
                     _ completion: ((Bool) -> Swift.Void)? = nil) {
-        let loadingView = KPLoadingView()
-        loadingView.loadingContents = ("回報中...", "回報成功", "回報失敗")
-        loadingView.state = .loading
+        let loadingView = KPLoadingView(("回報中...", "回報成功", "回報失敗"))
         UIApplication.shared.topViewController.view.addSubview(loadingView)
         loadingView.addConstraints(fromStringArray: ["V:|[$self]|",
                                                      "H:|[$self]|"])

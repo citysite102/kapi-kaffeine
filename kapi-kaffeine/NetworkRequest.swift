@@ -32,6 +32,7 @@ public enum NetworkRequestError: Error {
     case apiError(errorInformation: errorInformation)
     case unknownError
     case noNetworkConnection
+    case resultUnavailable
 }
 
 public typealias RawJsonResult = JSON
@@ -118,6 +119,13 @@ extension NetworkRequest where ResponseType == RawJsonResult {
     }
 
     private func rawJsonResponseHandler(_ data: Data) throws -> ResponseType {
+        if let responseResult = JSON(data: data).dictionary?["result"] {
+            if responseResult.boolValue {
+                return JSON(data: data)
+            } else {
+                throw NetworkRequestError.resultUnavailable
+            }
+        }
         return JSON(data: data)
     }
 }

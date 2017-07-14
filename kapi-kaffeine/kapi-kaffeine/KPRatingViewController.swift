@@ -85,8 +85,7 @@ class KPRatingViewController: KPSharedSettingViewController {
                                                      NSNumber(value: ratingViews[1].currentRate),
                                                      NSNumber(value: ratingViews[4].currentRate),
                                                      NSNumber(value: ratingViews[2].currentRate),
-                                                     NSNumber(value: ratingViews[6].currentRate),
-                                                     true) { (successed) in
+                                                     NSNumber(value: ratingViews[6].currentRate)) { (successed) in
                                                         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
                                                                                       execute: {
                                                                                         self.appModalController()?.dismissControllerWithDefaultDuration()

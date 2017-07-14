@@ -119,8 +119,28 @@ class KPLoadingView: UIView {
         iconView.addConstraintForCenterAligningToSuperview(in: .horizontal)
         iconView.transform = CGAffineTransform(translationX: 0, y: 20)
         iconView.alpha = 0
-
+        
+        container.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        iconView.alpha = 0
+        indicator.alpha = 1.0
+        indicator.transform = .identity
+        displayLabel.text = loadingContents != nil ? loadingContents?.loading : "載入中.."
+        indicator.startAnimating()
     }
+    
+    convenience init(_ loadingContents:
+        (loading: String,
+        success: String,
+        failed: String)?) {
+        
+        self.init(frame: .zero)
+        
+        self.loadingContents = loadingContents
+        self.displayLabel.text = loadingContents?.loading
+        self.successContent = loadingContents?.success
+        self.failContent = loadingContents?.failed
+    }
+    
     
     func performStateAnimation(_ state: loadingState) {
         

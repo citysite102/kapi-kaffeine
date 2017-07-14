@@ -223,49 +223,27 @@ class KPNewCommentController: KPViewController {
     func handleSendButtonOnTapped() {
         inputTextView.resignFirstResponder()
         
-        let loadingView = KPLoadingView()
-        loadingView.loadingContents = ("新增中..", "新增成功", "新增失敗")
-        UIApplication.shared.KPTopViewController().view.addSubview(loadingView)
-        loadingView.state = .loading
-        loadingView.addConstraints(fromStringArray: ["V:|[$self]|",
-                                                     "H:|[$self]|"])
-
-        
         if self.ratingCheckbox.checkBox.checkState == .checked {
-            KPServiceHandler.sharedHandler.addComment(inputTextView.text) { (successed) in
-                if successed {
-                    KPServiceHandler.sharedHandler.addRating(NSNumber(value: self.ratingViews[0].currentRate),
-                                                             NSNumber(value: self.ratingViews[3].currentRate),
-                                                             NSNumber(value: self.ratingViews[5].currentRate),
-                                                             NSNumber(value: self.ratingViews[1].currentRate),
-                                                             NSNumber(value: self.ratingViews[4].currentRate),
-                                                             NSNumber(value: self.ratingViews[2].currentRate),
-                                                             NSNumber(value: self.ratingViews[6].currentRate),
-                                                             false, { (successed) in
-                                                                if successed {
-                                                                    loadingView.state = .successed
+            KPServiceHandler.sharedHandler.addCommentAndRatings(inputTextView.text,
+                                                                NSNumber(value: self.ratingViews[0].currentRate),
+                                                                NSNumber(value: self.ratingViews[3].currentRate),
+                                                                NSNumber(value: self.ratingViews[5].currentRate),
+                                                                NSNumber(value: self.ratingViews[1].currentRate),
+                                                                NSNumber(value: self.ratingViews[4].currentRate),
+                                                                NSNumber(value: self.ratingViews[2].currentRate),
+                                                                NSNumber(value: self.ratingViews[6].currentRate), { (successed) in
                                                                     DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
                                                                                                   execute: {
                                                                                                     self.navigationController?.popViewController(animated: true)
                                                                     })
-                                                                } else {
-                                                                    loadingView.state = .failed
-                                                                }
-                    })
-                } else {
-                    loadingView.state = .failed
-                }
-            }
+            })
         } else {
             KPServiceHandler.sharedHandler.addComment(inputTextView.text, { (successed) in
                 if successed {
-                    loadingView.state = .successed
                     DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
                                                   execute: {
                                                     self.navigationController?.popViewController(animated: true)
                     })
-                } else {
-                    loadingView.state = .failed
                 }
             })
         }
