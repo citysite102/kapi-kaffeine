@@ -42,7 +42,6 @@ class KPDataModel: NSObject, Mappable, GMUClusterItem {
     var createdTime: NSNumber?
     var modifiedTime: NSNumber?
     
-    
     var featureContents: [String]! {
         get {
             var features = [String]()
@@ -59,6 +58,16 @@ class KPDataModel: NSObject, Mappable, GMUClusterItem {
     var position: CLLocationCoordinate2D {
         get {
             return CLLocationCoordinate2DMake(latitude, longitude)
+        }
+    }
+    
+    var distanceInMeter: Double? {
+        get {
+            if let currentLocation = KPLocationManager.sharedInstance().currentLocation {
+                return CLLocation(latitude: self.latitude,
+                                  longitude: self.longitude).distance(from: currentLocation)
+            }
+            return nil
         }
     }
     

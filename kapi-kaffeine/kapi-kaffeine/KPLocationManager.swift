@@ -9,13 +9,23 @@
 import UIKit
 import CoreLocation
 
+extension Notification.Name {
+    public static let KPLocationDidUpdate = Notification.Name(rawValue: "KPLocationDidUpdate")
+}
+
 class KPLocationManager: NSObject, CLLocationManagerDelegate {
     
     private static var mInstance:KPLocationManager?
     
     private let locationManager = CLLocationManager()
     
-    var currentLocation: CLLocation?
+    var currentLocation: CLLocation? {
+        didSet {
+            if oldValue != currentLocation {
+                NotificationCenter.default.post(name: .KPLocationDidUpdate, object: nil)
+            }
+        }
+    }
     
     static func sharedInstance() -> KPLocationManager {
         if mInstance == nil {

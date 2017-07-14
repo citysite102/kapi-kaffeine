@@ -48,17 +48,7 @@ class KPMainMapViewCollectionCell: UICollectionViewCell {
 //                self.shopImageView.image = R.image.icon_noImage()
 //            }
             
-            if let currentLocation = KPLocationManager.sharedInstance().currentLocation {
-                var distance = CLLocation(latitude: dataModel.latitude, longitude: dataModel.longitude).distance(from: currentLocation)
-                var unit = "m"
-                if distance > 1000 {
-                    unit = "km"
-                    distance = distance/1000
-                }
-                self.shopDistanceLabel.text = "\(Int(distance))\(unit)"
-            } else {
-                self.shopDistanceLabel.text = "-"
-            }
+            locationDidUpdate()
             
             if dataModel.businessHour != nil {
                 let shopStatus = dataModel.businessHour!.shopStatus
@@ -156,9 +146,28 @@ class KPMainMapViewCollectionCell: UICollectionViewCell {
         self.featureContainer.addConstraints(fromStringArray: ["H:[$self]-8-|",
                                                                "V:[$self]-|"])
         
+        NotificationCenter.default.addObserver(self, selector: #selector(locationDidUpdate), name: .KPLocationDidUpdate, object: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    func locationDidUpdate() {
+        if let distanceInMeter = dataModel.distanceInMeter {
+            var distance = distanceInMeter
+            var unit = "m"
+            if distance > 1000 {
+                unit = "km"
+                distance = distance/1000
+            }
+            self.shopDistanceLabel.text = "\(Int(distance))\(unit)"
+        } else {
+            self.shopDistanceLabel.text = "-"
+        }
     }
 }

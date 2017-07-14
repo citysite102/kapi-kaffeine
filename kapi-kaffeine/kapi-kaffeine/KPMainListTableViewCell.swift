@@ -68,17 +68,7 @@ class KPMainListTableViewCell: UITableViewCell {
 //                                                     roundedRadius: 2)
 //            }
             
-            if let currentLocation = KPLocationManager.sharedInstance().currentLocation {
-                var distance = CLLocation(latitude: dataModel.latitude, longitude: dataModel.longitude).distance(from: currentLocation)
-                var unit = "m"
-                if distance > 1000 {
-                    unit = "km"
-                    distance = distance/1000
-                }
-                self.shopDistanceLabel.text = "\(Int(distance))\(unit)"
-            } else {
-                self.shopDistanceLabel.text = "-"
-            }
+            locationDidUpdate()
             
             if dataModel.businessHour != nil {
                 let shopStatus = dataModel.businessHour!.shopStatus
@@ -92,6 +82,7 @@ class KPMainListTableViewCell: UITableViewCell {
                 shopStatusHint.backgroundColor = KPColorPalette.KPTextColor.grayColor_level5
                 shopStatusLabel.text = "暫無資料"
             }
+            
         }
     }
     
@@ -176,6 +167,9 @@ class KPMainListTableViewCell: UITableViewCell {
         contentView.addSubview(featureContainer)
         featureContainer.addConstraints(fromStringArray: ["H:[$self]-8-|",
                                                           "V:[$self]-10-|"])
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(locationDidUpdate), name: .KPLocationDidUpdate, object: nil)
+
     }
     
     override func layoutSubviews() {
@@ -190,11 +184,29 @@ class KPMainListTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
     }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         backgroundColor = selected ? KPColorPalette.KPBackgroundColor.grayColor_level6 : UIColor.white
         // Configure the view for the selected state
+    }
+    
+    func locationDidUpdate() {
+        if let distanceInMeter = dataModel.distanceInMeter {
+            var distance = distanceInMeter
+            var unit = "m"
+            if distance > 1000 {
+                unit = "km"
+                distance = distance/1000
+            }
+            self.shopDistanceLabel.text = "\(Int(distance))\(unit)"
+        } else {
+            self.shopDistanceLabel.text = "-"
+        }
     }
 }
 
