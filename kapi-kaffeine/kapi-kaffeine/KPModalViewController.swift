@@ -89,6 +89,7 @@ class KPModalViewController: KPViewController {
         backgroundSensingView = KPPopoverSensingView()
         backgroundSensingView.delegate = self
         backgroundSensingView.backgroundColor = UIColor.clear
+//        backgroundSensingView.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level4
         view.addSubview(backgroundSensingView)
         backgroundSensingView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                                "V:|[$self]"])
@@ -255,10 +256,9 @@ class KPModalViewController: KPViewController {
     
     func dismissController(duration: CGFloat, completion: (() -> Void)? = nil) {
         
-        self.view.backgroundColor = UIColor.clear
-        
         UIView.animate(withDuration: Double(duration),
                        animations: {
+            self.view.backgroundColor = UIColor.clear
             switch self.presentationStyle {
             case KPModalPresentationStyle.top:
                 self.containerSensingView.frameOrigin = CGPoint(x: self.containerSensingView.frame.minX,

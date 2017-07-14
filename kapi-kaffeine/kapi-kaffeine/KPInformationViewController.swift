@@ -100,7 +100,7 @@ class KPInformationViewController: KPViewController {
         
         dismissButton = KPBounceButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30),
                                        image: R.image.icon_close()!)
-        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(6, 6, 6, 6)
+        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(7, 7, 7, 7)
         dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor
         dismissButton.addTarget(self,
                                 action: #selector(KPInformationViewController.handleDismissButtonOnTapped),
@@ -129,7 +129,7 @@ class KPInformationViewController: KPViewController {
         let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace,
                                              target: nil,
                                              action: nil)
-        negativeSpacer.width = -8
+        negativeSpacer.width = -7
         navigationItem.leftBarButtonItems = [negativeSpacer, barItem]
         navigationItem.rightBarButtonItems = [negativeSpacer, rightBarItem]
         
@@ -511,7 +511,7 @@ class KPInformationViewController: KPViewController {
                 (self.rateInformationView.infoView as! KPShopRateInfoView).rateData = rate
                 self.informationHeaderButtonBar.rateButton.numberValue = (rate?.rates?.count)!
                 self.informationHeaderButtonBar.rateButton.selected =
-                    (KPUserManager.sharedManager.currentUser?.hasRated(self.informationDataModel.identifier)) ?? false  
+                    (KPUserManager.sharedManager.currentUser?.hasRated(self.informationDataModel.identifier)) ?? false
             }
         }
     }
@@ -599,7 +599,7 @@ class KPInformationViewController: KPViewController {
         let controller = KPModalViewController()
         let businessTimeViewController = KPBusinessTimeViewController()
         
-        controller.presentationStyle = .popout
+//        controller.presentationStyle = .popout
         controller.contentSize = CGSize(width: 276, height: 416)
         controller.cornerRadius = [.topRight, .topLeft, .bottomLeft, .bottomRight]
         controller.dismissWhenTouchingOnBackground = true

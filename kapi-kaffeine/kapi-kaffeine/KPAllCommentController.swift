@@ -126,7 +126,7 @@ extension KPAllCommentController: UITableViewDelegate, UITableViewDataSource {
         let displayCell = cell as! KPShopCommentCell
         
         if !shownCellIndex.contains(indexPath.row) && animated {
-            displayCell.userPicture.transform = CGAffineTransform(scaleX: 0.1, y: 0.1).rotated(by: -CGFloat.pi/2)
+            displayCell.userPicture.transform = CGAffineTransform(scaleX: 0.01, y: 0.01).rotated(by: -CGFloat.pi/2)
             UIView.animate(withDuration: 0.7,
                            delay: 0.2+Double(indexPath.row)*0.05,
                            usingSpringWithDamping: 0.6,

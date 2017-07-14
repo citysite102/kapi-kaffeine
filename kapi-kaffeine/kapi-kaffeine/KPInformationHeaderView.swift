@@ -99,16 +99,19 @@ class KPInformationHeaderButtonBar: UIView {
                                                         }
         })
         
-        visitButton.buttonInfo = HeaderButtonInfo(title: "我要打卡",
-                                                  info: "%d人來做",
+        visitButton.buttonInfo = HeaderButtonInfo(title: "有誰來過?",
+                                                  info: "%d人來過",
                                                   defaultInfo: "無人打卡",
                                                   icon: R.image.icon_map()!,
                                                   handler: { (headerButton) -> () in
                                                     
                                                     if headerButton.selected == false {
-                                                        headerButton.selected = true
-                                                        headerButton.numberValue = headerButton.numberValue + 1
-                                                        KPServiceHandler.sharedHandler.addVisitedCafe()
+                                                        KPPopoverView.popoverVisitedView(nil, { (content) in
+                                                            content.popoverView.dismiss()
+                                                            headerButton.selected = true
+                                                            headerButton.numberValue = headerButton.numberValue + 1
+                                                            KPServiceHandler.sharedHandler.addVisitedCafe()
+                                                        })
                                                     } else {
                                                         DispatchQueue.main.asyncAfter(deadline: .now()) {
                                                             KPPopoverView.popoverDefaultStyleContent(

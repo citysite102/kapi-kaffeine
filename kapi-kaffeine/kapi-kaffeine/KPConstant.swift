@@ -19,6 +19,7 @@ struct KPColorPalette {
         static let borderColor = UIColor(hexString: "#e6e6e6")
         static let starColor = UIColor(hexString: "#f9c816")
         
+        static let tempButtonCOlor = UIColor(hexString: "#4DA0D3")
         
         static let grayColor_level1 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 1.0)
         static let grayColor_level2 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.65)

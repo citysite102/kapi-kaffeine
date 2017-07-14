@@ -58,8 +58,8 @@ class KPBusinessTimeViewController: UIViewController {
         
         
         view.addSubview(titleLabel)
-        titleLabel.addConstraints(fromStringArray: ["V:|-24-[$self]-24-|",
-                                                    "H:|-24-[$self]"])
+        titleLabel.addConstraints(fromStringArray: ["V:|-24-[$self]",
+                                                    "H:|-24-[$self]-24-|"])
         
         shopStatusHint = UIView();
         shopStatusHint.backgroundColor = KPColorPalette.KPShopStatusColor.opened;
