@@ -189,7 +189,7 @@ class KPMainViewController: KPViewController {
                     case .noNetworkConnection:
                         self.mainListViewController?.state = .noInternet
                     default:
-                        print("錯誤萬歲")
+                        print("錯誤萬歲: \(requestError)")
                 }
             }
         }

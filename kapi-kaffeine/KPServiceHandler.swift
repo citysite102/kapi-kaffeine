@@ -286,6 +286,7 @@ class KPServiceHandler {
         let getPhotoRequest = KPGetPhotoRequest()
         getPhotoRequest.perform((currentDisplayModel?.identifier)!).then { result -> Void in
             print("Get Photo Result:\(result)")
+            completion?(true, result["data"].arrayObject as? [String])
         }.catch { (error) in
             completion?(false, nil)
         }

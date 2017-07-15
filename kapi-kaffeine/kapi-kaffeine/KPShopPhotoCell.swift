@@ -22,7 +22,6 @@ class KPShopPhotoCell: UICollectionViewCell {
         shopPhoto.contentMode = .scaleAspectFit
         shopPhoto.layer.cornerRadius = 2.0
         shopPhoto.layer.masksToBounds = true
-        shopPhoto.image = R.image.demo_1()
         shopPhoto.contentMode = .scaleAspectFill
         addSubview(shopPhoto)
         shopPhoto.addConstraints(fromStringArray: ["H:|[$self]|",

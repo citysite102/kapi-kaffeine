@@ -10,7 +10,8 @@ import UIKit
 
 struct PhotoInformation {
     let title: String
-    let image: UIImage
+//    let image: UIImage
+    let imageURL: URL
     let index: Int
 }
 
@@ -19,7 +20,7 @@ class KPPhotoDisplayViewController: KPViewController {
     static let KPPhotoDisplayControllerCellReuseIdentifier = "cell";
     
     var statusBarShouldBeHidden = false
-    var diplayedPhotoInformations: [PhotoInformation] = [PhotoInformation]()
+    var displayedPhotoInformations: [PhotoInformation] = [PhotoInformation]()
     
     var dismissing: Bool = false
     var startAnchorPoint: CGPoint!
@@ -29,7 +30,12 @@ class KPPhotoDisplayViewController: KPViewController {
     var collectionView : UICollectionView!
     var collectionLayout: UICollectionViewFlowLayout!
     var dismissButton: KPBounceButton!
-    var selectedIndexPath: IndexPath!
+    var selectedIndexPath: IndexPath! {
+        didSet {
+            countLabel.text = "\(selectedIndexPath.row+1) of \(displayedPhotoInformations.count)"
+            photoTitleLabel.text = displayedPhotoInformations[selectedIndexPath.row].title
+        }
+    }
     var backgroundSnapshot: UIView! {
         didSet {
             self.view.insertSubview(backgroundSnapshot, at: 0)
@@ -129,12 +135,12 @@ class KPPhotoDisplayViewController: KPViewController {
                                                        "V:|-13-[$self(30)]"]);
         
         view.addSubview(photoTitleLabel)
-        photoTitleLabel.text = "覺旅咖啡 Journey Cafe"
+        photoTitleLabel.text = ""
         photoTitleLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
         photoTitleLabel.addConstraint(from: "V:|-16-[$self]")
         
         view.addSubview(countLabel)
-        countLabel.text = "6 of 104"
+//        countLabel.text = "\(selectedIndexPath.row+1) of \(displayedPhotoInformations.count)"
         countLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
         countLabel.addConstraint(from: "V:[$self]-24-|")
     }
@@ -251,7 +257,7 @@ extension KPPhotoDisplayViewController:
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return diplayedPhotoInformations.count;
+        return displayedPhotoInformations.count;
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -266,7 +272,8 @@ extension KPPhotoDisplayViewController:
             cell.shopPhoto.addGestureRecognizer(longPressGesture)
         }
         
-        cell.shopPhoto.image = self.diplayedPhotoInformations[indexPath.row].image
+//        cell.shopPhoto.image = self.diplayedPhotoInformations[indexPath.row].image
+        cell.shopPhoto.af_setImage(withURL: self.displayedPhotoInformations[indexPath.row].imageURL)
         return cell;
     }
 }

@@ -24,7 +24,20 @@ class KPInformationViewController: KPViewController {
     
     var transitionController: KPPhotoDisplayTransition = KPPhotoDisplayTransition()
     var percentDrivenTransition: UIPercentDrivenInteractiveTransition!
-    var currentPhotoIndexPath: IndexPath = IndexPath(item: 0, section: 0)
+    var currentPhotoIndexPath: IndexPath = IndexPath(item: 0, section: 0) {
+        didSet {
+            informationHeaderView.shopPhoto.af_setImage(withURL: displayPhotoInformations[currentPhotoIndexPath.row].imageURL,
+                                                        placeholderImage: UIImage(color: KPColorPalette.KPBackgroundColor.grayColor_level6!),
+                                                        filter: nil,
+                                                        progress: nil,
+                                                        progressQueue: DispatchQueue.global(),
+                                                        imageTransition: UIImageView.ImageTransition.noTransition,
+                                                        runImageTransitionIfCached: false,
+                                                        completion: nil)
+        }
+    }
+    
+    var displayPhotoInformations: [PhotoInformation] = []
     
     var snapshotPhotoView: UIView  {
         get {
@@ -182,9 +195,11 @@ class KPInformationViewController: KPViewController {
         informationHeaderView = KPInformationHeaderView(frame: CGRect.zero)
         informationHeaderView.delegate = self
         informationHeaderView.informationController = self
+        
+        informationHeaderView.morePhotoButton.setTitle("\(informationDataModel.photoCount ?? 0) 張照片", for: .normal)
         if let photoURL = informationDataModel.covers?["google_l"] {
             informationHeaderView.shopPhoto.af_setImage(withURL: URL(string: photoURL)!,
-                                                        placeholderImage: UIImage(color:KPColorPalette.KPBackgroundColor.grayColor_level6!),
+                                                        placeholderImage: R.image.icon_loading(),
                                                         filter: nil,
                                                         progress: nil,
                                                         progressQueue: DispatchQueue.global(),
@@ -195,6 +210,8 @@ class KPInformationViewController: KPViewController {
                                                                 self.informationHeaderView.shopPhoto.image =  responseImage
                                                             }
                 })
+        } else {
+            
         }
         
         //informationDataModel
@@ -500,7 +517,20 @@ class KPInformationViewController: KPViewController {
         
         // 取得 Photo 資料
         KPServiceHandler.sharedHandler.getPhotos { (successed, photos) in
-            
+            if successed == true && photos != nil {
+                var index: Int = 0
+                for urlString in photos! {
+                    if let url = URL(string: urlString) {
+                        self.displayPhotoInformations.append(PhotoInformation(title: "", imageURL: url, index: index))
+                        index += 1
+                    }
+                }
+                if self.displayPhotoInformations.count == 0 {
+                    self.informationHeaderView.shopPhoto.image = R.image.icon_noImage()
+                }
+            } else {
+                // Handle Error
+            }
         }
     }
     
@@ -579,13 +609,7 @@ class KPInformationViewController: KPViewController {
     func handleMorePhotoButtonOnTapped() {
         let galleryController = KPPhotoGalleryViewController()
         
-        galleryController.diplayedPhotoInformations =
-            [PhotoInformation(title:"Title", image:R.image.demo_1()!, index:0),
-             PhotoInformation(title:"Title", image:R.image.demo_2()!, index:1),
-             PhotoInformation(title:"Title", image:R.image.demo_3()!, index:2),
-             PhotoInformation(title:"Title", image:R.image.demo_4()!, index:3),
-             PhotoInformation(title:"Title", image:R.image.demo_5()!, index:4),
-             PhotoInformation(title:"Title", image:R.image.demo_6()!, index:5)]
+        galleryController.displayedPhotoInformations = self.displayPhotoInformations
         
         dismissButton.isHidden = true
         navigationController?.pushViewController(viewController: galleryController,
@@ -727,6 +751,11 @@ extension KPInformationViewController: UIScrollViewDelegate {
 
 extension KPInformationViewController: KPInformationHeaderViewDelegate {
     func headerPhotoTapped(_ headerView: KPInformationHeaderView) {
+        
+        if self.displayPhotoInformations.count == 0 {
+            return
+        }
+        
         let photoDisplayController = KPPhotoDisplayViewController()
 //        let galleryController = KPPhotoGalleryViewController()
 //        galleryController.view.isHidden = true
@@ -740,13 +769,7 @@ extension KPInformationViewController: KPInformationHeaderViewDelegate {
         photoDisplayController.transitioningDelegate = self
 //        headerView.shopPhoto.isHidden = true
         photoDisplayController.backgroundSnapshot = navigationController!.view.snapshotView(afterScreenUpdates: true)
-        photoDisplayController.diplayedPhotoInformations =
-            [PhotoInformation(title:"Title", image:R.image.demo_1()!, index:0),
-             PhotoInformation(title:"Title", image:R.image.demo_2()!, index:1),
-             PhotoInformation(title:"Title", image:R.image.demo_3()!, index:2),
-             PhotoInformation(title:"Title", image:R.image.demo_4()!, index:3),
-             PhotoInformation(title:"Title", image:R.image.demo_5()!, index:4),
-             PhotoInformation(title:"Title", image:R.image.demo_6()!, index:5)]
+        photoDisplayController.displayedPhotoInformations = self.displayPhotoInformations
         
         present(photoDisplayController, animated: true, completion: {
 //            UIView.animate(withDuration: 0.5) { () -> Void in

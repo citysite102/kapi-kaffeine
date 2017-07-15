@@ -28,6 +28,7 @@ public struct NetworkClient: NetworkClientType {
             "Content-Type": "application/json",
             "User-Agent": "iReMW4K4fyWos"
         ]
+        print(networkRequest.url)
         Alamofire.request(networkRequest.url,
                           method: networkRequest.method,
                           parameters: networkRequest.parameters,

@@ -211,20 +211,20 @@ class KPInformationHeaderView: UIView {
                                                             "V:|[$self]|"])
         
 //        shopPhoto = UIImageView(image: UIImage(color:KPColorPalette.KPMainColor.borderColor!))
-        let randomImageArray = [R.image.demo_1(),
-                                R.image.demo_2(),
-                                R.image.demo_3(),
-                                R.image.demo_4(),
-                                R.image.demo_5(),
-                                R.image.demo_6(),
-                                R.image.demo_7(),
-                                R.image.demo_8(),
-                                R.image.demo_9(),
-                                R.image.demo_10(),
-                                R.image.demo_11()]
+//        let randomImageArray = [R.image.demo_1(),
+//                                R.image.demo_2(),
+//                                R.image.demo_3(),
+//                                R.image.demo_4(),
+//                                R.image.demo_5(),
+//                                R.image.demo_6(),
+//                                R.image.demo_7(),
+//                                R.image.demo_8(),
+//                                R.image.demo_9(),
+//                                R.image.demo_10(),
+//                                R.image.demo_11()]
         
-        let index: Int = Int(arc4random()%11)
-        shopPhoto = UIImageView(image: randomImageArray[index])
+//        let index: Int = Int(arc4random()%11)
+        shopPhoto = UIImageView(image: UIImage(color: KPColorPalette.KPBackgroundColor.grayColor_level6!))
         shopPhoto.contentMode = .scaleAspectFill
         shopPhoto.isUserInteractionEnabled = true
         shopPhotoContainer.addSubview(shopPhoto)

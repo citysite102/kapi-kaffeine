@@ -18,7 +18,7 @@ class KPPhotoGalleryViewController: KPViewController {
     var dismissButton:KPBounceButton!
     var collectionView:UICollectionView!;
     var collectionLayout:UICollectionViewFlowLayout!;
-    var diplayedPhotoInformations: [PhotoInformation] = [PhotoInformation]()
+    var displayedPhotoInformations: [PhotoInformation] = [PhotoInformation]()
     var selectedIndexPath: IndexPath!
     var selectedCellSnapshot: UIView  {
         get {
@@ -109,7 +109,7 @@ extension KPPhotoGalleryViewController: UICollectionViewDelegate, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return diplayedPhotoInformations.count;
+        return displayedPhotoInformations.count + 1;
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -125,7 +125,16 @@ extension KPPhotoGalleryViewController: UICollectionViewDelegate, UICollectionVi
                                                           for: indexPath) as! KPShopPhotoCell;
             cell.layer.cornerRadius = 4.0
             cell.layer.masksToBounds = true
-            cell.shopPhoto.image = diplayedPhotoInformations[indexPath.row].image
+//            cell.shopPhoto.af_setImage(withURL: displayedPhotoInformations[indexPath.row-1].imageURL)
+            cell.shopPhoto.af_setImage(withURL: displayedPhotoInformations[indexPath.row-1].imageURL,
+                                       placeholderImage: UIImage(color: KPColorPalette.KPBackgroundColor.grayColor_level6!),
+                                       filter: nil,
+                                       progress: nil,
+                                       progressQueue: DispatchQueue.global(),
+                                       imageTransition: UIImageView.ImageTransition.noTransition,
+                                       runImageTransitionIfCached: false,
+                                       completion: nil)
+//            cell.shopPhoto.image = diplayedPhotoInformations[indexPath.row].image
             return cell;
         }
     }
@@ -143,15 +152,10 @@ extension KPPhotoGalleryViewController: UICollectionViewDelegate, UICollectionVi
         } else {
             let photoDisplayController = KPPhotoDisplayViewController()
             photoDisplayController.transitioningDelegate = self
-            photoDisplayController.diplayedPhotoInformations =
-                [PhotoInformation(title:"Title", image:R.image.demo_1()!, index:0),
-                 PhotoInformation(title:"Title", image:R.image.demo_2()!, index:1),
-                 PhotoInformation(title:"Title", image:R.image.demo_3()!, index:2),
-                 PhotoInformation(title:"Title", image:R.image.demo_4()!, index:3),
-                 PhotoInformation(title:"Title", image:R.image.demo_5()!, index:4),
-                 PhotoInformation(title:"Title", image:R.image.demo_6()!, index:5)]
+            photoDisplayController.displayedPhotoInformations = self.displayedPhotoInformations
             
-                present(photoDisplayController, animated: true, completion: {
+            present(photoDisplayController, animated: true, completion: {
+                
             })
         }
         
@@ -178,7 +182,8 @@ extension KPPhotoGalleryViewController: UIViewControllerTransitioningDelegate {
     func animationController(forPresented presented: UIViewController,
                              presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         let photoViewController = presented as! KPPhotoDisplayViewController
-        photoViewController.selectedIndexPath = selectedIndexPath
+        photoViewController.selectedIndexPath = IndexPath(row: selectedIndexPath.row - 1,
+                                                          section: selectedIndexPath.section)
         
         let cell = collectionView.cellForItem(at: selectedIndexPath) as! KPShopPhotoCell
         transitionController.setupImageTransition(cell.shopPhoto.image!,
@@ -190,7 +195,8 @@ extension KPPhotoGalleryViewController: UIViewControllerTransitioningDelegate {
     
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         let photoViewController = dismissed as! KPPhotoDisplayViewController
-        selectedIndexPath = photoViewController.selectedIndexPath
+        selectedIndexPath = IndexPath(row: photoViewController.selectedIndexPath.row + 1,
+                                      section: photoViewController.selectedIndexPath.section)
         let cell = collectionView.cellForItem(at: selectedIndexPath) as! KPShopPhotoCell
         transitionController.setupImageTransition(cell.shopPhoto.image!,
                                                   fromDelegate: photoViewController,

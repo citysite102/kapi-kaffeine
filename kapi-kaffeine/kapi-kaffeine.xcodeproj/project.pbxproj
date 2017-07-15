@@ -1175,7 +1175,7 @@
 				TargetAttributes = {
 					C02AFE401E7D260D008FFB33 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = A43Y729CXH;
+						DevelopmentTeam = 4D7RCMZ7F7;
 						ProvisioningStyle = Automatic;
 					};
 					C02AFE541E7D260D008FFB33 = {
@@ -1637,10 +1637,10 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = A43Y729CXH;
+				DEVELOPMENT_TEAM = 4D7RCMZ7F7;
 				INFOPLIST_FILE = "kapi-kaffeine/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.kapi.kapi-kaffeine";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.kapi-kaffeine";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "kapi-kaffeine/kapi-kaffeine-bridging-header.h";
@@ -1659,10 +1659,10 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = A43Y729CXH;
+				DEVELOPMENT_TEAM = 4D7RCMZ7F7;
 				INFOPLIST_FILE = "kapi-kaffeine/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.kapi.kapi-kaffeine";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.kapi-kaffeine";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "kapi-kaffeine/kapi-kaffeine-bridging-header.h";
