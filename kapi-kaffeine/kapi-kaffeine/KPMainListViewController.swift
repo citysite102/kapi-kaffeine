@@ -44,6 +44,8 @@ class KPMainListViewController:
     var satisficationView: KPSatisficationView!
     var expNotificationView: KPExpNotificationView!
     var adLoader: GADAdLoader!
+    var oldScrollOffsetY: CGFloat = 80.0
+    var currentSearchTagTranslateY: CGFloat = 0.0
     
     lazy var addButton: KPShadowButton = {
         let shadowButton = KPShadowButton()
@@ -90,7 +92,7 @@ class KPMainListViewController:
     }
     
     private var searchFooterView: KPSearchFooterView!
-    private var snapshotView: UIImageView!
+    var snapshotView: UIImageView!
     
     var selectedDataModel: KPDataModel? {
         return currentDataModel
@@ -171,7 +173,7 @@ class KPMainListViewController:
         tableView.dataSource = self
         tableView.isUserInteractionEnabled = false
         view.addSubview(tableView)
-        tableView.addConstraints(fromStringArray: ["V:|-100-[$self]|",
+        tableView.addConstraints(fromStringArray: ["V:|-100-[$self]-(-40)-|",
                                                    "H:|[$self]|"])
         tableView.register(KPMainListTableViewCell.self,
                                 forCellReuseIdentifier: Constant.KPMainListViewCellReuseIdentifier)
@@ -179,7 +181,6 @@ class KPMainListViewController:
                                 forCellReuseIdentifier: Constant.KPMainListViewLoadingCellReuseIdentifier)
         tableView.register(KPMainListNativeExpressCell.self,
                                 forCellReuseIdentifier: Constant.KPMainListViewAdCellReuseIdentifier)
-        
         tableView.allowsSelection = false
         tableView.rowHeight = UITableViewAutomaticDimension
         
@@ -199,17 +200,17 @@ class KPMainListViewController:
         snapshotView.clipsToBounds = true
         snapshotView.isHidden = true
         view.addSubview(snapshotView)
-        snapshotView.addConstraints(fromStringArray: ["V:|-100-[$self]|",
+        snapshotView.addConstraints(fromStringArray: ["V:|-100-[$self]-(-40)-|",
                                                       "H:|[$self]|"])
         
 //        view.bringSubview(toFront: searchFooterView)
         
         
-        view.addSubview(addButton)
-        addButton.button.addTarget(self,
-                                   action: #selector(handleAddButtonTapped(_:)), for: .touchUpInside)
-        addButton.addConstraints(fromStringArray: ["H:[$self(56)]-18-|",
-                                                   "V:[$self(56)]-16-|"])
+//        view.addSubview(addButton)
+//        addButton.button.addTarget(self,
+//                                   action: #selector(handleAddButtonTapped(_:)), for: .touchUpInside)
+//        addButton.addConstraints(fromStringArray: ["H:[$self(56)]-18-|",
+//                                                   "V:[$self(56)]-16-|"])
         
         
         satisficationView = KPSatisficationView()
@@ -371,6 +372,44 @@ extension KPMainListViewController: GADNativeExpressAdViewDelegate {
 
 extension KPMainListViewController: UITableViewDelegate, UITableViewDataSource {
     
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+//        print("Did End Drag")
+//        UIView.animate(withDuration: 0.1) {
+//            let translate: CGFloat = self.currentSearchTagTranslateY < -40 ? -40.0 : 0.0
+//            self.mainController.searchHeaderView.searchTagView.transform = CGAffineTransform(translationX: 0,
+//                                                                                             y: translate)
+//            self.mainController.mainMapViewController?.mapView.transform = CGAffineTransform(translationX: 0,
+//                                                                                             y: translate)
+//            self.tableView.transform = CGAffineTransform(translationX: 0, y: translate)
+//            self.snapshotView.transform = CGAffineTransform(translationX: 0, y: translate)
+//            self.currentSearchTagTranslateY = translate
+//        }
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y > 80 {
+            if scrollView.contentOffset.y > oldScrollOffsetY {
+                // 往下
+                currentSearchTagTranslateY = (currentSearchTagTranslateY + oldScrollOffsetY - scrollView.contentOffset.y > -80) ?
+                    currentSearchTagTranslateY + oldScrollOffsetY - scrollView.contentOffset.y :
+                    -80
+            } else {
+                // 往上
+                let updatedOffset = oldScrollOffsetY - scrollView.contentOffset.y
+                currentSearchTagTranslateY = (currentSearchTagTranslateY + updatedOffset <= 0) ?
+                    currentSearchTagTranslateY + updatedOffset :
+                    0
+            }
+            
+            mainController.searchHeaderView.searchTagView.transform = CGAffineTransform(translationX: 0,
+                                                                                        y: currentSearchTagTranslateY/2)
+            mainController.mainMapViewController?.mapView.transform = CGAffineTransform(translationX: 0,
+                                                                                        y: currentSearchTagTranslateY/2)
+            tableView.transform = CGAffineTransform(translationX: 0, y: currentSearchTagTranslateY/2)
+            snapshotView.transform = CGAffineTransform(translationX: 0, y: currentSearchTagTranslateY/2)
+            oldScrollOffsetY = scrollView.contentOffset.y
+        }
+    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         

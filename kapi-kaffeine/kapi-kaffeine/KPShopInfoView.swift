@@ -71,6 +71,9 @@ class KPShopInfoView: UIView {
     var phoneLabel: UILabel!
     var locationIcon: UIImageView!
     var locationLabel: UILabel!
+    var priceIcon: UIImageView!
+    var priceLabel: UILabel!
+    
     
     
     convenience init(_ informationDataModel: KPDataModel) {
@@ -161,7 +164,7 @@ class KPShopInfoView: UIView {
         locationIcon = UIImageView(image: R.image.icon_pin())
         locationIcon.tintColor = KPColorPalette.KPMainColor.mainColor
         addSubview(locationIcon)
-        locationIcon.addConstraints(fromStringArray: ["V:[$view0]-8-[$self(20)]-16-|",
+        locationIcon.addConstraints(fromStringArray: ["V:[$view0]-8-[$self(20)]",
                                                       "H:|-16-[$self(20)]"],
                                     views: [phoneIcon])
         
@@ -176,9 +179,30 @@ class KPShopInfoView: UIView {
         locationLabel.addConstraintForCenterAligning(to: locationIcon,
                                                      in: .vertical)
         
+        priceIcon = UIImageView(image: R.image.icon_money())
+        priceIcon.tintColor = KPColorPalette.KPMainColor.mainColor
+        addSubview(priceIcon)
+        priceIcon.addConstraints(fromStringArray: ["V:[$view0]-8-[$self(20)]-16-|",
+                                                   "H:|-16-[$self(20)]"],
+                                    views: [locationIcon])
+        
+        priceLabel = UILabel()
+        priceLabel.font = UIFont.systemFont(ofSize: 14)
+        priceLabel.textColor = informationDataModel.address != nil ?
+            KPColorPalette.KPTextColor.grayColor_level1 :
+            KPColorPalette.KPTextColor.grayColor_level5
+        addSubview(priceLabel)
+        priceLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]"],
+                                  views: [priceIcon])
+        priceLabel.addConstraintForCenterAligning(to: priceIcon,
+                                                  in: .vertical)
+        
+        
         titleLabel.text = informationDataModel.name
         locationLabel.text = informationDataModel.address ?? "暫無資料"
         phoneLabel.text = informationDataModel.phone ?? "暫無資料"
+        priceLabel.text = "1 - 100/人"
+        
         
     }
     

@@ -102,7 +102,7 @@ class KPInformationHeaderButtonBar: UIView {
         visitButton.buttonInfo = HeaderButtonInfo(title: "有誰來過",
                                                   info: "%d人來過",
                                                   defaultInfo: "無人打卡",
-                                                  icon: R.image.icon_map()!,
+                                                  icon: R.image.icon_currentLocation()!,
                                                   handler: { (headerButton) -> () in
                                                     
                                                     if headerButton.selected == false {

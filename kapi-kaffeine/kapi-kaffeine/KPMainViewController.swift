@@ -32,8 +32,11 @@ class KPMainViewController: KPViewController {
             DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
                 self.mainListViewController?.displayDataModel = self.displayDataModel
                 self.mainMapViewController?.allDataModel = self.displayDataModel
+                self.searchHeaderView.styleButton.isEnabled = true
                 self.searchHeaderView.searchButton.isEnabled = true
                 self.searchHeaderView.menuButton.isEnabled = true
+                self.searchHeaderView.searchTagView.isUserInteractionEnabled = true
+                
             }
         }
     }
@@ -71,6 +74,8 @@ class KPMainViewController: KPViewController {
         searchHeaderView = KPSearchHeaderView()
         searchHeaderView.searchButton.isEnabled = false
         searchHeaderView.menuButton.isEnabled = false
+        searchHeaderView.styleButton.isEnabled = false
+        searchHeaderView.searchTagView.isUserInteractionEnabled = false
         searchHeaderView.searchTagView.delegate = self
         view.addSubview(searchHeaderView)
         searchHeaderView.addConstraints(fromStringArray: ["V:|[$self(100)]",

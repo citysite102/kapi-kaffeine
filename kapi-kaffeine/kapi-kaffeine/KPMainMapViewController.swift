@@ -167,7 +167,7 @@ GMUClusterRendererDelegate {
         
         self.view.addSubview(self.mapView)
         
-        self.mapView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|-100-[$self]|"])
+        self.mapView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|-100-[$self]-(-40)-|"])
         
         // Set up the cluster manager with the supplied icon generator and
         // renderer.
@@ -484,6 +484,8 @@ GMUClusterRendererDelegate {
     }
     
     func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
+        print("Position:\(position.target.latitude) and \(position.target.longitude)")
+        
         if !isCollectionViewShow && self.nearestButton.alpha != 0.75 {
             UIView.animate(withDuration: 0.15,
                            animations: {
@@ -494,10 +496,18 @@ GMUClusterRendererDelegate {
     }
     
     func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition) {
-        UIView.animate(withDuration: 0.15,
+        UIView.animate(withDuration: 0.2,
                        animations: {
                         self.nearestButton.alpha = 1.0
                         self.addButton.alpha = 1.0
+                        
+                        
+                        self.mainController.searchHeaderView.searchTagView.transform = CGAffineTransform(translationX: 0,
+                                                                                                         y: 0)
+                        self.mapView.transform = CGAffineTransform(translationX: 0, y: 0)
+                        self.mainController.mainListViewController?.tableView.transform = CGAffineTransform(translationX: 0, y: 0)
+                        self.mainController.mainListViewController?.snapshotView.transform = CGAffineTransform(translationX: 0, y: 0)
+                        self.mainController.mainListViewController?.currentSearchTagTranslateY = 0
         })
     }
     

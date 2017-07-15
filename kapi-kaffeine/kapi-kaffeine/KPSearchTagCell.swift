@@ -22,7 +22,7 @@ class KPSearchTagCell: UICollectionViewCell {
         tagIcon = UIImageView()
         addSubview(tagIcon)
         tagIcon.addConstraints(fromStringArray: ["H:|-6-[$self(20)]",
-                                                      "V:|-6-[$self(20)]-6-|"])
+                                                 "V:|-6-[$self(20)]-6-|"])
         tagIcon.tintColor = KPColorPalette.KPMainColor.mainColor
         
         tagTitle = UILabel()

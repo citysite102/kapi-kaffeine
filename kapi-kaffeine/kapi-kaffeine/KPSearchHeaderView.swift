@@ -10,6 +10,8 @@ import UIKit
 
 class KPSearchHeaderView: UIView {
 
+    
+    var containerView: UIView!
     var titleLabel: UILabel!
     var searchButton: KPBounceButton!
     var menuButton: KPBounceButton!
@@ -18,18 +20,24 @@ class KPSearchHeaderView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = KPColorPalette.KPBackgroundColor.mainColor_light
+        
+        containerView = UIView()
+        containerView.backgroundColor = KPColorPalette.KPBackgroundColor.mainColor_light
+        addSubview(containerView)
+        containerView.addConstraints(fromStringArray: ["V:|[$self(60)]",
+                                                       "H:|[$self]|"],
+                                     views: [])
         
         titleLabel = UILabel()
         titleLabel.font = UIFont.systemFont(ofSize: 18.0)
         titleLabel.textColor = KPColorPalette.KPTextColor.whiteColor
         titleLabel.text = "找咖啡"
-        addSubview(titleLabel)
+        containerView.addSubview(titleLabel)
         titleLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
         titleLabel.addConstraint(from: "V:|-32-[$self]")
         
         styleButton = KPBounceButton.init(frame: .zero, image: R.image.icon_map()!)
-        addSubview(styleButton)
+        containerView.addSubview(styleButton)
         styleButton.addConstraints(fromStringArray: ["H:[$self(30)]-5-|",
                                                      "V:[$self(30)]"])
         styleButton.contentEdgeInsets = UIEdgeInsetsMake(3, 3, 3, 3)
@@ -37,7 +45,7 @@ class KPSearchHeaderView: UIView {
         styleButton.tintColor = UIColor.white
         
         searchButton = KPBounceButton.init(frame: .zero, image: R.image.icon_search()!)
-        addSubview(searchButton)
+        containerView.addSubview(searchButton)
         searchButton.addConstraints(fromStringArray: ["H:[$self(30)]-5-[$view0]",
                                                       "V:[$self(30)]"],
                                          views: [styleButton])
@@ -47,7 +55,7 @@ class KPSearchHeaderView: UIView {
         searchButton.imageView?.tintColor = UIColor.white
         
         menuButton = KPBounceButton.init(frame: .zero, image: R.image.icon_menu()!)
-        addSubview(menuButton)
+        containerView.addSubview(menuButton)
         menuButton.addConstraints(fromStringArray: ["H:|-5-[$self(30)]",
                                                     "V:[$self(30)]"])
         menuButton.contentEdgeInsets = UIEdgeInsetsMake(3, 3, 3, 3)
@@ -59,6 +67,8 @@ class KPSearchHeaderView: UIView {
         addSubview(searchTagView)
         searchTagView.addConstraints(fromStringArray: ["V:[$self(40)]|",
                                                        "H:|[$self]|"])
+        
+        bringSubview(toFront: containerView)
         
     }
     

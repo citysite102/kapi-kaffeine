@@ -55,10 +55,11 @@ class KPSearchTagView: UIView {
         self.preferenceHintView.addConstraints(fromStringArray: ["V:|-4-[$self]-4-|",
                                                                  "H:|-8-[$self(96)]"])
         
-        self.preferenceHintIcon = UIImageView.init(image: R.image.icon_clock()?.withRenderingMode(.alwaysTemplate))
+        self.preferenceHintIcon = UIImageView.init(image: R.image.icon_filter()?.withRenderingMode(.alwaysTemplate))
         self.preferenceHintIcon.tintColor = UIColor.white
         self.preferenceHintView.addSubview(self.preferenceHintIcon)
-        self.preferenceHintIcon.addConstraints(fromStringArray: ["H:|-4-[$self]"])
+        self.preferenceHintIcon.addConstraints(fromStringArray: ["H:|-8-[$self(20)]",
+                                                                 "V:[$self(20)]"])
         self.preferenceHintIcon.addConstraintForCenterAligningToSuperview(in: .vertical)
         
         let preferenceTapGesture = UITapGestureRecognizer.init(target: self,
