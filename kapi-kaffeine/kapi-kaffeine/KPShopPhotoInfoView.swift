@@ -15,6 +15,12 @@ class KPShopPhotoInfoView: UIView {
     var collectionView:UICollectionView!;
     var collectionLayout:UICollectionViewFlowLayout!;
     
+    var displayPhotoInformations: [PhotoInformation] = [] {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame);
         
@@ -54,12 +60,17 @@ extension KPShopPhotoInfoView: UICollectionViewDelegate, UICollectionViewDataSou
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 8;
+        return displayPhotoInformations.count;
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: KPShopPhotoInfoView.KPShopPhotoInfoViewCellReuseIdentifier,
                                                       for: indexPath) as! KPShopPhotoCell;
+        cell.shopPhoto.af_setImage(withURL: displayPhotoInformations[indexPath.row].imageURL,
+                                   placeholderImage: UIImage(color: KPColorPalette.KPBackgroundColor.grayColor_level6!),
+                                   filter: nil,
+                                   progress: nil,
+                                   progressQueue: DispatchQueue.global(), imageTransition: UIImageView.ImageTransition.noTransition, runImageTransitionIfCached: false, completion: nil)
         
         return cell;
     }

@@ -37,7 +37,11 @@ class KPInformationViewController: KPViewController {
         }
     }
     
-    var displayPhotoInformations: [PhotoInformation] = []
+    var displayPhotoInformations: [PhotoInformation] = [] {
+        didSet {
+            (photoInformationView.infoView as! KPShopPhotoInfoView).displayPhotoInformations = displayPhotoInformations
+        }
+    }
     
     var snapshotPhotoView: UIView  {
         get {
