@@ -66,6 +66,7 @@ public class KPUserManager {
     func logIn(_ viewController: UIViewController,
                completion: ((Bool) -> Swift.Void)? = nil) {
         
+        self.loadingView.state = .loading
         loginManager.loginBehavior = LoginBehavior.native;
         loginManager.logIn([.publicProfile],
                            viewController: viewController) { (loginResult) in
@@ -139,6 +140,7 @@ public class KPUserManager {
     func logOut() {
         loginManager.logOut()
         KPUserDefaults.clearUserInformation()
+        currentUser = nil
     }
     
     func updateUserInformation() {

@@ -45,6 +45,17 @@ class KPMainListViewController:
     var expNotificationView: KPExpNotificationView!
     var adLoader: GADAdLoader!
     
+    lazy var addButton: KPShadowButton = {
+        let shadowButton = KPShadowButton()
+        shadowButton.backgroundColor = KPColorPalette.KPBackgroundColor.scoreButtonColor!
+        shadowButton.button.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.scoreButtonColor!), for: .normal)
+        shadowButton.button.setImage(R.image.icon_add(), for: .normal)
+        shadowButton.button.tintColor = UIColor.white
+        shadowButton.button.imageEdgeInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+        shadowButton.layer.cornerRadius = 28
+        return shadowButton
+    }()
+    
     var currentDataModel: KPDataModel?
     var state: ControllerState! = .loading
     {
@@ -193,9 +204,18 @@ class KPMainListViewController:
         
 //        view.bringSubview(toFront: searchFooterView)
         
+        
+        view.addSubview(addButton)
+        addButton.button.addTarget(self,
+                                   action: #selector(handleAddButtonTapped(_:)), for: .touchUpInside)
+        addButton.addConstraints(fromStringArray: ["H:[$self(56)]-18-|",
+                                                   "V:[$self(56)]-16-|"])
+        
+        
         satisficationView = KPSatisficationView()
         expNotificationView = KPExpNotificationView()
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        
     }
     
     
@@ -249,6 +269,18 @@ class KPMainListViewController:
         statusErrorDescriptionLabel.text = ""
         statusErrorDescriptionLabel.layer.add(fadeTransition, forKey: nil)
         CATransaction.commit()
+    }
+    
+    func handleAddButtonTapped(_ sender: UIButton) {
+        let controller = KPModalViewController()
+        controller.edgeInset = UIEdgeInsets(top: 0,
+                                            left: 0,
+                                            bottom: 0,
+                                            right: 0)
+        let newStoreController = KPNewStoreController()
+        let navigationController = UINavigationController(rootViewController: newStoreController)
+        controller.contentController = navigationController
+        controller.presentModalView()
     }
     
     // MARK: Ads

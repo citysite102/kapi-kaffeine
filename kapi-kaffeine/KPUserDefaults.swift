@@ -17,34 +17,31 @@ final public class KPUserDefaults {
     struct userInformationKey {
         static let accessToken = "accessToken"
         static let userIdentifier = "user_identifier"
+        static let userInformation = "user_information"
     }
     
     public static var accessToken: String? {
         didSet {
             if accessToken != nil {
-                UserDefaults.standard.set(accessToken, forKey: "accessToken")
+                UserDefaults.standard.set(accessToken, forKey: userInformationKey.accessToken)
             }
         }
     }
     
     public static var userInformation: Dictionary<String, Any>? = nil {
         didSet {
-            UserDefaults.standard.set(userInformation, forKey: "user_information")
+            UserDefaults.standard.set(userInformation, forKey: userInformationKey.userInformation)
         }
     }
     
     static func loadUserInformation() {
-        
-        userInformation = UserDefaults.standard.object(forKey: "user_information") as? Dictionary
-        accessToken = UserDefaults.standard.object(forKey: "accessToken") as? String
-//        if accessToken != nil {
-//            print("Get Access Token as \(accessToken!)")
-//        }
+        userInformation = UserDefaults.standard.object(forKey: userInformationKey.userInformation) as? Dictionary
+        accessToken = UserDefaults.standard.object(forKey: userInformationKey.accessToken) as? String
     }
     
     static func clearUserInformation() {
         UserDefaults.standard.removeObject(forKey: userInformationKey.accessToken)
-        UserDefaults.standard.removeObject(forKey: userInformationKey.userIdentifier)
+        UserDefaults.standard.removeObject(forKey: userInformationKey.userInformation)
     }
     
 }

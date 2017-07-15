@@ -41,13 +41,13 @@ PODS:
     - FBSDKCoreKit
   - FBSDKShareKit (4.24.0):
     - FBSDKCoreKit
-  - Firebase/Auth (4.0.3):
+  - Firebase/Auth (4.0.4):
     - Firebase/Core
     - FirebaseAuth (= 4.0.0)
-  - Firebase/Core (4.0.3):
+  - Firebase/Core (4.0.4):
     - FirebaseAnalytics (= 4.0.2)
-    - FirebaseCore (= 4.0.3)
-  - Firebase/Database (4.0.3):
+    - FirebaseCore (= 4.0.4)
+  - Firebase/Database (4.0.4):
     - Firebase/Core
     - FirebaseDatabase (= 4.0.0)
   - FirebaseAnalytics (4.0.2):
@@ -58,8 +58,9 @@ PODS:
     - FirebaseAnalytics (~> 4.0)
     - GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)
     - GTMSessionFetcher/Core (~> 1.1)
-  - FirebaseCore (4.0.3):
+  - FirebaseCore (4.0.4):
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+    - nanopb (~> 0.3)
   - FirebaseDatabase (4.0.0):
     - FirebaseAnalytics (~> 4.0)
   - FirebaseInstanceID (2.0.0):
@@ -82,7 +83,7 @@ PODS:
     - GoogleToolboxForMac/Defines (= 2.1.1)
     - GoogleToolboxForMac/NSString+URLArguments (= 2.1.1)
   - GoogleToolboxForMac/NSString+URLArguments (2.1.1)
-  - GTMSessionFetcher/Core (1.1.10)
+  - GTMSessionFetcher/Core (1.1.11)
   - libextobjc (0.4.1):
     - libextobjc/EXTADT (= 0.4.1)
     - libextobjc/EXTConcreteProtocol (= 0.4.1)
@@ -120,7 +121,12 @@ PODS:
   - libextobjc/UmbrellaHeader (0.4.1)
   - lottie-ios (1.5.2)
   - M13ProgressSuite (1.2.9)
-  - ObjectMapper (2.2.7)
+  - nanopb (0.3.8):
+    - nanopb/decode (= 0.3.8)
+    - nanopb/encode (= 0.3.8)
+  - nanopb/decode (0.3.8)
+  - nanopb/encode (0.3.8)
+  - ObjectMapper (2.2.8)
   - pop (1.0.10)
   - PromiseKit (4.2.2):
     - PromiseKit/Foundation (= 4.2.2)
@@ -189,21 +195,22 @@ SPEC CHECKSUMS:
   FBSDKCoreKit: f8c9eb0dd34a9cd277c7b60da4b32226d142502d
   FBSDKLoginKit: 1214c6d5a1c4995b694d8db8a9ba6910c6028acf
   FBSDKShareKit: a2ed9d7781a4eda9ac20d7404305e795b10251ac
-  Firebase: 9e33fdfbca37cab635c693883caa90a4475b842b
+  Firebase: 1492bf04e1b73a7353b4fb2cf5a20bac9692f341
   FirebaseAnalytics: ad41720e3e67fc63fbe3d2948d3e26932a8de311
   FirebaseAuth: ebb6abcbabae00fc47446d690c19ce68d8484fde
-  FirebaseCore: c709067051de07bdaffdc4e735cd7299a23c463a
+  FirebaseCore: cfc042628ef9f20debe09c0eb683135fcd404cb4
   FirebaseDatabase: d829b3a8c3e2ac7a16773c5df226966b0805dfc2
   FirebaseInstanceID: 9fbf536668f4d3f0880e7438456dabd1376e294b
   Google-Mobile-Ads-SDK: 4a6f1b43c8cc0e1e95a3b59d9f52a01671c6f9f3
   GoogleMaps: c66a71058b9b1294bcdd5463a68e357fa50c079f
   GooglePlaces: 4a7b22debfa1af65017b82943431822607e45201
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
-  GTMSessionFetcher: 30d874b96d0d76028f61fbd122801e3f030d47db
+  GTMSessionFetcher: 5ad62e8200fa00ed011fe5e08d27fef72c5b1429
   libextobjc: a650fc1bf489a3d3a9bc2e621efa3e1006fc5471
   lottie-ios: 255a0e95973a5c4424e809d7a5c19f7384c73e84
   M13ProgressSuite: ea9f7263e73e9215e6849dfa54e29ee0ad6a145c
-  ObjectMapper: 65abcfd9a61cf7396cbd14a4fb22fddfcc46577e
+  nanopb: 22bc080fa3955e2116b6ff3ee6c2cb3c15ab97cb
+  ObjectMapper: 3d571bb5af471c779e1160828cd9ad5c4ef90958
   pop: 82ca6b068ce9278fd350fd9dd09482a0ce9492e6
   PromiseKit: 00e8886881f151c7e573d06b437915b0bb2970ec
   R.swift: bde9704d50ff36820f49e266bc88ef545e1e9b36

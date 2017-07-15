@@ -77,21 +77,45 @@ class KPSettingViewController: KPViewController {
                                 forCellReuseIdentifier: KPSettingViewController.KPSettingViewButtonCellReuseIdentifier)
         tableView.allowsSelection = true
         
+//        settingDataContents = [settingData(title:"應用程式版本",
+//                                                information:"1.0.0",
+//                                                identifier:KPSettingViewController.KPSettingViewInfoCellReuseIdentifier,
+//                                                cellStyle:.normal,
+//                                                handler:nil),
+//                               settingData(title:"支持我們，讓我們顯示廣告",
+//                                           information:nil,
+//                                           identifier:KPSettingViewController.KPSettingViewSwitchCellReuseIdentifier,
+//                                           cellStyle:.switchControl,
+//                                           handler:nil),
+//                              settingData(title:"協助填寫問卷，幫助讓產品更好",
+//                                        information:nil,
+//                                        identifier:KPSettingViewController.KPSettingViewButtonCellReuseIdentifier,
+//                                        cellStyle:.button,
+//                                        handler:nil)]
+        
         settingDataContents = [settingData(title:"應用程式版本",
-                                                information:"1.0.0",
-                                                identifier:KPSettingViewController.KPSettingViewInfoCellReuseIdentifier,
-                                                cellStyle:.normal,
-                                                handler:nil),
-                               settingData(title:"支持我們，讓我們顯示廣告",
-                                           information:nil,
-                                           identifier:KPSettingViewController.KPSettingViewSwitchCellReuseIdentifier,
-                                           cellStyle:.switchControl,
+                                           information:"1.0.0",
+                                           identifier:KPSettingViewController.KPSettingViewInfoCellReuseIdentifier,
+                                           cellStyle:.normal,
                                            handler:nil),
-                              settingData(title:"協助填寫問卷，幫助讓產品更好",
-                                        information:nil,
-                                        identifier:KPSettingViewController.KPSettingViewButtonCellReuseIdentifier,
-                                        cellStyle:.button,
-                                        handler:nil)]
+                               settingData(title:"協助填寫問卷，幫助讓產品更好",
+                                           information:nil,
+                                           identifier:KPSettingViewController.KPSettingViewButtonCellReuseIdentifier,
+                                           cellStyle:.button,
+                                           handler:nil)]
+
+        
+        if KPUserManager.sharedManager.currentUser != nil {
+            settingDataContents.append(
+                settingData(title:"登出使用者",
+                            information:nil,
+                            identifier:KPSettingViewController.KPSettingViewButtonCellReuseIdentifier,
+                            cellStyle:.button,
+                            handler: {
+                                KPUserManager.sharedManager.logOut()
+                                self.appModalController()?.dismissControllerWithDefaultDuration()
+                }))
+        }
     }
 
     override func didReceiveMemoryWarning() {
