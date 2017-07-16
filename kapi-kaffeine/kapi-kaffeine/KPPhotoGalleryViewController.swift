@@ -92,14 +92,6 @@ class KPPhotoGalleryViewController: KPViewController {
         navigationController?.popViewController(animated: true)
     }
     
-//    override var prefersStatusBarHidden: Bool {
-//        return true
-//    }
-//    
-//    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
-//        return .slide
-//    }
-    
 }
 
 extension KPPhotoGalleryViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -125,16 +117,14 @@ extension KPPhotoGalleryViewController: UICollectionViewDelegate, UICollectionVi
                                                           for: indexPath) as! KPShopPhotoCell;
             cell.layer.cornerRadius = 4.0
             cell.layer.masksToBounds = true
-//            cell.shopPhoto.af_setImage(withURL: displayedPhotoInformations[indexPath.row-1].imageURL)
             cell.shopPhoto.af_setImage(withURL: displayedPhotoInformations[indexPath.row-1].imageURL,
-                                       placeholderImage: UIImage(color: KPColorPalette.KPBackgroundColor.grayColor_level6!),
+                                       placeholderImage: R.image.image_loading(),
                                        filter: nil,
                                        progress: nil,
                                        progressQueue: DispatchQueue.global(),
                                        imageTransition: UIImageView.ImageTransition.noTransition,
                                        runImageTransitionIfCached: false,
                                        completion: nil)
-//            cell.shopPhoto.image = diplayedPhotoInformations[indexPath.row].image
             return cell;
         }
     }

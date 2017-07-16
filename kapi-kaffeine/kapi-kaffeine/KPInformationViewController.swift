@@ -202,11 +202,11 @@ class KPInformationViewController: KPViewController {
         
         informationHeaderView.morePhotoButton.setTitle(informationDataModel.photoCount != nil ?
             "\(informationDataModel.photoCount ?? 0) 張照片" :
-            "新增照片"
+            "上傳照片"
             , for: .normal)
         if let photoURL = informationDataModel.covers?["google_l"] {
             informationHeaderView.shopPhoto.af_setImage(withURL: URL(string: photoURL)!,
-                                                        placeholderImage: R.image.icon_loading(),
+                                                        placeholderImage: nil,
                                                         filter: nil,
                                                         progress: nil,
                                                         progressQueue: DispatchQueue.global(),
@@ -426,7 +426,7 @@ class KPInformationViewController: KPViewController {
         photoInformationView.infoTitleLabel.text = "店家照片"
         photoInformationView.infoSupplementLabel.text = informationDataModel.photoCount != nil ?
             "\(informationDataModel.photoCount ?? 0) 張照片" :
-        "新增照片"
+        "上傳照片"
         scrollContainer.addSubview(photoInformationView)
         photoInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                               "V:[$view0]-24-[$self]"],
@@ -536,7 +536,7 @@ class KPInformationViewController: KPViewController {
                 }
                 if self.displayPhotoInformations.count == 0 {
                     self.informationHeaderView.shopPhoto.image = R.image.image_noImage()
-                    self.informationHeaderView.morePhotoButton.titleLabel?.text = "新增照片"
+                    self.informationHeaderView.morePhotoButton.titleLabel?.text = "上傳照片"
                 }
             } else {
                 // Handle Error
