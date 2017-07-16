@@ -10,7 +10,7 @@ import UIKit
 
 
 protocol KPSharedSettingDelegate: NSObjectProtocol {
-    func sendButtonTapped(_ controller: KPSharedSettingViewController)
+    func returnValueSet(_ controller: KPSharedSettingViewController)
 }
 
 class KPSharedSettingViewController: KPViewController {
@@ -22,7 +22,7 @@ class KPSharedSettingViewController: KPViewController {
     var sendButton: UIButton!
     
     var identifiedKey: String?
-    var setValue: Any!
+    var returnValue: Any!
     
     lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -98,12 +98,12 @@ class KPSharedSettingViewController: KPViewController {
                                  for: .normal)
         sendButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         view.addSubview(sendButton)
+        view.addSubview(seperator_two)
 
         sendButton.addConstraints(fromStringArray: ["V:[$view0]-16-[$self(30)]-16-|"],
                                   views: [seperator_two])
         sendButton.addConstraintForCenterAligningToSuperview(in: .horizontal)
         
-        view.addSubview(seperator_two)
         seperator_two.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
                                                        "V:[$self(1)]-16-[$view0]"],
                                      views: [sendButton])

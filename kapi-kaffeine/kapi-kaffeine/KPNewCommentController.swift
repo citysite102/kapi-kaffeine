@@ -185,7 +185,7 @@ class KPNewCommentController: KPViewController {
             if index == 0 {
                 ratingView.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
                                                             "V:[$view0]-16-[$self]"],
-                                          views:[ratingCheckbox])
+                                          views: [ratingCheckbox])
             } else {
                 ratingView.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
                                                             "V:[$view0]-12-[$self]"],

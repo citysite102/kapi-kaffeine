@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import GooglePlaces
 
 struct KPNewStoreControllerConstants {
     static let leftPadding = 168
@@ -68,6 +68,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
     var facebookSubTitleView: KPSubTitleEditView!
     
     
+    var nameInputController: KPSubtitleInputController!
     var ratingController: KPRatingViewController!
     var countrySelectController: KPCountrySelectController!
     var priceSelectController: KPPriceSelectController!
@@ -164,9 +165,24 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
                                            views: [sectionOneHeaderLabel])
      
         nameSubTitleView = KPSubTitleEditView(.Bottom,
-                                              .Edited,
+                                              .Fixed,
                                               "店家名稱")
         nameSubTitleView.placeHolderContent = "請輸入店家名稱"
+        nameSubTitleView.customInputAction = {
+            [unowned self] () -> Void in
+            let controller = KPModalViewController()
+            controller.edgeInset = UIEdgeInsets(top: 0,
+                                                left: 0,
+                                                bottom: 0,
+                                                right: 0)
+            if self.nameInputController == nil {
+                self.nameInputController = KPSubtitleInputController()
+                self.nameInputController.delegate = self
+                self.nameInputController.identifiedKey = "name"
+            }
+            controller.contentController = self.nameInputController
+            controller.presentModalView()
+        }
         sectionOneContainer.addSubview(nameSubTitleView)
         nameSubTitleView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                           "V:|[$self(72)]"])
@@ -378,7 +394,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
                                                  .Edited,
                                                  "店家地址")
         addressSubTitleView.placeHolderContent = "請輸入店家地址"
-        addressSubTitleView.editTextField.delegate = self
+//        addressSubTitleView.editTextField.delegate = self
         sectionTwoContainer.addSubview(addressSubTitleView)
         addressSubTitleView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                              "V:[$view0]-16-[$self(72)]"],
@@ -389,7 +405,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
                                                "店家電話")
         phoneSubTitleView.placeHolderContent = "請輸入店家電話"
         phoneSubTitleView.inputKeyboardType = .phonePad
-        phoneSubTitleView.editTextField.delegate = self
+//        phoneSubTitleView.editTextField.delegate = self
         sectionTwoContainer.addSubview(phoneSubTitleView)
         phoneSubTitleView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                            "V:[$view0][$self(72)]"],
@@ -399,7 +415,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
                                                   .Edited,
                                                   "Facebook 連結")
         facebookSubTitleView.placeHolderContent = "請輸入店家 Facebook 連結"
-        facebookSubTitleView.editTextField.delegate = self
+//        facebookSubTitleView.editTextField.delegate = self
         sectionTwoContainer.addSubview(facebookSubTitleView)
         facebookSubTitleView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                               "V:[$view0][$self(72)]-16-|"],
@@ -432,7 +448,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
                                                   "1",
                                                   "1",
                                                   phoneSubTitleView.editTextField.text ?? "",
-                                                  (businessHourController.setValue as? [String: String]) ?? [:]) { (success) in
+                                                  (businessHourController.returnValue as? [String: String]) ?? [:]) { (success) in
                                                     if success == true {
                                                         KPPopoverView.popoverNotification("新增成功",
                                                                                           "感謝您提交資訊，我們將儘速進行審查:D 這將會需要1-3天的審核時間確認店家的資訊是否無誤，給我好好的等。",
@@ -445,23 +461,47 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
         
     }
     
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
 }
 
+extension KPNewStoreController: KPSubtitleInputDelegate {
+    
+    func returnValueSet(_ controller: KPSubtitleInputController) {
+        
+        if controller.identifiedKey == "name" {
+            if let placeInformation = controller.returnValue as? GMSPlace {
+                nameSubTitleView.content = placeInformation.name
+                phoneSubTitleView.content = placeInformation.phoneNumber ?? ""
+                addressSubTitleView.content = placeInformation.formattedAddress ?? ""
+                facebookSubTitleView.content = placeInformation.website?.absoluteString ?? ""
+                
+                if let addressComponents = placeInformation.addressComponents {
+                    for component in addressComponents {
+                        if component.type == "administrative_area_level_1" {
+                            citySubTitleView.content = component.name
+                        }
+                    }
+                }
+            } else {
+                nameSubTitleView.content = controller.returnValue as? String
+            }
+        }
+    }
+}
+
 extension KPNewStoreController: KPSharedSettingDelegate {
     
-    func sendButtonTapped(_ controller: KPSharedSettingViewController) {
+    func returnValueSet(_ controller: KPSharedSettingViewController) {
         if controller.identifiedKey == "country" {
-            self.citySubTitleView.content = controller.setValue as! String
+            self.citySubTitleView.content = controller.returnValue as! String
         } else if controller.identifiedKey == "price" {
-            self.priceSubTitleView.content = controller.setValue as! String
+            self.priceSubTitleView.content = controller.returnValue as! String
         } else if controller.identifiedKey == "rate" {
             self.rateCheckedView.checkContent = String(format: "已評分(%.1f)",
-                                                       controller.setValue as! CGFloat)
+                                                       controller.returnValue as! CGFloat)
             self.rateCheckedView.checked = true
         } else if controller.identifiedKey == "time" {
             self.businessHourCheckedView.checked = true

@@ -76,8 +76,8 @@ class KPRatingViewController: KPSharedSettingViewController {
     }
     
     func handleSendButtonOnTapped() {
-        setValue = averageRate
-        delegate?.sendButtonTapped(self)
+        returnValue = averageRate
+        delegate?.returnValueSet(self)
         if isRemote {
             KPServiceHandler.sharedHandler.addRating(NSNumber(value: ratingViews[0].currentRate),
                                                      NSNumber(value: ratingViews[3].currentRate),

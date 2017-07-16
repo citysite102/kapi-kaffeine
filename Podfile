@@ -11,6 +11,7 @@ target 'kapi-kaffeine' do
   pod 'BenzeneFoundation'
 
   pod 'GoogleMaps'
+  pod 'GooglePlacePicker'
   pod 'GooglePlaces'
 
   # UI

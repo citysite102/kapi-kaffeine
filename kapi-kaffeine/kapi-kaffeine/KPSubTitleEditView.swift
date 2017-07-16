@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GooglePlaces
 
 class KPSubTitleEditView: UIView {
 
@@ -161,6 +162,45 @@ class KPSubTitleEditView: UIView {
             customInputAction()
         }
     }
+    
+    func placeAutocomplete(_ searchContent: String) {
+        let filter = GMSAutocompleteFilter()
+        filter.type = .establishment
+        GMSPlacesClient().autocompleteQuery(searchContent,
+                                            bounds: nil,
+                                            filter: filter,
+                                            callback: {(results, error) -> Void in
+                                                if let error = error {
+                                                    print("Autocomplete error \(error)")
+                                                    return
+                                                }
+                                                if let results = results {
+                                                    for result in results {
+                                                        print("Result \(result.attributedFullText) with placeID \(result.placeID)")
+                                                    
+                                                        GMSPlacesClient().lookUpPlaceID(result.placeID!, callback: { (place, error) -> Void in
+                                                            if let error = error {
+                                                                print("lookup place id query error: \(error.localizedDescription)")
+                                                                return
+                                                            }
+                                                            
+                                                            guard let place = place else {
+                                                                print("No place details for \(result.placeID)")
+                                                                return
+                                                            }
+                                                            
+                                                            print("-----------\nPlace name \(place.name)")
+                                                            print("Place type\(place.types)")
+                                                            print("Place website\(place.website)")
+                                                            print("Place address \(place.formattedAddress)")
+                                                            print("Place placeID \(place.placeID)")
+                                                            print("Place Phonenumber \(place.phoneNumber)")
+                                                            print("Place attributions \(place.attributions)")
+                                                        })
+                                                    }
+                                                }
+        })
+    }
 }
 
 extension KPSubTitleEditView: UITextFieldDelegate {
@@ -174,8 +214,10 @@ extension KPSubTitleEditView: UITextFieldDelegate {
             textField.resignFirstResponder()
             return false
         }
+        
+        self.placeAutocomplete((textField.text ?? "")+string)
+        
         return true
     }
-    
 }
 

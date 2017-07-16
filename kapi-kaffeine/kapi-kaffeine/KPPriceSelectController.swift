@@ -39,7 +39,7 @@ class KPPriceSelectController: KPSharedSettingViewController {
     }
     
     func handleSendButtonOnTapped() {
-        delegate?.sendButtonTapped(self)
+        delegate?.returnValueSet(self)
         appModalController()?.dismissControllerWithDefaultDuration()
     }
 }
@@ -56,7 +56,7 @@ extension KPPriceSelectController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        setValue = priceRanges[indexPath.row]
+        returnValue = priceRanges[indexPath.row]
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

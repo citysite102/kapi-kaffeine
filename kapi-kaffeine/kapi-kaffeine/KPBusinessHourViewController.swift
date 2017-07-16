@@ -157,8 +157,8 @@ class KPBusinessHourViewController: KPSharedSettingViewController, KPTimePickerD
                 value["\(dayShortHands)_1_close"] = self.endTimeButtons[index].titleLabel?.text
             }
         }
-        setValue = value
-        delegate?.sendButtonTapped(self)
+        returnValue = value
+        delegate?.returnValueSet(self)
         appModalController()?.dismissControllerWithDefaultDuration()
     }
     

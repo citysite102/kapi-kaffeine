@@ -41,7 +41,7 @@ class KPCountrySelectController: KPSharedSettingViewController {
     }
     
     func handleSendButtonOnTapped() {
-        delegate?.sendButtonTapped(self)
+        delegate?.returnValueSet(self)
         appModalController()?.dismissControllerWithDefaultDuration()
     }
     
@@ -59,7 +59,7 @@ extension KPCountrySelectController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        setValue = countries[indexPath.row]
+        returnValue = countries[indexPath.row]
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
