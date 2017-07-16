@@ -77,25 +77,65 @@ GMUClusterRendererDelegate {
     var isCollectionViewShow: Bool = false {
         didSet {
             if self.collectionViewBottomConstraint != nil && self.reloadNeeded {
-                let showc: Bool = isCollectionViewShow
-                DispatchQueue.main.async {
-                    self.view.bringSubview(toFront: self.collectionView)
-                    if showc {
-                        self.displayDataModel =  self.allDataModel.filter { (dataModel) -> Bool in
-                            let bounds = GMSCoordinateBounds(region: self.mapView.projection.visibleRegion())
-                            return bounds.contains(dataModel.position)
-                        }
-                        self.collectionViewBottomConstraint.constant = -16
-                    } else {
-                        self.collectionViewBottomConstraint.constant = 100
+                self.view.bringSubview(toFront: self.collectionView)
+                if isCollectionViewShow == true && self.mapView != nil {
+                    self.displayDataModel =  self.allDataModel.filter { (dataModel) -> Bool in
+                        let bounds = GMSCoordinateBounds(region: self.mapView.projection.visibleRegion())
+                        return bounds.contains(dataModel.position)
                     }
+                    self.collectionView.alpha = 1
+
+                    
+                    
+                    if oldValue == true {
+                        DispatchQueue.main.async {
+                            UIView.animate(withDuration: 0.2, animations: {
+                                self.collectionView.alpha = 0
+                            }, completion: { (_) in
+                                self.collectionView.reloadData()
+                                if let dataModel = self.mapView.selectedMarker?.userData as? KPDataModel,
+                                    let selectedIndex =  self.displayDataModel.index(where: {($0.name == dataModel.name)}){
+                                    self.collectionView.contentOffset = CGPoint(x: -30 + CGFloat(selectedIndex) * (UIScreen.main.bounds.size.width - 60 + 15), y: 0)
+                                }
+                                self.view.layoutIfNeeded()
+                                self.view.bringSubview(toFront: self.collectionView)
+                            })
+                            
+                            UIView.animate(withDuration: 0.2, delay: 0.3, options: UIViewAnimationOptions.curveLinear, animations: {
+                                self.collectionView.alpha = 1
+                            }, completion: { (_) in
+                                
+                            })
+                        }
+                    } else {
+                        self.collectionViewBottomConstraint.constant = -16
+                        self.collectionView.reloadData()
+                        if let dataModel = self.mapView.selectedMarker?.userData as? KPDataModel,
+                            let selectedIndex =  self.displayDataModel.index(where: {($0.name == dataModel.name)}) {
+                            self.collectionView.contentOffset = CGPoint(x: -30 + CGFloat(selectedIndex) * (UIScreen.main.bounds.size.width - 60 + 15), y: 0)
+                        }
+                        self.collectionView.layoutIfNeeded()
+                        UIView.animate(withDuration: 0.5,
+                                       delay: 0,
+                                       usingSpringWithDamping: 0.8,
+                                       initialSpringVelocity: 0.8,
+                                       options: UIViewAnimationOptions.curveEaseOut,
+                                       animations: {
+                                        self.view.layoutIfNeeded()
+                        }, completion: { (_) in
+                            
+                        })
+                    }
+                    
+                } else {
+                    self.collectionViewBottomConstraint.constant = 100
                     
                     UIView.animate(withDuration: 0.5,
                                    delay: 0,
                                    usingSpringWithDamping: 0.8,
                                    initialSpringVelocity: 0.8,
                                    options: UIViewAnimationOptions.curveEaseOut,
-                                   animations: { 
+                                   animations: {
                                     self.view.layoutIfNeeded()
                     }, completion: { (_) in
                         
@@ -105,31 +145,7 @@ GMUClusterRendererDelegate {
         }
     }
     
-    var displayDataModel: [KPDataModel] = [] {
-        didSet {
-            self.collectionView?.reloadData()
-            if  self.mapView != nil,
-                let dataModel = self.mapView.selectedMarker?.userData as? KPDataModel,
-                let selectedIndex =  self.displayDataModel.index(where: {($0.name == dataModel.name)}) {
-                
-                DispatchQueue.main.async {
-                    UIView.animate(withDuration: 0.2, animations: {
-                        self.collectionView.alpha = 0
-                    }, completion: { (_) in
-                        self.collectionView.contentOffset = CGPoint(x: -30 + CGFloat(selectedIndex) * (UIScreen.main.bounds.size.width - 60 + 15), y: 0)
-                        self.view.layoutIfNeeded()
-                        self.view.bringSubview(toFront: self.collectionView)
-                    })
-                    
-                    UIView.animate(withDuration: 0.2, delay: 0.3, options: UIViewAnimationOptions.curveLinear, animations: {
-                        self.collectionView.alpha = 1
-                    }, completion: { (_) in
-                        
-                    })
-                }
-            }
-        }
-    }
+    var displayDataModel: [KPDataModel] = []
     
     var allDataModel: [KPDataModel] = [] {
         didSet {
