@@ -46,7 +46,8 @@ class KPInformationHeaderButtonBar: UIView {
         
         collectButton = KPInformationHeaderButton()
         addSubview(collectButton)
-        collectButton.addConstraints(fromStringArray: ["H:|[$self($metric0)]", "V:|[$self(90)]|"],
+        collectButton.addConstraints(fromStringArray: ["H:|[$self($metric0)]",
+                                                       "V:|[$self(90)]|"],
                                      metrics: [UIScreen.main.bounds.size.width/4])
         
         
@@ -102,7 +103,7 @@ class KPInformationHeaderButtonBar: UIView {
         visitButton.buttonInfo = HeaderButtonInfo(title: "有誰來過",
                                                   info: "%d人來過",
                                                   defaultInfo: "無人打卡",
-                                                  icon: R.image.icon_currentLocation()!,
+                                                  icon: R.image.icon_pin()!,
                                                   handler: { (headerButton) -> () in
                                                     
                                                     if headerButton.selected == false {

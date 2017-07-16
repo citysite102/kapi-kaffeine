@@ -24,12 +24,12 @@ class KPSearchHeaderView: UIView {
         containerView = UIView()
         containerView.backgroundColor = KPColorPalette.KPBackgroundColor.mainColor_light
         addSubview(containerView)
-        containerView.addConstraints(fromStringArray: ["V:|[$self(60)]",
+        containerView.addConstraints(fromStringArray: ["V:|[$self(64)]",
                                                        "H:|[$self]|"],
                                      views: [])
         
         titleLabel = UILabel()
-        titleLabel.font = UIFont.systemFont(ofSize: 18.0)
+        titleLabel.font = UIFont.systemFont(ofSize: 20.0)
         titleLabel.textColor = KPColorPalette.KPTextColor.whiteColor
         titleLabel.text = "找咖啡"
         containerView.addSubview(titleLabel)

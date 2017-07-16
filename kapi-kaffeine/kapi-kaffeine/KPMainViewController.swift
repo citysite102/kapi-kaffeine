@@ -78,7 +78,7 @@ class KPMainViewController: KPViewController {
         searchHeaderView.searchTagView.isUserInteractionEnabled = false
         searchHeaderView.searchTagView.delegate = self
         view.addSubview(searchHeaderView)
-        searchHeaderView.addConstraints(fromStringArray: ["V:|[$self(100)]",
+        searchHeaderView.addConstraints(fromStringArray: ["V:|[$self(104)]",
                                                           "H:|[$self]|"])
         
         opacityView = UIView()

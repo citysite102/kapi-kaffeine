@@ -200,7 +200,10 @@ class KPInformationViewController: KPViewController {
         informationHeaderView.delegate = self
         informationHeaderView.informationController = self
         
-        informationHeaderView.morePhotoButton.setTitle("\(informationDataModel.photoCount ?? 0) 張照片", for: .normal)
+        informationHeaderView.morePhotoButton.setTitle(informationDataModel.photoCount != nil ?
+            "\(informationDataModel.photoCount ?? 0) 張照片" :
+            "新增照片"
+            , for: .normal)
         if let photoURL = informationDataModel.covers?["google_l"] {
             informationHeaderView.shopPhoto.af_setImage(withURL: URL(string: photoURL)!,
                                                         placeholderImage: R.image.icon_loading(),
@@ -421,7 +424,9 @@ class KPInformationViewController: KPViewController {
         photoInformationView = KPInformationSharedInfoView()
         photoInformationView.infoView = photoInfoView
         photoInformationView.infoTitleLabel.text = "店家照片"
-        photoInformationView.infoSupplementLabel.text = "\(informationDataModel.photoCount ?? 0) 張照片"
+        photoInformationView.infoSupplementLabel.text = informationDataModel.photoCount != nil ?
+            "\(informationDataModel.photoCount ?? 0) 張照片" :
+        "新增照片"
         scrollContainer.addSubview(photoInformationView)
         photoInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                               "V:[$view0]-24-[$self]"],
@@ -530,7 +535,8 @@ class KPInformationViewController: KPViewController {
                     }
                 }
                 if self.displayPhotoInformations.count == 0 {
-                    self.informationHeaderView.shopPhoto.image = R.image.icon_noImage()
+                    self.informationHeaderView.shopPhoto.image = R.image.image_noImage()
+                    self.informationHeaderView.morePhotoButton.titleLabel?.text = "新增照片"
                 }
             } else {
                 // Handle Error
@@ -611,15 +617,19 @@ class KPInformationViewController: KPViewController {
     // MARK: UI Event
     
     func handleMorePhotoButtonOnTapped() {
-        let galleryController = KPPhotoGalleryViewController()
-        
-        galleryController.displayedPhotoInformations = self.displayPhotoInformations
-        
-        dismissButton.isHidden = true
-        navigationController?.pushViewController(viewController: galleryController,
-                                                      animated: true,
-                                                      completion: {}
-        )
+        if self.displayPhotoInformations.count == 0 {
+            print("新增照片")
+        } else {
+            let galleryController = KPPhotoGalleryViewController()
+            
+            galleryController.displayedPhotoInformations = self.displayPhotoInformations
+            
+            dismissButton.isHidden = true
+            navigationController?.pushViewController(viewController: galleryController,
+                                                          animated: true,
+                                                          completion: {}
+            )
+        }
     }
     
     func handleOtherTimeButtonOnTapped() {

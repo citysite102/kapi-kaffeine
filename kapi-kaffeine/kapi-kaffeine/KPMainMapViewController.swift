@@ -495,6 +495,18 @@ GMUClusterRendererDelegate {
         }
     }
     
+    func mapView(_ mapView: GMSMapView, willMove gesture: Bool) {
+        UIView.animate(withDuration: 5.0,
+                       animations: {
+                        self.mainController.searchHeaderView.searchTagView.transform = CGAffineTransform(translationX: 0,
+                                                                                                         y: 0)
+                        self.mapView.transform = CGAffineTransform(translationX: 0, y: 0)
+                        self.mainController.mainListViewController?.tableView.transform = CGAffineTransform(translationX: 0, y: 0)
+                        self.mainController.mainListViewController?.snapshotView.transform = CGAffineTransform(translationX: 0, y: 0)
+                        self.mainController.mainListViewController?.currentSearchTagTranslateY = 0
+        })
+    }
+    
     func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition) {
         UIView.animate(withDuration: 0.2,
                        animations: {
@@ -502,12 +514,12 @@ GMUClusterRendererDelegate {
                         self.addButton.alpha = 1.0
                         
                         
-                        self.mainController.searchHeaderView.searchTagView.transform = CGAffineTransform(translationX: 0,
-                                                                                                         y: 0)
-                        self.mapView.transform = CGAffineTransform(translationX: 0, y: 0)
-                        self.mainController.mainListViewController?.tableView.transform = CGAffineTransform(translationX: 0, y: 0)
-                        self.mainController.mainListViewController?.snapshotView.transform = CGAffineTransform(translationX: 0, y: 0)
-                        self.mainController.mainListViewController?.currentSearchTagTranslateY = 0
+//                        self.mainController.searchHeaderView.searchTagView.transform = CGAffineTransform(translationX: 0,
+//                                                                                                         y: 0)
+//                        self.mapView.transform = CGAffineTransform(translationX: 0, y: 0)
+//                        self.mainController.mainListViewController?.tableView.transform = CGAffineTransform(translationX: 0, y: 0)
+//                        self.mainController.mainListViewController?.snapshotView.transform = CGAffineTransform(translationX: 0, y: 0)
+//                        self.mainController.mainListViewController?.currentSearchTagTranslateY = 0
         })
     }
     
