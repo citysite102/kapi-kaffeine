@@ -57,6 +57,8 @@ extension KPPriceSelectController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         returnValue = priceRanges[indexPath.row]
+        delegate?.returnValueSet(self)
+        appModalController()?.dismissControllerWithDefaultDuration()
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

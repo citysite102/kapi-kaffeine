@@ -148,6 +148,7 @@ extension KPSettingViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = UITableViewCell(style: .value1,
                                    reuseIdentifier: self.settingDataContents[indexPath.row].identifier)
         cell.selectionStyle = .none
+        cell.selectedBackgroundView = UIImageView(image: UIImage(color: KPColorPalette.KPBackgroundColor.mainColor_light_10!))
         self.setupCell(self.settingDataContents[indexPath.row], cell: cell)
         return cell
     }

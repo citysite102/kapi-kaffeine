@@ -60,6 +60,8 @@ extension KPCountrySelectController: UITableViewDelegate, UITableViewDataSource 
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         returnValue = countries[indexPath.row]
+        delegate?.returnValueSet(self)
+        appModalController()?.dismissControllerWithDefaultDuration()
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

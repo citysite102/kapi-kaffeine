@@ -38,7 +38,7 @@ class KPSelectCell: UITableViewCell {
         selectedBox.addConstraint(from: "V:[$self(20)]")
         selectedBox.addConstraintForCenterAligningToSuperview(in: .vertical)
         
-        
+        selectedBackgroundView = UIImageView(image: UIImage(color: KPColorPalette.KPBackgroundColor.mainColor_light_10!))
     }
     
     required init?(coder aDecoder: NSCoder) {
