@@ -94,10 +94,11 @@ class KPMainMapViewCollectionCell: UICollectionViewCell {
         self.shopNameLabel = KPLayerLabel()
         self.shopNameLabel.font = UIFont.systemFont(ofSize: 14.0)
         self.shopNameLabel.textColor = KPColorPalette.KPTextColor.grayColor
+        self.shopNameLabel.lineBreakMode = .byTruncatingTail
         self.shopNameLabel.text = "覺旅咖啡"
         self.addSubview(self.shopNameLabel)
         
-        self.shopNameLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self($metric0)]",
+        self.shopNameLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]",
                                                             "V:|-[$self]"],
                                           metrics: [UIScreen.main.bounds.size.width/2],
                                           views: [self.shopImageView])
@@ -137,8 +138,9 @@ class KPMainMapViewCollectionCell: UICollectionViewCell {
         self.scoreLabel.contentBackgroundColor = KPColorPalette.KPBackgroundColor.mainColor
         self.scoreLabel.score = "4.3"
         self.addSubview(self.scoreLabel)
-        self.scoreLabel.addConstraints(fromStringArray: ["H:[$self(30)]-8-|",
-                                                         "V:|-(-4)-[$self(22)]"])
+        self.scoreLabel.addConstraints(fromStringArray: ["H:[$view0]-4-[$self(30)]-8-|",
+                                                         "V:|-(-4)-[$self(22)]"],
+                                       views:[shopNameLabel])
         
         self.featureContainer = KPMainListCellFeatureContainer()
         self.featureContainer.featureContents = ["燈光美", "氣氛佳"]

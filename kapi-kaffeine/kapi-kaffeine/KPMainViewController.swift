@@ -223,7 +223,7 @@ class KPMainViewController: KPViewController {
             R.image.icon_list()!.withRenderingMode(.alwaysTemplate) :
             R.image.icon_map()!.withRenderingMode(.alwaysTemplate)
         
-        var transform   = CATransform3DIdentity
+        var transform   = CATransform3DMakeTranslation(0, 2, 0)
         transform.m34 = -1.0/1000
         
         self.mainListViewController?.snapShotShowing = true
