@@ -248,8 +248,6 @@ extension KPPhotoDisplayViewController:
     func collectionView(_ collectionView: UICollectionView,
                         didSelectItemAt indexPath: IndexPath) {
         selectedIndexPath = indexPath
-//        self.dismiss(animated: true, completion: {
-//        })
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -267,12 +265,11 @@ extension KPPhotoDisplayViewController:
         if cell.longPressGesture == nil {
             let longPressGesture = UILongPressGestureRecognizer(target: self,
                                                                 action: #selector(handlePhotoLongPressed(_:)))
-            longPressGesture.minimumPressDuration = 0.2
+            longPressGesture.minimumPressDuration = 0.1
             cell.longPressGesture = longPressGesture
             cell.shopPhoto.addGestureRecognizer(longPressGesture)
         }
         
-//        cell.shopPhoto.image = self.diplayedPhotoInformations[indexPath.row].image
         cell.shopPhoto.af_setImage(withURL: self.displayedPhotoInformations[indexPath.row].imageURL)
         return cell;
     }

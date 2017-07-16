@@ -469,10 +469,10 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
 
 extension KPNewStoreController: KPSubtitleInputDelegate {
     
-    func returnValueSet(_ controller: KPSubtitleInputController) {
+    func outputValueSet(_ controller: KPSubtitleInputController) {
         
         if controller.identifiedKey == "name" {
-            if let placeInformation = controller.returnValue as? GMSPlace {
+            if let placeInformation = controller.outputValue as? GMSPlace {
                 nameSubTitleView.content = placeInformation.name
                 phoneSubTitleView.content = placeInformation.phoneNumber ?? ""
                 addressSubTitleView.content = placeInformation.formattedAddress ?? ""
@@ -486,7 +486,7 @@ extension KPNewStoreController: KPSubtitleInputDelegate {
                     }
                 }
             } else {
-                nameSubTitleView.content = controller.returnValue as? String
+                nameSubTitleView.content = controller.outputValue as? String
             }
         }
     }

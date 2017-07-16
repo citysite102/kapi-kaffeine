@@ -535,7 +535,13 @@ class KPInformationViewController: KPViewController {
                     }
                 }
                 if self.displayPhotoInformations.count == 0 {
+                    
+                    let transition = CATransition()
+                    transition.duration = 0.2
+                    transition.type = kCATransitionFade
                     self.informationHeaderView.shopPhoto.image = R.image.image_noImage()
+                    self.informationHeaderView.shopPhoto.isUserInteractionEnabled = false
+                    self.informationHeaderView.shopPhoto.layer.add(transition, forKey: nil)
                     self.informationHeaderView.morePhotoButton.titleLabel?.text = "上傳照片"
                 }
             } else {

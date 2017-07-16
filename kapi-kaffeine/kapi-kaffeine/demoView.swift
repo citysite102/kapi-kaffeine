@@ -52,9 +52,9 @@ class menu: UIView {
     
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if let touch = touches.first {
-            openAnimation()
-        }
+//        if let touch = touches.first {
+//            openAnimation()
+//        }
     }
 }
 

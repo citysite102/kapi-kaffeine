@@ -10,7 +10,7 @@ import UIKit
 import GooglePlaces
 
 protocol KPSubtitleInputDelegate: NSObjectProtocol {
-    func returnValueSet(_ controller: KPSubtitleInputController)
+    func outputValueSet(_ controller: KPSubtitleInputController)
 }
 
 class KPSubtitleInputController: KPViewController {
@@ -50,7 +50,7 @@ class KPSubtitleInputController: KPViewController {
     }
     
     var identifiedKey: String?
-    var returnValue: Any!
+    var outputValue: Any!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -133,8 +133,8 @@ class KPSubtitleInputController: KPViewController {
     }
     
     func handleSendButtonOnTapped() {
-        returnValue = editTextField.text
-        delegate?.returnValueSet(self)
+        outputValue = editTextField.text
+        delegate?.outputValueSet(self)
         appModalController()?.dismissControllerWithDefaultDuration()
     }
 
@@ -215,11 +215,11 @@ extension KPSubtitleInputController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        returnValue = apiContents[indexPath.row]
+        outputValue = apiContents[indexPath.row]
         editTextField.text = apiContents[indexPath.row].name
         tableView.deselectRow(at: tableView.indexPathForSelectedRow!,
                               animated: false)
-        delegate?.returnValueSet(self)
+        delegate?.outputValueSet(self)
         appModalController()?.dismissControllerWithDefaultDuration()
     }
     
