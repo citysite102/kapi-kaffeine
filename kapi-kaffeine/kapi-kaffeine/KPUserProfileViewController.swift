@@ -147,7 +147,7 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
         tabView = KPTabView(titles: self.tabTitles.map {$0.title})
         tabView.delegate = self
         view.addSubview(tabView)
-        tabView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$view0][$self]"], views: [userContainer])
+        tabView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$view0][$self(44)]"], views: [userContainer])
         
         scrollView = UIScrollView()
         scrollView.delegate = self

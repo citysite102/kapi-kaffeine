@@ -320,7 +320,7 @@ class KPCheckBox: UIControl {
 //            isSelected = false
 //            if sender.state == .ended {
                 toggleCheckState(true)
-                sendActions(for: .valueChanged)
+//                sendActions(for: .valueChanged)
 //            }
 //        }
     }

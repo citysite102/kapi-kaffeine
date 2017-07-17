@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol KPTimePickerDelegate {
+protocol KPTimePickerDelegate: class {
     func valueUpdate(timePicker: KPTimePicker, value: String)
 }
 
@@ -18,7 +18,7 @@ class KPTimePicker: UIView, UIPickerViewDataSource, UIPickerViewDelegate {
     
     var pickerView: UIPickerView!
     
-    var delegate: KPTimePickerDelegate?
+    weak var delegate: KPTimePickerDelegate?
     
     var timeValue: String {
         get {
@@ -75,7 +75,7 @@ class KPTimePicker: UIView, UIPickerViewDataSource, UIPickerViewDelegate {
         pickerView.addSubview(separatorLine2)
         pickerView.addConstraint(NSLayoutConstraint(item: separatorLine2, attribute: .bottom, relatedBy: .equal, toItem: pickerView, attribute: .bottom, multiplier: 0.357, constant: 0))
 
-        separatorLine2.addConstraint(from: "H:|-(\(42))-[$self]")
+        separatorLine2.addConstraint(from: "H:|-(32)-[$self]")
         separatorLine2.addConstraint(forWidth: 50)
         separatorLine2.addConstraint(forHeight: 2)
         
@@ -83,7 +83,7 @@ class KPTimePicker: UIView, UIPickerViewDataSource, UIPickerViewDelegate {
         separatorLine3.backgroundColor = KPColorPalette.KPBackgroundColor.mainColor
         pickerView.addSubview(separatorLine3)
         pickerView.addConstraint(NSLayoutConstraint(item: separatorLine3, attribute: .bottom, relatedBy: .equal, toItem: pickerView, attribute: .bottom, multiplier: 0.643, constant: 0))
-        separatorLine3.addConstraint(from: "H:|-(\(42))-[$self]")
+        separatorLine3.addConstraint(from: "H:|-(32)-[$self]")
         separatorLine3.addConstraint(forWidth: 50)
         separatorLine3.addConstraint(forHeight: 2)
         
@@ -92,7 +92,7 @@ class KPTimePicker: UIView, UIPickerViewDataSource, UIPickerViewDelegate {
         separatorLine3_top.backgroundColor = KPColorPalette.KPBackgroundColor.mainColor
         pickerView.addSubview(separatorLine3_top)
         pickerView.addConstraint(NSLayoutConstraint(item: separatorLine3_top, attribute: .bottom, relatedBy: .equal, toItem: pickerView, attribute: .bottom, multiplier: 0.357, constant: 0))
-        separatorLine3_top.addConstraint(from: "H:[$self]-(\(42))-|")
+        separatorLine3_top.addConstraint(from: "H:[$self]-(32)-|")
         separatorLine3_top.addConstraint(forWidth: 50)
         separatorLine3_top.addConstraint(forHeight: 2)
         
@@ -100,7 +100,7 @@ class KPTimePicker: UIView, UIPickerViewDataSource, UIPickerViewDelegate {
         separatorLine3_bottom.backgroundColor = KPColorPalette.KPBackgroundColor.mainColor
         pickerView.addSubview(separatorLine3_bottom)
         pickerView.addConstraint(NSLayoutConstraint(item: separatorLine3_bottom, attribute: .bottom, relatedBy: .equal, toItem: pickerView, attribute: .bottom, multiplier: 0.643, constant: 0))
-        separatorLine3_bottom.addConstraint(from: "H:[$self]-(\(42))-|")
+        separatorLine3_bottom.addConstraint(from: "H:[$self]-(32)-|")
         separatorLine3_bottom.addConstraint(forWidth: 50)
         separatorLine3_bottom.addConstraint(forHeight: 2)
         

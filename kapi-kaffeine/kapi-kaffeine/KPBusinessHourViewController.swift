@@ -8,7 +8,7 @@
 
 import UIKit
 
-class KPBusinessHourViewController: KPSharedSettingViewController, KPTimePickerDelegate {
+class KPBusinessHourViewController: KPSharedSettingViewController, KPTimePickerViewControllerDelegate {
     
     var checkBoxViews = [KPCheckView]()
     var startTimeButtons = [UIButton]()
@@ -45,6 +45,7 @@ class KPBusinessHourViewController: KPSharedSettingViewController, KPTimePickerD
             subContainers.append(container)
             
             let checkView = KPCheckView(.checkmark, title)
+            checkView.checkBox.checkState = .checked
             container.addSubview(checkView)
             checkBoxViews.append(checkView)
             checkView.checkBox.addTarget(self, action: #selector(handleCheckBoxOnTap(checkBox:)), for: .valueChanged)
@@ -124,22 +125,43 @@ class KPBusinessHourViewController: KPSharedSettingViewController, KPTimePickerD
         
         let controller = KPModalViewController()
         controller.presentationStyle = .popout
-        controller.contentSize = CGSize(width: 300, height: 300)
+        controller.contentSize = CGSize(width: 300, height: 350)
         controller.presentationStyle = .popout
         let timePickerController = KPTimePickerViewController()
-        if let timeValue = currentSelectedButton?.titleLabel?.attributedText?.string {
-            timePickerController.timeValue = timeValue
-        }
-        timePickerController.businessHourController = self
-        controller.contentController = timePickerController;
+        timePickerController.setButtonTitles(["完成", "設定全部"])
+        timePickerController.delegate = self
+        timePickerController.startTimeValue = startTimeButtons[currentSelectedButton!.tag].titleLabel?.attributedText?.string
+        timePickerController.endTimeValue = endTimeButtons[currentSelectedButton!.tag].titleLabel?.attributedText?.string
+        controller.contentController = timePickerController
         controller.presentModalView()
         
     }
     
-    func valueUpdate(timePicker: KPTimePicker, value: String) {
+    func updateTimeValue(startTime startTimeValue: String, endTime endTimeValue: String) {
         if currentSelectedButton != nil {
-            currentSelectedButton!.setAttributedTitle(NSAttributedString(string: value, attributes: editAttrs),
-                                                      for: .normal)
+            startTimeButtons[currentSelectedButton!.tag].setAttributedTitle(NSAttributedString(string: startTimeValue, attributes: editAttrs),
+                                                                            for: .normal)
+            endTimeButtons[currentSelectedButton!.tag].setAttributedTitle(NSAttributedString(string: endTimeValue, attributes: editAttrs),
+                                                                          for: .normal)
+        }
+    }
+    
+    func updateAllTimeValue(startTime startTimeValue: String, endTime endTimeValue: String) {
+        for (index, _) in checkBoxViews.enumerated() {
+            startTimeButtons[index].setAttributedTitle(NSAttributedString(string: startTimeValue, attributes: editAttrs),
+                                                       for: .normal)
+            endTimeButtons[index].setAttributedTitle(NSAttributedString(string: endTimeValue, attributes: editAttrs),
+                                                     for: .normal)
+        }
+    }
+    
+    func timePickerButtonDidTap(_ timePickerController: KPTimePickerViewController, selectedIndex index: Int) {
+        if index == 0 {
+            self.updateTimeValue(startTime: timePickerController.startTimeValue,
+                                 endTime: timePickerController.endTimeValue)
+        } else if index == 1 {
+            self.updateAllTimeValue(startTime: timePickerController.startTimeValue,
+                                    endTime: timePickerController.endTimeValue)
         }
     }
     

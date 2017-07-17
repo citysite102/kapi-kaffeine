@@ -296,6 +296,9 @@ class KPSearchConditionViewController: KPViewController {
         businessCheckBoxTwo.addConstraints(fromStringArray: ["H:|-16-[$self]",
                                                              "V:[$view0]-16-[$self]-88-|"],
                                                 views: [businessCheckBoxOne])
+        businessCheckBoxTwo.checkBox.addTarget(self,
+                                               action: #selector(handleBusinessCheckBoxTwoOnTap(_:)),
+                                               for: .valueChanged)
         
         businessCheckBoxOne.checkBox.deselectCheckBoxs = [businessCheckBoxTwo.checkBox]
         businessCheckBoxTwo.checkBox.deselectCheckBoxs = [businessCheckBoxOne.checkBox]
@@ -393,6 +396,19 @@ class KPSearchConditionViewController: KPViewController {
             ratingViews[4].currentRate = 4
             ratingViews[5].currentRate = 4
             ratingViews[6].currentRate = 4
+        }
+    }
+    
+    func handleBusinessCheckBoxTwoOnTap(_ sender: KPCheckBox) {
+        if sender.checkState == .checked {
+            let controller = KPModalViewController()
+            controller.presentationStyle = .popout
+            controller.contentSize = CGSize(width: 300, height: 350)
+            controller.presentationStyle = .popout
+            let timePickerController = KPTimePickerViewController()
+            timePickerController.setButtonTitles(["完成"])
+            controller.contentController = timePickerController
+            controller.presentModalView()
         }
     }
     

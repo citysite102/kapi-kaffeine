@@ -48,6 +48,14 @@ class KPTabView: UIView {
         }
     }
     
+    var font: UIFont = UIFont.boldSystemFont(ofSize: 13) {
+        didSet {
+            for button in tabs {
+                button.titleLabel?.font = font
+            }
+        }
+    }
+    
     var tabs: [UIButton] = []
     
     convenience init(titles: [String]) {
@@ -66,14 +74,14 @@ class KPTabView: UIView {
             tabs.append(button)
             self.addSubview(button)
             if preButton == nil {
-                button.addConstraints(fromStringArray: ["H:|[$self]", "V:|[$self(44)]|"])
+                button.addConstraints(fromStringArray: ["H:|[$self]", "V:|[$self]|"])
                 button.isSelected = true
                 self.addSubview(hintView)
                 hintView.addConstraintForHavingSameWidth(with: button)
                 self.addConstraint(NSLayoutConstraint(item: button, attribute: .leading, relatedBy: .equal, toItem: hintView, attribute: .leading, multiplier: 1, constant: 0))
                 hintView.addConstraint(from: "V:[$self(2)]|")
             } else {
-                button.addConstraints(fromStringArray: ["H:[$view0][$self]", "V:|[$self(44)]|"], views: [preButton!])
+                button.addConstraints(fromStringArray: ["H:[$view0][$self]", "V:|[$self]|"], views: [preButton!])
                 button.addConstraintForHavingSameWidth(with: preButton)
             }
             preButton = button
