@@ -24,6 +24,11 @@ class KPSearchViewController: KPViewController {
 
     var shouldShowSearchResults = false
     
+    
+    var initialHeaderContent: [String] = ["最近搜尋紀錄"]
+    var recentSearchModel: [KPDataModel] = [KPDataModel]()
+    var hotSearchModel: [String] = ["Demo1", "Demo2", "Demo3"]
+    
     var displayDataModel: [KPDataModel] = [KPDataModel]()
     var filteredDataModel: [KPDataModel] = [KPDataModel]()
     
@@ -41,12 +46,10 @@ class KPSearchViewController: KPViewController {
                                 action: #selector(KPSearchViewController.handleDismissButtonOnTapped),
                                 for: .touchUpInside)
         
-//        let barItem = UIBarButtonItem.init(customView: self.dismissButton)
         let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace,
                                              target: nil,
                                              action: nil)
         negativeSpacer.width = -5
-//        navigationItem.rightBarButtonItems = [negativeSpacer, barItem]
         navigationItem.leftBarButtonItems = [negativeSpacer, UIBarButtonItem.init(image: R.image.icon_back(),
                                                                                   style: .plain,
                                                                                   target: self,
@@ -54,6 +57,7 @@ class KPSearchViewController: KPViewController {
         tableView = UITableView()
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.separatorColor = UIColor.clear
         view.addSubview(self.tableView)
         tableView.addConstraints(fromStringArray: ["V:|[$self]|",
                                                    "H:|[$self]|"])
@@ -84,10 +88,18 @@ class KPSearchViewController: KPViewController {
     
     func readSearchData() {
         
-        ref.child("all_of_user").child("searchHistories").observeSingleEvent(of: .value, with: { (snapshot) in
-            let value = snapshot.value as? NSArray
+        ref.child("all_of_user").child("searchHistories").observeSingleEvent(of: .value, with: { (_) in
+//            let value = snapshot.value as? NSArray
         }) { (error) in
             print(error.localizedDescription)
+        }
+        
+        if let recentSearch = KPUserDefaults.recentSearch {
+            for dataModelJson in recentSearch {
+                if let dataModel = KPDataModel(JSON: dataModelJson) {
+                    recentSearchModel.append(dataModel)
+                }
+            }
         }
     }
     
@@ -144,19 +156,34 @@ extension KPSearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier:KPSearchViewController.KPSearchViewControllerDefaultCellReuseIdentifier,
-                                                 for: indexPath) as! KPSearchViewDefaultCell
         if shouldShowSearchResults {
-            cell.shopNameLabel.text = self.filteredDataModel[indexPath.row].name
+            let cell = tableView.dequeueReusableCell(withIdentifier:KPSearchViewController.KPSearchViewControllerDefaultCellReuseIdentifier,
+                                                     for: indexPath) as! KPSearchViewDefaultCell
+            cell.shopNameLabel.text = filteredDataModel[indexPath.row].name
+            return cell
         } else {
-            cell.shopNameLabel.text = self.displayDataModel[indexPath.row].name
+            if indexPath.section == 0 {
+                let cell = tableView.dequeueReusableCell(withIdentifier:KPSearchViewController.KPSearchViewControllerRecentCellReuseIdentifier,
+                                                     for: indexPath) as! KPSearchViewRecentCell
+                cell.shopNameLabel.text = recentSearchModel[indexPath.row].name
+                return cell
+            } else {
+                let cell = tableView.dequeueReusableCell(withIdentifier:KPSearchViewController.KPSearchViewControllerDefaultCellReuseIdentifier,
+                                                         for: indexPath) as! KPSearchViewDefaultCell
+                cell.shopNameLabel.text = displayDataModel[indexPath.row].name
+                return cell
+            }
         }
         
-        return cell
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let searchTitleLabel = KPSearchViewHeaderLabel()
+        if shouldShowSearchResults {
+            searchTitleLabel.headerLabel.text = "搜尋結果"
+        } else {
+            searchTitleLabel.headerLabel.text = initialHeaderContent[section]
+        }
         return searchTitleLabel
     }
     
@@ -168,8 +195,17 @@ extension KPSearchViewController: UITableViewDelegate, UITableViewDataSource {
         return 48
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+    func numberOfSections(in tableView: UITableView) -> Int {
+        if shouldShowSearchResults {
+            return 1
+        } else {
+            // 暫時不處理熱門搜尋
+            return 1
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 56.0
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -180,7 +216,7 @@ extension KPSearchViewController: UITableViewDelegate, UITableViewDataSource {
         if shouldShowSearchResults {
             return filteredDataModel.count
         } else {
-            return displayDataModel.count
+            return recentSearchModel.count
         }
     }
     
@@ -188,6 +224,20 @@ extension KPSearchViewController: UITableViewDelegate, UITableViewDataSource {
         let infoController = KPInformationViewController()
         if shouldShowSearchResults {
             infoController.informationDataModel = filteredDataModel[indexPath.row]
+            
+            if var recentSearch = KPUserDefaults.recentSearch {
+                if recentSearch.count >= 3 {
+                    recentSearch.removeLast()
+                }
+                
+                let dataModel = filteredDataModel[indexPath.row].toJSON()
+                recentSearch.insert(dataModel, at: 0)
+                KPUserDefaults.recentSearch = recentSearch
+            } else {
+                let recentSearch = [filteredDataModel[indexPath.row].toJSON()]
+                KPUserDefaults.recentSearch = recentSearch
+            }
+            
         } else {
             infoController.informationDataModel = displayDataModel[indexPath.row]
         }

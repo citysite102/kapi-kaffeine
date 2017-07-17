@@ -20,9 +20,12 @@ class KPSearchViewHeaderLabel: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame);
+        
+        backgroundColor = UIColor.white
+        
         addSubview(headerLabel)
         headerLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
-        headerLabel.addConstraint(from: "H:|-8-[$self]")
+        headerLabel.addConstraint(from: "H:|-16-[$self]")
     }
     
     required init?(coder aDecoder: NSCoder) {

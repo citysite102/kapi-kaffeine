@@ -10,6 +10,46 @@ import UIKit
 
 class KPSearchViewRecentCell: UITableViewCell {
 
+    
+    var recentIcon: UIImageView!
+    
+    lazy var shopNameLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 16.0)
+        label.textColor = KPColorPalette.KPTextColor.grayColor_level2
+        return label
+    }()
+    
+    
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        recentIcon = UIImageView.init(image: R.image.icon_recent()!)
+        recentIcon.tintColor = KPColorPalette.KPMainColor.starColor
+        addSubview(recentIcon)
+        recentIcon.addConstraints(fromStringArray: ["H:|-16-[$self(28)]",
+                                                    "V:[$self(28)]"],
+                                    views: [shopNameLabel])
+        recentIcon.addConstraintForCenterAligningToSuperview(in: .vertical)
+        
+        addSubview(shopNameLabel)
+        shopNameLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self(<=200)]"],
+                                     views:[recentIcon])
+        shopNameLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
+        
+        let separator = UIView()
+        separator.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
+        addSubview(separator)
+        separator.addConstraints(fromStringArray: ["V:[$self(1)]|",
+                                                   "H:|-16-[$self]|"])
+        
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

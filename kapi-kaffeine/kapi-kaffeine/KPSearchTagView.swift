@@ -30,6 +30,9 @@ class KPSearchTagView: UIView {
     var collectionView:UICollectionView!
     var collectionLayout:UICollectionViewFlowLayout!
     
+    
+    var preferenceHintButton: UIButton!
+    
     var preferenceHintView: UIView!
     var preferenceHintIcon: UIImageView!
     var preferenceHintLabel: UILabel!
@@ -48,34 +51,28 @@ class KPSearchTagView: UIView {
         super.init(frame: frame)
         self.backgroundColor = KPColorPalette.KPBackgroundColor.mainColor_light
         
-        self.preferenceHintView = UIView()
-        self.preferenceHintView.backgroundColor = KPColorPalette.KPBackgroundColor.mainColor
-        self.preferenceHintView.layer.cornerRadius = 3.0
-        self.addSubview(self.preferenceHintView)
-        self.preferenceHintView.addConstraints(fromStringArray: ["V:|-4-[$self]-4-|",
-                                                                 "H:|-8-[$self(96)]"])
         
-        self.preferenceHintIcon = UIImageView.init(image: R.image.icon_filter()?.withRenderingMode(.alwaysTemplate))
-        self.preferenceHintIcon.tintColor = UIColor.white
-        self.preferenceHintView.addSubview(self.preferenceHintIcon)
-        self.preferenceHintIcon.addConstraints(fromStringArray: ["H:|-8-[$self(20)]",
-                                                                 "V:[$self(20)]"])
-        self.preferenceHintIcon.addConstraintForCenterAligningToSuperview(in: .vertical)
-        
-        let preferenceTapGesture = UITapGestureRecognizer.init(target: self,
-                                                               action: #selector(handlePreferenceButtonOnTapped))
-        
-        
-        self.preferenceHintLabel = UILabel()
-        self.preferenceHintLabel.isUserInteractionEnabled = true
-        self.preferenceHintLabel.font = UIFont.systemFont(ofSize: 13.0)
-        self.preferenceHintLabel.textColor = KPColorPalette.KPTextColor.whiteColor
-        self.preferenceHintLabel.text = "偏好篩選"
-        self.preferenceHintView.addSubview(self.preferenceHintLabel)
-        self.preferenceHintLabel.addConstraints(fromStringArray: ["H:[$self]-8-|"],
-                                     views: [self.preferenceHintIcon])
-        self.preferenceHintLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
-        self.preferenceHintLabel.addGestureRecognizer(preferenceTapGesture)
+        self.preferenceHintButton = UIButton()
+        self.preferenceHintButton.setImage(R.image.icon_filter(),
+                                           for: .normal)
+        self.preferenceHintButton.imageEdgeInsets = UIEdgeInsetsMake(4, 2, 4, 2)
+        self.preferenceHintButton.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 4)
+        self.preferenceHintButton.imageView?.contentMode = .scaleAspectFit
+        self.preferenceHintButton.titleLabel?.font = UIFont.systemFont(ofSize: 13.0)
+        self.preferenceHintButton.setTitle("偏好篩選", for: .normal)
+        self.preferenceHintButton.setTitleColor(UIColor.white, for: .normal)
+        self.preferenceHintButton.setTitleColor(UIColor(hexString: "#888888"), for: .highlighted)
+        self.preferenceHintButton.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.mainColor!),
+                                                     for: .normal)
+        self.preferenceHintButton.imageView?.tintColor = UIColor.white
+        self.preferenceHintButton.layer.cornerRadius = 3.0
+        self.preferenceHintButton.layer.masksToBounds = true
+        self.preferenceHintButton.addTarget(self,
+                                            action: #selector(handlePreferenceButtonOnTapped),
+                                            for: .touchUpInside)
+        self.addSubview(self.preferenceHintButton)
+        self.preferenceHintButton.addConstraints(fromStringArray: ["V:|-4-[$self]-4-|",
+                                                                   "H:|-8-[$self(96)]"])
         
         //Collection view
         self.collectionLayout = UICollectionViewFlowLayout()
@@ -97,7 +94,7 @@ class KPSearchTagView: UIView {
         
         self.addSubview(self.collectionView)
         self.collectionView.addConstraints(fromStringArray: ["H:[$view0]-6-[$self]|", "V:|[$self]|"],
-                                           views: [self.preferenceHintView])
+                                           views: [self.preferenceHintButton])
         
     }
     

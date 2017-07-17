@@ -16,6 +16,7 @@ final public class KPUserDefaults {
     
     struct userInformationKey {
         static let accessToken = "accessToken"
+        static let recentSearch = "recent_search"
         static let userIdentifier = "user_identifier"
         static let userInformation = "user_information"
     }
@@ -34,14 +35,25 @@ final public class KPUserDefaults {
         }
     }
     
+    public static var recentSearch: Array<Dictionary<String, Any>>? = nil {
+        didSet {
+            
+            print("Store Recent Search")
+            
+            UserDefaults.standard.set(recentSearch, forKey: userInformationKey.recentSearch)
+        }
+    }
+    
     static func loadUserInformation() {
         userInformation = UserDefaults.standard.object(forKey: userInformationKey.userInformation) as? Dictionary
         accessToken = UserDefaults.standard.object(forKey: userInformationKey.accessToken) as? String
+        recentSearch = UserDefaults.standard.object(forKey: userInformationKey.recentSearch) as? Array
     }
     
     static func clearUserInformation() {
         UserDefaults.standard.removeObject(forKey: userInformationKey.accessToken)
         UserDefaults.standard.removeObject(forKey: userInformationKey.userInformation)
+        UserDefaults.standard.removeObject(forKey: userInformationKey.recentSearch)
     }
     
 }

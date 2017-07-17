@@ -15,8 +15,7 @@ class KPSearchViewDefaultCell: UITableViewCell {
     lazy var shopNameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16.0)
-        label.textColor = KPColorPalette.KPTextColor.mainColor
-        label.text = "店家各項評分"
+        label.textColor = KPColorPalette.KPTextColor.grayColor_level2
         return label
     }()
     
@@ -48,7 +47,7 @@ class KPSearchViewDefaultCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         addSubview(shopNameLabel)
-        shopNameLabel.addConstraints(fromStringArray: ["H:|-8-[$self(<=160)]"])
+        shopNameLabel.addConstraints(fromStringArray: ["H:|-16-[$self(<=160)]"])
         shopNameLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
         
         starIcon = UIImageView.init(image: R.image.icon_star()?.withRenderingMode(.alwaysTemplate))
@@ -65,13 +64,19 @@ class KPSearchViewDefaultCell: UITableViewCell {
         rateLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
         
         addSubview(distanceLabel)
-        distanceLabel.addConstraints(fromStringArray: ["H:[$self]-8-|"])
+        distanceLabel.addConstraints(fromStringArray: ["H:[$self]-16-|"])
         distanceLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
         
         addSubview(distanceNameLabel)
         distanceNameLabel.addConstraints(fromStringArray: ["H:[$self]-4-[$view0]"],
                                          views:[distanceLabel])
         distanceNameLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
+        
+        let separator = UIView()
+        separator.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
+        addSubview(separator)
+        separator.addConstraints(fromStringArray: ["V:[$self(1)]|",
+                                                   "H:|-16-[$self]|"])
         
     }
     

@@ -328,7 +328,6 @@ extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier:KPSideViewController.KPSideViewControllerCityCellReuseIdentifier,
                                                          for: indexPath) as! KPCityTableViewCell
-//                cell.selectionStyle = .none
                 let regionIndex = getRegionIndex(expandIndex: indexPath.row)
                 var regionContent = regionContents[regionIndex]
                 cell.cityLabel.text = regionContent?.cities[indexPath.row-regionIndex-1]
