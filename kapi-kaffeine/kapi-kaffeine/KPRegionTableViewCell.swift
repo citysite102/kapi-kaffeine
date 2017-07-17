@@ -45,6 +45,7 @@ class KPRegionTableViewCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        
         regionIcon = UIImageView(image: R.image.icon_taipei())
         regionIcon.tintColor = KPColorPalette.KPMainColor.mainColor_light
         regionIcon.isOpaque = true
