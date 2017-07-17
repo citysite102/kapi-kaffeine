@@ -55,6 +55,7 @@ class KPAllCommentController: KPViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.separatorColor = UIColor.clear
         view.addSubview(tableView)
         tableView.addConstraints(fromStringArray: ["V:|[$self]|",
                                                    "H:|[$self]|"])
@@ -106,6 +107,11 @@ extension KPAllCommentController: UITableViewDelegate, UITableViewDataSource {
         cell.userCommentLabel.setText(text: comment.content, lineSpacing: 2.4)
         cell.voteUpCount = comment.likeCount ?? 0
         cell.voteDownCount = comment.dislikeCount ?? 0
+        
+        if indexPath.row == comments.count-1 {
+            cell.separator.isHidden = true
+        }
+        
         return cell
     }
     

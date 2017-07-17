@@ -65,6 +65,10 @@ extension KPShopCommentInfoView: UITableViewDelegate, UITableViewDataSource {
         cell.voteUpCount = comment.likeCount ?? 0
         cell.voteDownCount = comment.dislikeCount ?? 0
         
+        if indexPath.row == comments.count-1 || indexPath.row == 2 {
+            cell.separator.isHidden = true
+        }
+        
         return cell
     }
     

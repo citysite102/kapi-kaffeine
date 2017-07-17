@@ -15,6 +15,7 @@ class KPShopCommentCell: UITableViewCell {
     var userNameLabel: UILabel!
     var timeHintLabel: UILabel!
     var userCommentLabel: UILabel!
+    var separator: UIView!
     var voteUpCount: NSNumber! {
         didSet {
             self.voteUpButton.currentCount = voteUpCount.intValue
@@ -110,6 +111,11 @@ class KPShopCommentCell: UITableViewCell {
                                            metrics: [UIScreen.main.bounds.size.width/2],
                                            views: [voteUpButton, userCommentLabel])
         
+        separator = UIView()
+        separator.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
+        addSubview(separator)
+        separator.addConstraints(fromStringArray: ["V:[$self(1)]|",
+                                                   "H:|-16-[$self]|"])
     }
     
     required init?(coder aDecoder: NSCoder) {
