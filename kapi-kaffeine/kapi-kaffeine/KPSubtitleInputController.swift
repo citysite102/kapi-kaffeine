@@ -156,14 +156,19 @@ extension KPSubtitleInputController: UITextFieldDelegate {
             textField.resignFirstResponder()
             return false
         }
-        self.placeAutoComplete((textField.text ?? "")+string)
-        
+        if !(textField.text?.isEmpty)! {
+            let oString = textField.text! as NSString
+            let nString = oString.replacingCharacters(in: range, with: string)
+            placeAutoComplete(nString)
+        }
         return true
     }
     
     func placeAutoComplete(_ placeName: String) {
         let filter = GMSAutocompleteFilter()
         filter.type = .establishment
+        
+        print("搜尋:\(placeName)")
         GMSPlacesClient().autocompleteQuery(placeName,
                                             bounds: nil,
                                             filter: filter,
@@ -194,6 +199,8 @@ extension KPSubtitleInputController: UITextFieldDelegate {
                                                                 places.append(place)
                                                                 self.apiContents = places
                                                             }
+                                                            
+                                                            print("Name:\(place.name)")
                         })
                     }
                 }

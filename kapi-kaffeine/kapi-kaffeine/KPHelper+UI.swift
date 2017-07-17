@@ -194,26 +194,46 @@ public extension UITableView {
 
 // MARK: Drawing
 
-
 // 繪製圓角
 func drawImage(image originImage: UIImage,
                rectSize: CGSize,
                roundedRadius radius: CGFloat) -> UIImage? {
     
-    let rect = CGRect(origin: CGPoint(x: 0, y: 0), size: rectSize)
+    let rect = CGRect(x: 0, y: 0, width: rectSize.width, height: rectSize.height)
+    let ratio = max(originImage.size.width/rectSize.width, originImage.size.height/rectSize.height)
+    
     UIGraphicsBeginImageContextWithOptions(rect.size,
                                            false,
-                                           UIScreen.main.scale)
+                                           0)
     
     let currentContext = UIGraphicsGetCurrentContext()
+    
+    var cropImage: UIImage
+    if originImage.size.width > originImage.size.height {
+        let imageRef = originImage.cgImage!.cropping(to: CGRect(x: (originImage.size.width-(rect.width)*ratio)/2,
+                                                                y: 0,
+                                                                width: rect.width*ratio,
+                                                                height: rect.height*ratio))
+        cropImage = UIImage(cgImage: imageRef!)
+    } else if originImage.size.width < originImage.size.height {
+        let imageRef = originImage.cgImage!.cropping(to: CGRect(x: 0,
+                                                                y: (originImage.size.height-(rect.height)*ratio)/2,
+                                                                width: rect.width*ratio,
+                                                                height: rect.height*ratio))
+        cropImage = UIImage(cgImage: imageRef!)
+    } else {
+        cropImage = originImage
+    }
+    
     currentContext?.addPath(UIBezierPath(roundedRect: rect,
                                          cornerRadius: radius).cgPath)
         
     currentContext?.clip()
-    originImage.draw(in: rect)
+    cropImage.draw(in: rect)
     currentContext?.drawPath(using: .fillStroke)
     
     let rounderCornerImage = UIGraphicsGetImageFromCurrentImageContext()
+    
     UIGraphicsEndImageContext()
     
     return rounderCornerImage

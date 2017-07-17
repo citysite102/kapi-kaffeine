@@ -26,7 +26,7 @@ class KPMainListTableViewCell: UITableViewCell {
                 self.shopImageView.af_setImage(withURL: URL(string: photoURL)!,
                                                placeholderImage: drawImage(image: R.image.icon_loading()!,
                                                                            rectSize: CGSize(width: 56, height: 56),
-                                                                           roundedRadius: 2),
+                                                                           roundedRadius: 3),
                                                filter: nil,
                                                progress: nil,
                                                progressQueue: DispatchQueue.global(),
@@ -36,17 +36,17 @@ class KPMainListTableViewCell: UITableViewCell {
                                                 if let responseImage = response.result.value {
                                                     self.shopImageView.image =  drawImage(image: responseImage,
                                                                                           rectSize: CGSize(width: 56, height: 56),
-                                                                                          roundedRadius: 2)
+                                                                                          roundedRadius: 3)
                                                 } else {
                                                     self.shopImageView.image =  drawImage(image: R.image.icon_noImage()!,
                                                                                           rectSize: CGSize(width: 56, height: 56),
-                                                                                          roundedRadius: 2)
+                                                                                          roundedRadius: 3)
                                                 }
                 })
             } else {
                 self.shopImageView.image = drawImage(image: R.image.icon_noImage()!,
                                                      rectSize: CGSize(width: 56, height: 56),
-                                                     roundedRadius: 2)
+                                                     roundedRadius: 3)
             }
             
             locationDidUpdate()
@@ -81,7 +81,7 @@ class KPMainListTableViewCell: UITableViewCell {
         
         shopImageView = UIImageView(image: drawImage(image: R.image.demo_6()!,
                                                      rectSize: CGSize(width: 56, height: 56),
-                                                     roundedRadius: 2))
+                                                     roundedRadius: 3))
         shopImageView.contentMode = .scaleAspectFill
         shopImageView.clipsToBounds = true
         contentView.addSubview(shopImageView)

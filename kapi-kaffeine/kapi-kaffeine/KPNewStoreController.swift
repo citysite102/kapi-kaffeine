@@ -394,7 +394,6 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
                                                  .Edited,
                                                  "店家地址")
         addressSubTitleView.placeHolderContent = "請輸入店家地址"
-//        addressSubTitleView.editTextField.delegate = self
         sectionTwoContainer.addSubview(addressSubTitleView)
         addressSubTitleView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                              "V:[$view0]-16-[$self(72)]"],
@@ -405,7 +404,6 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
                                                "店家電話")
         phoneSubTitleView.placeHolderContent = "請輸入店家電話"
         phoneSubTitleView.inputKeyboardType = .phonePad
-//        phoneSubTitleView.editTextField.delegate = self
         sectionTwoContainer.addSubview(phoneSubTitleView)
         phoneSubTitleView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                            "V:[$view0][$self(72)]"],
@@ -415,7 +413,6 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
                                                   .Edited,
                                                   "Facebook 連結")
         facebookSubTitleView.placeHolderContent = "請輸入店家 Facebook 連結"
-//        facebookSubTitleView.editTextField.delegate = self
         sectionTwoContainer.addSubview(facebookSubTitleView)
         facebookSubTitleView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                               "V:[$view0][$self(72)]-16-|"],

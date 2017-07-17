@@ -462,8 +462,6 @@ class KPInformationViewController: KPViewController {
                                                      views: [photoInformationView])
         
         syncRemoteData()
-        
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {

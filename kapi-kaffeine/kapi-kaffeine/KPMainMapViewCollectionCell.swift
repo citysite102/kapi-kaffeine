@@ -38,7 +38,7 @@ class KPMainMapViewCollectionCell: UICollectionViewCell {
             let index: Int = Int(arc4random()%12)
             self.shopImageView.image = drawImage(image: randomImageArray[index]!,
                                                  rectSize: CGSize(width: 64, height: 64),
-                                                 roundedRadius: 2)
+                                                 roundedRadius: 3)
             
             
 //            if let photoURL = dataModel.covers?["google_s"] {
