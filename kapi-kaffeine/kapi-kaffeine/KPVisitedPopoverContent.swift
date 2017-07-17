@@ -171,7 +171,7 @@ UICollectionViewDelegateFlowLayout {
             displayCell.shopPhoto.transform = CGAffineTransform(scaleX: 0.01, y: 0.01).rotated(by: -CGFloat.pi/3)
             UIView.animate(withDuration: 0.7,
                            delay: 0.1+Double(indexPath.row)*0.02,
-                           usingSpringWithDamping: 0.6,
+                           usingSpringWithDamping: 0.7,
                            initialSpringVelocity: 0.8,
                            options: .curveEaseOut,
                            animations: {

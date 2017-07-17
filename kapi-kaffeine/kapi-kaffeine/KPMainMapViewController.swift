@@ -508,7 +508,7 @@ GMUClusterRendererDelegate {
                             self.nearestButton.alpha = 0.75
                             self.addButton.alpha = 0.75
             })
-            
+        } else {
             UIView.animate(withDuration: 0.4,
                            animations: {
                             self.mainController.searchHeaderView.searchTagView.transform = CGAffineTransform(translationX: 0,

@@ -204,6 +204,8 @@ class KPInformationViewController: KPViewController {
             "\(informationDataModel.photoCount ?? 0) 張照片" :
             "上傳照片"
             , for: .normal)
+        informationHeaderView.scoreLabel.text = String(format: "%.1f", informationDataModel.averageRate?.doubleValue ?? 0.0)
+        informationHeaderView.facebookButton.isHidden = !(informationDataModel.facebookURL != nil)
         if let photoURL = informationDataModel.covers?["google_l"] {
             informationHeaderView.shopPhoto.af_setImage(withURL: URL(string: photoURL)!,
                                                         placeholderImage: nil,
@@ -229,7 +231,11 @@ class KPInformationViewController: KPViewController {
         informationHeaderView.morePhotoButton.addTarget(self,
                                                         action: #selector(KPInformationViewController.handleMorePhotoButtonOnTapped),
                                                         for: UIControlEvents.touchUpInside)
-
+        informationHeaderView.facebookButton.addTarget(self,
+                                                       action: #selector(KPInformationViewController.handleFacebookButtonOnTapped),
+                                                        for: UIControlEvents.touchUpInside)
+        
+        
         loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
         loadingIndicator.tintColor = KPColorPalette.KPMainColor.mainColor
         scrollContainer.addSubview(loadingIndicator)
@@ -638,12 +644,18 @@ class KPInformationViewController: KPViewController {
         }
     }
     
+    func handleFacebookButtonOnTapped() {
+        UIApplication.shared.open(URL(string: informationDataModel.facebookURL!)!,
+                                  options: [:]) { (_) in
+                                    
+        }
+    }
+    
     func handleOtherTimeButtonOnTapped() {
         
         let controller = KPModalViewController()
         let businessTimeViewController = KPBusinessTimeViewController()
         
-//        controller.presentationStyle = .popout
         controller.contentSize = CGSize(width: 276, height: 416)
         controller.cornerRadius = [.topRight, .topLeft, .bottomLeft, .bottomRight]
         controller.dismissWhenTouchingOnBackground = true

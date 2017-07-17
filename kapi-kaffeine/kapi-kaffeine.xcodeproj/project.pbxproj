@@ -319,6 +319,7 @@
 		77CACF4C1F168F2F00093147 /* KPNotificationPopoverContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPNotificationPopoverContent.swift; sourceTree = "<group>"; };
 		77D6BDEF1F0E9A42005598B3 /* demoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = demoView.swift; sourceTree = "<group>"; };
 		77D98A681F1BA5F200FE1832 /* KPInputExpandTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPInputExpandTransition.swift; sourceTree = "<group>"; };
+		77D98A6A1F1C786600FE1832 /* kapi-kaffeine.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "kapi-kaffeine.entitlements"; sourceTree = "<group>"; };
 		77DA2F511F17150200DB2EC5 /* KPReportController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPReportController.swift; sourceTree = "<group>"; };
 		77DD7E3C1F0B7647007B0E17 /* KPDefaultPopoverContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPDefaultPopoverContent.swift; sourceTree = "<group>"; };
 		77DD7E3E1F0B9283007B0E17 /* KPPopoverViewUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPPopoverViewUtility.swift; sourceTree = "<group>"; };
@@ -1028,6 +1029,7 @@
 		C02AFE431E7D260D008FFB33 /* kapi-kaffeine */ = {
 			isa = PBXGroup;
 			children = (
+				77D98A6A1F1C786600FE1832 /* kapi-kaffeine.entitlements */,
 				77F718321ED33DDE00755AA2 /* Intro */,
 				774208FA1EA6799600C78A00 /* SideController */,
 				776ACAFD1E9BB18100B629A2 /* Shared Class */,
@@ -1186,6 +1188,11 @@
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = A43Y729CXH;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					C02AFE541E7D260D008FFB33 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -1646,13 +1653,14 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "kapi-kaffeine/kapi-kaffeine.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = A43Y729CXH;
 				INFOPLIST_FILE = "kapi-kaffeine/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.kapi-kaffeine";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.kapi.kapi-kaffeine";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "kapi-kaffeine/kapi-kaffeine-bridging-header.h";
@@ -1668,13 +1676,14 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "kapi-kaffeine/kapi-kaffeine.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = A43Y729CXH;
 				INFOPLIST_FILE = "kapi-kaffeine/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.kapi-kaffeine";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.kapi.kapi-kaffeine";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "kapi-kaffeine/kapi-kaffeine-bridging-header.h";

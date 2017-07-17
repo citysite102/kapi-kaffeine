@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="167" height="138" viewBox="0 0 167 138">
+    <g fill="none" fill-rule="evenodd">
+        <path fill="#FEFEFE" stroke="#784D1F" stroke-width="3" d="M125.708 94.94l4.713-18.418 27.82 7.015c5.128 1.292 8.223 6.459 6.92 11.55-1.301 5.085-6.512 8.16-11.632 6.868l-27.82-7.015z"/>
+        <path fill="#FFF" stroke="#784D1F" stroke-width="3" d="M137.049 69.042c0 37.58-30.681 68.041-68.522 68.041C30.68 137.083 0 106.622 0 69.042S30.681 1 68.527 1c37.84 0 68.522 30.461 68.522 68.042"/>
+        <path fill="#C8955E" fill-opacity=".2" stroke="#C8955E" stroke-dasharray="3,6" stroke-linecap="round" stroke-width="2" d="M68.057 126.3C35.993 126.3 10 100.489 10 68.65S35.993 11 68.057 11c32.064 0 58.057 25.811 58.057 57.65s-25.993 57.65-58.057 57.65z"/>
+        <g>
+            <g fill="#784D1F" transform="translate(39 59)">
+                <circle cx="51" cy="9" r="9"/>
+                <circle cx="9" cy="9" r="9"/>
+            </g>
+            <path stroke="#C8955E" stroke-linecap="round" stroke-width="6" d="M50 94s16.409 10.196 36.81 0"/>
+            <path stroke="#C8955E" stroke-linecap="round" stroke-width="5" d="M53.396 43S46.615 49.675 36 49.883M82 42s7.882 7.758 20.219 8"/>
+        </g>
+    </g>
+</svg>

@@ -336,7 +336,6 @@ class KPMainListViewController:
     
     func preloadNextAd() {
         if !adsToLoad.isEmpty {
-            print("Count:\(adsToLoad.count)")
             let ad = adsToLoad.removeFirst()
             ad.load(GADRequest())
             adsLoaded.append(ad)
@@ -373,17 +372,18 @@ extension KPMainListViewController: GADNativeExpressAdViewDelegate {
 extension KPMainListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-//        print("Did End Drag")
-//        UIView.animate(withDuration: 0.1) {
-//            let translate: CGFloat = self.currentSearchTagTranslateY < -40 ? -40.0 : 0.0
-//            self.mainController.searchHeaderView.searchTagView.transform = CGAffineTransform(translationX: 0,
-//                                                                                             y: translate)
-//            self.mainController.mainMapViewController?.mapView.transform = CGAffineTransform(translationX: 0,
-//                                                                                             y: translate)
-//            self.tableView.transform = CGAffineTransform(translationX: 0, y: translate)
-//            self.snapshotView.transform = CGAffineTransform(translationX: 0, y: translate)
-//            self.currentSearchTagTranslateY = translate
-//        }
+        
+        let translate: CGFloat = self.currentSearchTagTranslateY < -40 ? -80 : 0.0
+        self.currentSearchTagTranslateY = translate
+        UIView.animate(withDuration: 0.1) {
+            self.mainController.searchHeaderView.searchTagView.transform = CGAffineTransform(translationX: 0,
+                                                                                        y: self.currentSearchTagTranslateY/2)
+            self.mainController.mainMapViewController?.mapView.transform = CGAffineTransform(translationX: 0,
+                                                                                        y: self.currentSearchTagTranslateY/2)
+            self.tableView.transform = CGAffineTransform(translationX: 0, y: self.currentSearchTagTranslateY/2)
+            self.snapshotView.transform = CGAffineTransform(translationX: 0, y: self.currentSearchTagTranslateY/2)
+            
+        }
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

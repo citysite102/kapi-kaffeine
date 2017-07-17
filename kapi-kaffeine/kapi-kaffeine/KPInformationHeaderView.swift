@@ -187,10 +187,13 @@ class KPInformationHeaderView: UIView {
     var shopPhotoContainer: UIView!
     var shopPhoto: UIImageView!
     var shopSelectView: UIView!
+    
     var morePhotoButton: UIButton!
     var photoLongPressGesture: UILongPressGestureRecognizer!
     
     var scoreContainer: UIView!
+    var scoreIcon: UIImageView!
+    var scoreLabel: UILabel!
     var facebookButton: UIButton!
     var otherPhotoContainer: UIView!
 
@@ -230,6 +233,44 @@ class KPInformationHeaderView: UIView {
                                                              action: #selector(handleShopPhotoLongPressed(_:)))
         photoLongPressGesture.minimumPressDuration = 0.0
         shopPhoto.addGestureRecognizer(photoLongPressGesture)
+        
+        
+        scoreContainer = UIView()
+        scoreContainer.backgroundColor = UIColor.white
+        scoreContainer.layer.cornerRadius = 2.0
+        scoreContainer.layer.masksToBounds = true
+        container.addSubview(scoreContainer)
+        scoreContainer.addConstraints(fromStringArray: ["H:|-12-[$self(56)]",
+                                                        "V:[$self(28)]-16-|"])
+        
+        scoreIcon = UIImageView(image: R.image.icon_star())
+        scoreIcon.tintColor = KPColorPalette.KPMainColor.starColor
+        scoreContainer.addSubview(scoreIcon)
+        scoreIcon.addConstraints(fromStringArray: ["H:|-4-[$self(18)]",
+                                                   "V:|-5-[$self]-5-|"])
+        
+        scoreLabel = UILabel()
+        scoreLabel.font = UIFont.boldSystemFont(ofSize: 14.0)
+        scoreLabel.textColor = KPColorPalette.KPTextColor.mainColor
+        scoreLabel.text = "0.0"
+        scoreContainer.addSubview(scoreLabel)
+        scoreLabel.addConstraints(fromStringArray: ["H:[$view0]-2-[$self]-|"],
+                                  views:[scoreIcon])
+        scoreLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
+        
+        facebookButton = UIButton(type: .custom)
+        facebookButton.setBackgroundImage(UIImage(color: UIColor.white),
+                                          for: .normal)
+        facebookButton.setImage(R.image.icon_fb(),
+                                for: .normal)
+        facebookButton.layer.cornerRadius = 2.0
+        facebookButton.layer.masksToBounds = true
+        facebookButton.imageView?.tintColor = KPColorPalette.KPMainColor.mainColor
+        container.addSubview(facebookButton)
+        facebookButton.addConstraints(fromStringArray: ["H:[$view0]-8-[$self(28)]",
+                                                        "V:[$self(28)]-16-|"],
+                                      views:[scoreContainer])
+        
         
         morePhotoButton = UIButton(type: .custom)
         morePhotoButton.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.grayColor_level5!),
