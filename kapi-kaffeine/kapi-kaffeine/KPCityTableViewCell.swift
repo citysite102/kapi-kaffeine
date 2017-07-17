@@ -11,6 +11,7 @@ import UIKit
 class KPCityTableViewCell: UITableViewCell {
 
     var cityLabel: UILabel!
+    var selectedBox: KPCheckBox!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -30,6 +31,19 @@ class KPCityTableViewCell: UITableViewCell {
         cityLabel.addConstraints(fromStringArray: ["H:|-72-[$self]",
                                                    "V:|-12-[$self(16)]-12-|"]);
         
+        selectedBox = KPCheckBox()
+        selectedBox.setMarkType(markType: .checkmark,
+                                animated: true)
+        selectedBox.boxLineWidth = 2.0
+        selectedBox.stateChangeAnimation = .bounce(.fill)
+        selectedBox.setCheckState(.checked, animated: false)
+        selectedBox.isHidden = true
+        addSubview(selectedBox)
+        selectedBox.addConstraint(from: "H:[$self(16)]-16-|")
+        selectedBox.addConstraint(from: "V:[$self(16)]")
+        selectedBox.addConstraintForCenterAligningToSuperview(in: .vertical)
+        
+        selectedBackgroundView = UIImageView(image: UIImage(color: KPColorPalette.KPBackgroundColor.mainColor_light_10!))
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -38,8 +52,7 @@ class KPCityTableViewCell: UITableViewCell {
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+        selectedBox.isHidden = !selected
     }
 
 }

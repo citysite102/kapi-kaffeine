@@ -70,7 +70,9 @@ extension KPShopPhotoInfoView: UICollectionViewDelegate, UICollectionViewDataSou
                                    placeholderImage: UIImage(color: KPColorPalette.KPBackgroundColor.grayColor_level6!),
                                    filter: nil,
                                    progress: nil,
-                                   progressQueue: DispatchQueue.global(), imageTransition: UIImageView.ImageTransition.noTransition, runImageTransitionIfCached: false, completion: nil)
+                                   progressQueue: DispatchQueue.global(),
+                                   imageTransition: UIImageView.ImageTransition.crossDissolve(0.2),
+                                   runImageTransitionIfCached: false, completion: nil)
         
         return cell;
     }

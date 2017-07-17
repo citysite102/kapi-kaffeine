@@ -31,7 +31,7 @@ class KPInformationViewController: KPViewController {
                                                         filter: nil,
                                                         progress: nil,
                                                         progressQueue: DispatchQueue.global(),
-                                                        imageTransition: UIImageView.ImageTransition.noTransition,
+                                                        imageTransition: UIImageView.ImageTransition.crossDissolve(0.2),
                                                         runImageTransitionIfCached: false,
                                                         completion: nil)
         }
