@@ -17,6 +17,9 @@ class KPShopPhotoInfoView: UIView {
     
     var displayPhotoInformations: [PhotoInformation] = [] {
         didSet {
+            if displayPhotoInformations.count > 0 {
+                self.collectionView.addConstraint(forHeight: 112)
+            }
             collectionView.reloadData()
         }
     }
@@ -44,7 +47,7 @@ class KPShopPhotoInfoView: UIView {
                                      forCellWithReuseIdentifier: KPShopPhotoInfoView.KPShopPhotoInfoViewCellReuseIdentifier)
         
         self.addSubview(self.collectionView);
-        self.collectionView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self(112)]|"]);
+        self.collectionView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"]);
     }
     
     required init?(coder aDecoder: NSCoder) {
