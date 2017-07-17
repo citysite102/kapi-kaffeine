@@ -222,17 +222,24 @@ extension KPSearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let infoController = KPInformationViewController()
+        
         if shouldShowSearchResults {
             infoController.informationDataModel = filteredDataModel[indexPath.row]
             
             if var recentSearch = KPUserDefaults.recentSearch {
-                if recentSearch.count >= 3 {
+                if recentSearch.count >= 5 {
                     recentSearch.removeLast()
                 }
                 
                 let dataModel = filteredDataModel[indexPath.row].toJSON()
-                recentSearch.insert(dataModel, at: 0)
-                KPUserDefaults.recentSearch = recentSearch
+                let duplicatedModel = recentSearchModel.first(where: { (model) -> Bool in
+                    return model.identifier == filteredDataModel[indexPath.row].identifier
+                })
+                
+                if duplicatedModel == nil {
+                    recentSearch.insert(dataModel, at: 0)
+                    KPUserDefaults.recentSearch = recentSearch
+                }
             } else {
                 let recentSearch = [filteredDataModel[indexPath.row].toJSON()]
                 KPUserDefaults.recentSearch = recentSearch
@@ -241,6 +248,14 @@ extension KPSearchViewController: UITableViewDelegate, UITableViewDataSource {
         } else {
             infoController.informationDataModel = displayDataModel[indexPath.row]
         }
-        self.navigationController?.pushViewController(infoController, animated: true)
+        
+        if searchController.searchBar.isFirstResponder {
+            searchController.searchBar.endEditing(true)
+            DispatchQueue.main.asyncAfter(deadline: .now()+0.1) {
+                self.navigationController?.pushViewController(infoController, animated: true)
+            }
+        } else {
+            self.navigationController?.pushViewController(infoController, animated: true)
+        }
     }
 }
