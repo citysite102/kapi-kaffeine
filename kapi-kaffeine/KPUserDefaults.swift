@@ -14,8 +14,9 @@ final public class KPUserDefaults {
     static var defaults = UserDefaults.standard
     
     
-    struct userInformationKey {
-        static let accessToken = "accessToken"
+    struct UserInformationKey {
+        static let accessToken = "access_token"
+        static let accessGroup = "A43Y729CXH.com.kapi.kapi-kaffeine"
         static let recentSearch = "recent_search"
         static let userIdentifier = "user_identifier"
         static let userInformation = "user_information"
@@ -24,36 +25,43 @@ final public class KPUserDefaults {
     public static var accessToken: String? {
         didSet {
             if accessToken != nil {
-                UserDefaults.standard.set(accessToken, forKey: userInformationKey.accessToken)
+                let keychainItemWrapper = KeychainItemWrapper(identifier: UserInformationKey.accessToken,
+                                                              accessGroup: UserInformationKey.accessGroup)
+                keychainItemWrapper[UserInformationKey.accessToken] = accessToken as AnyObject?
             }
         }
     }
     
     public static var userInformation: Dictionary<String, Any>? = nil {
         didSet {
-            UserDefaults.standard.set(userInformation, forKey: userInformationKey.userInformation)
+            UserDefaults.standard.set(userInformation, forKey: UserInformationKey.userInformation)
         }
     }
     
     public static var recentSearch: Array<Dictionary<String, Any>>? = nil {
         didSet {
-            
-            print("Store Recent Search")
-            
-            UserDefaults.standard.set(recentSearch, forKey: userInformationKey.recentSearch)
+            UserDefaults.standard.set(recentSearch, forKey: UserInformationKey.recentSearch)
         }
     }
     
     static func loadUserInformation() {
-        userInformation = UserDefaults.standard.object(forKey: userInformationKey.userInformation) as? Dictionary
-        accessToken = UserDefaults.standard.object(forKey: userInformationKey.accessToken) as? String
-        recentSearch = UserDefaults.standard.object(forKey: userInformationKey.recentSearch) as? Array
+        userInformation = UserDefaults.standard.object(forKey: UserInformationKey.userInformation) as? Dictionary
+        recentSearch = UserDefaults.standard.object(forKey: UserInformationKey.recentSearch) as? Array
+        
+        let keychainItemWrapper = KeychainItemWrapper(identifier: UserInformationKey.accessToken,
+                                                      accessGroup: UserInformationKey.accessGroup)
+        if let secretToken = keychainItemWrapper[UserInformationKey.accessToken] as? String? {
+            accessToken = secretToken
+        }
     }
     
     static func clearUserInformation() {
-        UserDefaults.standard.removeObject(forKey: userInformationKey.accessToken)
-        UserDefaults.standard.removeObject(forKey: userInformationKey.userInformation)
-        UserDefaults.standard.removeObject(forKey: userInformationKey.recentSearch)
+        
+        let keychainItemWrapper = KeychainItemWrapper(identifier: UserInformationKey.accessToken,
+                                                      accessGroup: UserInformationKey.accessGroup)
+        keychainItemWrapper.resetKeychain()
+        UserDefaults.standard.removeObject(forKey: UserInformationKey.userInformation)
+        UserDefaults.standard.removeObject(forKey: UserInformationKey.recentSearch)
     }
     
 }

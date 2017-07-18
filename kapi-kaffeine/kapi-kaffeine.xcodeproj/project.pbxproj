@@ -32,6 +32,8 @@
 		7734634D1ED74C5400EA78F0 /* KPDataRateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7734634C1ED74C5400EA78F0 /* KPDataRateModel.swift */; };
 		7734634F1ED74FE000EA78F0 /* KPServiceHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7734634E1ED74FE000EA78F0 /* KPServiceHandler.swift */; };
 		773463521ED7547B00EA78F0 /* KPLoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773463511ED7547B00EA78F0 /* KPLoginRequest.swift */; };
+		773E24871F1E5A1600C7C094 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 773E24861F1E5A1600C7C094 /* Security.framework */; };
+		773E24891F1E5A4200C7C094 /* KeychainItemWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773E24881F1E5A4200C7C094 /* KeychainItemWrapper.swift */; };
 		774208ED1EA5B97300C78A00 /* KPShopCommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774208EC1EA5B97300C78A00 /* KPShopCommentCell.swift */; };
 		774208F11EA5F04B00C78A00 /* KPShopPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774208F01EA5F04B00C78A00 /* KPShopPhotoCell.swift */; };
 		774208F71EA61D4400C78A00 /* KPShopRecommendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774208F61EA61D4400C78A00 /* KPShopRecommendView.swift */; };
@@ -224,6 +226,8 @@
 		7734634C1ED74C5400EA78F0 /* KPDataRateModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPDataRateModel.swift; sourceTree = "<group>"; };
 		7734634E1ED74FE000EA78F0 /* KPServiceHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPServiceHandler.swift; sourceTree = "<group>"; };
 		773463511ED7547B00EA78F0 /* KPLoginRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPLoginRequest.swift; sourceTree = "<group>"; };
+		773E24861F1E5A1600C7C094 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		773E24881F1E5A4200C7C094 /* KeychainItemWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainItemWrapper.swift; sourceTree = "<group>"; };
 		774208EC1EA5B97300C78A00 /* KPShopCommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPShopCommentCell.swift; sourceTree = "<group>"; };
 		774208F01EA5F04B00C78A00 /* KPShopPhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPShopPhotoCell.swift; sourceTree = "<group>"; };
 		774208F61EA61D4400C78A00 /* KPShopRecommendView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPShopRecommendView.swift; sourceTree = "<group>"; };
@@ -409,6 +413,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				773E24871F1E5A1600C7C094 /* Security.framework in Frameworks */,
 				4EEB682CBA070A438BA23B29 /* Pods_kapi_kaffeine.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -442,6 +447,7 @@
 		54FAC649B6938A296E79D067 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				773E24861F1E5A1600C7C094 /* Security.framework */,
 				693D5C21ACB83D68DF6CDE6C /* Pods_kapi_kaffeine.framework */,
 				FA9A4A083D5D704A746B1C9A /* Pods_kapi_kaffeineTests.framework */,
 				5C9A071EB11610BEDE083D59 /* Pods_kapi_kaffeineUITests.framework */,
@@ -694,6 +700,7 @@
 				777DCC121EA785430055525A /* Transition */,
 				77FB63941E9AA75900FFC3DC /* Model */,
 				776ACAFE1E9BB1DE00B629A2 /* KPConstant.swift */,
+				773E24881F1E5A4200C7C094 /* KeychainItemWrapper.swift */,
 				775989901EA5171A0029989C /* KPHelper+UI.swift */,
 				7762E3491F1225B20006E205 /* KPHelper+Foundation.swift */,
 				C031E9061EA5F0BF00E87FB1 /* KPLocationManager.swift */,
@@ -1189,6 +1196,9 @@
 						DevelopmentTeam = A43Y729CXH;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
 							com.apple.Push = {
 								enabled = 1;
 							};
@@ -1361,6 +1371,7 @@
 				776ACB041E9BB8A900B629A2 /* KPSearchTagCell.swift in Sources */,
 				772748441ED5F81300C42FB6 /* KPUserManager.swift in Sources */,
 				779F9E921F1A2E5B00B8DC25 /* KPInputRecommendCell.swift in Sources */,
+				773E24891F1E5A4200C7C094 /* KeychainItemWrapper.swift in Sources */,
 				77C107841F063B4F00EE97DB /* KPSatisficationView.swift in Sources */,
 				77A2019D1EBC5D1D00F3497F /* KPCheckboxCheckPathGenerator.swift in Sources */,
 				77B66FB51EAFC46B008B6652 /* KPUserProfileViewController.swift in Sources */,
@@ -1651,7 +1662,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CA73E4544076455C6DC0C065 /* Pods-kapi-kaffeine.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "kapi-kaffeine/kapi-kaffeine.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1674,7 +1685,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 605CB2E5F236FDDFFE502CB5 /* Pods-kapi-kaffeine.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "kapi-kaffeine/kapi-kaffeine.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
