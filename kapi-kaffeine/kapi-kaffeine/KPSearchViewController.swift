@@ -246,7 +246,7 @@ extension KPSearchViewController: UITableViewDelegate, UITableViewDataSource {
             }
             
         } else {
-            infoController.informationDataModel = displayDataModel[indexPath.row]
+            infoController.informationDataModel = recentSearchModel[indexPath.row]
         }
         
         if searchController.searchBar.isFirstResponder {
