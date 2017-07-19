@@ -20,7 +20,7 @@ class KPDataTagModel: NSObject, Mappable {
     
     func mapping(map: Map) {
         identifier          <-    map["tag_id"]
-        name                <-    map["tag_name"]
+        name                <-    map["name"]
     }
     
 }

@@ -79,11 +79,12 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
     var businessHourController: KPBusinessHourViewController!
     var mapInputController: KPMapInputViewController!
     
-    let tags = ["工業風", "藝術", "文青", "老屋", "美式風",
-                "服務佳", "有寵物", "開很晚", "手沖單品", "好停車",
-                "很多書", "適合工作", "適合讀書", "聚會佳", "可預約", "可包場"]
+//    let tags = ["工業風", "藝術", "文青", "老屋", "美式風",
+//                "服務佳", "有寵物", "開很晚", "手沖單品", "好停車",
+//                "很多書", "適合工作", "適合讀書", "聚會佳", "可預約", "可包場"]
     
     var featureCollectionView: UICollectionView!
+    var featureCollectionViewHeightConstraint: NSLayoutConstraint!
     var rateCheckedView: KPItemCheckedView!
     var businessHourCheckedView: KPItemCheckedView!
     
@@ -256,7 +257,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
                                                  "選擇店家特色標籤")
         sectionOneContainer.addSubview(featureSubTitleView)
         featureSubTitleView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                             "V:[$view0][$self(200)]"],
+                                                             "V:[$view0][$self]"],
                                         views:[priceSubTitleView])
         
         sizingCell = KPFeatureTagCell()
@@ -275,6 +276,10 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
         featureCollectionView.allowsMultipleSelection = true
         featureCollectionView.register(KPFeatureTagCell.self,
                                        forCellWithReuseIdentifier: "cell")
+        
+        featureCollectionViewHeightConstraint = featureCollectionView.addConstraint(forHeight: 100)
+        
+        featureCollectionView.addObserver(self, forKeyPath: "contentSize", options: .new, context: nil)
         
         featureSubTitleView.customInfoView = featureCollectionView
     
@@ -479,6 +484,23 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShown(notification:)), name: .UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillBeHidden(notification:)), name: .UIKeyboardWillHide, object: nil)
     }
+    
+    deinit {
+        featureCollectionView.removeObserver(self, forKeyPath: "contentSize")
+    }
+    
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        if keyPath == "contentSize" {
+            if let changeValue = change,
+               let size = changeValue[NSKeyValueChangeKey.newKey] as? CGSize {
+                featureCollectionViewHeightConstraint.constant = size.height + 10
+                view.layoutIfNeeded()
+            }
+        } else {
+            super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
+        }
+    }
+    
 
     func handleDismissButtonOnTapped() {
         appModalController()?.dismissControllerWithDefaultDuration()
@@ -619,19 +641,22 @@ extension KPNewStoreController: UICollectionViewDelegate, UICollectionViewDataSo
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.tags.count
+        return KPServiceHandler.sharedHandler.featureTags.count
+//        return self.tags.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier:"cell",
-                                                          for: indexPath) as! KPFeatureTagCell
-            cell.featureLabel.text = self.tags[indexPath.row]
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier:"cell",
+                                                      for: indexPath) as! KPFeatureTagCell
+        cell.featureLabel.text = KPServiceHandler.sharedHandler.featureTags[indexPath.row].name
+//            cell.featureLabel.text = self.tags[indexPath.row]
             return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        sizingCell.featureLabel.text = self.tags[indexPath.row]
+        sizingCell.featureLabel.text = KPServiceHandler.sharedHandler.featureTags[indexPath.row].name
+//        sizingCell.featureLabel.text = self.tags[indexPath.row]
         return CGSize(width: sizingCell.systemLayoutSizeFitting(UILayoutFittingCompressedSize).width,
                       height: 30)
     }

@@ -22,6 +22,8 @@ class KPServiceHandler {
     var currentCafeDatas: [KPDataModel]!
     var currentDisplayModel: KPDataModel?
     
+    var featureTags: [KPDataTagModel] = []
+    
     // MARK: Initialization
     
     private init() {
@@ -406,6 +408,26 @@ class KPServiceHandler {
         DispatchQueue.main.asyncAfter(deadline: .now()+2.0) {
             loadingView.state = .successed
             completion?(true)
+        }
+    }
+    
+    // MARK: Tag
+    func fetchTagList() {
+        let tagListRequest = KPFeatureTagRequest()
+        tagListRequest.perform().then {[unowned self] result -> Void in
+            if let tagResult = result["result"].bool, tagResult == true {
+                var tagList = [KPDataTagModel]()
+                for data in (result["data"].arrayObject)! {
+                    if let tagData = KPDataTagModel(JSON: (data as! [String: Any])) {
+                        tagList.append(tagData)
+                    }
+                }
+                if tagList.count > 0 {
+                    self.featureTags = tagList
+                }
+            }
+        }.catch { (error) in
+            print(error)
         }
     }
 }
