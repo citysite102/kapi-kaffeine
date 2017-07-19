@@ -80,13 +80,9 @@ class KPRatingView: UIView {
         button.layer.masksToBounds = true
         button.dampingRatio = 0.8
         button.bounceDuration = 0.5
-        button.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.scoreButtonColor!),
-                                  for: UIControlState.normal)
-        button.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.disabledScoreButtonColor!),
-                                  for: UIControlState.disabled)
-        button.setImage(R.image.icon_minus()?.withRenderingMode(.alwaysTemplate),
+        button.setImage(R.image.button_minus()!,
                         for: UIControlState.normal)
-        button.imageView?.tintColor = UIColor.white
+        button.imageView?.contentMode = .scaleAspectFit
         button.imageEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4)
         return button
     }()
@@ -97,14 +93,10 @@ class KPRatingView: UIView {
         button.layer.masksToBounds = true
         button.dampingRatio = 0.8
         button.bounceDuration = 0.5
-        button.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.scoreButtonColor!),
-                                  for: UIControlState.normal)
-        button.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.disabledScoreButtonColor!),
-                                  for: UIControlState.disabled)
-        button.setImage(R.image.icon_add()?.withRenderingMode(.alwaysTemplate),
+        button.setImage(R.image.button_add()!,
                         for: UIControlState.normal)
-        button.imageView?.tintColor = UIColor.white
         button.imageEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4)
+        button.imageView?.contentMode = .scaleAspectFit
         return button
     }()
     
@@ -166,16 +158,16 @@ class KPRatingView: UIView {
             scoreLabelContainer.addSubview(rateScoreLabel)
             addSubview(addButton)
             
-            addButton.addConstraints(fromStringArray: ["V:|[$self(24)]|",
-                                                       "H:[$self(24)]|"])
+            addButton.addConstraints(fromStringArray: ["V:|[$self(40)]|",
+                                                       "H:[$self(32)]|"])
             
-            scoreLabelContainer.addConstraints(fromStringArray: ["H:[$self(40)][$view0]",
-                                                                 "V:|[$self(24)]|"],
+            scoreLabelContainer.addConstraints(fromStringArray: ["H:[$self(32)]-(-2)-[$view0]",
+                                                                 "V:|[$self(40)]|"],
                                                views: [addButton])
             rateScoreLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
             rateScoreLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
-            minusButton.addConstraints(fromStringArray: ["H:[$self(24)][$view0]",
-                                                         "V:|[$self(24)]|"],
+            minusButton.addConstraints(fromStringArray: ["H:[$self(32)]-(-2)-[$view0]",
+                                                         "V:|[$self(40)]|"],
                                        views: [scoreLabelContainer])
             
             addButton.addTarget(self, action: #selector(handleAddButtonOnTapped),

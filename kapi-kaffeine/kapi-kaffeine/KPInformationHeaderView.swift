@@ -136,11 +136,13 @@ class KPInformationHeaderButtonBar: UIView {
                                                  icon: R.image.icon_star()!,
                                                  handler: { (headerButton) -> () in
                                                     let controller = KPModalViewController()
-                                                    controller.edgeInset = UIEdgeInsets(top: UIDevice().isCompact ? 32 : 40,
+                                                    controller.edgeInset = UIEdgeInsets(top: UIDevice().isCompact ? 0 : 40,
                                                                                         left: 0,
                                                                                         bottom: 0,
                                                                                         right: 0)
-                                                    controller.cornerRadius = [.topRight, .topLeft, .bottomLeft, .bottomRight]
+                                                    controller.cornerRadius = UIDevice().isCompact ?
+                                                        [] :
+                                                        [.topRight, .topLeft]
                                                     let ratingViewController = KPRatingViewController()
                                                     if ((KPUserManager.sharedManager.currentUser?.hasRated) != nil) {
                                                         if let rate = self.informationDataModel.rates?.rates?.first(where: {$0.memberID == KPUserManager.sharedManager.currentUser?.identifier}) {

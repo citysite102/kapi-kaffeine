@@ -197,11 +197,11 @@ class KPSearchConditionViewController: KPViewController {
             
             if index == 0 {
                 ratingView.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
-                                                            "V:[$view0]-24-[$self]"],
+                                                            "V:[$view0]-12-[$self]"],
                                           views: [adjustPointLabel])
             } else {
                 ratingView.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
-                                                            "V:[$view0]-24-[$self]"],
+                                                            "V:[$view0]-12-[$self]"],
                                           views: [ratingViews[index-1]])
             }
             

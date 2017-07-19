@@ -341,11 +341,13 @@ class KPInformationViewController: KPViewController {
                                                         KPPopoverView.popoverLoginView()
                                                     } else {
                                                         let controller = KPModalViewController()
-                                                        controller.edgeInset = UIEdgeInsets(top: UIDevice().isCompact ? 16 : 48,
+                                                        controller.edgeInset = UIEdgeInsets(top: UIDevice().isCompact ? 0 : 40,
                                                                                             left: 0,
                                                                                             bottom: 0,
                                                                                             right: 0)
-                                                        controller.cornerRadius = [.topRight, .topLeft]
+                                                        controller.cornerRadius = UIDevice().isCompact ?
+                                                            [] :
+                                                            [.topRight, .topLeft]
                                                         let ratingViewController = KPRatingViewController()
                                                         
                                                         if ((KPUserManager.sharedManager.currentUser?.hasRated) != nil) {

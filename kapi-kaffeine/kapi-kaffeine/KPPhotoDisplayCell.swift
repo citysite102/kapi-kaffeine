@@ -11,6 +11,7 @@ import UIKit
 class KPPhotoDisplayCell: UICollectionViewCell {
     
     var shopPhoto: UIImageView!
+    
     var longPressGesture: UILongPressGestureRecognizer!
     var panGesture: UIPanGestureRecognizer!
     

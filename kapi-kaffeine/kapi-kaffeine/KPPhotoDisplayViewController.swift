@@ -69,11 +69,22 @@ class KPPhotoDisplayViewController: KPViewController {
         label.textColor = KPColorPalette.KPTextColor.whiteColor
         return label
     }()
+    
     lazy var countLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14.0)
         label.textColor = KPColorPalette.KPTextColor.whiteColor
         return label
+    }()
+    
+    lazy var userPhoto: UIImageView = {
+        let imageView = UIImageView()
+        imageView.backgroundColor = KPColorPalette.KPBackgroundColor.mainColor
+        imageView.layer.cornerRadius = 24.0
+        imageView.layer.masksToBounds = true
+        imageView.image = R.image.demo_profile()
+        imageView.contentMode = .scaleAspectFill
+        return imageView
     }()
     
     
@@ -131,8 +142,8 @@ class KPPhotoDisplayViewController: KPViewController {
                                 action: #selector(KPPhotoDisplayViewController.handleDismissButtonOnTapped),
                                 for: .touchUpInside)
         view.addSubview(self.dismissButton)
-        dismissButton.addConstraints(fromStringArray: ["H:|-5-[$self(30)]",
-                                                       "V:|-13-[$self(30)]"]);
+        dismissButton.addConstraints(fromStringArray: ["H:|-8-[$self(30)]",
+                                                       "V:|-12-[$self(30)]"]);
         
         view.addSubview(photoTitleLabel)
         photoTitleLabel.text = ""
@@ -142,7 +153,13 @@ class KPPhotoDisplayViewController: KPViewController {
         view.addSubview(countLabel)
 //        countLabel.text = "\(selectedIndexPath.row+1) of \(displayedPhotoInformations.count)"
         countLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
-        countLabel.addConstraint(from: "V:[$self]-24-|")
+        countLabel.addConstraint(from: "V:[$self]-16-|")
+//        countLabel.addConstraint(from: "H:[$self]-16-|")
+        
+        view.addSubview(userPhoto)
+        userPhoto.isHidden = true
+        userPhoto.addConstraints(fromStringArray: ["V:[$self(48)]-16-|",
+                                                   "H:|-16-[$self(48)]"])
     }
     
     
@@ -160,11 +177,27 @@ class KPPhotoDisplayViewController: KPViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+//        showUserPhoto()
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func showUserPhoto() {
+        userPhoto.transform = CGAffineTransform(translationX: 0, y: 80)
+        userPhoto.isHidden = false
+        UIView.animate(withDuration: 0.8,
+                       delay: 0,
+                       usingSpringWithDamping: 0.6,
+                       initialSpringVelocity: 0.6,
+                       options: .curveEaseInOut,
+                       animations: { 
+                        self.userPhoto.transform = .identity
+        }) { (_) in
+            
+        }
     }
     
     func handleDismissButtonOnTapped() {
@@ -198,6 +231,9 @@ class KPPhotoDisplayViewController: KPViewController {
             overlayCover.alpha = ((1000 - distance < 0) ? 1 : 1000-distance) / 1000
             dismissButton.alpha = ((700 - distance < 0) ? 1 : 700-distance) / 700
             photoTitleLabel.alpha = ((700 - distance < 0) ? 1 : 700-distance) / 700
+            userPhoto.alpha = ((700 - distance < 0) ? 1 : 700-distance) / 700
+//            userPhoto.transform = CGAffineTransform(translationX: 0,
+//                                                    y: (1-dismissButton.alpha)*(-100))
         case .ended:
             
             let distance = (pow(centerPoint.x-(lastMovePoint?.x)! , 2) +
@@ -218,6 +254,7 @@ class KPPhotoDisplayViewController: KPViewController {
                                 self.overlayCover.alpha = 1.0
                                 self.dismissButton.alpha = 1.0
                                 self.photoTitleLabel.alpha = 1.0
+                                self.userPhoto.transform = .identity
                 }) { (_) in
                     
                 }
