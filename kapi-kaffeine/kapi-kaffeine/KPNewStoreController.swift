@@ -13,7 +13,7 @@ struct KPNewStoreControllerConstants {
     static let leftPadding = 168
 }
 
-class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardProtocol {
+class KPNewStoreController: KPViewController, UITextFieldDelegate {
     
     var _scrollContainerView: UIView {
         get {
@@ -54,6 +54,9 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
     var socketRadioBoxOne: KPCheckView!
     var socketRadioBoxTwo: KPCheckView!
     var socketRadioBoxThree: KPCheckView!
+    
+    var standDeskLabel: UILabel!
+    var standDeskCheckBox: KPCheckView!
         
     var nameSubTitleView: KPSubTitleEditView!
     var citySubTitleView: KPSubTitleEditView!
@@ -64,6 +67,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
     var activeTextField: UITextField?
     
     var addressSubTitleView: KPSubTitleEditView!
+    var addressMapView: GMSMapView!
     var phoneSubTitleView: KPSubTitleEditView!
     var facebookSubTitleView: KPSubTitleEditView!
     
@@ -73,6 +77,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
     var countrySelectController: KPCountrySelectController!
     var priceSelectController: KPPriceSelectController!
     var businessHourController: KPBusinessHourViewController!
+    var mapInputController: KPMapInputViewController!
     
     let tags = ["工業風", "藝術", "文青", "老屋", "美式風",
                 "服務佳", "有寵物", "開很晚", "手沖單品", "好停車",
@@ -82,6 +87,19 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
     var rateCheckedView: KPItemCheckedView!
     var businessHourCheckedView: KPItemCheckedView!
     
+    
+    var selectedCoordinate: CLLocationCoordinate2D! {
+        didSet {
+            if addressMapView != nil {
+                addressMapView.clear()
+                addressMapView.camera = GMSCameraPosition.camera(withTarget: selectedCoordinate,
+                                                                 zoom: addressMapView.camera.zoom)
+                let marker = GMSMarker(position: CLLocationCoordinate2D(latitude: selectedCoordinate.latitude,
+                                                                        longitude: selectedCoordinate.longitude))
+                marker.map = addressMapView
+            }
+        }
+    }
     
     func headerLabel(_ title: String) -> UILabel {
         let label = UILabel()
@@ -97,7 +115,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
         
         view.backgroundColor = UIColor.white
         navigationController?.navigationBar.topItem?.title = "新增店家"
-        
+
         dismissButton = KPBounceButton(frame: CGRect(x: 0,
                                                      y: 0,
                                                      width: 24,
@@ -106,11 +124,11 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
         dismissButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4)
         dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor
         dismissButton.addTarget(self,
-                                action: #selector(KPNewStoreController.handleDismissButtonOnTapped),
+                                action: #selector(handleDismissButtonOnTapped),
                                 for: .touchUpInside)
-        
+
         let barItem = UIBarButtonItem(customView: dismissButton)
-        
+
         sendButton = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 24))
         sendButton.setTitle("新增", for: .normal)
         sendButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
@@ -118,24 +136,19 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
         sendButton.addTarget(self,
                              action: #selector(KPNewStoreController.handleSendButtonOnTapped),
                              for: .touchUpInside)
-        
+
         let rightbarItem = UIBarButtonItem(customView: sendButton)
         
         let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace,
                                              target: nil,
                                              action: nil)
-        
+
         rightbarItem.isEnabled = false
         negativeSpacer.width = -8
         navigationItem.leftBarButtonItems = [negativeSpacer, barItem]
         navigationItem.rightBarButtonItems = [negativeSpacer, rightbarItem]
-        
-        
-        
-        dismissButton.addTarget(self,
-                                action: #selector(KPInformationViewController.handleDismissButtonOnTapped),
-                                for: .touchUpInside)
-        
+
+
         scrollView = UIScrollView()
         scrollView.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7
         scrollView.showsVerticalScrollIndicator = false
@@ -390,24 +403,62 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
         socketRadioBoxThree.checkBox.deselectCheckBoxs = [socketRadioBoxOne.checkBox,
                                                           socketRadioBoxTwo.checkBox]
         
-        addressSubTitleView = KPSubTitleEditView(.Both,
+        
+        
+        standDeskLabel = headerLabel("其他")
+        sectionTwoContainer.addSubview(standDeskLabel)
+        standDeskLabel.addConstraints(fromStringArray: ["H:|-16-[$self]",
+                                                        "V:[$view0]-16-[$self]"],
+                                      views: [timeRadioBoxThree])
+        standDeskCheckBox = KPCheckView(.checkmark, "有站立桌，可站立工作")
+        standDeskCheckBox.checkBox.checkState = .checked
+        sectionTwoContainer.addSubview(standDeskCheckBox)
+        standDeskCheckBox.addConstraints(fromStringArray: ["H:|-16-[$self]",
+                                                           "V:[$view0]-16-[$self]"],
+                                         views: [standDeskLabel])
+        
+        
+        var latitude: Double = 25.018744,  longtitude: Double = 121.532785
+        if let position = KPLocationManager.sharedInstance().currentLocation {
+            latitude = position.coordinate.latitude
+            longtitude = position.coordinate.longitude
+            selectedCoordinate = position.coordinate
+        }
+        let camera = GMSCameraPosition.camera(withLatitude: latitude, longitude: longtitude, zoom: 18.0)
+        let marker = GMSMarker(position: CLLocationCoordinate2D(latitude: latitude, longitude: longtitude))
+        addressMapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
+        marker.map = addressMapView
+        sectionTwoContainer.addSubview(addressMapView)
+        addressMapView.isUserInteractionEnabled = false
+        
+        let mapCover = UIView()
+        mapCover.backgroundColor = UIColor.clear
+        sectionTwoContainer.addSubview(mapCover)
+        mapCover.addConstraintForAligning(to: .all, of: addressMapView, constant: 0)
+        
+        
+        let mapGesture = UITapGestureRecognizer(target: self, action: #selector(handleAddressMapViewOnTap(_:)))
+        mapCover.addGestureRecognizer(mapGesture)
+        
+        addressSubTitleView = KPSubTitleEditView(.Top,
                                                  .Edited,
                                                  "店家地址")
         addressSubTitleView.placeHolderContent = "請輸入店家地址"
         sectionTwoContainer.addSubview(addressSubTitleView)
-        addressSubTitleView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                             "V:[$view0]-16-[$self(72)]"],
-                                           views: [socketRadioBoxThree])
+        addressSubTitleView.addConstraints(fromStringArray: ["H:|[$self]|", "H:|-16-[$view1]-16-|",
+                                                             "V:[$view0]-16-[$self(72)][$view1(120)]"],
+                                           views: [standDeskCheckBox, addressMapView])
         
-        phoneSubTitleView = KPSubTitleEditView(.Bottom,
+
+        phoneSubTitleView = KPSubTitleEditView(.Both,
                                                .Edited,
                                                "店家電話")
         phoneSubTitleView.placeHolderContent = "請輸入店家電話"
         phoneSubTitleView.inputKeyboardType = .phonePad
         sectionTwoContainer.addSubview(phoneSubTitleView)
         phoneSubTitleView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                           "V:[$view0][$self(72)]"],
-                                           views: [addressSubTitleView])
+                                                           "V:[$view0]-16-[$self(72)]"],
+                                           views: [addressMapView])
         
         facebookSubTitleView = KPSubTitleEditView(.Bottom,
                                                   .Edited,
@@ -423,9 +474,10 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
                                                  action: #selector(handleTapGesture(tapGesture:)))
         tapGesture.cancelsTouchesInView = false
         containerView.addGestureRecognizer(tapGesture)
+
         
-        
-        registerForNotification()
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShown(notification:)), name: .UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillBeHidden(notification:)), name: .UIKeyboardWillHide, object: nil)
     }
 
     func handleDismissButtonOnTapped() {
@@ -454,8 +506,64 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate, KPKeyboardPro
                                                     
         }
         
+    }
+    
+    func handleAddressMapViewOnTap(_ gesture: UITapGestureRecognizer) {
+        let controller = KPModalViewController()
+        controller.edgeInset = UIEdgeInsets(top: 0,
+                                            left: 0,
+                                            bottom: 0,
+                                            right: 0)
+        if self.mapInputController == nil {
+            self.mapInputController = KPMapInputViewController()
+            self.mapInputController.coordinate = CLLocationCoordinate2D(latitude: selectedCoordinate.latitude,
+                                                                        longitude: selectedCoordinate.longitude)
+            self.mapInputController.sendButton.addTarget(self,
+                                                         action: #selector(KPNewStoreController.handleMapInputViewSendButtonOnTap(_:)),
+                                                         for: .touchUpInside)
+        }
+        
+        controller.contentController = self.mapInputController
+        controller.presentModalView()
+    }
+    
+    func handleMapInputViewSendButtonOnTap(_ sender: UIButton) {
+        self.mapInputController.appModalController()?.dismissControllerWithDefaultDuration()
+        addressSubTitleView.editTextField.text = mapInputController.address
+        selectedCoordinate = mapInputController.coordinate
+    }
+    
+    func keyboardWillShown(notification: Notification) {
+        
+        let info : NSDictionary = notification.userInfo! as NSDictionary
+        let ooooframe = (info[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
+        var keyboardFrame = UIApplication.shared.windows[0].convert(ooooframe!, to: view)
+        let contentInsets : UIEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, keyboardFrame.size.height, 0.0)
+        
+        _scrollView.contentInset = contentInsets
+        _scrollView.scrollIndicatorInsets = contentInsets
         
         
+        if let field = _activeTextField {
+            keyboardFrame.size.height += 64
+            keyboardFrame.origin.y -= 44
+            let fieldFrame = _scrollContainerView.convert(field.frame, to: view)
+            if (keyboardFrame.contains(fieldFrame)) {
+                let duration = (info[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue
+                
+                UIView.animate(withDuration: duration!, animations: {
+                    self._scrollView.contentOffset = CGPoint(x: 0, y: self._scrollView.contentOffset.y + (fieldFrame.origin.y - keyboardFrame.origin.y - 20))
+                })
+            }
+        }
+        
+    }
+    
+    func keyboardWillBeHidden(notification: Notification) {
+        let contentInsets : UIEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, 0, 0.0)
+        _scrollView.contentInset = contentInsets
+        _scrollView.scrollIndicatorInsets = contentInsets
+        self.view.endEditing(true)
     }
     
     override func didReceiveMemoryWarning() {
@@ -482,6 +590,7 @@ extension KPNewStoreController: KPSubtitleInputDelegate {
                         }
                     }
                 }
+                selectedCoordinate = placeInformation.coordinate
             } else {
                 nameSubTitleView.content = controller.outputValue as? String
             }

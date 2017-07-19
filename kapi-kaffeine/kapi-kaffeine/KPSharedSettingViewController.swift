@@ -19,7 +19,14 @@ class KPSharedSettingViewController: KPViewController {
     var dismissButton: KPBounceButton!
     var scrollView: UIScrollView!
     var containerView: UIView!
-    var sendButton: UIButton!
+    lazy var sendButton: UIButton! = {
+        let sendButton = UIButton.init(type: .custom)
+        sendButton.setTitle("送出評分", for: .normal)
+        sendButton.setTitleColor(KPColorPalette.KPTextColor.mainColor,
+                                 for: .normal)
+        sendButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+        return sendButton
+    }()
     
     var identifiedKey: String?
     var returnValue: Any!
@@ -92,11 +99,6 @@ class KPSharedSettingViewController: KPViewController {
                                                        "V:[$view0][$self(1)]"],
                                      views: [scrollView])
         
-        sendButton = UIButton.init(type: .custom)
-        sendButton.setTitle("送出評分", for: .normal)
-        sendButton.setTitleColor(KPColorPalette.KPTextColor.mainColor,
-                                 for: .normal)
-        sendButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         view.addSubview(sendButton)
         view.addSubview(seperator_two)
 

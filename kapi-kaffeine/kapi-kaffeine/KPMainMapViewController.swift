@@ -500,7 +500,6 @@ GMUClusterRendererDelegate {
     }
     
     func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
-        print("Position:\(position.target.latitude) and \(position.target.longitude)")
         
         if !isCollectionViewShow && self.nearestButton.alpha != 0.75 {
             UIView.animate(withDuration: 0.15,

@@ -9,60 +9,6 @@
 import UIKit
 import MobileCoreServices
 
-@objc public protocol KPKeyboardProtocol: class {
-    
-    var _activeTextField: UIView? {get}
-    var _scrollView: UIScrollView {get}
-    var _scrollContainerView: UIView {get}
-
-}
-
-public extension KPKeyboardProtocol where Self: UIViewController {
-    
-    func registerForNotification() {
-        NotificationCenter.default.addObserver(forName: .UIKeyboardWillShow, object: nil, queue: nil) { (notification) in            
-            self.keyboardWillShown(notification: notification)
-        }
-        NotificationCenter.default.addObserver(forName: .UIKeyboardWillHide, object: nil, queue: nil) { (notification) in
-            self.keyboardWillBeHidden(notification: notification)
-        }
-    }
-    
-    func keyboardWillShown(notification: Notification) {
-        
-        let info : NSDictionary = notification.userInfo! as NSDictionary
-        let ooooframe = (info[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
-        var keyboardFrame = UIApplication.shared.windows[0].convert(ooooframe!, to: view)
-        let contentInsets : UIEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, keyboardFrame.size.height, 0.0)
-
-        _scrollView.contentInset = contentInsets
-        _scrollView.scrollIndicatorInsets = contentInsets
-
-        
-        if let field = _activeTextField {
-            keyboardFrame.size.height += 64
-            keyboardFrame.origin.y -= 44
-            let fieldFrame = _scrollContainerView.convert(field.frame, to: view)
-            if (keyboardFrame.contains(fieldFrame)) {
-                let duration = (info[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue
-                
-                UIView.animate(withDuration: duration!, animations: {
-                    self._scrollView.contentOffset = CGPoint(x: 0, y: self._scrollView.contentOffset.y + (fieldFrame.origin.y - keyboardFrame.origin.y - 20))
-                })
-            }
-        }
-        
-    }
-    
-    
-    func keyboardWillBeHidden(notification: Notification) {
-        let contentInsets : UIEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, 0, 0.0)
-        _scrollView.contentInset = contentInsets
-        _scrollView.scrollIndicatorInsets = contentInsets
-        self.view.endEditing(true)
-    }
-}
-
 class KPUserPhotoEditView: UIView {
     
     var photoImageView: UIImageView!
@@ -96,7 +42,7 @@ class KPUserPhotoEditView: UIView {
 }
 
 
-class KPUserProfileEditorController: UIViewController, UITextFieldDelegate, UITextViewDelegate, KPKeyboardProtocol, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class KPUserProfileEditorController: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     var _scrollContainerView: UIView {
         get {
@@ -223,7 +169,7 @@ class KPUserProfileEditorController: UIViewController, UITextFieldDelegate, UITe
         
         introTextViewPlaceHolder = UILabel()
         introTextViewPlaceHolder.font = introTextView.font
-        introTextViewPlaceHolder.textColor = KPColorPalette.KPTextColor.grayColor_level6
+        introTextViewPlaceHolder.textColor = UIColor(hexString: "C7C7CD")
         introTextViewPlaceHolder.text = "請輸入自我介紹"
         introTextView.addSubview(introTextViewPlaceHolder)
         introTextViewPlaceHolder.addConstraints(fromStringArray: ["V:|[$self]"])
@@ -273,13 +219,50 @@ class KPUserProfileEditorController: UIViewController, UITextFieldDelegate, UITe
                                                    "V:|[$view5(72)][$self(72)][$view0(72)][$view1(72)]-16-[$view2]-8-[$view3(50)][view4]-|"],
                                  views: [emailField, regionField, label, introTextView, introTextNumberLabel, photoEditView])
         
-        registerForNotification()
-        
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(tapGesture:)))
         tapGesture.cancelsTouchesInView = false
         _scrollContainerView.addGestureRecognizer(tapGesture)
         
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShown(notification:)), name: .UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillBeHidden(notification:)), name: .UIKeyboardWillHide, object: nil)
+        
     }
+    
+    
+    func keyboardWillShown(notification: Notification) {
+        
+        let info : NSDictionary = notification.userInfo! as NSDictionary
+        let ooooframe = (info[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
+        var keyboardFrame = UIApplication.shared.windows[0].convert(ooooframe!, to: view)
+        let contentInsets : UIEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, keyboardFrame.size.height, 0.0)
+        
+        _scrollView.contentInset = contentInsets
+        _scrollView.scrollIndicatorInsets = contentInsets
+        
+        
+        if let field = _activeTextField {
+            keyboardFrame.size.height += 64
+            keyboardFrame.origin.y -= 44
+            let fieldFrame = _scrollContainerView.convert(field.frame, to: view)
+            if (keyboardFrame.contains(fieldFrame)) {
+                let duration = (info[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue
+                
+                UIView.animate(withDuration: duration!, animations: {
+                    self._scrollView.contentOffset = CGPoint(x: 0, y: self._scrollView.contentOffset.y + (fieldFrame.origin.y - keyboardFrame.origin.y - 20))
+                })
+            }
+        }
+        
+    }
+    
+    func keyboardWillBeHidden(notification: Notification) {
+        let contentInsets : UIEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, 0, 0.0)
+        _scrollView.contentInset = contentInsets
+        _scrollView.scrollIndicatorInsets = contentInsets
+        self.view.endEditing(true)
+    }
+    
     
     func handlePhotoTapGesture(tapGesture: UITapGestureRecognizer) {
         view.endEditing(true)
