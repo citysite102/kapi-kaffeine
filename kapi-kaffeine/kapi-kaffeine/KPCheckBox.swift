@@ -211,23 +211,49 @@ class KPCheckBox: UIControl {
             return
         }
         
-        if newState == .checked && deselectCheckBoxs != nil {
-            for checkBox in deselectCheckBoxs! {
-                checkBox.checkState = .unchecked
-            }
-        }
-        
-        if animated {
-            if enableMorphing {
-                controller.animate(checkState, toState: newState)
-            } else {
-                controller.animate(checkState, toState: nil, completion: { [weak self] in
-                    self?.controller.resetLayersForState(newState)
-                    self?.controller.animate(nil, toState: newState)
+        if newState == .unchecked {
+            if deselectCheckBoxs != nil {
+                let element = deselectCheckBoxs?.first(where: { (checkBox) -> Bool in
+                    return checkBox.checkState == .checked
                 })
+                if element == nil {
+                    return
+                }
             }
+            
+            if animated {
+                if enableMorphing {
+                    controller.animate(checkState, toState: newState)
+                } else {
+                    controller.animate(checkState, toState: nil, completion: { [weak self] in
+                        self?.controller.resetLayersForState(newState)
+                        self?.controller.animate(nil, toState: newState)
+                    })
+                }
+            } else {
+                controller.resetLayersForState(newState)
+            }
+            
         } else {
-            controller.resetLayersForState(newState)
+        
+            if animated {
+                if enableMorphing {
+                    controller.animate(checkState, toState: newState)
+                } else {
+                    controller.animate(checkState, toState: nil, completion: { [weak self] in
+                        self?.controller.resetLayersForState(newState)
+                        self?.controller.animate(nil, toState: newState)
+                    })
+                }
+            } else {
+                controller.resetLayersForState(newState)
+            }
+            
+            if newState == .checked && deselectCheckBoxs != nil {
+                for checkBox in deselectCheckBoxs! {
+                    checkBox.checkState = .unchecked
+                }
+            }
         }
     }
     

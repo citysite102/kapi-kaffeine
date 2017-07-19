@@ -181,7 +181,7 @@ class KPNewCommentController: KPViewController {
                                                title)
             ratingViews.append(ratingView)
             ratingContainer.addSubview(ratingView)
-            
+            ratingView.enable = false
             if index == 0 {
                 ratingView.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
                                                             "V:[$view0]-16-[$self]"],
