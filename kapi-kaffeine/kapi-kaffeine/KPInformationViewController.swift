@@ -201,8 +201,8 @@ class KPInformationViewController: KPViewController {
         informationHeaderView.informationController = self
         
         informationHeaderView.morePhotoButton.setTitle(informationDataModel.photoCount != nil ?
-            "\(informationDataModel.photoCount ?? 0) 張照片" :
-            "上傳照片"
+            "\(informationDataModel.photoCount ?? 0) \n張照片" :
+            "上傳\n照片"
             , for: .normal)
         informationHeaderView.scoreLabel.text = String(format: "%.1f", informationDataModel.averageRate?.doubleValue ?? 0.0)
         informationHeaderView.facebookButton.isHidden = !(informationDataModel.facebookURL != nil)
@@ -431,13 +431,13 @@ class KPInformationViewController: KPViewController {
         photoInformationView.infoView = photoInfoView
         photoInformationView.infoTitleLabel.text = "店家照片"
         photoInformationView.infoSupplementLabel.text = informationDataModel.photoCount != nil ?
-            "\(informationDataModel.photoCount ?? 0) 張照片" :
-        "上傳照片"
+            "\(informationDataModel.photoCount ?? 0) \n張照片" :
+        "上傳\n照片"
         scrollContainer.addSubview(photoInformationView)
         photoInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                               "V:[$view0]-24-[$self]"],
                                                     views: [commentInformationView])
-        photoInformationView.actions = [Action(title:"上傳照片",
+        photoInformationView.actions = [Action(title:"上傳\n照片",
                                                    style:.normal,
                                                    color:KPColorPalette.KPMainColor.mainColor!,
                                                    icon:(R.image.icon_map()?.withRenderingMode(.alwaysTemplate))!,
@@ -546,7 +546,7 @@ class KPInformationViewController: KPViewController {
                     self.informationHeaderView.shopPhoto.image = R.image.image_noImage()
                     self.informationHeaderView.shopPhoto.isUserInteractionEnabled = false
                     self.informationHeaderView.shopPhoto.layer.add(transition, forKey: nil)
-                    self.informationHeaderView.morePhotoButton.titleLabel?.text = "上傳照片"
+                    self.informationHeaderView.morePhotoButton.titleLabel?.text = "上傳\n照片"
                 }
             } else {
                 // Handle Error

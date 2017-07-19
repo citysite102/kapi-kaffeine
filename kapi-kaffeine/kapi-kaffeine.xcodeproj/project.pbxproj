@@ -72,6 +72,7 @@
 		776ACB061E9BE33A00B629A2 /* KPMainListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776ACB051E9BE33A00B629A2 /* KPMainListTableViewCell.swift */; };
 		776ACB081E9BE51600B629A2 /* KPMainListCellFeatureContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776ACB071E9BE51600B629A2 /* KPMainListCellFeatureContainer.swift */; };
 		776ACB0B1E9C783E00B629A2 /* KPInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776ACB0A1E9C783E00B629A2 /* KPInformationViewController.swift */; };
+		777079301F1FB9F2003A7AD8 /* loading.json in Resources */ = {isa = PBXBuildFile; fileRef = 7770792F1F1FB9F2003A7AD8 /* loading.json */; };
 		7776EA621F0A735B0083ECC5 /* KPPopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7776EA611F0A735B0083ECC5 /* KPPopoverView.swift */; };
 		777DCC161EA789A90055525A /* KPInformationTranstion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777DCC151EA789A90055525A /* KPInformationTranstion.swift */; };
 		778521811EA3C91C00EA59D9 /* KPInformationHeaderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778521801EA3C91C00EA59D9 /* KPInformationHeaderButton.swift */; };
@@ -268,6 +269,7 @@
 		776ACB051E9BE33A00B629A2 /* KPMainListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPMainListTableViewCell.swift; sourceTree = "<group>"; };
 		776ACB071E9BE51600B629A2 /* KPMainListCellFeatureContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPMainListCellFeatureContainer.swift; sourceTree = "<group>"; };
 		776ACB0A1E9C783E00B629A2 /* KPInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPInformationViewController.swift; sourceTree = "<group>"; };
+		7770792F1F1FB9F2003A7AD8 /* loading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = loading.json; sourceTree = "<group>"; };
 		7776EA611F0A735B0083ECC5 /* KPPopoverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPPopoverView.swift; sourceTree = "<group>"; };
 		777DCC131EA785730055525A /* KPPhotoDisplayTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPPhotoDisplayTransition.swift; sourceTree = "<group>"; };
 		777DCC151EA789A90055525A /* KPInformationTranstion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPInformationTranstion.swift; sourceTree = "<group>"; };
@@ -734,6 +736,14 @@
 			name = InformationController;
 			sourceTree = "<group>";
 		};
+		7770792E1F1FB9D8003A7AD8 /* Lottie-asset */ = {
+			isa = PBXGroup;
+			children = (
+				7770792F1F1FB9F2003A7AD8 /* loading.json */,
+			);
+			name = "Lottie-asset";
+			sourceTree = "<group>";
+		};
 		777DCC121EA785430055525A /* Transition */ = {
 			isa = PBXGroup;
 			children = (
@@ -1042,6 +1052,7 @@
 		C02AFE431E7D260D008FFB33 /* kapi-kaffeine */ = {
 			isa = PBXGroup;
 			children = (
+				7770792E1F1FB9D8003A7AD8 /* Lottie-asset */,
 				77D98A6A1F1C786600FE1832 /* kapi-kaffeine.entitlements */,
 				77F718321ED33DDE00755AA2 /* Intro */,
 				774208FA1EA6799600C78A00 /* SideController */,
@@ -1149,6 +1160,7 @@
 				5C7BF539A61DEDBAA160731E /* [CP] Embed Pods Frameworks */,
 				1C2519745C54F46C9A5A4965 /* [CP] Copy Pods Resources */,
 				7762E33D1F10BB040006E205 /* ShellScript */,
+				777079311F1FBC50003A7AD8 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1257,6 +1269,7 @@
 			files = (
 				C02AFE4F1E7D260D008FFB33 /* LaunchScreen.storyboard in Resources */,
 				C02AFE4C1E7D260D008FFB33 /* Assets.xcassets in Resources */,
+				777079301F1FB9F2003A7AD8 /* loading.json in Resources */,
 				C02AFE4A1E7D260D008FFB33 /* Main.storyboard in Resources */,
 				C00CD5341E95234A00A3CB6F /* style.json in Resources */,
 				77FA64B41F04FB8C00D0767A /* lottie_demo.json in Resources */,
@@ -1354,6 +1367,19 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Fabric/run\" f73735474efb32726dc0190d195c0bc62ee8532b 654dec8c258f721a4b8fa5e51d12250dc2a4c120294cf33cd45d1733f0df86e7";
+		};
+		777079311F1FBC50003A7AD8 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/bin/sh \"${PODS_ROOT}/BaltoSDK/BaltoSDK.framework/run.sh\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1678,7 +1704,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CA73E4544076455C6DC0C065 /* Pods-kapi-kaffeine.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "kapi-kaffeine/kapi-kaffeine.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1701,7 +1727,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 605CB2E5F236FDDFFE502CB5 /* Pods-kapi-kaffeine.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "kapi-kaffeine/kapi-kaffeine.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";

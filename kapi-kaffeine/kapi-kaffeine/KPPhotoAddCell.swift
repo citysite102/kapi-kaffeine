@@ -31,7 +31,7 @@ class KPPhotoAddCell: UICollectionViewCell {
         addSubview(addPhotoLabel)
         addPhotoLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
         addPhotoLabel.addConstraintForCenterAligningToSuperview(in: .vertical, constant: 16)
-        addPhotoLabel.text = "上傳照片"
+        addPhotoLabel.text = "上傳\n照片"
         
     }
     

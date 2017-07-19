@@ -48,7 +48,8 @@ target 'kapi-kaffeine' do
   # Analytics
   pod 'Fabric'
   pod 'Crashlytics'
-
+  pod 'BaltoSDK', '>= 3.0.0'
+  
   # Ad
   pod 'Google-Mobile-Ads-SDK'
 

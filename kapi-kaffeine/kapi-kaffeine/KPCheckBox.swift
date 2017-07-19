@@ -26,7 +26,7 @@ class KPCheckBox: UIControl {
         case unchecked = "Unchecked"
         /// A checkmark is shown.
         case checked = "Checked"
-        /// A dash is shown.
+        /// A dash is shown.  
         case mixed = "Mixed"
     }
     
