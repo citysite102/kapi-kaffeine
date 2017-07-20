@@ -21,7 +21,7 @@ class KPMainListTableViewCell: UITableViewCell {
                 self.scoreLabel.score = String(format: "%.1f",
                                                (self.dataModel.averageRate?.doubleValue) ?? 0)
             }
-            
+//            self.shopImageView.image = R.image.demo_6()
             if let photoURL = dataModel.covers?["google_s"] {
                 self.shopImageView.af_setImage(withURL: URL(string: photoURL)!,
                                                placeholderImage: drawImage(image: R.image.icon_loading()!,

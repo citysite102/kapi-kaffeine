@@ -25,6 +25,8 @@ class KPMainViewController: KPViewController {
     var mainListViewController: KPMainListViewController?
     var mainMapViewController: KPMainMapViewController?
     
+    var transitionController: KPPhotoDisplayTransition = KPPhotoDisplayTransition()
+    
     var displayDataModel: [KPDataModel]! {
         didSet {
             self.mainListViewController?.state = .loading
@@ -414,6 +416,57 @@ class KPMainViewController: KPViewController {
     }
     
 }
+
+
+//extension KPMainViewController: ImageTransitionProtocol {
+//    
+//    func tranisitionSetup(){
+//        
+//    }
+//    
+//    func tranisitionCleanup(){
+//        
+//    }
+//    
+//    func imageWindowFrame() -> CGRect{
+//        let convertedRect = self.mainListViewController?.view.convert((self.mainListViewController?.currentSelectedCell?.shopImageView.frame)!,
+//                                                                      from: (self.mainListViewController?.currentSelectedCell?.shopImageView)!)
+//        return convertedRect!
+//    }
+//}
+
+
+//extension KPMainViewController: UIViewControllerTransitioningDelegate {
+//    
+//    func animationController(forPresented presented: UIViewController,
+//                             presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+//        if let navigationController = presented as? UINavigationController {
+//            if let informationViewcontroller = navigationController.viewControllers.first as? KPInformationViewController {
+//                transitionController.setupImageTransition((self.mainListViewController?.currentSelectedCell?.shopImageView.image)!,
+//                                                          fromDelegate: self,
+//                                                          toDelegate: informationViewcontroller)
+//                
+//                return transitionController
+//            } else {
+//                return nil
+//            }
+//        } else {
+//            return nil
+//        }
+//    }
+//    
+//    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+//        if let informationViewcontroller = dismissed as? KPInformationViewController {
+//            transitionController.setupImageTransition((self.mainListViewController?.currentSelectedCell?.shopImageView.image)!,
+//                                                      fromDelegate: informationViewcontroller,
+//                                                      toDelegate: self)
+//            return transitionController
+//            
+//        } else {
+//            return nil
+//        }
+//    }
+//}
 
 extension KPMainViewController: UIViewControllerTransitioningDelegate {
 

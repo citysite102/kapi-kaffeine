@@ -179,6 +179,7 @@ extension KPPhotoGalleryViewController: UIViewControllerTransitioningDelegate {
         transitionController.setupImageTransition(cell.shopPhoto.image!,
                                                   fromDelegate: self,
                                                   toDelegate: photoViewController)
+        transitionController.transitionType = .damping
         return transitionController
         
     }

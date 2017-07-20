@@ -223,6 +223,8 @@ class KPInformationViewController: KPViewController {
             
         }
         
+//        informationHeaderView.shopPhoto.image = R.image.demo_6()
+        
         //informationDataModel
         scrollContainer.addSubview(informationHeaderView)
         informationHeaderView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]"])
@@ -546,6 +548,7 @@ class KPInformationViewController: KPViewController {
                     transition.duration = 0.2
                     transition.type = kCATransitionFade
                     self.informationHeaderView.shopPhoto.image = R.image.image_noImage()
+//                    self.informationHeaderView.shopPhoto.image = R.image.demo_6()
                     self.informationHeaderView.shopPhoto.isUserInteractionEnabled = false
                     self.informationHeaderView.shopPhoto.layer.add(transition, forKey: nil)
                     self.informationHeaderView.morePhotoButton.titleLabel?.text = "上傳\n照片"
@@ -698,6 +701,7 @@ extension KPInformationViewController: UIViewControllerTransitioningDelegate {
             transitionController.setupImageTransition(informationHeaderView.shopPhoto.image!,
                                                       fromDelegate: self,
                                                       toDelegate: photoViewController)
+            transitionController.transitionType = .damping
             return transitionController
         } else {
             return nil
@@ -720,14 +724,13 @@ extension KPInformationViewController: UIViewControllerTransitioningDelegate {
 extension KPInformationViewController: ImageTransitionProtocol {
     
     func tranisitionSetup(){
-//        hideSelectedCell = true
+        self.informationHeaderView.isHidden = true
     }
     
     func tranisitionCleanup(){
-//        hideSelectedCell = false
+        self.informationHeaderView.isHidden = false
     }
     
-    // 3: return window frame of selected image
     func imageWindowFrame() -> CGRect{
         return view.convert(informationHeaderView.shopPhoto.frame, to: nil)
     }

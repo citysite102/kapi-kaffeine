@@ -59,6 +59,7 @@ class KPMainListViewController:
     }()
     
     var currentDataModel: KPDataModel?
+    var currentSelectedCell: KPMainListTableViewCell?
     var state: ControllerState! = .loading
     {
         didSet {
@@ -465,6 +466,7 @@ extension KPMainListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let dataModel = self.displayDataModel[indexPath.row] as? KPDataModel {
             self.currentDataModel = dataModel
+            self.currentSelectedCell = tableView.cellForRow(at: indexPath) as! KPMainListTableViewCell
             self.snapShotShowing = true
             self.mainController.performSegue(withIdentifier: "datailedInformationSegue", sender: self)
         }
