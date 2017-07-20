@@ -36,7 +36,7 @@ class KPSearchHeaderView: UIView {
         titleLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
         titleLabel.addConstraint(from: "V:|-32-[$self]")
         
-        styleButton = KPBounceButton.init(frame: .zero, image: R.image.icon_map()!)
+        styleButton = KPBounceButton.init(frame: .zero, image: R.image.icon_list()!)
         containerView.addSubview(styleButton)
         styleButton.addConstraints(fromStringArray: ["H:[$self(30)]-5-|",
                                                      "V:[$self(30)]"])

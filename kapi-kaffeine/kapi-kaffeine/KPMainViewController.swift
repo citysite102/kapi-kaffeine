@@ -57,12 +57,6 @@ class KPMainViewController: KPViewController {
         mainListViewController!.mainController = self
         mainMapViewController!.mainController = self
         
-        addChildViewController(mainMapViewController!)
-        view.addSubview((mainMapViewController?.view)!)
-        mainMapViewController?.didMove(toParentViewController: self)
-        mainMapViewController?.view.layer.rasterizationScale = UIScreen.main.scale
-        _ = mainMapViewController?.view.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                                         "V:|[$self]|"])
         
         addChildViewController(mainListViewController!)
         view.addSubview((mainListViewController?.view)!)
@@ -71,7 +65,15 @@ class KPMainViewController: KPViewController {
         _ = mainListViewController?.view.addConstraints(fromStringArray: ["H:|[$self]|",
                                                                           "V:|[$self]|"])
         
-        currentController = mainListViewController
+        
+        addChildViewController(mainMapViewController!)
+        view.addSubview((mainMapViewController?.view)!)
+        mainMapViewController?.didMove(toParentViewController: self)
+        mainMapViewController?.view.layer.rasterizationScale = UIScreen.main.scale
+        _ = mainMapViewController?.view.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                                         "V:|[$self]|"])
+
+        currentController = mainMapViewController
         
         searchHeaderView = KPSearchHeaderView()
         searchHeaderView.searchButton.isEnabled = false
