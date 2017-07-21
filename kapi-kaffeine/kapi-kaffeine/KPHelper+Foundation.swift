@@ -16,3 +16,13 @@ extension Dictionary {
         }
     }
 }
+
+extension Decimal {
+    var doubleValue: Double {
+        return NSDecimalNumber(decimal:self).doubleValue
+    }
+    
+    var cgFloatValue: CGFloat {
+        return NSDecimalNumber(decimal:self).cgFloatValue
+    }
+}

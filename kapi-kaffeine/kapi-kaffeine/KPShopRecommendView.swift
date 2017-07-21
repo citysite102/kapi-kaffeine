@@ -11,9 +11,10 @@ import UIKit
 class KPShopRecommendView: UIView {
 
     static let KPShopRecommendViewCellReuseIdentifier = "cell";
+    weak open var informationController: KPInformationViewController?
     
     var tableView: UITableView!
-    var displayDataModel: [KPDataModel]! {
+    var displayDataModels: [KPDataModel]! {
         didSet {
             self.tableView.reloadData();
         }
@@ -47,10 +48,7 @@ extension KPShopRecommendView: UITableViewDelegate, UITableViewDataSource {
                                                  for: indexPath) as! KPMainListTableViewCell;
         
         cell.selectionStyle = .none;
-        cell.dataModel = self.displayDataModel[indexPath.row]
-//        cell.shopStatusContent = (self.displayDataModel[indexPath.row].openTime! as String).replacingOccurrences(of: "~", with: "-");
-//        cell.scoreLabel.score = "\(self.displayDataModel[indexPath.row].score!.format(f: ".1"))";
-        
+        cell.dataModel = self.displayDataModels[indexPath.row]
         return cell;
     }
     
@@ -59,7 +57,13 @@ extension KPShopRecommendView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.displayDataModel.count;
+        return self.displayDataModels.count;
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let controller = KPInformationViewController()
+        controller.informationDataModel = self.displayDataModels[indexPath.row]
+        informationController?.navigationController?.pushViewController(controller, animated: true)
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {

@@ -18,9 +18,9 @@ class KPDataModel: NSObject, Mappable, GMUClusterItem {
     var city: String!
     var latitude: Double!
     var longitude: Double!
-    var standingDesk: NSNumber?
-    var socket: NSNumber?
-    var limitedTime: NSNumber?
+    var standingDesk: NSNumber? = 0
+    var socket: NSNumber? = 0
+    var limitedTime: NSNumber? = 0
     var url: String?
     var facebookURL: String?
     var facebookID: String?
@@ -28,7 +28,7 @@ class KPDataModel: NSObject, Mappable, GMUClusterItem {
     var businessHour: KPDataBusinessHourModel?
     var tags: [KPDataTagModel]?
     
-    var averageRate: NSNumber?
+    var averageRate: NSNumber? = 0
     var rateCount: NSNumber?
     var commentCount: NSNumber?
     var favoriteCount: NSNumber?

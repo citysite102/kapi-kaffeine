@@ -45,7 +45,7 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
         let label = UILabel()
         label.font = UIFont.boldSystemFont  (ofSize: 16.0)
         label.textColor = KPColorPalette.KPTextColor.whiteColor
-        label.text = "Samuel"
+        label.text = "我是一隻蟲"
         return label
     }()
     
@@ -61,7 +61,7 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12.0)
         label.textColor = KPColorPalette.KPTextColor.whiteColor
-        label.text = "喜歡鬧，就是愛鬧，鬧到沒有極限的不停地鬧"
+        label.text = "被你看到這個隱藏的內容？！肯定有Bug，快回報給我們吧！"
         label.numberOfLines = 0
         return label
     }()

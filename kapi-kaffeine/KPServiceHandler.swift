@@ -21,6 +21,37 @@ class KPServiceHandler {
     // 目前儲存所有的咖啡店
     var currentCafeDatas: [KPDataModel]!
     var currentDisplayModel: KPDataModel?
+    var relatedDisplayModel: [KPDataModel]? {
+        if currentDisplayModel != nil {
+            let filteredLocationModel = KPFilter.filterData(source: self.currentCafeDatas,
+                                                            withCity: self.currentDisplayModel?.city ?? "taipei")
+            var relativeArray: [(cafeModel: KPDataModel, weight: CGFloat)] =
+                [(cafeModel: KPDataModel, weight: CGFloat)]()
+            for dataModel in filteredLocationModel {
+                if dataModel.identifier != currentDisplayModel?.identifier {
+                    relativeArray.append((cafeModel: dataModel,
+                                          weight: relativeWeight(currentDisplayModel!, dataModel)))
+                }
+            }
+            
+            relativeArray.sort(by: { (model1, model2) -> Bool in
+                model1.weight < model2.weight
+            })
+            
+            if relativeArray.count >= 3 {
+                return [relativeArray[0].cafeModel,
+                        relativeArray[1].cafeModel,
+                        relativeArray[2].cafeModel]
+            } else {
+                var responseResult: [KPDataModel] = [KPDataModel]()
+                for relativeModel in relativeArray {
+                    responseResult.append(relativeModel.cafeModel)
+                }
+                return responseResult
+            }
+        }
+        return nil
+    }
     
     var featureTags: [KPDataTagModel] = []
     
@@ -29,6 +60,17 @@ class KPServiceHandler {
     private init() {
         kapiDataRequest = KPCafeRequest()
         kapiDetailedInfoRequest = KPCafeDetailedInfoRequest()
+    }
+    
+    
+    func relativeWeight(_ model1: KPDataModel,
+                        _ model2: KPDataModel) -> CGFloat {
+        var totalWeight: CGFloat = 0
+        totalWeight = totalWeight + pow(Decimal((model1.standingDesk?.intValue)! - (model2.standingDesk?.intValue)!), 2).cgFloatValue
+        totalWeight = totalWeight + pow(Decimal((model1.socket?.intValue)! - (model2.socket?.intValue)!), 2).cgFloatValue
+        totalWeight = totalWeight + pow(Decimal((model1.limitedTime?.intValue)! - (model2.limitedTime?.intValue)!), 2).cgFloatValue
+        totalWeight = totalWeight + pow(Decimal((model1.averageRate?.intValue)! - (model2.averageRate?.intValue)!), 2).cgFloatValue
+        return totalWeight
     }
     
     

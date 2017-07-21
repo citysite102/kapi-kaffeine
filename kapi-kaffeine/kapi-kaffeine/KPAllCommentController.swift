@@ -12,7 +12,6 @@ class KPAllCommentController: KPViewController {
 
     static let KPAllCommentControllerCellReuseIdentifier = "cell"
     
-    
     var shownCellIndex: [Int] = [Int]()
     var animated: Bool = true
     var tableView: UITableView!

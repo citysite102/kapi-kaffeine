@@ -436,12 +436,12 @@ class KPInformationViewController: KPViewController {
         photoInformationView.infoTitleLabel.text = "店家照片"
         photoInformationView.infoSupplementLabel.text = informationDataModel.photoCount != nil ?
             "\(informationDataModel.photoCount ?? 0) \n張照片" :
-        "上傳\n照片"
+            "0張照片"
         scrollContainer.addSubview(photoInformationView)
         photoInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                               "V:[$view0]-24-[$self]"],
                                                     views: [commentInformationView])
-        photoInformationView.actions = [Action(title:"上傳\n照片",
+        photoInformationView.actions = [Action(title: "上傳照片",
                                                    style:.normal,
                                                    color:KPColorPalette.KPMainColor.mainColor!,
                                                    icon:(R.image.icon_map()?.withRenderingMode(.alwaysTemplate))!,
@@ -454,9 +454,8 @@ class KPInformationViewController: KPViewController {
         })]
         
         let shopRecommendView = KPShopRecommendView()
-        shopRecommendView.displayDataModel = [informationDataModel,
-                                              informationDataModel,
-                                              informationDataModel]
+        shopRecommendView.informationController = self
+        shopRecommendView.displayDataModels = KPServiceHandler.sharedHandler.relatedDisplayModel
         recommendInformationView = KPInformationSharedInfoView()
         recommendInformationView.infoView = shopRecommendView
         recommendInformationView.infoTitleLabel.text = "你可能也會喜歡"
