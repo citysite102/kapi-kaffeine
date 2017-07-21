@@ -7,11 +7,11 @@
 //
 
 import UIKit
+import MapKit
 import BenzeneFoundation
 
 class KPInformationViewController: KPViewController {
 
-    
     var informationDataModel: KPDataModel! {
         didSet {
             KPServiceHandler.sharedHandler.currentDisplayModel = informationDataModel
@@ -66,6 +66,7 @@ class KPInformationViewController: KPViewController {
     }
     
     var actionController: UIAlertController!
+    var mapActionController: UIAlertController!
     var scrollContainer: UIScrollView!
     var informationHeaderView: KPInformationHeaderView!
     var informationHeaderButtonBar: KPInformationHeaderButtonBar!
@@ -187,6 +188,42 @@ class KPInformationViewController: KPViewController {
         actionController.addAction(editButton)
         actionController.addAction(reportButton)
         actionController.addAction(cancelButton)
+        
+        
+        mapActionController = UIAlertController(title: nil,
+                                                message: nil,
+                                                preferredStyle: .actionSheet)
+        mapActionController.view.tintColor = KPColorPalette.KPTextColor.grayColor_level2
+        let googleAction = UIAlertAction(title: "使用Google地圖開啟",
+                                       style: .default) { (_) in
+                                        if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
+                                            UIApplication.shared.open(URL(string:
+                                                "comgooglemaps://?daddr=\(self.informationDataModel.latitude!),\(self.informationDataModel.longitude!)&mapmode=standard")!,
+                                                                      options: [:],
+                                                                      completionHandler: nil)
+                                        } else {
+                                            print("Can't use comgooglemaps://")
+                                        }
+
+        }
+        
+        let appleAction = UIAlertAction(title: "使用地圖開啟",
+                                         style: .default) {(_) in
+                                            let coordinates = CLLocationCoordinate2DMake(self.informationDataModel.latitude!,
+                                                                                         self.informationDataModel.longitude!)
+                                            let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: nil)
+                                            let mapItem = MKMapItem(placemark: placemark)
+                                            mapItem.openInMaps(launchOptions: nil)
+        }
+        
+        let mapCancelAction = UIAlertAction(title: "取消",
+                                            style: .destructive) { (_) in
+                                                print("取消 Map")
+        }
+        
+        mapActionController.addAction(googleAction)
+        mapActionController.addAction(appleAction)
+        mapActionController.addAction(mapCancelAction)
 
         scrollContainer = UIScrollView()
         scrollContainer.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7
@@ -300,14 +337,10 @@ class KPInformationViewController: KPViewController {
                                                  color:KPColorPalette.KPMainColor.mainColor!,
                                                  icon:(R.image.icon_navi()?.withRenderingMode(.alwaysTemplate))!,
                                                  handler:{ [unowned self] (infoView) -> () in
-                                                    if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
-                                                        UIApplication.shared.open(URL(string:
-                                                            "comgooglemaps://?daddr=\(self.informationDataModel.latitude!),\(self.informationDataModel.longitude!)&mapmode=standard")!,
-                                                                                  options: [:],
-                                                                                  completionHandler: nil)
-                                                    } else {
-                                                        print("Can't use comgooglemaps://")
-                                                    }
+                                                    self.present(self.mapActionController,
+                                                                 animated: true,
+                                                                 completion: nil)
+
         }),
                                                 Action(title:"街景模式",
                                                  style:.normal,
