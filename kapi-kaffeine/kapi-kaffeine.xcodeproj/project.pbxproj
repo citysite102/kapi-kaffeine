@@ -94,6 +94,7 @@
 		77A2019F1EBE23D100F3497F /* KPCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A2019E1EBE23D100F3497F /* KPCheckView.swift */; };
 		77A26B0A1F232E960045D46F /* iRate.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 77A26B071F232E960045D46F /* iRate.bundle */; };
 		77A26B0B1F232E960045D46F /* iRate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77A26B091F232E960045D46F /* iRate.m */; };
+		77A26B0D1F234A8D0045D46F /* KPCommentDetailedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A26B0C1F234A8D0045D46F /* KPCommentDetailedController.swift */; };
 		77A980E21F17334B002010EC /* KPLoadingButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 77A980E11F17334B002010EC /* KPLoadingButton.m */; };
 		77B66FA11EA91477008B6652 /* KPRegionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B66FA01EA91477008B6652 /* KPRegionTableViewCell.swift */; };
 		77B66FA31EA91488008B6652 /* KPCityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B66FA21EA91488008B6652 /* KPCityTableViewCell.swift */; };
@@ -295,6 +296,7 @@
 		77A26B071F232E960045D46F /* iRate.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = iRate.bundle; sourceTree = "<group>"; };
 		77A26B081F232E960045D46F /* iRate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iRate.h; sourceTree = "<group>"; };
 		77A26B091F232E960045D46F /* iRate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iRate.m; sourceTree = "<group>"; };
+		77A26B0C1F234A8D0045D46F /* KPCommentDetailedController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPCommentDetailedController.swift; sourceTree = "<group>"; };
 		77A980E01F17334B002010EC /* KPLoadingButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPLoadingButton.h; sourceTree = "<group>"; };
 		77A980E11F17334B002010EC /* KPLoadingButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPLoadingButton.m; sourceTree = "<group>"; };
 		77B66FA01EA91477008B6652 /* KPRegionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPRegionTableViewCell.swift; sourceTree = "<group>"; };
@@ -593,6 +595,7 @@
 				77C0E1011E9D48E000398852 /* KPShopInfoView.swift */,
 				7762E33B1F0FA7A90006E205 /* KPBusinessTimeInfoView.swift */,
 				7762E3391F0FA44F0006E205 /* KPBusinessTimeViewController.swift */,
+				77A26B0C1F234A8D0045D46F /* KPCommentDetailedController.swift */,
 			);
 			name = Info;
 			sourceTree = "<group>";
@@ -1565,6 +1568,7 @@
 				7762E3451F12185C0006E205 /* KPVisitedRequest.swift in Sources */,
 				77FB63961E9AA7BB00FFC3DC /* KPDataModel.swift in Sources */,
 				77FBE95D1ECCABD000EBBB9B /* KPFeatureTagLayout.swift in Sources */,
+				77A26B0D1F234A8D0045D46F /* KPCommentDetailedController.swift in Sources */,
 				7762E3431F1211770006E205 /* KPGetRatingRequest.swift in Sources */,
 				C01AC62F1EAAEA0A000390F7 /* GMUDefaultClusterIconGenerator.m in Sources */,
 				77BFC5581EB7586F00610F55 /* KPErrorResponseModel.swift in Sources */,

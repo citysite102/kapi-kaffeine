@@ -403,6 +403,7 @@ class KPInformationViewController: KPViewController {
         
         
         commentInfoView = KPShopCommentInfoView()
+        commentInfoView.informationController = self
         commentInformationView = KPInformationSharedInfoView()
         commentInformationView.infoView = commentInfoView
         commentInformationView.infoTitleLabel.text = "留言評價"

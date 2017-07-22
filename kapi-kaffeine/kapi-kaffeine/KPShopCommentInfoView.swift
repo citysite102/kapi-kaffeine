@@ -11,6 +11,7 @@ import UIKit
 class KPShopCommentInfoView: UIView {
 
     static let KPShopCommentInfoCellReuseIdentifier = "cell"
+    weak open var informationController: KPInformationViewController?
     
     var tableView: UITableView!
     var tableViewHeightConstraint: NSLayoutConstraint!
@@ -28,8 +29,10 @@ class KPShopCommentInfoView: UIView {
         tableView = UITableView()
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.isUserInteractionEnabled = false
-        tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 1))
+        tableView.isScrollEnabled = false
+        tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0,
+                                                         width: UIScreen.main.bounds.size.width,
+                                                         height: 1))
         tableView.rowHeight = UITableViewAutomaticDimension
         addSubview(tableView)
         tableView.addConstraints(fromStringArray: ["V:|[$self]|",
@@ -82,5 +85,17 @@ extension KPShopCommentInfoView: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let commentDatailedViewController = KPCommentDetailedController()
+        informationController?.navigationController?.pushViewController(viewController: commentDatailedViewController,
+                                                                       animated: true,
+                                                                       completion: {})
+        
+        if let indexPath = tableView.indexPathForSelectedRow {
+            tableView.deselectRow(at: indexPath, animated: false)
+        }
+        
     }
 }
