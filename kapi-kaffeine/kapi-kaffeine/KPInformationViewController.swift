@@ -332,28 +332,29 @@ class KPInformationViewController: KPViewController {
         locationInformationView = KPInformationSharedInfoView()
         locationInformationView.infoTitleLabel.text = "位置訊息"
         locationInformationView.infoSupplementLabel.text = "距離 600m"
-        locationInformationView.actions = [Action(title:"開啟導航",
-                                                 style:.normal,
-                                                 color:KPColorPalette.KPMainColor.mainColor!,
-                                                 icon:(R.image.icon_navi()?.withRenderingMode(.alwaysTemplate))!,
-                                                 handler:{ [unowned self] (infoView) -> () in
-                                                    self.present(self.mapActionController,
-                                                                 animated: true,
-                                                                 completion: nil)
+        locationInformationView.actions = [
+            Action(title:"街景模式",
+                   style:.normal,
+                   color:KPColorPalette.KPMainColor.mainColor_sub!,
+                   icon:(R.image.icon_map()?.withRenderingMode(.alwaysTemplate))!,
+                   handler:{ [unowned self] (infoView) -> () in
+                    if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
+                        UIApplication.shared.open(URL(string:
+                            "comgooglemaps://?center=\(self.informationDataModel.latitude!),\(self.informationDataModel.longitude!)&mapmode=streetview")!, options: [:], completionHandler: nil)
+                    } else {
+                        print("Can't use comgooglemaps://")
+                    }
+            }),
+            Action(title:"開啟導航",
+                   style:.normal,
+                   color:KPColorPalette.KPMainColor.mainColor!,
+                   icon:(R.image.icon_navi()?.withRenderingMode(.alwaysTemplate))!,
+                   handler:{ [unowned self] (infoView) -> () in
+                    self.present(self.mapActionController,
+                                 animated: true,
+                                 completion: nil)
 
-        }),
-                                                Action(title:"街景模式",
-                                                 style:.normal,
-                                                 color:KPColorPalette.KPMainColor.mainColor!,
-                                                 icon:(R.image.icon_map()?.withRenderingMode(.alwaysTemplate))!,
-                                                 handler:{ [unowned self] (infoView) -> () in
-                                                    if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
-                                                        UIApplication.shared.open(URL(string:
-                                                            "comgooglemaps://?center=\(self.informationDataModel.latitude!),\(self.informationDataModel.longitude!)&mapmode=streetview")!, options: [:], completionHandler: nil)
-                                                    } else {
-                                                        print("Can't use comgooglemaps://")
-                                                    }
-                                                })
+            })
         ]
         
         scrollContainer.addSubview(locationInformationView)
@@ -435,7 +436,7 @@ class KPInformationViewController: KPViewController {
         } else {
             commentInformationView.actions = [Action(title:"看更多評價(\(informationDataModel.commentCount ?? 0))",
                                                           style:.normal,
-                                                          color:KPColorPalette.KPMainColor.mainColor!,
+                                                          color:KPColorPalette.KPMainColor.mainColor_sub!,
                                                           icon:nil,
                                                           handler:{ [unowned self] (infoView) -> () in
                                                             let commentViewController = KPAllCommentController()

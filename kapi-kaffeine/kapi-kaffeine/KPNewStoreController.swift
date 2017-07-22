@@ -451,7 +451,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
         addressSubTitleView.placeHolderContent = "請輸入店家地址"
         sectionTwoContainer.addSubview(addressSubTitleView)
         addressSubTitleView.addConstraints(fromStringArray: ["H:|[$self]|", "H:|-16-[$view1]-16-|",
-                                                             "V:[$view0]-16-[$self(72)][$view1(120)]"],
+                                                             "V:[$view0]-16-[$self(72)]-8-[$view1(120)]"],
                                            views: [standDeskCheckBox, addressMapView])
         
 

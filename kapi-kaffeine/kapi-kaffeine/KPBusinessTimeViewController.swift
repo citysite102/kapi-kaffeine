@@ -67,7 +67,7 @@ class KPBusinessTimeViewController: UIViewController {
         shopStatusHint.isOpaque = true
         view.addSubview(shopStatusHint);
         shopStatusHint.addConstraints(fromStringArray: ["H:|-24-[$self(6)]",
-                                                        "V:[$view0]-16-[$self(6)]"],
+                                                        "V:[$view0]-12-[$self(6)]"],
                                       views: [titleLabel]);
         
         shopStatusLabel = KPLayerLabel();
@@ -77,7 +77,7 @@ class KPBusinessTimeViewController: UIViewController {
         shopStatusLabel.isOpaque = true
         shopStatusLabel.layer.masksToBounds = true
         view.addSubview(shopStatusLabel);
-        shopStatusLabel.addConstraints(fromStringArray: ["H:[$view0]-5-[$self($metric0)]"],
+        shopStatusLabel.addConstraints(fromStringArray: ["H:[$view0]-6-[$self($metric0)]"],
                                        metrics: [UIScreen.main.bounds.size.width/2],
                                        views: [shopStatusHint]);
         shopStatusLabel.addConstraintForCenterAligning(to: shopStatusHint,
@@ -86,7 +86,7 @@ class KPBusinessTimeViewController: UIViewController {
         
         if businessTime != nil {
             let shopStatus = businessTime!.shopStatus
-            shopStatusLabel.text = "營業時間 \(shopStatus.status)"
+            shopStatusLabel.text = "\(shopStatus.status)"
             shopStatusHint.backgroundColor = shopStatus.isOpening ?
                 KPColorPalette.KPShopStatusColor.opened :
                 KPColorPalette.KPShopStatusColor.closed

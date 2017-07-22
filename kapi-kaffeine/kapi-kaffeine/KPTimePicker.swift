@@ -104,6 +104,8 @@ class KPTimePicker: UIView, UIPickerViewDataSource, UIPickerViewDelegate {
         separatorLine3_bottom.addConstraint(forWidth: 50)
         separatorLine3_bottom.addConstraint(forHeight: 2)
         
+        timeValue = "10:30"
+        
     }
     
     required init?(coder aDecoder: NSCoder) {

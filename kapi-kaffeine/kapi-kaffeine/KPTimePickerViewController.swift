@@ -67,11 +67,11 @@ class KPTimePickerViewController: UIViewController, KPTimePickerDelegate, KPTabV
             button.layer.masksToBounds = true
             button.titleLabel?.font = UIFont.systemFont(ofSize: 15.0)
             buttonContainer.addSubview(button)
-            button.addConstraint(from: "V:|-16-[$self(40)]-16-|")
+            button.addConstraint(from: "V:|-8-[$self(36)]-8-|")
             button.tag = index
             
             if index == 0 {
-                button.addConstraint(from: "H:|-16-[$self]")
+                button.addConstraint(from: "H:|-12-[$self]")
             } else {
                 button.addConstraint(from: "H:[$view0]-[$self]",
                                      views: [buttons.last!])
@@ -84,7 +84,7 @@ class KPTimePickerViewController: UIViewController, KPTimePickerDelegate, KPTabV
         }
         
         if let lastButton = buttons.last {
-            lastButton.addConstraint(from: "H:[$self]-16-|")
+            lastButton.addConstraint(from: "H:[$self]-12-|")
         }
         
         view.layoutIfNeeded()
