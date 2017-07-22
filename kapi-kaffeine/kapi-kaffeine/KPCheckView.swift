@@ -19,6 +19,21 @@ class KPCheckView: UIView {
     var titleLabel: UILabel!
     var checkBox: KPCheckBox!
     var customValue: Int?
+    var supplementInfoView: UIView? {
+        didSet {
+            checkBox.removeAllRelatedConstraintsInSuperView()
+            titleLabel.removeAllRelatedConstraintsInSuperView()
+            checkBox.addConstraints(fromStringArray: ["V:|[$self(20)]",
+                                                      "H:|[$self(20)]"])
+            titleLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]|"],
+                                      views: [checkBox])
+            titleLabel.addConstraintForCenterAligning(to: checkBox, in: .vertical)
+            addSubview(supplementInfoView!)
+            let _ = supplementInfoView?.addConstraints(fromStringArray: ["V:[$view0]-8-[$self]|",
+                                                                         "H:[$view0]-8-[$self]"],
+                                                       views: [checkBox])
+        }
+    }
     
     var deselectCheckViews: [KPCheckView]? {
         didSet {

@@ -87,6 +87,9 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
         
         self.view.backgroundColor = UIColor.white
         self.navigationController?.navigationBar.topItem?.title = "個人資料"
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(),
+                                                                    for: .default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
 
         self.dismissButton = UIButton(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
         self.dismissButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4)

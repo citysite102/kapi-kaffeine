@@ -302,6 +302,12 @@ class KPSearchConditionViewController: KPViewController {
         
         businessCheckBoxOne.deselectCheckViews = [businessCheckBoxTwo]
         businessCheckBoxTwo.deselectCheckViews = [businessCheckBoxOne]
+        
+        
+        let timeSupplementView = KPSpecificTimeSupplementView()
+        businessCheckBoxTwo.supplementInfoView = timeSupplementView
+        timeSupplementView.addConstraint(forWidth: 90)
+        
         othersLabel = titleLabel("其他選項")
         containerView.addSubview(othersLabel)
         othersLabel.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",
@@ -411,6 +417,38 @@ class KPSearchConditionViewController: KPViewController {
             controller.presentModalView()
         }
     }
-    
+}
 
+
+class KPSpecificTimeSupplementView: UIView {
+    
+    lazy var timeLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 15.0)
+        label.textColor = KPColorPalette.KPTextColor.mainColor
+        label.text = "請選擇時段"
+        return label
+    }()
+    
+    lazy var baseline: UIView = {
+        let view = UIView()
+        view.backgroundColor = KPColorPalette.KPBackgroundColor.mainColor
+        return view
+    }()
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        addSubview(timeLabel)
+        timeLabel.addConstraints(fromStringArray: ["V:|[$self]",
+                                                   "H:|[$self]|"])
+        
+        addSubview(baseline)
+        baseline.addConstraints(fromStringArray: ["V:[$view0]-4-[$self(1)]|",
+                                                  "H:|[$self]|"],
+                                views: [timeLabel])
+    }
 }

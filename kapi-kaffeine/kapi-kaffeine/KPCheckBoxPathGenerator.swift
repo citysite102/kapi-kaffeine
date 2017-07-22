@@ -21,7 +21,7 @@ class KPCheckBoxPathGenerator {
     var size: CGFloat = 0.0
     
     /// The line width of the created checkmark.
-    var checkmarkLineWidth: CGFloat = 1.2
+    var checkmarkLineWidth: CGFloat = 1.5
     
     /// The line width of the created box.
     var boxLineWidth: CGFloat = 1.0
