@@ -15,8 +15,40 @@ class KPCheckView: UIView {
         case checkmark = "Scheckmarktar"
     }
 
+    
     var titleLabel: UILabel!
     var checkBox: KPCheckBox!
+    var customValue: Int?
+    
+    var deselectCheckViews: [KPCheckView]? {
+        didSet {
+            var deselectCheckBoxs: [KPCheckBox] = [KPCheckBox]()
+            for checkView in deselectCheckViews! {
+                deselectCheckBoxs.append(checkView.checkBox)
+            }
+            checkBox.deselectCheckBoxs = deselectCheckBoxs
+        }
+    }
+    
+    var groupValue: Any? {
+        
+        if let deselectCheckBoxs = checkBox.deselectCheckBoxs {
+            
+            if checkBox.checkState == .checked {
+                return customValue ?? titleLabel.text
+            }
+            
+            for deselectCheckView in deselectCheckViews! {
+                if deselectCheckView.checkBox.checkState == .checked {
+                    return deselectCheckView.customValue ?? deselectCheckView.titleLabel.text
+                }
+            }
+        }
+        
+        return nil
+    }
+    
+    
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

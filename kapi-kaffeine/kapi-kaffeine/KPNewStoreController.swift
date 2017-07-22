@@ -368,12 +368,12 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
                                                            "V:[$view0]-16-[$self]"],
                                          views: [timeRadioBoxTwo])
         
-        timeRadioBoxOne.checkBox.deselectCheckBoxs = [timeRadioBoxTwo.checkBox,
-                                                      timeRadioBoxThree.checkBox]
-        timeRadioBoxTwo.checkBox.deselectCheckBoxs = [timeRadioBoxOne.checkBox,
-                                                      timeRadioBoxThree.checkBox]
-        timeRadioBoxThree.checkBox.deselectCheckBoxs = [timeRadioBoxTwo.checkBox,
-                                                        timeRadioBoxOne.checkBox]
+        timeRadioBoxOne.deselectCheckViews = [timeRadioBoxTwo,
+                                              timeRadioBoxThree]
+        timeRadioBoxTwo.deselectCheckViews = [timeRadioBoxOne,
+                                              timeRadioBoxThree]
+        timeRadioBoxThree.deselectCheckViews = [timeRadioBoxTwo,
+                                                timeRadioBoxOne]
         
         socketLabel = headerLabel("插座數量")
         sectionTwoContainer.addSubview(socketLabel)
@@ -401,13 +401,12 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
                                            metrics:[KPNewStoreControllerConstants.leftPadding],
                                            views: [socketRadioBoxTwo])
         
-        socketRadioBoxOne.checkBox.deselectCheckBoxs = [socketRadioBoxTwo.checkBox,
-                                                        socketRadioBoxThree.checkBox]
-        socketRadioBoxTwo.checkBox.deselectCheckBoxs = [socketRadioBoxOne.checkBox,
-                                                        socketRadioBoxThree.checkBox]
-        socketRadioBoxThree.checkBox.deselectCheckBoxs = [socketRadioBoxOne.checkBox,
-                                                          socketRadioBoxTwo.checkBox]
-        
+        socketRadioBoxOne.deselectCheckViews = [socketRadioBoxTwo,
+                                                socketRadioBoxThree]
+        socketRadioBoxTwo.deselectCheckViews = [socketRadioBoxOne,
+                                                socketRadioBoxThree]
+        socketRadioBoxThree.deselectCheckViews = [socketRadioBoxOne,
+                                                  socketRadioBoxTwo]
         
         
         standDeskLabel = headerLabel("其他")
