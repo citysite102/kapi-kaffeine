@@ -236,11 +236,7 @@ class KPSideViewController: KPViewController {
                                                        icon:R.image.icon_star()!,
                                                        handler:{()->() in
                                                         DispatchQueue.main.asyncAfter(deadline: .now()) {
-                                                            KPPopoverView.popoverDefaultStyleContent("尚未開放",
-                                                                                                     "改天再來吧，再見。",
-                                                                                                     "遵命", { (content) in
-                                                                                                        content.popoverView.dismiss()
-                                                            })
+                                                            iRate.sharedInstance().promptIfNetworkAvailable()
                                                         }
                                         }),
                                         informationData(title:"設定",

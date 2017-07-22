@@ -26,7 +26,7 @@ class KPSettingViewController: KPViewController {
         var handler: (() -> ())?
     }
     
-    var dismissButton:UIButton!
+    var dismissButton: KPBounceButton!
     var tableView: UITableView!
     var satisficationView: KPSatisficationView!
     var settingDataContents: [settingData]!
@@ -42,10 +42,10 @@ class KPSettingViewController: KPViewController {
         view.backgroundColor = UIColor.white
         navigationController?.navigationBar.topItem?.title = "設定"
         
-        dismissButton = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+        
+        dismissButton = KPBounceButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30),
+                                       image: R.image.icon_close()!)
         dismissButton.contentEdgeInsets = UIEdgeInsetsMake(6, 7, 8, 7)
-        dismissButton.setImage(R.image.icon_close()?.withRenderingMode(.alwaysTemplate),
-                                    for: .normal)
         dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor
         dismissButton.addTarget(self,
                                      action: #selector(KPSettingViewController.handleDismissButtonOnTapped),

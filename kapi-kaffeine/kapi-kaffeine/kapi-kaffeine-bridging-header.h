@@ -8,3 +8,4 @@
 
 #import "GMUMarkerClustering.h"
 #import "KPLoadingButton.h"
+#import "iRate.h"

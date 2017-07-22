@@ -92,6 +92,8 @@
 		77A2019B1EBC5BF800F3497F /* KPCheckBoxStrokeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A2019A1EBC5BF800F3497F /* KPCheckBoxStrokeController.swift */; };
 		77A2019D1EBC5D1D00F3497F /* KPCheckboxCheckPathGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A2019C1EBC5D1D00F3497F /* KPCheckboxCheckPathGenerator.swift */; };
 		77A2019F1EBE23D100F3497F /* KPCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A2019E1EBE23D100F3497F /* KPCheckView.swift */; };
+		77A26B0A1F232E960045D46F /* iRate.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 77A26B071F232E960045D46F /* iRate.bundle */; };
+		77A26B0B1F232E960045D46F /* iRate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77A26B091F232E960045D46F /* iRate.m */; };
 		77A980E21F17334B002010EC /* KPLoadingButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 77A980E11F17334B002010EC /* KPLoadingButton.m */; };
 		77B66FA11EA91477008B6652 /* KPRegionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B66FA01EA91477008B6652 /* KPRegionTableViewCell.swift */; };
 		77B66FA31EA91488008B6652 /* KPCityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B66FA21EA91488008B6652 /* KPCityTableViewCell.swift */; };
@@ -290,6 +292,9 @@
 		77A2019A1EBC5BF800F3497F /* KPCheckBoxStrokeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPCheckBoxStrokeController.swift; sourceTree = "<group>"; };
 		77A2019C1EBC5D1D00F3497F /* KPCheckboxCheckPathGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPCheckboxCheckPathGenerator.swift; sourceTree = "<group>"; };
 		77A2019E1EBE23D100F3497F /* KPCheckView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPCheckView.swift; sourceTree = "<group>"; };
+		77A26B071F232E960045D46F /* iRate.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = iRate.bundle; sourceTree = "<group>"; };
+		77A26B081F232E960045D46F /* iRate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iRate.h; sourceTree = "<group>"; };
+		77A26B091F232E960045D46F /* iRate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iRate.m; sourceTree = "<group>"; };
 		77A980E01F17334B002010EC /* KPLoadingButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPLoadingButton.h; sourceTree = "<group>"; };
 		77A980E11F17334B002010EC /* KPLoadingButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPLoadingButton.m; sourceTree = "<group>"; };
 		77B66FA01EA91477008B6652 /* KPRegionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPRegionTableViewCell.swift; sourceTree = "<group>"; };
@@ -776,6 +781,16 @@
 			name = Basic;
 			sourceTree = "<group>";
 		};
+		77A26B061F232D1C0045D46F /* iRate */ = {
+			isa = PBXGroup;
+			children = (
+				77A26B071F232E960045D46F /* iRate.bundle */,
+				77A26B081F232E960045D46F /* iRate.h */,
+				77A26B091F232E960045D46F /* iRate.m */,
+			);
+			name = iRate;
+			sourceTree = "<group>";
+		};
 		77B66F9F1EA91451008B6652 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -1052,6 +1067,7 @@
 		C02AFE431E7D260D008FFB33 /* kapi-kaffeine */ = {
 			isa = PBXGroup;
 			children = (
+				77A26B061F232D1C0045D46F /* iRate */,
 				7770792E1F1FB9D8003A7AD8 /* Lottie-asset */,
 				77D98A6A1F1C786600FE1832 /* kapi-kaffeine.entitlements */,
 				77F718321ED33DDE00755AA2 /* Intro */,
@@ -1272,6 +1288,7 @@
 				777079301F1FB9F2003A7AD8 /* loading.json in Resources */,
 				C02AFE4A1E7D260D008FFB33 /* Main.storyboard in Resources */,
 				C00CD5341E95234A00A3CB6F /* style.json in Resources */,
+				77A26B0A1F232E960045D46F /* iRate.bundle in Resources */,
 				77FA64B41F04FB8C00D0767A /* lottie_demo.json in Resources */,
 				772748421ED5D21A00C42FB6 /* GoogleService-Info.plist in Resources */,
 				C0409E1F1E954F1A00C302FF /* cafes.json in Resources */,
@@ -1451,6 +1468,7 @@
 				77C594AF1ECB6E3100118947 /* KPLoadingViewController_v1.swift in Sources */,
 				771EECAF1EBC3177004A34B8 /* KPCheckBoxAnimationGenerator.swift in Sources */,
 				77E8CC301EC0E48300669809 /* KPPhotoDisplayCell.swift in Sources */,
+				77A26B0B1F232E960045D46F /* iRate.m in Sources */,
 				77E4955B1EC9E9B1003B7EBC /* KPSearchViewController.swift in Sources */,
 				775D32ED1F0CCCCF005EF0CE /* KPInformationPhotoTransition.swift in Sources */,
 				779F9E901F1A263000B8DC25 /* KPSubtitleInputController.swift in Sources */,
