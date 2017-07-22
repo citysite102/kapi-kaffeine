@@ -236,8 +236,8 @@ class KPPhotoDisplayViewController: KPViewController {
 //                                                    y: (1-dismissButton.alpha)*(-100))
         case .ended:
             
-            let distance = (pow(centerPoint.x-(lastMovePoint?.x)! , 2) +
-                pow(centerPoint.y-(lastMovePoint?.y)!, 2)).squareRoot()
+            let distance = (pow(centerPoint.x-(lastMovePoint?.x ?? 0) , 2) +
+                pow(centerPoint.y-(lastMovePoint?.y ?? 0), 2)).squareRoot()
             if distance > 150 {
                 self.dismissing = true
                 self.dismiss(animated: true) {
