@@ -264,6 +264,13 @@ class KPSideViewController: KPViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        
+        if let selectedIndexPath = tableView.indexPathForSelectedRow {
+            if regionContents[selectedIndexPath.row] != nil {
+                self.resetTableview()
+            }
+        }
+        
         mainController.opacityView.isHidden = true
         mainController.statusBarShouldBeHidden = false
         UIView.animate(withDuration: 0.15) {
@@ -554,6 +561,7 @@ extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func resetTableview() {
+        expandedCell = nil
         regionContents = KPSideViewController.defaultRegionContent
         tableView.reloadData()
     }
