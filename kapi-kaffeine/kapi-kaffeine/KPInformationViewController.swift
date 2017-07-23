@@ -405,6 +405,7 @@ class KPInformationViewController: KPViewController {
         commentInfoView = KPShopCommentInfoView()
         commentInfoView.informationController = self
         commentInformationView = KPInformationSharedInfoView()
+        commentInformationView.emptyLabel.text = "目前尚無留言，給點建議或分享吧:D"
         commentInformationView.infoView = commentInfoView
         commentInformationView.infoTitleLabel.text = "留言評價"
         scrollContainer.addSubview(commentInformationView)
@@ -471,6 +472,7 @@ class KPInformationViewController: KPViewController {
         
         let photoInfoView = KPShopPhotoInfoView()
         photoInformationView = KPInformationSharedInfoView()
+        photoInformationView.emptyLabel.text = "目前尚無照片，成為第一個上傳的人吧:D"
         photoInformationView.infoView = photoInfoView
         photoInformationView.infoTitleLabel.text = "店家照片"
         

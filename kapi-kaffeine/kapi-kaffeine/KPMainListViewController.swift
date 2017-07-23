@@ -149,7 +149,7 @@ class KPMainListViewController:
         statusErrorDescriptionLabel.addConstraints(fromStringArray: ["V:[$view0]-20-[$self]",
                                                                      "H:[$self(200)]"],
                                                    views: [statusErrorImageView])
-        statusErrorDescriptionLabel.setText(text: "你的網路實在太糟糕，快去升級台灣之星5G吧!",
+        statusErrorDescriptionLabel.setText(text: "被你發現了！網路好像有點問題耶...",
                                             lineSpacing: 3.0)
         
         statusErrorButton = KPLoadingButton(image: nil, title: "讓我再試試")
@@ -262,7 +262,7 @@ class KPMainListViewController:
         fadeTransition.duration = 0.2
         CATransaction.begin()
         CATransaction.setCompletionBlock({
-            self.statusErrorDescriptionLabel.setText(text: "你以為按了就用麻？傻子？快去換台灣之星5G吧",
+            self.statusErrorDescriptionLabel.setText(text: "你以為按了就有用麻？其實是沒用的啦？",
                                                      lineSpacing: 3.0)
             self.statusErrorDescriptionLabel.layer.add(fadeTransition, forKey: nil)
             self.statusErrorButton.isLoading = false

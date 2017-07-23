@@ -51,16 +51,24 @@ class KPAboutUsViewController: KPViewController {
                                                     link: URL.init(string: "www.yahoo.com.tw")!)]),
                 memberData(title: "iOS Developer",
                            name: "Samuel",
-                           email: "a97210230@gmail.com",
+                           email: "citysite1025@gmail.com",
                            relative: [relateiveLink(icon: UIImage.init(named: "icon_map")!,
                                                     link: URL.init(string: "www.yahoo.com.tw")!)]),
                 memberData(title: "iOS Developer",
                            name: "Shou",
                            email: "a97210230@gmail.com",
                            relative: [relateiveLink(icon: UIImage.init(named: "icon_map")!,
+                                                    link: URL.init(string: "www.yahoo.com.tw")!)]),
+                memberData(title: "Back-End Developer",
+                           name: "Jack",
+                           email: "a97210230@gmail.com",
+                           relative: [relateiveLink(icon: UIImage.init(named: "icon_map")!,
                                                     link: URL.init(string: "www.yahoo.com.tw")!)])]
     }()
     var productMemberContainerViews: [UIView] = [UIView]()
+    
+    var contactUsTitleLabel: UILabel!
+    var contactUsContentLabel: UILabel!
     
     var dataSourceTitleLabel: UILabel!
     var dataSourceContentLabel: UILabel!
@@ -219,32 +227,55 @@ class KPAboutUsViewController: KPViewController {
                                                               "H:|[$self]"])
             
             memberContainer.addSubview(memberNameLabel)
-            memberNameLabel.addConstraints(fromStringArray: ["V:[$view0]-4-[$self]",
+            memberNameLabel.addConstraints(fromStringArray: ["V:[$view0]-4-[$self]|",
                                                              "H:|[$self]"],
                                            views: [memberTitleLabel])
             
-            memberContainer.addSubview(memberEmailLabel)
-            memberEmailLabel.addConstraints(fromStringArray: ["V:[$view0]-4-[$self]|",
-                                                              "H:|[$self]"],
-                                            views: [memberNameLabel])
+//            memberContainer.addSubview(memberEmailLabel)
+//            memberEmailLabel.addConstraints(fromStringArray: ["V:[$view0]-4-[$self]|",
+//                                                              "H:|[$self]"],
+//                                            views: [memberNameLabel])
             
         }
+        
+        
+        contactUsTitleLabel = UILabel()
+        contactUsTitleLabel.font = UIFont.systemFont(ofSize: 18.0)
+        contactUsTitleLabel.textColor = KPColorPalette.KPTextColor.mainColor
+        contactUsTitleLabel.text = "聯絡我們"
+        containerView.addSubview(contactUsTitleLabel)
+        contactUsTitleLabel.addConstraints(fromStringArray: ["H:|[$self]",
+                                                             "V:[$view0]-24-[$self]"],
+                                           metrics: [UIScreen.main.bounds.size.width/2],
+                                           views: [productMemberContainerViews.last!])
+        
+        contactUsContentLabel = UILabel()
+        contactUsContentLabel.font = UIFont.systemFont(ofSize: 14.0)
+        contactUsContentLabel.textColor = KPColorPalette.KPTextColor.grayColor_level3
+        contactUsContentLabel.text = "kapitw.team@gmail.com"
+        containerView.addSubview(contactUsContentLabel)
+        contactUsContentLabel.addConstraints(fromStringArray: ["H:|[$self]",
+                                                               "V:[$view0]-8-[$self]"],
+                                              metrics: [UIScreen.main.bounds.size.width/2],
+                                              views: [contactUsTitleLabel])
         
         dataSourceTitleLabel = UILabel()
         dataSourceTitleLabel.font = UIFont.systemFont(ofSize: 18.0)
         dataSourceTitleLabel.textColor = KPColorPalette.KPTextColor.mainColor
         dataSourceTitleLabel.text = "資料來源"
         containerView.addSubview(dataSourceTitleLabel)
-        dataSourceTitleLabel.addConstraints(fromStringArray: ["H:|[$self]", "V:[$view0]-24-[$self]"],
+        dataSourceTitleLabel.addConstraints(fromStringArray: ["H:|[$self]",
+                                                              "V:[$view0]-24-[$self]"],
                                                  metrics: [UIScreen.main.bounds.size.width/2],
-                                                 views: [productMemberContainerViews.last!])
+                                                 views: [contactUsContentLabel])
         
         dataSourceContentLabel = UILabel()
         dataSourceContentLabel.font = UIFont.systemFont(ofSize: 14.0)
         dataSourceContentLabel.textColor = KPColorPalette.KPTextColor.grayColor_level3
         dataSourceContentLabel.text = "https://cafenomad.tw/"
         containerView.addSubview(dataSourceContentLabel)
-        dataSourceContentLabel.addConstraints(fromStringArray: ["H:|[$self]", "V:[$view0]-8-[$self]-32-|"],
+        dataSourceContentLabel.addConstraints(fromStringArray: ["H:|[$self]",
+                                                                "V:[$view0]-8-[$self]-32-|"],
                                                    metrics: [UIScreen.main.bounds.size.width/2],
                                                    views: [dataSourceTitleLabel])
         
