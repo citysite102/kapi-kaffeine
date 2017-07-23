@@ -546,6 +546,8 @@ class KPInformationViewController: KPViewController {
         KPServiceHandler.sharedHandler.fetchStoreInformation(informationDataModel.identifier) {
             (result) in
             self.informationHeaderButtonBar.informationDataModel = result
+            self.informationHeaderView.scoreLabel.text = String(format: "%.1f",
+                                                                result?.averageRate?.doubleValue ?? 0.0)
             self.dataLoading = false
         }
         
