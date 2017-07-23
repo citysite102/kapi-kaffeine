@@ -206,7 +206,6 @@ class KPMainListViewController:
         
 //        view.bringSubview(toFront: searchFooterView)
         
-        
         view.addSubview(addButton)
         addButton.button.addTarget(self,
                                    action: #selector(handleAddButtonTapped(_:)), for: .touchUpInside)
@@ -373,22 +372,72 @@ extension KPMainListViewController: GADNativeExpressAdViewDelegate {
 extension KPMainListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        
-        let translate: CGFloat = self.currentSearchTagTranslateY < -40 ? -80 : 0.0
-        self.currentSearchTagTranslateY = translate
-        UIView.animate(withDuration: 0.1) {
-            self.mainController.searchHeaderView.searchTagView.transform = CGAffineTransform(translationX: 0,
-                                                                                        y: self.currentSearchTagTranslateY/2)
-            self.mainController.mainMapViewController?.mapView.transform = CGAffineTransform(translationX: 0,
-                                                                                        y: self.currentSearchTagTranslateY/2)
-            self.tableView.transform = CGAffineTransform(translationX: 0, y: self.currentSearchTagTranslateY/2)
-            self.snapshotView.transform = CGAffineTransform(translationX: 0, y: self.currentSearchTagTranslateY/2)
-            
+        if !scrollView.isDecelerating && !scrollView.isDragging {
+            var translate: CGFloat
+            if (scrollView.contentOffset.y + 1) >= (scrollView.contentSize.height - scrollView.frame.size.height) {
+                translate = -80
+            } else {
+                translate = self.currentSearchTagTranslateY < -40 ? -80 : 0.0
+            }
+            self.currentSearchTagTranslateY = translate
+            UIView.animate(withDuration: 0.1,
+                           animations: { 
+                            self.mainController.searchHeaderView.searchTagView.transform = CGAffineTransform(translationX: 0,
+                                                                                                             y: self.currentSearchTagTranslateY/2)
+                            self.mainController.mainMapViewController?.mapView.transform = CGAffineTransform(translationX: 0,
+                                                                                                             y: self.currentSearchTagTranslateY/2)
+                            self.tableView.transform = CGAffineTransform(translationX: 0, y: self.currentSearchTagTranslateY/2)
+                            self.snapshotView.transform = CGAffineTransform(translationX: 0, y: self.currentSearchTagTranslateY/2)
+            }, completion: { (_) in
+                
+            })
         }
     }
     
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        print("Did End Decelerate")
+        if self.currentSearchTagTranslateY != -80 || self.currentSearchTagTranslateY != 0 {
+            var translate: CGFloat
+            if (scrollView.contentOffset.y + 1) >= (scrollView.contentSize.height - scrollView.frame.size.height) {
+                translate = -80
+            } else {
+                translate = self.currentSearchTagTranslateY < -40 ? -80 : 0.0
+            }
+            self.currentSearchTagTranslateY = translate
+            UIView.animate(withDuration: 0.1,
+                           animations: {
+                            self.mainController.searchHeaderView.searchTagView.transform = CGAffineTransform(translationX: 0,
+                                                                                                             y: self.currentSearchTagTranslateY/2)
+                            self.mainController.mainMapViewController?.mapView.transform = CGAffineTransform(translationX: 0,
+                                                                                                             y: self.currentSearchTagTranslateY/2)
+                            self.tableView.transform = CGAffineTransform(translationX: 0, y: self.currentSearchTagTranslateY/2)
+                            self.snapshotView.transform = CGAffineTransform(translationX: 0, y: self.currentSearchTagTranslateY/2)
+            }, completion: { (_) in
+                
+            })
+        }
+    }
+    
+    func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
+        print("Will Begin Decelerate")
+        let translate: CGFloat = self.currentSearchTagTranslateY < -40 ? -80 : 0.0
+        self.currentSearchTagTranslateY = translate
+        UIView.animate(withDuration: 0.1,
+                       animations: {
+                        self.mainController.searchHeaderView.searchTagView.transform = CGAffineTransform(translationX: 0,
+                                                                                                         y: self.currentSearchTagTranslateY/2)
+                        self.mainController.mainMapViewController?.mapView.transform = CGAffineTransform(translationX: 0,
+                                                                                                         y: self.currentSearchTagTranslateY/2)
+                        self.tableView.transform = CGAffineTransform(translationX: 0, y: self.currentSearchTagTranslateY/2)
+                        self.snapshotView.transform = CGAffineTransform(translationX: 0, y: self.currentSearchTagTranslateY/2)
+        }, completion: { (_) in
+            
+        })
+    }
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView.contentOffset.y > 80 {
+        if scrollView.contentOffset.y > 80 &&
+            (scrollView.contentOffset.y + scrollView.frameSize.height) < scrollView.contentSize.height {
             if scrollView.contentOffset.y > oldScrollOffsetY {
                 // 往下
                 currentSearchTagTranslateY = (currentSearchTagTranslateY + oldScrollOffsetY - scrollView.contentOffset.y > -80) ?

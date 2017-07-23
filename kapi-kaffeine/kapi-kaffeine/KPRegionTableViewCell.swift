@@ -56,11 +56,11 @@ class KPRegionTableViewCell: UITableViewCell {
         regionLabel = UILabel()
         regionLabel.font = UIFont.boldSystemFont(ofSize: 14)
         regionLabel.textColor = KPColorPalette.KPTextColor.grayColor_level2
-        regionLabel.isOpaque = true
-        regionLabel.backgroundColor = UIColor.white
+//        regionLabel.isOpaque = true
+//        regionLabel.backgroundColor = UIColor.white
         regionLabel.layer.masksToBounds = true
         addSubview(regionLabel)
-        regionLabel.addConstraints(fromStringArray: ["H:[$view0]-32-[$self]"],
+        regionLabel.addConstraints(fromStringArray: ["H:[$view0]-24-[$self]"],
                                         views: [regionIcon])
         regionLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
         
@@ -82,5 +82,12 @@ class KPRegionTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
+        super.setHighlighted(highlighted, animated: animated)
+        backgroundColor = highlighted ?
+            KPColorPalette.KPBackgroundColor.mainColor_light_10 :
+            UIColor.white
     }
 }

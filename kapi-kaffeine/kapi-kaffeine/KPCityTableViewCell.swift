@@ -24,11 +24,11 @@ class KPCityTableViewCell: UITableViewCell {
         cityLabel = UILabel();
         cityLabel.font = UIFont.systemFont(ofSize: 12);
         cityLabel.textColor = KPColorPalette.KPTextColor.grayColor;
-        cityLabel.isOpaque = true
-        cityLabel.backgroundColor = UIColor.white
+//        cityLabel.isOpaque = true
+//        cityLabel.backgroundColor = UIColor.white
         cityLabel.layer.masksToBounds = true
         addSubview(self.cityLabel);
-        cityLabel.addConstraints(fromStringArray: ["H:|-72-[$self]",
+        cityLabel.addConstraints(fromStringArray: ["H:|-64-[$self]",
                                                    "V:|-12-[$self(16)]-12-|"]);
         
         selectedBox = KPCheckBox()
@@ -53,6 +53,13 @@ class KPCityTableViewCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         selectedBox.isHidden = !selected
+    }
+    
+    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
+        super.setHighlighted(highlighted, animated: animated)
+        backgroundColor = highlighted ?
+            KPColorPalette.KPBackgroundColor.mainColor_light_10 :
+            UIColor.white
     }
 
 }

@@ -139,12 +139,12 @@ class KPSideViewController: KPViewController {
         navigationController?.setNavigationBarHidden(true, animated: false)
         
         view.addSubview(userContainer)
-        userContainer.addConstraints(fromStringArray: ["V:|[$self(150)]",
+        userContainer.addConstraints(fromStringArray: ["V:|[$self(130)]",
                                                        "H:|[$self]|"])
         
         userContainer.addSubview(userPhoto)
         userPhoto.addConstraints(fromStringArray: ["H:|-16-[$self(64)]",
-                                                   "V:|-16-[$self(64)]"])
+                                                   "V:|-20-[$self(64)]"])
         
         userContainer.addSubview(userNameLabel)
         userNameLabel.addConstraints(fromStringArray: ["H:|-16-[$self]",
@@ -152,9 +152,9 @@ class KPSideViewController: KPViewController {
                                           views: [userPhoto])
         
         userExpView = KPExpView()
-        userContainer.addSubview(userExpView)
-        userExpView.addConstraints(fromStringArray: ["H:|-16-[$self(100)]",
-                                                     "V:[$self(26)]-12-|"])
+//        userContainer.addSubview(userExpView)
+//        userExpView.addConstraints(fromStringArray: ["H:|-16-[$self(100)]",
+//                                                     "V:[$self(26)]-12-|"])
 
         loginButton = UILabel()
         loginButton.backgroundColor = KPColorPalette.KPBackgroundColor.mainColor_light
