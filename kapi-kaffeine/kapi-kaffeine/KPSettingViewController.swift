@@ -107,7 +107,7 @@ class KPSettingViewController: KPViewController {
         
         if KPUserManager.sharedManager.currentUser != nil {
             settingDataContents.append(
-                settingData(title:"登出使用者",
+                settingData(title:"登出KAPI",
                             information:nil,
                             identifier:KPSettingViewController.KPSettingViewButtonCellReuseIdentifier,
                             cellStyle:.button,

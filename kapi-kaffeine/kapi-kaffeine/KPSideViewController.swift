@@ -432,38 +432,39 @@ extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
                     if expandedCell != nil {
                         if let expandedIndexPath = tableView.indexPath(for: expandedCell!) {
                             
-                            tableView.beginUpdates()
-                            expandedCell?.expanded = false
-                            
-                            let expandedRigionCities = regionContents[expandedIndexPath.row]?.cities
-                            for (index, _) in (expandedRigionCities?.enumerated())! {
-                                indexPaths.append(NSIndexPath(row: expandedIndexPath.row+index+1, section: 0) as IndexPath)
-                                regionContents.remove(at: expandedIndexPath.row+1)
-                            }
-                            
-                            tableView.deleteRows(at: indexPaths, with: .top)
-                            
-                            
-                            cell.expanded = true
-                            expandedCell = cell
-                            
-                            if expandedIndexPath.row < indexPath.row {
-                                for (index, _) in (regionCities?.enumerated())! {
-                                    regionContents.insert(nil, at: indexPath.row+index+1-(expandedRigionCities?.count)!)
-                                    tableView.insertRows(at: [NSIndexPath(row: indexPath.row+index+1-(expandedRigionCities?.count)!,
-                                                                          section: 0) as IndexPath],
-                                                         with: .top)
+                            if let expandedRigionCities = regionContents[expandedIndexPath.row]?.cities {
+                                tableView.beginUpdates()
+                                expandedCell?.expanded = false
+                                
+                                for (index, _) in (expandedRigionCities.enumerated()) {
+                                    indexPaths.append(NSIndexPath(row: expandedIndexPath.row+index+1, section: 0) as IndexPath)
+                                    regionContents.remove(at: expandedIndexPath.row+1)
                                 }
-                            } else {
-                                for (index, _) in (regionCities?.enumerated())! {
-                                    regionContents.insert(nil, at: indexPath.row+index+1)
-                                    tableView.insertRows(at: [NSIndexPath(row: indexPath.row+index+1,
-                                                                          section: 0) as IndexPath],
-                                                         with: .top)
+                                
+                                tableView.deleteRows(at: indexPaths, with: .top)
+                                
+                                
+                                cell.expanded = true
+                                expandedCell = cell
+                                
+                                if expandedIndexPath.row < indexPath.row {
+                                    for (index, _) in (regionCities?.enumerated())! {
+                                        regionContents.insert(nil, at: indexPath.row+index+1-(expandedRigionCities.count))
+                                        tableView.insertRows(at: [NSIndexPath(row: indexPath.row+index+1-(expandedRigionCities.count),
+                                                                              section: 0) as IndexPath],
+                                                             with: .top)
+                                    }
+                                } else {
+                                    for (index, _) in (regionCities?.enumerated())! {
+                                        regionContents.insert(nil, at: indexPath.row+index+1)
+                                        tableView.insertRows(at: [NSIndexPath(row: indexPath.row+index+1,
+                                                                              section: 0) as IndexPath],
+                                                             with: .top)
+                                    }
                                 }
+                                
+                                tableView.endUpdates()
                             }
-                            
-                            tableView.endUpdates()
                         }
 
                     } else {

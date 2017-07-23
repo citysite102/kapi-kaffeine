@@ -69,7 +69,7 @@ class KPAboutUsViewController: KPViewController {
         super.viewDidLoad()
         
         view.backgroundColor = UIColor.white
-        navigationController?.navigationBar.topItem?.title = "設定"
+        navigationController?.navigationBar.topItem?.title = "關於我們"
         
         dismissButton = KPBounceButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30),
                                        image: R.image.icon_close()!)

@@ -228,8 +228,8 @@ GMUClusterRendererDelegate {
                                         action: #selector(moveToMyLocation as (Void) -> Void), for: .touchUpInside)
         currentLocationButton.alpha = 0.7
         self.view.addSubview(currentLocationButton)
-        currentLocationButton.addConstraints(fromStringArray: ["H:[$self(40)]-16-|",
-                                                               "V:|-120-[$self(40)]"])
+        currentLocationButton.addConstraints(fromStringArray: ["H:[$self(40)]-12-|",
+                                                               "V:|-116-[$self(40)]"])
         
         view.addSubview(nearestButton)
         nearestButton.button.addTarget(self, action: #selector(handleNearestButtonOnTap(_:)), for: .touchUpInside)

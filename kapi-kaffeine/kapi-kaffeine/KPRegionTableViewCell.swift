@@ -51,11 +51,11 @@ class KPRegionTableViewCell: UITableViewCell {
         regionIcon.isOpaque = true
         addSubview(regionIcon)
         regionIcon.addConstraints(fromStringArray: ["V:|-12-[$self(24)]-12-|",
-                                                         "H:|-16-[$self(24)]"])
+                                                    "H:|-16-[$self(24)]"])
         
         regionLabel = UILabel()
-        regionLabel.font = UIFont.systemFont(ofSize: 14)
-        regionLabel.textColor = KPColorPalette.KPTextColor.grayColor
+        regionLabel.font = UIFont.boldSystemFont(ofSize: 14)
+        regionLabel.textColor = KPColorPalette.KPTextColor.grayColor_level2
         regionLabel.isOpaque = true
         regionLabel.backgroundColor = UIColor.white
         regionLabel.layer.masksToBounds = true
@@ -68,7 +68,7 @@ class KPRegionTableViewCell: UITableViewCell {
         expandIcon.tintColor = KPColorPalette.KPMainColor.mainColor
         addSubview(expandIcon)
         expandIcon.addConstraints(fromStringArray: ["V:|-12-[$self(24)]-12-|",
-                                                         "H:[$self(24)]-16-|"])
+                                                    "H:[$self(24)]-16-|"])
         
         expanded = false
         
