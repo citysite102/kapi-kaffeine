@@ -486,7 +486,7 @@ extension KPMainViewController: UIViewControllerTransitioningDelegate {
     }
 }
 
-extension KPMainViewController: KPSearchTagViewDelegate {
+extension KPMainViewController: KPSearchTagViewDelegate, KPSearchConditionViewControllerDelegate {
     
     func searchTagDidSelect(_ searchTags: [searchTagType]) {
         
@@ -524,6 +524,36 @@ extension KPMainViewController: KPSearchTagViewDelegate {
                 self.displayDataModel = currentCafeDatas
             }
         }
+    }
+    
+    func searchConditionControllerDidSearch(_ searchConditionController: KPSearchConditionViewController) {
+//        var dataModels: [KPDataModel]!
+//        if let city = KPServiceHandler.sharedHandler.currentCity {
+//            dataModels = KPFilter.filterData(source: KPServiceHandler.sharedHandler.currentCafeDatas, withCity: city)
+//        } else {
+//            dataModels = KPServiceHandler.sharedHandler.currentCafeDatas
+//        }
+//        
+//        dataModels = dataModels.filter { (data) -> Bool in
+//            if (searchConditionController.othersCheckBoxOne.checkBox.checkState == .checked &&
+//                data.standingDesk?.intValue != 1) ||
+//               (searchConditionController.othersCheckBoxOne.checkBox.checkState == .unchecked &&
+//                data.standingDesk?.intValue == 1) {
+//                return false
+//            }
+//            
+//            if data.businessHour == nil {
+//                return false
+//            }
+//            
+//            if searchConditionController.businessCheckBoxOne.checkBox.checkState == .checked &&
+//                data.businessHour!.isOpening == false {
+//               return false
+//            } else if searchConditionController.businessCheckBoxTwo.checkBox.checkState == .checked {
+//                
+//            }
+//            return true
+//        }
     }
     
 }

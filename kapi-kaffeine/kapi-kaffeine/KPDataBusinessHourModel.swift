@@ -63,7 +63,7 @@ class KPDataBusinessHourModel: NSObject {
                 let currentMinute = calendar.component(.minute, from: todayDate)
                 let currentTime = timeFormatter.date(from: String(format: "%2d:%2d", currentHour, currentMinute))
                 
-                for (startHour, endHour) in businessTime[getDayOfWeek()]! {
+                for (startHour, endHour) in businessTime[KPDataBusinessHourModel.getDayOfWeek()]! {
                     if currentTime!.timeIntervalSince1970 > (timeFormatter.date(from: startHour)?.timeIntervalSince1970)! &&
                         currentTime!.timeIntervalSince1970 < (timeFormatter.date(from: endHour)?.timeIntervalSince1970)! {
                         return (true, "營業中: \(startHour)~\(endHour)")
@@ -84,7 +84,7 @@ class KPDataBusinessHourModel: NSObject {
         }
     }
     
-    func getDayOfWeek() -> KPDay {
+    public class func getDayOfWeek() -> KPDay {
         let todayDate = NSDate()
         let myCalendar = NSCalendar(calendarIdentifier: NSCalendar.Identifier.gregorian)
         let myComponents = myCalendar?.component(.weekday, from: todayDate as Date)

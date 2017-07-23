@@ -25,7 +25,7 @@ class KPSearchTagView: UIView {
     
     static let KPSearchTagViewCellReuseIdentifier = "cell"
 
-    weak open var delegate: KPSearchTagViewDelegate?
+    weak open var delegate: (KPSearchTagViewDelegate & KPSearchConditionViewControllerDelegate)?
     
     var collectionView:UICollectionView!
     var collectionLayout:UICollectionViewFlowLayout!
@@ -109,6 +109,7 @@ class KPSearchTagView: UIView {
                                                  bottom: 0,
                                                  right: 0)
         let preferenceController = KPSearchConditionViewController()
+        preferenceController.delegate = delegate
         let navigationController = UINavigationController.init(rootViewController: preferenceController)
         controller.contentController = navigationController
         controller.presentModalView()

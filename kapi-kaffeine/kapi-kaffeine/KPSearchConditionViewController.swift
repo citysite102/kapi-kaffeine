@@ -8,6 +8,9 @@
 
 import UIKit
 
+protocol KPSearchConditionViewControllerDelegate: class {
+    func searchConditionControllerDidSearch(_ searchConditionController: KPSearchConditionViewController)
+}
 
 struct KPSearchConditionViewControllerConstants {
     static let leftPadding = 168
@@ -30,6 +33,8 @@ class KPSearchConditionViewController: KPViewController {
                         R.image.icon_pic()]
     
     var ratingViews = [KPRatingView]()
+    
+    weak var delegate: KPSearchConditionViewControllerDelegate?
     
     // Section 1
     var quickSettingLabel: UILabel!
@@ -58,6 +63,9 @@ class KPSearchConditionViewController: KPViewController {
     var timeRadioBoxTwo: KPCheckView!
     var timeRadioBoxThree: KPCheckView!
     
+    var startSearchTime: String?
+    var endSearchTime: String?
+    
     var socketLabel: UILabel!
     var socketRadioBoxOne: KPCheckView!
     var socketRadioBoxTwo: KPCheckView!
@@ -66,6 +74,7 @@ class KPSearchConditionViewController: KPViewController {
     var businessHourLabel: UILabel!
     var businessCheckBoxOne: KPCheckView!
     var businessCheckBoxTwo: KPCheckView!
+    var businessCheckBoxThree: KPCheckView!
     
     var othersLabel: UILabel!
     var othersCheckBoxOne: KPCheckView!
@@ -284,28 +293,36 @@ class KPSearchConditionViewController: KPViewController {
                                                            "V:[$view0]-24-[$self]"],
                                               views: [timeRadioBoxThree])
         
-        businessCheckBoxOne = KPCheckView(.radio, "目前營業中")
+        businessCheckBoxOne = KPCheckView(.radio, "不設定")
         businessCheckBoxOne.checkBox.checkState = .checked
         containerView.addSubview(businessCheckBoxOne)
         businessCheckBoxOne.addConstraints(fromStringArray: ["H:|-16-[$self]",
                                                              "V:[$view0]-16-[$self]"],
                                                 views: [businessHourLabel])
         
-        businessCheckBoxTwo = KPCheckView(.radio, "特定營業時段")
+        businessCheckBoxTwo = KPCheckView(.radio, "目前營業中")
         containerView.addSubview(businessCheckBoxTwo)
         businessCheckBoxTwo.addConstraints(fromStringArray: ["H:|-16-[$self]",
-                                                             "V:[$view0]-16-[$self]-88-|"],
+                                                             "V:[$view0]-16-[$self]"],
                                                 views: [businessCheckBoxOne])
-        businessCheckBoxTwo.checkBox.addTarget(self,
-                                               action: #selector(handleBusinessCheckBoxTwoOnTap(_:)),
-                                               for: .valueChanged)
+
         
-        businessCheckBoxOne.deselectCheckViews = [businessCheckBoxTwo]
-        businessCheckBoxTwo.deselectCheckViews = [businessCheckBoxOne]
+        businessCheckBoxThree = KPCheckView(.radio, "特定營業時段")
+        containerView.addSubview(businessCheckBoxThree)
+        businessCheckBoxThree.addConstraints(fromStringArray: ["H:|-16-[$self]",
+                                                               "V:[$view0]-16-[$self]-88-|"],
+                                           views: [businessCheckBoxTwo])
+        businessCheckBoxThree.checkBox.addTarget(self,
+                                                 action: #selector(handleBusinessCheckBoxTwoOnTap(_:)),
+                                                 for: .valueChanged)
+        
+        businessCheckBoxOne.deselectCheckViews = [businessCheckBoxTwo, businessCheckBoxThree]
+        businessCheckBoxTwo.deselectCheckViews = [businessCheckBoxOne, businessCheckBoxThree]
+        businessCheckBoxThree.deselectCheckViews = [businessCheckBoxOne, businessCheckBoxTwo]
         
         
         let timeSupplementView = KPSpecificTimeSupplementView()
-        businessCheckBoxTwo.supplementInfoView = timeSupplementView
+        businessCheckBoxThree.supplementInfoView = timeSupplementView
         timeSupplementView.addConstraint(forWidth: 90)
         
         othersLabel = titleLabel("其他選項")
@@ -330,7 +347,7 @@ class KPSearchConditionViewController: KPViewController {
         searchButtonContainer.addSubview(seperator_three)
         seperator_three.addConstraints(fromStringArray: ["H:|[$self]|",
                                                          "V:|[$self(1)]"],
-                                       views: [businessCheckBoxTwo])
+                                       views: [businessCheckBoxThree])
         
         searchButton = UIButton()
         searchButton.setTitle("開始搜尋", for: .normal)
@@ -344,19 +361,11 @@ class KPSearchConditionViewController: KPViewController {
         searchButton.addConstraints(fromStringArray: ["V:[$view0]-16-[$self(40)]-16-|",
                                                       "H:|-16-[$self]-16-|"],
                                          views: [seperator_three])
-        searchButton.addTarget(self, action: #selector(showTimePicker), for: .touchUpInside)
+        searchButton.addTarget(self, action: #selector(handleSearchButtonOnTap(_:)), for: .touchUpInside)
     }
     
-    func showTimePicker() {
-        let controller = KPModalViewController()
-        controller.edgeInset = UIEdgeInsets(top: 32,
-                                            left: 0,
-                                            bottom: 0,
-                                            right: 0)
-        let timePickerController = KPBusinessHourViewController()
-        controller.contentController = timePickerController
-        controller.cornerRadius = [.topRight, .topLeft]
-        controller.presentModalView()
+    func handleSearchButtonOnTap(_ sender: UIButton) {
+        delegate?.searchConditionControllerDidSearch(self)
     }
 
     override func didReceiveMemoryWarning() {
@@ -412,6 +421,7 @@ class KPSearchConditionViewController: KPViewController {
             controller.contentSize = CGSize(width: 300, height: 350)
             controller.presentationStyle = .popout
             let timePickerController = KPTimePickerViewController()
+            timePickerController.delegate = self
             timePickerController.setButtonTitles(["完成"])
             controller.contentController = timePickerController
             controller.presentModalView()
@@ -450,5 +460,12 @@ class KPSpecificTimeSupplementView: UIView {
         baseline.addConstraints(fromStringArray: ["V:[$view0]-4-[$self(1)]|",
                                                   "H:|[$self]|"],
                                 views: [timeLabel])
+    }
+}
+
+
+extension KPSearchConditionViewController: KPTimePickerViewControllerDelegate {
+    func timePickerButtonDidTap(_ timePickerController: KPTimePickerViewController, selectedIndex index: Int) {
+        
     }
 }

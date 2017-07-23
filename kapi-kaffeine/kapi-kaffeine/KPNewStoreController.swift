@@ -351,7 +351,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
         sectionTwoContainer.addSubview(timeLimitLabel)
         timeLimitLabel.addConstraints(fromStringArray: ["H:|-16-[$self]",
                                                         "V:|-16-[$self]"])
-        timeRadioBoxOne = KPCheckView(.radio, "不設定")
+        timeRadioBoxOne = KPCheckView(.radio, "有限時")
         timeRadioBoxOne.checkBox.checkState = .checked
         sectionTwoContainer.addSubview(timeRadioBoxOne)
         timeRadioBoxOne.addConstraints(fromStringArray: ["H:|-16-[$self]",
@@ -381,7 +381,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
                                                      "V:|-16-[$self]"],
                                    metrics:[KPNewStoreControllerConstants.leftPadding])
         
-        socketRadioBoxOne = KPCheckView(.radio, "不設定")
+        socketRadioBoxOne = KPCheckView(.radio, "無插座")
         socketRadioBoxOne.checkBox.checkState = .checked
         sectionTwoContainer.addSubview(socketRadioBoxOne)
         socketRadioBoxOne.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",

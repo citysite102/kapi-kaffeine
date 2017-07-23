@@ -545,6 +545,7 @@ extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
                 let regionIndex = getRegionIndex(expandIndex: indexPath.row)
                 let regionContent = regionContents[regionIndex]
                 let cityName = regionContent?.cityKeys[indexPath.row-regionIndex-1]
+                KPServiceHandler.sharedHandler.currentCity = cityName
                 mainController.mainListViewController?.state = .loading
                 mainController.displayDataModel = KPFilter.filterData(source: KPServiceHandler.sharedHandler.currentCafeDatas,
                                                                       withCity: cityName!)
