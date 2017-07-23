@@ -31,7 +31,7 @@ class KPSearchTagView: UIView {
     var collectionLayout:UICollectionViewFlowLayout!
     
     
-    var preferenceHintButton: UIButton!
+    var preferenceHintButton: KPPreferenceHintButton!
     
     var preferenceHintView: UIView!
     var preferenceHintIcon: UIImageView!
@@ -52,7 +52,7 @@ class KPSearchTagView: UIView {
         self.backgroundColor = KPColorPalette.KPBackgroundColor.mainColor_light
         
         
-        self.preferenceHintButton = UIButton()
+        self.preferenceHintButton = KPPreferenceHintButton()
         self.preferenceHintButton.setImage(R.image.icon_filter(),
                                            for: .normal)
         self.preferenceHintButton.imageEdgeInsets = UIEdgeInsetsMake(4, 2, 4, 2)
@@ -143,6 +143,7 @@ extension KPSearchTagView: UICollectionViewDelegate, UICollectionViewDataSource,
         currentSelectTags.append(headerTagContents[indexPath.row])
         delegate?.searchTagDidSelect(currentSelectTags)
         cell?.alpha = 1.0
+        preferenceHintButton.hintCount = currentSelectTags.count
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
@@ -150,6 +151,7 @@ extension KPSearchTagView: UICollectionViewDelegate, UICollectionViewDataSource,
         currentSelectTags.remove(at: currentSelectTags.index(of: headerTagContents[indexPath.row])!)
         delegate?.searchTagDidSelect(currentSelectTags)
         cell?.alpha = 0.4
+        preferenceHintButton.hintCount = currentSelectTags.count
     }
     
     func collectionView(_ collectionView: UICollectionView,

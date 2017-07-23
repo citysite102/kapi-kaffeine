@@ -128,6 +128,7 @@
 		77C594AD1ECB171A00118947 /* KPAllCommentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C594AC1ECB171A00118947 /* KPAllCommentController.swift */; };
 		77C594AF1ECB6E3100118947 /* KPLoadingViewController_v1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C594AE1ECB6E3100118947 /* KPLoadingViewController_v1.swift */; };
 		77C594B11ECB754900118947 /* KPLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C594B01ECB754900118947 /* KPLoadingView.swift */; };
+		77C85EC61F24EF1B00F819E1 /* KPPreferenceHintButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C85EC51F24EF1B00F819E1 /* KPPreferenceHintButton.swift */; };
 		77CACF4D1F168F2F00093147 /* KPNotificationPopoverContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CACF4C1F168F2F00093147 /* KPNotificationPopoverContent.swift */; };
 		77D6BDF01F0E9A42005598B3 /* demoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77D6BDEF1F0E9A42005598B3 /* demoView.swift */; };
 		77D98A691F1BA5F200FE1832 /* KPInputExpandTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77D98A681F1BA5F200FE1832 /* KPInputExpandTransition.swift */; };
@@ -331,6 +332,7 @@
 		77C594AC1ECB171A00118947 /* KPAllCommentController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPAllCommentController.swift; sourceTree = "<group>"; };
 		77C594AE1ECB6E3100118947 /* KPLoadingViewController_v1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPLoadingViewController_v1.swift; sourceTree = "<group>"; };
 		77C594B01ECB754900118947 /* KPLoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPLoadingView.swift; sourceTree = "<group>"; };
+		77C85EC51F24EF1B00F819E1 /* KPPreferenceHintButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPPreferenceHintButton.swift; sourceTree = "<group>"; };
 		77CACF4C1F168F2F00093147 /* KPNotificationPopoverContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPNotificationPopoverContent.swift; sourceTree = "<group>"; };
 		77D6BDEF1F0E9A42005598B3 /* demoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = demoView.swift; sourceTree = "<group>"; };
 		77D98A681F1BA5F200FE1832 /* KPInputExpandTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPInputExpandTransition.swift; sourceTree = "<group>"; };
@@ -830,6 +832,7 @@
 				77A980E01F17334B002010EC /* KPLoadingButton.h */,
 				77A980E11F17334B002010EC /* KPLoadingButton.m */,
 				779F9E6B1F17E13800B8DC25 /* KPStatusView.swift */,
+				77C85EC51F24EF1B00F819E1 /* KPPreferenceHintButton.swift */,
 			);
 			name = "Shared View";
 			sourceTree = "<group>";
@@ -1452,6 +1455,7 @@
 				774209001EA67CE400C78A00 /* KPSliderMenuController.swift in Sources */,
 				C01AC62E1EAAEA0A000390F7 /* GMUStaticCluster.m in Sources */,
 				77B66FAE1EAD07F3008B6652 /* KPModalViewController.swift in Sources */,
+				77C85EC61F24EF1B00F819E1 /* KPPreferenceHintButton.swift in Sources */,
 				77A980E21F17334B002010EC /* KPLoadingButton.m in Sources */,
 				77C0E1021E9D48E000398852 /* KPShopInfoView.swift in Sources */,
 				77B66FB01EAD17DA008B6652 /* KPSettingViewController.swift in Sources */,
