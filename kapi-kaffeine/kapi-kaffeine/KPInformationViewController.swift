@@ -407,13 +407,14 @@ class KPInformationViewController: KPViewController {
         commentInformationView = KPInformationSharedInfoView()
         commentInformationView.infoView = commentInfoView
         commentInformationView.infoTitleLabel.text = "留言評價"
-        commentInformationView.infoSupplementLabel.text = "\(informationDataModel.commentCount ?? 0) 人已留言"
         scrollContainer.addSubview(commentInformationView)
         commentInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                                 "V:[$view0]-24-[$self]"],
                                                     views: [rateInformationView])
         
-        if informationDataModel.commentCount == nil {
+        if let commentCount = informationDataModel.commentCount {
+            commentInformationView.infoSupplementLabel.text = "\(commentCount) 人已留言"
+            commentInformationView.isEmpty = (commentCount == 0)
             commentInformationView.actions = [Action(title:"我要評價",
                                                      style:.normal,
                                                      color:KPColorPalette.KPMainColor.mainColor!,
@@ -432,22 +433,24 @@ class KPInformationViewController: KPViewController {
                                                                                                               completion: {})
                                                             }
                                                         }
-                                              })
+            })
             ]
         } else {
+            commentInformationView.infoSupplementLabel.text = "0 人已留言"
+            commentInformationView.isEmpty = true
             commentInformationView.actions = [Action(title:"看更多評價(\(informationDataModel.commentCount ?? 0))",
-                                                          style:.normal,
-                                                          color:KPColorPalette.KPMainColor.mainColor_sub!,
-                                                          icon:nil,
-                                                          handler:{ [unowned self] (infoView) -> () in
-                                                            let commentViewController = KPAllCommentController()
-                                                            commentViewController.comments = self.commentInfoView.comments
-                                                            commentViewController.animated = !self.allCommentHasShown
-                                                            self.allCommentHasShown = true
-                                                            self.navigationController?.pushViewController(viewController: commentViewController,
-                                                                                                          animated: true,
-                                                                                                          completion: {})
-                                                }),
+                style:.normal,
+                color:KPColorPalette.KPMainColor.mainColor_sub!,
+                icon:nil,
+                handler:{ [unowned self] (infoView) -> () in
+                    let commentViewController = KPAllCommentController()
+                    commentViewController.comments = self.commentInfoView.comments
+                    commentViewController.animated = !self.allCommentHasShown
+                    self.allCommentHasShown = true
+                    self.navigationController?.pushViewController(viewController: commentViewController,
+                                                                  animated: true,
+                                                                  completion: {})
+            }),
                                               Action(title:"我要評價",
                                                      style:.normal,
                                                      color:KPColorPalette.KPMainColor.mainColor!,
@@ -465,13 +468,19 @@ class KPInformationViewController: KPViewController {
             ]
         }
         
+        
         let photoInfoView = KPShopPhotoInfoView()
         photoInformationView = KPInformationSharedInfoView()
         photoInformationView.infoView = photoInfoView
         photoInformationView.infoTitleLabel.text = "店家照片"
-        photoInformationView.infoSupplementLabel.text = informationDataModel.photoCount != nil ?
-            "\(informationDataModel.photoCount ?? 0) \n張照片" :
-            "0張照片"
+        
+        if let photoCount = informationDataModel.photoCount {
+            photoInformationView.infoSupplementLabel.text = "\(photoCount)\n張照片"
+            photoInformationView.isEmpty = (photoCount == 0)
+        } else {
+            photoInformationView.infoSupplementLabel.text = "0\n張照片"
+            photoInformationView.isEmpty = true
+        }
         scrollContainer.addSubview(photoInformationView)
         photoInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                               "V:[$view0]-24-[$self]"],
@@ -528,8 +537,8 @@ class KPInformationViewController: KPViewController {
         super.viewDidLayoutSubviews()
         
         // Fix table view height according to fix cell
-//        commentInfoView = commentInformationView.infoView as! KPShopCommentInfoView
-//        commentInfoView.tableViewHeightConstraint.constant = commentInfoView.tableView.contentSize.height
+        commentInfoView = commentInformationView.infoView as! KPShopCommentInfoView
+        commentInfoView.tableViewHeightConstraint.constant = commentInfoView.tableView.contentSize.height
     }
     
     override func didReceiveMemoryWarning() {
@@ -552,28 +561,10 @@ class KPInformationViewController: KPViewController {
         }
         
         // 取得 Comment 資料
-        KPServiceHandler.sharedHandler.getComments { (successed, comments) in
-            if successed && comments != nil {
-                self.commentInfoView.comments = comments!
-                self.commentInformationView.infoSupplementLabel.text = "\(comments?.count ?? 0) 人已留言"
-                self.commentInformationView.setNeedsLayout()
-                self.commentInformationView.layoutIfNeeded()
-                
-                let commentInfoView = self.commentInformationView.infoView as! KPShopCommentInfoView
-                commentInfoView.tableViewHeightConstraint.constant = commentInfoView.tableView.contentSize.height
-            }
-        }
+        refreshComments()
         
         // 取得 Rating 資料
-        KPServiceHandler.sharedHandler.getRatings { (successed, rate) in
-            if successed && rate != nil {
-                (self.rateInformationView.infoView as! KPShopRateInfoView).rateData = rate
-                self.informationHeaderButtonBar.rateButton.numberValue = (rate?.rates?.count)!
-                self.informationHeaderButtonBar.rateButton.selected =
-                    (KPUserManager.sharedManager.currentUser?.hasRated(self.informationDataModel.identifier))!
-                self.rateInformationView.infoSupplementLabel.text = "\(rate?.rates?.count ?? 0) 人已評分"
-            }
-        }
+        refreshRatings()
         
         // 取得 Photo 資料
         KPServiceHandler.sharedHandler.getPhotos { (successed, photos) in
@@ -622,15 +613,18 @@ class KPInformationViewController: KPViewController {
             if successed && comments != nil {
                 self.commentInfoView.comments = comments!
                 self.commentInformationView.infoSupplementLabel.text = "\(comments?.count ?? 0) 人已留言"
-                self.commentInformationView.setNeedsLayout()
-                self.commentInformationView.layoutIfNeeded()
                 let commentInfoView = self.commentInformationView.infoView as! KPShopCommentInfoView
                 commentInfoView.tableViewHeightConstraint.constant = commentInfoView.tableView.contentSize.height
+                self.commentInformationView.setNeedsLayout()
+                self.commentInformationView.layoutIfNeeded()
                 
                 if let commentCountValue = comments?.count {
+                    self.commentInformationView.isEmpty = (commentCountValue == 0)
                     self.informationHeaderButtonBar.commentButton.numberValue = commentCountValue
                     self.informationHeaderButtonBar.commentButton.selected =
                         (KPUserManager.sharedManager.currentUser?.hasReviewed(self.informationDataModel.identifier)) ?? false
+                } else {
+                    self.commentInformationView.isEmpty = true
                 }
             }
         }

@@ -26,8 +26,17 @@ class KPInformationSharedInfoView: UIView {
     var infoTitleLabel: UILabel!
     var infoSupplementLabel: UILabel!
     var infoContainer: UIView!
+    var emptyLabel: UILabel!
+    
     var buttonContainer: UIView!
     var actionButtons: [UIButton] = [UIButton]()
+    
+    var isEmpty: Bool! {
+        didSet {
+            infoView.isHidden = isEmpty
+            emptyLabel.isHidden = !isEmpty
+        }
+    }
     
     var infoView: UIView! {
         didSet {
@@ -116,9 +125,18 @@ class KPInformationSharedInfoView: UIView {
         infoContainer = UIView()
         infoContainer.backgroundColor = UIColor.white
         addSubview(self.infoContainer)
-        infoContainer.addConstraints(fromStringArray: ["V:[$view0]-8-[$self]",
+        infoContainer.addConstraints(fromStringArray: ["V:[$view0]-8-[$self(>=64)]",
                                                        "H:|[$self]|"],
                                      views: [self.infoTitleLabel])
+        
+        emptyLabel = UILabel()
+        emptyLabel.font = UIFont.systemFont(ofSize: 14.0)
+        emptyLabel.textColor = KPColorPalette.KPTextColor.grayColor_level3
+        emptyLabel.text = "目前尚無內容喔！"
+        emptyLabel.isHidden = true
+        infoContainer.addSubview(emptyLabel)
+        emptyLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
+        emptyLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
         
         buttonContainer = UIView()
         buttonContainer.backgroundColor = UIColor.white
