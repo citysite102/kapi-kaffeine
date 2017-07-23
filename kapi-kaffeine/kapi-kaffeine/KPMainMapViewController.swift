@@ -84,8 +84,6 @@ GMUClusterRendererDelegate {
                         return bounds.contains(dataModel.position)
                     }
                     self.collectionView.alpha = 1
-
-                    
                     
                     if oldValue == true {
                         DispatchQueue.main.async {
@@ -324,9 +322,9 @@ GMUClusterRendererDelegate {
             if success {
                 self.clusterRenderer.animatesClusters = true
                 DispatchQueue.main.asyncAfter(deadline: .now()+0.5, execute: {
-                    self.reloadNeeded = false
-                    let test = self.isCollectionViewShow
-                    self.isCollectionViewShow = test
+//                    self.reloadNeeded = false
+//                    let test = self.isCollectionViewShow
+//                    self.isCollectionViewShow = test
                     if let renderer = self.clusterRenderer,
                         let currentLocation = KPLocationManager.sharedInstance().currentLocation {
                         var nearestMarker: GMSMarker?
@@ -349,14 +347,15 @@ GMUClusterRendererDelegate {
                             CATransaction.setValue(NSNumber(floatLiteral: 0.5), forKey: kCATransactionAnimationDuration)
                             self.mapView.animate(to: GMSCameraPosition.camera(withTarget: nearestMarker!.position , zoom: self.mapView.camera.zoom))
                             CATransaction.commit()
-                            CATransaction.setCompletionBlock({
-                                self.reloadNeeded = false
-                                self.mapView.selectedMarker = nearestMarker!
-                            })
+//                            CATransaction.setCompletionBlock({
+//                                self.reloadNeeded = false
+//                                self.mapView.selectedMarker = nearestMarker!
+//                            })
                             
                             DispatchQueue.main.asyncAfter(deadline: .now()+0.5, execute: {
                                 if nearestMarker?.userData is KPDataModel {
-                                    self.isCollectionViewShow = true
+                                    self.mapView.selectedMarker = nearestMarker!
+//                                    self.isCollectionViewShow = true
                                 } else {
                                     self.mapView.animate(toZoom: self.mapView.camera.zoom+1)
                                 }
