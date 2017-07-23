@@ -78,12 +78,12 @@ class KPSideViewController: KPViewController {
     
     lazy var userPhoto: UIImageView = {
         let imageView = UIImageView()
-        imageView.backgroundColor = KPColorPalette.KPBackgroundColor.mainColor
+        imageView.backgroundColor = KPColorPalette.KPBackgroundColor.mainColor_light
         imageView.layer.borderWidth = 2.0
         imageView.layer.borderColor = UIColor.white.cgColor
         imageView.layer.cornerRadius = 5.0
         imageView.layer.masksToBounds = true
-        imageView.image = R.image.demo_profile()
+        imageView.image = R.image.icon_user_avatar()
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
@@ -162,7 +162,7 @@ class KPSideViewController: KPViewController {
         loginButton.textAlignment = .center
         loginButton.font = UIFont.systemFont(ofSize: 14.0)
         loginButton.textColor = KPColorPalette.KPTextColor.whiteColor
-        loginButton.layer.cornerRadius = 13
+        loginButton.layer.cornerRadius = 4
         loginButton.clipsToBounds = true
         userContainer.addSubview(loginButton)
         loginButton.addConstraints(fromStringArray: ["H:|-16-[$self(64)]",
@@ -286,7 +286,7 @@ class KPSideViewController: KPViewController {
     
     func setCurrentUser(_ user: KPUser?) {
         if user == nil {
-            userPhoto.image = R.image.demo_profile()
+            userPhoto.image = R.image.icon_user_avatar()
             userNameLabel.text = "訪客一號"
             userExpView.isHidden = true
             loginButton.isHidden = false

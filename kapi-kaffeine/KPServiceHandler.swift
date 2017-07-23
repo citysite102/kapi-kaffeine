@@ -190,6 +190,12 @@ class KPServiceHandler {
                                comment!).then { result -> Void in
                                 if let commentResult = result["result"].bool {
                                     loadingView.state = commentResult ? .successed : .failed
+                                    
+                                    if commentResult {
+                                        let notification = Notification.Name(KPNotification.information.commentInformation)
+                                        NotificationCenter.default.post(name: notification, object: nil)
+                                    }
+                                    
                                     completion?(commentResult)
                                     guard let _ = KPUserManager.sharedManager.currentUser?.reviews?.first(where: {$0.identifier == self.currentDisplayModel?.identifier}) else {
                                         KPUserManager.sharedManager.currentUser?.reviews?.append(self.currentDisplayModel!)
@@ -256,6 +262,12 @@ class KPServiceHandler {
                               music).then { result -> Void in
                                 if let commentResult = result["result"].bool {
                                     loadingView.state = commentResult ? .successed : .failed
+                                    
+                                    if commentResult {
+                                        let notification = Notification.Name(KPNotification.information.rateInformation)
+                                        NotificationCenter.default.post(name: notification, object: nil)
+                                    }
+                                    
                                     completion?(commentResult)
                                     guard let _ = KPUserManager.sharedManager.currentUser?.rates?.first(where: {$0.identifier == self.currentDisplayModel?.identifier}) else {
                                         KPUserManager.sharedManager.currentUser?.rates?.append(self.currentDisplayModel!)
@@ -314,6 +326,14 @@ class KPServiceHandler {
                                       tasty,
                                       cheap,
                                       music)).then { (response1, response2) -> Void in
+                                        
+                                        var notification = Notification.Name(KPNotification.information.rateInformation)
+                                        NotificationCenter.default.post(name: notification, object: nil)
+                                        
+                                        notification = Notification.Name(KPNotification.information.commentInformation)
+                                        NotificationCenter.default.post(name: notification, object: nil)
+                                        
+                                        
                                         loadingView.state = .successed
                                         completion?(true)
         }.catch { (error) in

@@ -23,6 +23,7 @@ class KPNewRatingRequest: NetworkRequest {
     private var cheap: NSNumber?
     private var music: NSNumber?
     
+    var method: Alamofire.HTTPMethod { return .post }
     var endpoint: String { return "/rates" }
     
     var parameters: [String : Any]? {

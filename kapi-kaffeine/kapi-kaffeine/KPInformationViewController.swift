@@ -368,33 +368,33 @@ class KPInformationViewController: KPViewController {
         rateInformationView.infoTitleLabel.text = "店家評分"
         rateInformationView.infoSupplementLabel.text = "\(informationDataModel.rateCount ?? 0) 人已評分"
         rateInformationView.actions = [Action(title:"我要評分",
-                                                   style:.normal,
-                                                   color:KPColorPalette.KPMainColor.mainColor!,
-                                                   icon:(R.image.icon_star()?.withRenderingMode(.alwaysTemplate))!,
-                                                   handler:{ [unowned self] (infoView) -> () in
+                                              style:.normal,
+                                              color:KPColorPalette.KPMainColor.mainColor!,
+                                              icon:(R.image.icon_star()?.withRenderingMode(.alwaysTemplate))!,
+                                              handler:{ [unowned self] (infoView) -> () in
                                                     
-                                                    if KPUserManager.sharedManager.currentUser == nil {
-                                                        KPPopoverView.popoverLoginView()
-                                                    } else {
-                                                        let controller = KPModalViewController()
-                                                        controller.edgeInset = UIEdgeInsets(top: UIDevice().isCompact ? 0 : 40,
+                                                if KPUserManager.sharedManager.currentUser == nil {
+                                                    KPPopoverView.popoverLoginView()
+                                                } else {
+                                                    let controller = KPModalViewController()
+                                                    controller.edgeInset = UIEdgeInsets(top: UIDevice().isCompact ? 0 : 40,
                                                                                             left: 0,
                                                                                             bottom: 0,
                                                                                             right: 0)
-                                                        controller.cornerRadius = UIDevice().isCompact ?
-                                                            [] :
-                                                            [.topRight, .topLeft]
-                                                        let ratingViewController = KPRatingViewController()
+                                                    controller.cornerRadius = UIDevice().isCompact ?
+                                                        [] :
+                                                        [.topRight, .topLeft]
+                                                    let ratingViewController = KPRatingViewController()
                                                         
-                                                        if ((KPUserManager.sharedManager.currentUser?.hasRated) != nil) {
-                                                            if let rate = self.informationDataModel.rates?.rates?.first(where:
-                                                                {$0.memberID == KPUserManager.sharedManager.currentUser?.identifier}) {
-                                                                ratingViewController.defaultRateModel = rate
-                                                            }
+                                                    if ((KPUserManager.sharedManager.currentUser?.hasRated) != nil) {
+                                                        if let rate = self.informationDataModel.rates?.rates?.first(where:
+                                                            {$0.memberID == KPUserManager.sharedManager.currentUser?.identifier}) {
+                                                            ratingViewController.defaultRateModel = rate
                                                         }
-                                                        controller.contentController = ratingViewController
-                                                        controller.presentModalView()
                                                     }
+                                                    controller.contentController = ratingViewController
+                                                    controller.presentModalView()
+                                                }
         })]
         scrollContainer.addSubview(rateInformationView)
         rateInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
@@ -477,15 +477,15 @@ class KPInformationViewController: KPViewController {
                                                               "V:[$view0]-24-[$self]"],
                                                     views: [commentInformationView])
         photoInformationView.actions = [Action(title: "上傳照片",
-                                                   style:.normal,
-                                                   color:KPColorPalette.KPMainColor.mainColor!,
-                                                   icon:(R.image.icon_map()?.withRenderingMode(.alwaysTemplate))!,
-                                                   handler:{(infoView) -> () in
-                                                    if KPUserManager.sharedManager.currentUser == nil {
-                                                        KPPopoverView.popoverLoginView()
-                                                    } else {
-                                                        print("Photo button 1 Tapped")
-                                                    }
+                                               style:.normal,
+                                               color:KPColorPalette.KPMainColor.mainColor!,
+                                               icon:(R.image.icon_camera()?.withRenderingMode( .alwaysTemplate))!,
+                                               handler:{(infoView) -> () in
+                                                if KPUserManager.sharedManager.currentUser == nil       {
+                                                    KPPopoverView.popoverLoginView()
+                                                } else {
+                                                    print("Photo button 1 Tapped")
+                                                }
         })]
         
         let shopRecommendView = KPShopRecommendView()
@@ -499,6 +499,18 @@ class KPInformationViewController: KPViewController {
                                                                   "V:[$view0]-24-[$self]-32-|"],
                                                      views: [photoInformationView])
         
+        NotificationCenter.default.addObserver(forName: Notification.Name(KPNotification.information.rateInformation),
+                                               object: nil,
+                                               queue: nil) { (_) in
+                                                self.refreshRatings()
+        }
+        
+        NotificationCenter.default.addObserver(forName: Notification.Name(KPNotification.information.commentInformation),
+                                               object: nil,
+                                               queue: nil) { (_) in
+                                                self.refreshComments()
+        }
+        
         syncRemoteData()
     }
     
@@ -510,12 +522,6 @@ class KPInformationViewController: KPViewController {
         locationInformationView.infoView = shopLocationInfoView
         navBarFixBound = navigationController!.navigationBar.bounds
         informationHeaderView.shopPhoto.isHidden = false
-
-        
-        if !dataLoading {
-            refreshComments()
-            refreshRatings()
-        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -547,13 +553,13 @@ class KPInformationViewController: KPViewController {
         KPServiceHandler.sharedHandler.getComments { (successed, comments) in
             if successed && comments != nil {
                 self.commentInfoView.comments = comments!
+                self.commentInformationView.infoSupplementLabel.text = "\(comments?.count ?? 0) 人已留言"
+                self.commentInformationView.setNeedsLayout()
+                self.commentInformationView.layoutIfNeeded()
+                
+                let commentInfoView = self.commentInformationView.infoView as! KPShopCommentInfoView
+                commentInfoView.tableViewHeightConstraint.constant = commentInfoView.tableView.contentSize.height
             }
-            
-            self.commentInformationView.setNeedsLayout()
-            self.commentInformationView.layoutIfNeeded()
-            
-            let commentInfoView = self.commentInformationView.infoView as! KPShopCommentInfoView
-            commentInfoView.tableViewHeightConstraint.constant = commentInfoView.tableView.contentSize.height
         }
         
         // 取得 Rating 資料
@@ -563,6 +569,7 @@ class KPInformationViewController: KPViewController {
                 self.informationHeaderButtonBar.rateButton.numberValue = (rate?.rates?.count)!
                 self.informationHeaderButtonBar.rateButton.selected =
                     (KPUserManager.sharedManager.currentUser?.hasRated(self.informationDataModel.identifier))!
+                self.rateInformationView.infoSupplementLabel.text = "\(rate?.rates?.count ?? 0) 人已評分"
             }
         }
         
@@ -601,6 +608,7 @@ class KPInformationViewController: KPViewController {
                 self.informationHeaderButtonBar.rateButton.numberValue = (rate?.rates?.count)!
                 self.informationHeaderButtonBar.rateButton.selected =
                     (KPUserManager.sharedManager.currentUser?.hasRated(self.informationDataModel.identifier)) ?? false
+                self.rateInformationView.infoSupplementLabel.text = "\(rate?.rates?.count ?? 0) 人已評分"
             }
         }
     }
@@ -611,6 +619,7 @@ class KPInformationViewController: KPViewController {
         KPServiceHandler.sharedHandler.getComments { (successed, comments) in
             if successed && comments != nil {
                 self.commentInfoView.comments = comments!
+                self.commentInformationView.infoSupplementLabel.text = "\(comments?.count ?? 0) 人已留言"
                 self.commentInformationView.setNeedsLayout()
                 self.commentInformationView.layoutIfNeeded()
                 let commentInfoView = self.commentInformationView.infoView as! KPShopCommentInfoView

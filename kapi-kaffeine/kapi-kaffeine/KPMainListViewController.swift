@@ -207,11 +207,11 @@ class KPMainListViewController:
 //        view.bringSubview(toFront: searchFooterView)
         
         
-//        view.addSubview(addButton)
-//        addButton.button.addTarget(self,
-//                                   action: #selector(handleAddButtonTapped(_:)), for: .touchUpInside)
-//        addButton.addConstraints(fromStringArray: ["H:[$self(56)]-18-|",
-//                                                   "V:[$self(56)]-16-|"])
+        view.addSubview(addButton)
+        addButton.button.addTarget(self,
+                                   action: #selector(handleAddButtonTapped(_:)), for: .touchUpInside)
+        addButton.addConstraints(fromStringArray: ["H:[$self(56)]-18-|",
+                                                   "V:[$self(56)]-16-|"])
         
         
         satisficationView = KPSatisficationView()

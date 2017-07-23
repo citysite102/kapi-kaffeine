@@ -74,8 +74,6 @@ class KPShopInfoView: UIView {
     var priceIcon: UIImageView!
     var priceLabel: UILabel!
     
-    
-    
     convenience init(_ informationDataModel: KPDataModel) {
         self.init(frame: .zero)
         
@@ -106,7 +104,7 @@ class KPShopInfoView: UIView {
             openTimeIcon = UIImageView(image: R.image.icon_tradehour())
             openTimeIcon.tintColor = KPColorPalette.KPMainColor.mainColor
             addSubview(openTimeIcon)
-            openTimeIcon.addConstraints(fromStringArray: ["V:[$view0]-8-[$self(20)]",
+            openTimeIcon.addConstraints(fromStringArray: ["V:[$view0]-12-[$self(20)]",
                                                           "H:|-16-[$self(20)]"],
                                         views: [titleLabel])
         }
@@ -125,7 +123,7 @@ class KPShopInfoView: UIView {
         openLabel.font = UIFont.systemFont(ofSize: 14)
         openLabel.textColor = KPColorPalette.KPTextColor.grayColor_level1
         addSubview(openLabel)
-        openLabel.addConstraints(fromStringArray: ["H:[$view0]-6-[$self]"],
+        openLabel.addConstraints(fromStringArray: ["H:[$view0]-5-[$self]"],
                                  views: [openHint, titleLabel])
         openLabel.addConstraintForCenterAligning(to: openTimeIcon, in: .vertical)
         
@@ -146,7 +144,7 @@ class KPShopInfoView: UIView {
         phoneIcon = UIImageView(image: R.image.icon_phone())
         phoneIcon.tintColor = KPColorPalette.KPMainColor.mainColor
         addSubview(phoneIcon)
-        phoneIcon.addConstraints(fromStringArray: ["V:[$view0]-8-[$self(20)]",
+        phoneIcon.addConstraints(fromStringArray: ["V:[$self(20)]",
                                                    "H:|-16-[$self(20)]"],
                                  views: [openTimeIcon])
         
@@ -166,7 +164,7 @@ class KPShopInfoView: UIView {
         locationIcon = UIImageView(image: R.image.icon_pin())
         locationIcon.tintColor = KPColorPalette.KPMainColor.mainColor
         addSubview(locationIcon)
-        locationIcon.addConstraints(fromStringArray: ["V:[$view0]-8-[$self(20)]",
+        locationIcon.addConstraints(fromStringArray: ["V:[$self(20)]",
                                                       "H:|-16-[$self(20)]"],
                                     views: [phoneIcon])
         
@@ -187,7 +185,7 @@ class KPShopInfoView: UIView {
         priceIcon = UIImageView(image: R.image.icon_money_l())
         priceIcon.tintColor = KPColorPalette.KPMainColor.mainColor
         addSubview(priceIcon)
-        priceIcon.addConstraints(fromStringArray: ["V:[$view0]-8-[$self(20)]",
+        priceIcon.addConstraints(fromStringArray: ["V:[$self(20)]",
                                                    "H:|-16-[$self(20)]"],
                                     views: [locationIcon])
         
@@ -204,10 +202,13 @@ class KPShopInfoView: UIView {
                                                  in: .vertical)
         
         
-        titleLabel.text = informationDataModel.name
-        locationLabel.text = informationDataModel.address ?? "暫無資料"
-        phoneLabel.text = informationDataModel.phone ?? "暫無資料"
-        priceLabel.text = "1 - 100/人"
+        titleLabel.setText(text: informationDataModel.name,
+                           lineSpacing: 3.0)
+        locationLabel.setText(text: informationDataModel.address ?? "暫無資料",
+                              lineSpacing: 3.0)
+        phoneLabel.setText(text: informationDataModel.phone ?? "暫無資料",
+                           lineSpacing: 3.0)
+        priceLabel.text = "1-100/人"
         
         
     }

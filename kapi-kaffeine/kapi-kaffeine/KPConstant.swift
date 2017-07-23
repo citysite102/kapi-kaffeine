@@ -10,6 +10,13 @@ import Foundation
 import UIKit
 import BenzeneFoundation
 
+struct KPNotification {
+    struct information {
+        static let commentInformation = "commentInformation"
+        static let rateInformation = "rateInformation"
+    }
+}
+
 struct KPColorPalette {
 
     struct KPMainColor {

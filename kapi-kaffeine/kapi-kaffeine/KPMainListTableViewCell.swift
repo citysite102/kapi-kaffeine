@@ -208,7 +208,7 @@ class KPMainListCellScoreLabel: UILabel {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = KPColorPalette.KPBackgroundColor.cellScoreBgColor
+        backgroundColor = KPColorPalette.KPBackgroundColor.mainColor
         layer.cornerRadius = 2.0
         layer.masksToBounds = true
         
@@ -216,7 +216,7 @@ class KPMainListCellScoreLabel: UILabel {
         scoreLabel.textColor = KPColorPalette.KPTextColor.whiteColor
         scoreLabel.font = UIFont.systemFont(ofSize: 14.0)
         scoreLabel.isOpaque = true
-        scoreLabel.backgroundColor = KPColorPalette.KPBackgroundColor.cellScoreBgColor
+        scoreLabel.backgroundColor = KPColorPalette.KPBackgroundColor.mainColor
         addSubview(scoreLabel)
         scoreLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
         scoreLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)

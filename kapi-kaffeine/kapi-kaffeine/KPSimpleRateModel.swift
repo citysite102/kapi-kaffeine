@@ -9,7 +9,7 @@
 import Foundation
 import ObjectMapper
 
-class KPSimpleRateModel: NSObject {
+class KPSimpleRateModel: NSObject, Mappable {
 
     var cheap: NSNumber? = 0
     var food: NSNumber? = 0
