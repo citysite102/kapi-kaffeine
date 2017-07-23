@@ -75,6 +75,7 @@ class KPSearchConditionViewController: KPViewController {
     var businessCheckBoxOne: KPCheckView!
     var businessCheckBoxTwo: KPCheckView!
     var businessCheckBoxThree: KPCheckView!
+    var timeSupplementView: KPSpecificTimeSupplementView!
     
     var othersLabel: UILabel!
     var othersCheckBoxOne: KPCheckView!
@@ -321,7 +322,7 @@ class KPSearchConditionViewController: KPViewController {
         businessCheckBoxThree.deselectCheckViews = [businessCheckBoxOne, businessCheckBoxTwo]
         
         
-        let timeSupplementView = KPSpecificTimeSupplementView()
+        timeSupplementView = KPSpecificTimeSupplementView()
         businessCheckBoxThree.supplementInfoView = timeSupplementView
         timeSupplementView.addConstraint(forWidth: 90)
         
@@ -417,10 +418,13 @@ class KPSearchConditionViewController: KPViewController {
     func handleBusinessCheckBoxTwoOnTap(_ sender: KPCheckBox) {
         if sender.checkState == .checked {
             let controller = KPModalViewController()
+            controller.dismissWhenTouchingOnBackground = false
             controller.presentationStyle = .popout
             controller.contentSize = CGSize(width: 300, height: 350)
             controller.presentationStyle = .popout
             let timePickerController = KPTimePickerViewController()
+            timePickerController.startTimeValue = (timeSupplementView.startTime != nil) ? timeSupplementView.startTime! : "10:30"
+            timePickerController.endTimeValue = (timeSupplementView.endTime != nil) ? timeSupplementView.endTime! : "10:30"
             timePickerController.delegate = self
             timePickerController.setButtonTitles(["完成"])
             controller.contentController = timePickerController
@@ -431,6 +435,9 @@ class KPSearchConditionViewController: KPViewController {
 
 
 class KPSpecificTimeSupplementView: UIView {
+    
+    var startTime: String?
+    var endTime: String?
     
     lazy var timeLabel: UILabel = {
         let label = UILabel()
@@ -466,6 +473,8 @@ class KPSpecificTimeSupplementView: UIView {
 
 extension KPSearchConditionViewController: KPTimePickerViewControllerDelegate {
     func timePickerButtonDidTap(_ timePickerController: KPTimePickerViewController, selectedIndex index: Int) {
-        
+        timeSupplementView.startTime = timePickerController.startTimeValue
+        timeSupplementView.endTime = timePickerController.endTimeValue
+        timeSupplementView.timeLabel.text = "\(timePickerController.startTimeValue!)~\(timePickerController.endTimeValue!)"
     }
 }
