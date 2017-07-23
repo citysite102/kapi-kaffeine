@@ -367,6 +367,7 @@ class KPSearchConditionViewController: KPViewController {
     
     func handleSearchButtonOnTap(_ sender: UIButton) {
         delegate?.searchConditionControllerDidSearch(self)
+        appModalController()?.dismissControllerWithDefaultDuration()
     }
 
     override func didReceiveMemoryWarning() {

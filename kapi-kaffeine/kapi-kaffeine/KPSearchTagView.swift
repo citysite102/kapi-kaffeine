@@ -9,16 +9,17 @@
 import UIKit
 
 enum searchTagType: String {
-//    case wifi       = "Wifi穩"
+    case wifi       = "Wifi穩"
     case socket     = "插座多"
     case limitTime  = "不限時"
     case opening    = "營業中"
     case highRate   = "評分高"
-    case standDesk  = "有站桌"
+//    case standDesk  = "有站桌"
 }
 
 protocol KPSearchTagViewDelegate: NSObjectProtocol {
-    func searchTagDidSelect(_ searchTags: [searchTagType])
+    func searchTagDidSelect(_ searchTag: searchTagType)
+    func searchTagDidDeselect(_ searchTag: searchTagType)
 }
 
 class KPSearchTagView: UIView {
@@ -37,7 +38,7 @@ class KPSearchTagView: UIView {
     var preferenceHintIcon: UIImageView!
     var preferenceHintLabel: UILabel!
     var currentSelectTags: [searchTagType]! = [searchTagType]()
-    var headerTagContents = [searchTagType.standDesk,
+    var headerTagContents = [searchTagType.wifi,
                              searchTagType.socket,
                              searchTagType.limitTime,
                              searchTagType.opening,
@@ -142,7 +143,7 @@ extension KPSearchTagView: UICollectionViewDelegate, UICollectionViewDataSource,
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath)
         currentSelectTags.append(headerTagContents[indexPath.row])
-        delegate?.searchTagDidSelect(currentSelectTags)
+        delegate?.searchTagDidSelect(headerTagContents[indexPath.row])
         cell?.alpha = 1.0
         preferenceHintButton.hintCount = currentSelectTags.count
     }
@@ -150,7 +151,7 @@ extension KPSearchTagView: UICollectionViewDelegate, UICollectionViewDataSource,
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath)
         currentSelectTags.remove(at: currentSelectTags.index(of: headerTagContents[indexPath.row])!)
-        delegate?.searchTagDidSelect(currentSelectTags)
+        delegate?.searchTagDidDeselect(headerTagContents[indexPath.row])
         cell?.alpha = 0.4
         preferenceHintButton.hintCount = currentSelectTags.count
     }

@@ -488,45 +488,85 @@ extension KPMainViewController: UIViewControllerTransitioningDelegate {
 
 extension KPMainViewController: KPSearchTagViewDelegate, KPSearchConditionViewControllerDelegate {
     
-    func searchTagDidSelect(_ searchTags: [searchTagType]) {
+    func searchTagDidSelect(_ searchTag: searchTagType) {
         
         mainListViewController?.state = .loading
         mainListViewController?.tableView.reloadData()
         
         DispatchQueue.global().async {
-            var currentCafeDatas = KPServiceHandler.sharedHandler.currentCafeDatas
-            for searchTag in searchTags {
-                switch searchTag {
-                case .standDesk:
-                    currentCafeDatas = currentCafeDatas?.filter {
-                        return $0.standingDesk?.intValue ?? 0 >= 3
-                    }
-                case .socket:
-                    currentCafeDatas = currentCafeDatas?.filter {
-                        return $0.socket?.intValue ?? 0 >= 3
-                    }
-                case .limitTime:
-                    currentCafeDatas = currentCafeDatas?.filter {
-                        return $0.limitedTime?.intValue ?? 0 >= 3
-                    }
-                case .opening:
-                    currentCafeDatas = currentCafeDatas?.filter {
-                        return ($0.businessHour?.shopStatus.isOpening ?? false) == true
-                    }
-                case .highRate:
-                    currentCafeDatas = currentCafeDatas?.filter {
-                        return $0.averageRate?.doubleValue ?? 0.0 > 4.0
-                    }
-                }
+            switch searchTag {
+            case .wifi:
+                KPFilter.sharedFilter.wifiRate = 5
+            case .socket:
+                KPFilter.sharedFilter.socket = 1
+            case .limitTime:
+
+                KPFilter.sharedFilter.limited_time = 1
+//            case .opening:
+
+            case .highRate:
+                KPFilter.sharedFilter.averageRate = 4.5
+            default:
+                break
             }
             
             DispatchQueue.main.async {
-                self.displayDataModel = currentCafeDatas
+                self.displayDataModel = KPFilter.sharedFilter.currentFilterCafeDatas()
             }
         }
     }
     
+    func searchTagDidDeselect(_ searchTag: searchTagType) {
+        
+        mainListViewController?.state = .loading
+        mainListViewController?.tableView.reloadData()
+        
+        DispatchQueue.global().async {
+            switch searchTag {
+            case .wifi:
+                KPFilter.sharedFilter.wifiRate = 1
+            case .socket:
+                KPFilter.sharedFilter.socket = 4
+            case .limitTime:
+                
+                KPFilter.sharedFilter.limited_time = 4
+//            case .opening:
+            case .highRate:
+                KPFilter.sharedFilter.averageRate = 1
+            default:
+                break
+            }
+            
+            let filteredData = KPFilter.sharedFilter.currentFilterCafeDatas()
+            
+            DispatchQueue.main.async {
+                self.displayDataModel = filteredData
+            }
+        }
+        
+    }
+    
     func searchConditionControllerDidSearch(_ searchConditionController: KPSearchConditionViewController) {
+        
+        mainListViewController?.state = .loading
+        mainListViewController?.tableView.reloadData()
+        
+        DispatchQueue.global().async {
+        
+            if  searchConditionController.businessCheckBoxThree.checkBox.checkState == .checked,
+                let startTime = searchConditionController.timeSupplementView.startTime,
+                let endTime = searchConditionController.timeSupplementView.endTime {
+                
+                KPFilter.sharedFilter.searchTime = "\(startTime)~\(endTime)"
+                
+                let filteredData = KPFilter.sharedFilter.currentFilterCafeDatas()
+                
+                DispatchQueue.main.async {
+                    self.displayDataModel = filteredData
+                }
+            }
+        }
+        
 //        var dataModels: [KPDataModel]!
 //        if let city = KPServiceHandler.sharedHandler.currentCity {
 //            dataModels = KPFilter.filterData(source: KPServiceHandler.sharedHandler.currentCafeDatas, withCity: city)
