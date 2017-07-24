@@ -46,6 +46,10 @@
 		77427BDF1EF6EF2F005D7AE4 /* KPGetCommentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77427BDE1EF6EF2F005D7AE4 /* KPGetCommentRequest.swift */; };
 		77427BE21EF7F58B005D7AE4 /* KPNewRatingRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77427BE11EF7F58B005D7AE4 /* KPNewRatingRequest.swift */; };
 		77427BE71EF96EF8005D7AE4 /* KPFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77427BE61EF96EF8005D7AE4 /* KPFilter.swift */; };
+		774334281F264DE0000CCDFA /* KPAllRatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774334271F264DE0000CCDFA /* KPAllRatingViewController.swift */; };
+		7743342A1F264ED2000CCDFA /* KPShopRatingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774334291F264ED2000CCDFA /* KPShopRatingCell.swift */; };
+		7743342C1F265871000CCDFA /* KPCommentVoteRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7743342B1F265871000CCDFA /* KPCommentVoteRequest.swift */; };
+		7743342E1F265E3A000CCDFA /* KPLikeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7743342D1F265E3A000CCDFA /* KPLikeModel.swift */; };
 		7745C0821EF050D100244541 /* KPLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7745C0811EF050D100244541 /* KPLoginViewController.swift */; };
 		774AD6BF1F15FDA3002ACB47 /* KPPriceSelectController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774AD6BE1F15FDA3002ACB47 /* KPPriceSelectController.swift */; };
 		77594B471EC89DAF0013BB56 /* KPPhotoAddCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77594B461EC89DAF0013BB56 /* KPPhotoAddCell.swift */; };
@@ -247,6 +251,10 @@
 		77427BDE1EF6EF2F005D7AE4 /* KPGetCommentRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPGetCommentRequest.swift; sourceTree = "<group>"; };
 		77427BE11EF7F58B005D7AE4 /* KPNewRatingRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPNewRatingRequest.swift; sourceTree = "<group>"; };
 		77427BE61EF96EF8005D7AE4 /* KPFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPFilter.swift; sourceTree = "<group>"; };
+		774334271F264DE0000CCDFA /* KPAllRatingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPAllRatingViewController.swift; sourceTree = "<group>"; };
+		774334291F264ED2000CCDFA /* KPShopRatingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPShopRatingCell.swift; sourceTree = "<group>"; };
+		7743342B1F265871000CCDFA /* KPCommentVoteRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPCommentVoteRequest.swift; sourceTree = "<group>"; };
+		7743342D1F265E3A000CCDFA /* KPLikeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPLikeModel.swift; sourceTree = "<group>"; };
 		7745C0811EF050D100244541 /* KPLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPLoginViewController.swift; sourceTree = "<group>"; };
 		774AD6BE1F15FDA3002ACB47 /* KPPriceSelectController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = KPPriceSelectController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		77594B461EC89DAF0013BB56 /* KPPhotoAddCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPPhotoAddCell.swift; sourceTree = "<group>"; };
@@ -615,6 +623,8 @@
 			children = (
 				77E495541EC98BE0003B7EBC /* KPRatingViewController.swift */,
 				77C0E1071E9D491D00398852 /* KPShopRateInfoView.swift */,
+				774334271F264DE0000CCDFA /* KPAllRatingViewController.swift */,
+				774334291F264ED2000CCDFA /* KPShopRatingCell.swift */,
 			);
 			name = Rate;
 			sourceTree = "<group>";
@@ -668,6 +678,7 @@
 			children = (
 				77427BE11EF7F58B005D7AE4 /* KPNewRatingRequest.swift */,
 				7762E3421F1211770006E205 /* KPGetRatingRequest.swift */,
+				7743342B1F265871000CCDFA /* KPCommentVoteRequest.swift */,
 			);
 			name = Rate;
 			sourceTree = "<group>";
@@ -962,6 +973,7 @@
 				7734634B1ED74C3D00EA78F0 /* Data Model */,
 				774208F81EA675C800C78A00 /* KPCommentModel.swift */,
 				773463471ED74AFE00EA78F0 /* KPNomadDataModel.swift */,
+				7743342D1F265E3A000CCDFA /* KPLikeModel.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1443,6 +1455,7 @@
 				7720D0311F01479100E00F0B /* KPMainListNativeExpressCell.swift in Sources */,
 				77F718271ED1A5C800755AA2 /* KPDefaultLoadingTableCell.swift in Sources */,
 				7762E3481F1220A60006E205 /* KPGetPhotoRequest.swift in Sources */,
+				7743342C1F265871000CCDFA /* KPCommentVoteRequest.swift in Sources */,
 				77C594AB1ECB170000118947 /* KPNewCommentController.swift in Sources */,
 				7720D02D1F01402700E00F0B /* KPMainListNativeAppInstallAdCell.swift in Sources */,
 				77421FB01EB8EE0C00064FF0 /* KPNomadRequest.swift in Sources */,
@@ -1451,7 +1464,9 @@
 				C01AC6291EAAEA0A000390F7 /* GMUGridBasedClusterAlgorithm.m in Sources */,
 				776ACB011E9BB49E00B629A2 /* KPMainViewController.swift in Sources */,
 				77E6BAA51F12392D00802992 /* KPUserInformationRequest.swift in Sources */,
+				774334281F264DE0000CCDFA /* KPAllRatingViewController.swift in Sources */,
 				C01AC6301EAAEA0A000390F7 /* GMUDefaultClusterRenderer.m in Sources */,
+				7743342E1F265E3A000CCDFA /* KPLikeModel.swift in Sources */,
 				774209001EA67CE400C78A00 /* KPSliderMenuController.swift in Sources */,
 				C01AC62E1EAAEA0A000390F7 /* GMUStaticCluster.m in Sources */,
 				77B66FAE1EAD07F3008B6652 /* KPModalViewController.swift in Sources */,
@@ -1477,6 +1492,7 @@
 				77E8CC301EC0E48300669809 /* KPPhotoDisplayCell.swift in Sources */,
 				77A26B0B1F232E960045D46F /* iRate.m in Sources */,
 				77E4955B1EC9E9B1003B7EBC /* KPSearchViewController.swift in Sources */,
+				7743342A1F264ED2000CCDFA /* KPShopRatingCell.swift in Sources */,
 				775D32ED1F0CCCCF005EF0CE /* KPInformationPhotoTransition.swift in Sources */,
 				779F9E901F1A263000B8DC25 /* KPSubtitleInputController.swift in Sources */,
 				77BB392C1ED3DD6000958AFE /* KPForthIntroView.swift in Sources */,

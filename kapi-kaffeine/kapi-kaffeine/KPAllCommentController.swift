@@ -104,6 +104,16 @@ extension KPAllCommentController: UITableViewDelegate, UITableViewDataSource {
         cell.userNameLabel.text = comment.displayName
         cell.timeHintLabel.text = comment.createdModifiedContent
         cell.userCommentLabel.setText(text: comment.content, lineSpacing: 2.4)
+        cell.commentID = comment.commentID
+        
+        if let likeUser = comment.likes?.first(where: { $0.memberID == KPUserManager.sharedManager.currentUser?.identifier}) {
+            if likeUser.isLike == 0 {
+                cell.voteDownButton.buttonSelected = true
+            } else {
+                cell.voteUpButton.buttonSelected = true
+            }
+        }
+        
         cell.voteUpCount = comment.likeCount ?? 0
         cell.voteDownCount = comment.dislikeCount ?? 0
         

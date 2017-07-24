@@ -11,14 +11,13 @@ import ObjectMapper
 
 class KPCommentModel: Mappable {
     
-    
     var commentID: String!
     var content: String!
     var createdTime: NSNumber!
     var dislikeCount: NSNumber? = 0
     var displayName: String!
     var likeCount: NSNumber? = 0
-    var likes: [String: Any]?
+    var likes: [KPLikeModel]?
     var memberID: String!
     var photoURL: String!
     var createdModifiedContent: String! {

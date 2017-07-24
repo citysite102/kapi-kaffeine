@@ -10,12 +10,12 @@ import UIKit
 
 class KPShopCommentCell: UITableViewCell {
 
-    
     var userPicture: UIImageView!
     var userNameLabel: UILabel!
     var timeHintLabel: UILabel!
     var userCommentLabel: UILabel!
     var separator: UIView!
+    var commentID: String!
     var voteUpCount: NSNumber! {
         didSet {
             self.voteUpButton.currentCount = voteUpCount.intValue
@@ -28,9 +28,8 @@ class KPShopCommentCell: UITableViewCell {
         }
     }
     
-    private var voteUpButton: KPShopCommentCellButton!
-    private var voteDownButton: KPShopCommentCellButton!
-    
+    var voteUpButton: KPShopCommentCellButton!
+    var voteDownButton: KPShopCommentCellButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -127,8 +126,14 @@ class KPShopCommentCell: UITableViewCell {
             voteDownButton.buttonSelected = false
             voteDownButton.iconButton.isSelected = false
             voteUpButton.buttonSelected = true
+            KPServiceHandler.sharedHandler.updateCommentVoteStatus(nil,
+                                                                   commentID,
+                                                                   .like)
         } else {
             voteUpButton.buttonSelected = !voteUpButton.buttonSelected
+            KPServiceHandler.sharedHandler.updateCommentVoteStatus(nil,
+                                                                   commentID,
+                                                                   voteUpButton.buttonSelected ? .like : .cancel)
         }
     }
     
@@ -137,8 +142,14 @@ class KPShopCommentCell: UITableViewCell {
             voteUpButton.buttonSelected = false
             voteUpButton.iconButton.isSelected = false
             voteDownButton.buttonSelected = true
+            KPServiceHandler.sharedHandler.updateCommentVoteStatus(nil,
+                                                                   commentID,
+                                                                   .dislike)
         } else {
             voteDownButton.buttonSelected = !voteDownButton.buttonSelected
+            KPServiceHandler.sharedHandler.updateCommentVoteStatus(nil,
+                                                                   commentID,
+                                                                   voteDownButton.buttonSelected ? .dislike : .cancel)
         }
     }
 }

@@ -203,6 +203,8 @@ class KPServiceHandler {
                                         KPUserManager.sharedManager.storeUserInformation()
                                         return
                                     }
+                                } else {
+                                    completion?(false)
                                 }
         }.catch { (error) in
             completion?(false)
@@ -230,7 +232,7 @@ class KPServiceHandler {
                 
                 completion?(true, sortedComments)
             } else {
-                completion?(true, nil)
+                completion?(false, nil)
             }
         }.catch { (error) in
             completion?(false, nil)
@@ -275,6 +277,8 @@ class KPServiceHandler {
                                         KPUserManager.sharedManager.storeUserInformation()
                                         return
                                     }
+                                } else {
+                                    completion?(false)
                                 }
             }.catch { (error) in
                 loadingView.state = .failed
@@ -459,6 +463,32 @@ class KPServiceHandler {
         }
     }
     
+    // MARK: Comment Voting
+    
+    func updateCommentVoteStatus(_ cafeID: String?,
+                                 _ commentID: String,
+                                 _ type: voteType,
+                                 _ completion: ((Bool) -> Swift.Void)? = nil) {
+        let commentVoteRequest = KPCommentVoteRequest()
+        commentVoteRequest.perform(cafeID ?? (self.currentDisplayModel?.identifier)!,
+                                   type,
+                                   commentID).then { result -> Void in
+                                    
+                                    if let voteResult = result["result"].bool {
+                                        if voteResult {
+                                            let notification = Notification.Name(KPNotification.information.commentInformation)
+                                            NotificationCenter.default.post(name: notification, object: nil)
+                                        }
+                                        completion?(voteResult)
+                                    }
+                                    
+                                    completion?(true)
+                                    print("Result\(result)")
+            }.catch { (error) in
+                print("Like Comment Error \(error)")
+                completion?(false)
+        }
+    }
     
     // MARK: Report
     

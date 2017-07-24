@@ -279,6 +279,13 @@ class KPInformationViewController: KPViewController {
         informationHeaderView.facebookButton.addTarget(self,
                                                        action: #selector(KPInformationViewController.handleFacebookButtonOnTapped),
                                                         for: UIControlEvents.touchUpInside)
+        informationHeaderView.scoreHandler = { [unowned self] in
+            let allRatingController = KPAllRatingViewController()
+            self.navigationController?.pushViewController(viewController: allRatingController,
+                                                     animated: true,
+                                                     completion: {}
+            )
+        }
         
         
         loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
@@ -696,9 +703,7 @@ class KPInformationViewController: KPViewController {
             print("新增照片")
         } else {
             let galleryController = KPPhotoGalleryViewController()
-            
             galleryController.displayedPhotoInformations = self.displayPhotoInformations
-            
             dismissButton.isHidden = true
             navigationController?.pushViewController(viewController: galleryController,
                                                           animated: true,
@@ -713,6 +718,7 @@ class KPInformationViewController: KPViewController {
                                     
         }
     }
+    
     
     func handleOtherTimeButtonOnTapped() {
         

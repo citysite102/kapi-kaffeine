@@ -326,6 +326,8 @@ class KPInformationHeaderView: UIView {
     var scoreLabel: UILabel!
     var facebookButton: UIButton!
     var otherPhotoContainer: UIView!
+    var scoreTapGesture: UITapGestureRecognizer!
+    var scoreHandler: (() -> Void)?
 
     weak open var delegate: KPInformationHeaderViewDelegate?
     weak open var informationController: KPInformationViewController?
@@ -388,6 +390,10 @@ class KPInformationHeaderView: UIView {
                                   views:[scoreIcon])
         scoreLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
         
+        scoreTapGesture = UITapGestureRecognizer(target: self,
+                                                 action: #selector(KPInformationHeaderView.handleScoreContainerOnTapped(_:)))
+        scoreContainer.addGestureRecognizer(scoreTapGesture)
+        
         facebookButton = UIButton(type: .custom)
         facebookButton.setBackgroundImage(UIImage(color: UIColor.white),
                                           for: .normal)
@@ -438,7 +444,10 @@ class KPInformationHeaderView: UIView {
                 self.delegate?.headerPhotoTapped(self)
             })
         }
-        
+    }
+    
+    func handleScoreContainerOnTapped(_ sender: UITapGestureRecognizer) {
+        scoreHandler?()
     }
     
     
