@@ -151,10 +151,13 @@ GMUClusterRendererDelegate {
             for datamodel in self.allDataModel  {
                 self.clusterManager.add(datamodel)
             }
-            
             // Call cluster() after items have been added to perform the clustering
             // and rendering on map.
             self.clusterManager.cluster()
+            
+            if isCollectionViewShow == true {
+                isCollectionViewShow = true
+            }
         }
     }
 
