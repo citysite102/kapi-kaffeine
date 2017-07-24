@@ -266,7 +266,7 @@ class KPSideViewController: KPViewController {
         super.viewWillDisappear(animated)
         
         if let selectedIndexPath = tableView.indexPathForSelectedRow {
-            if regionContents[selectedIndexPath.row] != nil {
+            if selectedIndexPath.section == 0 && regionContents[selectedIndexPath.row] != nil {
                 self.resetTableview()
             }
         }

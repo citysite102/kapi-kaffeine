@@ -23,6 +23,7 @@ class KPSettingViewController: KPViewController {
         var information: String?
         var identifier: String
         var cellStyle: KPSettingViewCellStyle
+        var customColor: UIColor?
         var handler: (() -> ())?
     }
     
@@ -97,11 +98,13 @@ class KPSettingViewController: KPViewController {
                                            information:"1.0.0",
                                            identifier:KPSettingViewController.KPSettingViewInfoCellReuseIdentifier,
                                            cellStyle:.normal,
+                                           customColor:nil,
                                            handler:nil),
                                settingData(title:"協助填寫問卷，幫助讓產品更好",
                                            information:nil,
                                            identifier:KPSettingViewController.KPSettingViewButtonCellReuseIdentifier,
                                            cellStyle:.button,
+                                           customColor:nil,
                                            handler:nil)]
 
         
@@ -111,6 +114,7 @@ class KPSettingViewController: KPViewController {
                             information:nil,
                             identifier:KPSettingViewController.KPSettingViewButtonCellReuseIdentifier,
                             cellStyle:.button,
+                            customColor: KPColorPalette.KPTextColor.grayColor_level3,
                             handler: {
                                 KPUserManager.sharedManager.logOut()
                                 self.appModalController()?.dismissControllerWithDefaultDuration()
@@ -186,6 +190,9 @@ extension KPSettingViewController: UITableViewDelegate, UITableViewDataSource {
             cell.detailTextLabel?.textColor = KPColorPalette.KPTextColor.grayColor
         case .button:
             cell.selectionStyle = .default
+            if let customColor = cellData.customColor {
+                cell.textLabel?.textColor = customColor
+            }
         case .switchControl:
             let switchControl = UISwitch()
             switchControl.onTintColor = KPColorPalette.KPMainColor.mainColor

@@ -49,6 +49,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
     var timeRadioBoxOne: KPCheckView!
     var timeRadioBoxTwo: KPCheckView!
     var timeRadioBoxThree: KPCheckView!
+    var timeRadioBoxFour: KPCheckView!
     
     var socketLabel: UILabel!
     var socketRadioBoxOne: KPCheckView!
@@ -362,18 +363,30 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
         timeRadioBoxTwo.addConstraints(fromStringArray: ["H:|-16-[$self]",
                                                          "V:[$view0]-16-[$self]"],
                                        views: [timeRadioBoxOne])
-        timeRadioBoxThree = KPCheckView(.radio, "不限時")
+        timeRadioBoxThree = KPCheckView(.radio, "有限時")
         sectionTwoContainer.addSubview(timeRadioBoxThree)
         timeRadioBoxThree.addConstraints(fromStringArray: ["H:|-16-[$self]",
                                                            "V:[$view0]-16-[$self]"],
                                          views: [timeRadioBoxTwo])
+        timeRadioBoxFour = KPCheckView(.radio, "不限時")
+        sectionTwoContainer.addSubview(timeRadioBoxFour)
+        timeRadioBoxFour.addConstraints(fromStringArray: ["H:|-16-[$self]",
+                                                          "V:[$view0]-16-[$self]"],
+                                        views: [timeRadioBoxThree])
+        
         
         timeRadioBoxOne.deselectCheckViews = [timeRadioBoxTwo,
-                                              timeRadioBoxThree]
+                                              timeRadioBoxThree,
+                                              timeRadioBoxFour]
         timeRadioBoxTwo.deselectCheckViews = [timeRadioBoxOne,
-                                              timeRadioBoxThree]
+                                              timeRadioBoxThree,
+                                              timeRadioBoxFour]
         timeRadioBoxThree.deselectCheckViews = [timeRadioBoxTwo,
-                                                timeRadioBoxOne]
+                                                timeRadioBoxOne,
+                                                timeRadioBoxFour]
+        timeRadioBoxFour.deselectCheckViews = [timeRadioBoxTwo,
+                                               timeRadioBoxOne,
+                                               timeRadioBoxThree]
         
         socketLabel = headerLabel("插座數量")
         sectionTwoContainer.addSubview(socketLabel)
@@ -413,7 +426,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
         sectionTwoContainer.addSubview(standDeskLabel)
         standDeskLabel.addConstraints(fromStringArray: ["H:|-16-[$self]",
                                                         "V:[$view0]-16-[$self]"],
-                                      views: [timeRadioBoxThree])
+                                      views: [timeRadioBoxFour])
         standDeskCheckBox = KPCheckView(.checkmark, "有站立桌，可站立工作")
         standDeskCheckBox.checkBox.checkState = .checked
         sectionTwoContainer.addSubview(standDeskCheckBox)
