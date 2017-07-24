@@ -371,40 +371,106 @@ extension KPMainListViewController: GADNativeExpressAdViewDelegate {
 
 extension KPMainListViewController: UITableViewDelegate, UITableViewDataSource {
     
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if !scrollView.isDecelerating && !scrollView.isDragging {
-            var translate: CGFloat
-            if (scrollView.contentOffset.y + 1) >= (scrollView.contentSize.height - scrollView.frame.size.height) {
-                translate = -80
-            } else {
-                translate = self.currentSearchTagTranslateY < -40 ? -80 : 0.0
-            }
-            self.currentSearchTagTranslateY = translate
-            UIView.animate(withDuration: 0.1,
-                           animations: { 
-                            self.mainController.searchHeaderView.searchTagView.transform = CGAffineTransform(translationX: 0,
-                                                                                                             y: self.currentSearchTagTranslateY/2)
-                            self.mainController.mainMapViewController?.mapView.transform = CGAffineTransform(translationX: 0,
-                                                                                                             y: self.currentSearchTagTranslateY/2)
-                            self.tableView.transform = CGAffineTransform(translationX: 0, y: self.currentSearchTagTranslateY/2)
-                            self.snapshotView.transform = CGAffineTransform(translationX: 0, y: self.currentSearchTagTranslateY/2)
-            }, completion: { (_) in
-                
-            })
-        }
-    }
+//    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+//        if !scrollView.isDecelerating && !scrollView.isDragging {
+//            var translate: CGFloat
+//            if (scrollView.contentOffset.y + 1) >= (scrollView.contentSize.height - scrollView.frame.size.height) {
+//                translate = -80
+//            } else {
+//                translate = self.currentSearchTagTranslateY < -40 ? -80 : 0.0
+//            }
+//            self.currentSearchTagTranslateY = translate
+//            UIView.animate(withDuration: 0.1,
+//                           animations: { 
+//                            self.mainController.searchHeaderView.searchTagView.transform = CGAffineTransform(translationX: 0,
+//                                                                                                             y: self.currentSearchTagTranslateY/2)
+//                            self.mainController.mainMapViewController?.mapView.transform = CGAffineTransform(translationX: 0,
+//                                                                                                             y: self.currentSearchTagTranslateY/2)
+//                            self.tableView.transform = CGAffineTransform(translationX: 0, y: self.currentSearchTagTranslateY/2)
+//                            self.snapshotView.transform = CGAffineTransform(translationX: 0, y: self.currentSearchTagTranslateY/2)
+//            }, completion: { (_) in
+//                
+//            })
+//        }
+//    }
     
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        print("Did End Decelerate")
-        if self.currentSearchTagTranslateY != -80 || self.currentSearchTagTranslateY != 0 {
+//    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+//        print("Did End Decelerate")
+//        if self.currentSearchTagTranslateY != -80 || self.currentSearchTagTranslateY != 0 {
+//            var translate: CGFloat
+//            if (scrollView.contentOffset.y + 1) >= (scrollView.contentSize.height - scrollView.frame.size.height) {
+//                translate = -80
+//            } else {
+//                translate = self.currentSearchTagTranslateY < -40 ? -80 : 0.0
+//            }
+//            self.currentSearchTagTranslateY = translate
+//            UIView.animate(withDuration: 0.1,
+//                           animations: {
+//                            self.mainController.searchHeaderView.searchTagView.transform = CGAffineTransform(translationX: 0,
+//                                                                                                             y: self.currentSearchTagTranslateY/2)
+//                            self.mainController.mainMapViewController?.mapView.transform = CGAffineTransform(translationX: 0,
+//                                                                                                             y: self.currentSearchTagTranslateY/2)
+//                            self.tableView.transform = CGAffineTransform(translationX: 0, y: self.currentSearchTagTranslateY/2)
+//                            self.snapshotView.transform = CGAffineTransform(translationX: 0, y: self.currentSearchTagTranslateY/2)
+//            }, completion: { (_) in
+//                
+//            })
+//        }
+//    }
+    
+//    func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
+//        print("Will Begin Decelerate")
+//        let translate: CGFloat = self.currentSearchTagTranslateY < -40 ? -80 : 0.0
+//        self.currentSearchTagTranslateY = translate
+//        UIView.animate(withDuration: 0.1,
+//                       animations: {
+//                        self.mainController.searchHeaderView.searchTagView.transform = CGAffineTransform(translationX: 0,
+//                                                                                                         y: self.currentSearchTagTranslateY/2)
+//                        self.mainController.mainMapViewController?.mapView.transform = CGAffineTransform(translationX: 0,
+//                                                                                                         y: self.currentSearchTagTranslateY/2)
+//                        self.tableView.transform = CGAffineTransform(translationX: 0, y: self.currentSearchTagTranslateY/2)
+//                        self.snapshotView.transform = CGAffineTransform(translationX: 0, y: self.currentSearchTagTranslateY/2)
+//        }, completion: { (_) in
+//            
+//        })
+//    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y > 80 &&
+            (scrollView.contentOffset.y + scrollView.frameSize.height) < scrollView.contentSize.height {
+//            if scrollView.contentOffset.y > oldScrollOffsetY {
+//                // 往下
+//                currentSearchTagTranslateY = (currentSearchTagTranslateY + oldScrollOffsetY - scrollView.contentOffset.y > -80) ?
+//                    currentSearchTagTranslateY + oldScrollOffsetY - scrollView.contentOffset.y :
+//                    -80
+//            } else {
+//                // 往上
+//                let updatedOffset = oldScrollOffsetY - scrollView.contentOffset.y
+//                currentSearchTagTranslateY = (currentSearchTagTranslateY + updatedOffset <= 0) ?
+//                    currentSearchTagTranslateY + updatedOffset :
+//                    0
+//            }
+//            
+//            mainController.searchHeaderView.searchTagView.transform = CGAffineTransform(translationX: 0,
+//                                                                                        y: currentSearchTagTranslateY/2)
+//            mainController.mainMapViewController?.mapView.transform = CGAffineTransform(translationX: 0,
+//                                                                                        y: currentSearchTagTranslateY/2)
+//            tableView.transform = CGAffineTransform(translationX: 0, y: currentSearchTagTranslateY/2)
+//            snapshotView.transform = CGAffineTransform(translationX: 0, y: currentSearchTagTranslateY/2)
+//            oldScrollOffsetY = scrollView.contentOffset.y
+//        }
+          
             var translate: CGFloat
-            if (scrollView.contentOffset.y + 1) >= (scrollView.contentSize.height - scrollView.frame.size.height) {
+            if scrollView.contentOffset.y > oldScrollOffsetY {
+                // 往下
                 translate = -80
             } else {
-                translate = self.currentSearchTagTranslateY < -40 ? -80 : 0.0
+                // 往上
+                translate = 0.0
             }
+            
             self.currentSearchTagTranslateY = translate
-            UIView.animate(withDuration: 0.1,
+            UIView.animate(withDuration: 0.2,
                            animations: {
                             self.mainController.searchHeaderView.searchTagView.transform = CGAffineTransform(translationX: 0,
                                                                                                              y: self.currentSearchTagTranslateY/2)
@@ -413,51 +479,8 @@ extension KPMainListViewController: UITableViewDelegate, UITableViewDataSource {
                             self.tableView.transform = CGAffineTransform(translationX: 0, y: self.currentSearchTagTranslateY/2)
                             self.snapshotView.transform = CGAffineTransform(translationX: 0, y: self.currentSearchTagTranslateY/2)
             }, completion: { (_) in
-                
+                self.oldScrollOffsetY = scrollView.contentOffset.y
             })
-        }
-    }
-    
-    func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
-        print("Will Begin Decelerate")
-        let translate: CGFloat = self.currentSearchTagTranslateY < -40 ? -80 : 0.0
-        self.currentSearchTagTranslateY = translate
-        UIView.animate(withDuration: 0.1,
-                       animations: {
-                        self.mainController.searchHeaderView.searchTagView.transform = CGAffineTransform(translationX: 0,
-                                                                                                         y: self.currentSearchTagTranslateY/2)
-                        self.mainController.mainMapViewController?.mapView.transform = CGAffineTransform(translationX: 0,
-                                                                                                         y: self.currentSearchTagTranslateY/2)
-                        self.tableView.transform = CGAffineTransform(translationX: 0, y: self.currentSearchTagTranslateY/2)
-                        self.snapshotView.transform = CGAffineTransform(translationX: 0, y: self.currentSearchTagTranslateY/2)
-        }, completion: { (_) in
-            
-        })
-    }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView.contentOffset.y > 80 &&
-            (scrollView.contentOffset.y + scrollView.frameSize.height) < scrollView.contentSize.height {
-            if scrollView.contentOffset.y > oldScrollOffsetY {
-                // 往下
-                currentSearchTagTranslateY = (currentSearchTagTranslateY + oldScrollOffsetY - scrollView.contentOffset.y > -80) ?
-                    currentSearchTagTranslateY + oldScrollOffsetY - scrollView.contentOffset.y :
-                    -80
-            } else {
-                // 往上
-                let updatedOffset = oldScrollOffsetY - scrollView.contentOffset.y
-                currentSearchTagTranslateY = (currentSearchTagTranslateY + updatedOffset <= 0) ?
-                    currentSearchTagTranslateY + updatedOffset :
-                    0
-            }
-            
-            mainController.searchHeaderView.searchTagView.transform = CGAffineTransform(translationX: 0,
-                                                                                        y: currentSearchTagTranslateY/2)
-            mainController.mainMapViewController?.mapView.transform = CGAffineTransform(translationX: 0,
-                                                                                        y: currentSearchTagTranslateY/2)
-            tableView.transform = CGAffineTransform(translationX: 0, y: currentSearchTagTranslateY/2)
-            snapshotView.transform = CGAffineTransform(translationX: 0, y: currentSearchTagTranslateY/2)
-            oldScrollOffsetY = scrollView.contentOffset.y
         }
     }
     
