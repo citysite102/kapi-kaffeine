@@ -21,13 +21,16 @@ enum KPDay: String {
 
 class KPDataBusinessHourModel: NSObject {
     
-    var businessTime: [KPDay: [(startHour: String, endHour: String)]] = [KPDay.Monday: [],
-                                                                         KPDay.Tuesday: [],
-                                                                         KPDay.Wednesday: [],
-                                                                         KPDay.Thursday: [],
-                                                                         KPDay.Friday: [],
-                                                                         KPDay.Saturday: [],
-                                                                         KPDay.Sunday: []]
+    var businessTime: [KPDay: [(startHour: String,
+                                endHour: String,
+                                startTimeInterval: TimeInterval,
+                                endTimeInterval: TimeInterval)]] = [KPDay.Monday: [],
+                                                                    KPDay.Tuesday: [],
+                                                                    KPDay.Wednesday: [],
+                                                                    KPDay.Thursday: [],
+                                                                    KPDay.Friday: [],
+                                                                    KPDay.Saturday: [],
+                                                                    KPDay.Sunday: []]
     lazy var timeFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm"
@@ -43,13 +46,15 @@ class KPDataBusinessHourModel: NSObject {
             let timeIndex = Int(components[1])!
             
             while businessTime[day]!.count < timeIndex {
-                businessTime[day]!.append(("", ""))
+                businessTime[day]!.append(("", "", 0, 0))
             }
             
             if components[2] == "open" {
                 businessTime[day]?[timeIndex-1].startHour = time
+                businessTime[day]?[timeIndex-1].startTimeInterval = (timeFormatter.date(from: time)?.timeIntervalSince1970) ?? Double.greatestFiniteMagnitude
             } else if components[2] == "close" {
                 businessTime[day]?[timeIndex-1].endHour = time
+                businessTime[day]?[timeIndex-1].endTimeInterval = (timeFormatter.date(from: time)?.timeIntervalSince1970) ?? 0
             }
             
         }
@@ -63,10 +68,10 @@ class KPDataBusinessHourModel: NSObject {
                 let currentMinute = calendar.component(.minute, from: todayDate)
                 let currentTime = timeFormatter.date(from: String(format: "%2d:%2d", currentHour, currentMinute))
                 
-                for (startHour, endHour) in businessTime[getDayOfWeek()]! {
-                    if currentTime!.timeIntervalSince1970 > (timeFormatter.date(from: startHour)?.timeIntervalSince1970)! &&
-                        currentTime!.timeIntervalSince1970 < (timeFormatter.date(from: endHour)?.timeIntervalSince1970)! {
-                        return (true, "營業中: \(startHour)~\(endHour)")
+                for time in businessTime[KPDataBusinessHourModel.getDayOfWeek()]! {
+                    if currentTime!.timeIntervalSince1970 > time.startTimeInterval &&
+                        currentTime!.timeIntervalSince1970 < time.endTimeInterval {
+                        return (true, "營業中: \(time.startHour)~\(time.endHour)")
                     }
                 }
                 return (false, "休息中")
@@ -84,7 +89,7 @@ class KPDataBusinessHourModel: NSObject {
         }
     }
     
-    func getDayOfWeek() -> KPDay {
+    public class func getDayOfWeek() -> KPDay {
         let todayDate = NSDate()
         let myCalendar = NSCalendar(calendarIdentifier: NSCalendar.Identifier.gregorian)
         let myComponents = myCalendar?.component(.weekday, from: todayDate as Date)
@@ -111,7 +116,7 @@ class KPDataBusinessHourModel: NSObject {
         var result = ""
         for (key, value) in businessTime {
             result += "\(key.rawValue): "
-            for (start, end) in value {
+            for (start, end, _, _) in value {
                 result += "\(start)~\(end)\t"
             }
             result += "\n"
@@ -122,7 +127,7 @@ class KPDataBusinessHourModel: NSObject {
     func getTimeString(withDay day: String) -> String {
         let timeArray = businessTime[KPDataBusinessHourModel.getShortHands(withDay: day)]
         var result = ""
-        for (start, end) in timeArray! {
+        for (start, end, _, _) in timeArray! {
             result += "\(start)~\(end)\t"
         }
         return result == "" ? "休息" : result

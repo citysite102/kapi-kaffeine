@@ -47,7 +47,7 @@ class KPCheckView: UIView {
     
     var groupValue: Any? {
         
-        if let deselectCheckBoxs = checkBox.deselectCheckBoxs {
+        if deselectCheckViews != nil {
             
             if checkBox.checkState == .checked {
                 return customValue ?? titleLabel.text

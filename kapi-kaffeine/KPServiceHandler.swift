@@ -21,6 +21,7 @@ class KPServiceHandler {
     // 目前儲存所有的咖啡店
     var currentCafeDatas: [KPDataModel]!
     var currentDisplayModel: KPDataModel?
+    var currentCity: String?
     var relatedDisplayModel: [KPDataModel]? {
         if currentDisplayModel != nil {
             let filteredLocationModel = KPFilter.filterData(source: self.currentCafeDatas,
