@@ -66,6 +66,8 @@ class KPSegmentedControl: UIControl {
             
             if selectionTitleColors.count > index {
                 segment.setTitleColor(selectionTitleColors[index], for: .selected)
+            } else {
+                segment.setTitleColor(KPColorPalette.KPTextColor.whiteColor!, for: .selected)
             }
             
             if selectionBackgroundColors.count > index {

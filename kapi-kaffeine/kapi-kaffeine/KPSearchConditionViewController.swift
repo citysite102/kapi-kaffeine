@@ -37,6 +37,9 @@ class KPSearchConditionViewController: KPViewController {
     weak var delegate: KPSearchConditionViewControllerDelegate?
     
     // Section 1
+    var sortLabel: UILabel!
+    var sortSegmentedControl: KPSegmentedControl!
+    
     var quickSettingLabel: UILabel!
     var quickSettingButtonOne: UIButton!
     var quickSettingButtonTwo: UIButton!
@@ -156,10 +159,22 @@ class KPSearchConditionViewController: KPViewController {
         
         
         // Section 1
+        sortLabel = titleLabel("排序方式")
+        containerView.addSubview(sortLabel)
+        sortLabel.addConstraints(fromStringArray: ["H:|-16-[$self]",
+                                                   "V:|-24-[$self]"])
+        
+        sortSegmentedControl = KPSegmentedControl.init(["距離近到遠", "評分高到低"])
+        containerView.addSubview(sortSegmentedControl)
+        sortSegmentedControl.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
+                                                              "V:[$view0]-8-[$self(30)]"],
+                                            views: [sortLabel])
+        
         quickSettingLabel = titleLabel("使用快速設定")
         containerView.addSubview(quickSettingLabel)
         quickSettingLabel.addConstraints(fromStringArray: ["H:|-16-[$self]",
-                                                           "V:|-16-[$self]"])
+                                                           "V:[$view0]-24-[$self]"],
+                                         views: [sortSegmentedControl])
         
         quickSettingButtonOne = buttonWithTitle(title: "適合讀書工作")
         quickSettingButtonOne.addTarget(self,
@@ -188,7 +203,7 @@ class KPSearchConditionViewController: KPViewController {
                                                     views: [quickSettingLabel, quickSettingButtonTwo])
         containerView.addSubview(seperator_one)
         seperator_one.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                       "V:[$view0]-16-[$self(1)]"],
+                                                       "V:[$view0]-24-[$self(1)]"],
                                           views: [quickSettingButtonOne])
         
         
