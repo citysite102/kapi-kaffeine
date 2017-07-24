@@ -37,7 +37,7 @@ class KPSearchTagView: UIView {
     var preferenceHintView: UIView!
     var preferenceHintIcon: UIImageView!
     var preferenceHintLabel: UILabel!
-    var currentSelectTags: [searchTagType]! = [searchTagType]()
+//    var currentSelectTags: [searchTagType]! = [searchTagType]()
     var headerTagContents = [searchTagType.wifi,
                              searchTagType.socket,
                              searchTagType.limitTime,
@@ -141,19 +141,21 @@ extension KPSearchTagView: UICollectionViewDelegate, UICollectionViewDataSource,
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath)
-        currentSelectTags.append(headerTagContents[indexPath.row])
+//        let cell = collectionView.cellForItem(at: indexPath)
+//        currentSelectTags.append(headerTagContents[indexPath.row])
         delegate?.searchTagDidSelect(headerTagContents[indexPath.row])
-        cell?.alpha = 1.0
-        preferenceHintButton.hintCount = currentSelectTags.count
+//        cell?.alpha = 1.0
+        preferenceHintButton.hintCount = collectionView.indexPathsForSelectedItems?.count ?? 0
+//        preferenceHintButton.hintCount = currentSelectTags.count
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath)
-        currentSelectTags.remove(at: currentSelectTags.index(of: headerTagContents[indexPath.row])!)
+//        let cell = collectionView.cellForItem(at: indexPath)
+//        currentSelectTags.remove(at: currentSelectTags.index(of: headerTagContents[indexPath.row])!)
         delegate?.searchTagDidDeselect(headerTagContents[indexPath.row])
-        cell?.alpha = 0.4
-        preferenceHintButton.hintCount = currentSelectTags.count
+//        cell?.alpha = 0.4
+        preferenceHintButton.hintCount = collectionView.indexPathsForSelectedItems?.count ?? 0
+//        preferenceHintButton.hintCount = currentSelectTags.count
     }
     
     func collectionView(_ collectionView: UICollectionView,

@@ -37,4 +37,15 @@ class KPSearchTagCell: UICollectionViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    override var isSelected: Bool {
+        didSet {
+            if isSelected == true {
+                alpha = 1.0
+            } else {
+                alpha = 0.4
+            }
+        }
+    }
+    
 }

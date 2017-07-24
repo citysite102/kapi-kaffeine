@@ -231,7 +231,26 @@ class KPSearchConditionViewController: KPViewController {
                                           views: [ratingViews[index-1]])
             }
             
-            ratingView.currentRate = 3
+            
+            switch index {
+            case 0:
+                ratingView.currentRate = Int(KPFilter.sharedFilter.wifiRate)
+            case 1:
+                ratingView.currentRate = Int(KPFilter.sharedFilter.quietRate)
+            case 2:
+                ratingView.currentRate = Int(KPFilter.sharedFilter.cheapRate)
+            case 3:
+                ratingView.currentRate = Int(KPFilter.sharedFilter.seatRate)
+            case 4:
+                ratingView.currentRate = Int(KPFilter.sharedFilter.tastyRate)
+            case 5:
+                ratingView.currentRate = Int(KPFilter.sharedFilter.foodRate)
+            case 6:
+                ratingView.currentRate = Int(KPFilter.sharedFilter.musicRate)
+            default:
+                fatalError()
+            }
+            
         }
         
         containerView.addSubview(seperator_two)

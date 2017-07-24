@@ -19,8 +19,55 @@ class KPShopRateInfoView: UIView {
     
     var rateViews: [rateStatusView] = [rateStatusView]()
     var rateContents = [String]()
+    
+    weak var dataModel: KPDataModel! {
+        didSet {
+            rateContents = []
+            rateContents.append(dataModel.wifiAverage != nil ?
+                (dataModel.wifiAverage?.stringValue.characters.count == 1 ?
+                    "\((dataModel.wifiAverage?.stringValue)!).0" :
+                    "\((dataModel.wifiAverage?.stringValue)!)") :
+                "0.0")
+            rateContents.append(dataModel.quietAverage != nil ?
+                (dataModel.quietAverage?.stringValue.characters.count == 1 ?
+                    "\((dataModel.quietAverage?.stringValue)!).0" :
+                    "\((dataModel.quietAverage?.stringValue)!)") :
+                "0.0")
+            rateContents.append(dataModel.cheapAverage != nil ?
+                (dataModel.cheapAverage?.stringValue.characters.count == 1 ?
+                    "\((dataModel.cheapAverage?.stringValue)!).0" :
+                    "\((dataModel.cheapAverage?.stringValue)!)") :
+                "0.0")
+            rateContents.append(dataModel.seatAverage != nil ?
+                (dataModel.seatAverage?.stringValue.characters.count == 1 ?
+                    "\((dataModel.seatAverage?.stringValue)!).0" :
+                    "\((dataModel.seatAverage?.stringValue)!)") :
+                "0.0")
+            rateContents.append(dataModel.tastyAverage != nil ?
+                (dataModel.tastyAverage?.stringValue.characters.count == 1 ?
+                    "\((dataModel.tastyAverage?.stringValue)!).0" :
+                    "\((dataModel.tastyAverage?.stringValue)!)") :
+                "0.0")
+            rateContents.append(dataModel.foodAverage != nil ?
+                (dataModel.foodAverage?.stringValue.characters.count == 1 ?
+                    "\((dataModel.foodAverage?.stringValue)!).0" :
+                    "\((dataModel.foodAverage?.stringValue)!)") :
+                "0.0")
+            rateContents.append(dataModel.musicAverage != nil ?
+                (dataModel.musicAverage?.stringValue.characters.count == 1 ?
+                    "\((dataModel.musicAverage?.stringValue)!).0" :
+                    "\((dataModel.musicAverage?.stringValue)!)") :
+                "0.0")
+            
+            for (index, rateView) in rateViews.enumerated() {
+                rateView.rateContentLabel.text = rateContents[index]
+            }
+        }
+    }
+    
     var rateData: KPRateDataModel! {
         didSet {
+            rateContents = []
             rateContents.append(rateData.wifiAverage != nil ?
                 (rateData.wifiAverage?.stringValue.characters.count == 1 ?
                     "\((rateData.wifiAverage?.stringValue)!).0" :

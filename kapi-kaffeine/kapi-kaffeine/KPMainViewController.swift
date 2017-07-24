@@ -510,10 +510,9 @@ extension KPMainViewController: KPSearchTagViewDelegate, KPSearchConditionViewCo
             case .socket:
                 KPFilter.sharedFilter.socket = 1
             case .limitTime:
-
                 KPFilter.sharedFilter.limited_time = 1
 //            case .opening:
-
+                
             case .highRate:
                 KPFilter.sharedFilter.averageRate = 4.5
             default:
@@ -561,19 +560,44 @@ extension KPMainViewController: KPSearchTagViewDelegate, KPSearchConditionViewCo
         mainListViewController?.state = .loading
         mainListViewController?.tableView.reloadData()
         
-        DispatchQueue.global().async {
         
+            // 時間
             if  searchConditionController.businessCheckBoxThree.checkBox.checkState == .checked,
                 let startTime = searchConditionController.timeSupplementView.startTime,
                 let endTime = searchConditionController.timeSupplementView.endTime {
                 
                 KPFilter.sharedFilter.searchTime = "\(startTime)~\(endTime)"
-                
-                let filteredData = KPFilter.sharedFilter.currentFilterCafeDatas()
-                
-                DispatchQueue.main.async {
-                    self.displayDataModel = filteredData
-                }
+
+            }
+        
+        
+            // 各個 rating
+            KPFilter.sharedFilter.wifiRate  = Double(searchConditionController.ratingViews[0].currentRate)
+            if KPFilter.sharedFilter.wifiRate >= 4, let index = self.searchHeaderView.searchTagView.headerTagContents.index(of: .wifi) {
+                self.searchHeaderView.searchTagView.collectionView.selectItem(at: IndexPath.init(row: index, section: 0),
+                                                                              animated: false,
+                                                                              scrollPosition: [])
+            } else if let index = self.searchHeaderView.searchTagView.headerTagContents.index(of: .wifi) {
+                self.searchHeaderView.searchTagView.collectionView.deselectItem(at: IndexPath.init(row: index, section:0),
+                                                                                animated: false)
+            }
+            
+            KPFilter.sharedFilter.quietRate = Double(searchConditionController.ratingViews[1].currentRate)
+            KPFilter.sharedFilter.cheapRate = Double(searchConditionController.ratingViews[2].currentRate)
+            KPFilter.sharedFilter.seatRate = Double(searchConditionController.ratingViews[3].currentRate)
+            KPFilter.sharedFilter.tastyRate = Double(searchConditionController.ratingViews[4].currentRate)
+            KPFilter.sharedFilter.foodRate = Double(searchConditionController.ratingViews[5].currentRate)
+            KPFilter.sharedFilter.musicRate = Double(searchConditionController.ratingViews[6].currentRate)
+            
+            
+            self.searchHeaderView.searchTagView.preferenceHintButton.hintCount =
+            self.searchHeaderView.searchTagView.collectionView.indexPathsForSelectedItems?.count ?? 0
+        
+        DispatchQueue.global().async {
+            let filteredData = KPFilter.sharedFilter.currentFilterCafeDatas()
+            
+            DispatchQueue.main.async {
+                self.displayDataModel = filteredData
             }
         }
         

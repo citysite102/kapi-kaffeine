@@ -378,6 +378,7 @@ class KPInformationViewController: KPViewController {
                                                 views: [shopInformationView])
 
         let shopRateInfoView = KPShopRateInfoView()
+        shopRateInfoView.dataModel = informationDataModel
         rateInformationView = KPInformationSharedInfoView()
         rateInformationView.infoView = shopRateInfoView
         rateInformationView.infoTitleLabel.text = "店家評分"
