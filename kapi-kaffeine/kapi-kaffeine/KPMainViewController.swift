@@ -29,16 +29,25 @@ class KPMainViewController: KPViewController {
     
     var displayDataModel: [KPDataModel]! {
         didSet {
-            self.mainListViewController?.state = .loading
-            self.mainListViewController?.tableView.reloadData()
-            DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
+            if oldValue == nil {
+                self.mainListViewController?.state = .loading
+                self.mainListViewController?.tableView.reloadData()
+                DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
+                    self.mainListViewController?.displayDataModel = self.displayDataModel
+                    self.mainMapViewController?.allDataModel = self.displayDataModel
+                    self.searchHeaderView.styleButton.isEnabled = true
+                    self.searchHeaderView.searchButton.isEnabled = true
+                    self.searchHeaderView.menuButton.isEnabled = true
+                    self.searchHeaderView.searchTagView.isUserInteractionEnabled = true
+                    
+                }
+            } else {
                 self.mainListViewController?.displayDataModel = self.displayDataModel
                 self.mainMapViewController?.allDataModel = self.displayDataModel
                 self.searchHeaderView.styleButton.isEnabled = true
                 self.searchHeaderView.searchButton.isEnabled = true
                 self.searchHeaderView.menuButton.isEnabled = true
                 self.searchHeaderView.searchTagView.isUserInteractionEnabled = true
-                
             }
         }
     }
@@ -190,7 +199,8 @@ class KPMainViewController: KPViewController {
     // MARK: Data
     
     func fetchRemoteData() {
-        KPServiceHandler.sharedHandler.fetchRemoteData() { (results: [KPDataModel]?, error: NetworkRequestError?) in
+        KPServiceHandler.sharedHandler.fetchRemoteData() { (results: [KPDataModel]?,
+            error: NetworkRequestError?) in
             if results != nil {
                 self.displayDataModel = results!
             } else if let requestError = error {

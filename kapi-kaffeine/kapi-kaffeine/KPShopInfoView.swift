@@ -74,6 +74,12 @@ class KPShopInfoView: UIView {
     var priceIcon: UIImageView!
     var priceLabel: UILabel!
     
+    let priceContents = ["尚無價格資訊",
+                         "NT$1-100元/人",
+                         "NT$101-200元/人",
+                         "NT$201-300元/人",
+                         "NT$301-400元/人"]
+    
     convenience init(_ informationDataModel: KPDataModel) {
         self.init(frame: .zero)
         
@@ -208,8 +214,8 @@ class KPShopInfoView: UIView {
                               lineSpacing: 3.0)
         phoneLabel.setText(text: informationDataModel.phone ?? "暫無資料",
                            lineSpacing: 3.0)
-        priceLabel.text = "1-100/人"
-        
+        priceLabel.setText(text: priceContents[informationDataModel.priceAverage?.intValue ?? 0],
+                           lineSpacing: 3.0)
         
     }
     

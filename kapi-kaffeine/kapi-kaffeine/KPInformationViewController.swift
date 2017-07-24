@@ -18,6 +18,12 @@ class KPInformationViewController: KPViewController {
         }
     }
     
+    var detailedInformationDataModel: KPDetailedDataModel! {
+        didSet {
+            
+        }
+    }
+    
     var dismissButton: KPBounceButton!
     var moreButton: KPBounceButton!
     var shareButton: KPBounceButton!
@@ -290,13 +296,11 @@ class KPInformationViewController: KPViewController {
         loadingLabel.addConstraintForCenterAligningToSuperview(in: .horizontal,
                                                                constant:2)
         
-        informationHeaderButtonBar = KPInformationHeaderButtonBar(frame: .zero,
-                                                                  informationDataModel: informationDataModel)
+        informationHeaderButtonBar = KPInformationHeaderButtonBar(frame: .zero)
         informationHeaderButtonBar.informationController = self
         scrollContainer.addSubview(informationHeaderButtonBar)
         informationHeaderButtonBar.addConstraints(fromStringArray: ["H:|[$self]|"],
                                                   views: [informationHeaderView])
-        
         
         animatedHeaderConstraint =
             informationHeaderButtonBar.addConstraint(from: "V:[$view0][$self]",
@@ -340,7 +344,9 @@ class KPInformationViewController: KPViewController {
                    handler:{ [unowned self] (infoView) -> () in
                     if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
                         UIApplication.shared.open(URL(string:
-                            "comgooglemaps://?center=\(self.informationDataModel.latitude!),\(self.informationDataModel.longitude!)&mapmode=streetview")!, options: [:], completionHandler: nil)
+                            "comgooglemaps://?center=\(self.informationDataModel.latitude!),\(self.informationDataModel.longitude!)&mapmode=streetview")!,
+                                                  options: [:],
+                                                  completionHandler: nil)
                     } else {
                         print("Can't use comgooglemaps://")
                     }
@@ -387,10 +393,10 @@ class KPInformationViewController: KPViewController {
                                                     let ratingViewController = KPRatingViewController()
                                                         
                                                     if ((KPUserManager.sharedManager.currentUser?.hasRated) != nil) {
-                                                        if let rate = self.informationDataModel.rates?.rates?.first(where:
-                                                            {$0.memberID == KPUserManager.sharedManager.currentUser?.identifier}) {
-                                                            ratingViewController.defaultRateModel = rate
-                                                        }
+//                                                        if let rate = self.informationDataModel.rates?.rates?.first(where:
+//                                                            {$0.memberID == KPUserManager.sharedManager.currentUser?.identifier}) {
+//                                                            ratingViewController.defaultRateModel = rate
+//                                                        }
                                                     }
                                                     controller.contentController = ratingViewController
                                                     controller.presentModalView()
@@ -598,6 +604,8 @@ class KPInformationViewController: KPViewController {
     
     
     func refreshRatings() {
+        
+        // 取得 Rating 資料
         KPServiceHandler.sharedHandler.getRatings { (successed, rate) in
             if successed && rate != nil {
                 (self.rateInformationView.infoView as! KPShopRateInfoView).rateData = rate
@@ -605,6 +613,10 @@ class KPInformationViewController: KPViewController {
                 self.informationHeaderButtonBar.rateButton.selected =
                     (KPUserManager.sharedManager.currentUser?.hasRated(self.informationDataModel.identifier)) ?? false
                 self.rateInformationView.infoSupplementLabel.text = "\(rate?.rates?.count ?? 0) 人已評分"
+            } else {
+                self.informationHeaderButtonBar.rateButton.numberValue = 0
+                self.informationHeaderButtonBar.rateButton.selected = false
+                self.rateInformationView.infoSupplementLabel.text = "0人已評分"
             }
         }
     }
@@ -616,8 +628,7 @@ class KPInformationViewController: KPViewController {
             if successed && comments != nil {
                 self.commentInfoView.comments = comments!
                 self.commentInformationView.infoSupplementLabel.text = "\(comments?.count ?? 0) 人已留言"
-                let commentInfoView = self.commentInformationView.infoView as! KPShopCommentInfoView
-                commentInfoView.tableViewHeightConstraint.constant = commentInfoView.tableView.contentSize.height
+                self.commentInfoView.tableViewHeightConstraint.constant = self.commentInfoView.tableView.contentSize.height
                 self.commentInformationView.setNeedsLayout()
                 self.commentInformationView.layoutIfNeeded()
                 
@@ -629,6 +640,13 @@ class KPInformationViewController: KPViewController {
                 } else {
                     self.commentInformationView.isEmpty = true
                 }
+            } else {
+                self.commentInfoView.comments = [KPCommentModel]()
+                self.commentInformationView.infoSupplementLabel.text = "0人已留言"
+                self.commentInfoView.tableViewHeightConstraint.constant = self.commentInfoView.tableView.contentSize.height
+                self.commentInformationView.setNeedsLayout()
+                self.commentInformationView.layoutIfNeeded()
+                self.commentInformationView.isEmpty = true
             }
         }
     }

@@ -21,7 +21,6 @@ class KPDataModel: NSObject, Mappable, GMUClusterItem {
     var standingDesk: NSNumber? = 0
     var socket: NSNumber? = 0
     var limitedTime: NSNumber? = 0
-    var url: String?
     var facebookURL: String?
     var facebookID: String?
     var mrt: String?
@@ -35,7 +34,15 @@ class KPDataModel: NSObject, Mappable, GMUClusterItem {
     var visitCount: NSNumber?
     var photoCount: NSNumber?
     
-    var rates: KPRateDataModel?
+    var cheapAverage: NSNumber? = 0
+    var foodAverage: NSNumber? = 0
+    var quietAverage: NSNumber? = 0
+    var seatAverage: NSNumber? = 0
+    var tastyAverage: NSNumber? = 0
+    var musicAverage: NSNumber? = 0
+    var wifiAverage: NSNumber? = 0
+    var priceAverage: NSNumber? = 0
+    
     var covers: [String: String]?
     var isKapi: Bool!
     
@@ -88,13 +95,11 @@ class KPDataModel: NSObject, Mappable, GMUClusterItem {
         standingDesk        <-    map["standing_desk"]
         socket              <-    map["socket"]
         limitedTime         <-    map["limited_time"]
-        url                 <-    map["url"]
         facebookURL         <-    map["fb_url"]
         facebookID          <-    map["fb_id"]
         mrt                 <-    map["mrt"]
         businessHour        <-    (map["business_hours"], businessHourTransform)
         tags                <-    map["tags"]
-        rates               <-    map["rates"]
         averageRate         <-    map["rate_average"]
         rateCount           <-    map["rate_count"]
         commentCount        <-    map["comment_count"]
@@ -105,9 +110,18 @@ class KPDataModel: NSObject, Mappable, GMUClusterItem {
         isKapi              <-    map["is_kapi"]
         createdTime         <-    map["created_time"]
         modifiedTime        <-    map["modified_time"]
+        cheapAverage        <-    map["cheap_avg"]
+        foodAverage         <-    map["food_avg"]
+        quietAverage        <-    map["quiet_avg"]
+        seatAverage         <-    map["seat_avg"]
+        tastyAverage        <-    map["tasty_avg"]
+        musicAverage        <-    map["music_avg"]
+        wifiAverage         <-    map["wifi_avg"]
+        priceAverage        <-    map["price_average"]
     }
     
-    let businessHourTransform = TransformOf<KPDataBusinessHourModel, [String: String]>(fromJSON: { (value: [String: String]?) -> KPDataBusinessHourModel? in
+    let businessHourTransform = TransformOf<KPDataBusinessHourModel,
+        [String: String]>(fromJSON: { (value: [String: String]?) -> KPDataBusinessHourModel? in
         // transform value from String? to Int?
         if value != nil {
             return KPDataBusinessHourModel(value: value!)
@@ -117,5 +131,4 @@ class KPDataModel: NSObject, Mappable, GMUClusterItem {
         // transform value from Int? to String?
         return nil
     })
-
 }

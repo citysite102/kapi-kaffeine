@@ -111,10 +111,10 @@ class KPServiceHandler {
     }
     
     func fetchStoreInformation(_ cafeID: String!,
-                               _ completion:((_ result: KPDataModel?) -> Void)!) {
+                               _ completion:((_ result: KPDetailedDataModel?) -> Void)!) {
         kapiDetailedInfoRequest.perform(cafeID).then {result -> Void in
             if let data = result["data"].dictionaryObject {
-                if let cafeData = KPDataModel(JSON: data) {
+                if let cafeData = KPDetailedDataModel(JSON: data) {
                     completion(cafeData)
                 }
             }
