@@ -190,6 +190,7 @@
 		C0B21FC81F05079100925A89 /* KPUserProfileEditorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B21FC71F05079100925A89 /* KPUserProfileEditorController.swift */; };
 		C0B49D971EA13BC100BA95D8 /* KPMainMapViewCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B49D961EA13BC100BA95D8 /* KPMainMapViewCollectionCell.swift */; };
 		C0EBE5431ECB29800021653E /* KPBusinessHourViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EBE5421ECB29800021653E /* KPBusinessHourViewController.swift */; };
+		C0F11FAC1F26531000E9AC60 /* KPSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F11FAB1F26531000E9AC60 /* KPSegmentedControl.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -427,6 +428,7 @@
 		C0B21FC71F05079100925A89 /* KPUserProfileEditorController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPUserProfileEditorController.swift; sourceTree = "<group>"; };
 		C0B49D961EA13BC100BA95D8 /* KPMainMapViewCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPMainMapViewCollectionCell.swift; sourceTree = "<group>"; };
 		C0EBE5421ECB29800021653E /* KPBusinessHourViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = KPBusinessHourViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		C0F11FAB1F26531000E9AC60 /* KPSegmentedControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSegmentedControl.swift; sourceTree = "<group>"; };
 		CA73E4544076455C6DC0C065 /* Pods-kapi-kaffeine.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kapi-kaffeine.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-kapi-kaffeine/Pods-kapi-kaffeine.debug.xcconfig"; sourceTree = "<group>"; };
 		FA9A4A083D5D704A746B1C9A /* Pods_kapi_kaffeineTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_kapi_kaffeineTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -828,6 +830,7 @@
 				775D32EE1F0D20E4005EF0CE /* KPExpView.swift */,
 				77E6BAA81F13F18300802992 /* KPExpNotificationView.swift */,
 				771EECA51EBC27BE004A34B8 /* CheckBox */,
+				C0F11FAB1F26531000E9AC60 /* KPSegmentedControl.swift */,
 			);
 			name = Custom;
 			sourceTree = "<group>";
@@ -1581,6 +1584,7 @@
 				776ACB081E9BE51600B629A2 /* KPMainListCellFeatureContainer.swift in Sources */,
 				77869E1A1EB76F690027CA98 /* NetworkErrorHandler.swift in Sources */,
 				77869E161EB75B5C0027CA98 /* NetworkClient.swift in Sources */,
+				C0F11FAC1F26531000E9AC60 /* KPSegmentedControl.swift in Sources */,
 				77B66FA91EACF74C008B6652 /* KPPopoverSensingView.swift in Sources */,
 				779EB1441EC0DFD4008AAFF0 /* KPPhotoDisplayViewController.swift in Sources */,
 				C05CF8781EF8019800F3DF2A /* KPDataBusinessHourModel.swift in Sources */,

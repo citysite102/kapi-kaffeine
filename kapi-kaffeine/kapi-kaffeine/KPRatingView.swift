@@ -17,6 +17,7 @@ class KPRatingView: UIView {
     enum RateType: String, RawRepresentable {
         case button = "Button"
         case star = "Star"
+        case segmented = "Segmented"
     }
     
     //----------------------------
@@ -49,6 +50,14 @@ class KPRatingView: UIView {
                 let animatedIndex = 5 - currentRate
                 for (index, starView) in starViews.enumerated() {
                     starView.selected = index >= animatedIndex ? true : false
+                }
+            case .segmented:
+                if currentRate < 3 {
+                    segmentedControl.selectedSegmentIndex = 0
+                } else if currentRate >= 4 {
+                    segmentedControl.selectedSegmentIndex = 2
+                } else {
+                    segmentedControl.selectedSegmentIndex = 1
                 }
             }
             
@@ -113,6 +122,9 @@ class KPRatingView: UIView {
     private var panGesture: UIPanGestureRecognizer!
     private var tapGesture: UITapGestureRecognizer!
     
+    
+    // Segmented
+    private var segmentedControl: KPSegmentedControl!
     
     //----------------------------
     // MARK: - Initalization
@@ -203,6 +215,27 @@ class KPRatingView: UIView {
                                             views:[starViews[index-1]])
                 }
             }
+        case .segmented:
+            
+            rateTitleLabel.addConstraints(fromStringArray: ["H:[$view0]-16-[$self]"],
+                                          views: [iconImageView])
+            rateTitleLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
+            
+            segmentedControl = KPSegmentedControl.init(["很慢", "普通", "很快"],
+                                                       [KPColorPalette.KPMainColor.mainColor_light!,
+                                                        KPColorPalette.KPMainColor.starColor!,
+                                                        KPColorPalette.KPMainColor.mainColor_sub!],
+                                                       [KPColorPalette.KPTextColor.whiteColor!,
+                                                        KPColorPalette.KPTextColor.mainColor!,
+                                                        KPColorPalette.KPTextColor.whiteColor!])
+            
+            segmentedControl.addTarget(self, action: #selector(handleSegmentedValueChanged(_:)), for: .valueChanged)
+            
+            addSubview(segmentedControl)
+            segmentedControl.addConstraints(fromStringArray: ["H:|-(\(KPSearchConditionViewControllerConstants.leftPadding-16))-[$self]-8-|",
+                                                              "V:|-5-[$self(30)]-5-|"],
+                                            views: [rateTitleLabel])
+            
             
         }
     }
@@ -252,6 +285,17 @@ class KPRatingView: UIView {
                 currentRate = 5 - index
                 break
             }
+        }
+    }
+    
+    //MARK: Segmented Type UI Event
+    func handleSegmentedValueChanged(_ sender: KPSegmentedControl) {
+        if sender.selectedSegmentIndex == 0 {
+            currentRate = 0
+        } else if sender.selectedSegmentIndex == 1 {
+            currentRate = 3
+        } else if sender.selectedSegmentIndex == 2 {
+            currentRate = 4
         }
     }
     

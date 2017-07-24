@@ -200,7 +200,7 @@ class KPSearchConditionViewController: KPViewController {
                                              views: [seperator_one])
         
         for (index, title) in ratingTitles.enumerated() {
-            let ratingView = KPRatingView(.button,
+            let ratingView = KPRatingView(.segmented,
                                                ratingImages[index]!,
                                                title)
             ratingViews.append(ratingView)
