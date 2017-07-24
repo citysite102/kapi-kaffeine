@@ -74,21 +74,14 @@ class KPAllRatingViewController: KPViewController {
 
 extension KPAllRatingViewController: UITableViewDelegate, UITableViewDataSource {
     
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: KPAllRatingViewController.KPAllRatingControllerCellReuseIdentifier,
                                                  for: indexPath) as! KPShopRatingCell
-//        cell.selectionStyle = .none        
-//        let comment = comments[indexPath.row]
-//        cell.userNameLabel.text = comment.displayName
-//        cell.timeHintLabel.text = comment.createdModifiedContent
-//        cell.userCommentLabel.setText(text: comment.content, lineSpacing: 2.4)
-//        cell.voteUpCount = comment.likeCount ?? 0
-//        cell.voteDownCount = comment.dislikeCount ?? 0
-//        
-//        if indexPath.row == ratings.count-1 {
-//            cell.separator.isHidden = true
-//        }
+        cell.selectionStyle = .none
+        cell.rateData = ratings[indexPath.row]
+        if indexPath.row == ratings.count-1 {
+            cell.separator.isHidden = true
+        }
         return cell
     }
     
@@ -97,7 +90,7 @@ extension KPAllRatingViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 8
+        return ratings.count
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {

@@ -24,6 +24,7 @@ class KPInformationViewController: KPViewController {
         }
     }
     
+    var rateDataModel: KPRateDataModel!
     var dismissButton: KPBounceButton!
     var moreButton: KPBounceButton!
     var shareButton: KPBounceButton!
@@ -281,6 +282,7 @@ class KPInformationViewController: KPViewController {
                                                         for: UIControlEvents.touchUpInside)
         informationHeaderView.scoreHandler = { [unowned self] in
             let allRatingController = KPAllRatingViewController()
+            allRatingController.ratings = self.rateDataModel.rates
             self.navigationController?.pushViewController(viewController: allRatingController,
                                                      animated: true,
                                                      completion: {}
@@ -620,6 +622,7 @@ class KPInformationViewController: KPViewController {
                 self.informationHeaderButtonBar.rateButton.selected =
                     (KPUserManager.sharedManager.currentUser?.hasRated(self.informationDataModel.identifier)) ?? false
                 self.rateInformationView.infoSupplementLabel.text = "\(rate?.rates?.count ?? 0) 人已評分"
+                self.rateDataModel = rate
             } else {
                 self.informationHeaderButtonBar.rateButton.numberValue = 0
                 self.informationHeaderButtonBar.rateButton.selected = false

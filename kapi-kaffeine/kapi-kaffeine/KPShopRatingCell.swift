@@ -26,45 +26,104 @@ class KPShopRatingCell: UITableViewCell {
     var rateContents = [String]()
     var rateData: KPSimpleRateModel! {
         didSet {
-            rateContents.append(rateData.wifi != nil ?
-                (rateData.wifi?.stringValue.characters.count == 1 ?
-                    "\((rateData.wifi?.stringValue)!).0" :
-                    "\((rateData.wifi?.stringValue)!)") :
-                "0.0")
-            rateContents.append(rateData.quiet != nil ?
-                (rateData.quiet?.stringValue.characters.count == 1 ?
-                    "\((rateData.quiet?.stringValue)!).0" :
-                    "\((rateData.quiet?.stringValue)!)") :
-                "0.0")
-            rateContents.append(rateData.cheap != nil ?
-                (rateData.cheap?.stringValue.characters.count == 1 ?
-                    "\((rateData.cheap?.stringValue)!).0" :
-                    "\((rateData.cheap?.stringValue)!)") :
-                "0.0")
-            rateContents.append(rateData.seat != nil ?
-                (rateData.seat?.stringValue.characters.count == 1 ?
-                    "\((rateData.seat?.stringValue)!).0" :
-                    "\((rateData.seat?.stringValue)!)") :
-                "0.0")
-            rateContents.append(rateData.tasty != nil ?
-                (rateData.tasty?.stringValue.characters.count == 1 ?
-                    "\((rateData.tasty?.stringValue)!).0" :
-                    "\((rateData.tasty?.stringValue)!)") :
-                "0.0")
-            rateContents.append(rateData.food != nil ?
-                (rateData.food?.stringValue.characters.count == 1 ?
-                    "\((rateData.food?.stringValue)!).0" :
-                    "\((rateData.food?.stringValue)!)") :
-                "0.0")
-            rateContents.append(rateData.music != nil ?
-                (rateData.music?.stringValue.characters.count == 1 ?
-                    "\((rateData.music?.stringValue)!).0" :
-                    "\((rateData.music?.stringValue)!)") :
-                "0.0")
             
-            for (index, rateView) in rateViews.enumerated() {
-                rateView.rateContentLabel.text = rateContents[index]
+            var totalRate: CGFloat = 0
+            var availableRateCount: CGFloat = 0
+            
+            
+            if let wifi = rateData.wifi {
+                rateContents.append(rateData.wifi?.stringValue.characters.count == 1 ?
+                    "\((rateData.wifi?.stringValue)!).0" :
+                    "\((rateData.wifi?.stringValue)!)")
+                
+                if wifi.floatValue != 0.0 {
+                    totalRate = totalRate + wifi.cgFloatValue
+                    availableRateCount = availableRateCount+1
+                }
+            } else {
+                rateContents.append("0.0")
             }
+            
+            if let quiet = rateData.quiet {
+                rateContents.append(rateData.quiet?.stringValue.characters.count == 1 ?
+                    "\((rateData.quiet?.stringValue)!).0" :
+                    "\((rateData.quiet?.stringValue)!)")
+                
+                if quiet.floatValue != 0.0 {
+                    totalRate = totalRate + quiet.cgFloatValue
+                    availableRateCount = availableRateCount+1
+                }
+            } else {
+                rateContents.append("0.0")
+            }
+            
+            if let cheap = rateData.cheap {
+                rateContents.append(rateData.cheap?.stringValue.characters.count == 1 ?
+                    "\((rateData.cheap?.stringValue)!).0" :
+                    "\((rateData.cheap?.stringValue)!)")
+                
+                if cheap.floatValue != 0.0 {
+                    totalRate = totalRate + cheap.cgFloatValue
+                    availableRateCount = availableRateCount+1
+                }
+            } else {
+                rateContents.append("0.0")
+            }
+
+            if let seat = rateData.seat {
+                rateContents.append(rateData.seat?.stringValue.characters.count == 1 ?
+                    "\((rateData.seat?.stringValue)!).0" :
+                    "\((rateData.seat?.stringValue)!)")
+                
+                if seat.floatValue != 0.0 {
+                    totalRate = totalRate + seat.cgFloatValue
+                    availableRateCount = availableRateCount+1
+                }
+            } else {
+                rateContents.append("0.0")
+            }
+            
+            if let tasty = rateData.tasty {
+                rateContents.append(rateData.tasty?.stringValue.characters.count == 1 ?
+                    "\((rateData.tasty?.stringValue)!).0" :
+                    "\((rateData.tasty?.stringValue)!)")
+                
+                if tasty.floatValue != 0.0 {
+                    totalRate = totalRate + tasty.cgFloatValue
+                    availableRateCount = availableRateCount+1
+                }
+            } else {
+                rateContents.append("0.0")
+            }
+            
+            if let food = rateData.food {
+                rateContents.append(rateData.food?.stringValue.characters.count == 1 ?
+                    "\((rateData.food?.stringValue)!).0" :
+                    "\((rateData.food?.stringValue)!)")
+                
+                if food.floatValue != 0.0 {
+                    totalRate = totalRate + food.cgFloatValue
+                    availableRateCount = availableRateCount+1
+                }
+            } else {
+                rateContents.append("0.0")
+            }
+            
+            if let music = rateData.music {
+                rateContents.append(rateData.music?.stringValue.characters.count == 1 ?
+                    "\((rateData.music?.stringValue)!).0" :
+                    "\((rateData.music?.stringValue)!)")
+                
+                if music.floatValue != 0.0 {
+                    totalRate = totalRate + music.cgFloatValue
+                    availableRateCount = availableRateCount+1
+                }
+            } else {
+                rateContents.append("0.0")
+            }
+            
+            let averageRate = totalRate/availableRateCount
+            scoreLabel.score = String(format: "%.1f", averageRate)
         }
     }
     
@@ -143,7 +202,6 @@ class KPShopRatingCell: UITableViewCell {
         contentView.addSubview(scoreLabel)
         scoreLabel.addConstraints(fromStringArray: ["H:[$self(32)]-16-|",
                                                     "V:|-24-[$self(24)]"])
-        
         
         separator = UIView()
         separator.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
