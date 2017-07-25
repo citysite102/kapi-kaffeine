@@ -24,7 +24,7 @@ class KPInformationViewController: KPViewController {
         }
     }
     
-    var rateDataModel: KPRateDataModel!
+    var rateDataModel: KPRateDataModel?
     var dismissButton: KPBounceButton!
     var moreButton: KPBounceButton!
     var shareButton: KPBounceButton!
@@ -281,12 +281,14 @@ class KPInformationViewController: KPViewController {
                                                        action: #selector(KPInformationViewController.handleFacebookButtonOnTapped),
                                                         for: UIControlEvents.touchUpInside)
         informationHeaderView.scoreHandler = { [unowned self] in
-            let allRatingController = KPAllRatingViewController()
-            allRatingController.ratings = self.rateDataModel.rates
-            self.navigationController?.pushViewController(viewController: allRatingController,
-                                                     animated: true,
-                                                     completion: {}
-            )
+            if let rates = self.rateDataModel?.rates {
+                let allRatingController = KPAllRatingViewController()
+                allRatingController.ratings = rates
+                self.navigationController?.pushViewController(viewController: allRatingController,
+                                                         animated: true,
+                                                         completion: {}
+                )
+            }
         }
         
         
