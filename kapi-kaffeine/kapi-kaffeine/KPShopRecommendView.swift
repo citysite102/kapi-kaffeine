@@ -10,27 +10,29 @@ import UIKit
 
 class KPShopRecommendView: UIView {
 
-    static let KPShopRecommendViewCellReuseIdentifier = "cell";
+    static let KPShopRecommendViewCellReuseIdentifier = "cell"
     weak open var informationController: KPInformationViewController?
     
     var tableView: UITableView!
     var displayDataModels: [KPDataModel]! {
         didSet {
-            self.tableView.reloadData();
+            self.tableView.reloadData()
         }
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame) // calls designated initializer
         
-        self.tableView = UITableView();
-        self.tableView.delegate = self;
-        self.tableView.dataSource = self;
-        self.addSubview(self.tableView);
-        self.tableView.addConstraints(fromStringArray: ["V:|[$self(252)]|",
-                                                        "H:|[$self]|"]);
+        self.tableView = UITableView()
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        self.tableView.isScrollEnabled = false
+        tableView.separatorColor = UIColor.clear
+        self.addSubview(self.tableView)
+        self.tableView.addConstraints(fromStringArray: ["V:|[$self(420)]|",
+                                                        "H:|[$self]|"])
         self.tableView.register(KPMainListTableViewCell.self,
-                                forCellReuseIdentifier: KPShopRecommendView.KPShopRecommendViewCellReuseIdentifier);
+                                forCellReuseIdentifier: KPShopRecommendView.KPShopRecommendViewCellReuseIdentifier)
         
     }
     
@@ -45,19 +47,19 @@ extension KPShopRecommendView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier:KPShopRecommendView.KPShopRecommendViewCellReuseIdentifier,
-                                                 for: indexPath) as! KPMainListTableViewCell;
+                                                 for: indexPath) as! KPMainListTableViewCell
         
-        cell.selectionStyle = .none;
+        cell.selectionStyle = .none
         cell.dataModel = self.displayDataModels[indexPath.row]
-        return cell;
+        return cell
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80;
+        return 80
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.displayDataModels.count;
+        return self.displayDataModels.count
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -67,6 +69,6 @@ extension KPShopRecommendView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1;
+        return 1
     }
 }

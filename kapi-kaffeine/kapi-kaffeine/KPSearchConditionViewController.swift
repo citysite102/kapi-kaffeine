@@ -106,7 +106,7 @@ class KPSearchConditionViewController: KPViewController {
                                   for: .selected)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         button.layer.cornerRadius = 18.0
-        button.layer.borderWidth = 1.0
+        button.layer.borderWidth = 2.0
         button.layer.borderColor = KPColorPalette.KPMainColor.mainColor?.cgColor
         button.layer.masksToBounds = true
         return button

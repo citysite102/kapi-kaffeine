@@ -29,7 +29,9 @@ class KPCountrySelectController: KPSharedSettingViewController {
                            forCellReuseIdentifier: "cell")
         tableView.tableFooterView = UIView()
         
+        seperator_two.isHidden = true
         sendButton.setTitle("確認送出", for: .normal)
+        sendButton.isHidden = true
         sendButton.addTarget(self,
                              action: #selector(KPCountrySelectController.handleSendButtonOnTapped),
                              for: .touchUpInside)

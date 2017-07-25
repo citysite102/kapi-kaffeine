@@ -109,7 +109,8 @@ class KPMainListViewController:
                 state = .normal
                 self.tableView.isUserInteractionEnabled = true
                 self.tableView.allowsSelection = true
-                self.tableView.reloadData()
+                self.tableView.reloadSections(IndexSet.init(integer: 0) ,
+                                              with: .fade)
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
                 if !adsAdded {
                     self.addNativeExpressAds()
@@ -173,6 +174,7 @@ class KPMainListViewController:
         tableView.delegate = self
         tableView.dataSource = self
         tableView.isUserInteractionEnabled = false
+        tableView.separatorColor = UIColor.clear
         view.addSubview(tableView)
         tableView.addConstraints(fromStringArray: ["V:|-100-[$self]-(-40)-|",
                                                    "H:|[$self]|"])
@@ -461,12 +463,16 @@ extension KPMainListViewController: UITableViewDelegate, UITableViewDataSource {
 //        }
           
             var translate: CGFloat
+            var buttonTranslate: CGFloat
+            
             if scrollView.contentOffset.y > oldScrollOffsetY {
                 // 往下
                 translate = -80
+                buttonTranslate = 120
             } else {
                 // 往上
                 translate = 0.0
+                buttonTranslate = 0
             }
             
             self.currentSearchTagTranslateY = translate
@@ -478,6 +484,8 @@ extension KPMainListViewController: UITableViewDelegate, UITableViewDataSource {
                                                                                                              y: self.currentSearchTagTranslateY/2)
                             self.tableView.transform = CGAffineTransform(translationX: 0, y: self.currentSearchTagTranslateY/2)
                             self.snapshotView.transform = CGAffineTransform(translationX: 0, y: self.currentSearchTagTranslateY/2)
+                            self.addButton.transform = CGAffineTransform(translationX: 0, y: buttonTranslate)
+                            
             }, completion: { (_) in
                 self.oldScrollOffsetY = scrollView.contentOffset.y
             })

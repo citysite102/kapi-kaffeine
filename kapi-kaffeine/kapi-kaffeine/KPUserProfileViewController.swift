@@ -169,6 +169,7 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
             tableView.dataSource = self
             tableView.delegate = self
             tableView.tag = index
+            tableView.separatorColor = UIColor.clear
             tableView.register(KPMainListTableViewCell.self,
                                 forCellReuseIdentifier: "cell")
             tableView.register(KPDefaultLoadingTableCell.self,

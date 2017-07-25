@@ -39,10 +39,12 @@ class KPServiceHandler {
                 model1.weight < model2.weight
             })
             
-            if relativeArray.count >= 3 {
+            if relativeArray.count >= 5 {
                 return [relativeArray[0].cafeModel,
                         relativeArray[1].cafeModel,
-                        relativeArray[2].cafeModel]
+                        relativeArray[2].cafeModel,
+                        relativeArray[3].cafeModel,
+                        relativeArray[4].cafeModel]
             } else {
                 var responseResult: [KPDataModel] = [KPDataModel]()
                 for relativeModel in relativeArray {

@@ -71,6 +71,7 @@ class KPMainListTableViewCell: UITableViewCell {
     var shopNameLabel: KPLayerLabel!
     var shopDistanceLabel: KPLayerLabel!
     var scoreLabel: KPMainListCellScoreLabel!
+    var separator: UIView!
     
     private var shopStatusHint: UIView!
     private var shopStatusLabel: UILabel!
@@ -148,6 +149,12 @@ class KPMainListTableViewCell: UITableViewCell {
         contentView.addSubview(featureContainer)
         featureContainer.addConstraints(fromStringArray: ["H:[$self]-8-|",
                                                           "V:[$self]-10-|"])
+        
+        separator = UIView()
+        separator.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
+        contentView.addSubview(separator)
+        separator.addConstraints(fromStringArray: ["V:[$self(1)]|",
+                                                   "H:|[$self]|"])
         
         NotificationCenter.default.addObserver(self, selector: #selector(locationDidUpdate), name: .KPLocationDidUpdate, object: nil)
 
