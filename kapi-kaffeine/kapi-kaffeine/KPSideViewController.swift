@@ -435,7 +435,6 @@ extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
                     
                     var indexPaths = [IndexPath]()
                     
-                    
                     if expandedCell != nil {
                         if let expandedIndexPath = tableView.indexPath(for: expandedCell!) {
                             

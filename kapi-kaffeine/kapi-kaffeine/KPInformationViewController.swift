@@ -164,7 +164,8 @@ class KPInformationViewController: KPViewController {
                                              preferredStyle: .actionSheet)
         actionController.view.tintColor = KPColorPalette.KPTextColor.grayColor_level2
         let editButton = UIAlertAction(title: "編輯店家資料",
-                                       style: .default) { (_) in
+                                       style: .default) {
+                                        [unowned self] (_) in
                                         let controller = KPModalViewController()
                                         controller.edgeInset = UIEdgeInsets(top: 0,
                                                                             left: 0,
@@ -178,7 +179,8 @@ class KPInformationViewController: KPViewController {
         }
         
         let reportButton = UIAlertAction(title: "回報問題",
-                                         style: .default) {(_) in
+                                         style: .default) {
+                                            [unowned self] (_) in
                                             let controller = KPModalViewController()
                                             controller.edgeInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
                                             let settingController = KPReportController()
@@ -202,7 +204,8 @@ class KPInformationViewController: KPViewController {
                                                 preferredStyle: .actionSheet)
         mapActionController.view.tintColor = KPColorPalette.KPTextColor.grayColor_level2
         let googleAction = UIAlertAction(title: "使用Google地圖開啟",
-                                       style: .default) { (_) in
+                                       style: .default) {
+                                        [unowned self] (_) in
                                         if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
                                             UIApplication.shared.open(URL(string:
                                                 "comgooglemaps://?daddr=\(self.informationDataModel.latitude!),\(self.informationDataModel.longitude!)&mapmode=standard")!,
@@ -215,7 +218,8 @@ class KPInformationViewController: KPViewController {
         }
         
         let appleAction = UIAlertAction(title: "使用地圖開啟",
-                                         style: .default) {(_) in
+                                         style: .default) {
+                                            [unowned self] (_) in
                                             let coordinates = CLLocationCoordinate2DMake(self.informationDataModel.latitude!,
                                                                                          self.informationDataModel.longitude!)
                                             let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: nil)
@@ -558,8 +562,8 @@ class KPInformationViewController: KPViewController {
         super.viewDidLayoutSubviews()
         
         // Fix table view height according to fix cell
-        commentInfoView = commentInformationView.infoView as! KPShopCommentInfoView
-        commentInfoView.tableViewHeightConstraint.constant = commentInfoView.tableView.contentSize.height
+//        commentInfoView = commentInformationView.infoView as! KPShopCommentInfoView
+//        commentInfoView.tableViewHeightConstraint.constant = commentInfoView.tableView.contentSize.height
     }
     
     override func didReceiveMemoryWarning() {
@@ -574,7 +578,7 @@ class KPInformationViewController: KPViewController {
         
         dataLoading = true
         KPServiceHandler.sharedHandler.fetchStoreInformation(informationDataModel.identifier) {
-            (result) in
+            [unowned self] (result) in
             self.informationHeaderButtonBar.informationDataModel = result
             self.informationHeaderView.scoreLabel.text = String(format: "%.1f",
                                                                 result?.averageRate?.doubleValue ?? 0.0)
@@ -582,13 +586,14 @@ class KPInformationViewController: KPViewController {
         }
         
         // 取得 Comment 資料
-        refreshComments()
+//        refreshComments()
         
         // 取得 Rating 資料
-        refreshRatings()
+//        refreshRatings()
         
         // 取得 Photo 資料
-        KPServiceHandler.sharedHandler.getPhotos { (successed, photos) in
+        KPServiceHandler.sharedHandler.getPhotos {
+            [unowned self] (successed, photos) in
             if successed == true && photos != nil {
                 var index: Int = 0
                 for urlString in photos! {
@@ -618,7 +623,8 @@ class KPInformationViewController: KPViewController {
     func refreshRatings() {
         
         // 取得 Rating 資料
-        KPServiceHandler.sharedHandler.getRatings { (successed, rate) in
+        KPServiceHandler.sharedHandler.getRatings {
+            [unowned self] (successed, rate) in
             if successed && rate != nil {
                 (self.rateInformationView.infoView as! KPShopRateInfoView).rateData = rate
                 self.informationHeaderButtonBar.rateButton.numberValue = (rate?.rates?.count)!
@@ -637,7 +643,8 @@ class KPInformationViewController: KPViewController {
     func refreshComments() {
         
         // 取得 Comment 資料
-        KPServiceHandler.sharedHandler.getComments { (successed, comments) in
+        KPServiceHandler.sharedHandler.getComments {
+            [unowned self] (successed, comments) in
             if successed && comments != nil {
                 self.commentInfoView.comments = comments!
                 self.commentInformationView.infoSupplementLabel.text = "\(comments?.count ?? 0) 人已留言"
