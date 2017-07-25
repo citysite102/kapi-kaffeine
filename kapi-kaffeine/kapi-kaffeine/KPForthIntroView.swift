@@ -179,7 +179,6 @@ class KPForthIntroView: KPSharedIntroView {
                            animations: {
                             self.animateSpeekBox.transform = CGAffineTransform.identity
             }) { (_) in
-                
             }
             
             UIView.animate(withDuration: 1.0,
@@ -202,28 +201,31 @@ class KPForthIntroView: KPSharedIntroView {
                             self.animateSpeekBoxThree.transform = CGAffineTransform.identity
             }) { (_) in
                 
-                UIView.animate(withDuration: 0.2,
+
+                
+            }
+            
+            UIView.animate(withDuration: 0.2,
+                           delay: 0.3,
+                           usingSpringWithDamping: 0.5,
+                           initialSpringVelocity: 0.8,
+                           options: .curveEaseOut,
+                           animations: {
+                            self.animateStarView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+            }) { (_) in
+                UIView.animate(withDuration: 0.3,
                                delay: 0.0,
                                usingSpringWithDamping: 0.5,
                                initialSpringVelocity: 0.8,
                                options: .curveEaseOut,
                                animations: {
-                                self.animateStarView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+                                self.animateStarView.tintColor = UIColor(rgbaHexValue: 0xF9C816FF)
+                                self.animateStarView.transform = CGAffineTransform.identity
                 }) { (_) in
-                    UIView.animate(withDuration: 0.3,
-                                   delay: 0.0,
-                                   usingSpringWithDamping: 0.5,
-                                   initialSpringVelocity: 0.8,
-                                   options: .curveEaseOut,
-                                   animations: {
-                                    self.animateStarView.tintColor = UIColor(rgbaHexValue: 0xF9C816FF)
-                                    self.animateStarView.transform = CGAffineTransform.identity
-                    }) { (_) in
-                        self.performStarAnimation(0.1)
-                    }
+                    self.performStarAnimation(0.1)
                 }
-                
             }
+            
         }
     }
     
