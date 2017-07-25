@@ -65,14 +65,14 @@ class KPFilter {
         }
         
         currentCafeDatas = currentCafeDatas.filter({
-            return $0.averageRate?.doubleValue ?? 0 >= averageRate &&
-            $0.wifiAverage?.doubleValue ?? 0 >= wifiRate &&
-            $0.quietAverage?.doubleValue ?? 0 >= quietRate &&
-            $0.cheapAverage?.doubleValue ?? 0 >= cheapRate &&
-            $0.seatAverage?.doubleValue ?? 0 >= seatRate &&
-            $0.tastyAverage?.doubleValue ?? 0 >= tastyRate &&
-            $0.foodAverage?.doubleValue ?? 0 >= foodRate &&
-            $0.musicAverage?.doubleValue ?? 0 >= musicRate
+            return $0.averageRate?.doubleValue ?? 5 >= averageRate &&
+            $0.wifiAverage?.doubleValue ?? 5 >= wifiRate &&
+            $0.quietAverage?.doubleValue ?? 5 >= quietRate &&
+            $0.cheapAverage?.doubleValue ?? 5 >= cheapRate &&
+            $0.seatAverage?.doubleValue ?? 5 >= seatRate &&
+            $0.tastyAverage?.doubleValue ?? 5 >= tastyRate &&
+            $0.foodAverage?.doubleValue ?? 5 >= foodRate &&
+            $0.musicAverage?.doubleValue ?? 5 >= musicRate
         })
         
         
@@ -97,8 +97,6 @@ class KPFilter {
                     }
                     return false
                 })
-                
-                
             }
         }
         

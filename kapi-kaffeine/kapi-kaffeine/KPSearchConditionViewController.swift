@@ -367,6 +367,16 @@ class KPSearchConditionViewController: KPViewController {
         businessCheckBoxThree.deselectCheckViews = [businessCheckBoxOne, businessCheckBoxTwo]
         
         
+        if KPFilter.sharedFilter.currentOpening == true {
+            businessCheckBoxTwo.checkBox.checkState = .checked
+        } else if KPFilter.sharedFilter.searchTime != nil {
+            businessCheckBoxThree.checkBox.checkState = .checked
+        } else {
+            businessCheckBoxOne.checkBox.checkState = .checked
+        }
+        
+        
+        
         timeSupplementView = KPSpecificTimeSupplementView()
         businessCheckBoxThree.supplementInfoView = timeSupplementView
         timeSupplementView.addConstraint(forWidth: 90)
