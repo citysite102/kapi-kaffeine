@@ -346,7 +346,7 @@ class KPInformationViewController: KPViewController {
 
         locationInformationView = KPInformationSharedInfoView()
         locationInformationView.infoTitleLabel.text = "位置訊息"
-        locationInformationView.infoSupplementLabel.text = "距離 600m"
+        locationInformationView.infoSupplementLabel.text = "距離 \(String(format: "%.1f", informationDataModel.distanceInMeter ?? 0))m"
         locationInformationView.actions = [
             Action(title:"街景模式",
                    style:.normal,
@@ -496,10 +496,10 @@ class KPInformationViewController: KPViewController {
         photoInformationView.infoTitleLabel.text = "店家照片"
         
         if let photoCount = informationDataModel.photoCount {
-            photoInformationView.infoSupplementLabel.text = "\(photoCount)\n張照片"
+            photoInformationView.infoSupplementLabel.text = "\(photoCount) 張照片"
             photoInformationView.isEmpty = (photoCount == 0)
         } else {
-            photoInformationView.infoSupplementLabel.text = "0\n張照片"
+            photoInformationView.infoSupplementLabel.text = "0 張照片"
             photoInformationView.isEmpty = true
         }
         scrollContainer.addSubview(photoInformationView)
@@ -629,7 +629,7 @@ class KPInformationViewController: KPViewController {
             } else {
                 self.informationHeaderButtonBar.rateButton.numberValue = 0
                 self.informationHeaderButtonBar.rateButton.selected = false
-                self.rateInformationView.infoSupplementLabel.text = "0人已評分"
+                self.rateInformationView.infoSupplementLabel.text = "0 人已評分"
             }
         }
     }
@@ -655,7 +655,7 @@ class KPInformationViewController: KPViewController {
                 }
             } else {
                 self.commentInfoView.comments = [KPCommentModel]()
-                self.commentInformationView.infoSupplementLabel.text = "0人已留言"
+                self.commentInformationView.infoSupplementLabel.text = "0 人已留言"
                 self.commentInfoView.tableViewHeightConstraint.constant = self.commentInfoView.tableView.contentSize.height
                 self.commentInformationView.setNeedsLayout()
                 self.commentInformationView.layoutIfNeeded()
