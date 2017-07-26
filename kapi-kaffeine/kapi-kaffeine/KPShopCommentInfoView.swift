@@ -17,7 +17,7 @@ class KPShopCommentInfoView: UIView {
     var tableViewHeightConstraint: NSLayoutConstraint!
     var comments: [KPCommentModel] = [KPCommentModel]() {
         didSet {
-            self.tableView.invalidateIntrinsicContentSize()
+//            self.tableView.invalidateIntrinsicContentSize()
             self.tableView.reloadData()
         }
     }

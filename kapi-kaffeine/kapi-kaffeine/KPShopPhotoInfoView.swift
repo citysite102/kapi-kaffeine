@@ -20,6 +20,7 @@ class KPShopPhotoInfoView: UIView {
             if displayPhotoInformations.count > 0 {
                 self.collectionView.addConstraint(forHeight: 112)
             }
+            collectionView.layoutIfNeeded()
             collectionView.reloadData()
         }
     }

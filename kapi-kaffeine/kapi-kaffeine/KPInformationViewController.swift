@@ -438,7 +438,6 @@ class KPInformationViewController: KPViewController {
         if let commentCount = informationDataModel.commentCount {
             commentInformationView.infoSupplementLabel.text = "\(commentCount) 人已留言"
             commentInformationView.isEmpty = (commentCount == 0)
-            
             commentInformationView.actions = [Action(title:"看更多評價(\(commentCount))",
                 style:.normal,
                 color:KPColorPalette.KPMainColor.mainColor_sub!,
@@ -562,8 +561,11 @@ class KPInformationViewController: KPViewController {
         super.viewDidLayoutSubviews()
         
         // Fix table view height according to fix cell
-//        commentInfoView = commentInformationView.infoView as! KPShopCommentInfoView
-//        commentInfoView.tableViewHeightConstraint.constant = commentInfoView.tableView.contentSize.height
+        
+//        if !commentInformationView.isEmpty {
+//            commentInfoView = commentInformationView.infoView as! KPShopCommentInfoView
+//            commentInfoView.tableViewHeightConstraint.constant = commentInfoView.tableView.contentSize.height
+//        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -586,10 +588,10 @@ class KPInformationViewController: KPViewController {
         }
         
         // 取得 Comment 資料
-//        refreshComments()
+        refreshComments()
         
         // 取得 Rating 資料
-//        refreshRatings()
+        refreshRatings()
         
         // 取得 Photo 資料
         KPServiceHandler.sharedHandler.getPhotos {
@@ -648,6 +650,8 @@ class KPInformationViewController: KPViewController {
             if successed && comments != nil {
                 self.commentInfoView.comments = comments!
                 self.commentInformationView.infoSupplementLabel.text = "\(comments?.count ?? 0) 人已留言"
+                
+                self.commentInfoView.tableView.layoutIfNeeded()
                 self.commentInfoView.tableViewHeightConstraint.constant = self.commentInfoView.tableView.contentSize.height
                 self.commentInformationView.setNeedsLayout()
                 self.commentInformationView.layoutIfNeeded()
@@ -658,12 +662,14 @@ class KPInformationViewController: KPViewController {
                     self.informationHeaderButtonBar.commentButton.selected =
                         (KPUserManager.sharedManager.currentUser?.hasReviewed(self.informationDataModel.identifier)) ?? false
                 } else {
+                    self.commentInfoView.tableViewHeightConstraint.constant = 64
                     self.commentInformationView.isEmpty = true
                 }
             } else {
                 self.commentInfoView.comments = [KPCommentModel]()
                 self.commentInformationView.infoSupplementLabel.text = "0 人已留言"
-                self.commentInfoView.tableViewHeightConstraint.constant = self.commentInfoView.tableView.contentSize.height
+                self.commentInfoView.tableView.layoutIfNeeded()
+                self.commentInfoView.tableViewHeightConstraint.constant = 64
                 self.commentInformationView.setNeedsLayout()
                 self.commentInformationView.layoutIfNeeded()
                 self.commentInformationView.isEmpty = true
