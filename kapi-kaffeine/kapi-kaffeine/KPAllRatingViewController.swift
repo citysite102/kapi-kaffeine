@@ -79,6 +79,24 @@ extension KPAllRatingViewController: UITableViewDelegate, UITableViewDataSource 
                                                  for: indexPath) as! KPShopRatingCell
         cell.selectionStyle = .none
         cell.rateData = ratings[indexPath.row]
+        
+        if let photoURL = ratings[indexPath.row].photoURL {
+            cell.userPicture.af_setImage(withURL: URL(string: photoURL)!,
+                                         placeholderImage: nil,
+                                         filter: nil,
+                                         progress: nil,
+                                         progressQueue: DispatchQueue.global(),
+                                         imageTransition: UIImageView.ImageTransition.crossDissolve(0.2),
+                                         runImageTransitionIfCached: true,
+                                         completion: { response in
+                                            if let responseImage = response.result.value {
+                                                cell.userPicture.image = responseImage
+                                            }
+            })
+        } else {
+            cell.userPicture.image = R.image.demo_profile()
+        }
+    
         if indexPath.row == ratings.count-1 {
             cell.separator.isHidden = true
         }
