@@ -19,6 +19,11 @@ class KPVisitedPopoverContent: UIView, PopoverProtocol {
     var collectionView:UICollectionView!
     var collectionLayout:UICollectionViewFlowLayout!
     var shownCellIndex: [Int] = [Int]()
+    var photos: [String] = [String]() {
+        didSet {
+            self.peopleLabel.text = "共有\(photos.count)人來過"
+        }
+    }
     var animated: Bool = true
     
     lazy var titleLabel: UILabel = {
@@ -35,7 +40,6 @@ class KPVisitedPopoverContent: UIView, PopoverProtocol {
         label.font = UIFont.systemFont(ofSize: 12.0)
         label.textAlignment = .center
         label.textColor = KPColorPalette.KPTextColor.grayColor_level4
-        label.text = "共有13人來過"
         return label
     }()
     
@@ -160,7 +164,7 @@ UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 13
+        return photos.count
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
@@ -185,21 +189,20 @@ UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: KPShopPhotoInfoView.KPShopPhotoInfoViewCellReuseIdentifier,
                                                       for: indexPath) as! KPShopPhotoCell
-        
-        let randomImageArray = [R.image.demo_1(),
-                                R.image.demo_2(),
-                                R.image.demo_3(),
-                                R.image.demo_4(),
-                                R.image.demo_5(),
-                                R.image.demo_6(),
-                                R.image.demo_7(),
-                                R.image.demo_8(),
-                                R.image.demo_9(),
-                                R.image.demo_10(),
-                                R.image.demo_11()]
-        
         let index: Int = Int(arc4random()%11)
-        cell.shopPhoto.image = randomImageArray[index]
+        cell.shopPhoto.af_setImage(withURL: URL(string: photos[index])!,
+                                   placeholderImage: nil,
+                                   filter: nil,
+                                   progress: nil,
+                                   progressQueue: DispatchQueue.global(),
+                                   imageTransition: UIImageView.ImageTransition.crossDissolve(0.2),
+                                   runImageTransitionIfCached: true,
+                                   completion: { response in
+                                    if let responseImage = response.result.value {
+                                        cell.shopPhoto.image = responseImage
+                                    }
+        })
+        
         cell.shopPhoto.layer.cornerRadius = 21
         return cell
     }

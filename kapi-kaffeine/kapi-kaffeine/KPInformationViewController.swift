@@ -286,12 +286,15 @@ class KPInformationViewController: KPViewController {
                                                         for: UIControlEvents.touchUpInside)
         informationHeaderView.scoreHandler = { [unowned self] in
             if let rates = self.rateDataModel?.rates {
-                let allRatingController = KPAllRatingViewController()
-                allRatingController.ratings = rates
-                self.navigationController?.pushViewController(viewController: allRatingController,
-                                                         animated: true,
-                                                         completion: {}
-                )
+                if rates.count > 0 {
+                    let allRatingController = KPAllRatingViewController()
+                    allRatingController.ratings = rates
+                    print("RatesInfo:\(rates)")
+                    self.navigationController?.pushViewController(viewController: allRatingController,
+                                                             animated: true,
+                                                             completion: {}
+                    )
+                }
             }
         }
         
@@ -559,13 +562,6 @@ class KPInformationViewController: KPViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
-        // Fix table view height according to fix cell
-        
-//        if !commentInformationView.isEmpty {
-//            commentInfoView = commentInformationView.infoView as! KPShopCommentInfoView
-//            commentInfoView.tableViewHeightConstraint.constant = commentInfoView.tableView.contentSize.height
-//        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -629,11 +625,12 @@ class KPInformationViewController: KPViewController {
             [unowned self] (successed, rate) in
             if successed && rate != nil {
                 (self.rateInformationView.infoView as! KPShopRateInfoView).rateData = rate
+                print("Rate Count:\(rate?.rates?.count)")
                 self.informationHeaderButtonBar.rateButton.numberValue = (rate?.rates?.count)!
                 self.informationHeaderButtonBar.rateButton.selected =
                     (KPUserManager.sharedManager.currentUser?.hasRated(self.informationDataModel.identifier)) ?? false
                 self.rateInformationView.infoSupplementLabel.text = "\(rate?.rates?.count ?? 0) 人已評分"
-                self.rateDataModel = rate
+//                self.rateDataModel = rate
             } else {
                 self.informationHeaderButtonBar.rateButton.numberValue = 0
                 self.informationHeaderButtonBar.rateButton.selected = false

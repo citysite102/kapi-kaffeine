@@ -50,6 +50,7 @@
 		7743342A1F264ED2000CCDFA /* KPShopRatingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774334291F264ED2000CCDFA /* KPShopRatingCell.swift */; };
 		7743342C1F265871000CCDFA /* KPCommentVoteRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7743342B1F265871000CCDFA /* KPCommentVoteRequest.swift */; };
 		7743342E1F265E3A000CCDFA /* KPLikeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7743342D1F265E3A000CCDFA /* KPLikeModel.swift */; };
+		774334401F28D96B000CCDFA /* KPSimpleMemberModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7743343F1F28D96B000CCDFA /* KPSimpleMemberModel.swift */; };
 		7745C0821EF050D100244541 /* KPLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7745C0811EF050D100244541 /* KPLoginViewController.swift */; };
 		774AD6BF1F15FDA3002ACB47 /* KPPriceSelectController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774AD6BE1F15FDA3002ACB47 /* KPPriceSelectController.swift */; };
 		77594B471EC89DAF0013BB56 /* KPPhotoAddCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77594B461EC89DAF0013BB56 /* KPPhotoAddCell.swift */; };
@@ -256,6 +257,7 @@
 		774334291F264ED2000CCDFA /* KPShopRatingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPShopRatingCell.swift; sourceTree = "<group>"; };
 		7743342B1F265871000CCDFA /* KPCommentVoteRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPCommentVoteRequest.swift; sourceTree = "<group>"; };
 		7743342D1F265E3A000CCDFA /* KPLikeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPLikeModel.swift; sourceTree = "<group>"; };
+		7743343F1F28D96B000CCDFA /* KPSimpleMemberModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSimpleMemberModel.swift; sourceTree = "<group>"; };
 		7745C0811EF050D100244541 /* KPLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPLoginViewController.swift; sourceTree = "<group>"; };
 		774AD6BE1F15FDA3002ACB47 /* KPPriceSelectController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = KPPriceSelectController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		77594B461EC89DAF0013BB56 /* KPPhotoAddCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPPhotoAddCell.swift; sourceTree = "<group>"; };
@@ -560,6 +562,7 @@
 				7734634C1ED74C5400EA78F0 /* KPDataRateModel.swift */,
 				77E6BAA61F13D22600802992 /* KPSimpleRateModel.swift */,
 				C05CF8771EF8019800F3DF2A /* KPDataBusinessHourModel.swift */,
+				7743343F1F28D96B000CCDFA /* KPSimpleMemberModel.swift */,
 			);
 			name = "Data Model";
 			sourceTree = "<group>";
@@ -1448,6 +1451,7 @@
 				77BB39261ED350AD00958AFE /* KPFirstIntroView.swift in Sources */,
 				77D6BDF01F0E9A42005598B3 /* demoView.swift in Sources */,
 				776ACB041E9BB8A900B629A2 /* KPSearchTagCell.swift in Sources */,
+				774334401F28D96B000CCDFA /* KPSimpleMemberModel.swift in Sources */,
 				772748441ED5F81300C42FB6 /* KPUserManager.swift in Sources */,
 				779F9E921F1A2E5B00B8DC25 /* KPInputRecommendCell.swift in Sources */,
 				773E24891F1E5A4200C7C094 /* KeychainItemWrapper.swift in Sources */,

@@ -27,6 +27,9 @@ class KPDetailedDataModel: NSObject, Mappable, GMUClusterItem {
     var mrt: String?
     var businessHour: KPDataBusinessHourModel?
     var tags: [KPDataTagModel]?
+    var rates: [KPSimpleRateModel]?
+    var visitedMembers: [KPSimpleMemberModel]?
+    var favoritedMembers: [String]?
     
     var averageRate: NSNumber? = 0
     var rateCount: NSNumber?
@@ -111,6 +114,9 @@ class KPDetailedDataModel: NSObject, Mappable, GMUClusterItem {
         photos              <-    map["photos"]
         comments            <-    map["comments"]
         priceAverage        <-    map["price_average"]
+        rates               <-    map["rates"]
+        visitedMembers      <-    map["visit_members"]
+        favoritedMembers    <-    map["favorite_members"]
     }
     
     let businessHourTransform = TransformOf<KPDataBusinessHourModel,

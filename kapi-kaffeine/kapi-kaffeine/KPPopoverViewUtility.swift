@@ -34,11 +34,12 @@ extension KPPopoverView {
         KPPopoverView.sharedPopoverView.popoverContent()
     }
     
-    class func popoverVisitedView(_ photos: [String]?,
+    class func popoverVisitedView(_ photos: [String]!,
                                   _ confirmAction: ((_ content: KPVisitedPopoverContent) -> Swift.Void)?) {
         
         let content = KPVisitedPopoverContent()
         content.confirmAction = confirmAction
+        content.photos = photos!
         KPPopoverView.sharedPopoverView.contentView = content
         KPPopoverView.sharedPopoverView.popoverContent()
     }

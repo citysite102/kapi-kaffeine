@@ -21,6 +21,8 @@ class KPSimpleRateModel: NSObject, Mappable {
     var createdTime: NSNumber? = 0
     var modifiedTime: NSNumber? = 0
     var memberID: String?
+    var displayName: String?
+    var photoURL: String?
     
     
     required init?(map: Map) {
@@ -37,6 +39,8 @@ class KPSimpleRateModel: NSObject, Mappable {
         createdTime     <- map["created_time"]
         modifiedTime    <- map["modified_time"]
         memberID        <- map["member_id"]
+        displayName     <- map["display_name"]
+        photoURL        <- map["photo_url"]
     }
     
 }
