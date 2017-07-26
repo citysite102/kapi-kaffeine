@@ -630,7 +630,7 @@ class KPInformationViewController: KPViewController {
                 self.informationHeaderButtonBar.rateButton.selected =
                     (KPUserManager.sharedManager.currentUser?.hasRated(self.informationDataModel.identifier)) ?? false
                 self.rateInformationView.infoSupplementLabel.text = "\(rate?.rates?.count ?? 0) 人已評分"
-//                self.rateDataModel = rate
+                self.rateDataModel = rate
             } else {
                 self.informationHeaderButtonBar.rateButton.numberValue = 0
                 self.informationHeaderButtonBar.rateButton.selected = false
