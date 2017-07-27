@@ -21,6 +21,7 @@ class KPDefaultLoadingTableCell: UITableViewCell {
     var defaultTitlePlace: UIView!
     var defaultDescriptionPlace: UIView!
     var defaultDistancePlace: UIView!
+    var separator: UIView!
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -65,6 +66,11 @@ class KPDefaultLoadingTableCell: UITableViewCell {
 //                                         metrics: [UIScreen.main.bounds.size.width/2],
 //                                         views: [defaultImagePlace, defaultDescriptionPlace]);
         
+        separator = UIView()
+        separator.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7
+        contentView.addSubview(separator)
+        separator.addConstraints(fromStringArray: ["V:[$self(1)]|",
+                                                   "H:|[$self]|"])
         
     }
     
