@@ -35,7 +35,7 @@ class KPMainViewController: KPViewController {
     
     var displayDataModel: [KPDataModel]! {
         didSet {
-            if oldValue == nil {
+//            if oldValue == nil {
                 self.mainListViewController?.state = .loading
                 self.mainListViewController?.tableView.reloadData()
                 DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
@@ -47,14 +47,14 @@ class KPMainViewController: KPViewController {
                     self.searchHeaderView.searchTagView.isUserInteractionEnabled = true
                     
                 }
-            } else {
-                self.mainListViewController?.displayDataModel = self.displayDataModel
-                self.mainMapViewController?.allDataModel = self.displayDataModel
-                self.searchHeaderView.styleButton.isEnabled = true
-                self.searchHeaderView.searchButton.isEnabled = true
-                self.searchHeaderView.menuButton.isEnabled = true
-                self.searchHeaderView.searchTagView.isUserInteractionEnabled = true
-            }
+//            } else {
+//                self.mainListViewController?.displayDataModel = self.displayDataModel
+//                self.mainMapViewController?.allDataModel = self.displayDataModel
+//                self.searchHeaderView.styleButton.isEnabled = true
+//                self.searchHeaderView.searchButton.isEnabled = true
+//                self.searchHeaderView.menuButton.isEnabled = true
+//                self.searchHeaderView.searchTagView.isUserInteractionEnabled = true
+//            }
         }
     }
 

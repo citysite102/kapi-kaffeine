@@ -103,8 +103,7 @@ class KPMainListViewController:
                 state = .normal
                 self.tableView.isUserInteractionEnabled = true
                 self.tableView.allowsSelection = true
-                self.tableView.reloadSections(IndexSet.init(integer: 0) ,
-                                              with: .fade)
+                self.tableView.reloadData()
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
                 if !adsAdded {
                     self.addNativeExpressAds()
