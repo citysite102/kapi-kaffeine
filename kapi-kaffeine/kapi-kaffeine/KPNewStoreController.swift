@@ -49,7 +49,6 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
     var timeRadioBoxOne: KPCheckView!
     var timeRadioBoxTwo: KPCheckView!
     var timeRadioBoxThree: KPCheckView!
-    var timeRadioBoxFour: KPCheckView!
     
     var socketLabel: UILabel!
     var socketRadioBoxOne: KPCheckView!
@@ -90,7 +89,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
     var businessHourCheckedView: KPItemCheckedView!
     
     
-    var selectedCoordinate: CLLocationCoordinate2D! {
+    var selectedCoordinate: CLLocationCoordinate2D! = nil {
         didSet {
             if addressMapView != nil {
                 addressMapView.clear()
@@ -145,7 +144,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
                                              target: nil,
                                              action: nil)
 
-        rightbarItem.isEnabled = false
+        rightbarItem.isEnabled = true
         negativeSpacer.width = -8
         navigationItem.leftBarButtonItems = [negativeSpacer, barItem]
         navigationItem.rightBarButtonItems = [negativeSpacer, rightbarItem]
@@ -353,40 +352,33 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
         timeLimitLabel.addConstraints(fromStringArray: ["H:|-16-[$self]",
                                                         "V:|-16-[$self]"])
         timeRadioBoxOne = KPCheckView(.radio, "有限時")
+        timeRadioBoxOne.customValue = 1
         timeRadioBoxOne.checkBox.checkState = .checked
         sectionTwoContainer.addSubview(timeRadioBoxOne)
         timeRadioBoxOne.addConstraints(fromStringArray: ["H:|-16-[$self]",
                                                          "V:[$view0]-16-[$self]"],
                                        views: [timeLimitLabel])
         timeRadioBoxTwo = KPCheckView(.radio, "客滿/人多限時")
+        timeRadioBoxTwo.customValue = 1
         sectionTwoContainer.addSubview(timeRadioBoxTwo)
         timeRadioBoxTwo.addConstraints(fromStringArray: ["H:|-16-[$self]",
                                                          "V:[$view0]-16-[$self]"],
                                        views: [timeRadioBoxOne])
-        timeRadioBoxThree = KPCheckView(.radio, "有限時")
+        timeRadioBoxThree = KPCheckView(.radio, "不限時")
+        timeRadioBoxThree.customValue = 2
         sectionTwoContainer.addSubview(timeRadioBoxThree)
         timeRadioBoxThree.addConstraints(fromStringArray: ["H:|-16-[$self]",
                                                            "V:[$view0]-16-[$self]"],
                                          views: [timeRadioBoxTwo])
-        timeRadioBoxFour = KPCheckView(.radio, "不限時")
-        sectionTwoContainer.addSubview(timeRadioBoxFour)
-        timeRadioBoxFour.addConstraints(fromStringArray: ["H:|-16-[$self]",
-                                                          "V:[$view0]-16-[$self]"],
-                                        views: [timeRadioBoxThree])
         
         
         timeRadioBoxOne.deselectCheckViews = [timeRadioBoxTwo,
-                                              timeRadioBoxThree,
-                                              timeRadioBoxFour]
+                                              timeRadioBoxThree]
         timeRadioBoxTwo.deselectCheckViews = [timeRadioBoxOne,
-                                              timeRadioBoxThree,
-                                              timeRadioBoxFour]
+                                              timeRadioBoxThree]
         timeRadioBoxThree.deselectCheckViews = [timeRadioBoxTwo,
-                                                timeRadioBoxOne,
-                                                timeRadioBoxFour]
-        timeRadioBoxFour.deselectCheckViews = [timeRadioBoxTwo,
-                                               timeRadioBoxOne,
-                                               timeRadioBoxThree]
+                                                timeRadioBoxOne]
+
         
         socketLabel = headerLabel("插座數量")
         sectionTwoContainer.addSubview(socketLabel)
@@ -396,18 +388,21 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
         
         socketRadioBoxOne = KPCheckView(.radio, "無插座")
         socketRadioBoxOne.checkBox.checkState = .checked
+        socketRadioBoxOne.customValue = 4
         sectionTwoContainer.addSubview(socketRadioBoxOne)
         socketRadioBoxOne.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",
                                                            "V:[$view0]-16-[$self]"],
                                          metrics:[KPNewStoreControllerConstants.leftPadding],
                                          views: [socketLabel])
         socketRadioBoxTwo = KPCheckView(.radio, "部分座位有")
+        socketRadioBoxTwo.customValue = 2
         sectionTwoContainer.addSubview(socketRadioBoxTwo)
         socketRadioBoxTwo.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",
                                                            "V:[$view0]-16-[$self]"],
                                          metrics:[KPNewStoreControllerConstants.leftPadding],
                                          views: [socketRadioBoxOne])
         socketRadioBoxThree = KPCheckView(.radio, "很多插座")
+        socketRadioBoxThree.customValue = 1
         sectionTwoContainer.addSubview(socketRadioBoxThree)
         socketRadioBoxThree.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",
                                                              "V:[$view0]-16-[$self]"],
@@ -426,7 +421,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
         sectionTwoContainer.addSubview(standDeskLabel)
         standDeskLabel.addConstraints(fromStringArray: ["H:|-16-[$self]",
                                                         "V:[$view0]-16-[$self]"],
-                                      views: [timeRadioBoxFour])
+                                      views: [timeRadioBoxThree])
         standDeskCheckBox = KPCheckView(.checkmark, "有站立桌，可站立工作")
         standDeskCheckBox.checkBox.checkState = .checked
         sectionTwoContainer.addSubview(standDeskCheckBox)
@@ -524,20 +519,79 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
     
     func handleSendButtonOnTapped() {
         
+//        if nameSubTitleView.editTextField.text == nil ||
+//            nameSubTitleView.editTextField.text?.characters.count == 0 {
+//            
+//        }
+//        
+//        if addressSubTitleView.editTextField.text == nil ||
+//            addressSubTitleView.editTextField.text?.characters.count == 0 {
+//            
+//        }
+//        
+//        if citySubTitleView.editTextField.text == nil ||
+//            citySubTitleView.editTextField.text?.characters.count == 0 {
+//            
+//        }
+//        
+//        if addressSubTitleView.editTextField.text == nil ||
+//            addressSubTitleView.editTextField.text?.characters.count == 0 {
+//            
+//        }
+//        
+//        if addressSubTitleView.editTextField.text == nil ||
+//            addressSubTitleView.editTextField.text?.characters.count == 0 {
+//            
+//        }
+//        
+//        if addressSubTitleView.editTextField.text == nil ||
+//            addressSubTitleView.editTextField.text?.characters.count == 0 {
+//            
+//        }
+        
+        var tags = [KPDataTagModel]()
+        
+        if let indexPaths = featureCollectionView.indexPathsForSelectedItems {
+            for indexPath in indexPaths {
+                tags.append(KPServiceHandler.sharedHandler.featureTags[indexPath.row])
+            }
+        }
+        
+        var businessHour: [String: String]
+        if businessHourController == nil {
+            businessHour = [:]
+        } else {
+            businessHour = (businessHourController.returnValue as? [String: String]) ?? [:]
+        }
+        
         KPServiceHandler.sharedHandler.addNewShop(nameSubTitleView.editTextField.text ?? "",
                                                   addressSubTitleView.editTextField.text ?? "",
                                                   citySubTitleView.editTextField.text ?? "",
+                                                  selectedCoordinate.latitude,
+                                                  selectedCoordinate.longitude,
                                                   facebookSubTitleView.editTextField.text ?? "",
-                                                  "1",
-                                                  "1",
+                                                  timeRadioBoxOne.groupValue as! Int,
+                                                  standDeskCheckBox.checkBox.checkState == .checked ? 1 : 4,
+                                                  socketRadioBoxOne.groupValue as! Int,
+                                                  ratingController.ratingViews[0].currentRate,
+                                                  ratingController.ratingViews[1].currentRate,
+                                                  ratingController.ratingViews[2].currentRate,
+                                                  ratingController.ratingViews[3].currentRate,
+                                                  ratingController.ratingViews[4].currentRate,
+                                                  ratingController.ratingViews[5].currentRate,
+                                                  ratingController.ratingViews[6].currentRate,
                                                   phoneSubTitleView.editTextField.text ?? "",
-                                                  (businessHourController.returnValue as? [String: String]) ?? [:]) { (success) in
+                                                  tags,
+                                                  businessHour,
+                                                  priceSelectController.priceRanges.index(of: priceSubTitleView.editTextField.text ?? "") ?? -1) { (success) in
                                                     if success == true {
                                                         KPPopoverView.popoverNotification("新增成功",
                                                                                           "感謝您提交資訊，我們將儘速進行審查:D 這將會需要1-3天的審核時間確認店家的資訊是否無誤，給我好好的等。",
                                                                                           nil)
+                                                    } else {
+                                                        KPPopoverView.popoverNotification("新增失敗", "發生錯誤，請再試一次！", nil);
                                                     }
-                                                    
+
         }
         
     }

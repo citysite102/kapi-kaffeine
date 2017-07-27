@@ -551,6 +551,23 @@ extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
                 if let mapView = mainController.mainMapViewController?.mapView {
                     mapView.animate(to: GMSCameraPosition.camera(withTarget: (regionContent?.cityCoordinate[indexPath.row-regionIndex-1])!,
                                                                  zoom: mapView.camera.zoom))
+//                    let zoom = mapView.camera.zoom
+//                    CATransaction.begin()
+//                    CATransaction.setValue(NSNumber(floatLiteral: 1), forKey: kCATransactionAnimationDuration)
+//                    CATransaction.setCompletionBlock({
+//                        CATransaction.begin()
+//                        CATransaction.setValue(NSNumber(floatLiteral: 1), forKey: kCATransactionAnimationDuration)
+//                        mapView.animate(to: GMSCameraPosition.camera(withTarget: (regionContent?.cityCoordinate[indexPath.row-regionIndex-1])!,
+//                                                                     zoom: zoom))
+//                        CATransaction.commit()
+//
+//                    })
+//                    mapView.animate(to: GMSCameraPosition.camera(withTarget: CLLocationCoordinate2D(latitude: ((regionContent?.cityCoordinate[indexPath.row-regionIndex-1])!.latitude
+//                                                                                                                + mapView.camera.target.latitude)/2,
+//                                                                                                    longitude: ((regionContent?.cityCoordinate[indexPath.row-regionIndex-1])!.longitude
+//                                                                                                                + mapView.camera.target.longitude)/2),
+//                                                                 zoom: 14))
+//                    CATransaction.commit()
                 }
                 mainController.searchHeaderView.titleLabel.text = regionContent?.cities[indexPath.row-regionIndex-1]
                 dismiss(animated: true, completion: nil)

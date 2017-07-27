@@ -128,11 +128,23 @@ class KPServiceHandler {
     func addNewShop(_ name:String,
                     _ address:String,
                     _ city:String,
+                    _ latitude: Double,
+                    _ longitude: Double,
                     _ fb_url:String,
-                    _ limited_time: String,
-                    _ socket: String,
+                    _ limited_time: Int,
+                    _ standingDesk: Int,
+                    _ socket: Int,
+                    _ wifi: Int,
+                    _ quiet: Int,
+                    _ cheap: Int,
+                    _ seat: Int,
+                    _ tasty: Int,
+                    _ food: Int,
+                    _ music: Int,
                     _ phone: String,
+                    _ tags: [KPDataTagModel],
                     _ business_hour: [String: String],
+                    _ price_average: Int,
                     _ completion: ((_ successed: Bool) -> Swift.Void)?) {
         
         
@@ -146,11 +158,23 @@ class KPServiceHandler {
         newShopRequest.perform(name,
                                address,
                                city,
+                               latitude,
+                               longitude,
                                fb_url,
                                limited_time,
+                               standingDesk,
                                socket,
+                               wifi,
+                               quiet,
+                               cheap,
+                               seat,
+                               tasty,
+                               food,
+                               music,
                                phone,
-                               business_hour).then { result -> Void in
+                               tags,
+                               business_hour,
+                               price_average).then { result -> Void in
                                 if let addResult = result["result"].bool {
                                     loadingView.state = addResult ? .successed : .failed
                                     DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2.5,
@@ -166,13 +190,15 @@ class KPServiceHandler {
                                     })
                                     completion?(false)
                                 }
-        }.catch { (error) in
-            loadingView.state = .failed
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
-                                          execute: {
-                                            loadingView.removeFromSuperview()
-            })
-            completion?(false)
+            }.catch { (error) in
+                loadingView.state = .failed
+                print(error)
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
+                                              execute: {
+                                                loadingView.removeFromSuperview()
+                })
+                completion?(false)
+                
         }
         
     }

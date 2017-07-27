@@ -26,13 +26,32 @@ class KPAddNewCafeRequest: NetworkRequest {
         parameters["fb_url"] = facebookURL
         parameters["limited_time"] = limitedTime
         parameters["socket"] = socket
+        
+        var rates = [String: NSNumber]()
+        rates["wifi"] = NSNumber(value: wifi)
+        rates["quiet"] = NSNumber(value: quiet)
+        rates["cheap"] = NSNumber(value: cheap)
+        rates["seat"] = NSNumber(value: seat)
+        rates["tasty"] = NSNumber(value: tasty)
+        rates["food"] = NSNumber(value: food)
+        rates["music"] = NSNumber(value: music)
+        
+        parameters["rates"] = rates
+        
         parameters["phone"] = phone
         
-        parameters["latitude"] = NSNumber(value: 23.4838654)
-        parameters["longitude"] = NSNumber(value: 120.4535834)
+        parameters["latitude"] = latitude
+        parameters["longitude"] = longtitude
+        
+        parameters["tags"] = tags?.toJSONString()
         
         parameters["business_hours"] = business_hour
         
+        parameters["price_average"] = price_average
+        
+        
+        parameters["member_id"] = KPUserManager.sharedManager.currentUser?.identifier
+
         return parameters
     
     }
@@ -46,35 +65,75 @@ class KPAddNewCafeRequest: NetworkRequest {
     private var url: String?
     private var facebookURL: String?
     
-    private var limitedTime: String? // 限制時間 (1:很多,2:很少,3:看狀況,4:沒設定)
-    private var socket: String? // 插座 (1:很多,2:很少,3:看狀況,4:沒設定)
-    private var standingDesk: String? // 站立位 (1:很多,2:很少,3:看狀況,4:沒設定)
+    private var limitedTime: Int?
+    private var socket: Int?
+    private var standingDesk: Int?
+    
+    private var wifi: Int!
+    private var quiet: Int!
+    private var cheap: Int!
+    private var seat: Int!
+    private var tasty: Int!
+    private var food: Int!
+    private var music: Int!
+    
     private var mrt: String?
     private var phone: String?
-    private var timeStamp: String? // Time stamp 去掉小數點部分
+    
+    private var tags: [KPDataTagModel]?
     
     private var business_hour: [String: String]?
     
+    private var price_average: Int?
+    
     public func perform(_ name: String,
                         _ address: String,
-                        _ city: String,
-                        _ fb_url: String,
-                        _ limited_time: String,
-                        _ socket: String,
+                        _ city:String,
+                        _ latitude: Double,
+                        _ longitude: Double,
+                        _ fb_url:String,
+                        _ limited_time: Int,
+                        _ standingDesk: Int,
+                        _ socket: Int,
+                        _ wifi: Int,
+                        _ quiet: Int,
+                        _ cheap: Int,
+                        _ seat: Int,
+                        _ tasty: Int,
+                        _ food: Int,
+                        _ music: Int,
                         _ phone: String,
-                        _ business_hour: [String: String]) -> Promise<(ResponseType)> {
+                        _ tags: [KPDataTagModel],
+                        _ business_hour: [String: String],
+                        _ price_average: Int) -> Promise<(ResponseType)> {
         
         self.name = name
         self.address = address
         self.city = city
         
+        self.latitude = NSNumber(value: latitude)
+        self.longtitude = NSNumber(value: longitude)
+        
         self.facebookURL = fb_url
         
         self.limitedTime = limited_time
         self.socket = socket
+        
+        self.wifi = wifi
+        self.quiet = quiet
+        self.cheap = cheap
+        self.seat = seat
+        self.tasty = tasty
+        self.food = food
+        self.music = music
+        
         self.phone = phone
         
+        self.tags = tags
+        
         self.business_hour = business_hour
+        
+        self.price_average = price_average
         
         return networkClient.performRequest(self).then(execute: responseHandler)
     }
