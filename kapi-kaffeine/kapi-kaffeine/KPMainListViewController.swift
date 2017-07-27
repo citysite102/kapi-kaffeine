@@ -26,12 +26,6 @@ class KPMainListViewController:
         static let adViewHeight = CGFloat(135)
     }
     
-    public enum ControllerState {
-        case normal
-        case loading
-        case noInternet
-    }
-    
     weak var mainController: KPMainViewController!
     
     var statusContainerView: UIView!

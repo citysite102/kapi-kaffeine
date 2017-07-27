@@ -46,8 +46,26 @@ GMUClusterRendererDelegate {
         return shadowButton
     }()
     
+    var state: ControllerState! = .loading {
+        didSet {
+            if state == .normal {
+//                if loadingView.superview != nil {
+//                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1,
+//                                                  execute: {
+//                                                    self.loadingView.removeFromSuperview()
+//                    })
+//                }
+            } else if state == .loading {
+//                UIApplication.shared.topViewController.view.addSubview(loadingView)
+//                loadingView.addConstraints(fromStringArray: ["V:|[$self]|",
+//                                                             "H:|[$self]|"])
+            }
+        }
+    }
+    
     private var clusterManager: GMUClusterManager!
     
+    var loadingView: KPLoadingView!
     var mapView: GMSMapView!
     var currentDataModel:KPDataModel?
     var selectedDataModel: KPDataModel? {
@@ -147,6 +165,7 @@ GMUClusterRendererDelegate {
     
     var allDataModel: [KPDataModel] = [] {
         didSet {
+            self.state = .normal
             self.clusterManager.clearItems()
             for datamodel in self.allDataModel  {
                 self.clusterManager.add(datamodel)
@@ -255,6 +274,7 @@ GMUClusterRendererDelegate {
         snapshotView.addConstraints(fromStringArray: ["V:|-100-[$self]|",
                                                       "H:|[$self]|"])
         
+        loadingView = KPLoadingView(("讀取中..", "讀取成功", "讀取失敗"))
     }
     
     override func viewDidAppear(_ animated: Bool) {

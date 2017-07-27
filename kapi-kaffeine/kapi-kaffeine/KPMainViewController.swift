@@ -15,6 +15,12 @@ protocol KPMainViewControllerDelegate {
     var selectedDataModel: KPDataModel? { get }
 }
 
+public enum ControllerState {
+    case normal
+    case loading
+    case noInternet
+}
+
 class KPMainViewController: KPViewController {
 
     var statusBarShouldBeHidden = false
