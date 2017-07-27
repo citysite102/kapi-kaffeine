@@ -79,6 +79,8 @@ extension KPAllRatingViewController: UITableViewDelegate, UITableViewDataSource 
                                                  for: indexPath) as! KPShopRatingCell
         cell.selectionStyle = .none
         cell.rateData = ratings[indexPath.row]
+        cell.userNameLabel.text = ratings[indexPath.row].displayName
+        cell.timeHintLabel.text = ratings[indexPath.row].createdModifiedContent
         
         if let photoURL = ratings[indexPath.row].photoURL {
             cell.userPicture.af_setImage(withURL: URL(string: photoURL)!,

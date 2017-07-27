@@ -23,6 +23,16 @@ class KPSimpleRateModel: NSObject, Mappable {
     var memberID: String?
     var displayName: String?
     var photoURL: String?
+    var createdModifiedContent: String! {
+        let diffInterval = Date().timeIntervalSince1970 - (createdTime?.doubleValue ?? 0)
+        if diffInterval < 60*60 {
+            return String(format: "%d分鐘前", Int(diffInterval/60))
+        } else if diffInterval < 60*60*24 {
+            return String(format: "%d小時前", Int(diffInterval/(60*60)))
+        } else {
+            return String(format: "%d天前", Int(diffInterval/(60*60*24)))
+        }
+    }
     
     
     required init?(map: Map) {

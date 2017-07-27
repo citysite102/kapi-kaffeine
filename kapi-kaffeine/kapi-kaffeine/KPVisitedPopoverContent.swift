@@ -22,6 +22,7 @@ class KPVisitedPopoverContent: UIView, PopoverProtocol {
     var photos: [String] = [String]() {
         didSet {
             self.peopleLabel.text = "共有\(photos.count)人來過"
+            self.invalidateIntrinsicContentSize()
         }
     }
     var animated: Bool = true
@@ -53,7 +54,7 @@ class KPVisitedPopoverContent: UIView, PopoverProtocol {
     private var cancelButton: UIButton!
     
     override var intrinsicContentSize: CGSize {
-        return CGSize(width: 280, height: 250)
+        return CGSize(width: 280, height: (photos.count/5+1)*80+110)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -189,9 +190,8 @@ UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: KPShopPhotoInfoView.KPShopPhotoInfoViewCellReuseIdentifier,
                                                       for: indexPath) as! KPShopPhotoCell
-        let index: Int = Int(arc4random()%11)
-        cell.shopPhoto.af_setImage(withURL: URL(string: photos[index])!,
-                                   placeholderImage: nil,
+        cell.shopPhoto.af_setImage(withURL: URL(string: photos[indexPath.row])!,
+                                   placeholderImage: UIImage(color: KPColorPalette.KPBackgroundColor.grayColor_level6!),
                                    filter: nil,
                                    progress: nil,
                                    progressQueue: DispatchQueue.global(),

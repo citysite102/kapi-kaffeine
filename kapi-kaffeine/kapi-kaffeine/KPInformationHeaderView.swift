@@ -171,12 +171,10 @@ class KPInformationHeaderButtonBar: UIView {
                                                         [] :
                                                         [.topRight, .topLeft]
                                                     let ratingViewController = KPRatingViewController()
-                                                    if ((KPUserManager.sharedManager.currentUser?.hasRated) != nil) {
-//                                                        if let rate = self.informationDataModel.rates?.rates?.first(where:
-//                                                            {$0.memberID == KPUserManager.sharedManager.currentUser?.identifier}) {
-//                                                            ratingViewController.defaultRateModel = rate
-//                                                        }
+                                                    if self.informationController?.hasRatedDataModel != nil {
+                                                        ratingViewController.defaultRateModel = self.informationController?.hasRatedDataModel
                                                     }
+                                                    
                                                     controller.contentController = ratingViewController
                                                     controller.presentModalView()
         })

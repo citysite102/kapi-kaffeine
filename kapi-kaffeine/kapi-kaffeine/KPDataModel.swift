@@ -28,11 +28,11 @@ class KPDataModel: NSObject, Mappable, GMUClusterItem {
     var tags: [KPDataTagModel]?
     
     var averageRate: NSNumber? = 0
-    var rateCount: NSNumber?
-    var commentCount: NSNumber?
-    var favoriteCount: NSNumber?
-    var visitCount: NSNumber?
-    var photoCount: NSNumber?
+    var rateCount: NSNumber? = 0
+    var commentCount: NSNumber? = 0
+    var favoriteCount: NSNumber? = 0
+    var visitCount: NSNumber? = 0
+    var photoCount: NSNumber? = 0
     
     var cheapAverage: NSNumber? = 0
     var foodAverage: NSNumber? = 0

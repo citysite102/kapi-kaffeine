@@ -20,6 +20,7 @@ class KPRateDataModel: NSObject, Mappable {
     var musicAverage: NSNumber? = 0
     var wifiAverage: NSNumber? = 0
     var rates: [KPSimpleRateModel]?
+    var base: KPSimpleRateModel?
     
 
     required init?(map: Map) {
@@ -35,5 +36,6 @@ class KPRateDataModel: NSObject, Mappable {
         musicAverage    <- map["music_avg"]
         wifiAverage     <- map["wifi_avg"]
         rates           <- map["rates"]
+        base            <- map["base"]
     }
 }

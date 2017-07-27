@@ -30,7 +30,6 @@ class KPShopRatingCell: UITableViewCell {
             var totalRate: CGFloat = 0
             var availableRateCount: CGFloat = 0
             
-            
             if let wifi = rateData.wifi {
                 rateContents.append(rateData.wifi?.stringValue.characters.count == 1 ?
                     "\((rateData.wifi?.stringValue)!).0" :
@@ -120,6 +119,11 @@ class KPShopRatingCell: UITableViewCell {
                 }
             } else {
                 rateContents.append("0.0")
+            }
+            
+            
+            for (index, rateView) in rateViews.enumerated() {
+                rateView.rateContentLabel.text = rateContents[index]
             }
             
             let averageRate = totalRate/availableRateCount
