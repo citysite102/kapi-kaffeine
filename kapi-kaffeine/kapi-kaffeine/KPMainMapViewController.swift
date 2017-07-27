@@ -175,7 +175,7 @@ GMUClusterRendererDelegate {
             self.clusterManager.cluster()
             
             if isCollectionViewShow == true {
-                isCollectionViewShow = true
+                isCollectionViewShow = false
             }
         }
     }

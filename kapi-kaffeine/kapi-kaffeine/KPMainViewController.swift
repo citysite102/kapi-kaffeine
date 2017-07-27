@@ -257,7 +257,9 @@ class KPMainViewController: KPViewController {
             mainListViewController?.view.alpha = 1.0
             mainMapViewController?.view.alpha = 0.0
             
-            self.mainMapViewController?.collectionView.isHidden = true
+            if !(self.mainMapViewController?.isCollectionViewShow)! {
+                self.mainMapViewController?.collectionView.isHidden = true
+            }
             self.mainMapViewController?.view.layer.transform =
                 CATransform3DRotate((self.mainMapViewController?.view.layer.transform)!,
                                     CGFloat.pi, 0, 1, 0)
@@ -292,7 +294,9 @@ class KPMainViewController: KPViewController {
                                options: .curveEaseOut,
                                animations: {
                                 self.searchHeaderView.styleButton.setImage(iconImage, for: .normal)
-                                self.mainMapViewController?.collectionView.isHidden = true
+                                if !(self.mainMapViewController?.isCollectionViewShow)! {
+                                    self.mainMapViewController?.collectionView.isHidden = true
+                                }
                                 
                                 self.mainListViewController?.view.layer.transform =
                                     CATransform3DScale(CATransform3DRotate((self.mainMapViewController?.view.layer.transform)!,
@@ -314,7 +318,9 @@ class KPMainViewController: KPViewController {
             mainMapViewController?.view.alpha = 1.0
             
             
-            self.mainMapViewController?.collectionView.isHidden = true
+            if !(self.mainMapViewController?.isCollectionViewShow)! {
+                self.mainMapViewController?.collectionView.isHidden = true
+            }
             self.mainListViewController?.view.layer.transform =
                 CATransform3DRotate((self.mainListViewController?.view.layer.transform)!,
                                     CGFloat.pi, 0, 1, 0)
