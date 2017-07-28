@@ -14,6 +14,7 @@ enum searchTagType: String {
     case limitTime  = "不限時"
     case opening    = "營業中"
     case highRate   = "評分高"
+    case clear      = "清除設定"
 //    case standDesk  = "有站桌"
 }
 
@@ -42,10 +43,11 @@ class KPSearchTagView: UIView {
                              searchTagType.socket,
                              searchTagType.limitTime,
                              searchTagType.opening,
-                             searchTagType.highRate]
+                             searchTagType.highRate,
+                             searchTagType.clear]
     var headerTagImages = [R.image.icon_wifi(), R.image.icon_socket(),
                            R.image.icon_clock(), R.image.icon_door(),
-                           R.image.icon_star()]
+                           R.image.icon_star(), R.image.icon_edit()]
 
     
     override init(frame: CGRect) {
@@ -136,11 +138,19 @@ extension KPSearchTagView: UICollectionViewDelegate, UICollectionViewDataSource,
         cell.layer.cornerRadius = 2.0
         cell.layer.masksToBounds = true
         cell.alpha = cell.isSelected ? 1.0 : 0.4
-        
+
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        if self.headerTagContents[indexPath.row] == .clear {
+            for indexPath in collectionView.indexPathsForSelectedItems ?? [] {
+                collectionView.deselectItem(at: indexPath, animated: true)
+            }
+            collectionView.reloadData()
+        }
+
 //        let cell = collectionView.cellForItem(at: indexPath)
 //        currentSelectTags.append(headerTagContents[indexPath.row])
         delegate?.searchTagDidSelect(headerTagContents[indexPath.row])

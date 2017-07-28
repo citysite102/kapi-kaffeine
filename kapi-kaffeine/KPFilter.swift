@@ -148,6 +148,29 @@ class KPFilter {
         return currentCafeDatas
     }
     
+    
+    func restoreDefaultSettings() {
+        sortedby = .distance
+        
+        wifiRate = 0
+        quietRate = 0
+        cheapRate = 0
+        seatRate = 0
+        tastyRate = 0
+        foodRate = 0
+        musicRate = 0
+        
+        averageRate = 0
+        
+        limited_time = 4
+        socket = 4
+        standingDesk = false
+        
+        currentOpening = false
+        searchTime = nil
+    }
+    
+    
     public class func filterData(source: [KPDataModel], withMRT
                                  mrt: String) -> [KPDataModel] {
         

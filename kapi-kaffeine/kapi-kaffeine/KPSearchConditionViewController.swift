@@ -143,6 +143,21 @@ class KPSearchConditionViewController: KPViewController {
                                 action: #selector(KPInformationViewController.handleDismissButtonOnTapped),
                                 for: .touchUpInside)
         
+        
+        let barRightItem = UIBarButtonItem(title: "回復預設",
+                                           style: UIBarButtonItemStyle.plain,
+                                           target: self,
+                                           action: #selector(handleRestoreButtonOnTapped))
+        barRightItem.setTitleTextAttributes([NSFontAttributeName: UIFont.systemFont(ofSize: 16)],
+                                            for: .normal)
+        
+        let spacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace,
+                                             target: nil,
+                                             action: nil)
+        spacer.width = -8
+        navigationItem.rightBarButtonItems = [spacer, barRightItem]
+        
+        
         scrollView = UIScrollView()
         scrollView.showsVerticalScrollIndicator = false
         view.addSubview(scrollView)
@@ -458,6 +473,27 @@ class KPSearchConditionViewController: KPViewController {
     
     func handleDismissButtonOnTapped() {
         appModalController()?.dismissControllerWithDefaultDuration()
+    }
+    
+    func handleRestoreButtonOnTapped() {
+        sortSegmentedControl.selectedSegmentIndex = 0
+        quickSettingButtonOne.isSelected = false
+        quickSettingButtonTwo.isSelected = false
+        quickSettingButtonThree.isSelected = false
+        
+        ratingViews[0].currentRate = 0
+        ratingViews[1].currentRate = 0
+        ratingViews[2].currentRate = 0
+        ratingViews[3].currentRate = 0
+        ratingViews[4].currentRate = 0
+        ratingViews[5].currentRate = 0
+        ratingViews[6].currentRate = 0
+        
+        timeRadioBoxOne.checkBox.checkState = .checked
+        socketRadioBoxOne.checkBox.checkState = .checked
+        
+        businessCheckBoxOne.checkBox.checkState = .checked
+        othersCheckBoxOne.checkBox.checkState = .unchecked
     }
     
     func handleQuickSettingButtonOnTap(_ sender: UIButton) {

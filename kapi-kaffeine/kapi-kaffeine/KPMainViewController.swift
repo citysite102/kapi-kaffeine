@@ -528,6 +528,8 @@ extension KPMainViewController: KPSearchTagViewDelegate, KPSearchConditionViewCo
                 KPFilter.sharedFilter.currentOpening = true
             case .highRate:
                 KPFilter.sharedFilter.averageRate = 4
+            case .clear:
+                KPFilter.sharedFilter.restoreDefaultSettings()
             }
             
             DispatchQueue.main.async {
@@ -553,6 +555,8 @@ extension KPMainViewController: KPSearchTagViewDelegate, KPSearchConditionViewCo
                 KPFilter.sharedFilter.currentOpening = false
             case .highRate:
                 KPFilter.sharedFilter.averageRate = 0
+            case .clear:
+                break
             }
             
             let filteredData = KPFilter.sharedFilter.currentFilterCafeDatas()
@@ -630,7 +634,7 @@ extension KPMainViewController: KPSearchTagViewDelegate, KPSearchConditionViewCo
             KPFilter.sharedFilter.searchTime = nil
             
             // 取消 營業中 的tag
-            if let index = self.searchHeaderView.searchTagView.headerTagContents.index(of: .limitTime) {
+            if let index = self.searchHeaderView.searchTagView.headerTagContents.index(of: .opening) {
                 self.searchHeaderView.searchTagView.collectionView.deselectItem(at: IndexPath.init(row: index, section:0),
                                                                                 animated: false)
             }
@@ -644,7 +648,7 @@ extension KPMainViewController: KPSearchTagViewDelegate, KPSearchConditionViewCo
             }
             
             // 取消 營業中 的tag
-            if let index = self.searchHeaderView.searchTagView.headerTagContents.index(of: .limitTime) {
+            if let index = self.searchHeaderView.searchTagView.headerTagContents.index(of: .opening) {
                 self.searchHeaderView.searchTagView.collectionView.deselectItem(at: IndexPath.init(row: index, section:0),
                                                                                 animated: false)
             }
@@ -654,7 +658,7 @@ extension KPMainViewController: KPSearchTagViewDelegate, KPSearchConditionViewCo
             KPFilter.sharedFilter.currentOpening = true
             
             // 選取 營業中 的tag
-            if let index = self.searchHeaderView.searchTagView.headerTagContents.index(of: .limitTime) {
+            if let index = self.searchHeaderView.searchTagView.headerTagContents.index(of: .opening) {
                 self.searchHeaderView.searchTagView.collectionView.selectItem(at: IndexPath.init(row: index, section: 0),
                                                                               animated: false,
                                                                               scrollPosition: [])
