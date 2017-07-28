@@ -8,6 +8,7 @@
 
 import UIKit
 import GooglePlaces
+import pop
 
 class KPSubTitleEditView: UIView {
 
@@ -71,13 +72,19 @@ class KPSubTitleEditView: UIView {
                                          value: KPColorPalette.KPTextColor.default_placeholder!,
                                          range: NSRange.init(location: 0, length: placeHolderContent.characters.count))
                 editTextField.attributedPlaceholder = placeholder
+                editTextField.layer.pop_removeAllAnimations()
             } else if sType == .Warning {
-                let content = "這裡不能是空白的喔!"
+                let content = "Oops! 記得填寫這個欄位喔!"
                 let placeholder = NSMutableAttributedString(string: content)
                 placeholder.addAttribute(NSForegroundColorAttributeName,
                                          value: KPColorPalette.KPTextColor.warningColor!,
                                          range: NSRange.init(location: 0, length: content.characters.count))
                 editTextField.attributedPlaceholder = placeholder
+                
+                let anim = POPSpringAnimation(propertyNamed: kPOPLayerPositionX)
+                anim?.springBounciness = 15
+                anim?.velocity = 400
+                editTextField.layer.pop_add(anim, forKey: "warning")
             }
         }
     }
@@ -144,7 +151,7 @@ class KPSubTitleEditView: UIView {
     func makeUI() {
         makeTitleUI()
         editTextField.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
-                                                       "V:[$view0]-8-[$self]"],
+                                                       "V:[$view0]-10-[$self]"],
                                      views:[subTitleLabel])
         makeBorder()
     }
@@ -204,6 +211,8 @@ extension KPSubTitleEditView: UITextFieldDelegate {
             textField.resignFirstResponder()
             return false
         }
+        
+        sType = .Normal
         
         return true
     }

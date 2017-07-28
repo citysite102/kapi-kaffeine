@@ -46,9 +46,11 @@ extension KPPopoverView {
     
     class func popoverNotification(_ title: String,
                                    _ description: String,
+                                   _ customHeight: CGFloat?,
                                    _ confirmAction: ((_ content: KPNotificationPopoverContent) -> Swift.Void)?) {
         
         let content = KPNotificationPopoverContent()
+        content.customHeight = customHeight ?? 200
         content.confirmAction = confirmAction
         content.titleLabel.text = title
         content.descriptionLabel.setText(text: description, lineSpacing: 3.6)

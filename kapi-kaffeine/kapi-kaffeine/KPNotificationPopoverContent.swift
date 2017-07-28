@@ -13,6 +13,7 @@ class KPNotificationPopoverContent: UIView, PopoverProtocol {
     var popoverView: KPPopoverView!
     var confirmAction: ((_ content: KPNotificationPopoverContent) -> Swift.Void)?
     var confirmButton: UIButton!
+    var customHeight: CGFloat?
     
     lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -39,7 +40,7 @@ class KPNotificationPopoverContent: UIView, PopoverProtocol {
     private var buttonContainer: UIView!
     
     override var intrinsicContentSize: CGSize {
-        return CGSize(width: 280, height: 200)
+        return CGSize(width: 280, height: customHeight ?? 200)
     }
     
     required init?(coder aDecoder: NSCoder) {

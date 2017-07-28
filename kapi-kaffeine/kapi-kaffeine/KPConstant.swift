@@ -26,7 +26,7 @@ struct KPColorPalette {
         static let statusBarColor = UIColor(hexString: "#784d1f")
         static let borderColor = UIColor(hexString: "#e6e6e6")
         static let starColor = UIColor(hexString: "#f9c816")
-        static let warningColor = UIColor(hexString: "#FF5D5D")
+        static let warningColor = UIColor(hexString: "#FF4040")
         
         static let tempButtonCOlor = UIColor(hexString: "#4DA0D3")
         
@@ -48,7 +48,7 @@ struct KPColorPalette {
 //        static let mainColor_light = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.5)
 //        static let mainColor = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.7)
         static let whiteColor = UIColor(hexString: "#ffffff")
-        static let warningColor = UIColor(hexString: "#FF5D5D")
+        static let warningColor = UIColor(hexString: "#FF4040")
         
         
         static let default_placeholder = UIColor(hexString: "#C7C7CD")

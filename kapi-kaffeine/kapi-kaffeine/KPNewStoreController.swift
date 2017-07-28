@@ -525,46 +525,65 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
         
         if nameSubTitleView.editTextField.text == nil ||
             nameSubTitleView.editTextField.text?.characters.count == 0 {
+            nameSubTitleView.sType = .Warning
             KPPopoverView.popoverNotification("新增失敗",
-                                              "店家名稱尚未填寫！", nil);
+                                              "店家名稱尚未填寫！",
+                                              150,
+                                              nil);
             return;
         }
         
         if citySubTitleView.editTextField.text == nil ||
             citySubTitleView.editTextField.text?.characters.count == 0 {
+            citySubTitleView.sType = .Warning
             KPPopoverView.popoverNotification("新增失敗",
-                                              "店家所在城市尚未選擇！", nil);
+                                              "店家所在城市尚未選擇！",
+                                              150,
+                                              nil);
             return;
         }
         
         if priceSubTitleView.editTextField.text == nil ||
             priceSubTitleView.editTextField.text?.characters.count == 0 {
+            priceSubTitleView.sType = .Warning
             KPPopoverView.popoverNotification("新增失敗",
-                                              "價格區間尚未選擇！", nil);
+                                              "價格區間尚未選擇！",
+                                              150,
+                                              nil);
             return;
         }
         
         if rateCheckedView.checked == false {
             KPPopoverView.popoverNotification("新增失敗",
-                                              "評份尚末填寫！", nil);
+                                              "評份尚末填寫！",
+                                              150,
+                                              nil);
         }
         
         if businessHourCheckedView.checked == false {
             KPPopoverView.popoverNotification("新增失敗",
-                                              "營業時間尚末填寫！", nil);
+                                              "營業時間尚末填寫！",
+                                              150,
+                                              nil);
         }
         
         if addressSubTitleView.editTextField.text == nil ||
             addressSubTitleView.editTextField.text?.characters.count == 0 {
+            addressSubTitleView.sType = .Warning
             KPPopoverView.popoverNotification("新增失敗",
-                                              "店家地址尚未填寫！", nil);
+                                              "店家地址尚未填寫！",
+                                              150,
+                                              nil);
             return;
         }
         
         if phoneSubTitleView.editTextField.text == nil ||
             phoneSubTitleView.editTextField.text?.characters.count == 0 {
+            phoneSubTitleView.sType = .Warning
             KPPopoverView.popoverNotification("新增失敗",
-                                              "店家電話尚未填寫！", nil);
+                                              "店家電話尚未填寫！",
+                                              150,
+                                              nil);
             return;
         }
         
@@ -606,9 +625,13 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
                                                     if success == true {
                                                         KPPopoverView.popoverNotification("新增成功",
                                                                                           "感謝您提交資訊，我們將儘速進行審查:D 這將會需要1-3天的審核時間確認店家的資訊是否無誤，給我好好的等。",
+                                                                                          nil,
                                                                                           nil)
                                                     } else {
-                                                        KPPopoverView.popoverNotification("新增失敗", "發生錯誤，請再試一次！", nil);
+                                                        KPPopoverView.popoverNotification("新增失敗",
+                                                                                          "發生錯誤，請再試一次！",
+                                                                                          100,
+                                                                                          nil);
                                                     }
 
         }
