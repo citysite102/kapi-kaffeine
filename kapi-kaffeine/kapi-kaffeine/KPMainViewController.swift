@@ -235,7 +235,7 @@ class KPMainViewController: KPViewController {
             self.setNeedsStatusBarAppearanceUpdate()
         }
         
-        self.opacityView.isHidden = false
+        opacityView.isHidden = false
         present(SideMenuManager.menuLeftNavigationController!,
                 animated: true, completion: nil)
     }

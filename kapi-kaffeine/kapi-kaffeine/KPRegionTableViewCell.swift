@@ -86,8 +86,8 @@ class KPRegionTableViewCell: UITableViewCell {
     
     override func setHighlighted(_ highlighted: Bool, animated: Bool) {
         super.setHighlighted(highlighted, animated: animated)
-        backgroundColor = highlighted ?
-            KPColorPalette.KPBackgroundColor.mainColor_light_10 :
-            UIColor.white
+//        backgroundColor = highlighted ?
+//            KPColorPalette.KPBackgroundColor.mainColor_light_10 :
+//            UIColor.white
     }
 }

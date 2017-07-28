@@ -67,6 +67,46 @@ class KPSideViewController: KPViewController {
     weak var mainController: KPMainViewController!
     var lastY: CGFloat = 0.0
     
+    var defaultExpandedIndexPath: IndexPath?
+    var defaultSelectedIndexPath: IndexPath?
+    var selectedCityKey: String! {
+        didSet {
+            defaultExpandedIndexPath = nil
+            regionContents = KPSideViewController.defaultRegionContent
+            
+            var expandedIndex: Int?
+            var selectedIndex: Int?
+            
+            for (index, region) in KPSideViewController.defaultRegionContent.enumerated() {
+                for cityKey in region.cityKeys {
+                    if cityKey == selectedCityKey {
+                        expandedIndex = index
+                        selectedIndex = index
+                    }
+                }
+            }
+            
+            if let expandedIndex = expandedIndex, let selectedIndex = selectedIndex {
+                let regionCities = regionContents[expandedIndex]?.cities
+                for (index, _) in (regionCities?.enumerated())! {
+                    regionContents.insert(nil, at: expandedIndex+index+1)
+                }
+                defaultExpandedIndexPath = IndexPath(row: expandedIndex, section: 0)
+                if tableView != nil {
+                    tableView.reloadData()
+                    tableView.selectRow(at: defaultSelectedIndexPath,
+                                        animated: false,
+                                        scrollPosition: .bottom)
+                } else {
+                    defaultSelectedIndexPath = IndexPath(row: expandedIndex+selectedIndex,
+                                                         section: 0)
+                }
+            }
+            
+        }
+    }
+    
+    
     var expandedCell: KPRegionTableViewCell?
     var tapGesture: UITapGestureRecognizer!
     
@@ -92,7 +132,7 @@ class KPSideViewController: KPViewController {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14.0)
         label.textColor = KPColorPalette.KPTextColor.whiteColor
-        label.text = "訪客一號"
+        label.text = "神奇的路人"
         return label
     }()
     
@@ -189,7 +229,10 @@ class KPSideViewController: KPViewController {
         tableView.register(KPCityTableViewCell.self,
                                 forCellReuseIdentifier: KPSideViewController.KPSideViewControllerCityCellReuseIdentifier)
 
-        regionContents = KPSideViewController.defaultRegionContent
+        
+        if selectedCityKey == nil {
+            regionContents = KPSideViewController.defaultRegionContent
+        }
         
         informationSectionContents = [informationData(title:"關於我們",
                                                       icon:R.image.icon_cup()!,
@@ -262,6 +305,16 @@ class KPSideViewController: KPViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if defaultSelectedIndexPath != nil {
+            tableView.selectRow(at: defaultSelectedIndexPath,
+                                animated: false,
+                                scrollPosition: .bottom)
+            defaultSelectedIndexPath = nil
+        }
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
@@ -294,7 +347,7 @@ class KPSideViewController: KPViewController {
     func setCurrentUser(_ user: KPUser?) {
         if user == nil {
             userPhoto.image = R.image.icon_user_avatar()
-            userNameLabel.text = "訪客一號"
+            userNameLabel.text = "神奇的路人"
             userExpView.isHidden = true
             loginButton.isHidden = false
         } else {
@@ -434,6 +487,11 @@ extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
                 if indexPath.row + 1 >= regionContents.count || regionContents[indexPath.row+1] != nil {
                     
                     var indexPaths = [IndexPath]()
+                    
+                    if expandedCell == nil && defaultExpandedIndexPath != nil {
+                        expandedCell = tableView.cellForRow(at: defaultExpandedIndexPath!) as? KPRegionTableViewCell
+                        defaultExpandedIndexPath = nil
+                    }
                     
                     if expandedCell != nil {
                         if let expandedIndexPath = tableView.indexPath(for: expandedCell!) {

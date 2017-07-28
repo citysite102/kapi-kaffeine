@@ -185,8 +185,7 @@ GMUClusterRendererDelegate {
         
         
         let camera = GMSCameraPosition.camera(withLatitude: 25.018744, longitude: 121.532785, zoom: 18.0)
-        self.mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
-        
+        mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
         mapView.delegate = self
         mapView.preferredFrameRate = .maximum
         
