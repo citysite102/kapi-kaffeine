@@ -12,10 +12,10 @@ class KPShopRateInfoView: UIView {
 
     var rateTitles = ["WiFi穩定", "安靜程度", "價格實惠",
                       "座位數量", "咖啡品質", "餐點美味",
-                      "環境舒適"]
+                      "環境舒適", "有無限時", "站立座位"]
     var rateImages = [R.image.icon_wifi(), R.image.icon_sleep(), R.image.icon_money(),
                       R.image.icon_seat(), R.image.icon_cup(), R.image.icon_cutlery(),
-                      R.image.icon_pic()]
+                      R.image.icon_pic(), R.image.icon_clock(), R.image.icon_seat()]
     
     var rateViews: [rateStatusView] = [rateStatusView]()
     var rateContents = [String]()
@@ -58,6 +58,33 @@ class KPShopRateInfoView: UIView {
                     "\((dataModel.musicAverage?.stringValue)!).0" :
                     "\((dataModel.musicAverage?.stringValue)!)") :
                 "0.0")
+            
+            
+            if let limitedTime = dataModel.limitedTime {
+                if limitedTime == 1 {
+                    rateContents.append("客滿")
+                } else if limitedTime == 2 {
+                    rateContents.append("不限")
+                } else if limitedTime == 3 {
+                    rateContents.append("人多")
+                } else if limitedTime == 4 {
+                    rateContents.append("未知")
+                }
+            } else {
+                rateContents.append("未知")
+            }
+            
+            if let standingDesk = dataModel.standingDesk {
+                if standingDesk == 1 {
+                    rateContents.append("有")
+                } else if standingDesk == 4 {
+                    rateContents.append("未知")
+                } else {
+                    rateContents.append("未知")
+                }
+            } else {
+                rateContents.append("未知")
+            }
             
             for (index, rateView) in rateViews.enumerated() {
                 rateView.rateContentLabel.text = rateContents[index]
@@ -103,6 +130,33 @@ class KPShopRateInfoView: UIView {
                     "\((rateData.musicAverage?.stringValue)!).0" :
                     "\((rateData.musicAverage?.stringValue)!)") :
                 "0.0")
+
+            
+            if let limitedTime = dataModel.limitedTime {
+                if limitedTime == 1 {
+                    rateContents.append("客滿")
+                } else if limitedTime == 2 {
+                    rateContents.append("不限")
+                } else if limitedTime == 3 {
+                    rateContents.append("人多")
+                } else if limitedTime == 4 {
+                    rateContents.append("未知")
+                }
+            } else {
+                rateContents.append("未知")
+            }
+            
+            if let standingDesk = dataModel.standingDesk {
+                if standingDesk == 1 {
+                    rateContents.append("有")
+                } else if standingDesk == 4 {
+                    rateContents.append("未知")
+                } else {
+                    rateContents.append("未知")
+                }
+            } else {
+                rateContents.append("未知")
+            }
             
             for (index, rateView) in rateViews.enumerated() {
                 rateView.rateContentLabel.text = rateContents[index]
