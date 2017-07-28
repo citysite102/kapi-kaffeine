@@ -52,15 +52,33 @@ class KPFilter {
             })
         }
         
-        if let limited_time = limited_time {
+        if let limited_time = limited_time, limited_time != 4 {
             currentCafeDatas = currentCafeDatas.filter({
-                return $0.limitedTime?.intValue ?? 10 <= limited_time
+                
+                if limited_time == 3 {
+                    return $0.limitedTime?.intValue == 1 || $0.limitedTime?.intValue == 3
+                }
+                
+                if limited_time == 1 {
+                    return $0.limitedTime?.intValue == 1
+                }
+                
+                return true
             })
         }
         
-        if let socket = socket {
+        if let socket = socket, socket != 4 {
             currentCafeDatas = currentCafeDatas.filter({
-                return $0.socket?.intValue ?? 10 <= socket
+                
+                if socket == 3 || socket == 2 {
+                    return $0.socket?.intValue == 3 || $0.socket?.intValue == 2 || $0.socket?.intValue == 1
+                }
+                
+                if socket == 1 {
+                    return $0.socket?.intValue == 1
+                }
+                
+                return true
             })
         }
         

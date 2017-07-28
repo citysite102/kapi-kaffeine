@@ -526,7 +526,7 @@ extension KPMainViewController: KPSearchTagViewDelegate, KPSearchConditionViewCo
             case .opening:
                 KPFilter.sharedFilter.currentOpening = true
             case .highRate:
-                KPFilter.sharedFilter.averageRate = 4.5
+                KPFilter.sharedFilter.averageRate = 4
             }
             
             DispatchQueue.main.async {
@@ -567,10 +567,7 @@ extension KPMainViewController: KPSearchTagViewDelegate, KPSearchConditionViewCo
         
         mainListViewController?.state = .loading
         mainListViewController?.tableView.reloadData()
-        
-        
-        
-    
+  
         // 各個 rating
         
         // Wifi
