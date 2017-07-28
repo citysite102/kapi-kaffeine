@@ -11,6 +11,9 @@ import UIKit
 class KPCountrySelectController: KPSharedSettingViewController {
 
     var countries = ["台北 Taipei", "基隆 Keelung", "台中 Taichung", "火星 Mars"]
+    
+    var regionContents = KPSideViewController.defaultRegionContent
+    
     var tableView: UITableView!
     
     override func viewDidLoad() {
@@ -22,9 +25,10 @@ class KPCountrySelectController: KPSharedSettingViewController {
         tableView = UITableView()
         tableView.delegate = self
         tableView.dataSource = self
-        containerView.addSubview(self.tableView)
-        tableView.addConstraints(fromStringArray: ["V:|[$self(360)]|",
-                                                   "H:|[$self]|"])
+        view.addSubview(self.tableView)
+        tableView.addConstraints(fromStringArray: ["V:[$view0][$self]|",
+                                                   "H:|[$self]|"],
+                                 views: [seperator_one])
         tableView.register(KPSelectCell.self,
                            forCellReuseIdentifier: "cell")
         tableView.tableFooterView = UIView()
@@ -56,12 +60,12 @@ extension KPCountrySelectController: UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier:"cell",
                                                  for: indexPath) as! KPSelectCell;
-        cell.contentLabel.text = self.countries[indexPath.row]
+        cell.contentLabel.text = regionContents[indexPath.section].cities[indexPath.row]
         return cell;
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        returnValue = countries[indexPath.row]
+        returnValue = (name: regionContents[indexPath.section].cities[indexPath.row], key: regionContents[indexPath.section].cityKeys[indexPath.row])
         delegate?.returnValueSet(self)
         appModalController()?.dismissControllerWithDefaultDuration()
     }
@@ -71,11 +75,15 @@ extension KPCountrySelectController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return countries.count
+        return regionContents[section].cities.count
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return regionContents.count
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return regionContents[section].name
     }
 }
 

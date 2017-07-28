@@ -519,35 +519,54 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
     
     func handleSendButtonOnTapped() {
         
-//        if nameSubTitleView.editTextField.text == nil ||
-//            nameSubTitleView.editTextField.text?.characters.count == 0 {
-//            
-//        }
-//        
-//        if addressSubTitleView.editTextField.text == nil ||
-//            addressSubTitleView.editTextField.text?.characters.count == 0 {
-//            
-//        }
-//        
-//        if citySubTitleView.editTextField.text == nil ||
-//            citySubTitleView.editTextField.text?.characters.count == 0 {
-//            
-//        }
-//        
-//        if addressSubTitleView.editTextField.text == nil ||
-//            addressSubTitleView.editTextField.text?.characters.count == 0 {
-//            
-//        }
-//        
-//        if addressSubTitleView.editTextField.text == nil ||
-//            addressSubTitleView.editTextField.text?.characters.count == 0 {
-//            
-//        }
-//        
-//        if addressSubTitleView.editTextField.text == nil ||
-//            addressSubTitleView.editTextField.text?.characters.count == 0 {
-//            
-//        }
+        if KPUserManager.sharedManager.currentUser == nil {
+            KPPopoverView.popoverLoginView()
+        }
+        
+        if nameSubTitleView.editTextField.text == nil ||
+            nameSubTitleView.editTextField.text?.characters.count == 0 {
+            KPPopoverView.popoverNotification("新增失敗",
+                                              "店家名稱尚未填寫！", nil);
+            return;
+        }
+        
+        if citySubTitleView.editTextField.text == nil ||
+            citySubTitleView.editTextField.text?.characters.count == 0 {
+            KPPopoverView.popoverNotification("新增失敗",
+                                              "店家所在城市尚未選擇！", nil);
+            return;
+        }
+        
+        if priceSubTitleView.editTextField.text == nil ||
+            priceSubTitleView.editTextField.text?.characters.count == 0 {
+            KPPopoverView.popoverNotification("新增失敗",
+                                              "價格區間尚未選擇！", nil);
+            return;
+        }
+        
+        if rateCheckedView.checked == false {
+            KPPopoverView.popoverNotification("新增失敗",
+                                              "評份尚末填寫！", nil);
+        }
+        
+        if businessHourCheckedView.checked == false {
+            KPPopoverView.popoverNotification("新增失敗",
+                                              "營業時間尚末填寫！", nil);
+        }
+        
+        if addressSubTitleView.editTextField.text == nil ||
+            addressSubTitleView.editTextField.text?.characters.count == 0 {
+            KPPopoverView.popoverNotification("新增失敗",
+                                              "店家地址尚未填寫！", nil);
+            return;
+        }
+        
+        if phoneSubTitleView.editTextField.text == nil ||
+            phoneSubTitleView.editTextField.text?.characters.count == 0 {
+            KPPopoverView.popoverNotification("新增失敗",
+                                              "店家電話尚未填寫！", nil);
+            return;
+        }
         
         var tags = [KPDataTagModel]()
         
@@ -566,7 +585,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
         
         KPServiceHandler.sharedHandler.addNewShop(nameSubTitleView.editTextField.text ?? "",
                                                   addressSubTitleView.editTextField.text ?? "",
-                                                  citySubTitleView.editTextField.text ?? "",
+                                                  ((countrySelectController.returnValue as? (name: String, key: String))?.key) ?? "",
                                                   selectedCoordinate.latitude,
                                                   selectedCoordinate.longitude,
                                                   facebookSubTitleView.editTextField.text ?? "",
@@ -690,7 +709,7 @@ extension KPNewStoreController: KPSharedSettingDelegate {
     
     func returnValueSet(_ controller: KPSharedSettingViewController) {
         if controller.identifiedKey == "country" {
-            self.citySubTitleView.content = controller.returnValue as! String
+            self.citySubTitleView.content = (controller.returnValue as! (name: String, key: String)).name
         } else if controller.identifiedKey == "price" {
             self.priceSubTitleView.content = controller.returnValue as! String
         } else if controller.identifiedKey == "rate" {
