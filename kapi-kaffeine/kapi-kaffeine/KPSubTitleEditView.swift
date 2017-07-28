@@ -24,6 +24,11 @@ class KPSubTitleEditView: UIView {
         case Custom
     }
     
+    enum StatusType {
+        case Normal
+        case Warning
+    }
+    
     
     var inputKeyboardType: UIKeyboardType! {
         didSet {
@@ -33,7 +38,11 @@ class KPSubTitleEditView: UIView {
     
     var placeHolderContent: String! {
         didSet {
-            self.editTextField.placeholder = placeHolderContent
+            let placeholder = NSMutableAttributedString(string: placeHolderContent)
+            placeholder.addAttribute(NSForegroundColorAttributeName,
+                                     value: KPColorPalette.KPTextColor.default_placeholder!,
+                                     range: NSRange.init(location: 0, length: placeHolderContent.characters.count))
+            editTextField.attributedPlaceholder = placeholder
         }
     }
     
@@ -54,6 +63,24 @@ class KPSubTitleEditView: UIView {
     
     var customInputAction: (() -> Void)!
     var tapGesture: UITapGestureRecognizer!
+    var sType: StatusType! {
+        didSet {
+            if sType == .Normal {
+                let placeholder = NSMutableAttributedString(string: placeHolderContent)
+                placeholder.addAttribute(NSForegroundColorAttributeName,
+                                         value: KPColorPalette.KPTextColor.default_placeholder!,
+                                         range: NSRange.init(location: 0, length: placeHolderContent.characters.count))
+                editTextField.attributedPlaceholder = placeholder
+            } else if sType == .Warning {
+                let content = "這裡不能是空白的喔!"
+                let placeholder = NSMutableAttributedString(string: content)
+                placeholder.addAttribute(NSForegroundColorAttributeName,
+                                         value: KPColorPalette.KPTextColor.warningColor!,
+                                         range: NSRange.init(location: 0, length: content.characters.count))
+                editTextField.attributedPlaceholder = placeholder
+            }
+        }
+    }
     
     private var bType: BorderType!
     private var dType: DisplayType!
@@ -89,6 +116,7 @@ class KPSubTitleEditView: UIView {
         
         bType = borderType
         dType = displayType
+        sType = .Normal
         subTitleLabel.text = title
         
         

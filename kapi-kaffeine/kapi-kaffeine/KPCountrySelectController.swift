@@ -82,9 +82,25 @@ extension KPCountrySelectController: UITableViewDelegate, UITableViewDataSource 
         return regionContents.count
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return regionContents[section].name
+//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        return regionContents[section].name
+//    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let searchTitleLabel = KPSearchViewHeaderLabel()
+        searchTitleLabel.headerLabel.text = regionContents[section].name
+        return searchTitleLabel
     }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return UIView()
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 48
+    }
+    
+    
 }
 
 

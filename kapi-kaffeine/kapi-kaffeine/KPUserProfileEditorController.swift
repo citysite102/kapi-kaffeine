@@ -169,7 +169,7 @@ class KPUserProfileEditorController: UIViewController, UITextFieldDelegate, UITe
         
         introTextViewPlaceHolder = UILabel()
         introTextViewPlaceHolder.font = introTextView.font
-        introTextViewPlaceHolder.textColor = UIColor(hexString: "C7C7CD")
+        introTextViewPlaceHolder.textColor = KPColorPalette.KPTextColor.default_placeholder
         introTextViewPlaceHolder.text = "請輸入自我介紹"
         introTextView.addSubview(introTextViewPlaceHolder)
         introTextViewPlaceHolder.addConstraints(fromStringArray: ["V:|[$self]"])
