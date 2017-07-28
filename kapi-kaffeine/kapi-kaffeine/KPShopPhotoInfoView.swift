@@ -11,6 +11,7 @@ import UIKit
 class KPShopPhotoInfoView: UIView {
 
     static let KPShopPhotoInfoViewCellReuseIdentifier = "cell";
+    weak open var informationController: KPInformationViewController?
     
     var collectionView:UICollectionView!;
     var collectionLayout:UICollectionViewFlowLayout!;
@@ -81,15 +82,13 @@ extension KPShopPhotoInfoView: UICollectionViewDelegate, UICollectionViewDataSou
         return cell;
     }
     
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        let cell = collectionView.cellForItem(at: indexPath);
-//        cell?.alpha = 1.0;
-//    }
-//    
-//    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-//        let cell = collectionView.cellForItem(at: indexPath);
-//        cell?.alpha = 0.4;
-//    }
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let galleryController = KPPhotoGalleryViewController()
+        galleryController.displayedPhotoInformations = displayPhotoInformations
+        informationController?.navigationController?.pushViewController(viewController: galleryController,
+                                                                        animated: true,
+                                                                        completion: {}
+        )
+    }
     
 }

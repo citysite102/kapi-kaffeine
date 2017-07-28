@@ -221,7 +221,7 @@ class KPRatingView: UIView {
                                           views: [iconImageView])
             rateTitleLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
             
-            segmentedControl = KPSegmentedControl.init(["很慢", "普通", "很快"],
+            segmentedControl = KPSegmentedControl.init(["不限", "尚可", "優秀"],
                                                        [KPColorPalette.KPMainColor.mainColor_light!,
                                                         KPColorPalette.KPMainColor.starColor!,
                                                         KPColorPalette.KPMainColor.mainColor_sub!],

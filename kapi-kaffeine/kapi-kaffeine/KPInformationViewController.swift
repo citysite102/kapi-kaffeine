@@ -511,6 +511,7 @@ class KPInformationViewController: KPViewController {
         
         
         let photoInfoView = KPShopPhotoInfoView()
+        photoInfoView.informationController = self
         photoInformationView = KPInformationSharedInfoView()
         photoInformationView.emptyLabel.text = "目前尚無照片，成為第一個上傳的人吧:D"
         photoInformationView.infoView = photoInfoView

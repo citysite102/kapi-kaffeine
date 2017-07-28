@@ -61,8 +61,14 @@ class KPTimePickerViewController: UIViewController, KPTimePickerDelegate, KPTabV
             let button = UIButton()
             button.setTitle(title, for: .normal)
             button.setTitleColor(UIColor.white, for: .normal)
-            button.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.mainColor!),
+            
+            if index == 0 {
+                button.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.mainColor_sub!),
                                           for: .normal)
+            } else {
+                button.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.mainColor!),
+                                              for: .normal)
+            }
             button.layer.cornerRadius = 4.0
             button.layer.masksToBounds = true
             button.titleLabel?.font = UIFont.systemFont(ofSize: 15.0)
@@ -93,7 +99,7 @@ class KPTimePickerViewController: UIViewController, KPTimePickerDelegate, KPTabV
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let titles = ["營業時間", "打祥時間"]
+        let titles = ["營業時間", "打烊時間"]
         
         view.backgroundColor = UIColor.white
         

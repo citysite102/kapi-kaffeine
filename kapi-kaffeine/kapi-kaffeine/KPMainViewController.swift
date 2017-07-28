@@ -32,33 +32,34 @@ class KPMainViewController: KPViewController {
     var mainMapViewController: KPMainMapViewController?
     
     var transitionController: KPPhotoDisplayTransition = KPPhotoDisplayTransition()
+    var currentController: KPViewController!
     
-    var displayDataModel: [KPDataModel]! {
-        didSet {
-//            if oldValue == nil {
-                self.mainListViewController?.state = .loading
-                self.mainListViewController?.tableView.reloadData()
-                DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
-                    self.mainListViewController?.displayDataModel = self.displayDataModel
-                    self.mainMapViewController?.allDataModel = self.displayDataModel
-                    self.searchHeaderView.styleButton.isEnabled = true
-                    self.searchHeaderView.searchButton.isEnabled = true
-                    self.searchHeaderView.menuButton.isEnabled = true
-                    self.searchHeaderView.searchTagView.isUserInteractionEnabled = true
-                    
-                }
-//            } else {
-//                self.mainListViewController?.displayDataModel = self.displayDataModel
-//                self.mainMapViewController?.allDataModel = self.displayDataModel
-//                self.searchHeaderView.styleButton.isEnabled = true
-//                self.searchHeaderView.searchButton.isEnabled = true
-//                self.searchHeaderView.menuButton.isEnabled = true
-//                self.searchHeaderView.searchTagView.isUserInteractionEnabled = true
-//            }
+    private var displayDataModel: [KPDataModel]!
+
+    func setDisplayDataModel(_ dataModels: [KPDataModel]!, _ animated: Bool!) {
+        
+        displayDataModel = dataModels
+        
+        if animated {
+            mainListViewController?.state = .loading
+            mainListViewController?.tableView.reloadData()
+            DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
+                self.mainListViewController?.displayDataModel = self.displayDataModel
+                self.mainMapViewController?.allDataModel = self.displayDataModel
+                self.searchHeaderView.styleButton.isEnabled = true
+                self.searchHeaderView.searchButton.isEnabled = true
+                self.searchHeaderView.menuButton.isEnabled = true
+                self.searchHeaderView.searchTagView.isUserInteractionEnabled = true
+            }
+        } else {
+            mainListViewController?.displayDataModel = displayDataModel
+            mainMapViewController?.allDataModel = displayDataModel
+            searchHeaderView.styleButton.isEnabled = true
+            searchHeaderView.searchButton.isEnabled = true
+            searchHeaderView.menuButton.isEnabled = true
+            searchHeaderView.searchTagView.isUserInteractionEnabled = true
         }
     }
-
-    var currentController: KPViewController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -146,10 +147,11 @@ class KPMainViewController: KPViewController {
             }
         }
         
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(fetchRemoteData),
-                                               name: NSNotification.Name.UIApplicationDidBecomeActive,
-                                               object: nil)
+//        NotificationCenter.default.addObserver(self,
+//                                               selector: #selector(fetchRemoteData),
+//                                               name: NSNotification.Name.UIApplicationDidBecomeActive,
+//                                               object: nil)
+        fetchRemoteData()
         
     }
     
@@ -205,19 +207,38 @@ class KPMainViewController: KPViewController {
     // MARK: Data
     
     func fetchRemoteData() {
-        KPServiceHandler.sharedHandler.fetchRemoteData() { (results: [KPDataModel]?,
-            error: NetworkRequestError?) in
-            if results != nil {
-                self.displayDataModel = KPFilter.sharedFilter.currentFilterCafeDatas()
-//                self.displayDataModel = results!
-            } else if let requestError = error {
-                switch requestError {
-                    case .noNetworkConnection:
-                        self.mainListViewController?.state = .noInternet
-                    default:
-                        print("錯誤萬歲: \(requestError)")
-                }
-            }
+        KPServiceHandler.sharedHandler.fetchRemoteData(2,
+                                                       1,
+                                                       nil,
+                                                       nil,
+                                                       nil) {
+                                                        (results: [KPDataModel]?,
+                                                        error: NetworkRequestError?) in
+                                                        if results != nil {
+                                                            self.setDisplayDataModel(KPFilter.sharedFilter.currentFilterCafeDatas(), true)
+                                                        } else if let requestError = error {
+                                                            switch requestError {
+                                                            case .noNetworkConnection:
+                                                                self.mainListViewController?.state = .noInternet
+                                                            default:
+                                                                print("錯誤萬歲: \(requestError)")
+                                                            }
+                                                        }
+                                                        
+                                                        KPServiceHandler.sharedHandler.fetchRemoteData() { (results: [KPDataModel]?,
+                                                            error: NetworkRequestError?) in
+                                                            if results != nil {
+                                                                self.setDisplayDataModel(KPFilter.sharedFilter.currentFilterCafeDatas(), false)
+                                                            } else if let requestError = error {
+                                                                switch requestError {
+                                                                    case .noNetworkConnection:
+                                                                        self.mainListViewController?.state = .noInternet
+                                                                    default:
+                                                                        print("錯誤萬歲: \(requestError)")
+                                                                }
+                                                            }
+                                                        }
+                                                        
         }
         
         if (KPUserManager.sharedManager.currentUser != nil) {
@@ -435,7 +456,6 @@ class KPMainViewController: KPViewController {
             
             toViewController.transitioningDelegate = self
             targetController.informationDataModel = (sender as! KPMainViewControllerDelegate).selectedDataModel
-            
             addScreenEdgePanGestureRecognizer(view: toViewController.view, edges: .left)
         }
     }
@@ -533,7 +553,7 @@ extension KPMainViewController: KPSearchTagViewDelegate, KPSearchConditionViewCo
             }
             
             DispatchQueue.main.async {
-                self.displayDataModel = KPFilter.sharedFilter.currentFilterCafeDatas()
+                self.setDisplayDataModel(KPFilter.sharedFilter.currentFilterCafeDatas(), true)
             }
         }
     }
@@ -562,7 +582,7 @@ extension KPMainViewController: KPSearchTagViewDelegate, KPSearchConditionViewCo
             let filteredData = KPFilter.sharedFilter.currentFilterCafeDatas()
             
             DispatchQueue.main.async {
-                self.displayDataModel = filteredData
+                self.setDisplayDataModel(filteredData, true)
             }
         }
         
@@ -677,7 +697,7 @@ extension KPMainViewController: KPSearchTagViewDelegate, KPSearchConditionViewCo
             let filteredData = KPFilter.sharedFilter.currentFilterCafeDatas()
             
             DispatchQueue.main.async {
-                self.displayDataModel = filteredData
+                self.setDisplayDataModel(filteredData, true)
             }
         }
     }

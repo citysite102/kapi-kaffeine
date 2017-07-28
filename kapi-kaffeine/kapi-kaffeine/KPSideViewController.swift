@@ -106,8 +106,7 @@ class KPSideViewController: KPViewController {
         }
     }
     
-    
-    var expandedCell: KPRegionTableViewCell?
+    var expandedIndexPath: IndexPath?
     var tapGesture: UITapGestureRecognizer!
     
     lazy var userContainer: KPBounceView = {
@@ -132,7 +131,7 @@ class KPSideViewController: KPViewController {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14.0)
         label.textColor = KPColorPalette.KPTextColor.whiteColor
-        label.text = "神奇的路人"
+        label.text = "你的名字"
         return label
     }()
     
@@ -347,12 +346,14 @@ class KPSideViewController: KPViewController {
     func setCurrentUser(_ user: KPUser?) {
         if user == nil {
             userPhoto.image = R.image.icon_user_avatar()
-            userNameLabel.text = "神奇的路人"
+            userNameLabel.text = "你的名字"
+            userNameLabel.isHidden = true
             userExpView.isHidden = true
             loginButton.isHidden = false
         } else {
             userPhoto.af_setImage(withURL: URL(string: user!.photoURL ?? "")!)
-            userNameLabel.text = user!.displayName ?? ""
+            userNameLabel.text = user!.displayName ?? "你的名字"
+            userNameLabel.isHidden = false
             userExpView.isHidden = false
             loginButton.isHidden = true
         }
@@ -488,53 +489,52 @@ extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
                     
                     var indexPaths = [IndexPath]()
                     
-                    if expandedCell == nil && defaultExpandedIndexPath != nil {
-                        expandedCell = tableView.cellForRow(at: defaultExpandedIndexPath!) as? KPRegionTableViewCell
+                    if expandedIndexPath == nil && defaultExpandedIndexPath != nil {
+                        expandedIndexPath = defaultSelectedIndexPath
                         defaultExpandedIndexPath = nil
                     }
                     
-                    if expandedCell != nil {
-                        if let expandedIndexPath = tableView.indexPath(for: expandedCell!) {
+                    if var expandedIndexPath = expandedIndexPath {
                             
-                            if let expandedRigionCities = regionContents[expandedIndexPath.row]?.cities {
-                                tableView.beginUpdates()
-                                expandedCell?.expanded = false
-                                
-                                for (index, _) in (expandedRigionCities.enumerated()) {
-                                    indexPaths.append(NSIndexPath(row: expandedIndexPath.row+index+1, section: 0) as IndexPath)
-                                    regionContents.remove(at: expandedIndexPath.row+1)
-                                }
-                                
-                                tableView.deleteRows(at: indexPaths, with: .top)
-                                
-                                
-                                cell.expanded = true
-                                expandedCell = cell
-                                
-                                if expandedIndexPath.row < indexPath.row {
-                                    for (index, _) in (regionCities?.enumerated())! {
-                                        regionContents.insert(nil, at: indexPath.row+index+1-(expandedRigionCities.count))
-                                        tableView.insertRows(at: [NSIndexPath(row: indexPath.row+index+1-(expandedRigionCities.count),
-                                                                              section: 0) as IndexPath],
-                                                             with: .top)
-                                    }
-                                } else {
-                                    for (index, _) in (regionCities?.enumerated())! {
-                                        regionContents.insert(nil, at: indexPath.row+index+1)
-                                        tableView.insertRows(at: [NSIndexPath(row: indexPath.row+index+1,
-                                                                              section: 0) as IndexPath],
-                                                             with: .top)
-                                    }
-                                }
-                                
-                                tableView.endUpdates()
+                        if let expandedRigionCities = regionContents[expandedIndexPath.row]?.cities {
+                            tableView.beginUpdates()
+                            
+                            let expandedCell = tableView.cellForRow(at: expandedIndexPath) as! KPRegionTableViewCell
+                            expandedCell.expanded = false
+                            
+                            for (index, _) in (expandedRigionCities.enumerated()) {
+                                indexPaths.append(NSIndexPath(row: expandedIndexPath.row+index+1, section: 0) as IndexPath)
+                                regionContents.remove(at: expandedIndexPath.row+1)
                             }
+                            
+                            tableView.deleteRows(at: indexPaths, with: .top)
+                            cell.expanded = true
+                            
+                            if expandedIndexPath.row < indexPath.row {
+                                for (index, _) in (regionCities?.enumerated())! {
+                                    regionContents.insert(nil, at: indexPath.row+index+1-(expandedRigionCities.count))
+                                    tableView.insertRows(at: [NSIndexPath(row: indexPath.row+index+1-(expandedRigionCities.count),
+                                                                          section: 0) as IndexPath],
+                                                         with: .top)
+                                }
+                            } else {
+                                for (index, _) in (regionCities?.enumerated())! {
+                                    regionContents.insert(nil, at: indexPath.row+index+1)
+                                    tableView.insertRows(at: [NSIndexPath(row: indexPath.row+index+1,
+                                                                          section: 0) as IndexPath],
+                                                         with: .top)
+                                }
+                            }
+                            
+                            tableView.endUpdates()
+                            self.expandedIndexPath = tableView.indexPath(for: cell)!
                         }
 
                     } else {
                         tableView.beginUpdates()
                         cell.expanded = true
-                        expandedCell = cell
+                        expandedIndexPath = tableView.indexPath(for: cell)
+//                        expandedCell = cell
                         for (index, _) in (regionCities?.enumerated())! {
                             regionContents.insert(nil, at: indexPath.row+index+1)
                             tableView.insertRows(at: [NSIndexPath(row: indexPath.row+index+1,
@@ -547,9 +547,9 @@ extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
                     tableView.beginUpdates()
                     cell.expanded = false
                     
-                    if expandedCell == cell {
-                        expandedCell = nil
-                    }
+//                    if expandedIndexPath == tableView.indexPath(for: cell) {
+                        expandedIndexPath = nil
+//                    }
                     var indexPaths = [IndexPath]()
                     for (index, _) in (regionCities?.enumerated())! {
                         indexPaths.append(NSIndexPath(row: indexPath.row+index+1, section: 0) as IndexPath)
@@ -604,9 +604,7 @@ extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
                 let cityName = regionContent?.cityKeys[indexPath.row-regionIndex-1]
                 KPServiceHandler.sharedHandler.currentCity = cityName
                 mainController.mainListViewController?.state = .loading
-                mainController.displayDataModel = KPFilter.sharedFilter.currentFilterCafeDatas()
-//                mainController.displayDataModel = KPFilter.filterData(source: KPServiceHandler.sharedHandler.currentCafeDatas,
-//                                                                      withCity: cityName!)
+                mainController.setDisplayDataModel(KPFilter.sharedFilter.currentFilterCafeDatas(), true)
                 if let mapView = mainController.mainMapViewController?.mapView {
                     mapView.animate(to: GMSCameraPosition.camera(withTarget: (regionContent?.cityCoordinate[indexPath.row-regionIndex-1])!,
                                                                  zoom: mapView.camera.zoom))
@@ -637,7 +635,7 @@ extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func resetTableview() {
-        expandedCell = nil
+        expandedIndexPath = nil
         regionContents = KPSideViewController.defaultRegionContent
         tableView.reloadData()
     }

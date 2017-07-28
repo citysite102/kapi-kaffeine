@@ -34,7 +34,7 @@ class KPBusinessHourViewController: KPSharedSettingViewController, KPTimePickerV
         
         scrollView.isScrollEnabled = true
         
-        titleLabel.text = "請勾選/調整店家的營業時間"
+        titleLabel.text = "勾選/調整店家的營業時間"
         
         let days = ["星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"]
         
@@ -128,7 +128,7 @@ class KPBusinessHourViewController: KPSharedSettingViewController, KPTimePickerV
         controller.contentSize = CGSize(width: 300, height: 350)
         controller.presentationStyle = .popout
         let timePickerController = KPTimePickerViewController()
-        timePickerController.setButtonTitles(["完成", "設定全部"])
+        timePickerController.setButtonTitles(["設定全部", "完成"])
         timePickerController.delegate = self
         timePickerController.startTimeValue = startTimeButtons[currentSelectedButton!.tag].titleLabel?.attributedText?.string
         timePickerController.endTimeValue = endTimeButtons[currentSelectedButton!.tag].titleLabel?.attributedText?.string
@@ -156,10 +156,10 @@ class KPBusinessHourViewController: KPSharedSettingViewController, KPTimePickerV
     }
     
     func timePickerButtonDidTap(_ timePickerController: KPTimePickerViewController, selectedIndex index: Int) {
-        if index == 0 {
+        if index == 1 {
             self.updateTimeValue(startTime: timePickerController.startTimeValue,
                                  endTime: timePickerController.endTimeValue)
-        } else if index == 1 {
+        } else if index == 0 {
             self.updateAllTimeValue(startTime: timePickerController.startTimeValue,
                                     endTime: timePickerController.endTimeValue)
         }
