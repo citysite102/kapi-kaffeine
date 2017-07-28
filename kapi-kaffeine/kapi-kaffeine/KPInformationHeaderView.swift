@@ -305,7 +305,7 @@ class KPInformationHeaderView: UIView {
         morePhotoButton.layer.masksToBounds = true
         morePhotoButton.layer.borderWidth = 1.0
         morePhotoButton.layer.borderColor = KPColorPalette.KPMainColor.whiteColor_level1?.cgColor
-        morePhotoButton.setTitle("99+\n張照片", for: .normal)
+        morePhotoButton.setTitle("上傳\n照片", for: .normal)
         morePhotoButton.titleLabel?.font = UIFont.systemFont(ofSize: 13)
         morePhotoButton.titleLabel?.numberOfLines = 0
         morePhotoButton.titleLabel?.textAlignment = NSTextAlignment.center

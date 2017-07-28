@@ -256,9 +256,9 @@ class KPInformationViewController: KPViewController {
         informationHeaderView.delegate = self
         informationHeaderView.informationController = self
         
-        informationHeaderView.morePhotoButton.setTitle(informationDataModel.photoCount != nil ?
-            "\(informationDataModel.photoCount ?? 0) \n張照片" :
-            "上傳\n照片"
+        informationHeaderView.morePhotoButton.setTitle(informationDataModel.photoCount == 0 ?
+            "上傳\n照片" :
+            "\(informationDataModel.photoCount!) \n張照片"
             , for: .normal)
         informationHeaderView.scoreLabel.text = String(format: "%.1f", informationDataModel.averageRate?.doubleValue ?? 0.0)
         informationHeaderView.facebookButton.isHidden = !(informationDataModel.facebookURL != nil)
