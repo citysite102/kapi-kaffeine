@@ -186,6 +186,13 @@ class KPInformationHeaderButtonBar: UIView {
                                                     handler: { (headerButton) -> () in
                                                         let newCommentViewController = KPNewCommentController()
                                                         if self.informationController != nil {
+                                                            
+                                                            if self.informationController?.hasRatedDataModel != nil {
+                                                                DispatchQueue.main.async {
+                                                                    newCommentViewController.hideRatingViews = true
+                                                                }
+                                                            }
+                                                            
                                                             self.informationController?.navigationController?.pushViewController(viewController:
                                                                 newCommentViewController,
                                                                                                                                  animated: true,

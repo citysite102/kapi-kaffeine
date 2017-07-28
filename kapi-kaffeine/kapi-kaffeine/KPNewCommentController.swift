@@ -25,6 +25,14 @@ class KPNewCommentController: KPViewController {
     var ratingHeaderLabel: UILabel!
     var ratingContainer: UIView!
     var ratingCheckbox: KPCheckView!
+    var hideRatingViews: Bool! = false {
+        didSet {
+            if ratingContainer != nil {
+                ratingHeaderLabel.isHidden = hideRatingViews
+                ratingContainer.isHidden = hideRatingViews
+            }
+        }
+    }
     
     let ratingTitles = ["Wifi穩定", "安靜程度",
                         "價格實惠", "座位數量",
@@ -148,6 +156,7 @@ class KPNewCommentController: KPViewController {
                                                             "H:[$self]-16-|"])
         
         ratingHeaderLabel = UILabel()
+        ratingHeaderLabel.isHidden = hideRatingViews
         ratingHeaderLabel.font = UIFont.systemFont(ofSize: 13)
         ratingHeaderLabel.textColor = KPColorPalette.KPTextColor.mainColor
         ratingHeaderLabel.text = "為店家評分"
@@ -157,6 +166,7 @@ class KPNewCommentController: KPViewController {
                                          views:[textFieldContainerView])
         
         ratingContainer = UIView()
+        ratingContainer.isHidden = hideRatingViews
         ratingContainer.backgroundColor = UIColor.white
         scrollContainer.addSubview(ratingContainer)
         ratingContainer.addConstraints(fromStringArray: ["V:[$view0]-8-[$self]-16-|",

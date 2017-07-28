@@ -452,61 +452,7 @@ class KPInformationViewController: KPViewController {
         if let commentCount = informationDataModel.commentCount {
             commentInformationView.infoSupplementLabel.text = "\(commentCount) 人已留言"
             commentInformationView.isEmpty = (commentCount == 0)
-            
-            if commentCount == 0 {
-                commentInformationView.infoSupplementLabel.text = "0 人已留言"
-                commentInformationView.isEmpty = true
-                commentInformationView.actions = [Action(title:"我要評價",
-                                                         style:.normal,
-                                                         color:KPColorPalette.KPMainColor.mainColor!,
-                                                         icon:(R.image.icon_comment()?.withRenderingMode(.alwaysTemplate))!,
-                                                         handler:{ [unowned self] (infoView) -> () in
-                                                            
-                                                            if KPUserManager.sharedManager.currentUser == nil {
-                                                                KPPopoverView.popoverLoginView()
-                                                            } else {
-                                                                if KPUserManager.sharedManager.currentUser == nil {
-                                                                    KPPopoverView.popoverLoginView()
-                                                                } else {
-                                                                    let newCommentViewController = KPNewCommentController()
-                                                                    self.navigationController?.pushViewController(viewController: newCommentViewController,
-                                                                                                                  animated: true,
-                                                                                                                  completion: {})
-                                                                }
-                                                            }
-                    })
-                ]
-            } else {
-                commentInformationView.actions = [
-                    Action(title:"看更多評價(\(commentCount))",
-                        style:.normal,
-                        color:KPColorPalette.KPMainColor.mainColor_sub!,
-                        icon:nil,
-                        handler:{ [unowned self] (infoView) -> () in
-                            let commentViewController = KPAllCommentController()
-                            commentViewController.comments = self.commentInfoView.comments
-                            commentViewController.animated = !self.allCommentHasShown
-                            self.allCommentHasShown = true
-                            self.navigationController?.pushViewController(viewController: commentViewController,
-                                                                          animated: true,
-                                                                          completion: {})
-                    }),
-                    Action(title:"我要評價",
-                           style:.normal,
-                           color:KPColorPalette.KPMainColor.mainColor!,
-                           icon:(R.image.icon_comment()?.withRenderingMode(.alwaysTemplate))!,
-                           handler:{ [unowned self] (infoView) -> () in
-                            if KPUserManager.sharedManager.currentUser == nil {
-                                KPPopoverView.popoverLoginView()
-                            } else {
-                                let newCommentViewController = KPNewCommentController()
-                                self.navigationController?.pushViewController(viewController: newCommentViewController,
-                                                                              animated: true,
-                                                                              completion: {})
-                            }
-                    })
-                ]
-            }
+            updateCommentsLayout(Int(commentCount))
         }
         
         
@@ -672,6 +618,78 @@ class KPInformationViewController: KPViewController {
         }
     }
     
+    
+    func updateCommentsLayout(_ commentCount: Int) {
+        if commentCount == 0 {
+            self.commentInformationView.infoSupplementLabel.text = "0 人已留言"
+            self.commentInformationView.isEmpty = true
+            self.commentInformationView.actions = [Action(title:"我要評價",
+                                                          style:.normal,
+                                                          color:KPColorPalette.KPMainColor.mainColor!,
+                                                          icon:(R.image.icon_comment()?.withRenderingMode(.alwaysTemplate))!,
+                                                          handler:{ [unowned self] (infoView) -> () in
+                                                            
+                                                            if KPUserManager.sharedManager.currentUser == nil {
+                                                                KPPopoverView.popoverLoginView()
+                                                            } else {
+                                                                if KPUserManager.sharedManager.currentUser == nil {
+                                                                    KPPopoverView.popoverLoginView()
+                                                                } else {
+                                                                    let newCommentViewController = KPNewCommentController()
+                                                                    if self.hasRatedDataModel != nil {
+                                                                        DispatchQueue.main.async {
+                                                                            newCommentViewController.hideRatingViews = true
+                                                                        }
+                                                                    }
+                                                                    
+                                                                    self.navigationController?.pushViewController(viewController: newCommentViewController,
+                                                                                                                  animated: true,
+                                                                                                                  completion: {})
+                                                                }
+                                                            }
+            })
+            ]
+        } else {
+            self.commentInformationView.actions = [
+                Action(title:"看更多評價(\(commentCount))",
+                    style:.normal,
+                    color:KPColorPalette.KPMainColor.mainColor_sub!,
+                    icon:nil,
+                    handler:{ [unowned self] (infoView) -> () in
+                        let commentViewController = KPAllCommentController()
+                        commentViewController.comments = self.commentInfoView.comments
+                        commentViewController.animated = !self.allCommentHasShown
+                        self.allCommentHasShown = true
+                        self.navigationController?.pushViewController(viewController: commentViewController,
+                                                                      animated: true,
+                                                                      completion: {})
+                }),
+                Action(title:"我要評價",
+                       style:.normal,
+                       color:KPColorPalette.KPMainColor.mainColor!,
+                       icon:(R.image.icon_comment()?.withRenderingMode(.alwaysTemplate))!,
+                       handler:{ [unowned self] (infoView) -> () in
+                        if KPUserManager.sharedManager.currentUser == nil {
+                            KPPopoverView.popoverLoginView()
+                        } else {
+                            let newCommentViewController = KPNewCommentController()
+                            
+                            if self.hasRatedDataModel != nil {
+                                DispatchQueue.main.async {
+                                    newCommentViewController.hideRatingViews = true
+                                }
+                            }
+                            
+                            self.navigationController?.pushViewController(viewController: newCommentViewController,
+                                                                          animated: true,
+                                                                          completion: {})
+                        }
+                })
+            ]
+        }
+
+    }
+    
     func refreshComments() {
         
         // 取得 Comment 資料
@@ -687,6 +705,7 @@ class KPInformationViewController: KPViewController {
                 self.commentInformationView.layoutIfNeeded()
                 
                 if let commentCountValue = comments?.count {
+                    self.updateCommentsLayout(commentCountValue)
                     self.commentInformationView.isEmpty = (commentCountValue == 0)
                     self.informationHeaderButtonBar.commentButton.numberValue = commentCountValue
                     self.informationHeaderButtonBar.commentButton.selected =

@@ -54,6 +54,10 @@ class KPInformationSharedInfoView: UIView {
             let totalWidth = (Int(UIScreen.main.bounds.size.width)-((actions?.count)!-1)*8 - 16)
             let buttonWidth = Double(totalWidth)/Double((actions?.count)!)
             
+            for actionButton in actionButtons {
+                actionButton.removeFromSuperview()
+            }
+            
             actionButtons.removeAll()
             
             let separator = UIView()
