@@ -604,8 +604,9 @@ extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
                 let cityName = regionContent?.cityKeys[indexPath.row-regionIndex-1]
                 KPServiceHandler.sharedHandler.currentCity = cityName
                 mainController.mainListViewController?.state = .loading
-                mainController.displayDataModel = KPFilter.filterData(source: KPServiceHandler.sharedHandler.currentCafeDatas,
-                                                                      withCity: cityName!)
+                mainController.displayDataModel = KPFilter.sharedFilter.currentFilterCafeDatas()
+//                mainController.displayDataModel = KPFilter.filterData(source: KPServiceHandler.sharedHandler.currentCafeDatas,
+//                                                                      withCity: cityName!)
                 if let mapView = mainController.mainMapViewController?.mapView {
                     mapView.animate(to: GMSCameraPosition.camera(withTarget: (regionContent?.cityCoordinate[indexPath.row-regionIndex-1])!,
                                                                  zoom: mapView.camera.zoom))

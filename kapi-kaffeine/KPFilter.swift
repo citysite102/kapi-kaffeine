@@ -9,9 +9,17 @@
 import Foundation
 import BenzeneFoundation
 
+enum Sortedby {
+    case distance
+    case rates
+}
+
 class KPFilter {
 
     static let sharedFilter = KPFilter()
+    
+    
+    var sortedby: Sortedby! = .distance
     
     var city: String?
     
@@ -25,8 +33,8 @@ class KPFilter {
     
     var averageRate: Double = 0
     
-    var limited_time: Int?
-    var socket: Int?
+    var limited_time: Int = 4
+    var socket: Int = 4
     var standingDesk: Bool = false
     
     var currentOpening: Bool = false
@@ -52,7 +60,7 @@ class KPFilter {
             })
         }
         
-        if let limited_time = limited_time, limited_time != 4 {
+        if limited_time != 4 {
             currentCafeDatas = currentCafeDatas.filter({
                 
                 if limited_time == 3 {
@@ -67,7 +75,7 @@ class KPFilter {
             })
         }
         
-        if let socket = socket, socket != 4 {
+        if socket != 4 {
             currentCafeDatas = currentCafeDatas.filter({
                 
                 if socket == 3 || socket == 2 {
@@ -117,6 +125,25 @@ class KPFilter {
                 })
             }
         }
+        
+        if sortedby == .distance {
+            currentCafeDatas.sort { (data1, data2) -> Bool in
+                data1.distanceInMeter ?? Double.greatestFiniteMagnitude < data2.distanceInMeter ?? Double.greatestFiniteMagnitude
+            }
+        } else if sortedby == .rates {
+            currentCafeDatas.sort { (data1, data2) -> Bool in
+                if data1.averageRate?.doubleValue ?? 0 > data2.averageRate?.doubleValue ?? 0 {
+                    return true
+                } else if data1.averageRate?.doubleValue ?? 0 < data2.averageRate?.doubleValue ?? 0 {
+                    return false
+                } else {
+                    return data1.distanceInMeter ?? Double.greatestFiniteMagnitude < data2.distanceInMeter ?? Double.greatestFiniteMagnitude
+                }
+                
+            }
+        }
+        
+        
         
         return currentCafeDatas
     }

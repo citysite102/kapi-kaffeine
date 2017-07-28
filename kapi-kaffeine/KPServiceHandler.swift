@@ -123,11 +123,6 @@ class KPServiceHandler {
                                                 cafeDatas.append(cafeData)
                                             }
                                         }
-                                        if KPLocationManager.sharedInstance().currentLocation != nil {
-                                            cafeDatas.sort(by: { (model1, model2) -> Bool in
-                                                model1.distanceInMeter! < model2.distanceInMeter!
-                                            })
-                                        }
                                         self.currentCafeDatas = cafeDatas
                                         completion?(cafeDatas, nil)
                                     } else {

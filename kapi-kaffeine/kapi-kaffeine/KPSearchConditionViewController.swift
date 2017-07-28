@@ -22,7 +22,6 @@ class KPSearchConditionViewController: KPViewController {
     var scrollView: UIScrollView!
     var containerView: UIView!
     
-    
     var ratingTitles = ["Wifi穩定", "安靜程度",
                         "價格實惠", "座位數量",
                         "咖啡品質", "餐點美味", "環境舒適"]
@@ -165,6 +164,7 @@ class KPSearchConditionViewController: KPViewController {
                                                    "V:|-24-[$self]"])
         
         sortSegmentedControl = KPSegmentedControl.init(["距離近到遠", "評分高到低"])
+        sortSegmentedControl.selectedSegmentIndex = KPFilter.sharedFilter.sortedby == .distance ? 0 : 1
         containerView.addSubview(sortSegmentedControl)
         sortSegmentedControl.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
                                                               "V:[$view0]-8-[$self(30)]"],
@@ -266,22 +266,26 @@ class KPSearchConditionViewController: KPViewController {
                                                         "V:[$view0]-16-[$self]"],
                                            views: [seperator_two])
         timeRadioBoxOne = KPCheckView(.radio, "不設定")
+        timeRadioBoxOne.customValue = 4
         timeRadioBoxOne.checkBox.checkState = .checked
         containerView.addSubview(timeRadioBoxOne)
         timeRadioBoxOne.addConstraints(fromStringArray: ["H:|-16-[$self]",
                                                          "V:[$view0]-16-[$self]"],
                                             views: [timeLimitLabel])
         timeRadioBoxTwo = KPCheckView(.radio, "客滿/人多限時")
+        timeRadioBoxTwo.customValue = 3
         containerView.addSubview(timeRadioBoxTwo)
         timeRadioBoxTwo.addConstraints(fromStringArray: ["H:|-16-[$self]",
                                                          "V:[$view0]-16-[$self]"],
                                             views: [timeRadioBoxOne])
         timeRadioBoxThree = KPCheckView(.radio, "有限時")
+        timeRadioBoxThree.customValue = 1
         containerView.addSubview(timeRadioBoxThree)
         timeRadioBoxThree.addConstraints(fromStringArray: ["H:|-16-[$self]",
                                                            "V:[$view0]-16-[$self]"],
                                          views: [timeRadioBoxTwo])
         timeRadioBoxFour = KPCheckView(.radio, "不限時")
+        timeRadioBoxFour.customValue = 2
         containerView.addSubview(timeRadioBoxFour)
         timeRadioBoxFour.addConstraints(fromStringArray: ["H:|-16-[$self]",
                                                           "V:[$view0]-16-[$self]"],
@@ -299,6 +303,18 @@ class KPSearchConditionViewController: KPViewController {
         timeRadioBoxFour.deselectCheckViews = [timeRadioBoxTwo,
                                                timeRadioBoxOne,
                                                timeRadioBoxThree]
+        
+        if KPFilter.sharedFilter.limited_time == 1 {
+            timeRadioBoxThree.checkBox.checkState = .checked
+        } else if KPFilter.sharedFilter.limited_time == 2 {
+            timeRadioBoxFour.checkBox.checkState = .checked
+        } else if KPFilter.sharedFilter.limited_time == 3 {
+            timeRadioBoxTwo.checkBox.checkState = .checked
+        } else if KPFilter.sharedFilter.limited_time == 4 {
+            timeRadioBoxOne.checkBox.checkState = .checked
+        }
+        
+        
         socketLabel = titleLabel("插座數量")
         containerView.addSubview(socketLabel)
         socketLabel.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",
@@ -307,19 +323,21 @@ class KPSearchConditionViewController: KPViewController {
                                         views: [seperator_two])
         
         socketRadioBoxOne = KPCheckView(.radio, "不設定")
-        socketRadioBoxOne.checkBox.checkState = .checked
+        socketRadioBoxOne.customValue = 4
         containerView.addSubview(socketRadioBoxOne)
         socketRadioBoxOne.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",
                                                            "V:[$view0]-16-[$self]"],
                                               metrics:[KPSearchConditionViewControllerConstants.leftPadding],
                                               views: [socketLabel])
         socketRadioBoxTwo = KPCheckView(.radio, "部分座位有")
+        socketRadioBoxTwo.customValue = 2
         containerView.addSubview(socketRadioBoxTwo)
         socketRadioBoxTwo.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",
                                                            "V:[$view0]-16-[$self]"],
                                               metrics:[KPSearchConditionViewControllerConstants.leftPadding],
                                               views: [socketRadioBoxOne])
         socketRadioBoxThree = KPCheckView(.radio, "很多插座")
+        socketRadioBoxThree.customValue = 1
         containerView.addSubview(socketRadioBoxThree)
         socketRadioBoxThree.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",
                                                              "V:[$view0]-16-[$self]"],
@@ -332,6 +350,14 @@ class KPSearchConditionViewController: KPViewController {
                                                 socketRadioBoxThree]
         socketRadioBoxThree.deselectCheckViews = [socketRadioBoxTwo,
                                                   socketRadioBoxOne]
+        
+        if KPFilter.sharedFilter.socket == 1 {
+            socketRadioBoxThree.checkBox.checkState = .checked
+        } else if KPFilter.sharedFilter.socket == 2 {
+            socketRadioBoxTwo.checkBox.checkState = .checked
+        } else if KPFilter.sharedFilter.socket == 4 {
+            socketRadioBoxOne.checkBox.checkState = .checked
+        }
         
         businessHourLabel = titleLabel("營業時間")
         containerView.addSubview(businessHourLabel)

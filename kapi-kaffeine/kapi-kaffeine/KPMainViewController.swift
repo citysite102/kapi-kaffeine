@@ -208,7 +208,8 @@ class KPMainViewController: KPViewController {
         KPServiceHandler.sharedHandler.fetchRemoteData() { (results: [KPDataModel]?,
             error: NetworkRequestError?) in
             if results != nil {
-                self.displayDataModel = results!
+                self.displayDataModel = KPFilter.sharedFilter.currentFilterCafeDatas()
+//                self.displayDataModel = results!
             } else if let requestError = error {
                 switch requestError {
                     case .noNetworkConnection:
@@ -522,7 +523,7 @@ extension KPMainViewController: KPSearchTagViewDelegate, KPSearchConditionViewCo
             case .socket:
                 KPFilter.sharedFilter.socket = 1
             case .limitTime:
-                KPFilter.sharedFilter.limited_time = 1
+                KPFilter.sharedFilter.limited_time = 2
             case .opening:
                 KPFilter.sharedFilter.currentOpening = true
             case .highRate:
@@ -570,6 +571,13 @@ extension KPMainViewController: KPSearchTagViewDelegate, KPSearchConditionViewCo
   
         // 各個 rating
         
+        if searchConditionController.sortSegmentedControl.selectedSegmentIndex == 0 {
+            KPFilter.sharedFilter.sortedby = .distance
+        } else if searchConditionController.sortSegmentedControl.selectedSegmentIndex == 1 {
+            KPFilter.sharedFilter.sortedby = .rates
+        }
+        
+        
         // Wifi
         KPFilter.sharedFilter.wifiRate  = Double(searchConditionController.ratingViews[0].currentRate)
         if KPFilter.sharedFilter.wifiRate >= 4, let index = self.searchHeaderView.searchTagView.headerTagContents.index(of: .wifi) {
@@ -589,6 +597,30 @@ extension KPMainViewController: KPSearchTagViewDelegate, KPSearchConditionViewCo
         KPFilter.sharedFilter.musicRate = Double(searchConditionController.ratingViews[6].currentRate)
         
         
+        KPFilter.sharedFilter.limited_time = (searchConditionController.timeRadioBoxOne.groupValue as! Int)
+        KPFilter.sharedFilter.socket = (searchConditionController.socketRadioBoxOne.groupValue as! Int)
+        
+        if let index = self.searchHeaderView.searchTagView.headerTagContents.index(of: .limitTime) {
+            if KPFilter.sharedFilter.limited_time == 2 {
+                self.searchHeaderView.searchTagView.collectionView.selectItem(at: IndexPath.init(row: index, section: 0),
+                                                                              animated: false,
+                                                                              scrollPosition: [])
+            } else {
+                self.searchHeaderView.searchTagView.collectionView.deselectItem(at: IndexPath.init(row: index, section: 0),
+                                                                                animated: false)
+            }
+        }
+    
+        if let index = self.searchHeaderView.searchTagView.headerTagContents.index(of: .socket) {
+            if KPFilter.sharedFilter.socket == 1 {
+                self.searchHeaderView.searchTagView.collectionView.selectItem(at: IndexPath.init(row: index, section: 0),
+                                                                              animated: false,
+                                                                              scrollPosition: [])
+            } else {
+                self.searchHeaderView.searchTagView.collectionView.deselectItem(at: IndexPath.init(row: index, section: 0),
+                                                                                animated: false)
+            }
+        }
         
         
         // 時間
