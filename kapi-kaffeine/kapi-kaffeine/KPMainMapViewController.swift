@@ -263,7 +263,10 @@ GMUClusterRendererDelegate {
                                                    "V:[$self(56)]-16-[$view0]"],
                                  views: [collectionView])
         
-        KPLocationManager.sharedInstance().addObserver(self, forKeyPath: "currentLocation", options: .new, context: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(receiveLocationInformation),
+                                               name: NSNotification.Name.KPLocationDidUpdate,
+                                               object: nil)
         
         snapshotView = UIImageView()
         snapshotView.contentMode = .top
@@ -289,6 +292,11 @@ GMUClusterRendererDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    func receiveLocationInformation() {
+        moveToMyLocation()
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if object as? KPLocationManager == KPLocationManager.sharedInstance() && keyPath == "currentLocation" {
             self.moveToMyLocation(completion: nil)
@@ -306,9 +314,7 @@ GMUClusterRendererDelegate {
         if let location = KPLocationManager.sharedInstance().currentLocation?.coordinate {
             CATransaction.begin()
             CATransaction.setCompletionBlock({
-                if let ddddd = completion {
-                    ddddd(true)
-                }
+                completion?(true)
             })
             CATransaction.setValue(NSNumber(floatLiteral: 0.5), forKey: kCATransactionAnimationDuration)
             self.mapView.animate(to: GMSCameraPosition.camera(withTarget: location,
@@ -316,9 +322,7 @@ GMUClusterRendererDelegate {
             CATransaction.commit()
             
         } else {
-            if completion != nil {
-                completion!(false)
-            }
+            completion?(false)
         }
     }
     
