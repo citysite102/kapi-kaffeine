@@ -555,16 +555,18 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
         
         if rateCheckedView.checked == false || ratingController == nil {
             KPPopoverView.popoverNotification("新增失敗",
-                                              "評份尚末填寫！",
+                                              "評分尚未填寫！",
                                               150,
                                               nil);
+            return;
         }
         
-        if businessHourCheckedView.checked == false {
+        if businessHourCheckedView.checked == false || businessHourController == nil {
             KPPopoverView.popoverNotification("新增失敗",
-                                              "營業時間尚末填寫！",
+                                              "營業時間尚未填寫！",
                                               150,
                                               nil);
+            return;
         }
         
         if addressSubTitleView.editTextView.text == nil ||
