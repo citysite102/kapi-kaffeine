@@ -44,7 +44,7 @@ class KPSubTitleEditView: UIView {
         }
     }
     
-    var placeHolderContent: String! {
+    var placeHolderContent: String! = "" {
         didSet {
             if dType == .MultiLine {
                 placeHolderLabel.text = placeHolderContent
