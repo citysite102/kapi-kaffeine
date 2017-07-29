@@ -9,7 +9,23 @@
 import Foundation
 import ObjectMapper
 
-class KPDataModel: NSObject, Mappable, GMUClusterItem {
+class KPDataModel: NSObject, Mappable, GMUClusterItem, Comparable {
+    /// Returns a Boolean value indicating whether the value of the first
+    /// argument is less than that of the second argument.
+    ///
+    /// This function is the only requirement of the `Comparable` protocol. The
+    /// remainder of the relational operator functions are implemented by the
+    /// standard library for any type that conforms to `Comparable`.
+    ///
+    /// - Parameters:
+    ///   - lhs: A value to compare.
+    ///   - rhs: Another value to compare.
+    static func <(lhs: KPDataModel, rhs: KPDataModel) -> Bool {
+        return lhs.distanceInMeter! < rhs.distanceInMeter!
+    }
+
+    
+    
     
     var identifier: String!
     var address: String!

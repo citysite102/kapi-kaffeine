@@ -380,93 +380,42 @@ GMUClusterRendererDelegate {
     
     func handleNearestButtonOnTap(_ sender: UIButton) {
         
-        clusterRenderer.animatesClusters = false
-        
-        moveToMyLocation { (success) in
-            if success {
+        if let nearestModel = allDataModel.min() {
+            
+            clusterRenderer.animatesClusters = false
+            
+            CATransaction.begin()
+            CATransaction.setCompletionBlock({
+                
                 self.clusterRenderer.animatesClusters = true
-                DispatchQueue.main.asyncAfter(deadline: .now()+0.5, execute: {
-//                    self.reloadNeeded = false
-//                    let test = self.isCollectionViewShow
-//                    self.isCollectionViewShow = test
-                    if let renderer = self.clusterRenderer,
-                        let currentLocation = KPLocationManager.sharedInstance().currentLocation {
-                        var nearestMarker: GMSMarker?
+                DispatchQueue.main.asyncAfter(wallDeadline: .now()+0.5, execute: {
+                    if let renderer = self.clusterRenderer {
                         
-                        var nearestDistance: Double = Double.greatestFiniteMagnitude
+                        var nearestMarker: GMSMarker? = nil
+                        
                         for marker in renderer.markers() {
-                            if nearestMarker == nil {
+                            if let dataModel = marker.userData as? KPDataModel,
+                                dataModel.identifier == nearestModel.identifier {
                                 nearestMarker = marker
-                            } else {
-                                let distance = CLLocation(latitude: marker.position.latitude, longitude: marker.position.longitude).distance(from: currentLocation)
-                                if distance < nearestDistance {
-                                    nearestDistance = distance
-                                    nearestMarker = marker
-                                }
+                                break;
                             }
                         }
                         
                         if nearestMarker != nil {
-                            CATransaction.begin()
-                            CATransaction.setValue(NSNumber(floatLiteral: 0.5), forKey: kCATransactionAnimationDuration)
-                            self.mapView.animate(to: GMSCameraPosition.camera(withTarget: nearestMarker!.position , zoom: self.mapView.camera.zoom))
-                            CATransaction.commit()
-//                            CATransaction.setCompletionBlock({
-//                                self.reloadNeeded = false
-//                                self.mapView.selectedMarker = nearestMarker!
-//                            })
-                            
-                            DispatchQueue.main.asyncAfter(deadline: .now()+0.5, execute: {
-                                if nearestMarker?.userData is KPDataModel {
-                                    self.mapView.selectedMarker = nearestMarker!
-//                                    self.isCollectionViewShow = true
-                                } else {
-                                    self.mapView.animate(toZoom: self.mapView.camera.zoom+1)
-                                }
-                            })
+                            self.mapView.selectedMarker = nearestMarker!
                         }
                     }
                 })
 
-            }
+            })
+            CATransaction.setValue(NSNumber(floatLiteral: 0.5), forKey: kCATransactionAnimationDuration)
+            self.mapView.animate(to: GMSCameraPosition.camera(withTarget: CLLocationCoordinate2D(latitude: nearestModel.latitude,
+                                                                                                 longitude: nearestModel.longitude),
+                                                              zoom: 18))
+            CATransaction.commit()
+        
         }
         
-//        if let renderer = clusterRenderer as? GMUDefaultClusterRenderer,
-//           let currentLocation = KPLocationManager.sharedInstance().currentLocation {
-//            var nearestMarker: GMSMarker?
-//            
-//            var nearestDistance: Double = Double.greatestFiniteMagnitude
-//            for marker in renderer.markers() {
-//                if nearestMarker == nil {
-//                    nearestMarker = marker
-//                } else {
-//                    let distance = CLLocation(latitude: marker.position.latitude, longitude: marker.position.longitude).distance(from: currentLocation)
-//                    if distance < nearestDistance {
-//                        nearestDistance = distance
-//                        nearestMarker = marker
-//                    }
-//                }
-//            }
-//
-//            if nearestMarker != nil {
-//                CATransaction.begin()
-//                CATransaction.setValue(NSNumber(floatLiteral: 0.5), forKey: kCATransactionAnimationDuration)
-//                self.mapView.animate(to: GMSCameraPosition.camera(withTarget: nearestMarker!.position , zoom: self.mapView.camera.zoom))
-//                CATransaction.commit()
-//                CATransaction.setCompletionBlock({
-//                    self.reloadNeeded = false
-//                    self.mapView.selectedMarker = nearestMarker!
-//                })
-//                
-//                DispatchQueue.main.asyncAfter(deadline: .now()+0.5, execute: {
-//                    if nearestMarker?.userData is KPDataModel {
-//                        self.isCollectionViewShow = true
-//                    } else {
-//                        self.mapView.animate(toZoom: self.mapView.camera.zoom+1)
-//                    }
-//                })
-//            }
-//        }
     }
     
     // MARK: UICollectionView DataSource
