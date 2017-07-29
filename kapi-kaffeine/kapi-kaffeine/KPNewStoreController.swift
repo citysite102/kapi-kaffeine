@@ -453,12 +453,12 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
         mapCover.addGestureRecognizer(mapGesture)
         
         addressSubTitleView = KPSubTitleEditView(.Top,
-                                                 .Edited,
+                                                 .MultiLine,
                                                  "店家地址")
         addressSubTitleView.placeHolderContent = "請輸入店家地址"
         sectionTwoContainer.addSubview(addressSubTitleView)
         addressSubTitleView.addConstraints(fromStringArray: ["H:|[$self]|", "H:|-16-[$view1]-16-|",
-                                                             "V:[$view0]-16-[$self(72)]-8-[$view1(120)]"],
+                                                             "V:[$view0]-16-[$self][$view1(120)]"],
                                            views: [standDeskCheckBox, addressMapView])
         
 
@@ -567,8 +567,8 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
                                               nil);
         }
         
-        if addressSubTitleView.editTextField.text == nil ||
-            addressSubTitleView.editTextField.text?.characters.count == 0 {
+        if addressSubTitleView.editTextView.text == nil ||
+            addressSubTitleView.editTextView.text?.characters.count == 0 {
             addressSubTitleView.sType = .Warning
             KPPopoverView.popoverNotification("新增失敗",
                                               "店家地址尚未填寫！",
@@ -659,7 +659,8 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
     
     func handleMapInputViewSendButtonOnTap(_ sender: UIButton) {
         self.mapInputController.appModalController()?.dismissControllerWithDefaultDuration()
-        addressSubTitleView.editTextField.text = mapInputController.address
+        addressSubTitleView.editTextView.text = mapInputController.address
+        addressSubTitleView.editTextView.delegate?.textViewDidChange?(addressSubTitleView.editTextView)
         selectedCoordinate = mapInputController.coordinate
     }
     

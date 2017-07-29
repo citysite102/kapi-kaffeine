@@ -23,6 +23,7 @@ class KPSubTitleEditView: UIView {
         case Fixed
         case Edited
         case Custom
+        case MultiLine
     }
     
     enum StatusType {
@@ -49,7 +50,11 @@ class KPSubTitleEditView: UIView {
     
     var content: String! {
         didSet {
-            self.editTextField.text = content
+            if dType == .MultiLine {
+                self.editTextView.text = content
+            } else {
+                self.editTextField.text = content
+            }
         }
     }
     
@@ -108,6 +113,21 @@ class KPSubTitleEditView: UIView {
         return textField
     }()
     
+    lazy var editTextView: UITextView = {
+        let textView = UITextView()
+        textView.textColor = KPColorPalette.KPTextColor.grayColor_level2
+        textView.font = UIFont.systemFont(ofSize: 16)
+        textView.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        textView.isScrollEnabled = false
+        textView.textContainer.lineFragmentPadding = 0
+//        textView.placeholder = "請輸入..."
+        textView.delegate = self
+        textView.returnKeyType = .done
+        return textView
+    }()
+    
+    var editTextViewHeightConstaint: NSLayoutConstraint!
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -140,6 +160,18 @@ class KPSubTitleEditView: UIView {
             editTextField.isHidden = true
             makeTitleUI()
             makeBorder()
+        case .MultiLine:
+            makeTitleUI()
+            makeBorder()
+            addSubview(editTextView)
+            editTextView.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
+                                                          "V:[$view0]-10-[$self]-16-|"],
+                                        views:[subTitleLabel])
+            
+//            editTextView.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude))
+//            let newSize = editTextView.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude))
+//            editTextViewHeightConstaint = editTextView.addConstraint(forHeight: newSize.height)
+            editTextViewHeightConstaint = editTextView.addConstraint(forHeight: 0)
         }
         
         tapGesture = UITapGestureRecognizer(target: self,
@@ -216,5 +248,22 @@ extension KPSubTitleEditView: UITextFieldDelegate {
         
         return true
     }
+}
+
+extension KPSubTitleEditView: UITextViewDelegate {
+    
+    func textViewDidChange(_ textView: UITextView) {
+        if textView.text == "" {
+            textView.text = " "
+        }
+        let fixedWidth = textView.frame.size.width
+
+        textView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
+        let newSize = textView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
+        
+        editTextViewHeightConstaint.constant = newSize.height
+        textView.layoutIfNeeded()
+    }
+    
 }
 
