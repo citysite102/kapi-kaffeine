@@ -307,7 +307,19 @@ extension KPPhotoDisplayViewController:
             cell.shopPhoto.addGestureRecognizer(longPressGesture)
         }
         
-        cell.shopPhoto.af_setImage(withURL: self.displayedPhotoInformations[indexPath.row].imageURL)
+        cell.shopPhoto.af_setImage(withURL: self.displayedPhotoInformations[indexPath.row].imageURL,
+                                   placeholderImage: R.image.image_loading(),
+                                   filter: nil,
+                                   progress: nil,
+                                   progressQueue: DispatchQueue.global(),
+                                   imageTransition: UIImageView.ImageTransition.crossDissolve(0.2),
+                                   runImageTransitionIfCached: false,
+                                   completion:{ (response) in
+                                    if response.error != nil {
+                                        cell.shopPhoto.image = R.image.icon_failed()
+                                    }
+        })
+        
         return cell;
     }
 }

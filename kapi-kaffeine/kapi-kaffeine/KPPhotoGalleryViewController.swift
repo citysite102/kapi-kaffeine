@@ -124,7 +124,11 @@ extension KPPhotoGalleryViewController: UICollectionViewDelegate, UICollectionVi
                                        progressQueue: DispatchQueue.global(),
                                        imageTransition: UIImageView.ImageTransition.crossDissolve(0.2),
                                        runImageTransitionIfCached: false,
-                                       completion: nil)
+                                       completion: { (response) in
+                                        if response.error != nil {
+                                            cell.shopPhoto.image = R.image.icon_failed()
+                                        }
+            })
             return cell;
         }
     }

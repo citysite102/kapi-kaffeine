@@ -568,7 +568,6 @@ class KPInformationViewController: KPViewController {
                     transition.duration = 0.2
                     transition.type = kCATransitionFade
                     self.informationHeaderView.shopPhoto.image = R.image.image_noImage()
-//                    self.informationHeaderView.shopPhoto.image = R.image.demo_6()
                     self.informationHeaderView.shopPhoto.isUserInteractionEnabled = false
                     self.informationHeaderView.shopPhoto.layer.add(transition, forKey: nil)
                     self.informationHeaderView.morePhotoButton.titleLabel?.text = "上傳\n照片"
