@@ -648,12 +648,13 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
                                             right: 0)
         if self.mapInputController == nil {
             self.mapInputController = KPMapInputViewController()
-            self.mapInputController.coordinate = CLLocationCoordinate2D(latitude: selectedCoordinate.latitude,
-                                                                        longitude: selectedCoordinate.longitude)
             self.mapInputController.sendButton.addTarget(self,
                                                          action: #selector(KPNewStoreController.handleMapInputViewSendButtonOnTap(_:)),
                                                          for: .touchUpInside)
         }
+        
+        self.mapInputController.coordinate = CLLocationCoordinate2D(latitude: selectedCoordinate.latitude,
+                                                                    longitude: selectedCoordinate.longitude)
         
         controller.contentController = self.mapInputController
         controller.presentModalView()
