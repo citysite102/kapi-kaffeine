@@ -59,7 +59,7 @@ GMUClusterRendererDelegate {
                         })
                     }
                 } else if state == .loading {
-                    UIApplication.shared.topViewController.view.addSubview(loadingView)
+                    self.view.addSubview(loadingView)
                     loadingView.addConstraints(fromStringArray: ["V:|[$self]|",
                                                                  "H:|[$self]|"])
                 }
@@ -305,6 +305,10 @@ GMUClusterRendererDelegate {
         view.addGestureRecognizer(swipeGesture)
         
         loadingView = KPLoadingView(("讀取中..", "讀取成功", "讀取失敗"))
+        
+        DispatchQueue.main.asyncAfter(deadline: .now()+1.0) { 
+            self.state = .loading
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {

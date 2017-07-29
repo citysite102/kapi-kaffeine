@@ -76,6 +76,7 @@ class KPMainViewController: KPViewController {
         mainListViewController!.mainController = self
         mainMapViewController!.mainController = self
         
+        currentController = mainMapViewController
         
         addChildViewController(mainListViewController!)
         view.addSubview((mainListViewController?.view)!)
@@ -95,7 +96,6 @@ class KPMainViewController: KPViewController {
         _ = mainMapViewController?.view.addConstraints(fromStringArray: ["H:|[$self]|",
                                                                          "V:|[$self]|"])
 
-        currentController = mainMapViewController
         
         searchHeaderView = KPSearchHeaderView()
         searchHeaderView.searchButton.isEnabled = false
@@ -211,8 +211,6 @@ class KPMainViewController: KPViewController {
     // MARK: Data
     
     func fetchRemoteData() {
-        
-        mainMapViewController?.state = .loading
         KPServiceHandler.sharedHandler.fetchRemoteData() { (results: [KPDataModel]?,
             error: NetworkRequestError?) in
             if results != nil {
