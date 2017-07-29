@@ -126,7 +126,7 @@ extension KPPhotoGalleryViewController: UICollectionViewDelegate, UICollectionVi
                                        runImageTransitionIfCached: false,
                                        completion: { (response) in
                                         if response.error != nil {
-                                            cell.shopPhoto.image = R.image.icon_failed()
+                                            cell.shopPhoto.image = R.image.image_failed_s()
                                         }
             })
             return cell;
