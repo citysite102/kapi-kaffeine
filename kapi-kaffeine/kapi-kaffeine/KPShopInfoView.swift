@@ -68,7 +68,7 @@ class KPShopInfoView: UIView {
     var openLabel: UILabel!
     var otherTimeButton: UIButton!
     var phoneIcon: UIImageView!
-    var phoneLabel: UILabel!
+    var phoneLabel: UITextView!
     var locationIcon: UIImageView!
     var locationLabel: UILabel!
     var priceIcon: UIImageView!
@@ -154,15 +154,18 @@ class KPShopInfoView: UIView {
                                                    "H:|-16-[$self(20)]"],
                                  views: [openTimeIcon])
         
-        phoneLabel = UILabel()
+        phoneLabel = UITextView()
+        phoneLabel.isEditable = false
         phoneLabel.font = UIFont.systemFont(ofSize: 14)
-        phoneLabel.numberOfLines = 0
+        phoneLabel.dataDetectorTypes = .phoneNumber
+        phoneLabel.textContainerInset = UIEdgeInsetsMake(1, 0, 0, 0)
+        phoneLabel.textContainer.lineFragmentPadding = 0
         phoneLabel.textColor = informationDataModel.phone != nil ?
             KPColorPalette.KPTextColor.grayColor_level1 :
             KPColorPalette.KPTextColor.grayColor_level5
         addSubview(phoneLabel)
         phoneLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]-16-|",
-                                                    "V:[$view1]-12-[$self]"],
+                                                    "V:[$view1]-12-[$self(20)]"],
                                   views: [phoneIcon, openLabel])
         phoneIcon.addConstraintForCenterAligning(to: phoneLabel,
                                                  in: .vertical)
@@ -212,8 +215,7 @@ class KPShopInfoView: UIView {
                            lineSpacing: 3.0)
         locationLabel.setText(text: informationDataModel.address ?? "暫無資料",
                               lineSpacing: 3.0)
-        phoneLabel.setText(text: informationDataModel.phone ?? "暫無資料",
-                           lineSpacing: 3.0)
+        phoneLabel.text = informationDataModel.phone ?? "暫無資料"
         priceLabel.setText(text: priceContents[informationDataModel.priceAverage?.intValue ?? 0],
                            lineSpacing: 3.0)
         

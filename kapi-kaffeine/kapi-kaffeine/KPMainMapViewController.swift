@@ -192,7 +192,6 @@ GMUClusterRendererDelegate {
         mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
         mapView.delegate = self
         mapView.preferredFrameRate = .maximum
-        map
         
         do {
             // Set the map style by passing the URL of the local file.

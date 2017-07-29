@@ -95,8 +95,8 @@ class KPLoadingView: UIView {
         container.layer.cornerRadius = 8.0
         container.layer.masksToBounds = true
         addSubview(container)
-        container.addConstraints(fromStringArray: ["V:[$self(96)]",
-                                                   "H:[$self(96)]"])
+        container.addConstraints(fromStringArray: ["V:[$self(92)]",
+                                                   "H:[$self(92)]"])
         container.addConstraintForCenterAligningToSuperview(in: .vertical)
         container.addConstraintForCenterAligningToSuperview(in: .horizontal)
         
