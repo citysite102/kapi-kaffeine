@@ -76,24 +76,40 @@ class KPSubTitleEditView: UIView {
     var sType: StatusType! {
         didSet {
             if sType == .Normal {
-                let placeholder = NSMutableAttributedString(string: placeHolderContent)
-                placeholder.addAttribute(NSForegroundColorAttributeName,
-                                         value: KPColorPalette.KPTextColor.default_placeholder!,
-                                         range: NSRange.init(location: 0, length: placeHolderContent.characters.count))
-                editTextField.attributedPlaceholder = placeholder
-                editTextField.layer.pop_removeAllAnimations()
+                if dType == .MultiLine {
+                    placeHolderLabel.textColor = KPColorPalette.KPTextColor.default_placeholder!
+                    placeHolderLabel.text = placeHolderContent
+                    editTextView.layer.pop_removeAllAnimations()
+                } else {
+                    let placeholder = NSMutableAttributedString(string: placeHolderContent)
+                    placeholder.addAttribute(NSForegroundColorAttributeName,
+                                             value: KPColorPalette.KPTextColor.default_placeholder!,
+                                             range: NSRange.init(location: 0, length: placeHolderContent.characters.count))
+                    editTextField.attributedPlaceholder = placeholder
+                    editTextField.layer.pop_removeAllAnimations()
+                }
             } else if sType == .Warning {
                 let content = "Oops! 記得填寫這個欄位喔!"
-                let placeholder = NSMutableAttributedString(string: content)
-                placeholder.addAttribute(NSForegroundColorAttributeName,
-                                         value: KPColorPalette.KPTextColor.warningColor!,
-                                         range: NSRange.init(location: 0, length: content.characters.count))
-                editTextField.attributedPlaceholder = placeholder
-                
-                let anim = POPSpringAnimation(propertyNamed: kPOPLayerPositionX)
-                anim?.springBounciness = 15
-                anim?.velocity = 400
-                editTextField.layer.pop_add(anim, forKey: "warning")
+                if dType == .MultiLine {
+                    placeHolderLabel.textColor = KPColorPalette.KPTextColor.warningColor!
+                    placeHolderLabel.text = content
+                    
+                    let anim = POPSpringAnimation(propertyNamed: kPOPLayerPositionX)
+                    anim?.springBounciness = 15
+                    anim?.velocity = 400
+                    editTextView.layer.pop_add(anim, forKey: "warning")
+                } else {
+                    let placeholder = NSMutableAttributedString(string: content)
+                    placeholder.addAttribute(NSForegroundColorAttributeName,
+                                             value: KPColorPalette.KPTextColor.warningColor!,
+                                             range: NSRange.init(location: 0, length: content.characters.count))
+                    editTextField.attributedPlaceholder = placeholder
+                    
+                    let anim = POPSpringAnimation(propertyNamed: kPOPLayerPositionX)
+                    anim?.springBounciness = 15
+                    anim?.velocity = 400
+                    editTextField.layer.pop_add(anim, forKey: "warning")
+                }
             }
         }
     }
@@ -263,6 +279,8 @@ extension KPSubTitleEditView: UITextFieldDelegate {
 extension KPSubTitleEditView: UITextViewDelegate {
     
     func textViewDidChange(_ textView: UITextView) {
+        
+        sType = .Normal
         
         if textView.text.characters.count == 0 {
             placeHolderLabel.isHidden = false
