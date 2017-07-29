@@ -116,20 +116,24 @@ class KPServiceHandler {
                                 standingDesk,
                                 mrt,
                                 city).then { result -> Void in
-                                    var cafeDatas = [KPDataModel]()
-                                    if result["data"].arrayObject != nil {
-                                        for data in (result["data"].arrayObject)! {
-                                            if let cafeData = KPDataModel(JSON: (data as! [String: Any])) {
-                                                cafeDatas.append(cafeData)
+                                    DispatchQueue.global().async {
+                                        var cafeDatas = [KPDataModel]()
+                                        if result["data"].arrayObject != nil {
+                                            for data in (result["data"].arrayObject)! {
+                                                if let cafeData = KPDataModel(JSON: (data as! [String: Any])) {
+                                                    cafeDatas.append(cafeData)
+                                                }
                                             }
+                                            self.currentCafeDatas = cafeDatas
+                                            completion?(cafeDatas, nil)
+                                        } else {
+                                            completion?(nil, NetworkRequestError.resultUnavailable)
                                         }
-                                        self.currentCafeDatas = cafeDatas
-                                        completion?(cafeDatas, nil)
-                                    } else {
-                                        completion?(nil, NetworkRequestError.resultUnavailable)
                                     }
         }.catch { error in
-            completion?(nil, (error as! NetworkRequestError))
+            DispatchQueue.global().async {
+                completion?(nil, (error as! NetworkRequestError))
+            }
         }
     }
     

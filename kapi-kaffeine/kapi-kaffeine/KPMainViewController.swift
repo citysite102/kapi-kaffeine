@@ -53,12 +53,14 @@ class KPMainViewController: KPViewController {
                 self.searchHeaderView.searchTagView.isUserInteractionEnabled = true
             }
         } else {
-            mainListViewController?.displayDataModel = displayDataModel
-            mainMapViewController?.allDataModel = displayDataModel
-            searchHeaderView.styleButton.isEnabled = true
-            searchHeaderView.searchButton.isEnabled = true
-            searchHeaderView.menuButton.isEnabled = true
-            searchHeaderView.searchTagView.isUserInteractionEnabled = true
+            DispatchQueue.main.asyncAfter(deadline: .now()) {
+                self.mainListViewController?.displayDataModel = self.displayDataModel
+                self.mainMapViewController?.allDataModel = self.displayDataModel
+                self.searchHeaderView.styleButton.isEnabled = true
+                self.searchHeaderView.searchButton.isEnabled = true
+                self.searchHeaderView.menuButton.isEnabled = true
+                self.searchHeaderView.searchTagView.isUserInteractionEnabled = true
+            }
         }
     }
     
@@ -151,12 +153,10 @@ class KPMainViewController: KPViewController {
             }
         }
         
-//        NotificationCenter.default.addObserver(self,
-//                                               selector: #selector(fetchRemoteData),
-//                                               name: NSNotification.Name.UIApplicationDidBecomeActive,
-//                                               object: nil)
-        fetchRemoteData()
-        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(fetchRemoteData),
+                                               name: NSNotification.Name.UIApplicationDidBecomeActive,
+                                               object: nil)
     }
     
     override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
