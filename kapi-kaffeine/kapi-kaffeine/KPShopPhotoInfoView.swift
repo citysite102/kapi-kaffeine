@@ -21,7 +21,7 @@ class KPShopPhotoInfoView: UIView {
             if displayPhotoInformations.count > 0 {
                 self.collectionView.addConstraint(forHeight: 112)
             }
-            collectionView.layoutIfNeeded()
+//            collectionView.layoutIfNeeded()
             collectionView.reloadData()
         }
     }
@@ -80,12 +80,10 @@ extension KPShopPhotoInfoView: UICollectionViewDelegate, UICollectionViewDataSou
                                    runImageTransitionIfCached: false,
                                    completion: { (response) in
                                     
-                                    if response.error != nil {
-                                        print("error\(response.error)")
-                                        cell.shopPhoto.image = R.image.image_failed_s()
-                                    }
                                     if let responseImage = response.result.value {
                                         cell.shopPhoto.image = responseImage
+                                    } else {
+                                        cell.shopPhoto.image = R.image.image_failed_s()
                                     }
         })
         
