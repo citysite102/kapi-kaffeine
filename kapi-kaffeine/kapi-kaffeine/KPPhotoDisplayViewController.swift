@@ -318,6 +318,9 @@ extension KPPhotoDisplayViewController:
                                     if response.error != nil {
                                         cell.shopPhoto.image = R.image.image_failed()
                                     }
+                                    if let responseImage = response.result.value {
+                                        cell.shopPhoto.image = responseImage
+                                    }
         })
         
         return cell;

@@ -47,6 +47,8 @@
 	<string>387376394953767</string>
 	<key>FacebookDisplayName</key>
 	<string>KAPI-iOS</string>
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<false/>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>comgooglemaps</string>
@@ -60,9 +62,9 @@
 	<key>NSCameraUsageDescription</key>
 	<string>看鏡頭，比YA</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>你的位置要被我看到了喔</string>
+	<string>透過定位帶給您更棒的使用體驗吧！</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>交出你的照片</string>
+	<string>是否願意讓我們使用你的相片?</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -71,8 +73,6 @@
 	<array>
 		<string>armv7</string>
 	</array>
-    <key>FirebaseAppDelegateProxyEnabled</key>
-    <false/>
 	<key>UIStatusBarHidden</key>
 	<true/>
 	<key>UIStatusBarStyle</key>

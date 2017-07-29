@@ -79,8 +79,13 @@ extension KPShopPhotoInfoView: UICollectionViewDelegate, UICollectionViewDataSou
                                    imageTransition: UIImageView.ImageTransition.crossDissolve(0.2),
                                    runImageTransitionIfCached: false,
                                    completion: { (response) in
+                                    
                                     if response.error != nil {
+                                        print("error\(response.error)")
                                         cell.shopPhoto.image = R.image.image_failed_s()
+                                    }
+                                    if let responseImage = response.result.value {
+                                        cell.shopPhoto.image = responseImage
                                     }
         })
         

@@ -128,6 +128,9 @@ extension KPPhotoGalleryViewController: UICollectionViewDelegate, UICollectionVi
                                         if response.error != nil {
                                             cell.shopPhoto.image = R.image.image_failed_s()
                                         }
+                                        if let responseImage = response.result.value {
+                                            cell.shopPhoto.image = responseImage
+                                        }
             })
             return cell;
         }
