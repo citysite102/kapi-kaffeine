@@ -25,6 +25,7 @@ GMUClusterRendererDelegate {
     var collectionViewBottomConstraint: NSLayoutConstraint!
     var showAllButton: UIButton!
     var clusterRenderer: GMUDefaultClusterRenderer!
+    var swipeGesture: UISwipeGestureRecognizer!
 
     lazy var nearestButton: KPShadowButton = {
         let shadowButton = KPShadowButton()
@@ -191,6 +192,7 @@ GMUClusterRendererDelegate {
         mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
         mapView.delegate = self
         mapView.preferredFrameRate = .maximum
+        map
         
         do {
             // Set the map style by passing the URL of the local file.
@@ -298,6 +300,11 @@ GMUClusterRendererDelegate {
         snapshotView.addConstraints(fromStringArray: ["V:|-100-[$self]|",
                                                       "H:|[$self]|"])
         
+        swipeGesture = UISwipeGestureRecognizer(target: self,
+                                                action: #selector(handleMapViewSwiped(_:)))
+        swipeGesture.direction = .down
+        view.addGestureRecognizer(swipeGesture)
+        
         loadingView = KPLoadingView(("讀取中..", "讀取成功", "讀取失敗"))
     }
     
@@ -349,6 +356,12 @@ GMUClusterRendererDelegate {
     }
     
     // MARK: UI Event
+    
+    func handleMapViewSwiped(_ sender: UISwipeGestureRecognizer) {
+        if isCollectionViewShow {
+            isCollectionViewShow = false
+        }
+    }
     
     func handleAddButtonTapped(_ sender: UIButton) {
         let controller = KPModalViewController()
