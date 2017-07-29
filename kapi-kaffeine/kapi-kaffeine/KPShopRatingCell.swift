@@ -162,7 +162,7 @@ class KPShopRatingCell: UITableViewCell {
         contentView.addSubview(timeHintLabel)
         timeHintLabel.addConstraints(fromStringArray: ["[$view0]-16-[$self]"],
                                      views:[userPicture])
-        timeHintLabel.addConstraintForAligning(to: .bottom, of: userPicture)
+        timeHintLabel.addConstraintForAligning(to: .bottom, of: userPicture, constant: -1)
         
         
         for (index, property) in rateTitles.enumerated() {
