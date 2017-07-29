@@ -372,7 +372,7 @@ class KPInformationViewController: KPViewController {
             Action(title:"街景模式",
                    style:.normal,
                    color:KPColorPalette.KPMainColor.mainColor_sub!,
-                   icon:(R.image.icon_map()?.withRenderingMode(.alwaysTemplate))!,
+                   icon:R.image.icon_street(),
                    handler:{ [unowned self] (infoView) -> () in
                     if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
                         UIApplication.shared.open(URL(string:

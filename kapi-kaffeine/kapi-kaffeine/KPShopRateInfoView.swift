@@ -15,7 +15,7 @@ class KPShopRateInfoView: UIView {
                       "環境舒適", "有無限時", "站立座位"]
     var rateImages = [R.image.icon_wifi(), R.image.icon_sleep(), R.image.icon_money(),
                       R.image.icon_seat(), R.image.icon_cup(), R.image.icon_cutlery(),
-                      R.image.icon_pic(), R.image.icon_clock(), R.image.icon_seat()]
+                      R.image.icon_pic(), R.image.icon_clock(), R.image.icon_stand()]
     
     var rateViews: [rateStatusView] = [rateStatusView]()
     var rateContents = [String]()

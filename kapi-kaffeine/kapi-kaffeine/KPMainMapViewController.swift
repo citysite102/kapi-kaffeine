@@ -23,6 +23,7 @@ GMUClusterRendererDelegate {
     private var snapshotView: UIImageView!
     var collectionView: UICollectionView!
     var collectionViewBottomConstraint: NSLayoutConstraint!
+    var showAllButton: UIButton!
     var clusterRenderer: GMUDefaultClusterRenderer!
 
     lazy var nearestButton: KPShadowButton = {
@@ -48,17 +49,19 @@ GMUClusterRendererDelegate {
     
     var state: ControllerState! = .loading {
         didSet {
-            if state == .normal {
-//                if loadingView.superview != nil {
-//                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1,
-//                                                  execute: {
-//                                                    self.loadingView.removeFromSuperview()
-//                    })
-//                }
-            } else if state == .loading {
-//                UIApplication.shared.topViewController.view.addSubview(loadingView)
-//                loadingView.addConstraints(fromStringArray: ["V:|[$self]|",
-//                                                             "H:|[$self]|"])
+            if mainController.currentController == self {
+                if state == .normal {
+                    if loadingView.superview != nil {
+                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1,
+                                                      execute: {
+                                                        self.loadingView.removeFromSuperview()
+                        })
+                    }
+                } else if state == .loading {
+                    UIApplication.shared.topViewController.view.addSubview(loadingView)
+                    loadingView.addConstraints(fromStringArray: ["V:|[$self]|",
+                                                                 "H:|[$self]|"])
+                }
             }
         }
     }
@@ -244,11 +247,30 @@ GMUClusterRendererDelegate {
         let currentLocationButton = UIButton(type: .custom)
         currentLocationButton.setImage(R.image.icon_currentLocation(), for: .normal)
         currentLocationButton.addTarget(self,
-                                        action: #selector(moveToMyLocation as (Void) -> Void), for: .touchUpInside)
+                                        action: #selector(moveToMyLocation as (Void) -> Void),
+                                        for: .touchUpInside)
         currentLocationButton.alpha = 0.7
         self.view.addSubview(currentLocationButton)
         currentLocationButton.addConstraints(fromStringArray: ["H:[$self(40)]-12-|",
-                                                               "V:|-116-[$self(40)]"])
+                                                               "V:|-120-[$self(40)]"])
+        
+        showAllButton = UIButton(type: .custom)
+        showAllButton.layer.cornerRadius = 2.0
+        showAllButton.layer.masksToBounds = true
+        showAllButton.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.mainColor_light!) ,
+                                         for: .normal)
+        showAllButton.setTitle("顯示\n全部",
+                               for: .normal)
+        showAllButton.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0)
+        showAllButton.titleLabel?.font = UIFont.systemFont(ofSize: 10)
+        showAllButton.titleLabel?.numberOfLines = 2
+        showAllButton.titleLabel?.lineBreakMode = .byWordWrapping
+        self.view.addSubview(showAllButton)
+        showAllButton.addConstraints(fromStringArray: ["H:[$self(32)]-16-|",
+                                                       "V:[$view0]-8-[$self(32)]"],
+                                     views: [currentLocationButton])
+        
+        
         
         view.addSubview(nearestButton)
         nearestButton.button.addTarget(self, action: #selector(handleNearestButtonOnTap(_:)), for: .touchUpInside)
@@ -526,11 +548,11 @@ GMUClusterRendererDelegate {
     
     func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
         
-        if !isCollectionViewShow && self.nearestButton.alpha != 0.75 {
+        if !isCollectionViewShow && self.nearestButton.alpha != 0.6 {
             UIView.animate(withDuration: 0.15,
                            animations: {
-                            self.nearestButton.alpha = 0.75
-                            self.addButton.alpha = 0.75
+                            self.nearestButton.alpha = 0.6
+                            self.addButton.alpha = 0.6
             })
         } else {
             UIView.animate(withDuration: 0.4,

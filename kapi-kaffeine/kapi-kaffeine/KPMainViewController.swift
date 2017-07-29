@@ -42,6 +42,7 @@ class KPMainViewController: KPViewController {
         
         if animated {
             mainListViewController?.state = .loading
+            mainMapViewController?.state = .loading
             mainListViewController?.tableView.reloadData()
             DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
                 self.mainListViewController?.displayDataModel = self.displayDataModel
@@ -86,6 +87,9 @@ class KPMainViewController: KPViewController {
         view.addSubview((mainMapViewController?.view)!)
         mainMapViewController?.didMove(toParentViewController: self)
         mainMapViewController?.view.layer.rasterizationScale = UIScreen.main.scale
+        mainMapViewController?.showAllButton.addTarget(self,
+                                                       action: #selector(showAllLocation),
+                                                       for: .touchUpInside)
         _ = mainMapViewController?.view.addConstraints(fromStringArray: ["H:|[$self]|",
                                                                          "V:|[$self]|"])
 
@@ -207,39 +211,54 @@ class KPMainViewController: KPViewController {
     // MARK: Data
     
     func fetchRemoteData() {
-        KPServiceHandler.sharedHandler.fetchRemoteData(2,
-                                                       1,
-                                                       nil,
-                                                       nil,
-                                                       nil) {
-                                                        (results: [KPDataModel]?,
-                                                        error: NetworkRequestError?) in
-                                                        if results != nil {
-                                                            self.setDisplayDataModel(KPFilter.sharedFilter.currentFilterCafeDatas(), true)
-                                                        } else if let requestError = error {
-                                                            switch requestError {
-                                                            case .noNetworkConnection:
-                                                                self.mainListViewController?.state = .noInternet
-                                                            default:
-                                                                print("錯誤萬歲: \(requestError)")
-                                                            }
-                                                        }
-                                                        
-                                                        KPServiceHandler.sharedHandler.fetchRemoteData() { (results: [KPDataModel]?,
-                                                            error: NetworkRequestError?) in
-                                                            if results != nil {
-                                                                self.setDisplayDataModel(KPFilter.sharedFilter.currentFilterCafeDatas(), false)
-                                                            } else if let requestError = error {
-                                                                switch requestError {
-                                                                    case .noNetworkConnection:
-                                                                        self.mainListViewController?.state = .noInternet
-                                                                    default:
-                                                                        print("錯誤萬歲: \(requestError)")
-                                                                }
-                                                            }
-                                                        }
-                                                        
+        
+        mainMapViewController?.state = .loading
+        KPServiceHandler.sharedHandler.fetchRemoteData() { (results: [KPDataModel]?,
+            error: NetworkRequestError?) in
+            if results != nil {
+                self.setDisplayDataModel(KPFilter.sharedFilter.currentFilterCafeDatas(), false)
+            } else if let requestError = error {
+                switch requestError {
+                case .noNetworkConnection:
+                    self.mainListViewController?.state = .noInternet
+                default:
+                    print("錯誤萬歲: \(requestError)")
+                }
+            }
         }
+        
+//        KPServiceHandler.sharedHandler.fetchRemoteData(2,
+//                                                       1,
+//                                                       nil,
+//                                                       nil,
+//                                                       nil) {
+//                                                        (results: [KPDataModel]?,
+//                                                        error: NetworkRequestError?) in
+//                                                        if results != nil {
+//                                                            self.setDisplayDataModel(KPFilter.sharedFilter.currentFilterCafeDatas(), true)
+//                                                        } else if let requestError = error {
+//                                                            switch requestError {
+//                                                            case .noNetworkConnection:
+//                                                                self.mainListViewController?.state = .noInternet
+//                                                            default:
+//                                                                print("錯誤萬歲: \(requestError)")
+//                                                            }
+//                                                        }
+//                                                        
+//                                                        KPServiceHandler.sharedHandler.fetchRemoteData() { (results: [KPDataModel]?,
+//                                                            error: NetworkRequestError?) in
+//                                                            if results != nil {
+//                                                                self.setDisplayDataModel(KPFilter.sharedFilter.currentFilterCafeDatas(), false)
+//                                                            } else if let requestError = error {
+//                                                                switch requestError {
+//                                                                    case .noNetworkConnection:
+//                                                                        self.mainListViewController?.state = .noInternet
+//                                                                    default:
+//                                                                        print("錯誤萬歲: \(requestError)")
+//                                                                }
+//                                                            }
+//                                                        }
+//        }
         
         if (KPUserManager.sharedManager.currentUser != nil) {
             KPUserManager.sharedManager.updateUserInformation()
@@ -411,6 +430,20 @@ class KPMainViewController: KPViewController {
         controller.presentModalView()
     }
     
+    func showAllLocation() {
+        
+        searchHeaderView.searchTagView.deselectAllSearchTag()
+        mainListViewController?.state = .loading
+        mainMapViewController?.state = .loading
+        mainListViewController?.tableView.reloadData()
+        KPFilter.sharedFilter.restoreDefaultSettings()
+        
+        DispatchQueue.main.async {
+            self.setDisplayDataModel(KPFilter.sharedFilter.currentFilterCafeDatas(),
+                                     true)
+        }
+    }
+    
     func addScreenEdgePanGestureRecognizer(view: UIView, edges: UIRectEdge) {
         let edgePanGesture =
             UIScreenEdgePanGestureRecognizer(target: self,
@@ -534,6 +567,7 @@ extension KPMainViewController: KPSearchTagViewDelegate, KPSearchConditionViewCo
     func searchTagDidSelect(_ searchTag: searchTagType) {
         
         mainListViewController?.state = .loading
+        mainMapViewController?.state = .loading
         mainListViewController?.tableView.reloadData()
         
         DispatchQueue.global().async {
@@ -561,6 +595,7 @@ extension KPMainViewController: KPSearchTagViewDelegate, KPSearchConditionViewCo
     func searchTagDidDeselect(_ searchTag: searchTagType) {
         
         mainListViewController?.state = .loading
+        mainMapViewController?.state = .loading
         mainListViewController?.tableView.reloadData()
         
         DispatchQueue.global().async {
@@ -591,6 +626,7 @@ extension KPMainViewController: KPSearchTagViewDelegate, KPSearchConditionViewCo
     func searchConditionControllerDidSearch(_ searchConditionController: KPSearchConditionViewController) {
         
         mainListViewController?.state = .loading
+        mainMapViewController?.state = .loading
         mainListViewController?.tableView.reloadData()
   
         // 各個 rating

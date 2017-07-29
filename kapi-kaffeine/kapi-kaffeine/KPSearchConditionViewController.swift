@@ -154,7 +154,7 @@ class KPSearchConditionViewController: KPViewController {
         let spacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace,
                                              target: nil,
                                              action: nil)
-        spacer.width = -8
+        spacer.width = 0
         navigationItem.rightBarButtonItems = [spacer, barRightItem]
         
         

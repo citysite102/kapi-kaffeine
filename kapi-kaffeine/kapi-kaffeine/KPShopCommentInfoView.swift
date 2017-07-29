@@ -98,14 +98,14 @@ extension KPShopCommentInfoView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let commentDatailedViewController = KPCommentDetailedController()
-        informationController?.navigationController?.pushViewController(viewController: commentDatailedViewController,
-                                                                       animated: true,
-                                                                       completion: {})
-        
-        if let indexPath = tableView.indexPathForSelectedRow {
-            tableView.deselectRow(at: indexPath, animated: false)
-        }
+//        let commentDatailedViewController = KPCommentDetailedController()
+//        informationController?.navigationController?.pushViewController(viewController: commentDatailedViewController,
+//                                                                       animated: true,
+//                                                                       completion: {})
+//        
+//        if let indexPath = tableView.indexPathForSelectedRow {
+//            tableView.deselectRow(at: indexPath, animated: false)
+//        }
         
     }
 }

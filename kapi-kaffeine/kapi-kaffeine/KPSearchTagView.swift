@@ -15,7 +15,6 @@ enum searchTagType: String {
     case opening    = "營業中"
     case highRate   = "評分高"
     case clear      = "清除設定"
-//    case standDesk  = "有站桌"
 }
 
 protocol KPSearchTagViewDelegate: NSObjectProtocol {
@@ -92,6 +91,7 @@ class KPSearchTagView: UIView {
         self.collectionView.showsVerticalScrollIndicator = false
         self.collectionView.delaysContentTouches = true
         self.collectionView.allowsMultipleSelection = true
+        self.collectionView.contentInset = UIEdgeInsetsMake(0, 0, 0, 8);
         self.collectionView.register(KPSearchTagCell.self,
                                      forCellWithReuseIdentifier: KPSearchTagView.KPSearchTagViewCellReuseIdentifier)
         
@@ -116,6 +116,13 @@ class KPSearchTagView: UIView {
         let navigationController = UINavigationController.init(rootViewController: preferenceController)
         controller.contentController = navigationController
         controller.presentModalView()
+    }
+    
+    func deselectAllSearchTag() {
+        for indexPath in collectionView.indexPathsForSelectedItems ?? [] {
+            collectionView.deselectItem(at: indexPath, animated: true)
+        }
+        collectionView.reloadData()
     }
 
 }
@@ -145,12 +152,8 @@ extension KPSearchTagView: UICollectionViewDelegate, UICollectionViewDataSource,
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         if self.headerTagContents[indexPath.row] == .clear {
-            for indexPath in collectionView.indexPathsForSelectedItems ?? [] {
-                collectionView.deselectItem(at: indexPath, animated: true)
-            }
-            collectionView.reloadData()
+            deselectAllSearchTag()
         }
-
 //        let cell = collectionView.cellForItem(at: indexPath)
 //        currentSelectTags.append(headerTagContents[indexPath.row])
         delegate?.searchTagDidSelect(headerTagContents[indexPath.row])
