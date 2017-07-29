@@ -40,11 +40,15 @@ class KPSubTitleEditView: UIView {
     
     var placeHolderContent: String! {
         didSet {
-            let placeholder = NSMutableAttributedString(string: placeHolderContent)
-            placeholder.addAttribute(NSForegroundColorAttributeName,
-                                     value: KPColorPalette.KPTextColor.default_placeholder!,
-                                     range: NSRange.init(location: 0, length: placeHolderContent.characters.count))
-            editTextField.attributedPlaceholder = placeholder
+            if dType == .MultiLine {
+                placeHolderLabel.text = placeHolderContent
+            } else {
+                let placeholder = NSMutableAttributedString(string: placeHolderContent)
+                placeholder.addAttribute(NSForegroundColorAttributeName,
+                                         value: KPColorPalette.KPTextColor.default_placeholder!,
+                                         range: NSRange.init(location: 0, length: placeHolderContent.characters.count))
+                editTextField.attributedPlaceholder = placeholder
+            }
         }
     }
     
@@ -120,10 +124,15 @@ class KPSubTitleEditView: UIView {
         textView.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         textView.isScrollEnabled = false
         textView.textContainer.lineFragmentPadding = 0
-//        textView.placeholder = "請輸入..."
         textView.delegate = self
         textView.returnKeyType = .done
         return textView
+    }()
+    
+    var placeHolderLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = KPColorPalette.KPTextColor.default_placeholder!
+        return label
     }()
     
     var editTextViewHeightConstaint: NSLayoutConstraint!
@@ -168,10 +177,11 @@ class KPSubTitleEditView: UIView {
                                                           "V:[$view0]-10-[$self]-16-|"],
                                         views:[subTitleLabel])
             
-//            editTextView.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude))
-//            let newSize = editTextView.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude))
-//            editTextViewHeightConstaint = editTextView.addConstraint(forHeight: newSize.height)
-            editTextViewHeightConstaint = editTextView.addConstraint(forHeight: 0)
+            editTextView.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude))
+            let newSize = editTextView.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude))
+            editTextViewHeightConstaint = editTextView.addConstraint(forHeight: newSize.height)
+            editTextView.addSubview(placeHolderLabel)
+            placeHolderLabel.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]"])
         }
         
         tapGesture = UITapGestureRecognizer(target: self,
@@ -253,9 +263,13 @@ extension KPSubTitleEditView: UITextFieldDelegate {
 extension KPSubTitleEditView: UITextViewDelegate {
     
     func textViewDidChange(_ textView: UITextView) {
-        if textView.text == "" {
-            textView.text = " "
+        
+        if textView.text.characters.count == 0 {
+            placeHolderLabel.isHidden = false
+        } else {
+            placeHolderLabel.isHidden = true
         }
+        
         let fixedWidth = textView.frame.size.width
 
         textView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))

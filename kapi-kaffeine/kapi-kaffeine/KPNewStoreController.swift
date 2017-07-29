@@ -553,7 +553,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
             return;
         }
         
-        if rateCheckedView.checked == false {
+        if rateCheckedView.checked == false || ratingController == nil {
             KPPopoverView.popoverNotification("新增失敗",
                                               "評份尚末填寫！",
                                               150,
