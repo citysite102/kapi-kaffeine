@@ -460,7 +460,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
         addressSubTitleView.addConstraints(fromStringArray: ["H:|[$self]|", "H:|-16-[$view1]-16-|",
                                                              "V:[$view0]-16-[$self][$view1(120)]"],
                                            views: [standDeskCheckBox, addressMapView])
-        
+        addressSubTitleView.delegate = self
 
         phoneSubTitleView = KPSubTitleEditView(.Both,
                                                .Edited,
@@ -703,6 +703,18 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    func geoLocate(address:String!) {
+        let gc:CLGeocoder = CLGeocoder()
+        
+        gc.geocodeAddressString(address) { (placemarks, error) in
+            if let placemarks = placemarks, placemarks.count > 0,
+            let latitude = placemarks.first?.location?.coordinate.latitude,
+            let longitude = placemarks.first?.location?.coordinate.longitude {
+                self.selectedCoordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+            }
+        }
+    }
 }
 
 extension KPNewStoreController: KPSubtitleInputDelegate {
@@ -792,5 +804,13 @@ extension KPNewStoreController: UICollectionViewDelegate, UICollectionViewDataSo
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+}
+
+extension KPNewStoreController: KPSubTitleEditViewDelegate {
+    func subTitleEditViewDidEndEditing(_ subTitleEditView: KPSubTitleEditView) {
+        if subTitleEditView == addressSubTitleView {
+            geoLocate(address: addressSubTitleView.editTextView.text)
+        }
     }
 }

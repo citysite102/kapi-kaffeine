@@ -10,7 +10,13 @@ import UIKit
 import GooglePlaces
 import pop
 
+protocol KPSubTitleEditViewDelegate: class {
+    func subTitleEditViewDidEndEditing(_ subTitleEditView: KPSubTitleEditView)
+}
+
 class KPSubTitleEditView: UIView {
+    
+    weak var delegate: KPSubTitleEditViewDelegate?
 
     enum BorderType {
         case Top
@@ -274,6 +280,11 @@ extension KPSubTitleEditView: UITextFieldDelegate {
         
         return true
     }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        delegate?.subTitleEditViewDidEndEditing(self)
+    }
+    
 }
 
 extension KPSubTitleEditView: UITextViewDelegate {
@@ -292,9 +303,26 @@ extension KPSubTitleEditView: UITextViewDelegate {
 
         textView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
         let newSize = textView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
-        
         editTextViewHeightConstaint.constant = newSize.height
         textView.layoutIfNeeded()
+        
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        let returnKey = (text as NSString).range(of: "\n").location == NSNotFound
+        
+        if !returnKey {
+            textView.resignFirstResponder()
+            return false
+        }
+        
+        sType = .Normal
+        
+        return true
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        delegate?.subTitleEditViewDidEndEditing(self)
     }
     
 }
