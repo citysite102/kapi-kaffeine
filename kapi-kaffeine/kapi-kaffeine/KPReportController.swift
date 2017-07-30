@@ -125,7 +125,9 @@ class KPReportController: KPViewController {
     
     func handleSendButtonOnTapped() {
         inputTextView.resignFirstResponder()
-        KPServiceHandler.sharedHandler.sendReport("Report")
+        KPServiceHandler.sharedHandler.sendReport("送出去啦！！") { (_) in
+            self.appModalController()?.dismissControllerWithDefaultDuration()
+        }
     }
     
     func handleTapGesture(tapGesture: UITapGestureRecognizer) {

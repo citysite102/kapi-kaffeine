@@ -613,10 +613,10 @@ class KPServiceHandler {
     func sendReport(_ content: String,
                     _ completion: ((Bool) -> Swift.Void)? = nil) {
         let loadingView = KPLoadingView(("回報中...", "回報成功", "回報失敗"))
-        UIApplication.shared.topViewController.view.addSubview(loadingView)
+        UIApplication.shared.KPTopViewController().view.addSubview(loadingView)
         loadingView.addConstraints(fromStringArray: ["V:|[$self]|",
                                                      "H:|[$self]|"])
-        DispatchQueue.main.asyncAfter(deadline: .now()+2.0) {
+        DispatchQueue.main.asyncAfter(deadline: .now()+1.5) {
             loadingView.state = .successed
             completion?(true)
         }
