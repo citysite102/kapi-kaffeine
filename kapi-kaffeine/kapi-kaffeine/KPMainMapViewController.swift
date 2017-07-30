@@ -246,11 +246,11 @@ GMUClusterRendererDelegate {
                                                                                            constant: 100).first as! NSLayoutConstraint
         
         let currentLocationButton = UIButton(type: .custom)
-        currentLocationButton.setImage(R.image.icon_currentLocation(), for: .normal)
+        currentLocationButton.setImage(R.image.icon_currentLocation_alpha(), for: .normal)
+        currentLocationButton.setImage(R.image.icon_currentLocation(), for: .highlighted)
         currentLocationButton.addTarget(self,
                                         action: #selector(moveToMyLocation as (Void) -> Void),
                                         for: .touchUpInside)
-        currentLocationButton.alpha = 0.7
         self.view.addSubview(currentLocationButton)
         currentLocationButton.addConstraints(fromStringArray: ["H:[$self(40)]-12-|",
                                                                "V:|-120-[$self(40)]"])
@@ -513,23 +513,21 @@ GMUClusterRendererDelegate {
     
     func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
         
-        if !isCollectionViewShow && self.nearestButton.alpha != 0.6 {
-            UIView.animate(withDuration: 0.15,
-                           animations: {
-                            self.nearestButton.alpha = 0.6
-                            self.addButton.alpha = 0.6
-            })
-        } else {
-            UIView.animate(withDuration: 0.4,
-                           animations: {
-                            self.mainController.searchHeaderView.searchTagView.transform = CGAffineTransform(translationX: 0,
-                                                                                                             y: 0)
-                            self.mapView.transform = CGAffineTransform(translationX: 0, y: 0)
-                            self.mainController.mainListViewController?.tableView.transform = CGAffineTransform(translationX: 0, y: 0)
-                            self.mainController.mainListViewController?.snapshotView.transform = CGAffineTransform(translationX: 0, y: 0)
-                            self.mainController.mainListViewController?.currentSearchTagTranslateY = 0
-            })
-        }
+        UIView.animate(withDuration: 0.15,
+                       animations: {
+                        self.nearestButton.alpha = 0.6
+                        self.addButton.alpha = 0.6
+        })
+        
+        UIView.animate(withDuration: 0.4,
+                       animations: {
+                        self.mainController.searchHeaderView.searchTagView.transform = CGAffineTransform(translationX: 0,
+                                                                                                         y: 0)
+                        self.mapView.transform = CGAffineTransform(translationX: 0, y: 0)
+                        self.mainController.mainListViewController?.tableView.transform = CGAffineTransform(translationX: 0, y: 0)
+                        self.mainController.mainListViewController?.snapshotView.transform = CGAffineTransform(translationX: 0, y: 0)
+                        self.mainController.mainListViewController?.currentSearchTagTranslateY = 0
+        })
     }
     
     func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition) {
