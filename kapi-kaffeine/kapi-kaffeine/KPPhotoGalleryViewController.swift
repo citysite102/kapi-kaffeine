@@ -140,12 +140,12 @@ extension KPPhotoGalleryViewController: UICollectionViewDelegate, UICollectionVi
         selectedIndexPath = indexPath
         
         if indexPath.row == 0 {
-            let imagePicker = UIImagePickerController()
-            imagePicker.delegate = self
-            imagePicker.sourceType = .photoLibrary
-            present(imagePicker, animated: true, completion: {
-            })
-            
+            KPPopoverView.popoverUnsupportedView()
+//            let imagePicker = UIImagePickerController()
+//            imagePicker.delegate = self
+//            imagePicker.sourceType = .photoLibrary
+//            present(imagePicker, animated: true, completion: {
+//            })            
         } else {
             let photoDisplayController = KPPhotoDisplayViewController()
             photoDisplayController.transitioningDelegate = self

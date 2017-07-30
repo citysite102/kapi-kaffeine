@@ -45,6 +45,7 @@ struct KPColorPalette {
         static let grayColor = UIColor(hexString: "#333333")
         static let mainColor_light = UIColor(hexString: "#c8955e")
         static let mainColor = UIColor(hexString: "#784d1f")
+        static let mainColor_60 = UIColor(hexString: "#784d1f99")
 //        static let mainColor_light = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.5)
 //        static let mainColor = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.7)
         static let whiteColor = UIColor(hexString: "#ffffff")

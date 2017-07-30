@@ -228,6 +228,20 @@ class KPServiceHandler {
         
     }
     
+    // MARK: Rating API
+    
+    func reportStoreClosed(_ completion: ((_ successed: Bool) -> Swift.Void)?) {
+        
+        let loadingView = KPLoadingView(("回報中..", "回報成功", "回報失敗"))
+        UIApplication.shared.KPTopViewController().view.addSubview(loadingView)
+        loadingView.addConstraints(fromStringArray: ["V:|[$self]|",
+                                                     "H:|[$self]|"])
+        DispatchQueue.main.asyncAfter(deadline: .now()+1.0) { 
+            loadingView.state = .successed
+            completion?(true)
+        }
+    }
+    
     
     // MARK: Comment API
     

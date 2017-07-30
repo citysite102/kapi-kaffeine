@@ -105,7 +105,11 @@ class KPSettingViewController: KPViewController {
                                            identifier:KPSettingViewController.KPSettingViewButtonCellReuseIdentifier,
                                            cellStyle:.button,
                                            customColor:nil,
-                                           handler:nil)]
+                                           handler:{
+                                            UIApplication.shared.open(URL(string: "https://goo.gl/forms/sqXWMu3iHigUprbG3")!,
+                                                                      options: [:],
+                                                                      completionHandler: nil)
+                               })]
 
         
         if KPUserManager.sharedManager.currentUser != nil {

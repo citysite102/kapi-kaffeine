@@ -197,6 +197,13 @@ class KPInformationViewController: KPViewController {
                                             controller.presentModalView()
         }
         
+        let closeButton = UIAlertAction(title: "回報店家已歇業",
+                                        style: .default) {(_) in
+                                            KPServiceHandler.sharedHandler.reportStoreClosed({ (_) in
+                                                
+                                            })
+        }
+        
         let cancelButton = UIAlertAction(title: "取消",
                                          style: .destructive) { (_) in
                                             print("取消")
@@ -204,6 +211,7 @@ class KPInformationViewController: KPViewController {
         
         actionController.addAction(editButton)
         actionController.addAction(reportButton)
+        actionController.addAction(closeButton)
         actionController.addAction(cancelButton)
         
         
@@ -482,7 +490,7 @@ class KPInformationViewController: KPViewController {
                                                 if KPUserManager.sharedManager.currentUser == nil       {
                                                     KPPopoverView.popoverLoginView()
                                                 } else {
-                                                    print("Photo button 1 Tapped")
+                                                    KPPopoverView.popoverUnsupportedView()
                                                 }
         })]
         
@@ -770,7 +778,7 @@ class KPInformationViewController: KPViewController {
     
     func handleMorePhotoButtonOnTapped() {
         if self.displayPhotoInformations.count == 0 {
-            print("新增照片")
+            KPPopoverView.popoverUnsupportedView()
         } else {
             let galleryController = KPPhotoGalleryViewController()
             galleryController.displayedPhotoInformations = self.displayPhotoInformations

@@ -27,9 +27,19 @@ extension KPPopoverView {
                                                                completion: nil)
         }
         content.titleLabel.text = "進階功能"
-        content.descriptionLabel.text = "哈囉!登入一個帳號來享受更進階的功能吧!"
+        content.descriptionLabel.text = "哈囉！加入找咖啡的行列來享受更進階的功能吧!"
         content.confirmButton.setTitle("登入",
                                        for: .normal)
+        KPPopoverView.sharedPopoverView.contentView = content
+        KPPopoverView.sharedPopoverView.popoverContent()
+    }
+    
+    class func popoverUnsupportedView() {
+        let content = KPNotificationPopoverContent()
+        content.titleLabel.text = "尚未開放"
+        content.descriptionLabel.setText(text: "啊啊啊啊啊，竟然被你發現我們還在趕工的功能了(´・ω・`)，請再給我們一點時間吧！",
+                                         lineSpacing: 3.6)
+        content.confirmButton.setTitle("沒問題的啦", for: .normal)
         KPPopoverView.sharedPopoverView.contentView = content
         KPPopoverView.sharedPopoverView.popoverContent()
     }
