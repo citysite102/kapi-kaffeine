@@ -90,7 +90,7 @@ class KPInformationHeaderButtonBar: UIView {
                                                             DispatchQueue.main.asyncAfter(deadline: .now()) {
                                                                 KPPopoverView.popoverDefaultStyleContent(
                                                                     "移除收藏",
-                                                                    "請問...你確定要改變心意要移除收藏這間超級無敵優秀的咖啡廳嗎？",
+                                                                    "確定要改變心意要移除收藏這間優秀到不行再優秀的咖啡廳嗎？",
                                                                     "我慚愧", { (content) in
                                                                         content.popoverView.dismiss()
                                                                         headerButton.selected = false
@@ -134,7 +134,7 @@ class KPInformationHeaderButtonBar: UIView {
                                                         DispatchQueue.main.asyncAfter(deadline: .now()) {
                                                             KPPopoverView.popoverDefaultStyleContent(
                                                                 "移除打卡",
-                                                                "請問...你確定要改變心意說你沒有去過這間超級無敵優秀的咖啡廳嗎？",
+                                                                "確定要改變心意說你沒有去過這間超級無敵優秀的咖啡廳嗎？",
                                                                 "我慚愧", { (content) in
                                                                     content.popoverView.dismiss()
                                                                     headerButton.selected = false

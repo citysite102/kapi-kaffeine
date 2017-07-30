@@ -726,7 +726,13 @@ extension KPNewStoreController: KPSubtitleInputDelegate {
             if let placeInformation = controller.outputValue as? GMSPlace {
                 nameSubTitleView.content = placeInformation.name
                 phoneSubTitleView.content = placeInformation.phoneNumber ?? ""
-                addressSubTitleView.content = placeInformation.formattedAddress ?? ""
+                if let formattedAddress = placeInformation.formattedAddress {
+                    addressSubTitleView.content = formattedAddress
+                    addressSubTitleView.placeHolderContent = formattedAddress.characters.count > 0 ? "" : "請輸入店家地址"
+                } else {
+                    addressSubTitleView.content = ""
+                    addressSubTitleView.placeHolderContent = "請輸入店家地址"
+                }
                 facebookSubTitleView.content = placeInformation.website?.absoluteString ?? ""
                 
                 if let addressComponents = placeInformation.addressComponents {
