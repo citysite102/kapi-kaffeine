@@ -15,7 +15,7 @@ import GoogleMobileAds
 import UserNotifications
 import Fabric
 import Crashlytics
-import BaltoSDK
+//import BaltoSDK
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, MessagingDelegate {
