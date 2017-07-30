@@ -18,7 +18,7 @@ class KPUserPhotoEditView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        photoImageView = UIImageView(image: R.image.demo_1())
+        photoImageView = UIImageView()
         photoImageView.contentMode = .scaleAspectFill
         addSubview(photoImageView)
         photoImageView.addConstraint(from: "H:|-16-[$self(45)]")
