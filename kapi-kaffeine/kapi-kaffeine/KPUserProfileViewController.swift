@@ -16,12 +16,12 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
     let tabTitles: [(title: String, key: String)] = [("已收藏", "favorites"),
                                                      ("我去過", "visits"),
                                                      ("已評分", "rates"),
-                                                     ("已評價", "reviews")]
+                                                     ("已評論", "reviews")]
     
     let statusContents:[(icon: UIImage, content: String)] = [(R.image.status_collect()!, "快來收藏你喜愛的店家吧!"),
                                                              (R.image.status_location()!, "你有去過哪些店家呢?"),
-                                                             (R.image.status_star()!, "快給你喜愛的店家一些正面的評價吧!"),
-                                                             (R.image.status_comment()!, "來和更多夥伴聊聊你喜愛的店家:)")]
+                                                             (R.image.status_star()!, "快給你喜愛的店家一些正面的評分吧!"),
+                                                             (R.image.status_comment()!, "快給你喜愛的店家一些正面的評論吧!")]
     
     lazy var userContainer: UIView = {
         let containerView = UIView()

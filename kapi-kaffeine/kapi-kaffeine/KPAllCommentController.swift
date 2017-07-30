@@ -23,7 +23,7 @@ class KPAllCommentController: KPViewController {
         super.viewDidLoad()
         
         view.backgroundColor = KPColorPalette.KPTextColor.whiteColor
-        navigationItem.title = "所有評價"
+        navigationItem.title = "所有評論"
         navigationItem.hidesBackButton = true
         
         backButton = KPBounceButton(frame: CGRect(x: 0, y: 0, width: 24, height: 24),

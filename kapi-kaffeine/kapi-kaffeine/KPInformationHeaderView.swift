@@ -179,9 +179,9 @@ class KPInformationHeaderButtonBar: UIView {
                                                     controller.presentModalView()
         })
         
-        commentButton.buttonInfo = HeaderButtonInfo(title: "我要評價",
-                                                    info: "%d人已評價",
-                                                    defaultInfo: "尚無評價",
+        commentButton.buttonInfo = HeaderButtonInfo(title: "我要評論",
+                                                    info: "%d人已評論",
+                                                    defaultInfo: "尚無評論",
                                                     icon: R.image.icon_comment()!,
                                                     handler: { (headerButton) -> () in
                                                         let newCommentViewController = KPNewCommentController()

@@ -187,7 +187,7 @@ class KPInformationViewController: KPViewController {
 //                                        controller.presentModalView()
         }
         
-        let reportButton = UIAlertAction(title: "回報問題",
+        let reportButton = UIAlertAction(title: "錯誤回報",
                                          style: .default) {
                                             [unowned self] (_) in
                                             let controller = KPModalViewController()
@@ -452,7 +452,7 @@ class KPInformationViewController: KPViewController {
         commentInformationView = KPInformationSharedInfoView()
         commentInformationView.emptyLabel.text = "目前尚無留言，給點建議或分享吧:D"
         commentInformationView.infoView = commentInfoView
-        commentInformationView.infoTitleLabel.text = "留言評價"
+        commentInformationView.infoTitleLabel.text = "留言評論"
         scrollContainer.addSubview(commentInformationView)
         commentInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                                 "V:[$view0]-24-[$self]"],
@@ -546,13 +546,6 @@ class KPInformationViewController: KPViewController {
     func syncRemoteData() {
         
         dataLoading = true
-        KPServiceHandler.sharedHandler.fetchStoreInformation(informationDataModel.identifier) {
-            [unowned self] (result) in
-            self.informationHeaderButtonBar.informationDataModel = result
-            self.informationHeaderView.scoreLabel.text = String(format: "%.1f",
-                                                                result?.averageRate?.doubleValue ?? 0.0)
-            self.dataLoading = false
-        }
         
         // 取得 Comment 資料
         refreshComments()
@@ -584,6 +577,14 @@ class KPInformationViewController: KPViewController {
             } else {
                 // Handle Error
             }
+        }
+        
+        KPServiceHandler.sharedHandler.fetchStoreInformation(informationDataModel.identifier) {
+            [unowned self] (result) in
+            self.informationHeaderButtonBar.informationDataModel = result
+            self.informationHeaderView.scoreLabel.text = String(format: "%.1f",
+                                                                result?.averageRate?.doubleValue ?? 0.0)
+            self.dataLoading = false
         }
     }
     
@@ -631,7 +632,7 @@ class KPInformationViewController: KPViewController {
         if commentCount == 0 {
             self.commentInformationView.infoSupplementLabel.text = "0 人已留言"
             self.commentInformationView.isEmpty = true
-            self.commentInformationView.actions = [Action(title:"我要評價",
+            self.commentInformationView.actions = [Action(title:"我要評論",
                                                           style:.normal,
                                                           color:KPColorPalette.KPMainColor.mainColor!,
                                                           icon:(R.image.icon_comment()?.withRenderingMode(.alwaysTemplate))!,
@@ -659,7 +660,7 @@ class KPInformationViewController: KPViewController {
             ]
         } else {
             self.commentInformationView.actions = [
-                Action(title:"看更多評價(\(commentCount))",
+                Action(title:"看更多評論(\(commentCount))",
                     style:.normal,
                     color:KPColorPalette.KPMainColor.mainColor_sub!,
                     icon:nil,
@@ -672,7 +673,7 @@ class KPInformationViewController: KPViewController {
                                                                       animated: true,
                                                                       completion: {})
                 }),
-                Action(title:"我要評價",
+                Action(title:"我要評論",
                        style:.normal,
                        color:KPColorPalette.KPMainColor.mainColor!,
                        icon:(R.image.icon_comment()?.withRenderingMode(.alwaysTemplate))!,

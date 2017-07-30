@@ -47,7 +47,7 @@ class KPNewCommentController: KPViewController {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12.0)
         label.textColor = KPColorPalette.KPTextColor.mainColor
-        label.text = "請留下你的評價"
+        label.text = "請留下你的評論"
         return label
     }()
     
@@ -64,7 +64,7 @@ class KPNewCommentController: KPViewController {
         super.viewDidLoad()
 
         view.backgroundColor = UIColor.white
-        navigationItem.title = "新增評價"
+        navigationItem.title = "新增評論"
         navigationItem.hidesBackButton = true
         
         dismissButton = KPBounceButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30),
