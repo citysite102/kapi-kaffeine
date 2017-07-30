@@ -13,6 +13,12 @@ import Alamofire
 
 class KPNewRatingRequest: NetworkRequest {
     
+    
+    enum requestType {
+        case put
+        case add
+    }
+    
     typealias ResponseType = RawJsonResult
     private var cafeID: String?
     private var wifi: NSNumber?
@@ -22,8 +28,13 @@ class KPNewRatingRequest: NetworkRequest {
     private var tasty: NSNumber?
     private var cheap: NSNumber?
     private var music: NSNumber?
+    private var type: requestType?
     
-    var method: Alamofire.HTTPMethod { return .post }
+    var method: Alamofire.HTTPMethod {
+        return self.type == requestType.add ?
+            .post :
+            .put }
+    
     var endpoint: String { return "/rates" }
     
     var parameters: [String : Any]? {
@@ -49,7 +60,8 @@ class KPNewRatingRequest: NetworkRequest {
                         _ quiet: NSNumber? = 0,
                         _ tasty: NSNumber? = 0,
                         _ cheap: NSNumber? = 0,
-                        _ music: NSNumber? = 0) -> Promise<(ResponseType)> {
+                        _ music: NSNumber? = 0,
+                        _ type: requestType) -> Promise<(ResponseType)> {
         self.cafeID = cafeID
         self.wifi = wifi
         self.seat = seat
@@ -58,6 +70,7 @@ class KPNewRatingRequest: NetworkRequest {
         self.tasty = tasty
         self.cheap = cheap
         self.music = music
+        self.type = type
         return  networkClient.performRequest(self).then(execute: responseHandler)
     }
     

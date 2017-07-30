@@ -151,10 +151,8 @@ class KPPhotoDisplayViewController: KPViewController {
         photoTitleLabel.addConstraint(from: "V:|-16-[$self]")
         
         view.addSubview(countLabel)
-//        countLabel.text = "\(selectedIndexPath.row+1) of \(displayedPhotoInformations.count)"
         countLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
         countLabel.addConstraint(from: "V:[$self]-16-|")
-//        countLabel.addConstraint(from: "H:[$self]-16-|")
         
         view.addSubview(userPhoto)
         userPhoto.isHidden = true
@@ -308,7 +306,7 @@ extension KPPhotoDisplayViewController:
         }
         
         cell.shopPhoto.af_setImage(withURL: self.displayedPhotoInformations[indexPath.row].imageURL,
-                                   placeholderImage: R.image.image_loading(),
+                                   placeholderImage: nil,
                                    filter: nil,
                                    progress: nil,
                                    progressQueue: DispatchQueue.global(),

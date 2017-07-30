@@ -18,10 +18,10 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
                                                      ("已評分", "rates"),
                                                      ("已評價", "reviews")]
     
-    let statusContents:[(icon: UIImage, content: String)] = [(R.image.status_collect()!, "收藏你喜愛的店家吧!"),
+    let statusContents:[(icon: UIImage, content: String)] = [(R.image.status_collect()!, "快來收藏你喜愛的店家吧!"),
                                                              (R.image.status_location()!, "你有去過哪些店家呢?"),
                                                              (R.image.status_star()!, "快給你喜愛的店家一些正面的評價吧!"),
-                                                             (R.image.status_comment()!, "跟更多夥伴聊聊你喜愛的店家吧!")]
+                                                             (R.image.status_comment()!, "來和更多夥伴聊聊你喜愛的店家:)")]
     
     lazy var userContainer: UIView = {
         let containerView = UIView()
@@ -249,14 +249,26 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
                     if let displayModel = KPUserManager.sharedManager.currentUser?.value(forKey: tabTitle.key) as? [KPDataModel] {
                         self.displayDataModels[index] = displayModel
                         DispatchQueue.main.async {
-                            self.tableViews[index].isHidden = displayModel.count == 0
-                            self.statusViews[index].isHidden = (displayModel.count != 0)
+                            UIView.animate(withDuration: 0.1,
+                                           animations: { 
+                                            self.tableViews[index].alpha = (displayModel.count == 0) ? 0.0 : 1.0
+                                            self.statusViews[index].alpha = (displayModel.count != 0) ? 0.0 : 1.0
+                            }, completion: { (_) in
+                                self.tableViews[index].isHidden = displayModel.count == 0
+                                self.statusViews[index].isHidden = (displayModel.count != 0)
+                            })
                         }
                     } else {
                         self.displayDataModels[index] = []
                         DispatchQueue.main.async {
-                            self.tableViews[index].isHidden = true
-                            self.statusViews[index].isHidden = false
+                            UIView.animate(withDuration: 0.1,
+                                           animations: { 
+                                            self.tableViews[index].alpha = 0.0
+                                            self.statusViews[index].alpha = 1.0
+                            }, completion: { (_) in
+                                self.tableViews[index].isHidden = true
+                                self.statusViews[index].isHidden = false
+                            })
                         }
                     }
                 }

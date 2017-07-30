@@ -12,10 +12,12 @@ class KPShopRateInfoView: UIView {
 
     var rateTitles = ["WiFi穩定", "安靜程度", "價格實惠",
                       "座位數量", "咖啡品質", "餐點美味",
-                      "環境舒適", "有無限時", "站立座位"]
+                      "環境舒適", "有無限時", "站立座位",
+                      "插座數量"]
     var rateImages = [R.image.icon_wifi(), R.image.icon_sleep(), R.image.icon_money(),
                       R.image.icon_seat(), R.image.icon_cup(), R.image.icon_cutlery(),
-                      R.image.icon_pic(), R.image.icon_clock(), R.image.icon_stand()]
+                      R.image.icon_pic(), R.image.icon_clock(), R.image.icon_stand(),
+                      R.image.icon_socket()]
     
     var rateViews: [rateStatusView] = [rateStatusView]()
     var rateContents = [String]()
@@ -79,6 +81,20 @@ class KPShopRateInfoView: UIView {
                     rateContents.append("有")
                 } else if standingDesk == 4 {
                     rateContents.append("未知")
+                } else {
+                    rateContents.append("未知")
+                }
+            } else {
+                rateContents.append("未知")
+            }
+            
+            if let socket = dataModel.socket {
+                if socket == 1 {
+                    rateContents.append("多")
+                } else if socket == 2 {
+                    rateContents.append("少")
+                } else if socket == 3 {
+                    rateContents.append("部分")
                 } else {
                     rateContents.append("未知")
                 }
@@ -158,6 +174,20 @@ class KPShopRateInfoView: UIView {
                 rateContents.append("未知")
             }
             
+            if let socket = dataModel.socket {
+                if socket == 1 {
+                    rateContents.append("多")
+                } else if socket == 2 {
+                    rateContents.append("少")
+                } else if socket == 3 {
+                    rateContents.append("部分")
+                } else {
+                    rateContents.append("未知")
+                }
+            } else {
+                rateContents.append("未知")
+            }
+            
             for (index, rateView) in rateViews.enumerated() {
                 rateView.rateContentLabel.text = rateContents[index]
             }
@@ -191,7 +221,7 @@ class KPShopRateInfoView: UIView {
                                                            "H:[$view0]-16-[$self]"],
                                          views:[rateViews[0]])
 
-            } else if index == 6 || index == 7 || index == 8 {
+            } else if index == 6 || index == 7 || index == 8 || index == 9 {
                 rateView!.addConstraints(fromStringArray: ["V:[$view0]-8-[$self(24)]",
                                                            "H:[$view1]-16-[$self]"],
                                          views:[rateViews[index-1],

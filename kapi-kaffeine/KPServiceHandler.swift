@@ -329,7 +329,8 @@ class KPServiceHandler {
                               quiet,
                               tasty,
                               cheap,
-                              music).then { result -> Void in
+                              music,
+                              .add).then { result -> Void in
                                 if let commentResult = result["result"].bool {
                                     loadingView.state = commentResult ? .successed : .failed
                                     
@@ -352,6 +353,53 @@ class KPServiceHandler {
                 completion?(false)
             }
     }
+    
+    func updateRating(_ wifi: NSNumber? = 0,
+                      _ seat: NSNumber? = 0,
+                      _ food: NSNumber? = 0,
+                      _ quiet: NSNumber? = 0,
+                      _ tasty: NSNumber? = 0,
+                      _ cheap: NSNumber? = 0,
+                      _ music: NSNumber? = 0,
+                      _ completion: ((_ successed: Bool) -> Swift.Void)?) {
+        
+        let loadingView = KPLoadingView(("修改中..", "修改成功", "修改失敗"))
+        UIApplication.shared.KPTopViewController().view.addSubview(loadingView)
+        loadingView.addConstraints(fromStringArray: ["V:|[$self]|",
+                                                     "H:|[$self]|"])
+        let ratingRequest = KPNewRatingRequest()
+        ratingRequest.perform((currentDisplayModel?.identifier)!,
+                              wifi,
+                              seat,
+                              food,
+                              quiet,
+                              tasty,
+                              cheap,
+                              music,
+                              .put).then { result -> Void in
+                                if let commentResult = result["result"].bool {
+                                    loadingView.state = commentResult ? .successed : .failed
+                                    
+                                    if commentResult {
+                                        let notification = Notification.Name(KPNotification.information.rateInformation)
+                                        NotificationCenter.default.post(name: notification, object: nil)
+                                    }
+                                    
+                                    completion?(commentResult)
+                                    guard let _ = KPUserManager.sharedManager.currentUser?.rates?.first(where: {$0.identifier == self.currentDisplayModel?.identifier}) else {
+                                        KPUserManager.sharedManager.currentUser?.rates?.append(self.currentDisplayModel!)
+                                        KPUserManager.sharedManager.storeUserInformation()
+                                        return
+                                    }
+                                } else {
+                                    completion?(false)
+                                }
+            }.catch { (error) in
+                loadingView.state = .failed
+                completion?(false)
+        }
+    }
+    
     
     func getRatings(_ completion: ((_ successed: Bool,
         _ rating: KPRateDataModel?) -> Swift.Void)?) {
@@ -399,7 +447,8 @@ class KPServiceHandler {
                                       quiet,
                                       tasty,
                                       cheap,
-                                      music)).then { (response1, response2) -> Void in
+                                      music,
+                                      .add)).then { (response1, response2) -> Void in
                                         
                                         var notification = Notification.Name(KPNotification.information.rateInformation)
                                         NotificationCenter.default.post(name: notification, object: nil)

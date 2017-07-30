@@ -211,52 +211,52 @@ class KPMainViewController: KPViewController {
     // MARK: Data
     
     func fetchRemoteData() {
-        KPServiceHandler.sharedHandler.fetchRemoteData() { (results: [KPDataModel]?,
-            error: NetworkRequestError?) in
-            if results != nil {
-                self.setDisplayDataModel(KPFilter.sharedFilter.currentFilterCafeDatas(), false)
-            } else if let requestError = error {
-                switch requestError {
-                case .noNetworkConnection:
-                    self.mainListViewController?.state = .noInternet
-                default:
-                    print("錯誤萬歲: \(requestError)")
-                }
-            }
-        }
-        
-//        KPServiceHandler.sharedHandler.fetchRemoteData(2,
-//                                                       1,
-//                                                       nil,
-//                                                       nil,
-//                                                       nil) {
-//                                                        (results: [KPDataModel]?,
-//                                                        error: NetworkRequestError?) in
-//                                                        if results != nil {
-//                                                            self.setDisplayDataModel(KPFilter.sharedFilter.currentFilterCafeDatas(), true)
-//                                                        } else if let requestError = error {
-//                                                            switch requestError {
-//                                                            case .noNetworkConnection:
-//                                                                self.mainListViewController?.state = .noInternet
-//                                                            default:
-//                                                                print("錯誤萬歲: \(requestError)")
-//                                                            }
-//                                                        }
-//                                                        
-//                                                        KPServiceHandler.sharedHandler.fetchRemoteData() { (results: [KPDataModel]?,
-//                                                            error: NetworkRequestError?) in
-//                                                            if results != nil {
-//                                                                self.setDisplayDataModel(KPFilter.sharedFilter.currentFilterCafeDatas(), false)
-//                                                            } else if let requestError = error {
-//                                                                switch requestError {
-//                                                                    case .noNetworkConnection:
-//                                                                        self.mainListViewController?.state = .noInternet
-//                                                                    default:
-//                                                                        print("錯誤萬歲: \(requestError)")
-//                                                                }
-//                                                            }
-//                                                        }
+//        KPServiceHandler.sharedHandler.fetchRemoteData() { (results: [KPDataModel]?,
+//            error: NetworkRequestError?) in
+//            if results != nil {
+//                self.setDisplayDataModel(KPFilter.sharedFilter.currentFilterCafeDatas(), false)
+//            } else if let requestError = error {
+//                switch requestError {
+//                case .noNetworkConnection:
+//                    self.mainListViewController?.state = .noInternet
+//                default:
+//                    print("錯誤萬歲: \(requestError)")
+//                }
+//            }
 //        }
+        
+        KPServiceHandler.sharedHandler.fetchRemoteData(2,
+                                                       1,
+                                                       nil,
+                                                       nil,
+                                                       nil) {
+                                                        (results: [KPDataModel]?,
+                                                        error: NetworkRequestError?) in
+                                                        if results != nil {
+                                                            self.setDisplayDataModel(KPFilter.sharedFilter.currentFilterCafeDatas(), false)
+                                                        } else if let requestError = error {
+                                                            switch requestError {
+                                                            case .noNetworkConnection:
+                                                                self.mainListViewController?.state = .noInternet
+                                                            default:
+                                                                print("錯誤萬歲: \(requestError)")
+                                                            }
+                                                        }
+                                                        
+                                                        KPServiceHandler.sharedHandler.fetchRemoteData() { (results: [KPDataModel]?,
+                                                            error: NetworkRequestError?) in
+                                                            if results != nil {
+                                                                self.setDisplayDataModel(KPFilter.sharedFilter.currentFilterCafeDatas(), false)
+                                                            } else if let requestError = error {
+                                                                switch requestError {
+                                                                    case .noNetworkConnection:
+                                                                        self.mainListViewController?.state = .noInternet
+                                                                    default:
+                                                                        print("錯誤萬歲: \(requestError)")
+                                                                }
+                                                            }
+                                                        }
+        }
         
         if (KPUserManager.sharedManager.currentUser != nil) {
             KPUserManager.sharedManager.updateUserInformation()

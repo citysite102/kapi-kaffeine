@@ -1200,7 +1200,7 @@
 				5C7BF539A61DEDBAA160731E /* [CP] Embed Pods Frameworks */,
 				1C2519745C54F46C9A5A4965 /* [CP] Copy Pods Resources */,
 				7762E33D1F10BB040006E205 /* ShellScript */,
-				777079311F1FBC50003A7AD8 /* ShellScript */,
+				777079311F1FBC50003A7AD8 /* Run Script */,
 			);
 			buildRules = (
 			);
@@ -1409,18 +1409,19 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Fabric/run\" f73735474efb32726dc0190d195c0bc62ee8532b 654dec8c258f721a4b8fa5e51d12250dc2a4c120294cf33cd45d1733f0df86e7";
 		};
-		777079311F1FBC50003A7AD8 /* ShellScript */ = {
+		777079311F1FBC50003A7AD8 /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "Run Script";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/bin/sh \"${PODS_ROOT}/BaltoSDK/BaltoSDK.framework/run.sh\"";
+			shellScript = "#/bin/sh \"${PODS_ROOT}/BaltoSDK/BaltoSDK.framework/run.sh\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 
