@@ -36,11 +36,11 @@ PODS:
     - FacebookCore (~> 0.2)
     - FBSDKCoreKit (~> 4.21)
     - FBSDKShareKit (~> 4.21)
-  - FBSDKCoreKit (4.24.0):
+  - FBSDKCoreKit (4.25.0):
     - Bolts (~> 1.7)
-  - FBSDKLoginKit (4.24.0):
+  - FBSDKLoginKit (4.25.0):
     - FBSDKCoreKit
-  - FBSDKShareKit (4.24.0):
+  - FBSDKShareKit (4.25.0):
     - FBSDKCoreKit
   - Firebase/Auth (4.0.4):
     - Firebase/Core
@@ -143,16 +143,16 @@ PODS:
   - nanopb/encode (0.3.8)
   - ObjectMapper (2.2.8)
   - pop (1.0.10)
-  - PromiseKit (4.2.2):
-    - PromiseKit/Foundation (= 4.2.2)
-    - PromiseKit/QuartzCore (= 4.2.2)
-    - PromiseKit/UIKit (= 4.2.2)
-  - PromiseKit/CorePromise (4.2.2)
-  - PromiseKit/Foundation (4.2.2):
+  - PromiseKit (4.3.1):
+    - PromiseKit/Foundation (= 4.3.1)
+    - PromiseKit/QuartzCore (= 4.3.1)
+    - PromiseKit/UIKit (= 4.3.1)
+  - PromiseKit/CorePromise (4.3.1)
+  - PromiseKit/Foundation (4.3.1):
     - PromiseKit/CorePromise
-  - PromiseKit/QuartzCore (4.2.2):
+  - PromiseKit/QuartzCore (4.3.1):
     - PromiseKit/CorePromise
-  - PromiseKit/UIKit (4.2.2):
+  - PromiseKit/UIKit (4.3.1):
     - PromiseKit/CorePromise
   - Protobuf (3.3.0)
   - R.swift (3.3.0):
@@ -212,9 +212,9 @@ SPEC CHECKSUMS:
   FacebookCore: 2cb3f0fbff218e9d3119cec84bae983b232412de
   FacebookLogin: c9d606504735780a9e3002465a615512e0a691a5
   FacebookShare: d086f7a4610bbbca9cec5e774de450a9b3e1a20b
-  FBSDKCoreKit: f8c9eb0dd34a9cd277c7b60da4b32226d142502d
-  FBSDKLoginKit: 1214c6d5a1c4995b694d8db8a9ba6910c6028acf
-  FBSDKShareKit: a2ed9d7781a4eda9ac20d7404305e795b10251ac
+  FBSDKCoreKit: 53e3f4bfb64e80c5f229dd30ae33ff57fbbbd2d1
+  FBSDKLoginKit: f628c09684dae9c17f071cf90b014e886f5093ea
+  FBSDKShareKit: aea699d3cac749af08e360f4e949b82ffa8813f5
   Firebase: 1492bf04e1b73a7353b4fb2cf5a20bac9692f341
   FirebaseAnalytics: ad41720e3e67fc63fbe3d2948d3e26932a8de311
   FirebaseAuth: ebb6abcbabae00fc47446d690c19ce68d8484fde
@@ -234,7 +234,7 @@ SPEC CHECKSUMS:
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   ObjectMapper: 3d571bb5af471c779e1160828cd9ad5c4ef90958
   pop: 82ca6b068ce9278fd350fd9dd09482a0ce9492e6
-  PromiseKit: 00e8886881f151c7e573d06b437915b0bb2970ec
+  PromiseKit: 25a114b90b932ec8169b5736bd0881fe0efa93b5
   Protobuf: d582fecf68201eac3d79ed61369ef45734394b9c
   R.swift: bde9704d50ff36820f49e266bc88ef545e1e9b36
   R.swift.Library: fbdec16c9802ad104fc1ba53415dc190e6ec5c73

@@ -24,7 +24,8 @@ class KPSideViewController: KPViewController {
                                                                    CLLocationCoordinate2D(latitude: 24.989206,
                                                                                           longitude: 121.311351),
                                                                    CLLocationCoordinate2D(latitude: 24.8015771,
-                                                                                          longitude: 120.969366)]),
+                                                                                          longitude: 120.969366)],
+                                                  expanded: false),
                                        regionData(name:"東部",
                                                   icon:R.image.icon_taitung()!,
                                                   cities:["宜蘭 Yilan", "花蓮 Hualien", "台東 Taitung", "澎湖 Penghu"],
@@ -36,7 +37,8 @@ class KPSideViewController: KPViewController {
                                                                    CLLocationCoordinate2D(latitude: 22.791625,
                                                                                           longitude: 121.1233145),
                                                                    CLLocationCoordinate2D(latitude: 23.6294021,
-                                                                                          longitude: 119.526859)]),
+                                                                                          longitude: 119.526859)],
+                                                  expanded: false),
                                        regionData(name:"中部",
                                                   icon:R.image.icon_taichung()!,
                                                   cities:["苗栗 Miaoli", "台中 Taichung", "南投 Nantou", "彰化 Changhua", "雲林 Yunlin"],
@@ -50,7 +52,8 @@ class KPSideViewController: KPViewController {
                                                                    CLLocationCoordinate2D(latitude: 24.0816314,
                                                                                           longitude: 120.5362503),
                                                                    CLLocationCoordinate2D(latitude: 23.7289229,
-                                                                                          longitude: 120.4206707)]),
+                                                                                          longitude: 120.4206707)],
+                                                  expanded: false),
                                        regionData(name:"南部",
                                                   icon:R.image.icon_pingtung()!,
                                                   cities:["嘉義 Chiayi", "台南 Tainan", "高雄 Kaohsiung", "屏東 Pingtung"],
@@ -62,7 +65,8 @@ class KPSideViewController: KPViewController {
                                                                    CLLocationCoordinate2D(latitude: 22.6397615,
                                                                                           longitude: 120.299913),
                                                                    CLLocationCoordinate2D(latitude: 22.668857,
-                                                                                          longitude: 120.4837693)])]
+                                                                                          longitude: 120.4837693)],
+                                                  expanded: false)]
     
     weak var mainController: KPMainViewController!
     var lastY: CGFloat = 0.0
@@ -157,6 +161,7 @@ class KPSideViewController: KPViewController {
         var cities: [String]
         var cityKeys: [String]
         var cityCoordinate: [CLLocationCoordinate2D]
+        var expanded: Bool
     }
     
     struct informationData {
@@ -412,7 +417,7 @@ extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
                 let cell = tableView.dequeueReusableCell(withIdentifier:KPSideViewController.KPSideViewControllerRegionCellReuseIdentifier,
                                                          for: indexPath) as! KPRegionTableViewCell
                 cell.selectionStyle = .none
-                cell.expanded = false
+                cell.setExpanded(regionContents[indexPath.row]!.expanded, false)
                 cell.expandIcon.isHidden = false
                 cell.regionIcon.image = regionContents[indexPath.row]?.icon
                 cell.regionLabel.text = regionContents[indexPath.row]?.name
@@ -432,7 +437,7 @@ extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
             cell.regionLabel.text = informationSectionContents[indexPath.row]?.title
             cell.regionIcon.image = informationSectionContents[indexPath.row]?.icon
             cell.expandIcon.isHidden = true
-            cell.expanded = false
+            cell.setExpanded(false, false)
             return cell
         }
     }
@@ -499,8 +504,11 @@ extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
                         if let expandedRigionCities = regionContents[expandedIndexPath.row]?.cities {
                             tableView.beginUpdates()
                             
-                            let expandedCell = tableView.cellForRow(at: expandedIndexPath) as! KPRegionTableViewCell
-                            expandedCell.expanded = false
+                            if let expandedCell = tableView.cellForRow(at: expandedIndexPath) as? KPRegionTableViewCell {
+                                expandedCell.setExpanded(false, true)
+                            }
+                            regionContents[expandedIndexPath.row]?.expanded = false
+                            regionContents[indexPath.row]?.expanded = true
                             
                             for (index, _) in (expandedRigionCities.enumerated()) {
                                 indexPaths.append(NSIndexPath(row: expandedIndexPath.row+index+1, section: 0) as IndexPath)
@@ -508,7 +516,7 @@ extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
                             }
                             
                             tableView.deleteRows(at: indexPaths, with: .top)
-                            cell.expanded = true
+                            cell.setExpanded(true, true)
                             
                             if expandedIndexPath.row < indexPath.row {
                                 for (index, _) in (regionCities?.enumerated())! {
@@ -532,7 +540,8 @@ extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
 
                     } else {
                         tableView.beginUpdates()
-                        cell.expanded = true
+                        cell.setExpanded(true, true)
+                        regionContents[indexPath.row]?.expanded = true
                         expandedIndexPath = tableView.indexPath(for: cell)
 //                        expandedCell = cell
                         for (index, _) in (regionCities?.enumerated())! {
@@ -545,8 +554,8 @@ extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
                     }
                 } else {
                     tableView.beginUpdates()
-                    cell.expanded = false
-                    
+                    cell.setExpanded(false, true)
+                    regionContents[indexPath.row]?.expanded = false
 //                    if expandedIndexPath == tableView.indexPath(for: cell) {
                         expandedIndexPath = nil
 //                    }

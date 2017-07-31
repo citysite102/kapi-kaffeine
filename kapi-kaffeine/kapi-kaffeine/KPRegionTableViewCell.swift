@@ -13,8 +13,11 @@ class KPRegionTableViewCell: UITableViewCell {
     var regionIcon: UIImageView!
     var regionLabel: UILabel!
     var expandIcon: UIImageView!
-    var expanded: Bool! {
-        didSet {
+    private var expanded: Bool!
+
+    func setExpanded(_ expanded: Bool, _ animated: Bool) {
+        self.expanded = expanded
+        if animated {
             if expanded {
                 UIView.animate(withDuration: 0.2,
                                delay: 0,
@@ -33,6 +36,12 @@ class KPRegionTableViewCell: UITableViewCell {
                 }, completion: { (_) in
                     
                 })
+            }
+        } else {
+            if expanded {
+                self.expandIcon.transform = CGAffineTransform(rotationAngle: .pi)
+            } else {
+                self.expandIcon.transform = CGAffineTransform.identity
             }
         }
     }
