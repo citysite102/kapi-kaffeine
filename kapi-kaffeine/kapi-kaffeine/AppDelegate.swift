@@ -102,7 +102,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
-        Balto.returnFromBalto(openURL: url, options: options)
         return SDKApplicationDelegate.shared.application(app, open: url, options: options)
     }
     
