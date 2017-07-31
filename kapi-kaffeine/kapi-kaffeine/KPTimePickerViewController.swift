@@ -14,7 +14,12 @@ protocol KPTimePickerViewControllerDelegate: class {
 
 class KPTimePickerViewController: UIViewController, KPTimePickerDelegate, KPTabViewDelegate, UIScrollViewDelegate {
     
-    var tabView: KPTabView!
+    lazy var tabView: KPTabView = {
+        let tabView = KPTabView(titles: ["營業時間", "打烊時間"])
+        tabView.font = UIFont.boldSystemFont(ofSize: 16)
+        tabView.delegate = self
+        return tabView
+    }()
     
     private var scrollView: UIScrollView!
     private var containerView: UIView!
@@ -99,13 +104,9 @@ class KPTimePickerViewController: UIViewController, KPTimePickerDelegate, KPTabV
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let titles = ["營業時間", "打烊時間"]
         
         view.backgroundColor = UIColor.white
         
-        tabView = KPTabView(titles: titles)
-        tabView.font = UIFont.boldSystemFont(ofSize: 16)
-        tabView.delegate = self
         view.addSubview(tabView)
         tabView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self(60)]"])
         
@@ -154,6 +155,7 @@ class KPTimePickerViewController: UIViewController, KPTimePickerDelegate, KPTabV
         view.addSubview(buttonContainer)
         buttonContainer.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$view0][$self]|"], views: [seporator])
         
+        
 //        let doneButton = UIButton()
 //        doneButton.setTitle("完成", for: .normal)
 //        doneButton.setTitleColor(UIColor.white, for: .normal)
@@ -168,6 +170,11 @@ class KPTimePickerViewController: UIViewController, KPTimePickerDelegate, KPTabV
 //                                  views: [seporator])
 //        doneButton.addTarget(self, action: #selector(handleDoneButtonOnTap(sender:)), for: .touchUpInside)
         
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        scrollView.contentOffset = CGPoint(x: scrollView.frameSize.width * CGFloat(tabView.currentIndex), y: 0)
     }
 
     override func didReceiveMemoryWarning() {
