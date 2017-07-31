@@ -45,6 +45,14 @@ class KPTimePicker: UIView, UIPickerViewDataSource, UIPickerViewDelegate {
         pickerView.dataSource = self
         pickerView.delegate = self
         
+        let colon = UILabel()
+        colon.font = UIFont.systemFont(ofSize: 28)
+        colon.text = "："
+        pickerView.addSubview(colon)
+        colon.addConstraintForCenterAligningToSuperview(in: .horizontal)
+        colon.addConstraintForCenterAligningToSuperview(in: .vertical)
+        
+        
 //        let separatorLine = UIView()
 //        separatorLine.backgroundColor = KPColorPalette.KPBackgroundColor.mainColor
 //        pickerView.addSubview(separatorLine)
@@ -136,7 +144,7 @@ class KPTimePicker: UIView, UIPickerViewDataSource, UIPickerViewDelegate {
             label.text = "\(row)"
         case 1:
             if row == 0 {
-                label.text = "\(00)"
+                label.text = "00"
             } else if row == 1 {
                 label.text = "\(15)"
             } else if row == 2 {
