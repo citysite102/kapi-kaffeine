@@ -467,7 +467,7 @@ class KPInformationViewController: KPViewController {
             updateCommentsLayout(Int(commentCount))
         }
         
-        
+
         let photoInfoView = KPShopPhotoInfoView()
         photoInfoView.informationController = self
         photoInformationView = KPInformationSharedInfoView()
@@ -497,7 +497,7 @@ class KPInformationViewController: KPViewController {
                                                     KPPopoverView.popoverUnsupportedView()
                                                 }
         })]
-        
+
         let shopRecommendView = KPShopRecommendView()
         shopRecommendView.informationController = self
         shopRecommendView.displayDataModels = KPServiceHandler.sharedHandler.relatedDisplayModel
@@ -508,16 +508,16 @@ class KPInformationViewController: KPViewController {
         recommendInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                                   "V:[$view0]-24-[$self]-32-|"],
                                                      views: [photoInformationView])
-        
+
         NotificationCenter.default.addObserver(forName: Notification.Name(KPNotification.information.rateInformation),
                                                object: nil,
-                                               queue: nil) { (_) in
+                                               queue: nil) {[unowned self] (_) in
                                                 self.refreshRatings()
         }
         
         NotificationCenter.default.addObserver(forName: Notification.Name(KPNotification.information.commentInformation),
                                                object: nil,
-                                               queue: nil) { (_) in
+                                               queue: nil) {[unowned self] (_) in
                                                 self.refreshComments()
         }
         
