@@ -211,20 +211,6 @@ class KPMainViewController: KPViewController {
     // MARK: Data
     
     func fetchRemoteData() {
-//        KPServiceHandler.sharedHandler.fetchRemoteData() { (results: [KPDataModel]?,
-//            error: NetworkRequestError?) in
-//            if results != nil {
-//                self.setDisplayDataModel(KPFilter.sharedFilter.currentFilterCafeDatas(), false)
-//            } else if let requestError = error {
-//                switch requestError {
-//                case .noNetworkConnection:
-//                    self.mainListViewController?.state = .noInternet
-//                default:
-//                    print("錯誤萬歲: \(requestError)")
-//                }
-//            }
-//        }
-        
         KPServiceHandler.sharedHandler.fetchRemoteData(2,
                                                        1,
                                                        nil,
@@ -546,11 +532,25 @@ class KPMainViewController: KPViewController {
 
 extension KPMainViewController: UIViewControllerTransitioningDelegate {
 
-    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func animationController(forPresented presented: UIViewController,
+                             presenting: UIViewController,
+                             source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return KPInformationTranstion()
     }
     
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        if let navigationController = dismissed as? UINavigationController {
+            if let informationViewcontroller = navigationController.viewControllers.first as? KPInformationViewController {
+                if informationViewcontroller.dismissWithDefaultType {
+                    
+                    let transition = KPInformationDismissTransition()
+                    transition.defaultDimissed = true
+                    
+                    return transition
+                }
+            }
+        }
+        
         return KPInformationDismissTransition()
     }
     

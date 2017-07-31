@@ -25,6 +25,7 @@ class KPInformationViewController: KPViewController {
     }
     
     var showBackButton: Bool = false
+    var dismissWithDefaultType: Bool = false
     
     // 取得相關的所有評分資訊
     var rateDataModel: KPRateDataModel?
@@ -821,6 +822,7 @@ class KPInformationViewController: KPViewController {
         if self.navigationController?.viewControllers.first is KPUserProfileViewController {
             self.navigationController?.popViewController(animated: true)
         } else {
+            self.dismissWithDefaultType = true
             dismiss(animated: true, completion: nil)
         }
     }
