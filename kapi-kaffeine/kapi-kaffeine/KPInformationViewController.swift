@@ -428,13 +428,11 @@ class KPInformationViewController: KPViewController {
                                                     KPPopoverView.popoverLoginView()
                                                 } else {
                                                     let controller = KPModalViewController()
-                                                    controller.edgeInset = UIEdgeInsets(top: UIDevice().isCompact ? 0 : 40,
+                                                    controller.edgeInset = UIEdgeInsets(top: UIDevice().isSuperCompact ? 32 : 72,
                                                                                             left: 0,
                                                                                             bottom: 0,
                                                                                             right: 0)
-                                                    controller.cornerRadius = UIDevice().isCompact ?
-                                                        [] :
-                                                        [.topRight, .topLeft]
+                                                    controller.cornerRadius = [.topRight, .topLeft]
                                                     let ratingViewController = KPRatingViewController()
                                                         
                                                     if self.hasRatedDataModel != nil {
@@ -509,17 +507,16 @@ class KPInformationViewController: KPViewController {
                                                                   "V:[$view0]-24-[$self]-32-|"],
                                                      views: [photoInformationView])
 
-        NotificationCenter.default.addObserver(forName: Notification.Name(KPNotification.information.rateInformation),
-                                               object: nil,
-                                               queue: nil) {[unowned self] (_) in
-                                                self.refreshRatings()
-        }
         
-        NotificationCenter.default.addObserver(forName: Notification.Name(KPNotification.information.commentInformation),
-                                               object: nil,
-                                               queue: nil) {[unowned self] (_) in
-                                                self.refreshComments()
-        }
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(refreshRatings),
+                                               name: Notification.Name(KPNotification.information.rateInformation),
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(refreshComments),
+                                               name: Notification.Name(KPNotification.information.commentInformation),
+                                               object: nil)
         
         syncRemoteData()
     }

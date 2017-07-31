@@ -163,13 +163,11 @@ class KPInformationHeaderButtonBar: UIView {
                                                  icon: R.image.icon_star()!,
                                                  handler: { (headerButton) -> () in
                                                     let controller = KPModalViewController()
-                                                    controller.edgeInset = UIEdgeInsets(top: UIDevice().isCompact ? 0 : 40,
+                                                    controller.edgeInset = UIEdgeInsets(top: UIDevice().isSuperCompact ? 32 : 72,
                                                                                         left: 0,
                                                                                         bottom: 0,
                                                                                         right: 0)
-                                                    controller.cornerRadius = UIDevice().isCompact ?
-                                                        [] :
-                                                        [.topRight, .topLeft]
+                                                    controller.cornerRadius = [.topRight, .topLeft]
                                                     let ratingViewController = KPRatingViewController()
                                                     if self.informationController?.hasRatedDataModel != nil {
                                                         ratingViewController.defaultRateModel = self.informationController?.hasRatedDataModel
