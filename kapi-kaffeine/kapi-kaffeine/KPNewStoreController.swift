@@ -294,7 +294,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
         rateCheckedView.customInputAction = {
             [unowned self] () -> Void in
             let controller = KPModalViewController()
-            controller.edgeInset = UIEdgeInsets(top: UIDevice().isCompact ? 32 : 40,
+            controller.edgeInset = UIEdgeInsets(top: UIDevice().isSuperCompact ? 32 : 72,
                                                 left: 0,
                                                 bottom: 0,
                                                 right: 0)
@@ -320,7 +320,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
         businessHourCheckedView.customInputAction = {
             [unowned self] () -> Void in
             let controller = KPModalViewController()
-            controller.edgeInset = UIEdgeInsets(top: 32,
+            controller.edgeInset = UIEdgeInsets(top: UIDevice().isSuperCompact ? 32 : 72,
                                                 left: 0,
                                                 bottom: 0,
                                                 right: 0)

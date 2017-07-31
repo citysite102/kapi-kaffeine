@@ -101,12 +101,12 @@ class KPBusinessHourViewController: KPSharedSettingViewController, KPTimePickerV
     
     func startTimeSelectButtonOnTap(button: UIButton) {
         currentSelectedButton = button
-        showTimePicker()
+        showTimePicker(0)
     }
     
     func endTimeSelectButtonOnTap(button: UIButton) {
         currentSelectedButton = button
-        showTimePicker()
+        showTimePicker(1)
     }
     
     func handleCheckBoxOnTap(checkBox: KPCheckBox) {
@@ -121,13 +121,14 @@ class KPBusinessHourViewController: KPSharedSettingViewController, KPTimePickerV
         }
     }
     
-    func showTimePicker() {
+    func showTimePicker(_ index: Int) {
         
         let controller = KPModalViewController()
         controller.presentationStyle = .popout
         controller.contentSize = CGSize(width: 300, height: 350)
         controller.presentationStyle = .popout
         let timePickerController = KPTimePickerViewController()
+        timePickerController.tabView.currentIndex = index
         timePickerController.setButtonTitles(["設定全部", "完成"])
         timePickerController.delegate = self
         timePickerController.startTimeValue = startTimeButtons[currentSelectedButton!.tag].titleLabel?.attributedText?.string
