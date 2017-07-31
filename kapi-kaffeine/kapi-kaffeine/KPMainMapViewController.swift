@@ -249,7 +249,7 @@ GMUClusterRendererDelegate {
         currentLocationButton.setImage(R.image.icon_currentLocation_alpha(), for: .normal)
         currentLocationButton.setImage(R.image.icon_currentLocation(), for: .highlighted)
         currentLocationButton.addTarget(self,
-                                        action: #selector(moveToMyLocation as (Void) -> Void),
+                                        action: #selector(handleCurrentLocationButtonOnTap(_:)),
                                         for: .touchUpInside)
         self.view.addSubview(currentLocationButton)
         currentLocationButton.addConstraints(fromStringArray: ["H:[$self(40)]-12-|",
@@ -378,7 +378,30 @@ GMUClusterRendererDelegate {
         controller.presentModalView()
     }
     
+    func handleCurrentLocationButtonOnTap(_ sender: UIButton) {
+        if CLLocationManager.authorizationStatus() != .authorizedAlways ||
+            CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
+            KPPopoverView.popoverDefaultStyleContent("", "", "前往設定", { (popoverContent) in
+                UIApplication.shared.open(URL(string:UIApplicationOpenSettingsURLString)!, options: [:], completionHandler: nil)
+            })
+        } else {
+            moveToMyLocation()
+        }
+    }
+    
     func handleNearestButtonOnTap(_ sender: UIButton) {
+        
+        if KPLocationManager.sharedInstance().currentLocation == nil {
+            if CLLocationManager.authorizationStatus() != .authorizedAlways ||
+               CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
+                KPPopoverView.popoverDefaultStyleContent("", "", "前往設定", { (popoverContent) in
+                    UIApplication.shared.open(URL(string:UIApplicationOpenSettingsURLString)!, options: [:], completionHandler: nil)
+                })
+            } else {
+                // 選沒抓到位置 應該不太可能出現 放棄
+            }
+            return
+        }
         
         if let nearestModel = allDataModel.min() {
             
