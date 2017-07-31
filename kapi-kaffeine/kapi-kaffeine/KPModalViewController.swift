@@ -112,8 +112,8 @@ class KPModalViewController: KPViewController {
     }
     
     func presentModalView() {
-        let viewController = UIApplication.shared.topViewController
-        presentModalView(viewController)
+        let viewController = UIApplication.shared.KPTopViewController()
+        presentModalView(viewController!)
     }
     
     func presentModalView(_ controller: UIViewController) {

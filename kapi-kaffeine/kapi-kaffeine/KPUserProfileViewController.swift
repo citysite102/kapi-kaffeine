@@ -101,6 +101,7 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
                                      for: .touchUpInside)
         
         self.editButton = UIButton(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
+        self.editButton.contentEdgeInsets = UIEdgeInsetsMake(1, 1, 1, 1)
         self.editButton.setImage(R.image.icon_edit(),
                                  for: .normal)
         self.editButton.tintColor = KPColorPalette.KPTextColor.whiteColor
@@ -339,6 +340,7 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let controller = KPInformationViewController()
         controller.informationDataModel = self.displayDataModels[tableView.tag][indexPath.row]
+        controller.showBackButton = true
         self.navigationController?.pushViewController(controller, animated: true)
         
         for tableView in self.tableViews {

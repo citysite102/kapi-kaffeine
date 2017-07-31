@@ -24,6 +24,8 @@ class KPInformationViewController: KPViewController {
         }
     }
     
+    var showBackButton: Bool = false
+    
     // 取得相關的所有評分資訊
     var rateDataModel: KPRateDataModel?
     
@@ -132,8 +134,8 @@ class KPInformationViewController: KPViewController {
         navigationController?.delegate = self
         
         dismissButton = KPBounceButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30),
-                                       image: R.image.icon_close()!)
-        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(6, 7, 8, 7)
+                                       image: showBackButton ? R.image.icon_back()! : R.image.icon_close()!)
+        dismissButton.contentEdgeInsets = showBackButton ? UIEdgeInsetsMake(3, 3, 3, 3) : UIEdgeInsetsMake(6, 7, 8, 7)
         dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor
         dismissButton.addTarget(self,
                                 action: #selector(KPInformationViewController.handleDismissButtonOnTapped),

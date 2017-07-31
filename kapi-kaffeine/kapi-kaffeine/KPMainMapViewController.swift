@@ -381,7 +381,9 @@ GMUClusterRendererDelegate {
     func handleCurrentLocationButtonOnTap(_ sender: UIButton) {
         if CLLocationManager.authorizationStatus() != .authorizedAlways ||
             CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
-            KPPopoverView.popoverDefaultStyleContent("", "", "前往設定", { (popoverContent) in
+            KPPopoverView.popoverDefaultStyleContent("開啟定位",
+                                                     "沒有開啟定位我們是要怎麼定位？(#`Д´)ﾉ",
+                                                     "前往設定", { (popoverContent) in
                 UIApplication.shared.open(URL(string:UIApplicationOpenSettingsURLString)!, options: [:], completionHandler: nil)
             })
         } else {
@@ -394,7 +396,9 @@ GMUClusterRendererDelegate {
         if KPLocationManager.sharedInstance().currentLocation == nil {
             if CLLocationManager.authorizationStatus() != .authorizedAlways ||
                CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
-                KPPopoverView.popoverDefaultStyleContent("", "", "前往設定", { (popoverContent) in
+                KPPopoverView.popoverDefaultStyleContent("開啟定位",
+                                                         "沒有開啟定位我們難道要通靈算距離？(#`Д´)ﾉ",
+                                                         "前往設定", { (popoverContent) in
                     UIApplication.shared.open(URL(string:UIApplicationOpenSettingsURLString)!, options: [:], completionHandler: nil)
                 })
             } else {
