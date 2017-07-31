@@ -66,6 +66,22 @@ extension KPShopCommentInfoView: UITableViewDelegate, UITableViewDataSource {
         cell.userCommentLabel.setText(text: comment.content,
                                       lineSpacing: 2.4)
         cell.commentID = comment.commentID
+        cell.selectionStyle = .none
+
+        if let photoURL = comment.photoURL {
+            cell.userPicture.af_setImage(withURL: URL(string: photoURL)!,
+                                         placeholderImage: UIImage(color: KPColorPalette.KPBackgroundColor.mainColor_light_10!),
+                                         filter: nil,
+                                         progress: nil,
+                                         progressQueue: DispatchQueue.global(),
+                                         imageTransition: UIImageView.ImageTransition.crossDissolve(0.2),
+                                         runImageTransitionIfCached: true,
+                                         completion: { response in
+                                            if let responseImage = response.result.value {
+                                                cell.userPicture.image = responseImage
+                                            }
+            })
+        }
         
         if let likeUser = comment.likes?.first(where: { $0.memberID == KPUserManager.sharedManager.currentUser?.identifier}) {
             if likeUser.isLike == 0 {
