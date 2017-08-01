@@ -45,6 +45,7 @@ class KPDetailedDataModel: NSObject, Mappable, GMUClusterItem {
     var modifiedTime: NSNumber?
     
     var photos: [String]?
+    var kapiPhotos: [String]?
     var comments:[KPCommentModel]?
     
     var priceAverage: NSNumber? = 0
@@ -112,6 +113,7 @@ class KPDetailedDataModel: NSObject, Mappable, GMUClusterItem {
         createdTime         <-    map["created_time"]
         modifiedTime        <-    map["modified_time"]
         photos              <-    map["photos"]
+        kapiPhotos          <-    map["kapi_photos"]
         comments            <-    map["comments"]
         priceAverage        <-    map["price_average"]
         rates               <-    map["rates"]

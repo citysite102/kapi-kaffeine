@@ -643,4 +643,18 @@ class KPServiceHandler {
             print(error)
         }
     }
+    
+    // MARK: Photo Upload
+    func uploadPhoto(_ cafeID: String?,
+                     _ photoData: Data!) {
+        let photoUploadRequest = KPPhotoUploadRequest()
+        photoUploadRequest.perform(cafeID ?? (currentDisplayModel?.identifier)!,
+                                   nil,
+                                   photoData).then {[unowned self] result -> Void in
+                                    
+                                print("Result:\(result)")
+            }.catch { (error) in
+                print("Error:\(error)")
+        }
+    }
 }

@@ -140,12 +140,13 @@ extension KPPhotoGalleryViewController: UICollectionViewDelegate, UICollectionVi
         selectedIndexPath = indexPath
         
         if indexPath.row == 0 {
-            KPPopoverView.popoverUnsupportedView()
-//            let imagePicker = UIImagePickerController()
-//            imagePicker.delegate = self
-//            imagePicker.sourceType = .photoLibrary
-//            present(imagePicker, animated: true, completion: {
-//            })            
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.sourceType = .photoLibrary
+            
+            present(imagePicker, animated: true, completion: {
+            
+            })
         } else {
             let photoDisplayController = KPPhotoDisplayViewController()
             photoDisplayController.transitioningDelegate = self
@@ -164,9 +165,14 @@ extension KPPhotoGalleryViewController: UICollectionViewDelegate, UICollectionVi
 extension KPPhotoGalleryViewController: UIImagePickerControllerDelegate,
 UINavigationControllerDelegate {
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController,
+                               didFinishPickingMediaWithInfo info: [String : Any]) {
         picker.dismiss(animated: true) { 
-            
+            if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+                let imageData = UIImageJPEGRepresentation(image, 0.1)
+                KPServiceHandler.sharedHandler.uploadPhoto(nil,
+                                                           imageData)
+            }
         }
     }
     

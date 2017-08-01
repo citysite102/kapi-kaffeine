@@ -152,6 +152,11 @@ public protocol NetworkUploadRequest {
 
     var headers: [String : String] { get }
     
+    var fileData: Data? { get }
+    var fileKey: String? { get }
+    var fileName: String? { get }
+    var mimeType: String? { get }
+    
     /// Client that helps you to make reqeust.
     var networkClient: NetworkClientType { get }
     
@@ -160,7 +165,7 @@ public protocol NetworkUploadRequest {
 extension NetworkUploadRequest {
     
     public var url: String { return baseURL + endpoint}
-    public var baseURL: String {return "https://kapi-test.herokuapp.com/api/v1"}
+    public var baseURL: String {return "https://kapi-v2-test.herokuapp.com/api/v2"}
     public var method: Alamofire.HTTPMethod { return .post }
     
     public var threshold: UInt64 { return SessionManager.multipartFormDataEncodingMemoryThreshold }

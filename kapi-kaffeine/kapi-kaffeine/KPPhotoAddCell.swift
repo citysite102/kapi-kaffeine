@@ -17,6 +17,13 @@ class KPPhotoAddCell: UICollectionViewCell {
         label.textColor = KPColorPalette.KPTextColor.whiteColor
         return label
     }()
+    
+    lazy var overlayView: UIView = {
+        let overlay = UIView()
+        overlay.backgroundColor = UIColor.black
+        overlay.alpha = 0.2
+        return overlay
+    }()
  
     override init(frame: CGRect) {
         super.init(frame: frame);
@@ -33,6 +40,20 @@ class KPPhotoAddCell: UICollectionViewCell {
         addPhotoLabel.addConstraintForCenterAligningToSuperview(in: .vertical, constant: 16)
         addPhotoLabel.text = "上傳\n照片"
         
+        addSubview(overlayView)
+        overlayView.isUserInteractionEnabled = false
+        overlayView.alpha = 0.0
+        overlayView.addConstraints(fromStringArray: ["V:|[$self]|",
+                                                     "H:|[$self]|"])
+        
+    }
+    
+    override var isHighlighted: Bool {
+        didSet {
+            UIView.animate(withDuration: 0.1) { 
+                self.overlayView.alpha = self.isHighlighted ? 0.2 : 0
+            }
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -55,6 +55,14 @@ public struct NetworkClient: NetworkClientType {
 
         let (promise, fulfill, reject) = Promise<Data>.pending()
         Alamofire.upload(multipartFormData: { (multipartFormData) in
+            
+            if let fileData = networkRequest.fileData {
+                multipartFormData.append(fileData,
+                                         withName: networkRequest.fileKey!,
+                                         fileName: networkRequest.fileName!,
+                                         mimeType: networkRequest.mimeType!)
+            }
+            
             for (key, value) in networkRequest.parameters! {
                 if value as? String != nil {
                     multipartFormData.append((value as! String).data(using: .utf8)!,

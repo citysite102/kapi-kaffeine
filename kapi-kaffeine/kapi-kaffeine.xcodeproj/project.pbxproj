@@ -133,6 +133,7 @@
 		77C594AD1ECB171A00118947 /* KPAllCommentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C594AC1ECB171A00118947 /* KPAllCommentController.swift */; };
 		77C594AF1ECB6E3100118947 /* KPLoadingViewController_v1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C594AE1ECB6E3100118947 /* KPLoadingViewController_v1.swift */; };
 		77C594B11ECB754900118947 /* KPLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C594B01ECB754900118947 /* KPLoadingView.swift */; };
+		77C6F3E11F30E985004A0261 /* KPPhotoUploadRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C6F3E01F30E985004A0261 /* KPPhotoUploadRequest.swift */; };
 		77C85EC61F24EF1B00F819E1 /* KPPreferenceHintButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C85EC51F24EF1B00F819E1 /* KPPreferenceHintButton.swift */; };
 		77CACF4D1F168F2F00093147 /* KPNotificationPopoverContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CACF4C1F168F2F00093147 /* KPNotificationPopoverContent.swift */; };
 		77D6BDF01F0E9A42005598B3 /* demoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77D6BDEF1F0E9A42005598B3 /* demoView.swift */; };
@@ -343,6 +344,7 @@
 		77C594AC1ECB171A00118947 /* KPAllCommentController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPAllCommentController.swift; sourceTree = "<group>"; };
 		77C594AE1ECB6E3100118947 /* KPLoadingViewController_v1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPLoadingViewController_v1.swift; sourceTree = "<group>"; };
 		77C594B01ECB754900118947 /* KPLoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPLoadingView.swift; sourceTree = "<group>"; };
+		77C6F3E01F30E985004A0261 /* KPPhotoUploadRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPPhotoUploadRequest.swift; sourceTree = "<group>"; };
 		77C85EC51F24EF1B00F819E1 /* KPPreferenceHintButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPPreferenceHintButton.swift; sourceTree = "<group>"; };
 		77CACF4C1F168F2F00093147 /* KPNotificationPopoverContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPNotificationPopoverContent.swift; sourceTree = "<group>"; };
 		77D6BDEF1F0E9A42005598B3 /* demoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = demoView.swift; sourceTree = "<group>"; };
@@ -692,6 +694,7 @@
 			isa = PBXGroup;
 			children = (
 				7762E3471F1220A60006E205 /* KPGetPhotoRequest.swift */,
+				77C6F3E01F30E985004A0261 /* KPPhotoUploadRequest.swift */,
 			);
 			name = Photo;
 			sourceTree = "<group>";
@@ -1507,6 +1510,7 @@
 				774208F91EA675C800C78A00 /* KPCommentModel.swift in Sources */,
 				C00A6E111ECADE3700A05C9A /* KPTimePickerViewController.swift in Sources */,
 				779F9E6E1F18931700B8DC25 /* KPVisitedPopoverContent.swift in Sources */,
+				77C6F3E11F30E985004A0261 /* KPPhotoUploadRequest.swift in Sources */,
 				77FA64B21F04D9DB00D0767A /* KPLayerLabel.swift in Sources */,
 				77BFC5561EB757E800610F55 /* KPResponseModel.swift in Sources */,
 				C0B49D971EA13BC100BA95D8 /* KPMainMapViewCollectionCell.swift in Sources */,
