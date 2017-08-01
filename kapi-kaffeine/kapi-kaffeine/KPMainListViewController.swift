@@ -470,6 +470,8 @@ extension KPMainListViewController: UITableViewDelegate, UITableViewDataSource {
             
             self.currentSearchTagTranslateY = translate
             UIView.animate(withDuration: 0.2,
+                           delay: 0,
+                           options: .curveEaseIn,
                            animations: {
                             self.mainController.searchHeaderView.searchTagView.transform = CGAffineTransform(translationX: 0,
                                                                                                              y: self.currentSearchTagTranslateY/2)
@@ -478,7 +480,6 @@ extension KPMainListViewController: UITableViewDelegate, UITableViewDataSource {
                             self.tableView.transform = CGAffineTransform(translationX: 0, y: self.currentSearchTagTranslateY/2)
                             self.snapshotView.transform = CGAffineTransform(translationX: 0, y: self.currentSearchTagTranslateY/2)
                             self.addButton.transform = CGAffineTransform(translationX: 0, y: buttonTranslate)
-                            
             }, completion: { (_) in
                 self.oldScrollOffsetY = scrollView.contentOffset.y
             })
