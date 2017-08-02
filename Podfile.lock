@@ -160,6 +160,7 @@ PODS:
   - R.swift.Library (3.0.2)
   - Shimmer (1.0.2)
   - SideMenu (2.3.3)
+  - SKPhotoBrowser (4.0.1)
   - SwiftyJSON (3.1.4)
 
 DEPENDENCIES:
@@ -189,16 +190,22 @@ DEPENDENCIES:
   - R.swift
   - Shimmer
   - SideMenu
+  - SKPhotoBrowser (from `git@github.com:citysite102/SKPhotoBrowser.git`)
   - SwiftyJSON
 
 EXTERNAL SOURCES:
   FacebookShare:
     :git: https://github.com/1amageek/facebook-sdk-swift
+  SKPhotoBrowser:
+    :git: git@github.com:citysite102/SKPhotoBrowser.git
 
 CHECKOUT OPTIONS:
   FacebookShare:
     :commit: 3ac76c770e9849285c380f380309d866911d2e93
     :git: https://github.com/1amageek/facebook-sdk-swift
+  SKPhotoBrowser:
+    :commit: 6949df48eda63d7c17a3ca5bdcbd1289344e9aac
+    :git: git@github.com:citysite102/SKPhotoBrowser.git
 
 SPEC CHECKSUMS:
   Alamofire: f28cdffd29de33a7bfa022cbd63ae95a27fae140
@@ -240,8 +247,9 @@ SPEC CHECKSUMS:
   R.swift.Library: fbdec16c9802ad104fc1ba53415dc190e6ec5c73
   Shimmer: c5374be1c2b0c9e292fb05b339a513cf291cac86
   SideMenu: a447554ae5c982e8077666389e1c8b0c8656e065
+  SKPhotoBrowser: d91bd707222bd2308d098b82706e41e41f9829c3
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
 
-PODFILE CHECKSUM: c93b37a6d0fc332140bab88040f5797407ba629c
+PODFILE CHECKSUM: 8aa6f640369829d4319f0b65244ef10c4ede2e2a
 
 COCOAPODS: 1.1.1

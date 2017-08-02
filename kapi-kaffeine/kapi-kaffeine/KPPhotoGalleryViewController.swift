@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SKPhotoBrowser
 
 class KPPhotoGalleryViewController: KPViewController {
 
@@ -15,9 +16,9 @@ class KPPhotoGalleryViewController: KPViewController {
     
     var transitionController: KPPhotoDisplayTransition = KPPhotoDisplayTransition()
     var hideSelectedCell: Bool = false
-    var dismissButton:KPBounceButton!
-    var collectionView:UICollectionView!;
-    var collectionLayout:UICollectionViewFlowLayout!;
+    var dismissButton: KPBounceButton!
+    var collectionView: UICollectionView!;
+    var collectionLayout: UICollectionViewFlowLayout!;
     var displayedPhotoInformations: [PhotoInformation] = [PhotoInformation]()
     var selectedIndexPath: IndexPath!
     var selectedCellSnapshot: UIView  {
@@ -79,8 +80,11 @@ class KPPhotoGalleryViewController: KPViewController {
         
         view.addSubview(collectionView)
         collectionView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                             "V:|[$self]|"])
+                                                        "V:|[$self]|"])
 
+        SKPhotoBrowserOptions.displayAction = false
+        SKPhotoBrowserOptions.displayStatusbar = true
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -148,17 +152,64 @@ extension KPPhotoGalleryViewController: UICollectionViewDelegate, UICollectionVi
             
             })
         } else {
-            let photoDisplayController = KPPhotoDisplayViewController()
-            photoDisplayController.transitioningDelegate = self
-            photoDisplayController.displayedPhotoInformations = self.displayedPhotoInformations
+//            let photoDisplayController = KPPhotoDisplayViewController()
+//            photoDisplayController.transitioningDelegate = self
+//            photoDisplayController.displayedPhotoInformations = self.displayedPhotoInformations
+//            
+//            present(photoDisplayController, animated: true, completion: {
+//                
+//            })
             
-            present(photoDisplayController, animated: true, completion: {
-                
-            })
+            var photoSource: [SKPhotoProtocol] = [SKPhotoProtocol]()
+            for photoInfo in self.displayedPhotoInformations {
+                photoSource.append(SKPhoto.photoWithImageURL(photoInfo.imageURL.absoluteString))
+            }
+            
+            if let animatedCell = collectionView.cellForItem(at: indexPath) as? KPShopPhotoCell {
+                let browser = SKPhotoBrowser(originImage: animatedCell.shopPhoto.image!,
+                                             photos: photoSource,
+                                             animatedFromView: animatedCell)
+                browser.initializePageIndex(indexPath.row-1)
+                browser.delegate = self
+                present(browser, animated: true, completion: {})
+            }
         }
-        
+    
     }
 }
+
+extension KPPhotoGalleryViewController: SKPhotoBrowserDelegate {
+    func viewForPhoto(_ browser: SKPhotoBrowser, index: Int) -> UIView? {
+        return collectionView.cellForItem(at: IndexPath(item: index+1, section: 0))
+    }
+    
+    func didShowPhotoAtIndex(_ index: Int) {
+        collectionView.visibleCells.forEach({$0.isHidden = false})
+        collectionView.cellForItem(at: IndexPath(item: index+1, section: 0))?.isHidden = true
+    }
+    
+    func willDismissAtPageIndex(_ index: Int) {
+        collectionView.visibleCells.forEach({$0.isHidden = false})
+        collectionView.cellForItem(at: IndexPath(item: index+1, section: 0))?.isHidden = true
+    }
+    
+    func willShowActionSheet(_ photoIndex: Int) {
+        // do some handle if you need
+    }
+    
+    func didDismissAtPageIndex(_ index: Int) {
+        collectionView.cellForItem(at: IndexPath(item: index+1, section: 0))?.isHidden = false
+    }
+    
+    func didDismissActionSheetWithButtonIndex(_ buttonIndex: Int, photoIndex: Int) {
+        // handle dismissing custom actions
+    }
+    
+    func removePhoto(index: Int, reload: (() -> Void)) {
+        reload()
+    }
+}
+
 
 // MARK: Image Picker
 

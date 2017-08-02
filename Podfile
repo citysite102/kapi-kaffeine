@@ -21,7 +21,7 @@ target 'kapi-kaffeine' do
   pod 'pop', '~> 1.0'
   pod 'Shimmer', :inhibit_warnings => true
   pod 'lottie-ios', :inhibit_warnings => true
-  # pod 'DHSmartScreenshot'
+  pod 'SKPhotoBrowser', :git => 'git@github.com:citysite102/SKPhotoBrowser.git'
 
 
   # Model

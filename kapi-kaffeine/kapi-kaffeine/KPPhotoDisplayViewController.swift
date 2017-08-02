@@ -296,7 +296,6 @@ extension KPPhotoDisplayViewController:
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: KPPhotoDisplayViewController.KPPhotoDisplayControllerCellReuseIdentifier,
                                                       for: indexPath) as! KPPhotoDisplayCell
-        
         if cell.longPressGesture == nil {
             let longPressGesture = UILongPressGestureRecognizer(target: self,
                                                                 action: #selector(handlePhotoLongPressed(_:)))
@@ -305,6 +304,7 @@ extension KPPhotoDisplayViewController:
             cell.shopPhoto.addGestureRecognizer(longPressGesture)
         }
         
+        cell.delegate = self
         cell.shopPhoto.af_setImage(withURL: self.displayedPhotoInformations[indexPath.row].imageURL,
                                    placeholderImage: nil,
                                    filter: nil,
@@ -323,6 +323,20 @@ extension KPPhotoDisplayViewController:
         
         return cell;
     }
+}
+
+extension KPPhotoDisplayViewController: KPPhotoDisplayCellDelegate {
+    
+    func scrollShouldLocked(_ cell: KPPhotoDisplayCell) {
+        collectionView.isScrollEnabled = false
+        cell.longPressGesture.isEnabled = false
+    }
+    
+    func scrollShouldEnabled(_ cell: KPPhotoDisplayCell) {
+        collectionView.isScrollEnabled = true
+        cell.longPressGesture.isEnabled = true
+    }
+    
 }
 
 extension KPPhotoDisplayViewController: ImageTransitionProtocol {

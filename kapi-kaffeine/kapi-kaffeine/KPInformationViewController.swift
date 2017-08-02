@@ -9,6 +9,7 @@
 import UIKit
 import MapKit
 import BenzeneFoundation
+import SKPhotoBrowser
 
 class KPInformationViewController: KPViewController {
 
@@ -92,6 +93,7 @@ class KPInformationViewController: KPViewController {
     var recommendInformationView: KPInformationSharedInfoView!
     var commentInfoView: KPShopCommentInfoView!
     var loadingIndicator: UIActivityIndicatorView!
+    var currentPhotoIndex: Int!
     lazy var loadingLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 13.0)
@@ -290,8 +292,6 @@ class KPInformationViewController: KPViewController {
         } else {
             
         }
-        
-//        informationHeaderView.shopPhoto.image = R.image.demo_6()
         
         //informationDataModel
         scrollContainer.addSubview(informationHeaderView)
@@ -517,6 +517,10 @@ class KPInformationViewController: KPViewController {
                                                selector: #selector(refreshComments),
                                                name: Notification.Name(KPNotification.information.commentInformation),
                                                object: nil)
+        
+        currentPhotoIndex = 0
+        SKPhotoBrowserOptions.displayAction = false
+        SKPhotoBrowserOptions.displayStatusbar = true
         
         syncRemoteData()
     }
@@ -938,38 +942,51 @@ extension KPInformationViewController: KPInformationHeaderViewDelegate {
             return
         }
         
-        let photoDisplayController = KPPhotoDisplayViewController()
-//        let galleryController = KPPhotoGalleryViewController()
-//        galleryController.view.isHidden = true
-//        galleryController.view.backgroundColor = UIColor.clear
-//        galleryController.view.backgroundColor = UIColor.init(patternImage: currentScreenSnapshotImage)
-//        galleryController.navigationController?.view.isHidden = true
-//        galleryController.navigationController?.setNavigationBarHidden(true, animated: false)
-        
-//        galleryController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-//        photoDisplayController.photoGalleryController = galleryController
-        photoDisplayController.transitioningDelegate = self
-//        headerView.shopPhoto.isHidden = true
-        photoDisplayController.backgroundSnapshot = navigationController!.view.snapshotView(afterScreenUpdates: true)
-        photoDisplayController.displayedPhotoInformations = self.displayPhotoInformations
-        
-        present(photoDisplayController, animated: true, completion: {
-//            UIView.animate(withDuration: 0.5) { () -> Void in
-//                photoDisplayController.setNeedsStatusBarAppearanceUpdate()
-//            }
-        })
-//        navigationController?.pushViewController(viewController: galleryController,
-//                                                      animated: false,
-//                                                      completion: { 
-//                                                        galleryController.present(photoDisplayController,
-//                                                                                  animated: true) {
-//                                                        }
-//        })
+//        let photoDisplayController = KPPhotoDisplayViewController()
+//        photoDisplayController.transitioningDelegate = self
+//        photoDisplayController.backgroundSnapshot = navigationController!.view.snapshotView(afterScreenUpdates: true)
+//        photoDisplayController.displayedPhotoInformations = self.displayPhotoInformations
 //        
-//        present(galleryController, animated: false) {
-//            galleryController.present(photoDisplayController, animated: true) {
-//            }
-//        }
+//        present(photoDisplayController, animated: true, completion: {
+//        })
+        
+        var photoSource: [SKPhotoProtocol] = [SKPhotoProtocol]()
+        for photoInfo in self.displayPhotoInformations {
+            photoSource.append(SKPhoto.photoWithImageURL(photoInfo.imageURL.absoluteString))
+        }
+        
+        let browser = SKPhotoBrowser(originImage: headerView.shopPhoto.image!,
+                                     photos: photoSource,
+                                     animatedFromView: headerView.shopPhoto)
+        browser.initializePageIndex(currentPhotoIndex)
+        browser.delegate = self
+        present(browser, animated: true, completion: {})
+    }
+}
+
+extension KPInformationViewController: SKPhotoBrowserDelegate {
+    func viewForPhoto(_ browser: SKPhotoBrowser, index: Int) -> UIView? {
+        return self.informationHeaderView.shopPhoto
+    }
+    
+    func didShowPhotoAtIndex(_ index: Int) {
+        self.informationHeaderView.shopPhoto.isHidden = true
+    }
+    
+    func didDismissAtPageIndex(_ index: Int) {
+        self.informationHeaderView.shopPhoto.isHidden = false
+    }
+    
+    func willDismissAtPageIndex(_ index: Int) {
+        currentPhotoIndex = index
+        informationHeaderView.shopPhoto.af_setImage(withURL: displayPhotoInformations[index].imageURL,
+                                                    placeholderImage: UIImage(color: KPColorPalette.KPBackgroundColor.grayColor_level6!),
+                                                    filter: nil,
+                                                    progress: nil,
+                                                    progressQueue: DispatchQueue.global(),
+                                                    imageTransition: UIImageView.ImageTransition.crossDissolve(0.2),
+                                                    runImageTransitionIfCached: false,
+                                                    completion: nil)
     }
 }
 
