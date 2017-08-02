@@ -121,6 +121,7 @@ extension KPPhotoGalleryViewController: UICollectionViewDelegate, UICollectionVi
                                                           for: indexPath) as! KPShopPhotoCell;
             cell.layer.cornerRadius = 4.0
             cell.layer.masksToBounds = true
+            cell.isUserInteractionEnabled = true
             cell.shopPhoto.af_setImage(withURL: displayedPhotoInformations[indexPath.row-1].imageURL,
                                        placeholderImage: R.image.image_loading(),
                                        filter: nil,
@@ -131,9 +132,11 @@ extension KPPhotoGalleryViewController: UICollectionViewDelegate, UICollectionVi
                                        completion: { (response) in
                                         if response.error != nil {
                                             cell.shopPhoto.image = R.image.image_failed_s()
+                                            cell.isUserInteractionEnabled = false
                                         }
                                         if let responseImage = response.result.value {
                                             cell.shopPhoto.image = responseImage
+                                            cell.isUserInteractionEnabled = true
                                         }
             })
             return cell;
@@ -161,8 +164,13 @@ extension KPPhotoGalleryViewController: UICollectionViewDelegate, UICollectionVi
 //            })
             
             var photoSource: [SKPhotoProtocol] = [SKPhotoProtocol]()
-            for photoInfo in self.displayedPhotoInformations {
-                photoSource.append(SKPhoto.photoWithImageURL(photoInfo.imageURL.absoluteString))
+            for (index, photoInfo) in self.displayedPhotoInformations.enumerated() {
+                if let photoImage = (collectionView.cellForItem(at: indexPath) as! KPShopPhotoCell).shopPhoto.image,
+                    index == selectedIndexPath.row-1 {
+                    photoSource.append(SKPhoto.photoWithImage(photoImage))
+                } else {
+                    photoSource.append(SKPhoto.photoWithImageURL(photoInfo.imageURL.absoluteString))
+                }
             }
             
             if let animatedCell = collectionView.cellForItem(at: indexPath) as? KPShopPhotoCell {
@@ -193,10 +201,6 @@ extension KPPhotoGalleryViewController: SKPhotoBrowserDelegate {
         collectionView.cellForItem(at: IndexPath(item: index+1, section: 0))?.isHidden = true
     }
     
-    func willShowActionSheet(_ photoIndex: Int) {
-        // do some handle if you need
-    }
-    
     func didDismissAtPageIndex(_ index: Int) {
         collectionView.cellForItem(at: IndexPath(item: index+1, section: 0))?.isHidden = false
     }
@@ -205,9 +209,6 @@ extension KPPhotoGalleryViewController: SKPhotoBrowserDelegate {
         // handle dismissing custom actions
     }
     
-    func removePhoto(index: Int, reload: (() -> Void)) {
-        reload()
-    }
 }
 
 

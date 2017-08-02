@@ -951,8 +951,12 @@ extension KPInformationViewController: KPInformationHeaderViewDelegate {
 //        })
         
         var photoSource: [SKPhotoProtocol] = [SKPhotoProtocol]()
-        for photoInfo in self.displayPhotoInformations {
-            photoSource.append(SKPhoto.photoWithImageURL(photoInfo.imageURL.absoluteString))
+        for (index, photoInfo) in self.displayPhotoInformations.enumerated() {
+            if let shopImage = self.informationHeaderView.shopPhoto.image, index == currentPhotoIndex {
+                photoSource.append(SKPhoto.photoWithImage(shopImage))
+            } else {
+                photoSource.append(SKPhoto.photoWithImageURL(photoInfo.imageURL.absoluteString))
+            }
         }
         
         let browser = SKPhotoBrowser(originImage: headerView.shopPhoto.image!,
