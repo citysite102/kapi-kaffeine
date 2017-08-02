@@ -137,7 +137,7 @@ class KPNewCommentController: KPViewController {
                                           NSForegroundColorAttributeName: KPColorPalette.KPTextColor.grayColor_level2!]
         
         textFieldContainerView.addSubview(inputTextView)
-        inputTextView.addConstraints(fromStringArray: ["V:[$view0]-8-[$self]|",
+        inputTextView.addConstraints(fromStringArray: ["V:[$view0]-8-[$self]-40-|",
                                                        "H:|-12-[$self]-16-|"],
                                      views: [textFieldHeaderLabel])
         

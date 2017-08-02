@@ -23,6 +23,40 @@ class KPSearchViewController: KPViewController {
     var searchController: UISearchController!
 
     var shouldShowSearchResults = false
+    var emptyResult = false {
+        didSet {
+            
+            if emptyResult {
+                emptyContainer.isHidden = false
+            } else {
+                tableView.isHidden = false
+            }
+            
+            UIView.animate(withDuration: 0.2,
+                           animations: { 
+                            self.tableView.alpha = self.emptyResult ? 0.0 : 1.0
+                            self.emptyContainer.alpha = self.emptyResult ? 1.0 : 0.0
+            }) { (_) in
+                self.tableView.isHidden = self.emptyResult ? true : false
+                self.emptyContainer.isHidden = self.emptyResult ? false : true
+            }
+        }
+    }
+    
+    var emptyContainer: UIView!
+    var emptyImageView: UIImageView!
+    
+    lazy var emptyLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 16.0)
+        label.textColor = KPColorPalette.KPTextColor.mainColor
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        label.setText(text: "目前沒有找到符合的咖啡店")
+        return label
+    }()
+    
+    var newStoreButton: UIButton!
     
     
     var initialHeaderContent: [String] = ["最近搜尋紀錄"]
@@ -66,6 +100,41 @@ class KPSearchViewController: KPViewController {
         tableView.register(KPSearchViewRecentCell.self,
                            forCellReuseIdentifier: KPSearchViewController.KPSearchViewControllerRecentCellReuseIdentifier)
         tableView.allowsSelection = true
+        
+        
+        emptyContainer = UIView()
+        emptyContainer.isHidden = true
+        view.addSubview(emptyContainer)
+        emptyContainer.addConstraintForCenterAligningToSuperview(in: .vertical, constant: -48)
+        emptyContainer.addConstraintForCenterAligningToSuperview(in: .horizontal)
+        
+        emptyImageView = UIImageView(image: R.image.icon_house_l())
+        emptyImageView.contentMode = .scaleAspectFit
+        emptyContainer.addSubview(emptyImageView)
+        emptyImageView.addConstraintForCenterAligningToSuperview(in: .horizontal)
+        emptyImageView.addConstraint(from: "V:|[$self(90)]")
+        
+        emptyContainer.addSubview(emptyLabel)
+        emptyLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
+        emptyLabel.addConstraint(from: "V:[$view0]-24-[$self]",
+                                 views: [emptyImageView])
+        emptyLabel.addConstraint(from: "H:|[$self]|")
+        
+        newStoreButton = UIButton(type: .custom)
+        newStoreButton.setTitle("我要新增店家", for: .normal)
+        newStoreButton.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.mainColor!),
+                                                 for: .normal)
+        newStoreButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+        newStoreButton.layer.cornerRadius = 4
+        newStoreButton.layer.masksToBounds = true
+        newStoreButton.addTarget(self,
+                                 action: #selector(handleNewStoreButtonOnTap(_:)),
+                                 for: .touchUpInside)
+        emptyContainer.addSubview(newStoreButton)
+        newStoreButton.addConstraintForCenterAligningToSuperview(in: .horizontal)
+        newStoreButton.addConstraint(from: "V:[$view0]-10-[$self(44)]|",
+                                     views: [emptyLabel])
+        newStoreButton.addConstraint(forWidth: 176)
         
         configureSearchController()
         readSearchData()
@@ -112,6 +181,18 @@ class KPSearchViewController: KPViewController {
     func handleBackButtonOnTapped() {
         self.navigationController?.popViewController(animated: true)
     }
+    
+    func handleNewStoreButtonOnTap(_ sender: UIButton) {
+        let controller = KPModalViewController()
+        controller.edgeInset = UIEdgeInsets(top: 0,
+                                            left: 0,
+                                            bottom: 0,
+                                            right: 0)
+        let newStoreController = KPNewStoreController()
+        let navigationController = UINavigationController(rootViewController: newStoreController)
+        controller.contentController = navigationController
+        controller.presentModalView()
+    }
 }
 
 extension KPSearchViewController: UISearchResultsUpdating, UISearchBarDelegate {
@@ -148,7 +229,14 @@ extension KPSearchViewController: UISearchResultsUpdating, UISearchBarDelegate {
             return (dataModel.name as NSString).range(of: searchString,
                                                       options: .caseInsensitive).location != NSNotFound
         })
-        tableView.reloadData()
+        
+        
+        if filteredDataModel.count == 0 && (searchController.searchBar.text?.characters.count)! > 0 {
+            emptyResult = true
+        } else {
+            emptyResult = false
+            tableView.reloadData()
+        }
     }
 }
 

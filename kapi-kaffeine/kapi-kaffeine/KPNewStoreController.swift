@@ -631,7 +631,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
                                                         } else {
                                                             KPPopoverView.popoverNotification("新增失敗",
                                                                                               "發生錯誤，請再試一次！",
-                                                                                              100,
+                                                                                              150,
                                                                                               nil);
                                                         }
 

@@ -31,7 +31,7 @@ class KPSearchHeaderView: UIView {
         titleLabel = UILabel()
         titleLabel.font = UIFont.systemFont(ofSize: 20.0)
         titleLabel.textColor = KPColorPalette.KPTextColor.whiteColor
-        titleLabel.text = "台北"
+        titleLabel.text = "找咖啡"
         containerView.addSubview(titleLabel)
         titleLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
         titleLabel.addConstraint(from: "V:|-32-[$self]")
