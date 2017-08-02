@@ -379,8 +379,8 @@ GMUClusterRendererDelegate {
     }
     
     func handleCurrentLocationButtonOnTap(_ sender: UIButton) {
-        if CLLocationManager.authorizationStatus() != .authorizedAlways ||
-            CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
+        if CLLocationManager.authorizationStatus() != .authorizedAlways &&
+            CLLocationManager.authorizationStatus() != .authorizedWhenInUse {
             KPPopoverView.popoverDefaultStyleContent("開啟定位",
                                                      "沒有開啟定位我們是要怎麼定位啦？(#`Д´)ﾉ",
                                                      "前往設定", { (popoverContent) in
@@ -394,8 +394,8 @@ GMUClusterRendererDelegate {
     func handleNearestButtonOnTap(_ sender: UIButton) {
         
         if KPLocationManager.sharedInstance().currentLocation == nil {
-            if CLLocationManager.authorizationStatus() != .authorizedAlways ||
-               CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
+            if CLLocationManager.authorizationStatus() != .authorizedAlways &&
+               CLLocationManager.authorizationStatus() != .authorizedWhenInUse {
                 KPPopoverView.popoverDefaultStyleContent("開啟定位",
                                                          "沒有開啟定位我們難道要通靈算距離膩？(#`Д´)ﾉ",
                                                          "前往設定", { (popoverContent) in
