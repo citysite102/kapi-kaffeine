@@ -5,7 +5,7 @@ PODS:
   - AlamofireObjectMapper (4.1.0):
     - Alamofire (~> 4.1)
     - ObjectMapper (~> 2.0)
-  - BaltoSDK (4.0.0)
+  - BaltoSDK (4.0.1)
   - BenzeneFoundation (0.5.42):
     - BenzeneFoundation/Foundation (= 0.5.42)
     - BenzeneFoundation/UIKit (= 0.5.42)
@@ -76,16 +76,16 @@ PODS:
     - GoogleToolboxForMac/Logger (~> 2.1)
     - Protobuf (~> 3.1)
   - Google-Mobile-Ads-SDK (7.21.0)
-  - GoogleMaps (2.3.1):
-    - GoogleMaps/Maps (= 2.3.1)
-  - GoogleMaps/Base (2.3.1)
-  - GoogleMaps/Maps (2.3.1):
+  - GoogleMaps (2.4.0):
+    - GoogleMaps/Maps (= 2.4.0)
+  - GoogleMaps/Base (2.4.0)
+  - GoogleMaps/Maps (2.4.0):
     - GoogleMaps/Base
-  - GooglePlacePicker (2.3.1):
-    - GoogleMaps (= 2.3.1)
-    - GooglePlaces (= 2.3.1)
-  - GooglePlaces (2.3.1):
-    - GoogleMaps/Base (= 2.3.1)
+  - GooglePlacePicker (2.4.0):
+    - GoogleMaps (= 2.4.0)
+    - GooglePlaces (= 2.4.0)
+  - GooglePlaces (2.4.0):
+    - GoogleMaps/Base (= 2.4.0)
   - GoogleToolboxForMac/DebugUtils (2.1.1):
     - GoogleToolboxForMac/Defines (= 2.1.1)
   - GoogleToolboxForMac/Defines (2.1.1)
@@ -204,14 +204,14 @@ CHECKOUT OPTIONS:
     :commit: 3ac76c770e9849285c380f380309d866911d2e93
     :git: https://github.com/1amageek/facebook-sdk-swift
   SKPhotoBrowser:
-    :commit: 6949df48eda63d7c17a3ca5bdcbd1289344e9aac
+    :commit: 2419737bfeb9e037d11741879e6eae69e6f36432
     :git: git@github.com:citysite102/SKPhotoBrowser.git
 
 SPEC CHECKSUMS:
   Alamofire: f28cdffd29de33a7bfa022cbd63ae95a27fae140
   AlamofireImage: 157ed682cc81d3b9db4fb90c1f12180ac552d93b
   AlamofireObjectMapper: 435adc82f5b367679bd9e71c4974a54efd0b2521
-  BaltoSDK: f290f5240cd8aeebf8dc2b8e04cfce1567bbcc60
+  BaltoSDK: 3d8e5d0de6d3065e266873f96695b4d05ce25ed4
   BenzeneFoundation: 7a44807ff32cd32d8776deccf2b7fd2f92ed8159
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
   Crashlytics: dfbae35ef22ca189240d230ad501feea4ee85d2d
@@ -230,9 +230,9 @@ SPEC CHECKSUMS:
   FirebaseInstanceID: 9fbf536668f4d3f0880e7438456dabd1376e294b
   FirebaseMessaging: 227406c05b0dc9290702d2e9f18ab5528f0c2cf2
   Google-Mobile-Ads-SDK: 4a6f1b43c8cc0e1e95a3b59d9f52a01671c6f9f3
-  GoogleMaps: c66a71058b9b1294bcdd5463a68e357fa50c079f
-  GooglePlacePicker: fc3564ac7a2ce314e78e42bfc1e16822ad1e5488
-  GooglePlaces: 4a7b22debfa1af65017b82943431822607e45201
+  GoogleMaps: 8436ab5d1c25e36915b2f7416d0c8e3fa2e76c61
+  GooglePlacePicker: 755f10343d71280c7b016823e73fbae9625dfa8a
+  GooglePlaces: aafe5990fa7951e98e078761bbdaaf236d7e0c65
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   GTMSessionFetcher: 5ad62e8200fa00ed011fe5e08d27fef72c5b1429
   libextobjc: a650fc1bf489a3d3a9bc2e621efa3e1006fc5471
