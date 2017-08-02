@@ -253,7 +253,7 @@ class KPSideViewController: KPViewController {
                                                       icon:R.image.icon_msg()!,
                                                       handler:{()->() in
                                                         DispatchQueue.main.asyncAfter(deadline: .now()) {
-                                                            UIApplication.shared.open(URL(string: "fb-messenger://user-thread/KAPIFind")!,
+                                                            UIApplication.shared.open(URL(string: "fb-messenger://user-thread/255181958274780")!,
                                                                                       options: [:], completionHandler: { (completion) in
                                                                                         
                                                             })
