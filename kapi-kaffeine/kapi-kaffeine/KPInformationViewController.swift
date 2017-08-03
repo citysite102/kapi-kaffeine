@@ -227,26 +227,30 @@ class KPInformationViewController: KPViewController {
         mapActionController.view.tintColor = KPColorPalette.KPTextColor.grayColor_level2
         let googleAction = UIAlertAction(title: "使用Google地圖開啟",
                                        style: .default) {
-                                        [unowned self] (_) in
-                                        if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
-                                            UIApplication.shared.open(URL(string:
-                                                "comgooglemaps://?daddr=\(self.informationDataModel.latitude!),\(self.informationDataModel.longitude!)&mapmode=standard")!,
-                                                                      options: [:],
-                                                                      completionHandler: nil)
-                                        } else {
-                                            print("Can't use comgooglemaps://")
+                                        [weak self] (_) in
+                                        if let weSelf = self {
+                                            if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
+                                                UIApplication.shared.open(URL(string:
+                                                    "comgooglemaps://?daddr=\(weSelf.informationDataModel.latitude!),\(weSelf.informationDataModel.longitude!)&mapmode=standard")!,
+                                                                          options: [:],
+                                                                          completionHandler: nil)
+                                            } else {
+                                                print("Can't use comgooglemaps://")
+                                            }
                                         }
 
         }
         
         let appleAction = UIAlertAction(title: "使用地圖開啟",
                                          style: .default) {
-                                            [unowned self] (_) in
-                                            let coordinates = CLLocationCoordinate2DMake(self.informationDataModel.latitude!,
-                                                                                         self.informationDataModel.longitude!)
-                                            let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: nil)
-                                            let mapItem = MKMapItem(placemark: placemark)
-                                            mapItem.openInMaps(launchOptions: nil)
+                                            [weak self] (_) in
+                                            if let weSelf = self {
+                                                let coordinates = CLLocationCoordinate2DMake(weSelf.informationDataModel.latitude!,
+                                                                                             weSelf.informationDataModel.longitude!)
+                                                let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: nil)
+                                                let mapItem = MKMapItem(placemark: placemark)
+                                                mapItem.openInMaps(launchOptions: nil)
+                                            }
         }
         
         let mapCancelAction = UIAlertAction(title: "取消",
@@ -304,22 +308,25 @@ class KPInformationViewController: KPViewController {
         informationHeaderView.facebookButton.addTarget(self,
                                                        action: #selector(KPInformationViewController.handleFacebookButtonOnTapped),
                                                         for: UIControlEvents.touchUpInside)
-        informationHeaderView.scoreHandler = { [unowned self] in
-            if var rates = self.rateDataModel?.rates {
-                
-                if let cafeModel = self.rateDataModel?.base {
-                    cafeModel.displayName = "Cafe Nomad"
-                    rates.append(cafeModel)
-                }
-                
-                if rates.count > 0 {
-                    let allRatingController = KPAllRatingViewController()
-                    allRatingController.ratings = rates
-                    print("RatesInfo:\(rates)")
-                    self.navigationController?.pushViewController(viewController: allRatingController,
-                                                             animated: true,
-                                                             completion: {}
-                    )
+        informationHeaderView.scoreHandler = {
+            [weak self] (_) in
+            if let weSelf = self {
+                if var rates = weSelf.rateDataModel?.rates {
+                    
+                    if let cafeModel = weSelf.rateDataModel?.base {
+                        cafeModel.displayName = "Cafe Nomad"
+                        rates.append(cafeModel)
+                    }
+                    
+                    if rates.count > 0 {
+                        let allRatingController = KPAllRatingViewController()
+                        allRatingController.ratings = rates
+                        print("RatesInfo:\(rates)")
+                        weSelf.navigationController?.pushViewController(viewController: allRatingController,
+                                                                 animated: true,
+                                                                 completion: {}
+                        )
+                    }
                 }
             }
         }
@@ -385,24 +392,29 @@ class KPInformationViewController: KPViewController {
                    style:.normal,
                    color:KPColorPalette.KPMainColor.mainColor_sub!,
                    icon:R.image.icon_street(),
-                   handler:{ [unowned self] (infoView) -> () in
-                    if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
-                        UIApplication.shared.open(URL(string:
-                            "comgooglemaps://?center=\(self.informationDataModel.latitude!),\(self.informationDataModel.longitude!)&mapmode=streetview")!,
-                                                  options: [:],
-                                                  completionHandler: nil)
-                    } else {
-                        print("Can't use comgooglemaps://")
+                   handler:{
+                    [weak self] (infoView) -> () in
+                    if let weSelf = self {
+                        if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
+                            UIApplication.shared.open(URL(string:
+                                "comgooglemaps://?center=\(weSelf.informationDataModel.latitude!),\(weSelf.informationDataModel.longitude!)&mapmode=streetview")!,
+                                                      options: [:],
+                                                      completionHandler: nil)
+                        } else {
+                            print("Can't use comgooglemaps://")
+                        }
                     }
             }),
             Action(title:"開啟導航",
                    style:.normal,
                    color:KPColorPalette.KPMainColor.mainColor!,
                    icon:(R.image.icon_navi()?.withRenderingMode(.alwaysTemplate))!,
-                   handler:{ [unowned self] (infoView) -> () in
-                    self.present(self.mapActionController,
-                                 animated: true,
-                                 completion: nil)
+                   handler:{ [weak self] (infoView) -> () in
+                    if let weSelf = self {
+                        weSelf.present(weSelf.mapActionController,
+                                       animated: true,
+                                       completion: nil)
+                    }
 
             })
         ]
@@ -422,24 +434,26 @@ class KPInformationViewController: KPViewController {
                                               style:.normal,
                                               color:KPColorPalette.KPMainColor.mainColor!,
                                               icon:(R.image.icon_star()?.withRenderingMode(.alwaysTemplate))!,
-                                              handler:{ [unowned self] (infoView) -> () in
-                                                    
-                                                if KPUserManager.sharedManager.currentUser == nil {
-                                                    KPPopoverView.popoverLoginView()
-                                                } else {
-                                                    let controller = KPModalViewController()
-                                                    controller.edgeInset = UIEdgeInsets(top: UIDevice().isSuperCompact ? 32 : 72,
-                                                                                            left: 0,
-                                                                                            bottom: 0,
-                                                                                            right: 0)
-                                                    controller.cornerRadius = [.topRight, .topLeft]
-                                                    let ratingViewController = KPRatingViewController()
-                                                        
-                                                    if self.hasRatedDataModel != nil {
-                                                        ratingViewController.defaultRateModel = self.hasRatedDataModel
+                                              handler:{
+                                                [weak self] (infoView) -> () in
+                                                if let weSelf = self {
+                                                    if KPUserManager.sharedManager.currentUser == nil {
+                                                        KPPopoverView.popoverLoginView()
+                                                    } else {
+                                                        let controller = KPModalViewController()
+                                                        controller.edgeInset = UIEdgeInsets(top: UIDevice().isSuperCompact ? 32 : 72,
+                                                                                                left: 0,
+                                                                                                bottom: 0,
+                                                                                                right: 0)
+                                                        controller.cornerRadius = [.topRight, .topLeft]
+                                                        let ratingViewController = KPRatingViewController()
+                                                            
+                                                        if weSelf.hasRatedDataModel != nil {
+                                                            ratingViewController.defaultRateModel = weSelf.hasRatedDataModel
+                                                        }
+                                                        controller.contentController = ratingViewController
+                                                        controller.presentModalView()
                                                     }
-                                                    controller.contentController = ratingViewController
-                                                    controller.presentModalView()
                                                 }
         })]
         scrollContainer.addSubview(rateInformationView)
@@ -559,36 +573,42 @@ class KPInformationViewController: KPViewController {
         
         // 取得 Photo 資料
         KPServiceHandler.sharedHandler.getPhotos {
-            [unowned self] (successed, photos) in
-            if successed == true && photos != nil {
-                var index: Int = 0
-                for urlString in photos! {
-                    if let url = URL(string: urlString) {
-                        self.displayPhotoInformations.append(PhotoInformation(title: "", imageURL: url, index: index))
-                        index += 1
+            [weak self] (successed, photos) in
+            if let weSelf = self {
+                if successed == true && photos != nil {
+                    var index: Int = 0
+                    for urlString in photos! {
+                        if let url = URL(string: urlString) {
+                            weSelf.displayPhotoInformations.append(PhotoInformation(title: "",
+                                                                                    imageURL: url,
+                                                                                    index: index))
+                            index += 1
+                        }
                     }
+                    if weSelf.displayPhotoInformations.count == 0 {
+                        
+                        let transition = CATransition()
+                        transition.duration = 0.2
+                        transition.type = kCATransitionFade
+                        weSelf.informationHeaderView.shopPhoto.image = R.image.image_noImage()
+                        weSelf.informationHeaderView.shopPhoto.isUserInteractionEnabled = false
+                        weSelf.informationHeaderView.shopPhoto.layer.add(transition, forKey: nil)
+                        weSelf.informationHeaderView.morePhotoButton.titleLabel?.text = "上傳\n照片"
+                    }
+                } else {
+                    // Handle Error
                 }
-                if self.displayPhotoInformations.count == 0 {
-                    
-                    let transition = CATransition()
-                    transition.duration = 0.2
-                    transition.type = kCATransitionFade
-                    self.informationHeaderView.shopPhoto.image = R.image.image_noImage()
-                    self.informationHeaderView.shopPhoto.isUserInteractionEnabled = false
-                    self.informationHeaderView.shopPhoto.layer.add(transition, forKey: nil)
-                    self.informationHeaderView.morePhotoButton.titleLabel?.text = "上傳\n照片"
-                }
-            } else {
-                // Handle Error
             }
         }
         
         KPServiceHandler.sharedHandler.fetchStoreInformation(informationDataModel.identifier) {
-            [unowned self] (result) in
-            self.informationHeaderButtonBar.informationDataModel = result
-            self.informationHeaderView.scoreLabel.text = String(format: "%.1f",
-                                                                result?.averageRate?.doubleValue ?? 0.0)
-            self.dataLoading = false
+            [weak self] (result) in
+            if let weSelf = self {
+                weSelf.informationHeaderButtonBar.informationDataModel = result
+                weSelf.informationHeaderView.scoreLabel.text = String(format: "%.1f",
+                                                                    result?.averageRate?.doubleValue ?? 0.0)
+                weSelf.dataLoading = false
+            }
         }
     }
     
@@ -597,36 +617,38 @@ class KPInformationViewController: KPViewController {
         
         // 取得 Rating 資料
         KPServiceHandler.sharedHandler.getRatings {
-            [unowned self] (successed, rate) in
-            if successed && rate != nil {
-                (self.rateInformationView.infoView as! KPShopRateInfoView).rateData = rate
-                // 加上 base 的數量
-                let rateCount = (rate?.base != nil) ? (rate?.rates?.count)!+1 : (rate?.rates?.count)!
-                
-                self.informationHeaderButtonBar.rateButton.numberValue = rateCount
-                self.informationHeaderButtonBar.rateButton.selected =
-                    (KPUserManager.sharedManager.currentUser?.hasRated(self.informationDataModel.identifier)) ?? false
-                self.rateInformationView.infoSupplementLabel.text = "\(rateCount) 人已評分"
-                self.rateDataModel = rate
-                
-                if ((KPUserManager.sharedManager.currentUser?.hasRated) != nil) {
-                    if let rate = self.rateDataModel?.rates?.first(where:
-                        {$0.memberID == KPUserManager.sharedManager.currentUser?.identifier}) {
-                        self.hasRatedDataModel = rate
+            [weak self] (successed, rate) in
+            if let weSelf = self {
+                if successed && rate != nil {
+                    (weSelf.rateInformationView.infoView as! KPShopRateInfoView).rateData = rate
+                    // 加上 base 的數量
+                    let rateCount = (rate?.base != nil) ? (rate?.rates?.count)!+1 : (rate?.rates?.count)!
+                    
+                    weSelf.informationHeaderButtonBar.rateButton.numberValue = rateCount
+                    weSelf.informationHeaderButtonBar.rateButton.selected =
+                        (KPUserManager.sharedManager.currentUser?.hasRated(weSelf.informationDataModel.identifier)) ?? false
+                    weSelf.rateInformationView.infoSupplementLabel.text = "\(rateCount) 人已評分"
+                    weSelf.rateDataModel = rate
+                    
+                    if ((KPUserManager.sharedManager.currentUser?.hasRated) != nil) {
+                        if let rate = weSelf.rateDataModel?.rates?.first(where:
+                            {$0.memberID == KPUserManager.sharedManager.currentUser?.identifier}) {
+                            weSelf.hasRatedDataModel = rate
+                        }
                     }
-                }
-                
-                if self.hasRatedDataModel != nil {
-                    DispatchQueue.main.async {
-                        self.rateInformationView.actionButtons[0].setTitle("修改評分", for: .normal)
-                        self.informationHeaderButtonBar.rateButton.titleLabel.text = "修改評分"
+                    
+                    if weSelf.hasRatedDataModel != nil {
+                        DispatchQueue.main.async {
+                            weSelf.rateInformationView.actionButtons[0].setTitle("修改評分", for: .normal)
+                            weSelf.informationHeaderButtonBar.rateButton.titleLabel.text = "修改評分"
+                        }
                     }
+                    
+                } else {
+                    weSelf.informationHeaderButtonBar.rateButton.numberValue = 0
+                    weSelf.informationHeaderButtonBar.rateButton.selected = false
+                    weSelf.rateInformationView.infoSupplementLabel.text = "0 人已評分"
                 }
-                
-            } else {
-                self.informationHeaderButtonBar.rateButton.numberValue = 0
-                self.informationHeaderButtonBar.rateButton.selected = false
-                self.rateInformationView.infoSupplementLabel.text = "0 人已評分"
             }
         }
     }
@@ -640,24 +662,25 @@ class KPInformationViewController: KPViewController {
                                                           style:.normal,
                                                           color:KPColorPalette.KPMainColor.mainColor!,
                                                           icon:(R.image.icon_comment()?.withRenderingMode(.alwaysTemplate))!,
-                                                          handler:{ [unowned self] (infoView) -> () in
-                                                            
-                                                            if KPUserManager.sharedManager.currentUser == nil {
-                                                                KPPopoverView.popoverLoginView()
-                                                            } else {
+                                                          handler:{ [weak self] (infoView) -> () in
+                                                            if let weSelf = self {
                                                                 if KPUserManager.sharedManager.currentUser == nil {
                                                                     KPPopoverView.popoverLoginView()
                                                                 } else {
-                                                                    let newCommentViewController = KPNewCommentController()
-                                                                    if self.hasRatedDataModel != nil {
-                                                                        DispatchQueue.main.async {
-                                                                            newCommentViewController.hideRatingViews = true
+                                                                    if KPUserManager.sharedManager.currentUser == nil {
+                                                                        KPPopoverView.popoverLoginView()
+                                                                    } else {
+                                                                        let newCommentViewController = KPNewCommentController()
+                                                                        if weSelf.hasRatedDataModel != nil {
+                                                                            DispatchQueue.main.async {
+                                                                                newCommentViewController.hideRatingViews = true
+                                                                            }
                                                                         }
+                                                                        
+                                                                        weSelf.navigationController?.pushViewController(viewController: newCommentViewController,
+                                                                                                                      animated: true,
+                                                                                                                      completion: {})
                                                                     }
-                                                                    
-                                                                    self.navigationController?.pushViewController(viewController: newCommentViewController,
-                                                                                                                  animated: true,
-                                                                                                                  completion: {})
                                                                 }
                                                             }
             })
@@ -668,34 +691,38 @@ class KPInformationViewController: KPViewController {
                     style:.normal,
                     color:KPColorPalette.KPMainColor.mainColor_sub!,
                     icon:nil,
-                    handler:{ [unowned self] (infoView) -> () in
-                        let commentViewController = KPAllCommentController()
-                        commentViewController.comments = self.commentInfoView.comments
-                        commentViewController.animated = !self.allCommentHasShown
-                        self.allCommentHasShown = true
-                        self.navigationController?.pushViewController(viewController: commentViewController,
-                                                                      animated: true,
-                                                                      completion: {})
+                    handler:{ [weak self] (infoView) -> () in
+                        if let weSelf = self {
+                            let commentViewController = KPAllCommentController()
+                            commentViewController.comments = weSelf.commentInfoView.comments
+                            commentViewController.animated = !weSelf.allCommentHasShown
+                            weSelf.allCommentHasShown = true
+                            weSelf.navigationController?.pushViewController(viewController: commentViewController,
+                                                                            animated: true,
+                                                                            completion: {})
+                        }
                 }),
                 Action(title:"我要評論",
                        style:.normal,
                        color:KPColorPalette.KPMainColor.mainColor!,
                        icon:(R.image.icon_comment()?.withRenderingMode(.alwaysTemplate))!,
-                       handler:{ [unowned self] (infoView) -> () in
-                        if KPUserManager.sharedManager.currentUser == nil {
-                            KPPopoverView.popoverLoginView()
-                        } else {
-                            let newCommentViewController = KPNewCommentController()
-                            
-                            if self.hasRatedDataModel != nil {
-                                DispatchQueue.main.async {
-                                    newCommentViewController.hideRatingViews = true
+                       handler:{ [weak self] (infoView) -> () in
+                        if let weSelf = self {
+                            if KPUserManager.sharedManager.currentUser == nil {
+                                KPPopoverView.popoverLoginView()
+                            } else {
+                                let newCommentViewController = KPNewCommentController()
+                                
+                                if weSelf.hasRatedDataModel != nil {
+                                    DispatchQueue.main.async {
+                                        newCommentViewController.hideRatingViews = true
+                                    }
                                 }
+                                
+                                weSelf.navigationController?.pushViewController(viewController: newCommentViewController,
+                                                                              animated: true,
+                                                                              completion: {})
                             }
-                            
-                            self.navigationController?.pushViewController(viewController: newCommentViewController,
-                                                                          animated: true,
-                                                                          completion: {})
                         }
                 })
             ]
@@ -707,34 +734,36 @@ class KPInformationViewController: KPViewController {
         
         // 取得 Comment 資料
         KPServiceHandler.sharedHandler.getComments {
-            [unowned self] (successed, comments) in
-            if successed && comments != nil {
-                self.commentInfoView.comments = comments!
-                self.commentInformationView.infoSupplementLabel.text = "\(comments?.count ?? 0) 人已留言"
-                
-                self.commentInfoView.tableView.layoutIfNeeded()
-                self.commentInfoView.tableViewHeightConstraint.constant = self.commentInfoView.tableView.contentSize.height
-                self.commentInformationView.setNeedsLayout()
-                self.commentInformationView.layoutIfNeeded()
-                
-                if let commentCountValue = comments?.count {
-                    self.updateCommentsLayout(commentCountValue)
-                    self.commentInformationView.isEmpty = (commentCountValue == 0)
-                    self.informationHeaderButtonBar.commentButton.numberValue = commentCountValue
-                    self.informationHeaderButtonBar.commentButton.selected =
-                        (KPUserManager.sharedManager.currentUser?.hasReviewed(self.informationDataModel.identifier)) ?? false
+            [weak self] (successed, comments) in
+            if let weSelf = self {
+                if successed && comments != nil {
+                    weSelf.commentInfoView.comments = comments!
+                    weSelf.commentInformationView.infoSupplementLabel.text = "\(comments?.count ?? 0) 人已留言"
+                    
+                    weSelf.commentInfoView.tableView.layoutIfNeeded()
+                    weSelf.commentInfoView.tableViewHeightConstraint.constant = weSelf.commentInfoView.tableView.contentSize.height
+                    weSelf.commentInformationView.setNeedsLayout()
+                    weSelf.commentInformationView.layoutIfNeeded()
+                    
+                    if let commentCountValue = comments?.count {
+                        weSelf.updateCommentsLayout(commentCountValue)
+                        weSelf.commentInformationView.isEmpty = (commentCountValue == 0)
+                        weSelf.informationHeaderButtonBar.commentButton.numberValue = commentCountValue
+                        weSelf.informationHeaderButtonBar.commentButton.selected =
+                            (KPUserManager.sharedManager.currentUser?.hasReviewed(weSelf.informationDataModel.identifier)) ?? false
+                    } else {
+                        weSelf.commentInfoView.tableViewHeightConstraint.constant = 64
+                        weSelf.commentInformationView.isEmpty = true
+                    }
                 } else {
-                    self.commentInfoView.tableViewHeightConstraint.constant = 64
-                    self.commentInformationView.isEmpty = true
+                    weSelf.commentInfoView.comments = [KPCommentModel]()
+                    weSelf.commentInformationView.infoSupplementLabel.text = "0 人已留言"
+                    weSelf.commentInfoView.tableView.layoutIfNeeded()
+                    weSelf.commentInfoView.tableViewHeightConstraint.constant = 64
+                    weSelf.commentInformationView.setNeedsLayout()
+                    weSelf.commentInformationView.layoutIfNeeded()
+                    weSelf.commentInformationView.isEmpty = true
                 }
-            } else {
-                self.commentInfoView.comments = [KPCommentModel]()
-                self.commentInformationView.infoSupplementLabel.text = "0 人已留言"
-                self.commentInfoView.tableView.layoutIfNeeded()
-                self.commentInfoView.tableViewHeightConstraint.constant = 64
-                self.commentInformationView.setNeedsLayout()
-                self.commentInformationView.layoutIfNeeded()
-                self.commentInformationView.isEmpty = true
             }
         }
     }
