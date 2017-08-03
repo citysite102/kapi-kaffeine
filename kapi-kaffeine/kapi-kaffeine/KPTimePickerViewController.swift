@@ -67,7 +67,7 @@ class KPTimePickerViewController: UIViewController, KPTimePickerDelegate, KPTabV
             button.setTitle(title, for: .normal)
             button.setTitleColor(UIColor.white, for: .normal)
             
-            if index == 0 {
+            if index == 0 && titles.count != 1 {
                 button.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.mainColor_sub!),
                                           for: .normal)
             } else {
