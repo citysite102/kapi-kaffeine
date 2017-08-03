@@ -25,6 +25,7 @@ class KPNewCommentController: KPViewController {
     var ratingHeaderLabel: UILabel!
     var ratingContainer: UIView!
     var ratingCheckbox: KPCheckView!
+    var resignTapGesture: UITapGestureRecognizer!
     var hideRatingViews: Bool! = false {
         didSet {
             if ratingContainer != nil {
@@ -117,7 +118,7 @@ class KPNewCommentController: KPViewController {
         textFieldContainerView.addConstraintForHavingSameWidth(with: view)
         
         tapGesture = UITapGestureRecognizer(target: self,
-                                                 action: #selector(handleTapGesture(tapGesture:)))
+                                            action: #selector(handleTapGesture(tapGesture:)))
         textFieldContainerView.addGestureRecognizer(tapGesture)
         
         textFieldContainerView.addSubview(textFieldHeaderLabel)
@@ -204,11 +205,21 @@ class KPNewCommentController: KPViewController {
         }
         ratingViews.last!.addConstraint(from: "V:[$self]-16-|")
         
+        resignTapGesture = UITapGestureRecognizer(target: self,
+                                            action: #selector(handleResignTapGesture(_:)))
+        view.addGestureRecognizer(tapGesture)
+        
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func handleResignTapGesture(_ tapGesture: UITapGestureRecognizer) {
+        if inputTextView.isFirstResponder {
+            inputTextView.resignFirstResponder()
+        }
     }
     
     func checkBoxValueChanged(_ sender: KPCheckBox) {
