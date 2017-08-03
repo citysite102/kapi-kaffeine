@@ -207,6 +207,8 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
         citySubTitleView.placeHolderContent = "請選擇城市"
         citySubTitleView.customInputAction = {
             [unowned self] () -> Void in
+            
+            self.view.endEditing(true)
             let controller = KPModalViewController()
             controller.edgeInset = UIEdgeInsets(top: UIDevice().isCompact ? 48 : 56,
                                                      left: 0,
@@ -232,6 +234,8 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
         priceSubTitleView.placeHolderContent = "請選擇價格區間"
         priceSubTitleView.customInputAction = {
             [unowned self] () -> Void in
+            
+            self.view.endEditing(true)
             let controller = KPModalViewController()
             controller.edgeInset = UIEdgeInsets(top: UIDevice().isCompact ? 48 : 56,
                                                 left: 0,
@@ -293,6 +297,8 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
                                            views:[featureSubTitleView])
         rateCheckedView.customInputAction = {
             [unowned self] () -> Void in
+            
+            self.view.endEditing(true)
             let controller = KPModalViewController()
             controller.edgeInset = UIEdgeInsets(top: UIDevice().isSuperCompact ? 32 : 72,
                                                 left: 0,
@@ -319,6 +325,8 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
                                                views:[rateCheckedView])
         businessHourCheckedView.customInputAction = {
             [unowned self] () -> Void in
+            
+            self.view.endEditing(true)
             let controller = KPModalViewController()
             controller.edgeInset = UIEdgeInsets(top: UIDevice().isSuperCompact ? 32 : 72,
                                                 left: 0,
@@ -772,7 +780,6 @@ extension KPNewStoreController: UICollectionViewDelegate, UICollectionViewDataSo
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return KPServiceHandler.sharedHandler.featureTags.count
-//        return self.tags.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -780,7 +787,6 @@ extension KPNewStoreController: UICollectionViewDelegate, UICollectionViewDataSo
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier:"cell",
                                                       for: indexPath) as! KPFeatureTagCell
         cell.featureLabel.text = KPServiceHandler.sharedHandler.featureTags[indexPath.row].name
-//            cell.featureLabel.text = self.tags[indexPath.row]
             return cell
     }
 
