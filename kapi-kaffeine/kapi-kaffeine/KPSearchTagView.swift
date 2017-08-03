@@ -25,6 +25,7 @@ protocol KPSearchTagViewDelegate: NSObjectProtocol {
 class KPSearchTagView: UIView {
     
     static let KPSearchTagViewCellReuseIdentifier = "cell"
+    static let KPSearchTagViewButtonCellReuseIdentifier = "button_cell"
 
     weak open var delegate: (KPSearchTagViewDelegate & KPSearchConditionViewControllerDelegate)?
     
@@ -51,53 +52,56 @@ class KPSearchTagView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = KPColorPalette.KPBackgroundColor.mainColor_light
+        backgroundColor = KPColorPalette.KPBackgroundColor.mainColor_light
         
         
-        self.preferenceHintButton = KPPreferenceHintButton()
-        self.preferenceHintButton.setImage(R.image.icon_filter(),
+        preferenceHintButton = KPPreferenceHintButton()
+        preferenceHintButton.setImage(R.image.icon_filter(),
                                            for: .normal)
-        self.preferenceHintButton.imageEdgeInsets = UIEdgeInsetsMake(4, 2, 4, 2)
-        self.preferenceHintButton.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 4)
-        self.preferenceHintButton.imageView?.contentMode = .scaleAspectFit
-        self.preferenceHintButton.titleLabel?.font = UIFont.systemFont(ofSize: 13.0)
-        self.preferenceHintButton.setTitle("偏好篩選", for: .normal)
-        self.preferenceHintButton.setTitleColor(UIColor.white, for: .normal)
-        self.preferenceHintButton.setTitleColor(UIColor(hexString: "#888888"), for: .highlighted)
-        self.preferenceHintButton.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.mainColor!),
+        preferenceHintButton.imageEdgeInsets = UIEdgeInsetsMake(4, 2, 4, 2)
+        preferenceHintButton.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 4)
+        preferenceHintButton.imageView?.contentMode = .scaleAspectFit
+        preferenceHintButton.titleLabel?.font = UIFont.systemFont(ofSize: 13.0)
+        preferenceHintButton.setTitle("偏好篩選", for: .normal)
+        preferenceHintButton.setTitleColor(UIColor.white, for: .normal)
+        preferenceHintButton.setTitleColor(UIColor(hexString: "#888888"), for: .highlighted)
+        preferenceHintButton.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.mainColor!),
                                                      for: .normal)
-        self.preferenceHintButton.imageView?.tintColor = UIColor.white
-        self.preferenceHintButton.layer.cornerRadius = 3.0
-        self.preferenceHintButton.layer.masksToBounds = true
-        self.preferenceHintButton.addTarget(self,
-                                            action: #selector(handlePreferenceButtonOnTapped),
-                                            for: .touchUpInside)
-        self.addSubview(self.preferenceHintButton)
-        self.preferenceHintButton.addConstraints(fromStringArray: ["V:|-4-[$self]-4-|",
-                                                                   "H:|-8-[$self(96)]"])
+        preferenceHintButton.imageView?.tintColor = UIColor.white
+        preferenceHintButton.layer.cornerRadius = 3.0
+        preferenceHintButton.layer.masksToBounds = true
+        preferenceHintButton.addTarget(self,
+                                       action: #selector(handlePreferenceButtonOnTapped),
+                                       for: .touchUpInside)
+        addSubview(preferenceHintButton)
+        preferenceHintButton.addConstraints(fromStringArray: ["V:|-4-[$self]-4-|",
+                                                              "H:|-8-[$self(96)]"])
         
         //Collection view
-        self.collectionLayout = UICollectionViewFlowLayout()
-        self.collectionLayout.scrollDirection = .horizontal
-        self.collectionLayout.minimumLineSpacing = 4.0
-        self.collectionLayout.minimumInteritemSpacing = 6.0
+        collectionLayout = UICollectionViewFlowLayout()
+        collectionLayout.scrollDirection = .horizontal
+        collectionLayout.minimumLineSpacing = 4.0
+        collectionLayout.minimumInteritemSpacing = 6.0
         
-        self.collectionView = UICollectionView(frame: .zero,
-                                               collectionViewLayout: self.collectionLayout)
-        self.collectionView.backgroundColor = UIColor.clear
-        self.collectionView.dataSource = self
-        self.collectionView.delegate = self
-        self.collectionView.showsHorizontalScrollIndicator = false
-        self.collectionView.showsVerticalScrollIndicator = false
-        self.collectionView.delaysContentTouches = true
-        self.collectionView.allowsMultipleSelection = true
-        self.collectionView.contentInset = UIEdgeInsetsMake(0, 0, 0, 8);
-        self.collectionView.register(KPSearchTagCell.self,
-                                     forCellWithReuseIdentifier: KPSearchTagView.KPSearchTagViewCellReuseIdentifier)
+        collectionView = UICollectionView(frame: .zero,
+                                          collectionViewLayout: collectionLayout)
+        collectionView.backgroundColor = UIColor.clear
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.delaysContentTouches = true
+        collectionView.allowsMultipleSelection = true
+        collectionView.contentInset = UIEdgeInsetsMake(0, 0, 0, 8);
+        collectionView.register(KPSearchTagButtonCell.self,
+                                forCellWithReuseIdentifier: KPSearchTagView.KPSearchTagViewButtonCellReuseIdentifier)
+        collectionView.register(KPSearchTagCell.self,
+                                forCellWithReuseIdentifier: KPSearchTagView.KPSearchTagViewCellReuseIdentifier)
         
-        self.addSubview(self.collectionView)
-        self.collectionView.addConstraints(fromStringArray: ["H:[$view0]-6-[$self]|", "V:|[$self]|"],
-                                           views: [self.preferenceHintButton])
+        addSubview(collectionView)
+        collectionView.addConstraints(fromStringArray: ["H:[$view0]-6-[$self]|",
+                                                        "V:|[$self]|"],
+                                      views: [preferenceHintButton])
         
     }
     
@@ -134,19 +138,30 @@ extension KPSearchTagView: UICollectionViewDelegate, UICollectionViewDataSource,
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.headerTagContents.count
+        return headerTagContents.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: KPSearchTagView.KPSearchTagViewCellReuseIdentifier,
-                                                      for: indexPath) as! KPSearchTagCell
-        cell.tagTitle.text = self.headerTagContents[indexPath.row].rawValue
-        cell.tagIcon.image = self.headerTagImages[indexPath.row]
-        cell.layer.cornerRadius = 2.0
-        cell.layer.masksToBounds = true
-        cell.alpha = cell.isSelected ? 1.0 : 0.4
+        
+        if indexPath.row == headerTagContents.count-1 {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: KPSearchTagView.KPSearchTagViewButtonCellReuseIdentifier,
+                                                          for: indexPath) as! KPSearchTagButtonCell
+            cell.tagTitle.text = self.headerTagContents[indexPath.row].rawValue
+            cell.layer.cornerRadius = 2.0
+            cell.layer.masksToBounds = true
+            return cell
+            
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: KPSearchTagView.KPSearchTagViewCellReuseIdentifier,
+                                                          for: indexPath) as! KPSearchTagCell
+            cell.tagTitle.text = self.headerTagContents[indexPath.row].rawValue
+            cell.tagIcon.image = self.headerTagImages[indexPath.row]
+            cell.layer.cornerRadius = 2.0
+            cell.layer.masksToBounds = true
+            cell.alpha = cell.isSelected ? 1.0 : 0.4
 
-        return cell
+            return cell
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -163,23 +178,23 @@ extension KPSearchTagView: UICollectionViewDelegate, UICollectionViewDataSource,
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-//        let cell = collectionView.cellForItem(at: indexPath)
-//        currentSelectTags.remove(at: currentSelectTags.index(of: headerTagContents[indexPath.row])!)
         delegate?.searchTagDidDeselect(headerTagContents[indexPath.row])
-//        cell?.alpha = 0.4
         preferenceHintButton.hintCount = collectionView.indexPathsForSelectedItems?.count ?? 0
-//        preferenceHintButton.hintCount = currentSelectTags.count
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let contentSize = NSString.init(string: self.headerTagContents[indexPath.row].rawValue).boundingRect(with: CGSize.init(width: Double.greatestFiniteMagnitude, height: 32),
-                                                                                                             options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 13)],
-                                                                                                             context: nil).size
+        if indexPath.row == headerTagContents.count-1 {
+            return CGSize.init(width: 68, height: 32)
+        } else {
+            let contentSize = NSString.init(string: self.headerTagContents[indexPath.row].rawValue).boundingRect(with: CGSize.init(width: Double.greatestFiniteMagnitude, height: 32),
+                                                                                                                 options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 13)],
+                                                                                                                 context: nil).size
 
-        
-        return CGSize.init(width: contentSize.width + 42, height: 32)
+            
+            return CGSize.init(width: contentSize.width + 42, height: 32)
+        }
     }
     
 }

@@ -34,6 +34,7 @@
 		773463521ED7547B00EA78F0 /* KPLoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773463511ED7547B00EA78F0 /* KPLoginRequest.swift */; };
 		773E24871F1E5A1600C7C094 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 773E24861F1E5A1600C7C094 /* Security.framework */; };
 		773E24891F1E5A4200C7C094 /* KeychainItemWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773E24881F1E5A4200C7C094 /* KeychainItemWrapper.swift */; };
+		77409A481F337829005488F8 /* KPSearchTagButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77409A471F337829005488F8 /* KPSearchTagButtonCell.swift */; };
 		774208ED1EA5B97300C78A00 /* KPShopCommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774208EC1EA5B97300C78A00 /* KPShopCommentCell.swift */; };
 		774208F11EA5F04B00C78A00 /* KPShopPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774208F01EA5F04B00C78A00 /* KPShopPhotoCell.swift */; };
 		774208F71EA61D4400C78A00 /* KPShopRecommendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774208F61EA61D4400C78A00 /* KPShopRecommendView.swift */; };
@@ -242,6 +243,7 @@
 		773463511ED7547B00EA78F0 /* KPLoginRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPLoginRequest.swift; sourceTree = "<group>"; };
 		773E24861F1E5A1600C7C094 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		773E24881F1E5A4200C7C094 /* KeychainItemWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainItemWrapper.swift; sourceTree = "<group>"; };
+		77409A471F337829005488F8 /* KPSearchTagButtonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSearchTagButtonCell.swift; sourceTree = "<group>"; };
 		774208EC1EA5B97300C78A00 /* KPShopCommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPShopCommentCell.swift; sourceTree = "<group>"; };
 		774208F01EA5F04B00C78A00 /* KPShopPhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPShopPhotoCell.swift; sourceTree = "<group>"; };
 		774208F61EA61D4400C78A00 /* KPShopRecommendView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPShopRecommendView.swift; sourceTree = "<group>"; };
@@ -749,6 +751,7 @@
 			children = (
 				776ACAF51E9BAFBF00B629A2 /* KPSearchTagView.swift */,
 				776ACB031E9BB8A900B629A2 /* KPSearchTagCell.swift */,
+				77409A471F337829005488F8 /* KPSearchTagButtonCell.swift */,
 			);
 			name = KPSearchTagView;
 			sourceTree = "<group>";
@@ -1424,7 +1427,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/bin/sh \"${PODS_ROOT}/BaltoSDK/BaltoSDK.framework/run.sh\"";
+			shellScript = "#/bin/sh \"${PODS_ROOT}/BaltoSDK/BaltoSDK.framework/run.sh\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1438,6 +1441,7 @@
 				77427BDF1EF6EF2F005D7AE4 /* KPGetCommentRequest.swift in Sources */,
 				C01AC62B1EAAEA0A000390F7 /* GMUSimpleClusterAlgorithm.m in Sources */,
 				772D68261ECC78840013F802 /* KPNewStoreController.swift in Sources */,
+				77409A481F337829005488F8 /* KPSearchTagButtonCell.swift in Sources */,
 				77E495651ECA04F5003B7EBC /* KPSearchBar.swift in Sources */,
 				C0EBE5431ECB29800021653E /* KPBusinessHourViewController.swift in Sources */,
 				77BB39391ED49BD100958AFE /* KPSharedIntroView.swift in Sources */,
