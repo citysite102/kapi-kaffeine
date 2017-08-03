@@ -456,9 +456,22 @@ class KPServiceHandler {
                                         notification = Notification.Name(KPNotification.information.commentInformation)
                                         NotificationCenter.default.post(name: notification, object: nil)
                                         
-                                        
                                         loadingView.state = .successed
                                         completion?(true)
+                                        
+                                        guard let _ = KPUserManager.sharedManager.currentUser?.reviews?.first(where: {$0.identifier == self.currentDisplayModel?.identifier}) else {
+                                            KPUserManager.sharedManager.currentUser?.reviews?.append(self.currentDisplayModel!)
+                                            KPUserManager.sharedManager.storeUserInformation()
+                                            
+                                            guard let _ = KPUserManager.sharedManager.currentUser?.rates?.first(where: {$0.identifier == self.currentDisplayModel?.identifier}) else {
+                                                KPUserManager.sharedManager.currentUser?.rates?.append(self.currentDisplayModel!)
+                                                KPUserManager.sharedManager.storeUserInformation()
+                                                return
+                                            }   
+                                            return
+                                        }
+                                        
+                                        
         }.catch { (error) in
             loadingView.state = .failed
             completion?(false)
