@@ -257,7 +257,7 @@ extension KPSearchViewController: UITableViewDelegate, UITableViewDataSource {
                     unit = "km"
                     distance = distance/1000
                 }
-                cell.distanceLabel.text = "\(Int(distance))\(unit)"
+                cell.distanceLabel.text = String(format: "%.1f%@", distance, unit)
             } else {
                 cell.distanceLabel.text = "-"
             }
@@ -282,7 +282,7 @@ extension KPSearchViewController: UITableViewDelegate, UITableViewDataSource {
                         unit = "km"
                         distance = distance/1000
                     }
-                    cell.distanceLabel.text = "\(Int(distance))\(unit)"
+                    cell.distanceLabel.text = String(format: "%.1f%@", distance, unit)
                 } else {
                     cell.distanceLabel.text = "-"
                 }

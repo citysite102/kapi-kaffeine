@@ -168,7 +168,7 @@ class KPMainMapViewCollectionCell: UICollectionViewCell {
                 unit = "km"
                 distance = distance/1000
             }
-            self.shopDistanceLabel.text = "\(Int(distance))\(unit)"
+            self.shopDistanceLabel.text = String(format: "%.1f%@", distance, unit)
         } else {
             self.shopDistanceLabel.text = "-"
         }
