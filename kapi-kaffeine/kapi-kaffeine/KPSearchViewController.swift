@@ -248,6 +248,20 @@ extension KPSearchViewController: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier:KPSearchViewController.KPSearchViewControllerDefaultCellReuseIdentifier,
                                                      for: indexPath) as! KPSearchViewDefaultCell
             cell.shopNameLabel.text = filteredDataModel[indexPath.row].name
+            cell.rateLabel.text = String(format: "%.1f", filteredDataModel[indexPath.row].averageRate?.doubleValue ?? 0.0)
+            
+            if let distanceInMeter = filteredDataModel[indexPath.row].distanceInMeter {
+                var distance = distanceInMeter
+                var unit = "m"
+                if distance > 1000 {
+                    unit = "km"
+                    distance = distance/1000
+                }
+                cell.distanceLabel.text = "\(Int(distance))\(unit)"
+            } else {
+                cell.distanceLabel.text = "-"
+            }
+            
             return cell
         } else {
             if indexPath.section == 0 {
@@ -259,6 +273,20 @@ extension KPSearchViewController: UITableViewDelegate, UITableViewDataSource {
                 let cell = tableView.dequeueReusableCell(withIdentifier:KPSearchViewController.KPSearchViewControllerDefaultCellReuseIdentifier,
                                                          for: indexPath) as! KPSearchViewDefaultCell
                 cell.shopNameLabel.text = displayDataModel[indexPath.row].name
+                cell.rateLabel.text = String(format: "%.1f", displayDataModel[indexPath.row].averageRate?.doubleValue ?? 0.0)
+                
+                if let distanceInMeter = displayDataModel[indexPath.row].distanceInMeter {
+                    var distance = distanceInMeter
+                    var unit = "m"
+                    if distance > 1000 {
+                        unit = "km"
+                        distance = distance/1000
+                    }
+                    cell.distanceLabel.text = "\(Int(distance))\(unit)"
+                } else {
+                    cell.distanceLabel.text = "-"
+                }
+                
                 return cell
             }
         }
