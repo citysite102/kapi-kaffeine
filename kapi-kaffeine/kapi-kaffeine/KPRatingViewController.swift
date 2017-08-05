@@ -75,8 +75,45 @@ class KPRatingViewController: KPSharedSettingViewController {
         
     }
     
+    func setRating(_ rating: (Int, Int, Int, Int, Int, Int, Int, CGFloat)?) {
+        if let rating = rating {
+            ratingViews[0].currentRate = rating.0
+            ratingViews[1].currentRate = rating.1
+            ratingViews[2].currentRate = rating.2
+            ratingViews[3].currentRate = rating.3
+            ratingViews[4].currentRate = rating.4
+            ratingViews[5].currentRate = rating.5
+            ratingViews[6].currentRate = rating.6
+            averageRate = rating.7
+        } else {
+            if ratingViews.count >= 7 {
+                ratingViews[0].currentRate = 0
+                ratingViews[1].currentRate = 0
+                ratingViews[2].currentRate = 0
+                ratingViews[3].currentRate = 0
+                ratingViews[4].currentRate = 0
+                ratingViews[5].currentRate = 0
+                ratingViews[6].currentRate = 0
+                averageRate = 0
+                scoreLabel.score = "0.0"
+            }
+        }
+    }
+    
+    override func handleDismissButtonOnTapped() {
+        self.setRating(returnValue as? (Int, Int, Int, Int, Int, Int, Int, CGFloat))
+        super.handleDismissButtonOnTapped()
+    }
+    
     func handleSendButtonOnTapped() {
-        returnValue = averageRate
+        returnValue = (ratingViews[0].currentRate,
+                       ratingViews[1].currentRate,
+                       ratingViews[2].currentRate,
+                       ratingViews[3].currentRate,
+                       ratingViews[4].currentRate,
+                       ratingViews[5].currentRate,
+                       ratingViews[6].currentRate,
+                       averageRate)
         delegate?.returnValueSet(self)
         if isRemote {
             if defaultRateModel != nil {

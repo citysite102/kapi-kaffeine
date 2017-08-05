@@ -767,7 +767,7 @@ extension KPNewStoreController: KPSharedSettingDelegate {
             self.priceSubTitleView.content = controller.returnValue as! String
         } else if controller.identifiedKey == "rate" {
             self.rateCheckedView.checkContent = String(format: "已評分(%.1f)",
-                                                       controller.returnValue as! CGFloat)
+                                                       (controller.returnValue as! (Int, Int, Int, Int, Int, Int, Int, CGFloat)).7)
             self.rateCheckedView.checked = true
         } else if controller.identifiedKey == "time" {
             self.businessHourCheckedView.checked = true

@@ -9,6 +9,7 @@
 import Foundation
 import ObjectMapper
 import PromiseKit
+import Crashlytics
 
 class KPServiceHandler {
 
@@ -20,7 +21,11 @@ class KPServiceHandler {
     
     // 目前儲存所有的咖啡店
     var currentCafeDatas: [KPDataModel]!
-    var currentDisplayModel: KPDataModel?
+    var currentDisplayModel: KPDataModel? {
+        didSet {
+            CLSLogv("Information Controller with cafe id: %@", getVaList([currentDisplayModel?.identifier ?? ""]))
+        }
+    }
     var currentCity: String?
     var relatedDisplayModel: [KPDataModel]? {
         if currentDisplayModel != nil {

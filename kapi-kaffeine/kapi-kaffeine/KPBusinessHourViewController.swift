@@ -99,6 +99,60 @@ class KPBusinessHourViewController: KPSharedSettingViewController, KPTimePickerV
         
     }
     
+    func setBusinessHour(_ businessHour: [String: String]?) {
+        
+        if let businessHour = businessHour {
+        
+            for checkBoxView in self.checkBoxViews {
+                checkBoxView.checkBox.checkState = .unchecked
+            }
+            
+            for subcontainer in self.subContainers {
+                subcontainer.alpha = 0.6
+            }
+            
+            for (key, time) in businessHour {
+                let components = key.components(separatedBy: "_")
+                let day = KPDay(rawValue: components.first!)!
+                
+                var dayNumber: Int!
+                switch day {
+                case .Monday:
+                    dayNumber = 0
+                case .Tuesday:
+                    dayNumber = 1
+                case .Wednesday:
+                    dayNumber = 2
+                case .Thursday:
+                    dayNumber = 3
+                case .Friday:
+                    dayNumber = 4
+                case .Saturday:
+                    dayNumber = 5
+                case .Sunday:
+                    dayNumber = 6
+                }
+                
+                self.checkBoxViews[dayNumber].checkBox.checkState = .checked
+                self.subContainers[dayNumber].alpha = 1
+                
+                if components[2] == "open" {
+                    self.startTimeButtons[dayNumber].setAttributedTitle(NSAttributedString(string: time, attributes: self.editAttrs),
+                                                                                            for: .normal)
+                } else if components[2] == "close" {
+                    self.endTimeButtons[dayNumber].setAttributedTitle(NSAttributedString(string: time, attributes: self.editAttrs),
+                                                                      for: .normal)
+                }
+                
+            }
+        }
+    }
+    
+    override func handleDismissButtonOnTapped() {
+        self.setBusinessHour(returnValue as? [String: String])
+        super.handleDismissButtonOnTapped()
+    }
+    
     func startTimeSelectButtonOnTap(button: UIButton) {
         currentSelectedButton = button
         showTimePicker(0)
