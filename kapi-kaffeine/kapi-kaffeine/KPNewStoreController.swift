@@ -612,7 +612,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
             }
             
             KPServiceHandler.sharedHandler.addNewShop(nameSubTitleView.editTextField.text ?? "",
-                                                      addressSubTitleView.editTextField.text ?? "",
+                                                      addressSubTitleView.editTextView.text ?? "",
                                                       ((countrySelectController.returnValue as? (name: String, key: String))?.key) ?? "",
                                                       selectedCoordinate.latitude,
                                                       selectedCoordinate.longitude,
