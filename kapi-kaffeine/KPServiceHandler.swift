@@ -675,4 +675,34 @@ class KPServiceHandler {
                 print("Error:\(error)")
         }
     }
+    
+    func uploadPhotos(_ photos: [UIImage],
+                      _ cafeID: String,
+                      _ completion: ((_ success: Bool) -> Void)?) {
+        
+        var uploadRequests = [Promise<(RawJsonResult)>]()
+        
+        for photo in photos {
+            let uploadPhotoRequest = KPPhotoUploadRequest()
+            let uploadPromise = uploadPhotoRequest.perform(cafeID, nil, photo.jpegData(withQuality: 1))
+            uploadRequests.append(uploadPromise)
+        }
+        
+        /*
+         The other two functions are when and join. Those fulfill after all the specified promises are fulfilled.
+         Where these two differ is in the rejected case.
+         join always waits for all the promises to complete before rejected if one of them rejects,
+         but when(fulfilled:) rejects as soon as any one of the promises rejects.
+         There’s also a when(resolved:) that waits for all the promises to complete, but always calls the then block and never the catch.
+         */
+        
+        join(uploadRequests).then { (results) -> Void in
+            print("results : \(results)")
+            completion?(true)
+            }.catch { (error) in
+                print("error : \(error)")
+                completion?(false)
+        }
+        
+    }
 }

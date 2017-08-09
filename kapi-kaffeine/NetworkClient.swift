@@ -54,6 +54,7 @@ public struct NetworkClient: NetworkClientType {
     public func performUploadRequest<Request>(_ networkRequest: Request) -> Promise<Data> where Request : NetworkUploadRequest {
 
         let (promise, fulfill, reject) = Promise<Data>.pending()
+        
         Alamofire.upload(multipartFormData: { (multipartFormData) in
             
             if let fileData = networkRequest.fileData {
@@ -78,8 +79,9 @@ public struct NetworkClient: NetworkClientType {
            headers: networkRequest.headers) { (encodingResult) in
             switch encodingResult {
             case .success(let upload, _, _):
-                upload.responseJSON { response in
+                upload.validate().responseJSON { response in
                     fulfill(response.data!)
+
                 }
             case .failure(let encodingError):
                 reject(encodingError)

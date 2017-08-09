@@ -71,7 +71,8 @@ public protocol NetworkRequest {
 extension NetworkRequest {
     
     public var url: String { return baseURL + endpoint}
-    public var baseURL: String { return "https://kapi-v2-test.herokuapp.com/api/v2" }
+//    public var baseURL: String { return "https://kapi-v2-test.herokuapp.com/api/v2" }
+    public var baseURL: String { return "https://api.kapi.tw/api/v2" }
     public var method: Alamofire.HTTPMethod { return .get }
     public var encoding: Alamofire.ParameterEncoding { return method == .get ?
         URLEncoding.default :
@@ -165,10 +166,11 @@ public protocol NetworkUploadRequest {
 extension NetworkUploadRequest {
     
     public var url: String { return baseURL + endpoint}
-    public var baseURL: String {return "https://kapi-v2-test.herokuapp.com/api/v2"}
+//    public var baseURL: String {return "https://kapi-v2-test.herokuapp.com/api/v2"}
+    public var baseURL: String { return "https://api.kapi.tw/api/v2" }
     public var method: Alamofire.HTTPMethod { return .post }
     
-    public var threshold: UInt64 { return SessionManager.multipartFormDataEncodingMemoryThreshold }
+    public var threshold: UInt64 { return 100_000_000 }
     public var parameters: [String : AnyObject] { return [:] }
     public var headers: [String : String] { return ["Content-Type":"multipart/form-data",
                                                     "User-Agent":"iReMW4K4fyWos"] }

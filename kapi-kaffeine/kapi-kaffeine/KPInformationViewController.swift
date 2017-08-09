@@ -502,11 +502,36 @@ class KPInformationViewController: KPViewController {
                                                style:.normal,
                                                color:KPColorPalette.KPMainColor.mainColor!,
                                                icon:(R.image.icon_camera()?.withRenderingMode( .alwaysTemplate))!,
-                                               handler:{(infoView) -> () in
+                                               handler:{[unowned self] (infoView) -> () in
                                                 if KPUserManager.sharedManager.currentUser == nil       {
                                                     KPPopoverView.popoverLoginView()
                                                 } else {
-                                                    KPPopoverView.popoverUnsupportedView()
+                                                    let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+                                                    controller.addAction(UIAlertAction(title: "從相簿中選擇", style: .default) { (action) in
+                                                        let imagePickerController = UIImagePickerController()
+                                                        imagePickerController.allowsEditing = false
+                                                        imagePickerController.sourceType = .photoLibrary
+                                                        imagePickerController.delegate = self
+//                                                        imagePickerController.mediaTypes = [kUTTypeImage as String]
+                                                        self.present(imagePickerController, animated: true, completion: nil)
+                                                    })
+                                                    controller.addAction(UIAlertAction(title: "開啟相機", style: .default) { (action) in
+                                                        let imagePickerController = UIImagePickerController()
+                                                        imagePickerController.allowsEditing = false
+                                                        imagePickerController.sourceType = .camera
+                                                        imagePickerController.delegate = self
+//                                                        imagePickerController.mediaTypes = [kUTTypeImage as String]
+                                                        self.present(imagePickerController, animated: true, completion: nil)
+                                                    })
+                                                    
+                                                    controller.addAction(UIAlertAction(title: "取消", style: .cancel) { (action) in
+                                                        
+                                                    })
+                                                    
+                                                    self.present(controller, animated: true) { 
+                                                        
+                                                    }
+//                                                    KPPopoverView.popoverUnsupportedView()
                                                 }
         })]
 
@@ -1021,6 +1046,28 @@ extension KPInformationViewController: SKPhotoBrowserDelegate {
                                                     runImageTransitionIfCached: false,
                                                     completion: nil)
     }
+}
+
+
+extension KPInformationViewController : UIImagePickerControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        
+        self.dismiss(animated: true, completion: nil)
+        
+        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+//            KPServiceHandler.sharedHandler.uploadPhoto(informationDataModel.identifier, image.jpegData(withQuality: 1))
+            KPServiceHandler.sharedHandler.uploadPhotos([image], informationDataModel.identifier, { (success) in
+                if success {
+                    print("upload successed")
+                } else {
+                    print("upload failed")
+                }
+            })
+        }
+        
+    }
+    
 }
 
 extension UINavigationController {
