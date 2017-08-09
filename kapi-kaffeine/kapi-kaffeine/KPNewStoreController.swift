@@ -71,6 +71,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
     var phoneSubTitleView: KPSubTitleEditView!
     var facebookSubTitleView: KPSubTitleEditView!
     
+    var photoUploadSubTitleView: KPSubTitlePhotoUploadView!
     
     var nameInputController: KPSubtitleInputController!
     var ratingController: KPRatingViewController!
@@ -486,8 +487,14 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
         facebookSubTitleView.placeHolderContent = "請輸入店家 Facebook 連結"
         sectionTwoContainer.addSubview(facebookSubTitleView)
         facebookSubTitleView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                              "V:[$view0][$self(72)]-16-|"],
+                                                              "V:[$view0][$self(72)]"],
                                          views: [phoneSubTitleView])
+        
+        photoUploadSubTitleView = KPSubTitlePhotoUploadView()
+        photoUploadSubTitleView.controller = self
+        sectionTwoContainer.addSubview(photoUploadSubTitleView)
+        photoUploadSubTitleView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$view0][$self]-16-|"],
+                                               views: [facebookSubTitleView])
         
         
         tapGesture = UITapGestureRecognizer(target: self,
