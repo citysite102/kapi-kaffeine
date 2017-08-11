@@ -45,7 +45,8 @@ class KPSubTitlePhotoUploadView: UIView {
         collectionView.showsVerticalScrollIndicator = false
         collectionView.delaysContentTouches = true
         collectionView.register(KPShopPhotoCell.self,
-                                     forCellWithReuseIdentifier: KPSubTitlePhotoUploadView.KPSubTitlePhotoUploadViewCellReuseIdentifier)
+                                     forCellWithReuseIdentifier:
+            KPSubTitlePhotoUploadView.KPSubTitlePhotoUploadViewCellReuseIdentifier)
         collectionView.register(KPPhotoAddCell.self,
                                 forCellWithReuseIdentifier:
             KPSubTitlePhotoUploadView.KPSubTitlePhotoUploadViewUploadCellReuseIdentifier)

@@ -637,7 +637,8 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
                                                       phoneSubTitleView.editTextField.text ?? "",
                                                       tags,
                                                       businessHour,
-                                                      priceSelectController.priceRanges.index(of: priceSubTitleView.editTextField.text ?? "") ?? -1) { (success) in
+                                                      priceSelectController.priceRanges.index(of: priceSubTitleView.editTextField.text ?? "") ?? -1,
+                                                      photoUploadSubTitleView.images) { (success) in
                                                         if success == true {
                                                             KPPopoverView.popoverNotification("新增成功",
                                                                                               "感謝您提交資訊，我們將儘速進行審查:D 這將會需要1-3天的審核時間確認店家的資訊是否無誤，給我好好的等。",

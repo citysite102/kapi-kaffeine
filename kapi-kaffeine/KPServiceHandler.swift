@@ -175,6 +175,7 @@ class KPServiceHandler {
                     _ tags: [KPDataTagModel],
                     _ business_hour: [String: String],
                     _ price_average: Int,
+                    _ photos: [UIImage],
                     _ completion: ((_ successed: Bool) -> Swift.Void)?) {
         
         
@@ -211,6 +212,13 @@ class KPServiceHandler {
                                                                   execute: {
                                                                     loadingView.removeFromSuperview()
                                     })
+                                    
+                                    if let cafeID = result["data"]["cafe_id"].string {
+                                        self.uploadPhotos(photos, cafeID, { (success) in
+                                            // TODO: upload failed error handle
+                                        })
+                                    }
+                                    
                                     completion?(addResult)
                                 } else {
                                     loadingView.state = .failed
