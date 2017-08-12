@@ -482,6 +482,7 @@ class KPMainViewController: KPViewController {
         mainMapViewController?.state = .loading
         mainListViewController?.tableView.reloadData()
         KPFilter.sharedFilter.restoreDefaultSettings()
+        searchHeaderView.searchTagView.preferenceHintButton.hintCount = 0
         
         DispatchQueue.main.async {
             self.setDisplayDataModel(KPFilter.sharedFilter.currentFilterCafeDatas(),
