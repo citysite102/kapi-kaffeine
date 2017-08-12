@@ -24,7 +24,7 @@ class KPShopPhotoInfoView: UIView {
                     self.collectionView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"])
                     self.collectionView.addConstraint(forHeight: 112)
                 }
-                //            collectionView.layoutIfNeeded()
+                self.collectionView.layoutIfNeeded()
                 self.collectionView.reloadData()
             }
         }

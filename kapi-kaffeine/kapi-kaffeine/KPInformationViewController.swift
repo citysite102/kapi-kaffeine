@@ -608,7 +608,6 @@ class KPInformationViewController: KPViewController {
                 }
             }
         }
-        
     }
     
     func refreshRatings() {

@@ -139,6 +139,19 @@ class KPSideViewController: KPViewController {
         return label
     }()
     
+    lazy var userInfoButton: UIButton = {
+        let button = UIButton()
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 13.0)
+        button.setTitle("查看個人資料", for: .normal)
+        button.layer.cornerRadius = 2.0
+        button.layer.masksToBounds = true
+        button.titleEdgeInsets = UIEdgeInsetsMake(2, 2, 2, 2)
+        button.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.mainColor_light!),
+                                  for: .normal)
+        button.setTitleColor(UIColor.white, for: .normal)
+        return button
+    }()
+    
     var userExpView: KPExpView!
     
     var loginButton: UILabel!
@@ -183,7 +196,7 @@ class KPSideViewController: KPViewController {
         navigationController?.setNavigationBarHidden(true, animated: false)
         
         view.addSubview(userContainer)
-        userContainer.addConstraints(fromStringArray: ["V:|[$self(130)]",
+        userContainer.addConstraints(fromStringArray: ["V:|[$self(156)]",
                                                        "H:|[$self]|"])
         
         userContainer.addSubview(userPhoto)
@@ -194,6 +207,11 @@ class KPSideViewController: KPViewController {
         userNameLabel.addConstraints(fromStringArray: ["H:|-16-[$self]",
                                                        "V:[$view0]-8-[$self]"],
                                           views: [userPhoto])
+        
+        userContainer.addSubview(userInfoButton)
+        userInfoButton.addConstraints(fromStringArray: ["H:|-16-[$self(88)]",
+                                                        "V:[$view0]-8-[$self(24)]"],
+                                      views: [userNameLabel])
         
         userExpView = KPExpView()
 //        userContainer.addSubview(userExpView)

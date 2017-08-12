@@ -19,7 +19,6 @@ class KPPhotoGalleryViewController: KPViewController {
     var dismissButton: KPBounceButton!
     var collectionView: UICollectionView!;
     var collectionLayout: UICollectionViewFlowLayout!;
-    var displayedPhotoInformations: [PhotoInformation] = [PhotoInformation]()
     var selectedIndexPath: IndexPath!
     var selectedCellSnapshot: UIView  {
         get {
@@ -35,6 +34,13 @@ class KPPhotoGalleryViewController: KPViewController {
             let snapShotView = UIImageView(image: selectedCell.shopPhoto.image)
             snapShotView.frame = selectedCell.frame
             return snapShotView
+        }
+    }
+    var displayedPhotoInformations: [PhotoInformation] = [PhotoInformation]() {
+        didSet {
+            if collectionView != nil {
+                collectionView.reloadData()
+            }
         }
     }
     
@@ -85,18 +91,42 @@ class KPPhotoGalleryViewController: KPViewController {
         SKPhotoBrowserOptions.displayAction = false
         SKPhotoBrowserOptions.displayStatusbar = true
         
-//        NotificationCenter.default.addObserver(self,
-//                                               selector: #selector(refreshPhoto),
-//                                               name: Notification.Name(KPNotification.information.photoInformation),
-//                                               object: nil)
-        
-        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(refreshPhoto),
+                                               name: Notification.Name(KPNotification.information.photoInformation),
+                                               object: nil)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    // MARK: Photo Refresh
+    
+    func refreshPhoto() {
+        KPServiceHandler.sharedHandler.getPhotos {
+            [weak self] (successed, photos) in
+            if let weSelf = self {
+                if successed == true && photos != nil {
+                    var index: Int = 0
+                    var photoInformations: [PhotoInformation] = []
+                    for urlString in photos! {
+                        if let url = URL(string: urlString) {
+                            photoInformations.append(PhotoInformation(title: "",
+                                                                      imageURL: url,
+                                                                      index: index))
+                            index += 1
+                        }
+                    }
+                    weSelf.displayedPhotoInformations = photoInformations
+                } else {
+                    // Handle Error
+                }
+            }
+        }
+    }
+    
     
     // MARK: UI Event
     

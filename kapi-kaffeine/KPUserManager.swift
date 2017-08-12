@@ -13,6 +13,7 @@ import FacebookLogin
 import FacebookCore
 import ObjectMapper
 import PromiseKit
+import Crashlytics
 
 extension NSNotification.Name {
     public static let KPCurrentUserDidChange: NSNotification.Name = NSNotification.Name(rawValue: "KPCurrentUserDidChange")
@@ -89,17 +90,9 @@ public class KPUserManager {
                                                    completion: { (user, error) in
                                                         
                                                         if let error = error {
-                                                            print("Login error: \(error.localizedDescription)")
-                                                            let alertController = UIAlertController(title: "Login Error",
-                                                                                                    message: error.localizedDescription,
-                                                                                                    preferredStyle: .alert)
-                                                            let okayAction = UIAlertAction(title: "OK",
-                                                                                           style: .cancel,
-                                                                                           handler: nil)
-                                                            alertController.addAction(okayAction)
-                                                            viewController.present(alertController,
-                                                                                   animated: true,
-                                                                                   completion: nil)
+                                                            CLSLogv("Login Error %@", getVaList(["\(error.localizedDescription)"]))
+                                                            
+                                                            self.showAlert(viewController, error)
                                                             self.loadingView.state = .failed
                                                             completion?(false)
                                                             return
@@ -112,14 +105,19 @@ public class KPUserManager {
                                                                              user?.photoURL?.absoluteString,
                                                                              user?.email ?? "unknown").then { result -> Void in
                                                                                 
+                                                                                KPUserDefaults.accessToken = result["token"].string
+                                                                                
                                                                                 // 建立 Current User
                                                                                 self.currentUser =
                                                                                     Mapper<KPUser>().map(JSONObject: result["data"].dictionaryObject)
                                                                                 self.currentUser?.accessToken = result["token"].string
-                                                                                KPUserDefaults.accessToken = result["token"].string
                                                                                 self.storeUserInformation()
-                                                                                
                                                                                 self.loadingView.state = .successed
+                                                                                
+                                                                                Crashlytics.sharedInstance().setUserIdentifier(self.currentUser?.identifier)
+                                                                                Crashlytics.sharedInstance().setUserEmail(self.currentUser?.email)
+                                                                                Crashlytics.sharedInstance().setUserName(self.currentUser?.displayName)
+                                                                                
                                                                                 completion?(true)
                                                                                 
                                                                                 DispatchQueue.main.asyncAfter(deadline: .now()+1.0) {
@@ -129,7 +127,11 @@ public class KPUserManager {
                                                                                 }
                                                                             
                                                             }.catch { error in
-                                                                print("Error")
+                                                                CLSLogv("Login Error %@", getVaList(["\(error.localizedDescription)"]))
+                                                                self.showAlert(viewController, error)
+                                                                self.loadingView.state = .failed
+                                                                completion?(false)
+                                                                return
                                                             }
                                 })
                             }
@@ -175,6 +177,22 @@ public class KPUserManager {
                 }
             }
         }
+    }
+    
+    // UI Event
+    
+    func showAlert(_ viewController: UIViewController,
+                   _ error: Error) {
+        let alertController = UIAlertController(title: "登入失敗",
+                                                message: error.localizedDescription,
+                                                preferredStyle: .alert)
+        let okayAction = UIAlertAction(title: "瞭解",
+                                       style: .cancel,
+                                       handler: nil)
+        alertController.addAction(okayAction)
+        viewController.present(alertController,
+                               animated: true,
+                               completion: nil)
     }
     
     // MARK: Thread Issue
