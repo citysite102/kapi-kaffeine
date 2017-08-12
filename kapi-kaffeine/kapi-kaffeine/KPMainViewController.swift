@@ -19,12 +19,16 @@ public enum ControllerState {
     case normal
     case loading
     case noInternet
+    case failed
 }
 
 class KPMainViewController: KPViewController {
 
     var statusBarShouldBeHidden = false
     var searchHeaderView: KPSearchHeaderView!
+    var statusContainer: UIView!
+    var statusLabel: UILabel!
+    var reFetchTapGesture: UITapGestureRecognizer!
     var sideBarController: KPSideViewController!
     var opacityView: UIView!
     var percentDrivenTransition: UIPercentDrivenInteractiveTransition!
@@ -106,6 +110,31 @@ class KPMainViewController: KPViewController {
         view.addSubview(searchHeaderView)
         searchHeaderView.addConstraints(fromStringArray: ["V:|[$self(104)]",
                                                           "H:|[$self]|"])
+        
+        statusContainer = UIView()
+        statusContainer.isHidden = true
+        statusContainer.alpha = 0
+        statusContainer.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level3
+        view.addSubview(statusContainer)
+        statusContainer.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                         "V:[$view0][$self]"],
+                                       views:[searchHeaderView])
+        
+        statusLabel = UILabel()
+        statusLabel.font = UIFont.systemFont(ofSize: 14)
+        statusLabel.textColor = UIColor.white
+        statusLabel.textAlignment = .center
+        statusLabel.numberOfLines = 0
+        statusLabel.setText(text: "啊啊啊，似乎發生了一些問題｡ﾟヽ(ﾟ´Д`)ﾉﾟ｡\n點擊重新抓取資料",
+                            lineSpacing: 3.0)
+        statusContainer.addSubview(statusLabel)
+        statusLabel.addConstraints(fromStringArray: ["V:|-8-[$self]-8-|",
+                                                     "H:|-16-[$self]-16-|"])
+        
+        reFetchTapGesture = UITapGestureRecognizer(target: self,
+                                                 action: #selector(handleStatusContainerOnTapped(_:)))
+        statusContainer.addGestureRecognizer(reFetchTapGesture)
+        
         
         opacityView = UIView()
         opacityView.backgroundColor = UIColor.black
@@ -224,7 +253,14 @@ class KPMainViewController: KPViewController {
                                                             switch requestError {
                                                             case .noNetworkConnection:
                                                                 self.mainListViewController?.state = .noInternet
+                                                                self.mainMapViewController?.state = .noInternet
                                                             default:
+                                                                self.mainMapViewController?.state = .failed
+                                                                self.statusContainer.isHidden = false
+                                                                UIView.animate(withDuration: 0.15,
+                                                                               animations: { 
+                                                                                self.statusContainer.alpha = 1.0
+                                                                })
                                                                 print("錯誤萬歲: \(requestError)")
                                                             }
                                                         }
@@ -237,7 +273,14 @@ class KPMainViewController: KPViewController {
                                                                 switch requestError {
                                                                     case .noNetworkConnection:
                                                                         self.mainListViewController?.state = .noInternet
+                                                                        self.mainMapViewController?.state = .noInternet
                                                                     default:
+                                                                        self.mainMapViewController?.state = .failed
+                                                                        self.statusContainer.isHidden = false
+                                                                        UIView.animate(withDuration: 0.15,
+                                                                                       animations: {
+                                                                                        self.statusContainer.alpha = 1.0
+                                                                        })
                                                                         print("錯誤萬歲: \(requestError)")
                                                                 }
                                                             }
@@ -251,7 +294,25 @@ class KPMainViewController: KPViewController {
         KPServiceHandler.sharedHandler.fetchTagList()
     }
     
+    func reFetchRemoteData() {
+        mainListViewController?.state = .loading
+        mainMapViewController?.state = .loading
+        fetchRemoteData()
+    }
+    
     // MARK: UI Event
+    
+    func handleStatusContainerOnTapped(_ sender: UITapGestureRecognizer) {
+        statusContainer.isUserInteractionEnabled = false
+        UIView.animate(withDuration: 0.15,
+                       animations: { 
+                        self.statusContainer.alpha = 0
+        }) { (_) in
+            self.statusContainer.isHidden = true
+            self.statusContainer.isUserInteractionEnabled = true
+            self.reFetchRemoteData()
+        }
+    }
     
     func switchSideBar() {
         
@@ -566,6 +627,7 @@ extension KPMainViewController: KPSearchTagViewDelegate, KPSearchConditionViewCo
         
         mainListViewController?.state = .loading
         mainMapViewController?.state = .loading
+        mainMapViewController?.showAllButton.isHidden = false
         mainListViewController?.tableView.reloadData()
         
         DispatchQueue.global().async {
@@ -581,6 +643,7 @@ extension KPMainViewController: KPSearchTagViewDelegate, KPSearchConditionViewCo
             case .highRate:
                 KPFilter.sharedFilter.averageRate = 4
             case .clear:
+                self.mainMapViewController?.showAllButton.isHidden = true
                 KPFilter.sharedFilter.restoreDefaultSettings()
             }
             
@@ -594,6 +657,7 @@ extension KPMainViewController: KPSearchTagViewDelegate, KPSearchConditionViewCo
         
         mainListViewController?.state = .loading
         mainMapViewController?.state = .loading
+        mainMapViewController?.showAllButton.isHidden = (searchHeaderView.searchTagView.preferenceHintButton.hintCount == 0)
         mainListViewController?.tableView.reloadData()
         
         DispatchQueue.global().async {
@@ -625,6 +689,7 @@ extension KPMainViewController: KPSearchTagViewDelegate, KPSearchConditionViewCo
         
         mainListViewController?.state = .loading
         mainMapViewController?.state = .loading
+        mainMapViewController?.showAllButton.isHidden = false
         mainListViewController?.tableView.reloadData()
   
         // 各個 rating

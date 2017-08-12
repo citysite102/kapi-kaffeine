@@ -178,8 +178,8 @@ extension KPSearchTagView: UICollectionViewDelegate, UICollectionViewDataSource,
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        delegate?.searchTagDidDeselect(headerTagContents[indexPath.row])
         preferenceHintButton.hintCount = collectionView.indexPathsForSelectedItems?.count ?? 0
+        delegate?.searchTagDidDeselect(headerTagContents[indexPath.row])
     }
     
     func collectionView(_ collectionView: UICollectionView,

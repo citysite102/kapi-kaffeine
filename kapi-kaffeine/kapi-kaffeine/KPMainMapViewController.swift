@@ -62,6 +62,22 @@ GMUClusterRendererDelegate {
                     self.view.addSubview(loadingView)
                     loadingView.addConstraints(fromStringArray: ["V:|[$self]|",
                                                                  "H:|[$self]|"])
+                } else if state == .failed {
+                    if loadingView.superview != nil {
+                        loadingView.state = .failed
+                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2.0,
+                                                      execute: {
+                                                        self.loadingView.removeFromSuperview()
+                        })
+                    }
+                } else if state == .noInternet {
+                    if loadingView.superview != nil {
+                        loadingView.state = .failed
+                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2.0,
+                                                      execute: {
+                                                        self.loadingView.removeFromSuperview()
+                        })
+                    }
                 }
             }
         }
@@ -266,6 +282,7 @@ GMUClusterRendererDelegate {
         showAllButton.titleLabel?.font = UIFont.systemFont(ofSize: 10)
         showAllButton.titleLabel?.numberOfLines = 2
         showAllButton.titleLabel?.lineBreakMode = .byWordWrapping
+        showAllButton.isHidden = true
         self.view.addSubview(showAllButton)
         showAllButton.addConstraints(fromStringArray: ["H:[$self(32)]-16-|",
                                                        "V:[$view0]-8-[$self(32)]"],
