@@ -238,7 +238,7 @@ class KPNewCommentController: KPViewController {
     }
 
     func handleDismissButtonOnTapped() {
-        navigationController?.popToRootViewController(animated: true)
+        navigationController?.popViewController(animated: true)
     }
     
     func handleSendButtonOnTapped() {
