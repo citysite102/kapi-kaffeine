@@ -680,7 +680,7 @@ class KPServiceHandler {
         let photoUploadRequest = KPPhotoUploadRequest()
         photoUploadRequest.perform(cafeID ?? (currentDisplayModel?.identifier)!,
                                    nil,
-                                   photoData).then {[unowned self] result -> Void in
+                                   photoData).then {result -> Void in
                                     loadingView.state = result["result"].boolValue ? .successed : .failed
                                     completion?(result["result"].boolValue)
             }.catch { (error) in
@@ -690,7 +690,7 @@ class KPServiceHandler {
     }
     
     func uploadPhotos(_ photos: [UIImage],
-                      _ cafeID: String,
+                      _ cafeID: String?,
                       _ completion: ((_ success: Bool) -> Void)?) {
         
         let loadingView = KPLoadingView(("上傳中...", "上傳成功", "上傳失敗"))
@@ -701,7 +701,9 @@ class KPServiceHandler {
         var uploadRequests = [Promise<(RawJsonResult)>]()
         for photo in photos {
             let uploadPhotoRequest = KPPhotoUploadRequest()
-            let uploadPromise = uploadPhotoRequest.perform(cafeID, nil, photo.jpegData(withQuality: 1))
+            let uploadPromise = uploadPhotoRequest.perform(cafeID ?? (currentDisplayModel?.identifier)!,
+                                                           nil,
+                                                           photo.jpegData(withQuality: 1))
             uploadRequests.append(uploadPromise)
         }
         
@@ -716,11 +718,15 @@ class KPServiceHandler {
         join(uploadRequests).then { (results) -> Void in
             print("results : \(results)")
             
-            let notification = Notification.Name(KPNotification.information.photoInformation)
-            NotificationCenter.default.post(name: notification, object: nil)
-            
-            loadingView.state = .successed
-            completion?(true)
+            if results.first?.dictionaryObject != nil {
+                let notification = Notification.Name(KPNotification.information.photoInformation)
+                NotificationCenter.default.post(name: notification, object: nil)
+                loadingView.state = .successed
+                completion?(true)
+            } else {
+                loadingView.state = .failed
+                completion?(false)
+            }
         }.catch { (error) in
             print("error : \(error)")
             completion?(false)

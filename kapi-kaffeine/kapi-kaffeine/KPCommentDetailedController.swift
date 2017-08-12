@@ -102,7 +102,7 @@ class KPCommentDetailedController: KPViewController {
         
         userNameLabel = UILabel()
         userNameLabel.font = UIFont.systemFont(ofSize: 14.0)
-        userNameLabel.text = "測試用名稱"
+        userNameLabel.text = "程式裡的蟲"
         userNameLabel.textColor = KPColorPalette.KPTextColor.grayColor_level1
         containerView.addSubview(userNameLabel)
         userNameLabel.addConstraints(fromStringArray: ["H:|-16-[$self(190)]",
@@ -124,7 +124,7 @@ class KPCommentDetailedController: KPViewController {
         userCommentLabel.font = UIFont.systemFont(ofSize: 14.0)
         userCommentLabel.numberOfLines = 0
         userCommentLabel.textColor = KPColorPalette.KPTextColor.grayColor_level3
-        userCommentLabel.setText(text: "測試用評論，測試用評論，測試用評論，測試用評論，測試用評論，測試用評論，測試用評論，測試用評論，測試用評論！！",
+        userCommentLabel.setText(text: "我是蟲！！你不應該看到這個評論才對，快回報給開發者們吧(´・ω・`)",
                                  lineSpacing: 3.0)
         containerView.addSubview(userCommentLabel)
         userCommentLabel.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",

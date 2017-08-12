@@ -85,11 +85,51 @@ class KPPhotoGalleryViewController: KPViewController {
         SKPhotoBrowserOptions.displayAction = false
         SKPhotoBrowserOptions.displayStatusbar = true
         
+//        NotificationCenter.default.addObserver(self,
+//                                               selector: #selector(refreshPhoto),
+//                                               name: Notification.Name(KPNotification.information.photoInformation),
+//                                               object: nil)
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    // MARK: UI Event
+    
+    func photoUpload() {
+        if KPUserManager.sharedManager.currentUser == nil {
+            KPPopoverView.popoverLoginView()
+        } else {
+            let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            controller.addAction(UIAlertAction(title: "從相簿中選擇", style: .default) { (action) in
+                let imagePickerController = UIImagePickerController()
+                imagePickerController.allowsEditing = false
+                imagePickerController.sourceType = .photoLibrary
+                imagePickerController.delegate = self
+                //                                                        imagePickerController.mediaTypes = [kUTTypeImage as String]
+                self.present(imagePickerController, animated: true, completion: nil)
+            })
+            controller.addAction(UIAlertAction(title: "開啟相機", style: .default) { (action) in
+                let imagePickerController = UIImagePickerController()
+                imagePickerController.allowsEditing = false
+                imagePickerController.sourceType = .camera
+                imagePickerController.delegate = self
+                //                                                        imagePickerController.mediaTypes = [kUTTypeImage as String]
+                self.present(imagePickerController, animated: true, completion: nil)
+            })
+            
+            controller.addAction(UIAlertAction(title: "取消", style: .cancel) { (action) in
+                
+            })
+            
+            self.present(controller, animated: true) {
+                
+            }
+        }
     }
     
     func handleBackButtonOnTapped() {
@@ -147,22 +187,8 @@ extension KPPhotoGalleryViewController: UICollectionViewDelegate, UICollectionVi
         selectedIndexPath = indexPath
         
         if indexPath.row == 0 {
-            let imagePicker = UIImagePickerController()
-            imagePicker.delegate = self
-            imagePicker.sourceType = .photoLibrary
-            
-            present(imagePicker, animated: true, completion: {
-            
-            })
+            photoUpload()
         } else {
-//            let photoDisplayController = KPPhotoDisplayViewController()
-//            photoDisplayController.transitioningDelegate = self
-//            photoDisplayController.displayedPhotoInformations = self.displayedPhotoInformations
-//            
-//            present(photoDisplayController, animated: true, completion: {
-//                
-//            })
-            
             var photoSource: [SKPhotoProtocol] = [SKPhotoProtocol]()
             for (index, photoInfo) in self.displayedPhotoInformations.enumerated() {
                 if let photoImage = (collectionView.cellForItem(at: indexPath) as! KPShopPhotoCell).shopPhoto.image,
@@ -182,7 +208,6 @@ extension KPPhotoGalleryViewController: UICollectionViewDelegate, UICollectionVi
                 present(browser, animated: true, completion: {})
             }
         }
-    
     }
 }
 
@@ -211,7 +236,6 @@ extension KPPhotoGalleryViewController: SKPhotoBrowserDelegate {
     
 }
 
-
 // MARK: Image Picker
 
 extension KPPhotoGalleryViewController: UIImagePickerControllerDelegate,
@@ -219,11 +243,17 @@ UINavigationControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController,
                                didFinishPickingMediaWithInfo info: [String : Any]) {
-        picker.dismiss(animated: true) { 
+        
+        picker.dismiss(animated: true) {
             if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
-                let imageData = UIImageJPEGRepresentation(image, 0.1)
-                KPServiceHandler.sharedHandler.uploadPhoto(nil,
-                                                           imageData)
+                KPServiceHandler.sharedHandler.uploadPhotos([image],
+                                                            nil, { (success) in
+                                                                if success {
+                                                                    print("upload successed")
+                                                                } else {
+                                                                    print("upload failed")
+                                                                }
+                })
             }
         }
     }

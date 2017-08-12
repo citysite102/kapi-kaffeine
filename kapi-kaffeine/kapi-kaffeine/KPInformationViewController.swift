@@ -175,7 +175,7 @@ class KPInformationViewController: KPViewController {
         actionController = UIAlertController(title: nil,
                                              message: nil,
                                              preferredStyle: .actionSheet)
-        actionController.view.tintColor = KPColorPalette.KPTextColor.grayColor_level2
+//        actionController.view.tintColor = KPColorPalette.KPTextColor.grayColor_level2
         let editButton = UIAlertAction(title: "編輯店家資料",
                                        style: .default) {
                                         [unowned self] (_) in
@@ -490,36 +490,7 @@ class KPInformationViewController: KPViewController {
                                                color:KPColorPalette.KPMainColor.mainColor!,
                                                icon:(R.image.icon_camera()?.withRenderingMode( .alwaysTemplate))!,
                                                handler:{[unowned self] (infoView) -> () in
-                                                if KPUserManager.sharedManager.currentUser == nil {
-                                                    KPPopoverView.popoverLoginView()
-                                                } else {
-                                                    let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-                                                    controller.addAction(UIAlertAction(title: "從相簿中選擇", style: .default) { (action) in
-                                                        let imagePickerController = UIImagePickerController()
-                                                        imagePickerController.allowsEditing = false
-                                                        imagePickerController.sourceType = .photoLibrary
-                                                        imagePickerController.delegate = self
-//                                                        imagePickerController.mediaTypes = [kUTTypeImage as String]
-                                                        self.present(imagePickerController, animated: true, completion: nil)
-                                                    })
-                                                    controller.addAction(UIAlertAction(title: "開啟相機", style: .default) { (action) in
-                                                        let imagePickerController = UIImagePickerController()
-                                                        imagePickerController.allowsEditing = false
-                                                        imagePickerController.sourceType = .camera
-                                                        imagePickerController.delegate = self
-//                                                        imagePickerController.mediaTypes = [kUTTypeImage as String]
-                                                        self.present(imagePickerController, animated: true, completion: nil)
-                                                    })
-                                                    
-                                                    controller.addAction(UIAlertAction(title: "取消", style: .cancel) { (action) in
-                                                        
-                                                    })
-                                                    
-                                                    self.present(controller, animated: true) { 
-                                                        
-                                                    }
-//                                                    KPPopoverView.popoverUnsupportedView()
-                                                }
+                                                self.photoUpload()
         })]
 
         let shopRecommendView = KPShopRecommendView()
@@ -674,7 +645,7 @@ class KPInformationViewController: KPViewController {
                 } else {
                     weSelf.informationHeaderButtonBar.rateButton.numberValue = 0
                     weSelf.informationHeaderButtonBar.rateButton.selected = false
-                    weSelf.rateInformationView.infoSupplementLabel.text = "0 人已評分"
+                    weSelf.rateInformationView.infoSupplementLabel.text = "尚無評分"
                 }
             }
         }
@@ -683,7 +654,7 @@ class KPInformationViewController: KPViewController {
     
     func updateCommentsLayout(_ commentCount: Int) {
         if commentCount == 0 {
-            self.commentInformationView.infoSupplementLabel.text = "0 人已留言"
+            self.commentInformationView.infoSupplementLabel.text = "尚無留言"
             self.commentInformationView.isEmpty = true
             self.commentInformationView.actions = [Action(title:"我要評論",
                                                           style:.normal,
@@ -784,7 +755,7 @@ class KPInformationViewController: KPViewController {
                     }
                 } else {
                     weSelf.commentInfoView.comments = [KPCommentModel]()
-                    weSelf.commentInformationView.infoSupplementLabel.text = "0 人已留言"
+                    weSelf.commentInformationView.infoSupplementLabel.text = "尚無留言"
                     weSelf.commentInfoView.tableView.layoutIfNeeded()
                     weSelf.commentInfoView.tableViewHeightConstraint.constant = 64
                     weSelf.commentInformationView.setNeedsLayout()
@@ -838,9 +809,41 @@ class KPInformationViewController: KPViewController {
     
     // MARK: UI Event
     
+    func photoUpload() {
+        if KPUserManager.sharedManager.currentUser == nil {
+            KPPopoverView.popoverLoginView()
+        } else {
+            let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            controller.addAction(UIAlertAction(title: "從相簿中選擇", style: .default) { (action) in
+                let imagePickerController = UIImagePickerController()
+                imagePickerController.allowsEditing = false
+                imagePickerController.sourceType = .photoLibrary
+                imagePickerController.delegate = self
+                //                                                        imagePickerController.mediaTypes = [kUTTypeImage as String]
+                self.present(imagePickerController, animated: true, completion: nil)
+            })
+            controller.addAction(UIAlertAction(title: "開啟相機", style: .default) { (action) in
+                let imagePickerController = UIImagePickerController()
+                imagePickerController.allowsEditing = false
+                imagePickerController.sourceType = .camera
+                imagePickerController.delegate = self
+                //                                                        imagePickerController.mediaTypes = [kUTTypeImage as String]
+                self.present(imagePickerController, animated: true, completion: nil)
+            })
+            
+            controller.addAction(UIAlertAction(title: "取消", style: .cancel) { (action) in
+                
+            })
+            
+            self.present(controller, animated: true) {
+                
+            }
+        }
+    }
+    
     func handleMorePhotoButtonOnTapped() {
         if self.displayPhotoInformations.count == 0 {
-            KPPopoverView.popoverUnsupportedView()
+            photoUpload()
         } else {
             let galleryController = KPPhotoGalleryViewController()
             galleryController.displayedPhotoInformations = self.displayPhotoInformations
@@ -1053,9 +1056,10 @@ extension KPInformationViewController: SKPhotoBrowserDelegate {
 
 extension KPInformationViewController : UIImagePickerControllerDelegate {
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController,
+                               didFinishPickingMediaWithInfo info: [String : Any]) {
         
-        self.dismiss(animated: true) { 
+        picker.dismiss(animated: true) {
             if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
                 KPServiceHandler.sharedHandler.uploadPhotos([image],
                                                             self.informationDataModel.identifier, { (success) in
