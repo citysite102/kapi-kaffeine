@@ -540,7 +540,6 @@ class KPServiceHandler {
                         user.intro,
                         user.email,
                         .put).then { result -> Void in
-                            print(result)
                             KPUserManager.sharedManager.storeUserInformation()
                             loadingView.state = result["result"].boolValue ? .successed : .failed
                             completion?(result["result"].boolValue)
@@ -670,15 +669,23 @@ class KPServiceHandler {
     
     // MARK: Photo Upload
     func uploadPhoto(_ cafeID: String?,
-                     _ photoData: Data!) {
+                     _ photoData: Data!,
+                     _ completion: ((Bool) -> Swift.Void)? = nil) {
+        
+        let loadingView = KPLoadingView(("上傳中...", "上傳成功", "上傳失敗"))
+        UIApplication.shared.KPTopViewController().view.addSubview(loadingView)
+        loadingView.addConstraints(fromStringArray: ["V:|[$self]|",
+                                                     "H:|[$self]|"])
+        
         let photoUploadRequest = KPPhotoUploadRequest()
         photoUploadRequest.perform(cafeID ?? (currentDisplayModel?.identifier)!,
                                    nil,
                                    photoData).then {[unowned self] result -> Void in
-                                    
-                                print("Result:\(result)")
+                                    loadingView.state = result["result"].boolValue ? .successed : .failed
+                                    completion?(result["result"].boolValue)
             }.catch { (error) in
                 print("Error:\(error)")
+                completion?(false)
         }
     }
     
@@ -686,8 +693,12 @@ class KPServiceHandler {
                       _ cafeID: String,
                       _ completion: ((_ success: Bool) -> Void)?) {
         
-        var uploadRequests = [Promise<(RawJsonResult)>]()
+        let loadingView = KPLoadingView(("上傳中...", "上傳成功", "上傳失敗"))
+        UIApplication.shared.KPTopViewController().view.addSubview(loadingView)
+        loadingView.addConstraints(fromStringArray: ["V:|[$self]|",
+                                                     "H:|[$self]|"])
         
+        var uploadRequests = [Promise<(RawJsonResult)>]()
         for photo in photos {
             let uploadPhotoRequest = KPPhotoUploadRequest()
             let uploadPromise = uploadPhotoRequest.perform(cafeID, nil, photo.jpegData(withQuality: 1))
@@ -704,10 +715,15 @@ class KPServiceHandler {
         
         join(uploadRequests).then { (results) -> Void in
             print("results : \(results)")
+            
+            let notification = Notification.Name(KPNotification.information.photoInformation)
+            NotificationCenter.default.post(name: notification, object: nil)
+            
+            loadingView.state = .successed
             completion?(true)
-            }.catch { (error) in
-                print("error : \(error)")
-                completion?(false)
+        }.catch { (error) in
+            print("error : \(error)")
+            completion?(false)
         }
         
     }

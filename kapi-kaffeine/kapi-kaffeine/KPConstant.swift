@@ -13,7 +13,8 @@ import BenzeneFoundation
 struct KPNotification {
     struct information {
         static let commentInformation = "commentInformation"
-        static let rateInformation = "rateInformation"
+        static let rateInformation =    "rateInformation"
+        static let photoInformation =   "photoInformation"
     }
 }
 
