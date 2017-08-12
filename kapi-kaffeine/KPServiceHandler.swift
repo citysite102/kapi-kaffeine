@@ -420,7 +420,6 @@ class KPServiceHandler {
         let getRatingRequest = KPGetRatingRequest()
         getRatingRequest.perform((currentDisplayModel?.identifier)!).then { result -> Void in
             if let ratingResult = result["data"].dictionaryObject {
-                print("Get Photo Result:\(ratingResult)")
                 completion?(true, KPRateDataModel(JSON: ratingResult))
             } else {
                 completion?(false, nil)
@@ -498,7 +497,6 @@ class KPServiceHandler {
         
         let getPhotoRequest = KPGetPhotoRequest()
         getPhotoRequest.perform((currentDisplayModel?.identifier)!).then { result -> Void in
-            print("Get Photo Result:\(result)")
             completion?(true, result["data"].arrayObject as? [String])
         }.catch { (error) in
             completion?(false, nil)

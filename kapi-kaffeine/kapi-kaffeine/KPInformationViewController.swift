@@ -273,11 +273,6 @@ class KPInformationViewController: KPViewController {
         informationHeaderView = KPInformationHeaderView(frame: CGRect.zero)
         informationHeaderView.delegate = self
         informationHeaderView.informationController = self
-        
-        informationHeaderView.morePhotoButton.setTitle(informationDataModel.photoCount == 0 ?
-            "上傳\n照片" :
-            "\(informationDataModel.photoCount!) \n張照片"
-            , for: .normal)
         informationHeaderView.scoreLabel.text = String(format: "%.1f", informationDataModel.averageRate?.doubleValue ?? 0.0)
         informationHeaderView.facebookButton.isHidden = !(informationDataModel.facebookURL != nil)
         if let photoURL = informationDataModel.covers?["google_l"] {
@@ -486,14 +481,6 @@ class KPInformationViewController: KPViewController {
         photoInformationView.emptyLabel.text = "目前尚無照片，成為第一個上傳的人吧:D"
         photoInformationView.infoView = photoInfoView
         photoInformationView.infoTitleLabel.text = "店家照片"
-        
-        if let photoCount = informationDataModel.photoCount {
-            photoInformationView.infoSupplementLabel.text = "\(photoCount) 張照片"
-            photoInformationView.isEmpty = (photoCount == 0)
-        } else {
-            photoInformationView.infoSupplementLabel.text = "0 張照片"
-            photoInformationView.isEmpty = true
-        }
         scrollContainer.addSubview(photoInformationView)
         photoInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                               "V:[$view0]-24-[$self]"],
@@ -503,7 +490,7 @@ class KPInformationViewController: KPViewController {
                                                color:KPColorPalette.KPMainColor.mainColor!,
                                                icon:(R.image.icon_camera()?.withRenderingMode( .alwaysTemplate))!,
                                                handler:{[unowned self] (infoView) -> () in
-                                                if KPUserManager.sharedManager.currentUser == nil       {
+                                                if KPUserManager.sharedManager.currentUser == nil {
                                                     KPPopoverView.popoverLoginView()
                                                 } else {
                                                     let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -590,41 +577,9 @@ class KPInformationViewController: KPViewController {
         
         dataLoading = true
         
-        // 取得 Comment 資料
         refreshComments()
-        
-        // 取得 Rating 資料
         refreshRatings()
-        
-        // 取得 Photo 資料
-        KPServiceHandler.sharedHandler.getPhotos {
-            [weak self] (successed, photos) in
-            if let weSelf = self {
-                if successed == true && photos != nil {
-                    var index: Int = 0
-                    for urlString in photos! {
-                        if let url = URL(string: urlString) {
-                            weSelf.displayPhotoInformations.append(PhotoInformation(title: "",
-                                                                                    imageURL: url,
-                                                                                    index: index))
-                            index += 1
-                        }
-                    }
-                    if weSelf.displayPhotoInformations.count == 0 {
-                        
-                        let transition = CATransition()
-                        transition.duration = 0.2
-                        transition.type = kCATransitionFade
-                        weSelf.informationHeaderView.shopPhoto.image = R.image.image_noImage()
-                        weSelf.informationHeaderView.shopPhoto.isUserInteractionEnabled = false
-                        weSelf.informationHeaderView.shopPhoto.layer.add(transition, forKey: nil)
-                        weSelf.informationHeaderView.morePhotoButton.titleLabel?.text = "上傳\n照片"
-                    }
-                } else {
-                    // Handle Error
-                }
-            }
-        }
+        refreshPhoto()
         
         KPServiceHandler.sharedHandler.fetchStoreInformation(informationDataModel.identifier) {
             [weak self] (result) in
@@ -637,6 +592,48 @@ class KPInformationViewController: KPViewController {
         }
     }
     
+    func refreshPhoto() {
+        KPServiceHandler.sharedHandler.getPhotos {
+            [weak self] (successed, photos) in
+            if let weSelf = self {
+                if successed == true && photos != nil {
+                    var index: Int = 0
+                    var photoInformations: [PhotoInformation] = []
+                    for urlString in photos! {
+                        if let url = URL(string: urlString) {
+                            photoInformations.append(PhotoInformation(title: "",
+                                                                     imageURL: url,
+                                                                     index: index))
+                            index += 1
+                        }
+                    }
+                    weSelf.displayPhotoInformations = photoInformations
+                    
+                    if weSelf.displayPhotoInformations.count == 0 {
+                        let transition = CATransition()
+                        transition.duration = 0.2
+                        transition.type = kCATransitionFade
+                        weSelf.informationHeaderView.shopPhoto.image = R.image.image_noImage()
+                        weSelf.informationHeaderView.shopPhoto.isUserInteractionEnabled = false
+                        weSelf.informationHeaderView.shopPhoto.layer.add(transition, forKey: nil)
+                        weSelf.informationHeaderView.morePhotoButton.titleLabel?.text = "上傳\n照片"
+                        weSelf.photoInformationView.infoSupplementLabel.text = "0 張照片"
+                        weSelf.photoInformationView.isEmpty = true
+                        weSelf.informationHeaderView.morePhotoButton.setTitle("上傳\n照片", for: .normal)
+                    } else {
+                        weSelf.photoInformationView.infoSupplementLabel.text = "\(weSelf.displayPhotoInformations.count) 張照片"
+                        weSelf.photoInformationView.isEmpty = false
+                        weSelf.informationHeaderView.morePhotoButton.setTitle("\(weSelf.displayPhotoInformations.count) \n張照片",
+                            for: .normal)
+                        
+                    }
+                } else {
+                    // Handle Error
+                }
+            }
+        }
+        
+    }
     
     func refreshRatings() {
         

@@ -10,46 +10,50 @@ import UIKit
 
 class KPShopPhotoInfoView: UIView {
 
-    static let KPShopPhotoInfoViewCellReuseIdentifier = "cell";
+    static let KPShopPhotoInfoViewCellReuseIdentifier = "cell"
     weak open var informationController: KPInformationViewController?
     
-    var collectionView:UICollectionView!;
-    var collectionLayout:UICollectionViewFlowLayout!;
+    var collectionView:UICollectionView!
+    var collectionLayout:UICollectionViewFlowLayout!
     
     var displayPhotoInformations: [PhotoInformation] = [] {
         didSet {
-            if displayPhotoInformations.count > 0 {
-                self.collectionView.addConstraint(forHeight: 112)
+            DispatchQueue.main.async {
+                if self.displayPhotoInformations.count > 0 {
+                    self.collectionView.removeAllRelatedConstraintsInSuperView()
+                    self.collectionView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"])
+                    self.collectionView.addConstraint(forHeight: 112)
+                }
+                //            collectionView.layoutIfNeeded()
+                self.collectionView.reloadData()
             }
-//            collectionView.layoutIfNeeded()
-            collectionView.reloadData()
         }
     }
     
     override init(frame: CGRect) {
-        super.init(frame: frame);
+        super.init(frame: frame)
         
-        self.backgroundColor = KPColorPalette.KPTextColor.whiteColor;
+        self.backgroundColor = KPColorPalette.KPTextColor.whiteColor
         
         //Collection view
-        self.collectionLayout = UICollectionViewFlowLayout();
-        self.collectionLayout.scrollDirection = .horizontal;
-        self.collectionLayout.sectionInset = UIEdgeInsetsMake(8, 8, 8, 8);
-        self.collectionLayout.minimumLineSpacing = 8.0;
-        self.collectionLayout.itemSize = CGSize(width: 96, height: 96);
+        self.collectionLayout = UICollectionViewFlowLayout()
+        self.collectionLayout.scrollDirection = .horizontal
+        self.collectionLayout.sectionInset = UIEdgeInsetsMake(8, 8, 8, 8)
+        self.collectionLayout.minimumLineSpacing = 8.0
+        self.collectionLayout.itemSize = CGSize(width: 96, height: 96)
         
-        self.collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.collectionLayout);
-        self.collectionView.backgroundColor = UIColor.clear;
-        self.collectionView.dataSource = self;
-        self.collectionView.delegate = self;
-        self.collectionView.showsHorizontalScrollIndicator = false;
-        self.collectionView.showsVerticalScrollIndicator = false;
-        self.collectionView.delaysContentTouches = true;
+        self.collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.collectionLayout)
+        self.collectionView.backgroundColor = UIColor.clear
+        self.collectionView.dataSource = self
+        self.collectionView.delegate = self
+        self.collectionView.showsHorizontalScrollIndicator = false
+        self.collectionView.showsVerticalScrollIndicator = false
+        self.collectionView.delaysContentTouches = true
         self.collectionView.register(KPShopPhotoCell.self,
                                      forCellWithReuseIdentifier: KPShopPhotoInfoView.KPShopPhotoInfoViewCellReuseIdentifier)
         
-        self.addSubview(self.collectionView);
-        self.collectionView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"]);
+        self.addSubview(self.collectionView)
+        self.collectionView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"])
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -61,16 +65,16 @@ class KPShopPhotoInfoView: UIView {
 extension KPShopPhotoInfoView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1;
+        return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return displayPhotoInformations.count;
+        return displayPhotoInformations.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: KPShopPhotoInfoView.KPShopPhotoInfoViewCellReuseIdentifier,
-                                                      for: indexPath) as! KPShopPhotoCell;
+                                                      for: indexPath) as! KPShopPhotoCell
         cell.shopPhoto.af_setImage(withURL: displayPhotoInformations[indexPath.row].imageURL,
                                    placeholderImage: UIImage(color: KPColorPalette.KPBackgroundColor.grayColor_level6!),
                                    filter: nil,
@@ -87,7 +91,7 @@ extension KPShopPhotoInfoView: UICollectionViewDelegate, UICollectionViewDataSou
                                     }
         })
         
-        return cell;
+        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
