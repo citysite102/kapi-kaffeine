@@ -10,8 +10,8 @@ import UIKit
 
 class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, KPTabViewDelegate {
 
-    var dismissButton: UIButton!
-    var editButton: UIButton!
+    var dismissButton: KPBounceButton!
+    var editButton: KPBounceButton!
     
     let tabTitles: [(title: String, key: String)] = [("已收藏", "favorites"),
                                                      ("我去過", "visits"),
@@ -85,84 +85,86 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor.white
-        self.navigationController?.navigationBar.topItem?.title = "個人資料"
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(),
+        view.backgroundColor = UIColor.white
+        navigationController?.navigationBar.topItem?.title = "個人資料"
+        navigationController?.navigationBar.setBackgroundImage(UIImage(),
                                                                     for: .default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.shadowImage = UIImage()
 
-        self.dismissButton = UIButton(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
-        self.dismissButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4)
-        self.dismissButton.setImage(R.image.icon_close(),
-                                    for: .normal)
-        self.dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor
-        self.dismissButton.addTarget(self,
-                                     action: #selector(KPUserProfileViewController.handleDismissButtonOnTapped),
-                                     for: .touchUpInside)
+        dismissButton = KPBounceButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30),
+                                       image: R.image.icon_close()!)
+        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(6, 7, 8, 7)
+        dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor
+        dismissButton.addTarget(self,
+                                action: #selector(KPInformationViewController.handleDismissButtonOnTapped),
+                                for: .touchUpInside)
         
-        self.editButton = UIButton(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
-        self.editButton.contentEdgeInsets = UIEdgeInsetsMake(1, 1, 1, 1)
-        self.editButton.setImage(R.image.icon_edit(),
-                                 for: .normal)
-        self.editButton.tintColor = KPColorPalette.KPTextColor.whiteColor
-        self.editButton.addTarget(self,
-                                  action: #selector(KPUserProfileViewController.handleEditButtonOnTapped),
-                                  for: .touchUpInside)
-
         
-        let barItem = UIBarButtonItem(customView: self.dismissButton)
-        let rightBarItem = UIBarButtonItem(customView: self.editButton)
+        let barItem = UIBarButtonItem(customView: dismissButton)
         let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace,
                                              target: nil,
                                              action: nil)
-        negativeSpacer.width = -8
-        self.navigationItem.leftBarButtonItems = [negativeSpacer, barItem]
-        self.navigationItem.rightBarButtonItems = [negativeSpacer, rightBarItem]
+        negativeSpacer.width = -7
+        navigationItem.leftBarButtonItems = [negativeSpacer, barItem]
         
-        self.dismissButton.addTarget(self,
-                                     action: #selector(KPInformationViewController.handleDismissButtonOnTapped),
-                                     for: .touchUpInside)
-        
-        self.view.addSubview(self.userContainer)
-        self.userContainer.addConstraints(fromStringArray: ["V:|[$self]", "H:|[$self]|"])
-        
-        self.userContainer.addSubview(self.userPhoto)
-        self.userPhoto.addConstraints(fromStringArray: ["H:|-16-[$self(64)]",
-                                                        "V:|-16-[$self(64)]-16-|"])
-        
-        self.userContainer.addSubview(self.userNameLabel)
-        self.userNameLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]",
-                                                            "V:|-16-[$self]"],
-                                          views: [self.userPhoto])
-        
-        self.userContainer.addSubview(self.userCityLabel)
-        self.userCityLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]",
-                                                            "V:[$view1]-2-[$self]"],
-                                          views: [self.userPhoto,
-                                                  self.userNameLabel])
-        
-        self.userContainer.addSubview(self.userBioLabel)
-        self.userBioLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self(150)]",
-                                                            "V:[$view1]-4-[$self]"],
-                                          views: [self.userPhoto,
-                                                  self.userCityLabel])
+
+        editButton = KPBounceButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30),
+                                       image: R.image.icon_edit()!)
+        editButton.contentEdgeInsets = UIEdgeInsetsMake(5, 5, 5, 5)
+        editButton.tintColor = KPColorPalette.KPTextColor.whiteColor
+        editButton.addTarget(self,
+                             action: #selector(KPUserProfileViewController.handleEditButtonOnTapped),
+                             for: .touchUpInside)
         
         
-        tabView = KPTabView(titles: self.tabTitles.map {$0.title})
+        let rightBarItem = UIBarButtonItem(customView: editButton)
+        navigationItem.leftBarButtonItems = [negativeSpacer, barItem]
+        navigationItem.rightBarButtonItems = [negativeSpacer, rightBarItem]
+        
+        view.addSubview(userContainer)
+        userContainer.addConstraints(fromStringArray: ["V:|[$self]",
+                                                       "H:|[$self]|"])
+        
+        userContainer.addSubview(userPhoto)
+        userPhoto.addConstraints(fromStringArray: ["H:|-16-[$self(64)]",
+                                                   "V:|-16-[$self(64)]-16-|"])
+        
+        userContainer.addSubview(userNameLabel)
+        userNameLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]",
+                                                       "V:|-16-[$self]"],
+                                          views: [userPhoto])
+        
+        userContainer.addSubview(userCityLabel)
+        userCityLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]",
+                                                       "V:[$view1]-2-[$self]"],
+                                          views: [userPhoto,
+                                                  userNameLabel])
+        
+        userContainer.addSubview(userBioLabel)
+        userBioLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self(150)]",
+                                                      "V:[$view1]-4-[$self]"],
+                                          views: [userPhoto,
+                                                  userCityLabel])
+        
+        
+        tabView = KPTabView(titles: tabTitles.map {$0.title})
         tabView.delegate = self
         view.addSubview(tabView)
-        tabView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$view0][$self(44)]"], views: [userContainer])
+        tabView.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                 "V:[$view0][$self(44)]"], views: [userContainer])
         
         scrollView = UIScrollView()
         scrollView.delegate = self
         scrollView.isPagingEnabled = true
         scrollView.showsHorizontalScrollIndicator = false
         view.addSubview(scrollView)
-        scrollView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$view0][$self]|"], views: [tabView])
+        scrollView.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                    "V:[$view0][$self]|"], views: [tabView])
 
         scrollContainer = UIView()
         scrollView.addSubview(scrollContainer)
-        scrollContainer.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"])
+        scrollContainer.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                         "V:|[$self]|"])
         scrollContainer.addConstraintForHavingSameHeight(with: scrollView)
         
         for (index, _) in tabTitles.enumerated() {
@@ -213,7 +215,7 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
             userCityLabel.text = user.defaultLocation ?? ""
             userBioLabel.text = user.intro ?? ""
             
-            for (index, tabTitle) in self.tabTitles.enumerated() {
+            for (index, tabTitle) in tabTitles.enumerated() {
                 
                 if let displayModel = KPUserManager.sharedManager.currentUser?.value(forKey: tabTitle.key) as? [KPDataModel] {
                     tabView.tabs[index].setTitle("\(tabTitle.title) \(displayModel.count)", for: .normal)

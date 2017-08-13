@@ -23,7 +23,7 @@ class KPAboutUsViewController: KPViewController {
         var relative: [relateiveLink]?
     }
     
-    var dismissButton:KPBounceButton!
+    var dismissButton: KPBounceButton!
     
     var scrollView: UIScrollView!
     var containerView: UIView!

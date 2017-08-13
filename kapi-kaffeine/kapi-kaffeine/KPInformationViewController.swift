@@ -381,7 +381,17 @@ class KPInformationViewController: KPViewController {
 
         locationInformationView = KPInformationSharedInfoView()
         locationInformationView.infoTitleLabel.text = "位置訊息"
-        locationInformationView.infoSupplementLabel.text = "距離 \(String(format: "%.1f", informationDataModel.distanceInMeter ?? 0))m"
+        if let distanceInMeter = informationDataModel.distanceInMeter {
+            var distance = distanceInMeter
+            var unit = "m"
+            if distance > 1000 {
+                unit = "km"
+                distance = distance/1000
+            }
+            locationInformationView.infoSupplementLabel.text = String(format: "%.1f%@", distance, unit)
+        } else {
+            locationInformationView.infoSupplementLabel.text = "你身在神秘的星球"
+        }
         locationInformationView.actions = [
             Action(title:"街景模式",
                    style:.normal,
