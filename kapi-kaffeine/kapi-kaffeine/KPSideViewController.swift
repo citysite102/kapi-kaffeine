@@ -212,6 +212,8 @@ class KPSideViewController: KPViewController {
         userInfoButton.addConstraints(fromStringArray: ["H:|-16-[$self(88)]",
                                                         "V:[$view0]-8-[$self(24)]"],
                                       views: [userNameLabel])
+        userInfoButton.addTarget(self, action: #selector(handleUserInfoButtonOnTapped),
+                                 for: .touchUpInside)
         
         userExpView = KPExpView()
 //        userContainer.addSubview(userExpView)
@@ -335,6 +337,13 @@ class KPSideViewController: KPViewController {
                                 scrollPosition: .bottom)
             defaultSelectedIndexPath = nil
         }
+        
+        if animated {
+            mainController.statusBarShouldBeHidden = true
+            UIView.animate(withDuration: 0.15) {
+                self.mainController.setNeedsStatusBarAppearanceUpdate()
+            }
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -382,8 +391,11 @@ class KPSideViewController: KPViewController {
         }
     }
     
+    func handleUserInfoButtonOnTapped() {
+        handleUserContainerOnTapped(nil)
+    }
     
-    func handleUserContainerOnTapped(_ sender: UITapGestureRecognizer) {
+    func handleUserContainerOnTapped(_ sender: UITapGestureRecognizer?) {
         if KPUserManager.sharedManager.currentUser == nil {
             let controller = KPModalViewController()
             controller.edgeInset = UIEdgeInsets(top: 0,
