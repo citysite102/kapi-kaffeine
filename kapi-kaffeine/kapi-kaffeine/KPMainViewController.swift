@@ -528,6 +528,7 @@ class KPMainViewController: KPViewController {
         searchHeaderView.searchTagView.deselectAllSearchTag()
         mainListViewController?.state = .loading
         mainMapViewController?.state = .loading
+        mainMapViewController?.showAllButton.isHidden = true
         mainListViewController?.tableView.reloadData()
         KPFilter.sharedFilter.restoreDefaultSettings()
         searchHeaderView.searchTagView.preferenceHintButton.hintCount = 0
