@@ -28,6 +28,7 @@ class KPMainViewController: KPViewController {
     var searchHeaderView: KPSearchHeaderView!
     var statusContainer: UIView!
     var statusLabel: UILabel!
+    var loadingIndicator: UIActivityIndicatorView!
     var reFetchTapGesture: UITapGestureRecognizer!
     var sideBarController: KPSideViewController!
     var opacityView: UIView!
@@ -113,7 +114,7 @@ class KPMainViewController: KPViewController {
         
         statusContainer = UIView()
         statusContainer.isHidden = true
-        statusContainer.alpha = 0
+        statusContainer.alpha = 0.0
         statusContainer.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level3
         view.addSubview(statusContainer)
         statusContainer.addConstraints(fromStringArray: ["H:|[$self]|",
@@ -130,6 +131,11 @@ class KPMainViewController: KPViewController {
         statusContainer.addSubview(statusLabel)
         statusLabel.addConstraints(fromStringArray: ["V:|-8-[$self]-8-|",
                                                      "H:|-16-[$self]-16-|"])
+        
+        loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: .white)
+        statusContainer.addSubview(loadingIndicator)
+        loadingIndicator.addConstraintForCenterAligningToSuperview(in: .vertical)
+        loadingIndicator.addConstraintForCenterAligningToSuperview(in: .horizontal)
         
         reFetchTapGesture = UITapGestureRecognizer(target: self,
                                                  action: #selector(handleStatusContainerOnTapped(_:)))
@@ -177,8 +183,23 @@ class KPMainViewController: KPViewController {
             if reachabilityManager?.isReachable ?? false {
                 self.mainListViewController?.state =
                     self.mainListViewController?.state == .normal ? .normal : .loading
+                self.mainMapViewController?.state =
+                    self.mainMapViewController?.state == .normal ? .normal : .loading
+                UIView.animate(withDuration: 0.15,
+                               animations: { 
+                                self.statusContainer.alpha = 0.0
+                }, completion: { (_) in
+                    self.statusContainer.isHidden = true
+                })
             } else {
                 self.mainListViewController?.state = .noInternet
+                self.mainMapViewController?.state = .noInternet
+                self.searchHeaderView.searchTagView.isUserInteractionEnabled = false
+                self.statusContainer.isHidden = false
+                UIView.animate(withDuration: 0.15,
+                               animations: {
+                                self.statusContainer.alpha = 1.0
+                })
             }
         }
         
@@ -220,7 +241,6 @@ class KPMainViewController: KPViewController {
                                                 right: 0);
             let introController = KPIntroViewController()
             self.present(introController, animated: true, completion: nil)
-            
         } else {
             if KPUserManager.sharedManager.currentUser == nil &&
                 !UserDefaults.standard.bool(forKey: AppConstant.cancelLogInKey) {
@@ -236,7 +256,6 @@ class KPMainViewController: KPViewController {
     }
     
     
-    
     // MARK: Data
     
     func fetchRemoteData() {
@@ -247,41 +266,42 @@ class KPMainViewController: KPViewController {
                                                        nil) {
                                                         (results: [KPDataModel]?,
                                                         error: NetworkRequestError?) in
-                                                        if results != nil {
-                                                            self.setDisplayDataModel(KPFilter.sharedFilter.currentFilterCafeDatas(), false)
-                                                        } else if let requestError = error {
-                                                            switch requestError {
-                                                            case .noNetworkConnection:
-                                                                self.mainListViewController?.state = .noInternet
-                                                                self.mainMapViewController?.state = .noInternet
-                                                            default:
-                                                                self.mainMapViewController?.state = .failed
-                                                                self.statusContainer.isHidden = false
-                                                                UIView.animate(withDuration: 0.15,
-                                                                               animations: { 
-                                                                                self.statusContainer.alpha = 1.0
-                                                                })
-                                                                print("錯誤萬歲: \(requestError)")
+                                                        DispatchQueue.main.async {
+                                                            if results != nil {
+                                                                self.setDisplayDataModel(KPFilter.sharedFilter.currentFilterCafeDatas(),
+                                                                                         false)
+                                                                self.updateStatusContainerState(true, nil)
+                                                            } else if let requestError = error {
+                                                                self.updateStatusContainerState(false, nil)
+                                                                switch requestError {
+                                                                case .noNetworkConnection:
+                                                                    self.mainListViewController?.state = .noInternet
+                                                                    self.mainMapViewController?.state = .noInternet
+                                                                default:
+                                                                    self.mainMapViewController?.state = .failed
+                                                                    print("錯誤萬歲: \(requestError)")
+                                                                }
                                                             }
                                                         }
                                                         
-                                                        KPServiceHandler.sharedHandler.fetchRemoteData() { (results: [KPDataModel]?,
+                                                        KPServiceHandler.sharedHandler.fetchRemoteData() {
+                                                            (results: [KPDataModel]?,
                                                             error: NetworkRequestError?) in
-                                                            if results != nil {
-                                                                self.setDisplayDataModel(KPFilter.sharedFilter.currentFilterCafeDatas(), false)
-                                                            } else if let requestError = error {
-                                                                switch requestError {
-                                                                    case .noNetworkConnection:
-                                                                        self.mainListViewController?.state = .noInternet
-                                                                        self.mainMapViewController?.state = .noInternet
-                                                                    default:
-                                                                        self.mainMapViewController?.state = .failed
-                                                                        self.statusContainer.isHidden = false
-                                                                        UIView.animate(withDuration: 0.15,
-                                                                                       animations: {
-                                                                                        self.statusContainer.alpha = 1.0
-                                                                        })
-                                                                        print("錯誤萬歲: \(requestError)")
+                                                            DispatchQueue.main.async {
+                                                                if results != nil {
+                                                                    self.setDisplayDataModel(KPFilter.sharedFilter.currentFilterCafeDatas(),
+                                                                                             false)
+                                                                    self.updateStatusContainerState(true, nil)
+                                                                } else if let requestError = error {
+                                                                    self.updateStatusContainerState(false, nil)
+                                                                    switch requestError {
+                                                                        case .noNetworkConnection:
+                                                                            self.mainListViewController?.state = .noInternet
+                                                                            self.mainMapViewController?.state = .noInternet
+                                                                        default:
+                                                                            self.mainMapViewController?.state = .failed
+                                                                            print("錯誤萬歲: \(requestError)")
+                                                                    }
                                                                 }
                                                             }
                                                         }
@@ -296,20 +316,48 @@ class KPMainViewController: KPViewController {
     
     func reFetchRemoteData() {
         mainListViewController?.state = .loading
+        mainListViewController?.tableView.reloadData()
         mainMapViewController?.state = .loading
         fetchRemoteData()
     }
     
     // MARK: UI Event
     
+    func updateStatusContainerState(_ hidden: Bool,
+                                    _ completion: (() -> Swift.Void)?) {
+        if hidden {
+            self.statusLabel.alpha = 1.0
+            self.searchHeaderView.searchTagView.isUserInteractionEnabled = true
+            self.loadingIndicator.stopAnimating()
+            UIView.animate(withDuration: 0.15,
+                           animations: { 
+                            self.statusContainer.alpha = 0.0
+            }, completion: { (_) in
+                self.statusContainer.isHidden = true
+                completion?()
+            })
+        } else {
+            self.searchHeaderView.searchTagView.isUserInteractionEnabled = false
+            self.statusContainer.isHidden = false
+            self.statusLabel.alpha = 1.0
+            self.loadingIndicator.stopAnimating()
+            UIView.animate(withDuration: 0.15,
+                           animations: {
+                            self.statusContainer.alpha = 1.0
+            }, completion: { (_) in
+                self.statusContainer.isUserInteractionEnabled = true
+                completion?()
+            })
+        }
+    }
+    
     func handleStatusContainerOnTapped(_ sender: UITapGestureRecognizer) {
         statusContainer.isUserInteractionEnabled = false
-        UIView.animate(withDuration: 0.15,
+        UIView.animate(withDuration: 0.1,
                        animations: { 
-                        self.statusContainer.alpha = 0
+                        self.statusLabel.alpha = 0.0
         }) { (_) in
-            self.statusContainer.isHidden = true
-            self.statusContainer.isUserInteractionEnabled = true
+            self.loadingIndicator.startAnimating()
             self.reFetchRemoteData()
         }
     }

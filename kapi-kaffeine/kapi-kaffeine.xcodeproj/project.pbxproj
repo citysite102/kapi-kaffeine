@@ -1430,7 +1430,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/bin/sh \"${PODS_ROOT}/BaltoSDK/BaltoSDK.framework/run.sh\"";
+			shellScript = "#/bin/sh \"${PODS_ROOT}/BaltoSDK/BaltoSDK.framework/run.sh\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 

@@ -146,7 +146,7 @@ class KPMainListViewController:
         statusErrorDescriptionLabel.setText(text: "被你發現了！網路好像有點問題耶...",
                                             lineSpacing: 3.0)
         
-        statusErrorButton = KPLoadingButton(image: nil, title: "讓我再試試")
+        statusErrorButton = KPLoadingButton(image: nil, title: "再試試")
         statusErrorButton.setTitleColor(UIColor.white, for: .normal)
         statusErrorButton.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.mainColor!),
                                         for: .normal)
