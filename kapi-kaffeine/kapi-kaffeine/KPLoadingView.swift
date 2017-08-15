@@ -220,13 +220,14 @@ class KPLoadingView: UIView {
     
     
     func dismiss() {
-        UIView.animate(withDuration: 0.15,
+        UIView.animate(withDuration: 0.12,
                        delay: 0,
                        options: .curveEaseOut,
                        animations: { 
                         self.container.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
         }) { (_) in
             self.removeFromSuperview()
+            self.container.transform = .identity
         }
     }
     

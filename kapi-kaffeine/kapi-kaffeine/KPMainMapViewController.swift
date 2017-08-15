@@ -55,7 +55,7 @@ GMUClusterRendererDelegate {
                     if loadingView.superview != nil {
                         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1,
                                                       execute: {
-                                                        self.loadingView.removeFromSuperview()
+                                                        self.loadingView.dismiss()
                         })
                     }
                 } else if state == .loading {
@@ -67,7 +67,7 @@ GMUClusterRendererDelegate {
                         loadingView.state = .failed
                         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2.0,
                                                       execute: {
-                                                        self.loadingView.removeFromSuperview()
+                                                        self.loadingView.dismiss()
                         })
                     }
                 } else if state == .noInternet {
@@ -75,7 +75,7 @@ GMUClusterRendererDelegate {
                         loadingView.state = .failed
                         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2.0,
                                                       execute: {
-                                                        self.loadingView.removeFromSuperview()
+                                                        self.loadingView.dismiss()
                         })
                     }
                 }

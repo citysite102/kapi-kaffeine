@@ -130,6 +130,13 @@ class KPInformationViewController: KPViewController {
     var animatedHeaderConstraint: NSLayoutConstraint!
     var navBarFixBound: CGRect!
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if KPPopoverView.sharedPopoverView.contentView != nil {
+            KPPopoverView.sharedPopoverView.dismiss()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
@@ -887,7 +894,6 @@ class KPInformationViewController: KPViewController {
     }
     
     func handleDismissButtonOnTapped() {
-        
         if self.navigationController?.viewControllers.first is KPUserProfileViewController {
             self.navigationController?.popViewController(animated: true)
         } else {

@@ -210,7 +210,7 @@ class KPServiceHandler {
                                     loadingView.state = addResult ? .successed : .failed
                                     DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2.5,
                                                                   execute: {
-                                                                    loadingView.removeFromSuperview()
+                                                                    loadingView.dismiss()
                                     })
                                     
                                     if let cafeID = result["data"]["cafe_id"].string {
@@ -224,7 +224,7 @@ class KPServiceHandler {
                                     loadingView.state = .failed
                                     DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
                                                                   execute: {
-                                                                    loadingView.removeFromSuperview()
+                                                                    loadingView.dismiss()
                                     })
                                     completion?(false)
                                 }
@@ -233,7 +233,7 @@ class KPServiceHandler {
                 print(error)
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
                                               execute: {
-                                                loadingView.removeFromSuperview()
+                                                loadingView.dismiss()
                 })
                 completion?(false)
                 

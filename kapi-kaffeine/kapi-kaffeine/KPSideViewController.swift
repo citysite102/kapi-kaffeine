@@ -230,7 +230,7 @@ class KPSideViewController: KPViewController {
         loginButton.clipsToBounds = true
         userContainer.addSubview(loginButton)
         loginButton.addConstraints(fromStringArray: ["H:|-16-[$self(64)]",
-                                                     "V:[$self(26)]-12-|"])
+                                                     "V:[$self(26)]-32-|"])
         
         tapGesture = UITapGestureRecognizer(target: self, action: #selector(KPSideViewController.handleUserContainerOnTapped(_:)))
         userContainer.addGestureRecognizer(tapGesture)
@@ -338,7 +338,7 @@ class KPSideViewController: KPViewController {
             defaultSelectedIndexPath = nil
         }
         
-        if animated {
+        if animated && self.navigationController?.view.isHidden == false {
             mainController.statusBarShouldBeHidden = true
             UIView.animate(withDuration: 0.15) {
                 self.mainController.setNeedsStatusBarAppearanceUpdate()
@@ -382,12 +382,14 @@ class KPSideViewController: KPViewController {
             userNameLabel.isHidden = true
             userExpView.isHidden = true
             loginButton.isHidden = false
+            userInfoButton.isHidden = true
         } else {
             userPhoto.af_setImage(withURL: URL(string: user!.photoURL ?? "")!)
             userNameLabel.text = user!.displayName ?? "你的名字"
             userNameLabel.isHidden = false
             userExpView.isHidden = false
             loginButton.isHidden = true
+            userInfoButton.isHidden = false
         }
     }
     

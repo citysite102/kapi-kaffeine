@@ -72,8 +72,9 @@ class KPPopoverView: UIView {
     
     func popoverContent() {
         
-        let rootView = UIApplication.shared.topView
-        rootView?.addSubview(self)
+        UIApplication.shared.keyWindow?.addSubview(self)
+//        let rootView = UIApplication.shared.topView
+//        rootView?.addSubview(self)
         
         containerView.alpha = 1.0
         containerView.isHidden = false
