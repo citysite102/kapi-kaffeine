@@ -27,7 +27,7 @@ class KPAllRatingViewController: KPViewController {
                                     image: R.image.icon_back()!)
         backButton.tintColor = KPColorPalette.KPTextColor.whiteColor
         backButton.addTarget(self,
-                             action: #selector(KPAllCommentController.handleBackButtonOnTapped),
+                             action: #selector(KPAllRatingViewController.handleBackButtonOnTapped),
                              for: .touchUpInside)
         let barItem = UIBarButtonItem(customView: backButton)
         

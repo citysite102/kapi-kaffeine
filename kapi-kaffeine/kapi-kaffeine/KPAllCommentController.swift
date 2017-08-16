@@ -11,13 +11,14 @@ import UIKit
 class KPAllCommentController: KPViewController {
 
     static let KPAllCommentControllerCellReuseIdentifier = "cell"
+    weak open var informationController: KPInformationViewController?
     
     var shownCellIndex: [Int] = [Int]()
     var animated: Bool = true
     var tableView: UITableView!
     var backButton: KPBounceButton!
     var editButton: KPBounceButton!
-    var comments: [KPCommentModel]!
+    var comments: [KPCommentModel?] = [KPCommentModel?]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,6 +52,7 @@ class KPAllCommentController: KPViewController {
         navigationItem.rightBarButtonItems = [negativeSpacer, rightbarItem]
         
         tableView = UITableView()
+//        tableView.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -74,10 +76,19 @@ class KPAllCommentController: KPViewController {
     }
     
     func handleEditButtonOnTapped() {
-        let newCommentViewController = KPNewCommentController()
-        navigationController?.pushViewController(viewController: newCommentViewController,
-                                                      animated: true,
-                                                      completion: {})
+        
+        if let comment = self.informationController?.hasCommentDataModel {
+            let editCommentViewController = KPEditCommentController()
+            editCommentViewController.defaultCommentModel =  comment
+            self.informationController?.navigationController?.pushViewController(viewController: editCommentViewController,
+                                                                                 animated: true,
+                                                                                 completion: {})
+        } else {
+            let newCommentViewController = KPNewCommentController()
+            navigationController?.pushViewController(viewController: newCommentViewController,
+                                                          animated: true,
+                                                          completion: {})
+        }
     }
     
     /*
@@ -100,40 +111,41 @@ extension KPAllCommentController: UITableViewDelegate, UITableViewDataSource {
                                                  for: indexPath) as! KPShopCommentCell
         cell.selectionStyle = .none
         
-        let comment = comments[indexPath.row]
-        cell.userNameLabel.text = comment.displayName
-        cell.timeHintLabel.text = comment.createdModifiedContent
-        cell.userCommentLabel.setText(text: comment.content, lineSpacing: 2.4)
-        cell.commentID = comment.commentID
-        
-        if let photoURL = comment.photoURL {
-            cell.userPicture.af_setImage(withURL: URL(string: photoURL)!,
-                                         placeholderImage: UIImage(color: KPColorPalette.KPBackgroundColor.mainColor_light_10!),
-                                         filter: nil,
-                                         progress: nil,
-                                         progressQueue: DispatchQueue.global(),
-                                         imageTransition: UIImageView.ImageTransition.crossDissolve(0.2),
-                                         runImageTransitionIfCached: true,
-                                         completion: { response in
-                                            if let responseImage = response.result.value {
-                                                cell.userPicture.image = responseImage
-                                            }
-            })
-        }
-        
-        if let likeUser = comment.likes?.first(where: { $0.memberID == KPUserManager.sharedManager.currentUser?.identifier}) {
-            if likeUser.isLike == 0 {
-                cell.voteDownButton.buttonSelected = true
-            } else {
-                cell.voteUpButton.buttonSelected = true
+        if let comment = comments[indexPath.row] {
+            cell.userNameLabel.text = comment.displayName
+            cell.timeHintLabel.text = comment.createdModifiedContent
+            cell.userCommentLabel.setText(text: comment.content, lineSpacing: 2.4)
+            cell.commentID = comment.commentID
+            
+            if let photoURL = comment.photoURL {
+                cell.userPicture.af_setImage(withURL: URL(string: photoURL)!,
+                                             placeholderImage: UIImage(color: KPColorPalette.KPBackgroundColor.mainColor_light_10!),
+                                             filter: nil,
+                                             progress: nil,
+                                             progressQueue: DispatchQueue.global(),
+                                             imageTransition: UIImageView.ImageTransition.crossDissolve(0.2),
+                                             runImageTransitionIfCached: true,
+                                             completion: { response in
+                                                if let responseImage = response.result.value {
+                                                    cell.userPicture.image = responseImage
+                                                }
+                })
             }
-        }
-        
-        cell.voteUpCount = comment.likeCount ?? 0
-        cell.voteDownCount = comment.dislikeCount ?? 0
-        
-        if indexPath.row == comments.count-1 {
-            cell.separator.isHidden = true
+            
+            if let likeUser = comment.likes?.first(where: { $0.memberID == KPUserManager.sharedManager.currentUser?.identifier}) {
+                if likeUser.isLike == 0 {
+                    cell.voteDownButton.buttonSelected = true
+                } else {
+                    cell.voteUpButton.buttonSelected = true
+                }
+            }
+            
+            cell.voteUpCount = comment.likeCount ?? 0
+            cell.voteDownCount = comment.dislikeCount ?? 0
+            
+            if indexPath.row == comments.count-1 {
+                cell.separator.isHidden = true
+            }
         }
         
         return cell
@@ -149,6 +161,21 @@ extension KPAllCommentController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let comment = comments[indexPath.row] {
+            if comment.memberID == KPUserManager.sharedManager.currentUser?.identifier {
+                let editCommentViewController = KPEditCommentController()
+                editCommentViewController.defaultCommentModel = comment
+                navigationController?.pushViewController(viewController: editCommentViewController,
+                                                         animated: true,
+                                                         completion: {})
+                if let indexPath = tableView.indexPathForSelectedRow {
+                    tableView.deselectRow(at: indexPath, animated: false)
+                }
+            }
+        }
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {

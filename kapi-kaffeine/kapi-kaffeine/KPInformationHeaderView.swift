@@ -81,7 +81,7 @@ class KPInformationHeaderButtonBar: UIView {
                                                     info: "%d人已收藏",
                                                     defaultInfo: "無人收藏",
                                                     icon: R.image.icon_collect()!,
-                                                    handler: { (headerButton) -> () in
+                                                    handler: { [unowned self] (headerButton) -> () in
                                                         if headerButton.selected == false {
                                                             headerButton.selected = true
                                                             headerButton.numberValue = headerButton.numberValue + 1
@@ -107,7 +107,7 @@ class KPInformationHeaderButtonBar: UIView {
                                                   info: "%d人來過",
                                                   defaultInfo: "無人打卡",
                                                   icon: R.image.icon_pin()!,
-                                                  handler: { (headerButton) -> () in
+                                                  handler: { [unowned self] (headerButton) -> () in
                                                     
                                                     if headerButton.selected == false {
                                                         if let visitedMembers = self.informationDataModel.visitedMembers {
@@ -161,7 +161,7 @@ class KPInformationHeaderButtonBar: UIView {
                                                  info: "%d人已評分",
                                                  defaultInfo: "尚無評分",
                                                  icon: R.image.icon_star()!,
-                                                 handler: { (headerButton) -> () in
+                                                 handler: { [unowned self] (headerButton) -> () in
                                                     let controller = KPModalViewController()
                                                     controller.edgeInset = UIEdgeInsets(top: UIDevice().isSuperCompact ? 32 : 72,
                                                                                         left: 0,
@@ -181,7 +181,7 @@ class KPInformationHeaderButtonBar: UIView {
                                                     info: "%d人已評論",
                                                     defaultInfo: "尚無評論",
                                                     icon: R.image.icon_comment()!,
-                                                    handler: { (headerButton) -> () in
+                                                    handler: { [unowned self] (headerButton) -> () in
                                                         let newCommentViewController = KPNewCommentController()
                                                         if self.informationController != nil {
                                                             
@@ -190,11 +190,20 @@ class KPInformationHeaderButtonBar: UIView {
                                                                     newCommentViewController.hideRatingViews = true
                                                                 }
                                                             }
-                                                            
-                                                            self.informationController?.navigationController?.pushViewController(viewController:
-                                                                newCommentViewController,
-                                                                                                                                 animated: true,
-                                                                                                                                 completion: {})
+
+                                                            if let comment = self.informationController?.hasCommentDataModel {
+                                                                let editCommentViewController = KPEditCommentController()
+                                                                editCommentViewController.defaultCommentModel =  comment
+                                                                self.informationController?.navigationController?.pushViewController(viewController: editCommentViewController,
+                                                                                                                                     animated: true,
+                                                                                                                                     completion: {})
+                                                            } else {
+                                                                self.informationController?.navigationController?.pushViewController(viewController:
+                                                                    newCommentViewController,
+                                                                                                                                     animated: true,
+                                                                                                                                     completion: {})
+
+                                                            }
                                                         }
         })
         

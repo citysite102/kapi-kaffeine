@@ -113,7 +113,7 @@ class KPSearchConditionViewController: KPViewController {
     
     func titleLabel(_ title: String) -> UILabel {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14.0)
+        label.font = UIFont.boldSystemFont(ofSize: 14.0)
         label.textColor = KPColorPalette.KPTextColor.mainColor
         label.text = title
         return label
@@ -144,7 +144,7 @@ class KPSearchConditionViewController: KPViewController {
                                 for: .touchUpInside)
         
         
-        let barRightItem = UIBarButtonItem(title: "回復預設",
+        let barRightItem = UIBarButtonItem(title: "清除",
                                            style: UIBarButtonItemStyle.plain,
                                            target: self,
                                            action: #selector(handleRestoreButtonOnTapped))

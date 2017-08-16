@@ -32,6 +32,7 @@
 		7734634D1ED74C5400EA78F0 /* KPDataRateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7734634C1ED74C5400EA78F0 /* KPDataRateModel.swift */; };
 		7734634F1ED74FE000EA78F0 /* KPServiceHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7734634E1ED74FE000EA78F0 /* KPServiceHandler.swift */; };
 		773463521ED7547B00EA78F0 /* KPLoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773463511ED7547B00EA78F0 /* KPLoginRequest.swift */; };
+		773844FA1F4468A100B4BBD5 /* KPEditCommentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773844F91F4468A100B4BBD5 /* KPEditCommentController.swift */; };
 		773E24871F1E5A1600C7C094 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 773E24861F1E5A1600C7C094 /* Security.framework */; };
 		773E24891F1E5A4200C7C094 /* KeychainItemWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773E24881F1E5A4200C7C094 /* KeychainItemWrapper.swift */; };
 		77409A481F337829005488F8 /* KPSearchTagButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77409A471F337829005488F8 /* KPSearchTagButtonCell.swift */; };
@@ -242,6 +243,7 @@
 		7734634C1ED74C5400EA78F0 /* KPDataRateModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPDataRateModel.swift; sourceTree = "<group>"; };
 		7734634E1ED74FE000EA78F0 /* KPServiceHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPServiceHandler.swift; sourceTree = "<group>"; };
 		773463511ED7547B00EA78F0 /* KPLoginRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPLoginRequest.swift; sourceTree = "<group>"; };
+		773844F91F4468A100B4BBD5 /* KPEditCommentController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPEditCommentController.swift; sourceTree = "<group>"; };
 		773E24861F1E5A1600C7C094 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		773E24881F1E5A4200C7C094 /* KeychainItemWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainItemWrapper.swift; sourceTree = "<group>"; };
 		77409A471F337829005488F8 /* KPSearchTagButtonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSearchTagButtonCell.swift; sourceTree = "<group>"; };
@@ -598,6 +600,7 @@
 				77C0E1091E9D493400398852 /* KPShopCommentInfoView.swift */,
 				774208EC1EA5B97300C78A00 /* KPShopCommentCell.swift */,
 				77C594AA1ECB170000118947 /* KPNewCommentController.swift */,
+				773844F91F4468A100B4BBD5 /* KPEditCommentController.swift */,
 				77C594AC1ECB171A00118947 /* KPAllCommentController.swift */,
 			);
 			name = Comment;
@@ -1503,6 +1506,7 @@
 				77E495631EC9EEF0003B7EBC /* KPTimePicker.swift in Sources */,
 				774208F11EA5F04B00C78A00 /* KPShopPhotoCell.swift in Sources */,
 				77B66FA31EA91488008B6652 /* KPCityTableViewCell.swift in Sources */,
+				773844FA1F4468A100B4BBD5 /* KPEditCommentController.swift in Sources */,
 				77952EF51EFAEE110012445F /* KPSearchViewHeaderLabel.swift in Sources */,
 				7734634D1ED74C5400EA78F0 /* KPDataRateModel.swift in Sources */,
 				77C594AF1ECB6E3100118947 /* KPLoadingViewController_v1.swift in Sources */,
