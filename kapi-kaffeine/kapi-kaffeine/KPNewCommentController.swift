@@ -15,6 +15,7 @@ class KPNewCommentController: KPViewController {
     var scrollContainer: UIScrollView!
     var dismissButton: KPBounceButton!
     var sendButton: UIButton!
+    var sendButtonItem: UIBarButtonItem!
     var textFieldContainerView: UIView!
     var inputTextView: UITextView!
     var placeholderLabel: UILabel!
@@ -77,14 +78,13 @@ class KPNewCommentController: KPViewController {
         
         sendButton = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 24));
         sendButton.setTitle("發佈", for: .normal)
-        sendButton.isEnabled = false
         sendButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         sendButton.tintColor = KPColorPalette.KPTextColor.mainColor;
         sendButton.addTarget(self,
                              action: #selector(KPNewCommentController.handleSendButtonOnTapped),
                              for: .touchUpInside)
         
-        let rightbarItem = UIBarButtonItem(customView: sendButton);
+        sendButtonItem = UIBarButtonItem(customView: sendButton);
         let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace,
                                              target: nil,
                                              action: nil)
@@ -93,11 +93,12 @@ class KPNewCommentController: KPViewController {
                                                   target: nil,
                                                   action: nil)
 
-        rightbarItem.isEnabled = false
+        sendButtonItem.isEnabled = false
+        sendButtonItem.customView?.alpha = 0.5
         negativeSpacer.width = -5
         rightNegativeSpacer.width = -8
         navigationItem.leftBarButtonItems = [negativeSpacer, barItem]
-        navigationItem.rightBarButtonItems = [rightNegativeSpacer, rightbarItem]
+        navigationItem.rightBarButtonItems = [rightNegativeSpacer, sendButtonItem]
         
         
         scrollContainer = UIScrollView()
@@ -208,7 +209,12 @@ class KPNewCommentController: KPViewController {
         view.addGestureRecognizer(tapGesture)
         
     }
-
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        sendButtonItem.customView!.alpha = inputTextView.text.characters.count > 0 ? 1.0 : 0.6
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -311,7 +317,8 @@ extension KPNewCommentController: UITextViewDelegate {
         let newLength = oldLength - rangeLength + replacementLength
         let returnKey = (text as NSString).range(of: "\n").location == NSNotFound
         
-        sendButton.isEnabled = newLength > 0
+        sendButtonItem.isEnabled = newLength > 0
+        sendButtonItem.customView!.alpha = newLength > 0 ? 1.0 : 0.6
         
         if !returnKey {
             textView.resignFirstResponder()

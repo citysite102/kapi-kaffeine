@@ -133,6 +133,13 @@ class KPEditCommentController: KPViewController {
         remainingTextLabel.setText(text: "\(defaultCommentModel?.content?.characters.count ?? 0)/\(KPEditCommentController.commentMaximumTextLength)")
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        sendButton.alpha = (inputTextView.text.characters.count > 0 &&
+            inputTextView.text != defaultCommentModel?.content) ?
+                1.0 : 0.6
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         inputTextView.becomeFirstResponder()
@@ -224,6 +231,10 @@ extension KPEditCommentController: UITextViewDelegate {
         let returnKey = (text as NSString).range(of: "\n").location == NSNotFound
         
         sendButton.isEnabled = newLength > 0
+        
+        sendButton.alpha = (newLength > 0 &&
+            inputTextView.text != defaultCommentModel?.content) ?
+                1.0 : 0.6
         
         if !returnKey {
             textView.resignFirstResponder()
