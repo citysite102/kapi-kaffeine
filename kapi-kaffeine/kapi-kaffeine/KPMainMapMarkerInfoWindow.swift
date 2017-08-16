@@ -64,7 +64,7 @@ class KPMainMapMarkerInfoWindow: UIView {
 
         let scoreLabel = UILabel()
         scoreLabel.font = UIFont.boldSystemFont(ofSize: 12)
-        scoreLabel.text = "\(dataModel.averageRate ?? NSNumber(value: 0.0))"
+        scoreLabel.text = String(format: "%.1f", dataModel.averageRate?.doubleValue ?? 0.0)
         scoreLabel.textColor = KPColorPalette.KPTextColor.mainColor
         
         self.contentView.addSubview(imageView)
