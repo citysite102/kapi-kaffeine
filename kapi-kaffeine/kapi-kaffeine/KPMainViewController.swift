@@ -259,31 +259,31 @@ class KPMainViewController: KPViewController {
     // MARK: Data
     
     func fetchRemoteData() {
-        KPServiceHandler.sharedHandler.fetchRemoteData(2,
-                                                       1,
-                                                       nil,
-                                                       nil,
-                                                       nil) {
-                                                        (results: [KPDataModel]?,
-                                                        error: NetworkRequestError?) in
-                                                        DispatchQueue.main.async {
-                                                            if results != nil {
-                                                                self.setDisplayDataModel(KPFilter.sharedFilter.currentFilterCafeDatas(),
-                                                                                         false)
-                                                                self.updateStatusContainerState(true, nil)
-                                                            } else if let requestError = error {
-                                                                self.updateStatusContainerState(false, nil)
-                                                                switch requestError {
-                                                                case .noNetworkConnection:
-                                                                    self.mainListViewController?.state = .noInternet
-                                                                    self.mainMapViewController?.state = .noInternet
-                                                                default:
-                                                                    self.mainMapViewController?.state = .failed
-                                                                    print("錯誤萬歲: \(requestError)")
-                                                                }
-                                                            }
-                                                        }
-                                                        
+//        KPServiceHandler.sharedHandler.fetchRemoteData(2,
+//                                                       1,
+//                                                       nil,
+//                                                       nil,
+//                                                       nil) {
+//                                                        (results: [KPDataModel]?,
+//                                                        error: NetworkRequestError?) in
+//                                                        DispatchQueue.main.async {
+//                                                            if results != nil {
+//                                                                self.setDisplayDataModel(KPFilter.sharedFilter.currentFilterCafeDatas(),
+//                                                                                         false)
+//                                                                self.updateStatusContainerState(true, nil)
+//                                                            } else if let requestError = error {
+//                                                                self.updateStatusContainerState(false, nil)
+//                                                                switch requestError {
+//                                                                case .noNetworkConnection:
+//                                                                    self.mainListViewController?.state = .noInternet
+//                                                                    self.mainMapViewController?.state = .noInternet
+//                                                                default:
+//                                                                    self.mainMapViewController?.state = .failed
+//                                                                    print("錯誤萬歲: \(requestError)")
+//                                                                }
+//                                                            }
+//                                                        }
+        
                                                         KPServiceHandler.sharedHandler.fetchRemoteData() {
                                                             (results: [KPDataModel]?,
                                                             error: NetworkRequestError?) in
@@ -305,7 +305,7 @@ class KPMainViewController: KPViewController {
                                                                 }
                                                             }
                                                         }
-        }
+//        }
         
         if (KPUserManager.sharedManager.currentUser != nil) {
             KPUserManager.sharedManager.updateUserInformation()

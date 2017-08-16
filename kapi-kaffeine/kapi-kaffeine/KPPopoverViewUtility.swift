@@ -44,6 +44,16 @@ extension KPPopoverView {
         KPPopoverView.sharedPopoverView.popoverContent()
     }
     
+    class func popoverInReviewNotification() {
+        let content = KPNotificationPopoverContent()
+        content.titleLabel.text = "審核中"
+        content.descriptionLabel.setText(text: "感謝你偉大的貢獻，你的照片正經過我們仔細的審核中(⊙‿⊙)！（約3-4天）",
+                                         lineSpacing: 3.6)
+        content.confirmButton.setTitle("感謝你們", for: .normal)
+        KPPopoverView.sharedPopoverView.contentView = content
+        KPPopoverView.sharedPopoverView.popoverContent()
+    }
+    
     class func popoverVisitedView(_ photos: [String]!,
                                   _ confirmAction: ((_ content: KPVisitedPopoverContent) -> Swift.Void)?) {
         
