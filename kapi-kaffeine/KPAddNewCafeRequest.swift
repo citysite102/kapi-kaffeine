@@ -28,13 +28,27 @@ class KPAddNewCafeRequest: NetworkRequest {
         parameters["socket"] = socket
         
         var rates = [String: NSNumber]()
-        rates["wifi"] = NSNumber(value: wifi)
-        rates["quiet"] = NSNumber(value: quiet)
-        rates["cheap"] = NSNumber(value: cheap)
-        rates["seat"] = NSNumber(value: seat)
-        rates["tasty"] = NSNumber(value: tasty)
-        rates["food"] = NSNumber(value: food)
-        rates["music"] = NSNumber(value: music)
+        if wifi != 0 {
+            rates["wifi"] = NSNumber(value: wifi)
+        }
+        if quiet != 0 {
+            rates["quiet"] = NSNumber(value: quiet)
+        }
+        if cheap != 0 {
+            rates["cheap"] = NSNumber(value: cheap)
+        }
+        if seat != 0 {
+            rates["seat"] = NSNumber(value: seat)
+        }
+        if tasty != 0 {
+            rates["tasty"] = NSNumber(value: tasty)
+        }
+        if food != 0 {
+            rates["food"] = NSNumber(value: food)
+        }
+        if music != 0 {
+            rates["music"] = NSNumber(value: music)
+        }
         
         parameters["rates"] = rates
         
@@ -82,7 +96,7 @@ class KPAddNewCafeRequest: NetworkRequest {
     
     private var tags: [KPDataTagModel]?
     
-    private var business_hour: [String: String]?
+    private var business_hour: [String: String]!
     
     private var price_average: Int?
     
