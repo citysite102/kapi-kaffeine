@@ -42,13 +42,27 @@ class KPNewRatingRequest: NetworkRequest {
         var parameters = [String : Any]()
         parameters["member_id"] = KPUserManager.sharedManager.currentUser?.identifier
         parameters["cafe_id"] = cafeID
-        parameters["wifi"] = wifi
-        parameters["seat"] = seat
-        parameters["food"] = food
-        parameters["quiet"] = quiet
-        parameters["tasty"] = tasty
-        parameters["cheap"] = cheap
-        parameters["music"] = music
+        if wifi?.intValue ?? 0 != 0 {
+            parameters["wifi"] = wifi
+        }
+        if seat?.intValue ?? 0 != 0 {
+            parameters["seat"] = seat
+        }
+        if food?.intValue ?? 0 != 0 {
+            parameters["food"] = food
+        }
+        if quiet?.intValue ?? 0 != 0 {
+            parameters["quiet"] = quiet
+        }
+        if tasty?.intValue ?? 0 != 0 {
+            parameters["tasty"] = tasty
+        }
+        if cheap?.intValue ?? 0 != 0 {
+            parameters["cheap"] = cheap
+        }
+        if music?.intValue ?? 0 != 0 {
+            parameters["music"] = music
+        }
         
         return parameters
     }
