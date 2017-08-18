@@ -57,7 +57,14 @@ class KPAddNewCafeRequest: NetworkRequest {
         parameters["latitude"] = latitude
         parameters["longitude"] = longtitude
         
-        parameters["tags"] = tags?.toJSONString()
+//        parameters["tags"] = tags?.toJSONString()
+        
+        var tagStrings = [String]()
+        for tag in tags ?? [] {
+            tagStrings.append(tag.identifier)
+        }
+        parameters["tags"] = tagStrings
+        
         
         parameters["business_hours"] = business_hour
         

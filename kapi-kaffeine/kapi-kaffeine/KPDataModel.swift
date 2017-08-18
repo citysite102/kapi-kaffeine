@@ -115,7 +115,7 @@ class KPDataModel: NSObject, Mappable, GMUClusterItem, Comparable {
         facebookID          <-    map["fb_id"]
         mrt                 <-    map["mrt"]
         businessHour        <-    (map["business_hours"], businessHourTransform)
-        tags                <-    map["tags"]
+        tags                <-    (map["tags"], tagsTransform)
         averageRate         <-    map["rate_average"]
         rateCount           <-    map["rate_count"]
         commentCount        <-    map["comment_count"]
@@ -135,6 +135,31 @@ class KPDataModel: NSObject, Mappable, GMUClusterItem, Comparable {
         wifiAverage         <-    map["wifi_avg"]
         priceAverage        <-    map["price_average"]
     }
+    
+//    let tagsModelTransform = TransformOf(fromJSON: { (value: [String]?) -> [KPDataTagModel]? in
+//        
+//        return []
+//    }) { (tags: [KPDataTagModel]?) -> [String]? in
+//        return []
+//    }
+    
+    let tagsTransform = TransformOf<[KPDataTagModel], [String]>(fromJSON: {(tagIdentifiers: [String]?) -> [KPDataTagModel]? in
+        
+        var tags = [KPDataTagModel]()
+        if let tagids = tagIdentifiers {
+            for identifier in tagids {
+                for tag in KPServiceHandler.sharedHandler.featureTags {
+                    if identifier == tag.identifier {
+                        tags.append(tag)
+                        break
+                    }
+                }
+            }
+        }
+        return tags
+    }, toJSON: { (value: [KPDataTagModel]?) -> [String]? in
+        return []
+    });
     
     let businessHourTransform = TransformOf<KPDataBusinessHourModel,
         [String: String]>(fromJSON: { (value: [String: String]?) -> KPDataBusinessHourModel? in
