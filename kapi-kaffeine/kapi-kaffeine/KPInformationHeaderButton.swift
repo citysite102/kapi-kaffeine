@@ -123,7 +123,11 @@ class KPInformationHeaderButton: UIView {
         if KPUserManager.sharedManager.currentUser == nil {
             KPPopoverView.popoverLoginView()
         } else {
-            handler(self)
+            if KPServiceHandler.sharedHandler.isCurrentShopClosed {
+                KPPopoverView.popoverClosedView()
+            } else {
+                handler(self)
+            }
         }
     }
     

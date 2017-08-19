@@ -88,10 +88,10 @@ class KPInformationHeaderButtonBar: UIView {
                                                             KPServiceHandler.sharedHandler.addFavoriteCafe()
                                                         } else {
                                                             DispatchQueue.main.asyncAfter(deadline: .now()) {
-                                                                KPPopoverView.popoverDefaultStyleContent(
+                                                                KPPopoverView.popoverDefaultStyleContent (
                                                                     "移除收藏",
-                                                                    "確定要改變心意要移除收藏這間優秀到不行再優秀的咖啡廳嗎？",
-                                                                    "我慚愧", { (content) in
+                                                                    "確定要改變心意移除收藏這間優秀到不行再優秀的咖啡廳嗎？",
+                                                                    "我確定", { (content) in
                                                                         content.popoverView.dismiss()
                                                                         headerButton.selected = false
                                                                         headerButton.numberValue = headerButton.numberValue - 1
@@ -134,8 +134,8 @@ class KPInformationHeaderButtonBar: UIView {
                                                         DispatchQueue.main.asyncAfter(deadline: .now()) {
                                                             KPPopoverView.popoverDefaultStyleContent(
                                                                 "移除打卡",
-                                                                "確定要改變心意說你沒有去過這間超級無敵優秀的咖啡廳嗎？",
-                                                                "我慚愧", { (content) in
+                                                                "確定要改變心意說你沒有去過這間超棒的咖啡廳嗎？",
+                                                                "我確定", { (content) in
                                                                     content.popoverView.dismiss()
                                                                     headerButton.selected = false
                                                                     headerButton.numberValue = headerButton.numberValue - 1

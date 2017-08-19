@@ -26,6 +26,10 @@ class KPServiceHandler {
             CLSLogv("Information Controller with cafe id: %@", getVaList([currentDisplayModel?.identifier ?? ""]))
         }
     }
+    var isCurrentShopClosed: Bool! {
+        return self.currentDisplayModel?.closed ?? false
+    }
+    
     var currentCity: String?
     var relatedDisplayModel: [KPDataModel]? {
         if currentDisplayModel != nil {

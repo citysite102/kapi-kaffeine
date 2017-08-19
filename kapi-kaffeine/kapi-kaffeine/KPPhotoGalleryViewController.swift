@@ -136,30 +136,34 @@ class KPPhotoGalleryViewController: KPViewController {
         if KPUserManager.sharedManager.currentUser == nil {
             KPPopoverView.popoverLoginView()
         } else {
-            let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            controller.addAction(UIAlertAction(title: "從相簿中選擇", style: .default) { (action) in
-                let imagePickerController = UIImagePickerController()
-                imagePickerController.allowsEditing = false
-                imagePickerController.sourceType = .photoLibrary
-                imagePickerController.delegate = self
-                //                                                        imagePickerController.mediaTypes = [kUTTypeImage as String]
-                self.present(imagePickerController, animated: true, completion: nil)
-            })
-            controller.addAction(UIAlertAction(title: "開啟相機", style: .default) { (action) in
-                let imagePickerController = UIImagePickerController()
-                imagePickerController.allowsEditing = false
-                imagePickerController.sourceType = .camera
-                imagePickerController.delegate = self
-                //                                                        imagePickerController.mediaTypes = [kUTTypeImage as String]
-                self.present(imagePickerController, animated: true, completion: nil)
-            })
-            
-            controller.addAction(UIAlertAction(title: "取消", style: .cancel) { (action) in
+            if KPServiceHandler.sharedHandler.isCurrentShopClosed {
+                KPPopoverView.popoverClosedView()
+            } else {
+                let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+                controller.addAction(UIAlertAction(title: "從相簿中選擇", style: .default) { (action) in
+                    let imagePickerController = UIImagePickerController()
+                    imagePickerController.allowsEditing = false
+                    imagePickerController.sourceType = .photoLibrary
+                    imagePickerController.delegate = self
+                    //                                                        imagePickerController.mediaTypes = [kUTTypeImage as String]
+                    self.present(imagePickerController, animated: true, completion: nil)
+                })
+                controller.addAction(UIAlertAction(title: "開啟相機", style: .default) { (action) in
+                    let imagePickerController = UIImagePickerController()
+                    imagePickerController.allowsEditing = false
+                    imagePickerController.sourceType = .camera
+                    imagePickerController.delegate = self
+                    //                                                        imagePickerController.mediaTypes = [kUTTypeImage as String]
+                    self.present(imagePickerController, animated: true, completion: nil)
+                })
                 
-            })
-            
-            self.present(controller, animated: true) {
+                controller.addAction(UIAlertAction(title: "取消", style: .cancel) { (action) in
+                    
+                })
                 
+                self.present(controller, animated: true) {
+                    
+                }
             }
         }
     }

@@ -211,7 +211,9 @@ class KPShopInfoView: UIView {
                                                  in: .vertical)
         
         
-        titleLabel.setText(text: informationDataModel.name,
+        titleLabel.setText(text: informationDataModel.closed ?
+            ("(已歇業) " + informationDataModel.name) :
+            informationDataModel.name,
                            lineSpacing: 3.0)
         locationLabel.setText(text: informationDataModel.address ?? "暫無資料",
                               lineSpacing: 3.0)

@@ -43,6 +43,16 @@ extension KPPopoverView {
         KPPopoverView.sharedPopoverView.contentView = content
         KPPopoverView.sharedPopoverView.popoverContent()
     }
+
+    class func popoverClosedView() {
+        let content = KPNotificationPopoverContent()
+        content.titleLabel.text = "店家已歇業"
+        content.descriptionLabel.setText(text: "感謝您的支持，但是由於該店家已停止營業，因此我們將停止支援收藏評論等進階功能 இдஇ",
+                                         lineSpacing: 3.6)
+        content.confirmButton.setTitle("我難過", for: .normal)
+        KPPopoverView.sharedPopoverView.contentView = content
+        KPPopoverView.sharedPopoverView.popoverContent()
+    }
     
     class func popoverInReviewNotification() {
         let content = KPNotificationPopoverContent()

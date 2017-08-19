@@ -42,6 +42,7 @@ class KPDataModel: NSObject, Mappable, GMUClusterItem, Comparable {
     var mrt: String?
     var businessHour: KPDataBusinessHourModel?
     var tags: [KPDataTagModel]?
+    var closed: Bool = false
     
     var averageRate: NSNumber? = 0
     var rateCount: NSNumber? = 0

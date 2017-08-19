@@ -20,6 +20,27 @@ class KPMainListTableViewCell: UITableViewCell {
                 self.featureContainer.featureContents = self.dataModel.featureContents
                 self.scoreLabel.score = String(format: "%.1f",
                                                (self.dataModel.averageRate?.doubleValue) ?? 0)
+                
+                if self.dataModel.closed {
+                    self.shopNameLabel.text = "(已歇業) " + (self.dataModel.name ?? "未命名")
+                    self.shopStatusLabel.textColor = KPColorPalette.KPTextColor.grayColor_level5
+                    self.shopStatusHint.backgroundColor = KPColorPalette.KPTextColor.grayColor_level5
+                    self.shopStatusLabel.text = "已歇業"
+                } else {
+                    if self.dataModel.businessHour != nil {
+                        let shopStatus = self.dataModel.businessHour!.shopStatus
+                        self.shopStatusLabel.textColor = KPColorPalette.KPTextColor.grayColor
+                        self.shopStatusLabel.text = shopStatus.status
+                        self.shopStatusHint.backgroundColor = shopStatus.isOpening ?
+                                KPColorPalette.KPShopStatusColor.opened :
+                                KPColorPalette.KPShopStatusColor.closed
+                    } else {
+                        self.shopStatusLabel.textColor = KPColorPalette.KPTextColor.grayColor_level5
+                        self.shopStatusHint.backgroundColor = KPColorPalette.KPTextColor.grayColor_level5
+                        self.shopStatusLabel.text = "暫無資料"
+                    }
+                }
+                
             }
 //            self.shopImageView.image = R.image.demo_6()
             if let photoURL = dataModel.covers?["google_s"] {
@@ -50,20 +71,6 @@ class KPMainListTableViewCell: UITableViewCell {
             }
             
             locationDidUpdate()
-            
-            if dataModel.businessHour != nil {
-                let shopStatus = dataModel.businessHour!.shopStatus
-                shopStatusLabel.textColor = KPColorPalette.KPTextColor.grayColor
-                shopStatusLabel.text = shopStatus.status
-                shopStatusHint.backgroundColor = shopStatus.isOpening ?
-                    KPColorPalette.KPShopStatusColor.opened :
-                    KPColorPalette.KPShopStatusColor.closed
-            } else {
-                shopStatusLabel.textColor = KPColorPalette.KPTextColor.grayColor_level5
-                shopStatusHint.backgroundColor = KPColorPalette.KPTextColor.grayColor_level5
-                shopStatusLabel.text = "暫無資料"
-            }
-            
         }
     }
     

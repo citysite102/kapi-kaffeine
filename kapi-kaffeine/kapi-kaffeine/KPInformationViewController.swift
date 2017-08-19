@@ -96,6 +96,7 @@ class KPInformationViewController: KPViewController {
     var photoInformationView: KPInformationSharedInfoView!
     var recommendInformationView: KPInformationSharedInfoView!
     var commentInfoView: KPShopCommentInfoView!
+    var informationView: KPShopInfoView!
     var loadingIndicator: UIActivityIndicatorView!
     var currentPhotoIndex: Int!
     lazy var loadingLabel: UILabel = {
@@ -363,7 +364,7 @@ class KPInformationViewController: KPViewController {
             informationHeaderButtonBar.addConstraint(from: "V:[$view0][$self]",
                                                      views:[informationHeaderView]).first as! NSLayoutConstraint
         
-        let informationView: KPShopInfoView = KPShopInfoView(informationDataModel)
+        informationView = KPShopInfoView(informationDataModel)
         informationView.otherTimeButton.addTarget(self,
                                                   action: #selector(KPInformationViewController.handleOtherTimeButtonOnTapped),
                                                   for: .touchUpInside)
@@ -456,19 +457,23 @@ class KPInformationViewController: KPViewController {
                                                     if KPUserManager.sharedManager.currentUser == nil {
                                                         KPPopoverView.popoverLoginView()
                                                     } else {
-                                                        let controller = KPModalViewController()
-                                                        controller.edgeInset = UIEdgeInsets(top: UIDevice().isSuperCompact ? 32 : 72,
-                                                                                                left: 0,
-                                                                                                bottom: 0,
-                                                                                                right: 0)
-                                                        controller.cornerRadius = [.topRight, .topLeft]
-                                                        let ratingViewController = KPRatingViewController()
-                                                            
-                                                        if weSelf.hasRatedDataModel != nil {
-                                                            ratingViewController.defaultRateModel = weSelf.hasRatedDataModel
+                                                        if KPServiceHandler.sharedHandler.isCurrentShopClosed {
+                                                            KPPopoverView.popoverClosedView()
+                                                        } else {
+                                                            let controller = KPModalViewController()
+                                                            controller.edgeInset = UIEdgeInsets(top: UIDevice().isSuperCompact ? 32 : 72,
+                                                                                                    left: 0,
+                                                                                                    bottom: 0,
+                                                                                                    right: 0)
+                                                            controller.cornerRadius = [.topRight, .topLeft]
+                                                            let ratingViewController = KPRatingViewController()
+                                                                
+                                                            if weSelf.hasRatedDataModel != nil {
+                                                                ratingViewController.defaultRateModel = weSelf.hasRatedDataModel
+                                                            }
+                                                            controller.contentController = ratingViewController
+                                                            controller.presentModalView()
                                                         }
-                                                        controller.contentController = ratingViewController
-                                                        controller.presentModalView()
                                                     }
                                                 }
         })]
@@ -687,8 +692,8 @@ class KPInformationViewController: KPViewController {
                                                                 if KPUserManager.sharedManager.currentUser == nil {
                                                                     KPPopoverView.popoverLoginView()
                                                                 } else {
-                                                                    if KPUserManager.sharedManager.currentUser == nil {
-                                                                        KPPopoverView.popoverLoginView()
+                                                                    if KPServiceHandler.sharedHandler.isCurrentShopClosed {
+                                                                        KPPopoverView.popoverClosedView()
                                                                     } else {
                                                                         let newCommentViewController = KPNewCommentController()
                                                                         if weSelf.hasRatedDataModel != nil {
@@ -730,11 +735,19 @@ class KPInformationViewController: KPViewController {
                            icon:(R.image.icon_comment()?.withRenderingMode(.alwaysTemplate))!,
                            handler:{ [weak self] (infoView) -> () in
                             if let weSelf = self {
-                            let editCommentViewController = KPEditCommentController()
-                                editCommentViewController.defaultCommentModel =  weSelf.hasCommentDataModel!
-                                weSelf.navigationController?.pushViewController(viewController: editCommentViewController,
-                                                                                                     animated: true,
-                                                                                                     completion: {})
+                                if KPUserManager.sharedManager.currentUser == nil {
+                                    KPPopoverView.popoverLoginView()
+                                } else {
+                                    if KPServiceHandler.sharedHandler.isCurrentShopClosed {
+                                        KPPopoverView.popoverClosedView()
+                                    } else {
+                                        let editCommentViewController = KPEditCommentController()
+                                            editCommentViewController.defaultCommentModel =  weSelf.hasCommentDataModel!
+                                            weSelf.navigationController?.pushViewController(viewController: editCommentViewController,
+                                                                                                                 animated: true,
+                                                                                                                 completion: {})
+                                    }
+                                }
                             }
                     })
                 ]
@@ -765,17 +778,21 @@ class KPInformationViewController: KPViewController {
                                 if KPUserManager.sharedManager.currentUser == nil {
                                     KPPopoverView.popoverLoginView()
                                 } else {
-                                    let newCommentViewController = KPNewCommentController()
-                                    
-                                    if weSelf.hasRatedDataModel != nil {
-                                        DispatchQueue.main.async {
-                                            newCommentViewController.hideRatingViews = true
+                                    if KPServiceHandler.sharedHandler.isCurrentShopClosed {
+                                        KPPopoverView.popoverClosedView()
+                                    } else {
+                                        let newCommentViewController = KPNewCommentController()
+                                        
+                                        if weSelf.hasRatedDataModel != nil {
+                                            DispatchQueue.main.async {
+                                                newCommentViewController.hideRatingViews = true
+                                            }
                                         }
+                                        
+                                        weSelf.navigationController?.pushViewController(viewController: newCommentViewController,
+                                                                                        animated: true,
+                                                                                        completion: {})
                                     }
-                                    
-                                    weSelf.navigationController?.pushViewController(viewController: newCommentViewController,
-                                                                                    animated: true,
-                                                                                    completion: {})
                                 }
                             }
                     })
@@ -881,30 +898,34 @@ class KPInformationViewController: KPViewController {
         if KPUserManager.sharedManager.currentUser == nil {
             KPPopoverView.popoverLoginView()
         } else {
-            let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            controller.addAction(UIAlertAction(title: "從相簿中選擇", style: .default) { (action) in
-                let imagePickerController = UIImagePickerController()
-                imagePickerController.allowsEditing = false
-                imagePickerController.sourceType = .photoLibrary
-                imagePickerController.delegate = self
-                //                                                        imagePickerController.mediaTypes = [kUTTypeImage as String]
-                self.present(imagePickerController, animated: true, completion: nil)
-            })
-            controller.addAction(UIAlertAction(title: "開啟相機", style: .default) { (action) in
-                let imagePickerController = UIImagePickerController()
-                imagePickerController.allowsEditing = false
-                imagePickerController.sourceType = .camera
-                imagePickerController.delegate = self
-                //                                                        imagePickerController.mediaTypes = [kUTTypeImage as String]
-                self.present(imagePickerController, animated: true, completion: nil)
-            })
-            
-            controller.addAction(UIAlertAction(title: "取消", style: .cancel) { (action) in
+            if KPServiceHandler.sharedHandler.isCurrentShopClosed {
+                KPPopoverView.popoverClosedView()
+            } else {
+                let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+                controller.addAction(UIAlertAction(title: "從相簿中選擇", style: .default) { (action) in
+                    let imagePickerController = UIImagePickerController()
+                    imagePickerController.allowsEditing = false
+                    imagePickerController.sourceType = .photoLibrary
+                    imagePickerController.delegate = self
+                    //                                                        imagePickerController.mediaTypes = [kUTTypeImage as String]
+                    self.present(imagePickerController, animated: true, completion: nil)
+                })
+                controller.addAction(UIAlertAction(title: "開啟相機", style: .default) { (action) in
+                    let imagePickerController = UIImagePickerController()
+                    imagePickerController.allowsEditing = false
+                    imagePickerController.sourceType = .camera
+                    imagePickerController.delegate = self
+                    //                                                        imagePickerController.mediaTypes = [kUTTypeImage as String]
+                    self.present(imagePickerController, animated: true, completion: nil)
+                })
                 
-            })
-            
-            self.present(controller, animated: true) {
+                controller.addAction(UIAlertAction(title: "取消", style: .cancel) { (action) in
+                    
+                })
                 
+                self.present(controller, animated: true) {
+                    
+                }
             }
         }
     }
