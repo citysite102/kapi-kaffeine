@@ -221,7 +221,7 @@ class KPServiceHandler {
                                     })
                                     
                                     if let cafeID = result["data"]["cafe_id"].string {
-                                        self.uploadPhotos(photos, cafeID, { (success) in
+                                        self.uploadPhotos(photos, cafeID, false, { (success) in
                                             // TODO: upload failed error handle
                                         })
                                     }
@@ -713,18 +713,23 @@ class KPServiceHandler {
     // MARK: Photo Upload
     func uploadPhoto(_ cafeID: String?,
                      _ photoData: Data!,
+                     _ showLoading: Bool = true,
                      _ completion: ((Bool) -> Swift.Void)? = nil) {
         
         let loadingView = KPLoadingView(("上傳中...", "上傳成功", "上傳失敗"))
-        UIApplication.shared.KPTopViewController().view.addSubview(loadingView)
-        loadingView.addConstraints(fromStringArray: ["V:|[$self]|",
-                                                     "H:|[$self]|"])
+        if showLoading {
+            UIApplication.shared.KPTopViewController().view.addSubview(loadingView)
+            loadingView.addConstraints(fromStringArray: ["V:|[$self]|",
+                                                         "H:|[$self]|"])
+        }
         
         let photoUploadRequest = KPPhotoUploadRequest()
         photoUploadRequest.perform(cafeID ?? (currentDisplayModel?.identifier)!,
                                    nil,
                                    photoData).then {result -> Void in
-                                    loadingView.state = result["result"].boolValue ? .successed : .failed
+                                    loadingView.state = result["result"].boolValue ?
+                                        .successed :
+                                        .failed
                                     completion?(result["result"].boolValue)
             }.catch { (error) in
                 print("Error:\(error)")
@@ -734,12 +739,15 @@ class KPServiceHandler {
     
     func uploadPhotos(_ photos: [UIImage],
                       _ cafeID: String?,
+                      _ showLoading: Bool = true,
                       _ completion: ((_ success: Bool) -> Void)?) {
         
         let loadingView = KPLoadingView(("上傳中...", "上傳成功", "上傳失敗"))
-        UIApplication.shared.KPTopViewController().view.addSubview(loadingView)
-        loadingView.addConstraints(fromStringArray: ["V:|[$self]|",
-                                                     "H:|[$self]|"])
+        if showLoading {
+            UIApplication.shared.KPTopViewController().view.addSubview(loadingView)
+            loadingView.addConstraints(fromStringArray: ["V:|[$self]|",
+                                                         "H:|[$self]|"])
+        }
         
         var uploadRequests = [Promise<(RawJsonResult)>]()
         for photo in photos {

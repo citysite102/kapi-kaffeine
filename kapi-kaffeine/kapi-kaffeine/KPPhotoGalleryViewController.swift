@@ -283,7 +283,9 @@ UINavigationControllerDelegate {
         picker.dismiss(animated: true) {
             if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
                 KPServiceHandler.sharedHandler.uploadPhotos([image],
-                                                            nil, { (success) in
+                                                            nil,
+                                                            true,
+                                                            { (success) in
                                                                 if success {
                                                                     print("upload successed")
                                                                 } else {

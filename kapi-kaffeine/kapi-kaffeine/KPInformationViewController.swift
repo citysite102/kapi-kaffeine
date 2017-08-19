@@ -1153,7 +1153,9 @@ extension KPInformationViewController : UIImagePickerControllerDelegate {
         picker.dismiss(animated: true) {
             if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
                 KPServiceHandler.sharedHandler.uploadPhotos([image],
-                                                            self.informationDataModel.identifier, { (success) in
+                                                            self.informationDataModel.identifier,
+                                                            true,
+                                                            { (success) in
                     if success {
                         print("upload successed")
                     } else {
