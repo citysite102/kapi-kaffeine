@@ -10,10 +10,14 @@ import UIKit
 
 class KPBusinessTimeViewController: UIViewController {
 
+    
     var dismissButton: KPBounceButton!
+    var containerView: UIView!
+    var tapGesture: UITapGestureRecognizer!
     lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "覺旅咖啡-陽光店"
+        label.text = "快跟我們回報錯誤"
+        label.numberOfLines = 0
         label.font = UIFont.systemFont(ofSize: 24.0)
         label.textColor = KPColorPalette.KPTextColor.mainColor
         return label
@@ -41,45 +45,41 @@ class KPBusinessTimeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor.white
+        tapGesture = UITapGestureRecognizer(target: self,
+                                            action: #selector(KPBusinessTimeViewController.handleTap(_:)))
+        view.addGestureRecognizer(tapGesture)
+        containerView = UIView()
+        containerView.backgroundColor = UIColor.white
+        containerView.layer.cornerRadius = 4.0
+        containerView.layer.masksToBounds = true
+        view.addSubview(containerView)
+        containerView.addConstraintForCenterAligningToSuperview(in: .vertical)
+        containerView.addConstraintForCenterAligningToSuperview(in: .horizontal)
+        containerView.addConstraint(forWidth: 276)
         
-//        dismissButton = KPBounceButton()
-//        dismissButton.setImage(R.image.icon_close()?.withRenderingMode(.alwaysTemplate),
-//                               for: .normal)
-//        dismissButton.tintColor = KPColorPalette.KPMainColor.mainColor
-//        dismissButton.addTarget(self,
-//                                action: #selector(KPBusinessTimeViewController.handleDismissButtonOnTapped),
-//                                for: .touchUpInside)
-//        
-//        view.addSubview(dismissButton)
-//        dismissButton.addConstraints(fromStringArray: ["H:|-20-[$self(30)]",
-//                                                       "V:|-16-[$self(30)]"])
-//        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(6, 6, 6, 6)
-        
-        
-        view.addSubview(titleLabel)
+        containerView.addSubview(titleLabel)
         titleLabel.addConstraints(fromStringArray: ["V:|-24-[$self]",
-                                                    "H:|-24-[$self]-24-|"])
+                                                    "H:|-22-[$self]-24-|"])
         
-        shopStatusHint = UIView();
-        shopStatusHint.backgroundColor = KPColorPalette.KPShopStatusColor.opened;
-        shopStatusHint.layer.cornerRadius = 3.0;
+        shopStatusHint = UIView()
+        shopStatusHint.backgroundColor = KPColorPalette.KPShopStatusColor.opened
+        shopStatusHint.layer.cornerRadius = 3.0
         shopStatusHint.isOpaque = true
-        view.addSubview(shopStatusHint);
+        containerView.addSubview(shopStatusHint)
         shopStatusHint.addConstraints(fromStringArray: ["H:|-24-[$self(6)]",
                                                         "V:[$view0]-12-[$self(6)]"],
-                                      views: [titleLabel]);
+                                      views: [titleLabel])
         
-        shopStatusLabel = KPLayerLabel();
-        shopStatusLabel.font = UIFont.systemFont(ofSize: 12.0);
-        shopStatusLabel.textColor = KPColorPalette.KPTextColor.grayColor;
-        shopStatusLabel.text = "營業時間 未知";
+        shopStatusLabel = KPLayerLabel()
+        shopStatusLabel.font = UIFont.systemFont(ofSize: 12.0)
+        shopStatusLabel.textColor = KPColorPalette.KPTextColor.grayColor
+        shopStatusLabel.text = "營業時間 未知"
         shopStatusLabel.isOpaque = true
         shopStatusLabel.layer.masksToBounds = true
-        view.addSubview(shopStatusLabel);
+        containerView.addSubview(shopStatusLabel)
         shopStatusLabel.addConstraints(fromStringArray: ["H:[$view0]-6-[$self($metric0)]"],
                                        metrics: [UIScreen.main.bounds.size.width/2],
-                                       views: [shopStatusHint]);
+                                       views: [shopStatusHint])
         shopStatusLabel.addConstraintForCenterAligning(to: shopStatusHint,
                                                        in: .vertical,
                                                        constant: -2)
@@ -97,11 +97,12 @@ class KPBusinessTimeViewController: UIViewController {
         
         
         for (index, content) in dayContents.enumerated() {
-            let dayInfoView = KPBusinessTimeInfoView(content, businessTime==nil ? "尚無資料" : businessTime!.getTimeString(withDay: content))
-            view.addSubview(dayInfoView)
+            let dayInfoView = KPBusinessTimeInfoView(content, businessTime==nil ?
+                "尚無資料" : businessTime!.getTimeString(withDay: content))
+            containerView.addSubview(dayInfoView)
             dayInfoViews.append(dayInfoView)
             if index == 0 {
-                dayInfoView.addConstraints(fromStringArray: ["V:[$view0]-20-[$self]",
+                dayInfoView.addConstraints(fromStringArray: ["V:[$view0]-24-[$self]",
                                                              "H:|-24-[$self]-24-|"],
                                            views: [shopStatusLabel])
             } else {
@@ -111,15 +112,19 @@ class KPBusinessTimeViewController: UIViewController {
             }
         }
         
-        view.addSubview(noteLabel)
+        containerView.addSubview(noteLabel)
         noteLabel.addConstraints(fromStringArray: ["H:|-24-[$self]-24-|",
-                                                   "V:[$self]-24-|"],
+                                                   "V:[$view0]-24-[$self]-24-|"],
                                  views: [dayInfoViews.last! as KPBusinessTimeInfoView])
         
     }
 
     func handleDismissButtonOnTapped() {
-        self.dismiss(animated: true, completion: nil);
+        appModalController()?.dismissControllerWithDefaultDuration()
+    }
+    
+    func handleTap(_ sender: UITapGestureRecognizer) {
+        appModalController()?.dismissControllerWithDefaultDuration()
     }
     
     override func didReceiveMemoryWarning() {

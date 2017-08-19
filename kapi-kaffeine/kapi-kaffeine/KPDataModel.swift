@@ -43,6 +43,7 @@ class KPDataModel: NSObject, Mappable, GMUClusterItem, Comparable {
     var businessHour: KPDataBusinessHourModel?
     var tags: [KPDataTagModel]?
     var closed: Bool = false
+    var verified: Bool = true
     
     var averageRate: NSNumber? = 0
     var rateCount: NSNumber? = 0
@@ -135,6 +136,9 @@ class KPDataModel: NSObject, Mappable, GMUClusterItem, Comparable {
         musicAverage        <-    map["music_avg"]
         wifiAverage         <-    map["wifi_avg"]
         priceAverage        <-    map["price_average"]
+        closed              <-    map["is_close"]
+        verified            <-    map["is_verify"]
+        
     }
     
 //    let tagsModelTransform = TransformOf(fromJSON: { (value: [String]?) -> [KPDataTagModel]? in

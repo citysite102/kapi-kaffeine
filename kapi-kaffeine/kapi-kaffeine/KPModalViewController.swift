@@ -30,7 +30,7 @@ class KPModalViewController: KPViewController {
 
     
     static let defaultDismissDuration: CGFloat = 0.3
-    static let defaultPopoutDismissDuration: CGFloat = 0.15
+    static let defaultPopoutDismissDuration: CGFloat = 0.2
     
     var keyboardIsShowing: Bool = false
     var dismissWhenTouchingOnBackground: Bool = true

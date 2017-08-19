@@ -957,11 +957,14 @@ class KPInformationViewController: KPViewController {
         let controller = KPModalViewController()
         let businessTimeViewController = KPBusinessTimeViewController()
         
-        controller.contentSize = CGSize(width: 276, height: 416)
-        controller.cornerRadius = [.topRight, .topLeft, .bottomLeft, .bottomRight]
+//        controller.contentSize = CGSize(width: 276, height: 416)
+//        controller.cornerRadius = [.topRight, .topLeft, .bottomLeft, .bottomRight]
+        controller.edgeInset = UIEdgeInsetsMake(0, 0, 0, 0)
         controller.dismissWhenTouchingOnBackground = true
+        controller.presentationStyle = .popout
         businessTimeViewController.businessTime = informationDataModel.businessHour
-        businessTimeViewController.titleLabel.text = informationDataModel.name
+        businessTimeViewController.titleLabel.setText(text: informationDataModel.name,
+                                                      lineSpacing: 3.0)
         controller.contentController = businessTimeViewController
         controller.presentModalView()
     }

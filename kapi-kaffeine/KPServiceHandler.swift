@@ -133,7 +133,9 @@ class KPServiceHandler {
                                                     cafeDatas.append(cafeData)
                                                 }
                                             }
-                                            self.currentCafeDatas = cafeDatas
+                                            self.currentCafeDatas = cafeDatas.filter({ (dataModel) -> Bool in
+                                                dataModel.verified == true
+                                            })
                                             completion?(cafeDatas, nil)
                                         } else {
                                             completion?(nil, NetworkRequestError.resultUnavailable)
@@ -212,9 +214,10 @@ class KPServiceHandler {
                                price_average).then { result -> Void in
                                 if let addResult = result["result"].bool {
                                     loadingView.state = addResult ? .successed : .failed
-                                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2.5,
+                                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.5,
                                                                   execute: {
                                                                     loadingView.dismiss()
+                                                                    completion?(addResult)
                                     })
                                     
                                     if let cafeID = result["data"]["cafe_id"].string {
@@ -222,15 +225,13 @@ class KPServiceHandler {
                                             // TODO: upload failed error handle
                                         })
                                     }
-                                    
-                                    completion?(addResult)
                                 } else {
                                     loadingView.state = .failed
                                     DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
                                                                   execute: {
                                                                     loadingView.dismiss()
+                                                                    completion?(false)
                                     })
-                                    completion?(false)
                                 }
             }.catch { (error) in
                 loadingView.state = .failed
@@ -767,7 +768,7 @@ class KPServiceHandler {
                 loadingView.state = .successed
                 DispatchQueue.main.asyncAfter(deadline: .now()+1.0,
                                               execute: { 
-                                                KPPopoverView.popoverInReviewNotification()
+                                                KPPopoverView.popoverPhotoInReviewNotification()
                 })
                 completion?(true)
             } else {

@@ -52,7 +52,8 @@ class KPBusinessTimeInfoView: UIView {
                                                   "H:|[$self]"])
         
         addSubview(timeLabel)
-        timeLabel.text = timeContent
+        timeLabel.text = timeContent.replacingOccurrences(of: "\t", with: "")
+        timeLabel.textAlignment = .right
         timeLabel.addConstraints(fromStringArray: ["V:|[$self]|",
                                                    "H:[$self]|"])
         
