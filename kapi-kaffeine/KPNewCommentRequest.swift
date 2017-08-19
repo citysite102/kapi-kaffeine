@@ -12,12 +12,24 @@ import PromiseKit
 import Alamofire
 
 class KPNewCommentRequest: NetworkRequest {
+    
+    enum requestType {
+        case put
+        case add
+    }
 
     typealias ResponseType = RawJsonResult
     private var cafeID: String?
     private var content: String?
+    private var comment_id: String?
     
-    var method: Alamofire.HTTPMethod { return .post }
+    var method: Alamofire.HTTPMethod {
+        return self.type == requestType.add ?
+        .post :
+        .put }
+    
+    private var type: requestType?
+    
     var endpoint: String { return "/comments" }
     
     var parameters: [String : Any]? {
@@ -27,13 +39,21 @@ class KPNewCommentRequest: NetworkRequest {
         parameters["cafe_id"] = cafeID
         parameters["content"] = content
         
+        if type == .put {
+            parameters["comment_id"] = comment_id
+        }
+        
         return parameters
     }
     
     public func perform(_ cafeID: String,
-                        _ content: String) -> Promise<(ResponseType)> {
+                        _ comment_id: String?,
+                        _ content: String,
+                        _ type: requestType) -> Promise<(ResponseType)> {
         self.cafeID = cafeID
         self.content = content
+        self.comment_id = comment_id
+        self.type = type
         return  networkClient.performRequest(self).then(execute: responseHandler)
     }
     

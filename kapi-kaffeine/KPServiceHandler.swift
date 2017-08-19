@@ -268,7 +268,9 @@ class KPServiceHandler {
         
         let commentRequest = KPNewCommentRequest()
         commentRequest.perform((currentDisplayModel?.identifier)!,
-                               comment!).then { result -> Void in
+                               nil,
+                               comment!,
+                               .add).then { result -> Void in
                                 if let commentResult = result["result"].bool {
                                     loadingView.state = commentResult ? .successed : .failed
                                     
@@ -288,6 +290,43 @@ class KPServiceHandler {
                                 }
         }.catch { (error) in
             completion?(false)
+        }
+    }
+    
+    func modifyComment(_ comment: String? = "",
+                       _ comment_id: String,
+                       _ completion: ((_ successed: Bool) -> Swift.Void)?) {
+        
+        let loadingView = KPLoadingView(("修改中..", "修改成功", "修改失敗"))
+        UIApplication.shared.KPTopViewController().view.addSubview(loadingView)
+        loadingView.addConstraints(fromStringArray: ["V:|[$self]|",
+                                                     "H:|[$self]|"])
+        
+        let commentRequest = KPNewCommentRequest()
+        commentRequest.perform((currentDisplayModel?.identifier)!,
+                               comment_id,
+                               comment!,
+                               .put).then { result -> Void in
+                                if let commentResult = result["result"].bool {
+                                    loadingView.state = commentResult ? .successed : .failed
+                                    
+                                    if commentResult {
+                                        let notification = Notification.Name(KPNotification.information.commentInformation)
+                                        NotificationCenter.default.post(name: notification, object: nil)
+                                    }
+                                    
+                                    completion?(commentResult)
+                                    guard let _ = KPUserManager.sharedManager.currentUser?.reviews?.first(where: {$0.identifier == self.currentDisplayModel?.identifier}) else {
+                                        KPUserManager.sharedManager.currentUser?.reviews?.append(self.currentDisplayModel!)
+                                        KPUserManager.sharedManager.storeUserInformation()
+                                        return
+                                    }
+                                } else {
+                                    completion?(false)
+                                }
+            }.catch { (error) in
+                loadingView.state = .failed
+                completion?(false)
         }
     }
     
@@ -451,7 +490,7 @@ class KPServiceHandler {
         let ratingRequest = KPNewRatingRequest()
         
         when(fulfilled:
-                commentRequest.perform((currentDisplayModel?.identifier)!, comment!),
+                commentRequest.perform((currentDisplayModel?.identifier)!, nil, comment!, .add),
                 ratingRequest.perform((currentDisplayModel?.identifier)!,
                                       wifi,
                                       seat,

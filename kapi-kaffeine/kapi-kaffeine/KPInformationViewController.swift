@@ -795,7 +795,6 @@ class KPInformationViewController: KPViewController {
                     weSelf.comments = comments!
                     weSelf.commentInfoView.comments = comments!
                     weSelf.commentInformationView.infoSupplementLabel.text = "\(comments?.count ?? 0) 人已留言"
-                    
                     weSelf.commentInfoView.tableView.layoutIfNeeded()
                     weSelf.commentInfoView.tableViewHeightConstraint.constant = weSelf.commentInfoView.tableView.contentSize.height
                     weSelf.commentInformationView.setNeedsLayout()

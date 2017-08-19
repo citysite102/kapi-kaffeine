@@ -15,7 +15,7 @@ class KPEditCommentController: KPViewController {
     var dismissButton: KPBounceButton!
     var sendButton: UIButton!
     var textFieldContainerView: UIView!
-    var defaultCommentModel: KPCommentModel?
+    var defaultCommentModel: KPCommentModel!
     var inputTextView: UITextView!
     var placeholderLabel: UILabel!
     var paragraphStyle: NSMutableParagraphStyle!
@@ -162,15 +162,15 @@ class KPEditCommentController: KPViewController {
     
     func handleSendButtonOnTapped() {
         inputTextView.resignFirstResponder()
-        KPPopoverView.popoverUnsupportedView()
-//        KPServiceHandler.sharedHandler.addComment(inputTextView.text, { (successed) in
-//            if successed {
-//                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
-//                                              execute: {
-//                                                self.navigationController?.popViewController(animated: true)
-//                })
-//            }
-//        })
+//        KPPopoverView.popoverUnsupportedView()
+        KPServiceHandler.sharedHandler.modifyComment(inputTextView.text, defaultCommentModel.commentID, { (successed) in
+            if successed {
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
+                                              execute: {
+                                                self.navigationController?.popViewController(animated: true)
+                })
+            }
+        })
         
     }
     
