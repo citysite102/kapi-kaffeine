@@ -239,9 +239,8 @@ class KPServiceHandler {
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
                                               execute: {
                                                 loadingView.dismiss()
+                                                completion?(false)
                 })
-                completion?(false)
-                
         }
         
     }

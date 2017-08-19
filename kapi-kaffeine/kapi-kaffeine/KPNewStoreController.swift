@@ -79,9 +79,9 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
     
     var nameInputController: KPSubtitleInputController!
     var ratingController: KPRatingViewController!
-    var countrySelectController: KPCountrySelectController!
-    var priceSelectController: KPPriceSelectController!
-    var businessHourController: KPBusinessHourViewController!
+    var countrySelectController: KPCountrySelectController?
+    var priceSelectController: KPPriceSelectController?
+    var businessHourController: KPBusinessHourViewController?
     var mapInputController: KPMapInputViewController!
     
 //    let tags = ["工業風", "藝術", "文青", "老屋", "美式風",
@@ -222,8 +222,8 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
             controller.cornerRadius = [.topRight, .topLeft]
             if self.countrySelectController == nil {
                 self.countrySelectController = KPCountrySelectController()
-                self.countrySelectController.identifiedKey = "country"
-                self.countrySelectController.delegate = self
+                self.countrySelectController!.identifiedKey = "country"
+                self.countrySelectController!.delegate = self
             }
             controller.contentController = self.countrySelectController
             controller.presentModalView()
@@ -249,8 +249,8 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
             controller.cornerRadius = [.topRight, .topLeft]
             if self.priceSelectController == nil {
                 self.priceSelectController = KPPriceSelectController()
-                self.priceSelectController.identifiedKey = "price"
-                self.priceSelectController.delegate = self
+                self.priceSelectController!.identifiedKey = "price"
+                self.priceSelectController!.delegate = self
             }
             controller.contentController = self.priceSelectController
             controller.presentModalView()
@@ -339,8 +339,8 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
                                                 right: 0)
             if self.businessHourController == nil {
                 self.businessHourController = KPBusinessHourViewController()
-                self.businessHourController.identifiedKey = "time"
-                self.businessHourController.delegate = self
+                self.businessHourController!.identifiedKey = "time"
+                self.businessHourController!.delegate = self
             }
             controller.contentController = self.businessHourController
             controller.cornerRadius = [.topRight, .topLeft]
@@ -668,12 +668,12 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
             if businessHourCheckedView.checked == false || businessHourController == nil {
                 businessHour = [:]
             } else {
-                businessHour = (businessHourController.returnValue as? [String: String]) ?? [:]
+                businessHour = (businessHourController?.returnValue as? [String: String]) ?? [:]
             }
             
             KPServiceHandler.sharedHandler.addNewShop(nameSubTitleView.editTextField.text ?? "",
                                                       addressSubTitleView.editTextView.text ?? "",
-                                                      ((countrySelectController.returnValue as? (name: String, key: String))?.key) ?? "",
+                                                      ((countrySelectController?.returnValue as? (name: String, key: String))?.key) ?? "",
                                                       selectedCoordinate.latitude,
                                                       selectedCoordinate.longitude,
                                                       facebookSubTitleView.editTextField.text ?? "",
@@ -690,7 +690,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
                                                       phoneSubTitleView.editTextField.text ?? "",
                                                       tags,
                                                       businessHour,
-                                                      priceSelectController.priceRanges.index(of: priceSubTitleView.editTextField.text ?? "") ?? -1,
+                                                      priceSelectController?.priceRanges.index(of: priceSubTitleView.editTextField.text ?? "") ?? -1,
                                                       photoUploadSubTitleView.images) {[unowned self] (success) in
                                                         if success == true {
                                                             KPPopoverView.popoverStoreInReviewNotification()

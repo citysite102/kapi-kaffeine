@@ -90,8 +90,5 @@ public struct NetworkClient: NetworkClientType {
         
         return promise
     }
-    
-    
-    
 }
 
