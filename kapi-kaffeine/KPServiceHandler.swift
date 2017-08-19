@@ -493,11 +493,11 @@ class KPServiceHandler {
     // MARK: Photo API
     
     func getPhotos(_ completion: ((_ successed: Bool,
-        _ photos: [String]?) -> Swift.Void)?) {
+        _ photos: [[String: String]]?) -> Swift.Void)?) {
         
         let getPhotoRequest = KPGetPhotoRequest()
         getPhotoRequest.perform((currentDisplayModel?.identifier)!).then { result -> Void in
-            completion?(true, result["data"].arrayObject as? [String])
+            completion?(true, result["data"].arrayObject as? [[String: String]])
         }.catch { (error) in
             completion?(false, nil)
         }

@@ -112,9 +112,11 @@ class KPPhotoGalleryViewController: KPViewController {
                     var index: Int = 0
                     var photoInformations: [PhotoInformation] = []
                     for urlString in photos! {
-                        if let url = URL(string: urlString) {
+                        if let url = URL(string: urlString["url"]!),
+                            let thumbnailurl = URL(string: urlString["thumbnail"]!) {
                             photoInformations.append(PhotoInformation(title: "",
                                                                       imageURL: url,
+                                                                      thumbnailURL: thumbnailurl,
                                                                       index: index))
                             index += 1
                         }

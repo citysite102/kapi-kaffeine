@@ -75,7 +75,7 @@ extension KPShopPhotoInfoView: UICollectionViewDelegate, UICollectionViewDataSou
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: KPShopPhotoInfoView.KPShopPhotoInfoViewCellReuseIdentifier,
                                                       for: indexPath) as! KPShopPhotoCell
-        cell.shopPhoto.af_setImage(withURL: displayPhotoInformations[indexPath.row].imageURL,
+        cell.shopPhoto.af_setImage(withURL: displayPhotoInformations[indexPath.row].thumbnailURL,
                                    placeholderImage: UIImage(color: KPColorPalette.KPBackgroundColor.grayColor_level6!),
                                    filter: nil,
                                    progress: nil,

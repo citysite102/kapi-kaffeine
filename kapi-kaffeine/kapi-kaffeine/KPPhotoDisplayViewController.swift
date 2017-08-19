@@ -12,6 +12,7 @@ struct PhotoInformation {
     let title: String
 //    let image: UIImage
     let imageURL: URL
+    let thumbnailURL: URL
     let index: Int
 }
 
