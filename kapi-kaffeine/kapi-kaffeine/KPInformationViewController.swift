@@ -486,7 +486,7 @@ class KPInformationViewController: KPViewController {
         commentInfoView = KPShopCommentInfoView()
         commentInfoView.informationController = self
         commentInformationView = KPInformationSharedInfoView()
-        commentInformationView.emptyLabel.text = "目前尚無留言，給點建議或分享吧:D"
+        commentInformationView.emptyLabel.text = "幫忙給點建議或分享吧:D"
         commentInformationView.infoView = commentInfoView
         commentInformationView.infoTitleLabel.text = "留言評論"
         scrollContainer.addSubview(commentInformationView)
@@ -504,7 +504,7 @@ class KPInformationViewController: KPViewController {
         let photoInfoView = KPShopPhotoInfoView()
         photoInfoView.informationController = self
         photoInformationView = KPInformationSharedInfoView()
-        photoInformationView.emptyLabel.text = "目前尚無照片，成為第一個上傳的人吧:D"
+        photoInformationView.emptyLabel.text = "成為第一個上傳的人吧:D"
         photoInformationView.infoView = photoInfoView
         photoInformationView.infoTitleLabel.text = "店家照片"
         scrollContainer.addSubview(photoInformationView)
@@ -621,7 +621,7 @@ class KPInformationViewController: KPViewController {
                         weSelf.informationHeaderView.shopPhoto.isUserInteractionEnabled = false
                         weSelf.informationHeaderView.shopPhoto.layer.add(transition, forKey: nil)
                         weSelf.informationHeaderView.morePhotoButton.titleLabel?.text = "上傳\n照片"
-                        weSelf.photoInformationView.infoSupplementLabel.text = "0 張照片"
+                        weSelf.photoInformationView.infoSupplementLabel.text = "尚無照片"
                         weSelf.photoInformationView.isEmpty = true
                         weSelf.informationHeaderView.morePhotoButton.setTitle("上傳\n照片", for: .normal)
                     } else {
@@ -632,7 +632,16 @@ class KPInformationViewController: KPViewController {
                         
                     }
                 } else {
-                    // Handle Error
+                    let transition = CATransition()
+                    transition.duration = 0.2
+                    transition.type = kCATransitionFade
+                    weSelf.informationHeaderView.shopPhoto.image = R.image.image_noImage()
+                    weSelf.informationHeaderView.shopPhoto.isUserInteractionEnabled = false
+                    weSelf.informationHeaderView.shopPhoto.layer.add(transition, forKey: nil)
+                    weSelf.informationHeaderView.morePhotoButton.titleLabel?.text = "上傳\n照片"
+                    weSelf.photoInformationView.infoSupplementLabel.text = "尚無照片"
+                    weSelf.photoInformationView.isEmpty = true
+                    weSelf.informationHeaderView.morePhotoButton.setTitle("上傳\n照片", for: .normal)
                 }
             }
         }

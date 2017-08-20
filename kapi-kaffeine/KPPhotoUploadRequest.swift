@@ -36,7 +36,7 @@ class KPPhotoUploadRequest: NetworkUploadRequest {
         return photoData
     }
     var fileKey: String? {
-        return "photo"
+        return "photo1"
     }
     var fileName: String? {
         return "\(self.cafeID)-\(self.memberID)-\(arc4random_uniform(1000))"
