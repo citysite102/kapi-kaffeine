@@ -96,7 +96,7 @@ extension KPAllRatingViewController: UITableViewDelegate, UITableViewDataSource 
                                             }
             })
         } else {
-            cell.userPicture.image = R.image.demo_profile()
+            cell.userPicture.image = R.image.demo_profile2()
         }
     
         if indexPath.row == ratings.count-1 {

@@ -15,7 +15,7 @@ import GoogleMobileAds
 import UserNotifications
 import Fabric
 import Crashlytics
-import BaltoSDK
+//import BaltoSDK
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, MessagingDelegate {
@@ -41,10 +41,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         FirebaseApp.configure()
         
         // Balto
-        Balto.with()
-        Balto.with(options: [kBaltoHideMenu: true])
-        Balto.withLongPress(minimumPressDuration: 1.5, options: [kBaltoHideMenu: true])
-        Balto.withCustomSwipe(numberOfTouchesRequired: 2, direction: .down, options: [kBaltoHideMenu: true])
+//        Balto.with()
+//        Balto.with(options: [kBaltoHideMenu: true])
+//        Balto.withLongPress(minimumPressDuration: 1.5, options: [kBaltoHideMenu: true])
+//        Balto.withCustomSwipe(numberOfTouchesRequired: 2, direction: .down, options: [kBaltoHideMenu: true])
         
         if #available(iOS 10.0, *) {
             // For iOS 10 display notification (sent via APNS)

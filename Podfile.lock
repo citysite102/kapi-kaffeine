@@ -5,7 +5,6 @@ PODS:
   - AlamofireObjectMapper (4.1.0):
     - Alamofire (~> 4.1)
     - ObjectMapper (~> 2.0)
-  - BaltoSDK (4.0.2)
   - BenzeneFoundation (0.5.42):
     - BenzeneFoundation/Foundation (= 0.5.42)
     - BenzeneFoundation/UIKit (= 0.5.42)
@@ -167,7 +166,6 @@ DEPENDENCIES:
   - Alamofire (~> 4.4)
   - AlamofireImage
   - AlamofireObjectMapper (~> 4.0)
-  - BaltoSDK (>= 3.0.0)
   - BenzeneFoundation
   - Crashlytics
   - Fabric
@@ -211,7 +209,6 @@ SPEC CHECKSUMS:
   Alamofire: f28cdffd29de33a7bfa022cbd63ae95a27fae140
   AlamofireImage: 157ed682cc81d3b9db4fb90c1f12180ac552d93b
   AlamofireObjectMapper: 435adc82f5b367679bd9e71c4974a54efd0b2521
-  BaltoSDK: 078ef58ff4b3d2b01fde28ed5953a3307fcd2027
   BenzeneFoundation: 7a44807ff32cd32d8776deccf2b7fd2f92ed8159
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
   Crashlytics: dfbae35ef22ca189240d230ad501feea4ee85d2d
@@ -250,6 +247,6 @@ SPEC CHECKSUMS:
   SKPhotoBrowser: d91bd707222bd2308d098b82706e41e41f9829c3
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
 
-PODFILE CHECKSUM: 8aa6f640369829d4319f0b65244ef10c4ede2e2a
+PODFILE CHECKSUM: 130f952fce0170d2d5124b170383bea88e593f05
 
 COCOAPODS: 1.1.1
