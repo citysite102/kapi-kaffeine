@@ -551,7 +551,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
         
         
         tapGesture = UITapGestureRecognizer(target: self,
-                                                 action: #selector(handleTapGesture(tapGesture:)))
+                                            action: #selector(handleTapGesture(tapGesture:)))
         tapGesture.cancelsTouchesInView = false
         containerView.addGestureRecognizer(tapGesture)
 

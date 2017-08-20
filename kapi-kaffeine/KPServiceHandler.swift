@@ -773,10 +773,12 @@ class KPServiceHandler {
                     let notification = Notification.Name(KPNotification.information.photoInformation)
                     NotificationCenter.default.post(name: notification, object: nil)
                     loadingView.state = .successed
-                    DispatchQueue.main.asyncAfter(deadline: .now()+1.0,
-                                                  execute: {
-                                                    KPPopoverView.popoverPhotoInReviewNotification()
-                    })
+                    if showLoading {
+                        DispatchQueue.main.asyncAfter(deadline: .now()+1.0,
+                                                      execute: {
+                                                        KPPopoverView.popoverPhotoInReviewNotification()
+                        })
+                    }
                 } else {
                     loadingView.state = .failed
                 }

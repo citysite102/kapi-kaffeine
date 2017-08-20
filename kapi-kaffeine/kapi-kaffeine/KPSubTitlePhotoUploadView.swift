@@ -53,6 +53,11 @@ class KPSubTitlePhotoUploadView: UIView {
         
         addSubview(self.collectionView)
         subTitleView.customInfoView = collectionView
+        collectionView.removeAllRelatedConstraintsInSuperView()
+        collectionView.addConstraints(fromStringArray: ["V:[$view0]-8-[$self]-8-|",
+                                                        "H:|-16-[$self]|"],
+                                      views:[subTitleView.subTitleLabel])
+        
         collectionView.addConstraint(forHeight: 112)
 
     }
