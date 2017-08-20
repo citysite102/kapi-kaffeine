@@ -57,25 +57,19 @@ extension KPPopoverView {
     class func popoverPhotoInReviewNotification() {
         let content = KPNotificationPopoverContent()
         content.titleLabel.text = "審核中"
-        content.descriptionLabel.setText(text: "感謝你偉大的貢獻，你的照片正經過我們仔細的審核中(⊙‿⊙)！（約3-4天）",
+        content.descriptionLabel.setText(text: "感謝您的貢獻，為了確保資料的正確性，請靜待管理團隊的照片審核(⊙‿⊙)！（約3-4天）",
                                          lineSpacing: 3.6)
-        content.confirmButton.setTitle("感謝你們", for: .normal)
+        content.confirmButton.setTitle("沒有問題", for: .normal)
         KPPopoverView.sharedPopoverView.contentView = content
         KPPopoverView.sharedPopoverView.popoverContent()
     }
     
     class func popoverStoreInReviewNotification() {
-        
-        
-//        KPPopoverView.popoverNotification("新增成功",
-//                                          "感謝您提交資訊，我們將儘速進行審查:D 這將會需要1-3天的審核時間確認店家的資訊是否無誤，給我好好的等。",
-//                                          nil,
-//                                          nil)
         let content = KPNotificationPopoverContent()
         content.titleLabel.text = "審核中"
-        content.descriptionLabel.setText(text: "感謝你偉大的貢獻，你的照片正經過我們仔細的審核中(⊙‿⊙)！（約3-4天）",
+        content.descriptionLabel.setText(text: "感謝您的貢獻，為了確保資料的正確性，請靜待管理團隊的店家審核(⊙‿⊙)！（約3-4天）",
                                          lineSpacing: 3.6)
-        content.confirmButton.setTitle("感謝你們", for: .normal)
+        content.confirmButton.setTitle("沒有問題", for: .normal)
         KPPopoverView.sharedPopoverView.contentView = content
         KPPopoverView.sharedPopoverView.popoverContent()
     }

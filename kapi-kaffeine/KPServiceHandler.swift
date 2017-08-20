@@ -766,18 +766,21 @@ class KPServiceHandler {
          There’s also a when(resolved:) that waits for all the promises to complete, but always calls the then block and never the catch.
          */
         
-        join(uploadRequests).then { (results) -> Void in
-            print("results : \(results)")
-            
-            if results.first?.dictionaryObject != nil {
-                let notification = Notification.Name(KPNotification.information.photoInformation)
-                NotificationCenter.default.post(name: notification, object: nil)
-                loadingView.state = .successed
-                DispatchQueue.main.asyncAfter(deadline: .now()+1.0,
-                                              execute: { 
-                                                KPPopoverView.popoverPhotoInReviewNotification()
-                })
-                completion?(true)
+        join(uploadRequests).then { (result) -> Void in
+            print("result : \(result)")
+            if let uploadResult = result.first?["result"].bool {
+                if uploadResult {
+                    let notification = Notification.Name(KPNotification.information.photoInformation)
+                    NotificationCenter.default.post(name: notification, object: nil)
+                    loadingView.state = .successed
+                    DispatchQueue.main.asyncAfter(deadline: .now()+1.0,
+                                                  execute: {
+                                                    KPPopoverView.popoverPhotoInReviewNotification()
+                    })
+                } else {
+                    loadingView.state = .failed
+                }
+                completion?(uploadResult)
             } else {
                 loadingView.state = .failed
                 completion?(false)
