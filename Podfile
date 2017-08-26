@@ -48,6 +48,7 @@ target 'kapi-kaffeine' do
   # Analytics
   pod 'Fabric'
   pod 'Crashlytics'
+  pod 'Amplitude-iOS', '~> 3.14.1'
   # pod 'BaltoSDK', '>= 3.0.0'
   
   # Ad

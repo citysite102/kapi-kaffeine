@@ -15,6 +15,7 @@ import GoogleMobileAds
 import UserNotifications
 import Fabric
 import Crashlytics
+import Amplitude_iOS
 //import BaltoSDK
 
 @UIApplicationMain
@@ -39,6 +40,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         // Firebase
         FirebaseApp.configure()
+        
+        // Amplitude
+        Amplitude.instance().initializeApiKey("4f5f1d32e1e9fde0c7d307c92340944b")
         
         // Balto
 //        Balto.with()
