@@ -20,7 +20,7 @@ class KPRatingViewController: KPSharedSettingViewController {
     var ratingViews = [KPRatingView]()
     var defaultRateModel: KPSimpleRateModel?
     var scoreLabel: KPMainListCellScoreLabel!
-    var averageRate: CGFloat!
+    var averageRate: CGFloat = 0
     var isRemote: Bool = true
     
     override func viewDidLoad() {
