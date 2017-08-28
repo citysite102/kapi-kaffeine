@@ -497,6 +497,8 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
             latitude = position.coordinate.latitude
             longtitude = position.coordinate.longitude
             selectedCoordinate = position.coordinate
+        } else {
+            selectedCoordinate = CLLocationCoordinate2D(latitude: 25.0470462, longitude: 121.5156119)
         }
         let camera = GMSCameraPosition.camera(withLatitude: latitude, longitude: longtitude, zoom: 18.0)
         let marker = GMSMarker(position: CLLocationCoordinate2D(latitude: latitude, longitude: longtitude))
