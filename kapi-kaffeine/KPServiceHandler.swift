@@ -245,6 +245,71 @@ class KPServiceHandler {
         
     }
     
+    func modifyCafeData(_ cafeid: String,
+                        _ name:String,
+                        _ address:String,
+                        _ city:String,
+                        _ latitude: Double,
+                        _ longitude: Double,
+                        _ fb_url:String,
+                        _ limited_time: Int,
+                        _ standingDesk: Int,
+                        _ socket: Int,
+                        _ phone: String,
+                        _ tags: [KPDataTagModel],
+                        _ business_hour: [String: String],
+                        _ price_average: Int,
+                        _ completion: ((_ successed: Bool) -> Swift.Void)?) {
+        
+        
+        let modifyRequest = KPModifyCafeDataRequest()
+        
+        let loadingView = KPLoadingView(("修改中..", "修改成功", "修改失敗"))
+        UIApplication.shared.topViewController.view.addSubview(loadingView)
+        loadingView.addConstraints(fromStringArray: ["V:|[$self]|",
+                                                     "H:|[$self]|"])
+        
+        modifyRequest.perform(cafeid,
+                              name,
+                              address,
+                              city,
+                              latitude,
+                              longitude,
+                              fb_url,
+                              limited_time,
+                              standingDesk,
+                              socket,
+                              phone,
+                              tags,
+                              business_hour,
+                              price_average).then { result -> Void in
+                                if let addResult = result["result"].bool {
+                                    loadingView.state = addResult ? .successed : .failed
+                                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.5,
+                                                                  execute: {
+                                                                    loadingView.dismiss()
+                                                                    completion?(addResult)
+                                    })
+                                } else {
+                                    loadingView.state = .failed
+                                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
+                                                                  execute: {
+                                                                    loadingView.dismiss()
+                                                                    completion?(false)
+                                    })
+                                }
+            }.catch { (error) in
+                loadingView.state = .failed
+                print(error)
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
+                                              execute: {
+                                                loadingView.dismiss()
+                                                completion?(false)
+                })
+        }
+        
+    }
+    
     // MARK: Rating API
     
     func reportStoreClosed(_ completion: ((_ successed: Bool) -> Swift.Void)?) {

@@ -91,8 +91,8 @@ class KPCityRegionModel: NSObject {
         return nil
     }
     
-    static func getKeyWithRegionString(_ region: String) -> String? {
-        if region == "" {
+    static func getKeyWithRegionString(_ region: String?) -> String? {
+        if region == nil || region == "" {
             return nil
         }
         
