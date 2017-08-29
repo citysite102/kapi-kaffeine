@@ -10,9 +10,9 @@ import UIKit
 
 class KPCountrySelectController: KPSharedSettingViewController {
 
-    var countries = ["台北 Taipei", "基隆 Keelung", "台中 Taichung", "火星 Mars"]
+//    var countries = ["台北 Taipei", "基隆 Keelung", "台中 Taichung", "火星 Mars"]
     
-    var regionContents = KPSideViewController.defaultRegionContent
+    var regionContents = KPCityRegionModel.defaultRegionData
     
     var tableView: UITableView!
     
@@ -65,7 +65,7 @@ extension KPCountrySelectController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        returnValue = (name: regionContents[indexPath.section].cities[indexPath.row], key: regionContents[indexPath.section].cityKeys[indexPath.row])
+        returnValue = regionContents[indexPath.section].cities[indexPath.row]
         delegate?.returnValueSet(self)
         appModalController()?.dismissControllerWithDefaultDuration()
     }

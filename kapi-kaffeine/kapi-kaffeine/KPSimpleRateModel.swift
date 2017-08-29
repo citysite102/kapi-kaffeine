@@ -36,6 +36,57 @@ class KPSimpleRateModel: NSObject, Mappable {
         }
     }
     
+    var averageRate: CGFloat {
+        get {
+            var totalRate: CGFloat = 0
+            var availableRateCount: CGFloat = 0
+            
+            if let rate = cheap?.cgFloatValue,
+                rate > 0 {
+                totalRate += rate
+                availableRateCount += 1
+            }
+            
+            if let rate = food?.cgFloatValue,
+                rate > 0 {
+                totalRate += rate
+                availableRateCount += 1
+            }
+            
+            if let rate = quiet?.cgFloatValue,
+                rate > 0 {
+                totalRate += rate
+                availableRateCount += 1
+            }
+            
+            if let rate = seat?.cgFloatValue,
+                rate > 0 {
+                totalRate += rate
+                availableRateCount += 1
+            }
+            
+            if let rate = wifi?.cgFloatValue,
+                rate > 0 {
+                totalRate += rate
+                availableRateCount += 1
+            }
+            
+            if let rate = tasty?.cgFloatValue,
+                rate > 0 {
+                totalRate += rate
+                availableRateCount += 1
+            }
+            
+            if let rate = music?.cgFloatValue,
+                rate > 0 {
+                totalRate += rate
+                availableRateCount += 1
+            }
+
+            return totalRate/availableRateCount
+        }
+    }
+    
     
     required init?(map: Map) {
     }

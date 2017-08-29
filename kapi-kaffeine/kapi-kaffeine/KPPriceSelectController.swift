@@ -10,11 +10,11 @@ import UIKit
 
 class KPPriceSelectController: KPSharedSettingViewController {
 
-    var priceRanges = ["NT$1-100元 / 人",
-                       "NT$101-200元 / 人",
-                       "NT$201-300元 / 人",
-                       "NT$301-400元 / 人",
-                       "大於NT$400元 / 人"]
+    static var priceRanges = ["NT$1-100元 / 人",
+                              "NT$101-200元 / 人",
+                              "NT$201-300元 / 人",
+                              "NT$301-400元 / 人",
+                              "大於NT$400元 / 人"]
     var tableView: UITableView!
     
     override func viewDidLoad() {
@@ -57,12 +57,12 @@ extension KPPriceSelectController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier:"cell",
                                                  for: indexPath) as! KPSelectCell;
-        cell.contentLabel.text = self.priceRanges[indexPath.row]
+        cell.contentLabel.text = KPPriceSelectController.priceRanges[indexPath.row]
         return cell;
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        returnValue = priceRanges[indexPath.row]
+        returnValue = KPPriceSelectController.priceRanges[indexPath.row]
         delegate?.returnValueSet(self)
         appModalController()?.dismissControllerWithDefaultDuration()
     }
@@ -72,7 +72,7 @@ extension KPPriceSelectController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return priceRanges.count
+        return KPPriceSelectController.priceRanges.count
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {

@@ -389,7 +389,7 @@ GMUClusterRendererDelegate {
                                             left: 0,
                                             bottom: 0,
                                             right: 0)
-        let newStoreController = KPNewStoreController()
+        let newStoreController = KPNewStoreController(.add)
         let navigationController = UINavigationController(rootViewController: newStoreController)
         controller.contentController = navigationController
         controller.presentModalView()

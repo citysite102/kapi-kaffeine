@@ -62,6 +62,11 @@ class KPSubTitleEditView: UIView {
         didSet {
             if dType == .MultiLine {
                 self.editTextView.text = content
+                if editTextView.text.characters.count == 0 {
+                    placeHolderLabel.isHidden = false
+                } else {
+                    placeHolderLabel.isHidden = true
+                }
             } else {
                 self.editTextField.text = content
             }

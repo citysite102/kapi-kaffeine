@@ -194,6 +194,7 @@
 		C09C69C41F1F56A70051C42F /* KPFeatureTagRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09C69C31F1F56A70051C42F /* KPFeatureTagRequest.swift */; };
 		C0B21FC81F05079100925A89 /* KPUserProfileEditorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B21FC71F05079100925A89 /* KPUserProfileEditorController.swift */; };
 		C0B49D971EA13BC100BA95D8 /* KPMainMapViewCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B49D961EA13BC100BA95D8 /* KPMainMapViewCollectionCell.swift */; };
+		C0D7EE7B1F550FCD00A3BC57 /* KPCityRegionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D7EE7A1F550FCD00A3BC57 /* KPCityRegionModel.swift */; };
 		C0EBE5431ECB29800021653E /* KPBusinessHourViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EBE5421ECB29800021653E /* KPBusinessHourViewController.swift */; };
 		C0F11FAC1F26531000E9AC60 /* KPSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F11FAB1F26531000E9AC60 /* KPSegmentedControl.swift */; };
 /* End PBXBuildFile section */
@@ -437,6 +438,7 @@
 		C09C69C31F1F56A70051C42F /* KPFeatureTagRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPFeatureTagRequest.swift; sourceTree = "<group>"; };
 		C0B21FC71F05079100925A89 /* KPUserProfileEditorController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPUserProfileEditorController.swift; sourceTree = "<group>"; };
 		C0B49D961EA13BC100BA95D8 /* KPMainMapViewCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPMainMapViewCollectionCell.swift; sourceTree = "<group>"; };
+		C0D7EE7A1F550FCD00A3BC57 /* KPCityRegionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPCityRegionModel.swift; sourceTree = "<group>"; };
 		C0EBE5421ECB29800021653E /* KPBusinessHourViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = KPBusinessHourViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C0F11FAB1F26531000E9AC60 /* KPSegmentedControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSegmentedControl.swift; sourceTree = "<group>"; };
 		CA73E4544076455C6DC0C065 /* Pods-kapi-kaffeine.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kapi-kaffeine.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-kapi-kaffeine/Pods-kapi-kaffeine.debug.xcconfig"; sourceTree = "<group>"; };
@@ -992,6 +994,7 @@
 				774208F81EA675C800C78A00 /* KPCommentModel.swift */,
 				773463471ED74AFE00EA78F0 /* KPNomadDataModel.swift */,
 				7743342D1F265E3A000CCDFA /* KPLikeModel.swift */,
+				C0D7EE7A1F550FCD00A3BC57 /* KPCityRegionModel.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1674,6 +1677,7 @@
 				C05CF8781EF8019800F3DF2A /* KPDataBusinessHourModel.swift in Sources */,
 				77BB39281ED3DD4300958AFE /* KPSecondIntroView.swift in Sources */,
 				7762E3451F12185C0006E205 /* KPVisitedRequest.swift in Sources */,
+				C0D7EE7B1F550FCD00A3BC57 /* KPCityRegionModel.swift in Sources */,
 				77FB63961E9AA7BB00FFC3DC /* KPDataModel.swift in Sources */,
 				77FBE95D1ECCABD000EBBB9B /* KPFeatureTagLayout.swift in Sources */,
 				77A26B0D1F234A8D0045D46F /* KPCommentDetailedController.swift in Sources */,

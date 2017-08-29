@@ -31,14 +31,17 @@ class KPDataBusinessHourModel: NSObject {
                                                                     KPDay.Friday: [],
                                                                     KPDay.Saturday: [],
                                                                     KPDay.Sunday: []]
+    var originalData: [String: String]
+    
     lazy var timeFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm"
         return formatter
     }()
     
-    convenience init(value: [String: String]) {
-        self.init()
+    init(value: [String: String]) {
+        originalData = value
+        super.init()
         
         for (key, time) in value {
             let components = key.components(separatedBy: "_")

@@ -15,6 +15,11 @@ struct KPNewStoreControllerConstants {
 
 class KPNewStoreController: KPViewController, UITextFieldDelegate {
     
+    enum EditorType {
+        case modify
+        case add
+    }
+    
     var _scrollContainerView: UIView {
         get {
             return containerView
@@ -93,8 +98,10 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
     var rateCheckedView: KPItemCheckedView!
     var businessHourCheckedView: KPItemCheckedView!
     
+    var dataModel: KPDataModel?
+    var rateDataModel: KPSimpleRateModel?
     
-    var selectedCoordinate: CLLocationCoordinate2D! = nil {
+    var selectedCoordinate: CLLocationCoordinate2D!  {
         didSet {
             if addressMapView != nil {
                 addressMapView.clear()
@@ -107,6 +114,8 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
         }
     }
     
+    var type: EditorType
+    
     func headerLabel(_ title: String) -> UILabel {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14.0)
@@ -115,12 +124,29 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
         return label
     }
     
+    init(_ etype:EditorType) {
+        type = etype
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
         view.backgroundColor = UIColor.white
-        navigationController?.navigationBar.topItem?.title = "新增店家"
+        
+        
+        // Navigation Bar ==============================================
+        
+        if type == .add {
+            navigationController?.navigationBar.topItem?.title = "新增店家"
+        } else if type == .modify {
+            navigationController?.navigationBar.topItem?.title = "修改店家"
+        }
 
         dismissButton = KPBounceButton(frame: CGRect(x: 0,
                                                      y: 0,
@@ -136,7 +162,11 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
         let barItem = UIBarButtonItem(customView: dismissButton)
 
         sendButton = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 24))
-        sendButton.setTitle("新增", for: .normal)
+        if type == .add {
+            sendButton.setTitle("新增", for: .normal)
+        } else if type == .modify {
+            sendButton.setTitle("送出", for: .normal)
+        }
         sendButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         sendButton.tintColor = KPColorPalette.KPTextColor.mainColor
         sendButton.addTarget(self,
@@ -153,6 +183,10 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
         negativeSpacer.width = -8
         navigationItem.leftBarButtonItems = [negativeSpacer, barItem]
         navigationItem.rightBarButtonItems = [negativeSpacer, rightbarItem]
+        
+        
+        
+        // ============================================================
 
 
         scrollView = UIScrollView()
@@ -183,6 +217,9 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
                                                              "V:[$view0]-8-[$self]"],
                                            views: [sectionOneHeaderLabel])
      
+        
+        // name
+        
         nameSubTitleView = KPSubTitleEditView(.Bottom,
                                               .Fixed,
                                               "店家名稱")
@@ -203,8 +240,12 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
             controller.presentModalView()
         }
         sectionOneContainer.addSubview(nameSubTitleView)
+        nameSubTitleView.content = dataModel?.name ?? ""
         nameSubTitleView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                           "V:|[$self(72)]"])
+        
+        
+        // city
         
         citySubTitleView = KPSubTitleEditView(.Bottom,
                                               .Fixed,
@@ -228,10 +269,14 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
             controller.contentController = self.countrySelectController
             controller.presentModalView()
         }
+        citySubTitleView.content = KPCityRegionModel.getRegionStringWithKey(dataModel?.city) ?? ""
         sectionOneContainer.addSubview(citySubTitleView)
         citySubTitleView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                           "V:[$view0][$self(72)]"],
                                         views:[nameSubTitleView])
+        
+        
+        // price
         
         priceSubTitleView = KPSubTitleEditView(.Bottom,
                                                .Fixed,
@@ -256,10 +301,17 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
             controller.presentModalView()
         }
         sectionOneContainer.addSubview(priceSubTitleView)
+        if let priceIndex = dataModel?.priceAverage?.intValue,
+            priceIndex >= 0 {
+            priceSubTitleView.content = KPPriceSelectController.priceRanges[priceIndex]
+            
+        }
         priceSubTitleView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                            "V:[$view0][$self(72)]"],
                                          views:[citySubTitleView])
         
+        
+        // feature tags
         
         featureSubTitleView = KPSubTitleEditView(.Bottom,
                                                  .Custom,
@@ -291,43 +343,15 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
         featureCollectionView.addObserver(self, forKeyPath: "contentSize", options: .new, context: nil)
         
         featureSubTitleView.customInfoView = featureCollectionView
-    
-        rateCheckedView = KPItemCheckedView("幫店家評分",
-                                            "未評分",
-                                            "已評分(3.0)",
-                                            .Bottom)
-        sectionOneContainer.addSubview(rateCheckedView)
-        rateCheckedView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                         "V:[$view0][$self(64)]"],
-                                           views:[featureSubTitleView])
-        rateCheckedView.customInputAction = {
-            [unowned self] () -> Void in
-            
-            self.view.endEditing(true)
-            let controller = KPModalViewController()
-            controller.edgeInset = UIEdgeInsets(top: UIDevice().isSuperCompact ? 32 : 72,
-                                                left: 0,
-                                                bottom: 0,
-                                                right: 0)
-            controller.cornerRadius = [.topRight, .topLeft, .bottomLeft, .bottomRight]
-            if self.ratingController == nil {
-                self.ratingController = KPRatingViewController()
-                self.ratingController.identifiedKey = "rate"
-                self.ratingController.isRemote = false
-                self.ratingController.delegate = self
-            }
-            controller.contentController = self.ratingController
-            controller.presentModalView()
-        }
+        
+        
+        // business hour
         
         businessHourCheckedView = KPItemCheckedView("填寫營業時間",
                                                     "未填寫",
                                                     "已填寫",
                                                     .Bottom)
         sectionOneContainer.addSubview(businessHourCheckedView)
-        businessHourCheckedView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                                 "V:[$view0][$self(64)]|"],
-                                               views:[rateCheckedView])
         businessHourCheckedView.customInputAction = {
             [unowned self] () -> Void in
             
@@ -346,6 +370,69 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
             controller.cornerRadius = [.topRight, .topLeft]
             controller.presentModalView()
         }
+        
+        if let businessHour = dataModel?.businessHour {
+            businessHourController = KPBusinessHourViewController()
+            businessHourController!.identifiedKey = "time"
+            businessHourController!.delegate = self
+            businessHourController!.setBusinessHour(businessHour.originalData)
+            businessHourCheckedView.checked = true
+        }
+        
+        
+        if type == .add {
+        
+            // rate
+            rateCheckedView = KPItemCheckedView("幫店家評分",
+                                                "未評分",
+                                                "已評分(3.0)",
+                                                .Bottom)
+            sectionOneContainer.addSubview(rateCheckedView)
+            rateCheckedView.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                             "V:[$view0][$self(64)]"],
+                                               views:[featureSubTitleView])
+            rateCheckedView.customInputAction = {
+                [unowned self] () -> Void in
+                
+                self.view.endEditing(true)
+                let controller = KPModalViewController()
+                controller.edgeInset = UIEdgeInsets(top: UIDevice().isSuperCompact ? 32 : 72,
+                                                    left: 0,
+                                                    bottom: 0,
+                                                    right: 0)
+                controller.cornerRadius = [.topRight, .topLeft, .bottomLeft, .bottomRight]
+                if self.ratingController == nil {
+                    self.ratingController = KPRatingViewController()
+                    self.ratingController.identifiedKey = "rate"
+                    self.ratingController.isRemote = false
+                    self.ratingController.delegate = self
+                }
+                controller.contentController = self.ratingController
+                controller.presentModalView()
+            }
+            
+            if let rateDataModel = rateDataModel {
+                ratingController = KPRatingViewController()
+                ratingController.identifiedKey = "rate"
+                ratingController.isRemote = false
+                ratingController.delegate = self
+                ratingController.defaultRateModel = rateDataModel
+                rateCheckedView.checkContent = String(format: "已評分(%.1f)", rateDataModel.averageRate)
+                rateCheckedView.checked = true
+            }
+            
+            businessHourCheckedView.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                                     "V:[$view0][$self(64)]|"],
+                                                   views:[rateCheckedView])
+            
+        } else if type == .modify {
+            
+            businessHourCheckedView.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                                     "V:[$view0][$self(64)]|"],
+                                                   views:[featureSubTitleView])
+            
+        }
+        
         
         sectionTwoHeaderLabel = headerLabel("其他選項")
         containerView.addSubview(sectionTwoHeaderLabel)
@@ -384,7 +471,6 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
                                          views: [timeRadioBoxTwo])
         
         timeRadioBoxFour = KPCheckView(.radio, "不太確定")
-        timeRadioBoxFour.checkBox.checkState = .checked
         timeRadioBoxFour.customValue = 4
         sectionTwoContainer.addSubview(timeRadioBoxFour)
         timeRadioBoxFour.addConstraints(fromStringArray: ["H:|-16-[$self]",
@@ -404,6 +490,19 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
         timeRadioBoxFour.deselectCheckViews = [timeRadioBoxTwo,
                                                timeRadioBoxOne,
                                                timeRadioBoxThree]
+        
+        let limitedTime = dataModel?.limitedTime?.intValue ?? 4
+        switch limitedTime {
+        case 1:
+            timeRadioBoxOne.checkBox.checkState = .checked
+        case 2:
+            timeRadioBoxThree.checkBox.checkState = .checked
+        case 3:
+            timeRadioBoxTwo.checkBox.checkState = .checked
+        default:
+            timeRadioBoxFour.checkBox.checkState = .checked
+        }
+            
 
         
         socketLabel = headerLabel("插座數量")
@@ -435,7 +534,6 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
                                            views: [socketRadioBoxTwo])
         
         socketRadioBoxFour = KPCheckView(.radio, "不太確定")
-        socketRadioBoxFour.checkBox.checkState = .checked
         socketRadioBoxFour.customValue = 4
         sectionTwoContainer.addSubview(socketRadioBoxFour)
         socketRadioBoxFour.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",
@@ -455,6 +553,18 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
         socketRadioBoxFour.deselectCheckViews = [socketRadioBoxOne,
                                                  socketRadioBoxTwo,
                                                  socketRadioBoxThree]
+        
+        let socket = dataModel?.socket?.intValue ?? 4
+        switch socket {
+        case 1:
+            socketRadioBoxThree.checkBox.checkState = .checked
+        case 2:
+            socketRadioBoxTwo.checkBox.checkState = .checked
+        case 5:
+            socketRadioBoxOne.checkBox.checkState = .checked
+        default:
+            socketRadioBoxFour.checkBox.checkState = .checked
+        }
         
         
         standDeskLabel = headerLabel("其他")
@@ -478,7 +588,6 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
         
         standDeskCheckBoxThree = KPCheckView(.radio, "不太確定")
         standDeskCheckBoxThree.customValue = 4
-        standDeskCheckBoxThree.checkBox.checkState = .checked
         sectionTwoContainer.addSubview(standDeskCheckBoxThree)
         standDeskCheckBoxThree.addConstraints(fromStringArray: ["H:|-16-[$self]",
                                                                 "V:[$view0]-16-[$self]"],
@@ -492,16 +601,26 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
                                                      standDeskCheckBoxOne]
         
         
-        var latitude: Double = 25.018744,  longtitude: Double = 121.532785
-        if let position = KPLocationManager.sharedInstance().currentLocation {
-            latitude = position.coordinate.latitude
-            longtitude = position.coordinate.longitude
+        let standDesk = dataModel?.standingDesk?.intValue ?? 4
+        switch standDesk {
+        case 1:
+            standDeskCheckBoxOne.checkBox.checkState = .checked
+        case 2:
+            standDeskCheckBoxTwo.checkBox.checkState = .checked
+        default:
+            standDeskCheckBoxThree.checkBox.checkState = .checked
+        }
+        
+        
+        if let latitude = dataModel?.latitude, let longitude = dataModel?.longitude {
+            selectedCoordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        } else if let position = KPLocationManager.sharedInstance().currentLocation {
             selectedCoordinate = position.coordinate
         } else {
             selectedCoordinate = CLLocationCoordinate2D(latitude: 25.0470462, longitude: 121.5156119)
         }
-        let camera = GMSCameraPosition.camera(withLatitude: latitude, longitude: longtitude, zoom: 18.0)
-        let marker = GMSMarker(position: CLLocationCoordinate2D(latitude: latitude, longitude: longtitude))
+        let camera = GMSCameraPosition.camera(withLatitude: selectedCoordinate.latitude, longitude: selectedCoordinate.longitude, zoom: 18.0)
+        let marker = GMSMarker(position: CLLocationCoordinate2D(latitude: selectedCoordinate.latitude, longitude: selectedCoordinate.longitude))
         addressMapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
         marker.map = addressMapView
         sectionTwoContainer.addSubview(addressMapView)
@@ -525,6 +644,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
                                                              "V:[$view0]-16-[$self][$view1(120)]"],
                                            views: [standDeskCheckBoxThree, addressMapView])
         addressSubTitleView.delegate = self
+        addressSubTitleView.content = dataModel?.address ?? ""
 
         phoneSubTitleView = KPSubTitleEditView(.Both,
                                                .Edited,
@@ -535,6 +655,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
         phoneSubTitleView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                            "V:[$view0]-16-[$self(72)]"],
                                            views: [addressMapView])
+        phoneSubTitleView.content = dataModel?.phone ?? ""
         
         facebookSubTitleView = KPSubTitleEditView(.Bottom,
                                                   .Edited,
@@ -544,13 +665,20 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
         facebookSubTitleView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                               "V:[$view0][$self(72)]"],
                                          views: [phoneSubTitleView])
+        facebookSubTitleView.content = dataModel?.facebookURL
         
-        photoUploadSubTitleView = KPSubTitlePhotoUploadView()
-        photoUploadSubTitleView.controller = self
-        sectionTwoContainer.addSubview(photoUploadSubTitleView)
-        photoUploadSubTitleView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$view0][$self]-16-|"],
-                                               views: [facebookSubTitleView])
         
+        if type == .add {
+        
+            photoUploadSubTitleView = KPSubTitlePhotoUploadView()
+            photoUploadSubTitleView.controller = self
+            sectionTwoContainer.addSubview(photoUploadSubTitleView)
+            photoUploadSubTitleView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$view0][$self]-16-|"],
+                                                   views: [facebookSubTitleView])
+            
+        } else if type == .modify {
+            facebookSubTitleView.addConstraint(from: "V:[$self]-16-|")
+        }
         
         tapGesture = UITapGestureRecognizer(target: self,
                                             action: #selector(handleTapGesture(tapGesture:)))
@@ -561,6 +689,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShown(notification:)), name: .UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillBeHidden(notification:)), name: .UIKeyboardWillHide, object: nil)
     }
+    
     
     deinit {
         featureCollectionView.removeObserver(self, forKeyPath: "contentSize")
@@ -589,124 +718,102 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
     
     func handleSendButtonOnTapped() {
         
-        if KPUserManager.sharedManager.currentUser == nil {
-            KPPopoverView.popoverLoginView()
-        } else {
-            if nameSubTitleView.editTextField.text == nil ||
-                nameSubTitleView.editTextField.text?.characters.count == 0 {
-                nameSubTitleView.sType = .Warning
-                KPPopoverView.popoverNotification("新增失敗",
-                                                  "店家名稱尚未填寫！",
-                                                  150,
-                                                  nil);
-                return;
-            }
+        if type == .add {
             
-            if citySubTitleView.editTextField.text == nil ||
-                citySubTitleView.editTextField.text?.characters.count == 0 {
-                citySubTitleView.sType = .Warning
-                KPPopoverView.popoverNotification("新增失敗",
-                                                  "店家所在城市尚未選擇！",
-                                                  150,
-                                                  nil);
-                return;
-            }
-            
-//            if priceSubTitleView.editTextField.text == nil ||
-//                priceSubTitleView.editTextField.text?.characters.count == 0 {
-//                priceSubTitleView.sType = .Warning
-//                KPPopoverView.popoverNotification("新增失敗",
-//                                                  "價格區間尚未選擇！",
-//                                                  150,
-//                                                  nil);
-//                return;
-//            }
-//            
-//            if rateCheckedView.checked == false || ratingController == nil {
-//                KPPopoverView.popoverNotification("新增失敗",
-//                                                  "評分尚未填寫！",
-//                                                  150,
-//                                                  nil);
-//                return;
-//            }
-//            
-//            if businessHourCheckedView.checked == false || businessHourController == nil {
-//                KPPopoverView.popoverNotification("新增失敗",
-//                                                  "營業時間尚未填寫！",
-//                                                  150,
-//                                                  nil);
-//                return;
-//            }
-            
-            if addressSubTitleView.editTextView.text == nil ||
-                addressSubTitleView.editTextView.text?.characters.count == 0 {
-                addressSubTitleView.sType = .Warning
-                KPPopoverView.popoverNotification("新增失敗",
-                                                  "店家地址尚未填寫！",
-                                                  150,
-                                                  nil);
-                return;
-            }
-            
-            if phoneSubTitleView.editTextField.text == nil ||
-                phoneSubTitleView.editTextField.text?.characters.count == 0 {
-                phoneSubTitleView.sType = .Warning
-                KPPopoverView.popoverNotification("新增失敗",
-                                                  "店家電話尚未填寫！",
-                                                  150,
-                                                  nil);
-                return;
-            }
-            
-            var tags = [KPDataTagModel]()
-            
-            if let indexPaths = featureCollectionView.indexPathsForSelectedItems {
-                for indexPath in indexPaths {
-                    tags.append(KPServiceHandler.sharedHandler.featureTags[indexPath.row])
+            if KPUserManager.sharedManager.currentUser == nil {
+                KPPopoverView.popoverLoginView()
+            } else {
+                if nameSubTitleView.editTextField.text == nil ||
+                    nameSubTitleView.editTextField.text?.characters.count == 0 {
+                    nameSubTitleView.sType = .Warning
+                    KPPopoverView.popoverNotification("新增失敗",
+                                                      "店家名稱尚未填寫！",
+                                                      150,
+                                                      nil);
+                    return;
+                }
+                
+                if citySubTitleView.editTextField.text == nil ||
+                    citySubTitleView.editTextField.text?.characters.count == 0 {
+                    citySubTitleView.sType = .Warning
+                    KPPopoverView.popoverNotification("新增失敗",
+                                                      "店家所在城市尚未選擇！",
+                                                      150,
+                                                      nil);
+                    return;
+                }
+                
+                if addressSubTitleView.editTextView.text == nil ||
+                    addressSubTitleView.editTextView.text?.characters.count == 0 {
+                    addressSubTitleView.sType = .Warning
+                    KPPopoverView.popoverNotification("新增失敗",
+                                                      "店家地址尚未填寫！",
+                                                      150,
+                                                      nil);
+                    return;
+                }
+                
+                if phoneSubTitleView.editTextField.text == nil ||
+                    phoneSubTitleView.editTextField.text?.characters.count == 0 {
+                    phoneSubTitleView.sType = .Warning
+                    KPPopoverView.popoverNotification("新增失敗",
+                                                      "店家電話尚未填寫！",
+                                                      150,
+                                                      nil);
+                    return;
+                }
+                
+                var tags = [KPDataTagModel]()
+                
+                if let indexPaths = featureCollectionView.indexPathsForSelectedItems {
+                    for indexPath in indexPaths {
+                        tags.append(KPServiceHandler.sharedHandler.featureTags[indexPath.row])
+                    }
+                }
+                
+                var businessHour: [String: String]
+                if businessHourCheckedView.checked == false || businessHourController == nil {
+                    businessHour = [:]
+                } else {
+                    businessHour = (businessHourController?.returnValue as? [String: String]) ?? [:]
+                }
+                
+                KPServiceHandler.sharedHandler.addNewShop(nameSubTitleView.editTextField.text ?? "",
+                                                          addressSubTitleView.editTextView.text ?? "",
+                                                          KPCityRegionModel.getKeyWithRegionString(citySubTitleView.editTextView.text) ?? "",
+                                                          selectedCoordinate.latitude,
+                                                          selectedCoordinate.longitude,
+                                                          facebookSubTitleView.editTextField.text ?? "",
+                                                          timeRadioBoxOne.groupValue as! Int,
+                                                          standDeskCheckBoxOne.groupValue as! Int,
+                                                          socketRadioBoxOne.groupValue as! Int,
+                                                          ratingController?.ratingViews[0].currentRate ?? 0,
+                                                          ratingController?.ratingViews[1].currentRate ?? 0,
+                                                          ratingController?.ratingViews[2].currentRate ?? 0,
+                                                          ratingController?.ratingViews[3].currentRate ?? 0,
+                                                          ratingController?.ratingViews[4].currentRate ?? 0,
+                                                          ratingController?.ratingViews[5].currentRate ?? 0,
+                                                          ratingController?.ratingViews[6].currentRate ?? 0,
+                                                          phoneSubTitleView.editTextField.text ?? "",
+                                                          tags,
+                                                          businessHour,
+                                                          KPPriceSelectController.priceRanges.index(of: priceSubTitleView.editTextField.text ?? "") ?? -1,
+                                                          photoUploadSubTitleView.images) {[unowned self] (success) in
+                                                            if success == true {
+                                                                KPPopoverView.popoverStoreInReviewNotification()
+                                                                self.appModalController()?.dismissControllerWithDefaultDuration()
+                                                            } else {
+                                                                KPPopoverView.popoverNotification("新增失敗",
+                                                                                                  "發生錯誤，請再試一次！",
+                                                                                                  150,
+                                                                                                  nil);
+                                                            }
+
                 }
             }
-            
-            var businessHour: [String: String]
-            if businessHourCheckedView.checked == false || businessHourController == nil {
-                businessHour = [:]
-            } else {
-                businessHour = (businessHourController?.returnValue as? [String: String]) ?? [:]
-            }
-            
-            KPServiceHandler.sharedHandler.addNewShop(nameSubTitleView.editTextField.text ?? "",
-                                                      addressSubTitleView.editTextView.text ?? "",
-                                                      ((countrySelectController?.returnValue as? (name: String, key: String))?.key) ?? "",
-                                                      selectedCoordinate.latitude,
-                                                      selectedCoordinate.longitude,
-                                                      facebookSubTitleView.editTextField.text ?? "",
-                                                      timeRadioBoxOne.groupValue as! Int,
-                                                      standDeskCheckBoxOne.groupValue as! Int,
-                                                      socketRadioBoxOne.groupValue as! Int,
-                                                      ratingController?.ratingViews[0].currentRate ?? 0,
-                                                      ratingController?.ratingViews[1].currentRate ?? 0,
-                                                      ratingController?.ratingViews[2].currentRate ?? 0,
-                                                      ratingController?.ratingViews[3].currentRate ?? 0,
-                                                      ratingController?.ratingViews[4].currentRate ?? 0,
-                                                      ratingController?.ratingViews[5].currentRate ?? 0,
-                                                      ratingController?.ratingViews[6].currentRate ?? 0,
-                                                      phoneSubTitleView.editTextField.text ?? "",
-                                                      tags,
-                                                      businessHour,
-                                                      priceSelectController?.priceRanges.index(of: priceSubTitleView.editTextField.text ?? "") ?? -1,
-                                                      photoUploadSubTitleView.images) {[unowned self] (success) in
-                                                        if success == true {
-                                                            KPPopoverView.popoverStoreInReviewNotification()
-                                                            self.appModalController()?.dismissControllerWithDefaultDuration()
-                                                        } else {
-                                                            KPPopoverView.popoverNotification("新增失敗",
-                                                                                              "發生錯誤，請再試一次！",
-                                                                                              150,
-                                                                                              nil);
-                                                        }
-
-            }
+        } else {
+            // TODO:
         }
-        
     }
     
     func handleAddressMapViewOnTap(_ gesture: UITapGestureRecognizer) {
@@ -722,8 +829,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
                                                          for: .touchUpInside)
         }
         
-        self.mapInputController.coordinate = CLLocationCoordinate2D(latitude: selectedCoordinate.latitude,
-                                                                    longitude: selectedCoordinate.longitude)
+        self.mapInputController.coordinate = selectedCoordinate
         
         controller.contentController = self.mapInputController
         controller.presentModalView()
@@ -823,7 +929,7 @@ extension KPNewStoreController: KPSharedSettingDelegate {
     
     func returnValueSet(_ controller: KPSharedSettingViewController) {
         if controller.identifiedKey == "country" {
-            self.citySubTitleView.content = (controller.returnValue as! (name: String, key: String)).name
+            self.citySubTitleView.content = controller.returnValue as! String
         } else if controller.identifiedKey == "price" {
             self.priceSubTitleView.content = controller.returnValue as! String
         } else if controller.identifiedKey == "rate" {
@@ -848,12 +954,19 @@ extension KPNewStoreController: UICollectionViewDelegate, UICollectionViewDataSo
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier:"cell",
                                                       for: indexPath) as! KPFeatureTagCell
         cell.featureLabel.text = KPServiceHandler.sharedHandler.featureTags[indexPath.row].name
-            return cell
+        
+        if let features = dataModel?.featureContents,
+            features.contains(KPServiceHandler.sharedHandler.featureTags[indexPath.row].identifier) {
+            cell.isSelected = true
+        } else {
+            cell.isSelected = false
+        }
+        
+        return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         sizingCell.featureLabel.text = KPServiceHandler.sharedHandler.featureTags[indexPath.row].name
-//        sizingCell.featureLabel.text = self.tags[indexPath.row]
         return CGSize(width: sizingCell.systemLayoutSizeFitting(UILayoutFittingCompressedSize).width,
                       height: 30)
     }

@@ -27,6 +27,8 @@ class KPBusinessHourViewController: KPSharedSettingViewController, KPTimePickerV
         NSForegroundColorAttributeName : KPColorPalette.KPTextColor.mainColor!,
         NSUnderlineStyleAttributeName : 1] as [String : Any]
     
+    var defaultBusinessHour: [String: String]?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -97,12 +99,21 @@ class KPBusinessHourViewController: KPSharedSettingViewController, KPTimePickerV
                              action: #selector(handleSendButtonOnTapped),
                              for: .touchUpInside)
         
+        if let businessHour = defaultBusinessHour {
+            setBusinessHour(businessHour)
+        }
+        
     }
     
     func setBusinessHour(_ businessHour: [String: String]?) {
         
         if let businessHour = businessHour {
-        
+            
+            if checkBoxViews.count == 0 {
+                defaultBusinessHour = businessHour
+                return
+            }
+            
             for checkBoxView in self.checkBoxViews {
                 checkBoxView.checkBox.checkState = .unchecked
             }

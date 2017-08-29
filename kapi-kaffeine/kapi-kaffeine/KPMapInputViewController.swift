@@ -18,7 +18,7 @@ class KPMapInputViewController: KPSharedSettingViewController, GMSMapViewDelegat
     var addressLabel: UILabel!
     
     var address: String?
-    var coordinate: CLLocationCoordinate2D?
+    var coordinate: CLLocationCoordinate2D!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,25 +30,21 @@ class KPMapInputViewController: KPSharedSettingViewController, GMSMapViewDelegat
         geocoder = GMSGeocoder()
         
         marker = GMSMarker()
+        marker.position = coordinate
         
-        var latitude: Double = 25.018744,  longtitude: Double = 121.532785
-        if let position = coordinate {
-            latitude = position.latitude
-            longtitude = position.longitude
-            marker.position = position
-            geocoder.reverseGeocodeCoordinate(position) {[unowned self] (geocodeResponse, error) in
-                if let gmsaddress = geocodeResponse?.firstResult(),
-                    let addressLines = gmsaddress.lines {
-                    var address = ""
-                    for line in addressLines {
-                        address += "\(line) "
-                    }
-                    self.address = address
+        geocoder.reverseGeocodeCoordinate(coordinate) {[unowned self] (geocodeResponse, error) in
+            if let gmsaddress = geocodeResponse?.firstResult(),
+                let addressLines = gmsaddress.lines {
+                var address = ""
+                for line in addressLines {
+                    address += "\(line) "
                 }
+                self.address = address
+                self.addressLabel.setText(text: address, lineSpacing: 3.0)
             }
         }
         
-        let camera = GMSCameraPosition.camera(withLatitude: latitude, longitude: longtitude, zoom: 18.0)
+        let camera = GMSCameraPosition.camera(withLatitude: coordinate.latitude, longitude: coordinate.longitude, zoom: 18.0)
         mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
         
         mapView.delegate = self
@@ -75,7 +71,7 @@ class KPMapInputViewController: KPSharedSettingViewController, GMSMapViewDelegat
         addressLabel.textColor = KPColorPalette.KPTextColor.grayColor
         container.addSubview(addressLabel)
         addressLabel.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|", "V:|-16-[$self]-16-|"])
-        addressLabel.setText(text: "點選地圖以選擇店家地址", lineSpacing: 3.0)
+        addressLabel.setText(text: address ?? "點選地圖以選擇店家地址", lineSpacing: 3.0)
         
         container.layer.cornerRadius = 4
         container.layer.borderWidth = 0.5
