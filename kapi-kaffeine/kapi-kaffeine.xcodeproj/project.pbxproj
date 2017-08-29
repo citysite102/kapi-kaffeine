@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4EEB682CBA070A438BA23B29 /* Pods_kapi_kaffeine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 693D5C21ACB83D68DF6CDE6C /* Pods_kapi_kaffeine.framework */; };
+		770904321F55C70000A9CCE3 /* KPAnalyticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770904311F55C70000A9CCE3 /* KPAnalyticManager.swift */; };
 		770AB5D31EB70E8E00EE8A3B /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770AB5D21EB70E8E00EE8A3B /* R.generated.swift */; };
 		7712D4E31ED72A200024C176 /* KPUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7712D4E21ED72A200024C176 /* KPUserDefaults.swift */; };
 		771EECA41EBC217B004A34B8 /* KPCheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771EECA31EBC217B004A34B8 /* KPCheckBox.swift */; };
@@ -221,6 +222,7 @@
 		5C9A071EB11610BEDE083D59 /* Pods_kapi_kaffeineUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_kapi_kaffeineUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		605CB2E5F236FDDFFE502CB5 /* Pods-kapi-kaffeine.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kapi-kaffeine.release.xcconfig"; path = "../Pods/Target Support Files/Pods-kapi-kaffeine/Pods-kapi-kaffeine.release.xcconfig"; sourceTree = "<group>"; };
 		693D5C21ACB83D68DF6CDE6C /* Pods_kapi_kaffeine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_kapi_kaffeine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		770904311F55C70000A9CCE3 /* KPAnalyticManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPAnalyticManager.swift; sourceTree = "<group>"; };
 		770AB5D21EB70E8E00EE8A3B /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = SOURCE_ROOT; };
 		7712D4E21ED72A200024C176 /* KPUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPUserDefaults.swift; sourceTree = "<group>"; };
 		771EECA31EBC217B004A34B8 /* KPCheckBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPCheckBox.swift; sourceTree = "<group>"; };
@@ -752,6 +754,7 @@
 				775989901EA5171A0029989C /* KPHelper+UI.swift */,
 				7762E3491F1225B20006E205 /* KPHelper+Foundation.swift */,
 				C031E9061EA5F0BF00E87FB1 /* KPLocationManager.swift */,
+				770904311F55C70000A9CCE3 /* KPAnalyticManager.swift */,
 			);
 			name = "Shared Class";
 			sourceTree = "<group>";
@@ -1672,6 +1675,7 @@
 				77B66FA61EAA70F3008B6652 /* KPBounceButton.swift in Sources */,
 				771EECB31EBC32E4004A34B8 /* KPCheckBoxRadioPathGenerator.swift in Sources */,
 				77E6BAA91F13F18300802992 /* KPExpNotificationView.swift in Sources */,
+				770904321F55C70000A9CCE3 /* KPAnalyticManager.swift in Sources */,
 				776ACB081E9BE51600B629A2 /* KPMainListCellFeatureContainer.swift in Sources */,
 				77869E1A1EB76F690027CA98 /* NetworkErrorHandler.swift in Sources */,
 				77869E161EB75B5C0027CA98 /* NetworkClient.swift in Sources */,

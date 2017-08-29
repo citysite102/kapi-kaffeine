@@ -15,7 +15,7 @@ extension Notification.Name {
 
 class KPLocationManager: NSObject, CLLocationManagerDelegate {
     
-    private static var mInstance:KPLocationManager?
+    private static var mInstance: KPLocationManager?
     
     private let locationManager = CLLocationManager()
     

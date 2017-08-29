@@ -509,6 +509,7 @@ class KPMainViewController: KPViewController {
     }
 
     func search() {
+        
         let controller = KPModalViewController()
         controller.edgeInset = UIEdgeInsets(top: 0,
                                             left: 0,

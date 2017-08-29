@@ -11,6 +11,76 @@ import UIKit
 import BenzeneFoundation
 
 
+struct KPAnalyticsEventPropertyKey {
+    static let proeperty_name = "name"
+    
+    static let proeperty_source = "source"
+    struct proeperty_source_value {
+        static let source_list = "list"
+        static let source_map = "map"
+        static let source_search = "search"
+        static let source_profile = "profile"
+    }
+}
+
+struct KPAnalyticsEvent {
+    
+    static let ads_click = "ads_click"
+    
+    static let cell_event = "cell_event"
+    // 紀錄點開來的店相關的屬性（可以知道哪間店被點開次數最多/評分，透過哪個管道）
+    // --> 知道從哪一頁點進去的 Map/List/Search/Profile
+    struct cellEventProperty {
+        static let store_name = "store_name"
+        static let store_rate = "store_rate"
+        static let source = "source"
+    }
+    
+    // 頁面
+    static let page_event = "page_event"
+    struct pageEventProperty {
+        static let list_page = "list_page"
+        static let map_page = "map_page"
+        static let detail_page = "datail_page"
+        static let search_page = "search_page"
+        static let profile_page = "profile_page"
+        static let setting_page = "setting_page"
+        static let aboutus_page = "aboutus_page"
+    }
+    
+    // 按鈕
+    static let button_click = "button_click"
+    struct buttonEventProperty {
+        
+        // Main
+        static let main_menu_button = "main_menu_button"
+        static let main_filter_button = "main_filter_button"
+        static let main_fast_filter_button = "main_fast_filter_button"
+        static let main_add_store_button = "main_add_store_button"
+        static let main_switch_mode_button = "main_switch_mode_button"
+        static let main_search_button = "main_search_button"
+        static let map_navigation_button = "map_navigation_button"
+        static let map_near_button = "map_near_button"
+        
+        // Store
+        static let store_more_button = "store_more_button"
+        static let store_favorite_button = "store_favorite_button"
+        static let store_visit_button = "store_visit_button"
+        static let store_rate_button = "store_rate_button"
+        static let store_comment_button = "store_comment_button"
+        static let store_streetview_button = "store_streetview_button"
+        static let store_navigation_button = "store_navigation_button"
+        
+        // Quick Search
+        static let quick_wifi_button = "quick_wifi_button"
+        static let quick_socket_button = "quick_socket_button"
+        static let quick_time_button = "quick_time_button"
+        static let quick_open_button = "quick_open_button"
+        static let quick_rate_button = "quick_rate_button"
+        static let quick_clear_button = "quick_clear_button"
+    }
+}
+
 struct KPNotification {
     struct information {
         static let commentInformation = "commentInformation"

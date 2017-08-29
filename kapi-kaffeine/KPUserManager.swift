@@ -14,6 +14,7 @@ import FacebookCore
 import ObjectMapper
 import PromiseKit
 import Crashlytics
+import Amplitude_iOS
 
 extension NSNotification.Name {
     public static let KPCurrentUserDidChange: NSNotification.Name = NSNotification.Name(rawValue: "KPCurrentUserDidChange")
@@ -117,6 +118,10 @@ public class KPUserManager {
                                                                                 Crashlytics.sharedInstance().setUserIdentifier(self.currentUser?.identifier)
                                                                                 Crashlytics.sharedInstance().setUserEmail(self.currentUser?.email)
                                                                                 Crashlytics.sharedInstance().setUserName(self.currentUser?.displayName)
+                                                                                
+                                                                                Amplitude.instance().setUserId(self.currentUser?.identifier)
+                                                                                Amplitude.instance().setUserProperties(["name": self.currentUser?.displayName ?? "No Name",
+                                                                                                                        "email": self.currentUser?.email ?? "No Email"])
                                                                                 
                                                                                 completion?(true)
                                                                                 
