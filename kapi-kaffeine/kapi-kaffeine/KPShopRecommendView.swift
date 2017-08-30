@@ -63,6 +63,9 @@ extension KPShopRecommendView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        KPAnalyticManager.sendCellClickEvent(self.displayDataModels[indexPath.row].name,
+                                             self.displayDataModels[indexPath.row].rateCount?.stringValue,
+                                             KPAnalyticsEventValue.source.source_recommend)
         let controller = KPInformationViewController()
         controller.informationDataModel = self.displayDataModels[indexPath.row]
         informationController?.navigationController?.pushViewController(controller, animated: true)

@@ -40,6 +40,8 @@ class KPSettingViewController: KPViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        KPAnalyticManager.sendPageViewEvent(KPAnalyticsEventValue.page.setting_page)
+        
         view.backgroundColor = UIColor.white
         navigationController?.navigationBar.topItem?.title = "設定"
         

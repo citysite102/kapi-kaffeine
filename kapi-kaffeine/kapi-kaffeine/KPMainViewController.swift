@@ -259,53 +259,27 @@ class KPMainViewController: KPViewController {
     // MARK: Data
     
     func fetchRemoteData() {
-//        KPServiceHandler.sharedHandler.fetchRemoteData(2,
-//                                                       1,
-//                                                       nil,
-//                                                       nil,
-//                                                       nil) {
-//                                                        (results: [KPDataModel]?,
-//                                                        error: NetworkRequestError?) in
-//                                                        DispatchQueue.main.async {
-//                                                            if results != nil {
-//                                                                self.setDisplayDataModel(KPFilter.sharedFilter.currentFilterCafeDatas(),
-//                                                                                         false)
-//                                                                self.updateStatusContainerState(true, nil)
-//                                                            } else if let requestError = error {
-//                                                                self.updateStatusContainerState(false, nil)
-//                                                                switch requestError {
-//                                                                case .noNetworkConnection:
-//                                                                    self.mainListViewController?.state = .noInternet
-//                                                                    self.mainMapViewController?.state = .noInternet
-//                                                                default:
-//                                                                    self.mainMapViewController?.state = .failed
-//                                                                    print("錯誤萬歲: \(requestError)")
-//                                                                }
-//                                                            }
-//                                                        }
-        
-                                                        KPServiceHandler.sharedHandler.fetchRemoteData() {
-                                                            (results: [KPDataModel]?,
-                                                            error: NetworkRequestError?) in
-                                                            DispatchQueue.main.async {
-                                                                if results != nil {
-                                                                    self.setDisplayDataModel(KPFilter.sharedFilter.currentFilterCafeDatas(),
-                                                                                             false)
-                                                                    self.updateStatusContainerState(true, nil)
-                                                                } else if let requestError = error {
-                                                                    self.updateStatusContainerState(false, nil)
-                                                                    switch requestError {
-                                                                        case .noNetworkConnection:
-                                                                            self.mainListViewController?.state = .noInternet
-                                                                            self.mainMapViewController?.state = .noInternet
-                                                                        default:
-                                                                            self.mainMapViewController?.state = .failed
-                                                                            print("錯誤萬歲: \(requestError)")
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-//        }
+        KPServiceHandler.sharedHandler.fetchRemoteData() {
+            (results: [KPDataModel]?,
+            error: NetworkRequestError?) in
+            DispatchQueue.main.async {
+                if results != nil {
+                    self.setDisplayDataModel(KPFilter.sharedFilter.currentFilterCafeDatas(),
+                                             false)
+                    self.updateStatusContainerState(true, nil)
+                } else if let requestError = error {
+                    self.updateStatusContainerState(false, nil)
+                    switch requestError {
+                        case .noNetworkConnection:
+                            self.mainListViewController?.state = .noInternet
+                            self.mainMapViewController?.state = .noInternet
+                        default:
+                            self.mainMapViewController?.state = .failed
+                            print("錯誤萬歲: \(requestError)")
+                    }
+                }
+            }
+        }
         
         if (KPUserManager.sharedManager.currentUser != nil) {
             KPUserManager.sharedManager.updateUserInformation()
@@ -364,6 +338,8 @@ class KPMainViewController: KPViewController {
     
     func switchSideBar() {
         
+        KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.main_menu_button)
+        
         statusBarShouldBeHidden = true
         UIView.animate(withDuration: 0.1) {
             self.setNeedsStatusBarAppearanceUpdate()
@@ -375,6 +351,9 @@ class KPMainViewController: KPViewController {
     }
     
     func changeStyle() {
+        
+        KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.main_switch_mode_button)
+        
         let iconImage = (self.currentController == self.mainListViewController) ?
             R.image.icon_list()!.withRenderingMode(.alwaysTemplate) :
             R.image.icon_map()!.withRenderingMode(.alwaysTemplate)
@@ -509,6 +488,8 @@ class KPMainViewController: KPViewController {
     }
 
     func search() {
+        
+        KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.main_search_button)
         
         let controller = KPModalViewController()
         controller.edgeInset = UIEdgeInsets(top: 0,
@@ -685,16 +666,22 @@ extension KPMainViewController: KPSearchTagViewDelegate, KPSearchConditionViewCo
             switch searchTag {
             case .wifi:
                 KPFilter.sharedFilter.wifiRate = 5
+                KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.quick_wifi_button)
             case .socket:
                 KPFilter.sharedFilter.socket = 1
+                KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.quick_socket_button)
             case .limitTime:
                 KPFilter.sharedFilter.limited_time = 2
+                KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.quick_time_button)
             case .opening:
                 KPFilter.sharedFilter.currentOpening = true
+                KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.quick_open_button)
             case .highRate:
                 KPFilter.sharedFilter.averageRate = 4
+                KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.quick_rate_button)
             case .clear:
                 self.mainMapViewController?.showAllButton.isHidden = true
+                KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.quick_clear_button)
                 KPFilter.sharedFilter.restoreDefaultSettings()
             }
             

@@ -119,6 +119,8 @@ class KPMainListViewController:
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        KPAnalyticManager.sendPageViewEvent(KPAnalyticsEventValue.page.list_page)
+        
         statusContainerView = UIView()
         statusContainerView.backgroundColor = UIColor.white
         view.addSubview(statusContainerView)
@@ -268,6 +270,9 @@ class KPMainListViewController:
     }
     
     func handleAddButtonTapped(_ sender: UIButton) {
+        
+        KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.list_add_store_button)
+        
         let controller = KPModalViewController()
         controller.edgeInset = UIEdgeInsets(top: 0,
                                             left: 0,
@@ -539,6 +544,11 @@ extension KPMainListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let dataModel = self.displayDataModel[indexPath.row] as? KPDataModel {
+            
+            KPAnalyticManager.sendCellClickEvent(dataModel.name,
+                                                 dataModel.averageRate?.stringValue,
+                                                 KPAnalyticsEventValue.source.source_list)
+            
             self.currentDataModel = dataModel
             self.currentSelectedCell = tableView.cellForRow(at: indexPath) as? KPMainListTableViewCell
             self.snapShotShowing = true

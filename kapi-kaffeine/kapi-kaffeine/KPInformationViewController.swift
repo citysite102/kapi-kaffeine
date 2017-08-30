@@ -144,6 +144,9 @@ class KPInformationViewController: KPViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        KPAnalyticManager.sendPageViewEvent(KPAnalyticsEventValue.page.detail_page)
+        
         view.backgroundColor = UIColor.white
         navigationItem.title = informationDataModel.name
         navigationController?.delegate = self
@@ -191,7 +194,6 @@ class KPInformationViewController: KPViewController {
         let editButton = UIAlertAction(title: "編輯店家資料",
                                        style: .default) {
                                         [unowned self] (_) in
-//                                        KPPopoverView.popoverUnsupportedView()
                                         let controller = KPModalViewController()
                                         controller.edgeInset = UIEdgeInsets(top: 0,
                                                                             left: 0,
@@ -207,8 +209,7 @@ class KPInformationViewController: KPViewController {
         }
         
         let reportButton = UIAlertAction(title: "錯誤回報",
-                                         style: .default) {
-                                            [unowned self] (_) in
+                                         style: .default) { (_) in
                                             let controller = KPModalViewController()
                                             controller.edgeInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
                                             let settingController = KPReportController()
@@ -289,6 +290,7 @@ class KPInformationViewController: KPViewController {
         informationHeaderView.informationController = self
         informationHeaderView.scoreLabel.text = String(format: "%.1f", informationDataModel.averageRate?.doubleValue ?? 0.0)
         informationHeaderView.facebookButton.isHidden = !(informationDataModel.facebookURL != nil)
+        
         if let photoURL = informationDataModel.covers?["google_l"] {
             informationHeaderView.shopPhoto.af_setImage(withURL: URL(string: photoURL)!,
                                                         placeholderImage: nil,
@@ -429,6 +431,7 @@ class KPInformationViewController: KPViewController {
                    color:KPColorPalette.KPMainColor.mainColor!,
                    icon:(R.image.icon_navi()?.withRenderingMode(.alwaysTemplate))!,
                    handler:{ [weak self] (infoView) -> () in
+                    KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.store_navigation_button)
                     if let weSelf = self {
                         weSelf.present(weSelf.mapActionController,
                                        animated: true,
@@ -990,6 +993,7 @@ class KPInformationViewController: KPViewController {
     }
     
     func handleMoreButtonOnTapped() {
+        KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.store_more_button)
         present(actionController,
                 animated: true,
                 completion: nil)

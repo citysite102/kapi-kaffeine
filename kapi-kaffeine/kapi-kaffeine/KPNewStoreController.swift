@@ -79,7 +79,6 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
     var addressMapView: GMSMapView!
     var phoneSubTitleView: KPSubTitleEditView!
     var facebookSubTitleView: KPSubTitleEditView!
-    
     var photoUploadSubTitleView: KPSubTitlePhotoUploadView!
     
     var nameInputController: KPSubtitleInputController!
@@ -88,10 +87,6 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
     var priceSelectController: KPPriceSelectController?
     var businessHourController: KPBusinessHourViewController?
     var mapInputController: KPMapInputViewController!
-    
-//    let tags = ["工業風", "藝術", "文青", "老屋", "美式風",
-//                "服務佳", "有寵物", "開很晚", "手沖單品", "好停車",
-//                "很多書", "適合工作", "適合讀書", "聚會佳", "可預約", "可包場"]
     
     var featureCollectionView: UICollectionView!
     var featureCollectionViewHeightConstraint: NSLayoutConstraint!
@@ -709,6 +704,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
     
 
     func handleDismissButtonOnTapped() {
+        KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.new_dismiss_button)
         appModalController()?.dismissControllerWithDefaultDuration()
     }
     
@@ -717,103 +713,99 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
     }
     
     func handleSendButtonOnTapped() {
-        
+        KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.new_send_button)
         if KPUserManager.sharedManager.currentUser == nil {
             KPPopoverView.popoverLoginView()
         
         } else if type == .add {
+        
+            if nameSubTitleView.editTextField.text == nil ||
+                nameSubTitleView.editTextField.text?.characters.count == 0 {
+                nameSubTitleView.sType = .Warning
+                KPPopoverView.popoverNotification("新增失敗",
+                                                  "店家名稱尚未填寫！",
+                                                  150,
+                                                  nil);
+                return;
+            }
             
-//            if KPUserManager.sharedManager.currentUser == nil {
-//                KPPopoverView.popoverLoginView()
-//            } else {
-                if nameSubTitleView.editTextField.text == nil ||
-                    nameSubTitleView.editTextField.text?.characters.count == 0 {
-                    nameSubTitleView.sType = .Warning
-                    KPPopoverView.popoverNotification("新增失敗",
-                                                      "店家名稱尚未填寫！",
-                                                      150,
-                                                      nil);
-                    return;
+            if citySubTitleView.editTextField.text == nil ||
+                citySubTitleView.editTextField.text?.characters.count == 0 {
+                citySubTitleView.sType = .Warning
+                KPPopoverView.popoverNotification("新增失敗",
+                                                  "店家所在城市尚未選擇！",
+                                                  150,
+                                                  nil);
+                return;
+            }
+            
+            if addressSubTitleView.editTextView.text == nil ||
+                addressSubTitleView.editTextView.text?.characters.count == 0 {
+                addressSubTitleView.sType = .Warning
+                KPPopoverView.popoverNotification("新增失敗",
+                                                  "店家地址尚未填寫！",
+                                                  150,
+                                                  nil);
+                return;
+            }
+            
+            if phoneSubTitleView.editTextField.text == nil ||
+                phoneSubTitleView.editTextField.text?.characters.count == 0 {
+                phoneSubTitleView.sType = .Warning
+                KPPopoverView.popoverNotification("新增失敗",
+                                                  "店家電話尚未填寫！",
+                                                  150,
+                                                  nil);
+                return;
+            }
+            
+            var tags = [KPDataTagModel]()
+            
+            if let indexPaths = featureCollectionView.indexPathsForSelectedItems {
+                for indexPath in indexPaths {
+                    tags.append(KPServiceHandler.sharedHandler.featureTags[indexPath.row])
                 }
-                
-                if citySubTitleView.editTextField.text == nil ||
-                    citySubTitleView.editTextField.text?.characters.count == 0 {
-                    citySubTitleView.sType = .Warning
-                    KPPopoverView.popoverNotification("新增失敗",
-                                                      "店家所在城市尚未選擇！",
-                                                      150,
-                                                      nil);
-                    return;
-                }
-                
-                if addressSubTitleView.editTextView.text == nil ||
-                    addressSubTitleView.editTextView.text?.characters.count == 0 {
-                    addressSubTitleView.sType = .Warning
-                    KPPopoverView.popoverNotification("新增失敗",
-                                                      "店家地址尚未填寫！",
-                                                      150,
-                                                      nil);
-                    return;
-                }
-                
-                if phoneSubTitleView.editTextField.text == nil ||
-                    phoneSubTitleView.editTextField.text?.characters.count == 0 {
-                    phoneSubTitleView.sType = .Warning
-                    KPPopoverView.popoverNotification("新增失敗",
-                                                      "店家電話尚未填寫！",
-                                                      150,
-                                                      nil);
-                    return;
-                }
-                
-                var tags = [KPDataTagModel]()
-                
-                if let indexPaths = featureCollectionView.indexPathsForSelectedItems {
-                    for indexPath in indexPaths {
-                        tags.append(KPServiceHandler.sharedHandler.featureTags[indexPath.row])
-                    }
-                }
-                
-                var businessHour: [String: String]
-                if businessHourCheckedView.checked == false || businessHourController == nil {
-                    businessHour = [:]
-                } else {
-                    businessHour = (businessHourController?.returnValue as? [String: String]) ?? [:]
-                }
-                
-                KPServiceHandler.sharedHandler.addNewShop(nameSubTitleView.editTextField.text ?? "",
-                                                          addressSubTitleView.editTextView.text ?? "",
-                                                          KPCityRegionModel.getKeyWithRegionString(citySubTitleView.editTextField.text) ?? "",
-                                                          selectedCoordinate.latitude,
-                                                          selectedCoordinate.longitude,
-                                                          facebookSubTitleView.editTextField.text ?? "",
-                                                          timeRadioBoxOne.groupValue as! Int,
-                                                          standDeskCheckBoxOne.groupValue as! Int,
-                                                          socketRadioBoxOne.groupValue as! Int,
-                                                          ratingController?.ratingViews[0].currentRate ?? 0,
-                                                          ratingController?.ratingViews[1].currentRate ?? 0,
-                                                          ratingController?.ratingViews[2].currentRate ?? 0,
-                                                          ratingController?.ratingViews[3].currentRate ?? 0,
-                                                          ratingController?.ratingViews[4].currentRate ?? 0,
-                                                          ratingController?.ratingViews[5].currentRate ?? 0,
-                                                          ratingController?.ratingViews[6].currentRate ?? 0,
-                                                          phoneSubTitleView.editTextField.text ?? "",
-                                                          tags,
-                                                          businessHour,
-                                                          KPPriceSelectController.priceRanges.index(of: priceSubTitleView.editTextField.text ?? "") ?? -1,
-                                                          photoUploadSubTitleView.images) {[unowned self] (success) in
-                                                            if success == true {
-                                                                KPPopoverView.popoverStoreInReviewNotification()
-                                                                self.appModalController()?.dismissControllerWithDefaultDuration()
-                                                            } else {
-                                                                KPPopoverView.popoverNotification("新增失敗",
-                                                                                                  "發生錯誤，請再試一次！",
-                                                                                                  150,
-                                                                                                  nil);
-                                                            }
+            }
+            
+            var businessHour: [String: String]
+            if businessHourCheckedView.checked == false || businessHourController == nil {
+                businessHour = [:]
+            } else {
+                businessHour = (businessHourController?.returnValue as? [String: String]) ?? [:]
+            }
+            
+            KPServiceHandler.sharedHandler.addNewShop(nameSubTitleView.editTextField.text ?? "",
+                                                      addressSubTitleView.editTextView.text ?? "",
+                                                      KPCityRegionModel.getKeyWithRegionString(citySubTitleView.editTextField.text) ?? "",
+                                                      selectedCoordinate.latitude,
+                                                      selectedCoordinate.longitude,
+                                                      facebookSubTitleView.editTextField.text ?? "",
+                                                      timeRadioBoxOne.groupValue as! Int,
+                                                      standDeskCheckBoxOne.groupValue as! Int,
+                                                      socketRadioBoxOne.groupValue as! Int,
+                                                      ratingController?.ratingViews[0].currentRate ?? 0,
+                                                      ratingController?.ratingViews[1].currentRate ?? 0,
+                                                      ratingController?.ratingViews[2].currentRate ?? 0,
+                                                      ratingController?.ratingViews[3].currentRate ?? 0,
+                                                      ratingController?.ratingViews[4].currentRate ?? 0,
+                                                      ratingController?.ratingViews[5].currentRate ?? 0,
+                                                      ratingController?.ratingViews[6].currentRate ?? 0,
+                                                      phoneSubTitleView.editTextField.text ?? "",
+                                                      tags,
+                                                      businessHour,
+                                                      KPPriceSelectController.priceRanges.index(of: priceSubTitleView.editTextField.text ?? "") ?? -1,
+                                                      photoUploadSubTitleView.images) {[unowned self] (success) in
+                                                        if success == true {
+                                                            KPPopoverView.popoverStoreInReviewNotification()
+                                                            self.appModalController()?.dismissControllerWithDefaultDuration()
+                                                        } else {
+                                                            KPPopoverView.popoverNotification("新增失敗",
+                                                                                              "發生錯誤，請再試一次！",
+                                                                                              150,
+                                                                                              nil);
+                                                        }
 
-                }
-//            }
+            }
         } else {
             
             if nameSubTitleView.editTextField.text == nil ||

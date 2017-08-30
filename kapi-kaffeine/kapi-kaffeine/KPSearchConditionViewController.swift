@@ -462,6 +462,7 @@ class KPSearchConditionViewController: KPViewController {
     }
     
     func handleSearchButtonOnTap(_ sender: UIButton) {
+        KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.condition_search_button)
         delegate?.searchConditionControllerDidSearch(self)
         appModalController()?.dismissControllerWithDefaultDuration()
     }

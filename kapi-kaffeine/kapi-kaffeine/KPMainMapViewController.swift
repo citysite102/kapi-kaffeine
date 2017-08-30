@@ -203,6 +203,7 @@ GMUClusterRendererDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        KPAnalyticManager.sendPageViewEvent(KPAnalyticsEventValue.page.map_page)
         
         let camera = GMSCameraPosition.camera(withLatitude: 25.018744, longitude: 121.532785, zoom: 18.0)
         mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
@@ -384,6 +385,9 @@ GMUClusterRendererDelegate {
     }
     
     func handleAddButtonTapped(_ sender: UIButton) {
+        
+        KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.map_add_store_button)
+        
         let controller = KPModalViewController()
         controller.edgeInset = UIEdgeInsets(top: 0,
                                             left: 0,
@@ -396,6 +400,9 @@ GMUClusterRendererDelegate {
     }
     
     func handleCurrentLocationButtonOnTap(_ sender: UIButton) {
+        
+        KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.map_navigation_button)
+        
         if CLLocationManager.authorizationStatus() != .authorizedAlways &&
             CLLocationManager.authorizationStatus() != .authorizedWhenInUse {
             KPPopoverView.popoverDefaultStyleContent("開啟定位",
@@ -409,6 +416,8 @@ GMUClusterRendererDelegate {
     }
     
     func handleNearestButtonOnTap(_ sender: UIButton) {
+        
+        KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.map_near_button)
         
         if KPLocationManager.sharedInstance().currentLocation == nil {
             if CLLocationManager.authorizationStatus() != .authorizedAlways &&
@@ -477,8 +486,14 @@ GMUClusterRendererDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.currentDataModel = self.displayDataModel[indexPath.row]
-        self.mainController.performSegue(withIdentifier: "datailedInformationSegue", sender: self)
+        
+        if let dataModel = self.displayDataModel[indexPath.row] as? KPDataModel {
+            KPAnalyticManager.sendCellClickEvent(dataModel.name,
+                                                 dataModel.averageRate?.stringValue,
+                                                 KPAnalyticsEventValue.source.source_map)
+            self.currentDataModel = dataModel
+            self.mainController.performSegue(withIdentifier: "datailedInformationSegue", sender: self)
+        }
     }
     
     func scrollViewWillEndDragging(_ scrollView: UIScrollView,

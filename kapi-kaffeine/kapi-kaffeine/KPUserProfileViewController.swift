@@ -85,6 +85,8 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        KPAnalyticManager.sendPageViewEvent(KPAnalyticsEventValue.page.profile_page)
+        
         view.backgroundColor = UIColor.white
         navigationController?.navigationBar.topItem?.title = "個人資料"
         navigationController?.navigationBar.setBackgroundImage(UIImage(),
@@ -340,6 +342,11 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
     // MARK: UITableView Delegate
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        KPAnalyticManager.sendCellClickEvent(self.displayDataModels[tableView.tag][indexPath.row].name,
+                                             self.displayDataModels[tableView.tag][indexPath.row].averageRate?.stringValue,
+                                             KPAnalyticsEventValue.source.source_profile)
+        
         let controller = KPInformationViewController()
         controller.informationDataModel = self.displayDataModels[tableView.tag][indexPath.row]
         controller.showBackButton = true

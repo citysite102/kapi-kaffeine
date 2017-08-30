@@ -85,6 +85,7 @@ class KPInformationHeaderButtonBar: UIView {
                                                         if headerButton.selected == false {
                                                             headerButton.selected = true
                                                             headerButton.numberValue = headerButton.numberValue + 1
+                                                            KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.store_favorite_button)
                                                             KPServiceHandler.sharedHandler.addFavoriteCafe()
                                                         } else {
                                                             DispatchQueue.main.asyncAfter(deadline: .now()) {
@@ -110,6 +111,7 @@ class KPInformationHeaderButtonBar: UIView {
                                                   handler: { [unowned self] (headerButton) -> () in
                                                     
                                                     if headerButton.selected == false {
+                                                        KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.store_visit_button)
                                                         if let visitedMembers = self.informationDataModel.visitedMembers {
                                                             var photoArray: [String] = [String]()
                                                             for member in visitedMembers {
@@ -162,6 +164,8 @@ class KPInformationHeaderButtonBar: UIView {
                                                  defaultInfo: "尚無評分",
                                                  icon: R.image.icon_star()!,
                                                  handler: { [unowned self] (headerButton) -> () in
+                                                    
+                                                    KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.store_rate_button)
                                                     let controller = KPModalViewController()
                                                     controller.edgeInset = UIEdgeInsets(top: UIDevice().isSuperCompact ? 32 : 72,
                                                                                         left: 0,
@@ -182,6 +186,7 @@ class KPInformationHeaderButtonBar: UIView {
                                                     defaultInfo: "尚無評論",
                                                     icon: R.image.icon_comment()!,
                                                     handler: { [unowned self] (headerButton) -> () in
+                                                        KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.store_comment_button)
                                                         let newCommentViewController = KPNewCommentController()
                                                         if self.informationController != nil {
                                                             

@@ -69,6 +69,8 @@ class KPSearchViewController: KPViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        KPAnalyticManager.sendPageViewEvent(KPAnalyticsEventValue.page.search_page)
+
         view.backgroundColor = UIColor.white
         ref = Database.database().reference()
         
@@ -361,8 +363,17 @@ extension KPSearchViewController: UITableViewDelegate, UITableViewDataSource {
                 KPUserDefaults.recentSearch = recentSearch
             }
             
+            KPAnalyticManager.sendCellClickEvent(filteredDataModel[indexPath.row].name,
+                                                 filteredDataModel[indexPath.row].averageRate?.stringValue,
+                                                 KPAnalyticsEventValue.source.source_search)
+            
+            
         } else {
             infoController.informationDataModel = recentSearchModel[indexPath.row]
+            
+            KPAnalyticManager.sendCellClickEvent(recentSearchModel[indexPath.row].name,
+                                                 recentSearchModel[indexPath.row].averageRate?.stringValue,
+                                                 KPAnalyticsEventValue.source.source_search)
         }
         
         if searchController.searchBar.isFirstResponder {

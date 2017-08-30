@@ -20,4 +20,29 @@ public class KPAnalyticManager {
             Amplitude.instance().logEvent(eventName)
         }
     }
+    
+    static func sendButtonClickEvent(_ buttonName: String!) {
+        KPAnalyticManager.sendEvent(KPAnalyticsEvent.button_click,
+                                    [KPAnalyticsEventProperty.name: buttonName])
+    }
+    
+    static func sendCellClickEvent(_ storeName: String!,
+                                   _ storeRating: String?,
+                                   _ source: String! ) {
+        KPAnalyticManager.sendEvent(KPAnalyticsEvent.cell_click,
+                                    [KPAnalyticsEventProperty.store_name: storeName,
+                                     KPAnalyticsEventProperty.store_rate: storeRating ?? KPAnalyticsEventValue.unknown,
+                                     KPAnalyticsEventProperty.source: source])
+    }
+    
+    static func sendAdsClickEvent() {
+        KPAnalyticManager.sendEvent(KPAnalyticsEvent.ads_click,
+                                    nil)
+    }
+    
+    
+    static func sendPageViewEvent(_ pageName: String!) {
+        KPAnalyticManager.sendEvent(KPAnalyticsEvent.page_event,
+                                    [KPAnalyticsEventProperty.name: pageName])
+    }
 }

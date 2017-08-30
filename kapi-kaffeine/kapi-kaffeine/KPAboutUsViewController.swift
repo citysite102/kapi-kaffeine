@@ -76,6 +76,8 @@ class KPAboutUsViewController: KPViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        KPAnalyticManager.sendPageViewEvent(KPAnalyticsEventValue.page.aboutus_page)
+        
         view.backgroundColor = UIColor.white
         navigationController?.navigationBar.topItem?.title = "關於我們"
         
