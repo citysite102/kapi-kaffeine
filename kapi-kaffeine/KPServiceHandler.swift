@@ -265,7 +265,7 @@ class KPServiceHandler {
         let modifyRequest = KPModifyCafeDataRequest()
         
         let loadingView = KPLoadingView(("修改中..", "修改成功", "修改失敗"))
-        UIApplication.shared.topViewController.view.addSubview(loadingView)
+        UIApplication.shared.KPTopViewController().view.addSubview(loadingView)
         loadingView.addConstraints(fromStringArray: ["V:|[$self]|",
                                                      "H:|[$self]|"])
         
