@@ -816,11 +816,21 @@ class KPServiceHandler {
         
         var uploadRequests = [Promise<(RawJsonResult)>]()
         for photo in photos {
-            let uploadPhotoRequest = KPPhotoUploadRequest()
-            let uploadPromise = uploadPhotoRequest.perform(cafeID ?? (currentDisplayModel?.identifier)!,
-                                                           nil,
-                                                           photo.jpegData(withQuality: 1))
-            uploadRequests.append(uploadPromise)
+            if let imageData = UIImageJPEGRepresentation(photo, 1) {
+                let uploadPhotoRequest = KPPhotoUploadRequest()
+                let uploadPromise = uploadPhotoRequest.perform(cafeID ?? (currentDisplayModel?.identifier)!,
+                                                               nil,
+                                                               imageData)
+                uploadRequests.append(uploadPromise)
+            } else {
+//                let uploadPhotoRequest = KPPhotoUploadRequest()
+//                let uploadPromise = uploadPhotoRequest.perform(cafeID ?? (currentDisplayModel?.identifier)!,
+//                                                               nil,
+//                                                               photo.jpegData(withQuality: 1))
+//                uploadRequests.append(uploadPromise)
+                loadingView.state = .failed
+                completion?(false)
+            }
         }
         
         /*
