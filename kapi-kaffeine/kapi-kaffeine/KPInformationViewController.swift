@@ -291,7 +291,7 @@ class KPInformationViewController: KPViewController {
         informationHeaderView.scoreLabel.text = String(format: "%.1f", informationDataModel.averageRate?.doubleValue ?? 0.0)
         informationHeaderView.facebookButton.isHidden = !(informationDataModel.facebookURL != nil)
         
-        if let photoURL = informationDataModel.covers?["google_l"] {
+        if let photoURL = informationDataModel.covers?["kapi_l"] ?? informationDataModel.covers?["google_l"] {
             informationHeaderView.shopPhoto.af_setImage(withURL: URL(string: photoURL)!,
                                                         placeholderImage: nil,
                                                         filter: nil,
