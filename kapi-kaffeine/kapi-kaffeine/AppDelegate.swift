@@ -50,6 +50,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 //        Balto.withLongPress(minimumPressDuration: 1.5, options: [kBaltoHideMenu: true])
 //        Balto.withCustomSwipe(numberOfTouchesRequired: 2, direction: .down, options: [kBaltoHideMenu: true])
         
+        // iRate
+        iRate.sharedInstance().appStoreID = 1261224197
+        if iRate.sharedInstance().ratedThisVersion {
+            iRate.sharedInstance().promptAtLaunch = false
+        } else {
+            iRate.sharedInstance().remindPeriod = 7
+        }
+        
         if #available(iOS 10.0, *) {
             // For iOS 10 display notification (sent via APNS)
             UNUserNotificationCenter.current().delegate = self

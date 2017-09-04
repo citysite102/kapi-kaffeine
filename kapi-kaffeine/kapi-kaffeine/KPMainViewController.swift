@@ -207,7 +207,24 @@ class KPMainViewController: KPViewController {
                                                selector: #selector(fetchRemoteData),
                                                name: NSNotification.Name.UIApplicationDidBecomeActive,
                                                object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(windowDidBecomeVisible(_:)),
+                                               name: NSNotification.Name.UIWindowDidBecomeVisible,
+                                               object: nil)
+        
     }
+    
+    func windowDidBecomeVisible(_ notification:Notification){
+        
+        let window = notification.object as! UIWindow
+        let windows = UIApplication.shared.windows
+        
+        print("\nwindow目前總數：\(windows.count)")
+        print("Become Visible資訊：\(window)")
+        print("windowLevel數值：\(window.windowLevel)\n")
+    }
+    
     
     override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
         return .fade
