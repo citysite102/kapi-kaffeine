@@ -74,6 +74,17 @@ class KPCityRegionModel: NSObject {
                                                                    longitude: 120.299913),
                                             CLLocationCoordinate2D(latitude: 22.668857,
                                                                    longitude: 120.4837693)],
+                           expanded: false),
+                regionData(name:"其他國家",
+                           icon:R.image.icon_global()!,
+                           cities:["日本 Japan", "英國 England", "美國 United States"],
+                           cityKeys:["chiayi", "tainan", "kaohsiung", "pingtung"],
+                           cityCoordinate: [CLLocationCoordinate2D(latitude: 35.6811673,
+                                                                   longitude: 139.7648576),
+                                            CLLocationCoordinate2D(latitude: 51.5316396,
+                                                                   longitude: -0.1266171),
+                                            CLLocationCoordinate2D(latitude: 37.7631955,
+                                                                   longitude: -122.4294305)],
                            expanded: false)]
     
     static func getRegionStringWithKey(_ key: String?) -> String? {
