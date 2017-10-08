@@ -119,12 +119,16 @@ class KPServiceHandler {
                          _ standingDesk: NSNumber? = nil,
                          _ mrt: String? = nil,
                          _ city: String? = nil,
+                         _ rightTop: CLLocationCoordinate2D? = nil,
+                         _ leftBottom: CLLocationCoordinate2D? = nil,
                          _ completion:((_ result: [KPDataModel]?, _ error: NetworkRequestError?) -> Void)!) {
         kapiDataRequest.perform(limitedTime,
                                 socket,
                                 standingDesk,
                                 mrt,
-                                city).then { result -> Void in
+                                city,
+                                rightTop,
+                                leftBottom).then { result -> Void in
                                     DispatchQueue.global().async {
                                         var cafeDatas = [KPDataModel]()
                                         if result["data"].arrayObject != nil {

@@ -94,7 +94,9 @@ GMUClusterRendererDelegate {
     
     var reloadNeeded: Bool = true
     
-
+    var draggingByUser: Bool = true
+    
+    
     var snapShotShowing: Bool = false {
         didSet {
             DispatchQueue.main.async {
@@ -514,6 +516,7 @@ GMUClusterRendererDelegate {
             let marker = renderer.markers().filter({ (marker) -> Bool in
                 marker.userData as? KPDataModel == self.currentDataModel
             }).first {
+            self.draggingByUser = false
             CATransaction.begin()
             CATransaction.setValue(NSNumber(floatLiteral: 0.5), forKey: kCATransactionAnimationDuration)
             self.mapView.animate(to: GMSCameraPosition.camera(withTarget: marker.position , zoom: self.mapView.camera.zoom))
@@ -523,6 +526,7 @@ GMUClusterRendererDelegate {
                 self.mapView.selectedMarker = marker
             })
         }
+    
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -538,6 +542,8 @@ GMUClusterRendererDelegate {
     // MARK: GMSMapViewDelegate
     
     func mapView(_ mapView: GMSMapView, markerInfoWindow marker: GMSMarker) -> UIView? {
+        
+        draggingByUser = false
         
         // 過濾cluster的marker
         if (marker.userData as? KPDataModel) == nil {
@@ -590,6 +596,11 @@ GMUClusterRendererDelegate {
     }
     
     func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition) {
+        if draggingByUser == true {
+            mainController.reFetchRemoteData()
+        } else {
+            draggingByUser = true
+        }
         UIView.animate(withDuration: 0.2,
                        animations: {
                         self.nearestButton.alpha = 1.0
@@ -602,6 +613,8 @@ GMUClusterRendererDelegate {
         if self.isCollectionViewShow {
             self.isCollectionViewShow = false
         }
+        
+        draggingByUser = false
         
         CATransaction.begin()
         CATransaction.setValue(NSNumber(floatLiteral: 0.5), forKey: kCATransactionAnimationDuration)
