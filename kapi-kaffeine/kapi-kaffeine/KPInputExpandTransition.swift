@@ -9,8 +9,6 @@
 import UIKit
 
 protocol InputTransitionProtocol {
-//    func tranisitionSetup()
-//    func tranisitionCleanup()
     func inputSubTitleLabelFrame() -> CGRect
     func inputTextfieldFrame() -> CGRect
     
@@ -103,13 +101,13 @@ class KPInputExpandTransition: NSObject, UIViewControllerAnimatedTransitioning {
                        initialSpringVelocity: 0.3,
                        options: .curveEaseOut,
                        animations: {
-//                        toSnapshot?.alpha = 1
-//                        self.inputView.frame = toFrame
+                        if let titleFrame = self.toDelegate?.inputSubTitleLabelFrame() {
+                            titleFrame?.origin = CGPoint(x: (titleFrame?.origin.x)!, y: (titleFrame?.origin.y)!-20)
+                        }
                         
-                        var titleFrame = self.toDelegate?.inputSubTitleLabelFrame()
-                        titleFrame?.origin = CGPoint(x: (titleFrame?.origin.x)!, y: (titleFrame?.origin.y)!-20)
-                        var fieldFrame = self.toDelegate?.inputTextfieldFrame()
-                        fieldFrame?.origin = CGPoint(x: (fieldFrame?.origin.x)!, y: (fieldFrame?.origin.y)!-20)
+                        if let fieldFrame = self.toDelegate?.inputTextfieldFrame() {
+                            fieldFrame?.origin = CGPoint(x: (fieldFrame?.origin.x)!, y: (fieldFrame?.origin.y)!-20)
+                        }
                         
                         self.subTitleLabel.frame = titleFrame!
                         self.editTextField.frame = fieldFrame!

@@ -164,9 +164,9 @@ class KeychainItemWrapper {
             var tempCheck = self.dictToSecItemData(dict: self.keychainItemData)
             tempCheck.removeValue(forKey: kSecClass)
             
-            if TARGET_IPHONE_SIMULATOR == 1 {
-                tempCheck.removeValue(forKey: kSecAttrAccessGroup)
-            }
+//            if TARGET_IPHONE_SIMULATOR == 1 {
+//                tempCheck.removeValue(forKey: kSecAttrAccessGroup)
+//            }
             
             result = SecItemUpdate(updateItem! as CFDictionary, tempCheck as CFDictionary)
             assert(result == noErr, "Failed to update keychain item")
