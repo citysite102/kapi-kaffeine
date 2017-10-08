@@ -66,35 +66,9 @@ class KPServiceHandler {
     }
     
     
-    //
     var featureTags: [KPDataTagModel] = []
-    
-    // Region
-//    var regionData: [String : [(name: String, key: String, coordinate: CLLocationCoordinate2D)]] =
-//        ["北部": [("台北 Taipei", "taipei", CLLocationCoordinate2D(latitude: 25.0470462, longitude: 121.5156119)),
-//                 ("基隆 Keelung", "keelung", CLLocationCoordinate2D(latitude: 25.131736, longitude: 121.738372)),
-//                 ("桃園 Taoyuan", "taoyuan", CLLocationCoordinate2D(latitude: 24.989206, longitude: 121.311351)),
-//                 ("新竹 Hsinchu", "hsinchu", CLLocationCoordinate2D(latitude: 24.8015771, longitude: 120.969366))],
-//         
-//         "中部": [("苗栗 miaoli", "miaoli", CLLocationCoordinate2D(latitude: 24.57002, longitude: 120.820149)),
-//                 ("台中 taichung", "taichung", CLLocationCoordinate2D(latitude: 24.1375758, longitude: 120.6844115)),
-//                 ("南投 nantou", "nantou", CLLocationCoordinate2D(latitude: 23.8295543, longitude: 120.7904003)),
-//                 ("彰化 changhua", "changhua", CLLocationCoordinate2D(latitude: 24.0816314, longitude: 120.5362503)),
-//                 ("雲林 yunlin", "yunlin", CLLocationCoordinate2D(latitude: 23.7289229, longitude: 120.4206707))],
-//         
-//         "南部": [("嘉義 chiayi", "chiayi", CLLocationCoordinate2D(latitude: 23.4791187, longitude: 120.4389442)),
-//                 ("台南 tainan", "tainan", CLLocationCoordinate2D(latitude: 22.9719654, longitude: 120.2140395)),
-//                 ("高雄 kaohsiung", "kaohsiung", CLLocationCoordinate2D(latitude: 22.6397615, longitude: 120.299913)),
-//                 ("屏東 pingtung", "pingtung", CLLocationCoordinate2D(latitude: 22.668857, longitude: 120.4837693))],
-//         
-//         "東部": [("宜蘭 Yilan", "yilan", CLLocationCoordinate2D(latitude: 24.7543117, longitude: 121.756184)),
-//                 ("花蓮 Hualien", "hualien", CLLocationCoordinate2D(latitude: 23.9929463, longitude: 121.5989202)),
-//                 ("台東 Taitung", "taitung", CLLocationCoordinate2D(latitude: 22.791625, longitude: 121.1233145)),
-//                 ("澎湖 Penghu", "penghu", CLLocationCoordinate2D(latitude: 23.6294021, longitude: 119.526859))]]
-    
-    
-    // MARK: Initialization
-    
+
+    // MARK: Initialization    
     private init() {
         kapiDataRequest = KPCafeRequest()
         kapiDetailedInfoRequest = KPCafeDetailedInfoRequest()
@@ -161,12 +135,13 @@ class KPServiceHandler {
         }
     }
     
-    func addNewShop(_ name:String,
-                    _ address:String,
-                    _ city:String,
+    func addNewShop(_ name: String,
+                    _ address: String,
+                    _ country: String,
+                    _ city: String,
                     _ latitude: Double,
                     _ longitude: Double,
-                    _ fb_url:String,
+                    _ fb_url: String,
                     _ limited_time: Int,
                     _ standingDesk: Int,
                     _ socket: Int,
@@ -194,6 +169,7 @@ class KPServiceHandler {
         
         newShopRequest.perform(name,
                                address,
+                               country,
                                city,
                                latitude,
                                longitude,

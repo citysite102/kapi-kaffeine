@@ -22,6 +22,7 @@ class KPAddNewCafeRequest: NetworkRequest {
         
         parameters["name"] = name
         parameters["address"] = address
+        parameters["country"] = country
         parameters["city"] = city
         parameters["fb_url"] = facebookURL
         parameters["limited_time"] = limitedTime
@@ -79,6 +80,7 @@ class KPAddNewCafeRequest: NetworkRequest {
     
     private var name: String?
     private var address: String?
+    private var country: String?
     private var city: String?
     private var latitude: NSNumber?
     private var longtitude: NSNumber?
@@ -109,10 +111,11 @@ class KPAddNewCafeRequest: NetworkRequest {
     
     public func perform(_ name: String,
                         _ address: String,
-                        _ city:String,
+                        _ country: String,
+                        _ city: String,
                         _ latitude: Double,
                         _ longitude: Double,
-                        _ fb_url:String,
+                        _ fb_url: String,
                         _ limited_time: Int,
                         _ standingDesk: Int,
                         _ socket: Int,
@@ -130,6 +133,7 @@ class KPAddNewCafeRequest: NetworkRequest {
         
         self.name = name
         self.address = address
+        self.country = country
         self.city = city
         
         self.latitude = NSNumber(value: latitude)

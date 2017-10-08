@@ -775,6 +775,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
             
             KPServiceHandler.sharedHandler.addNewShop(nameSubTitleView.editTextField.text ?? "",
                                                       addressSubTitleView.editTextView.text ?? "",
+                                                      KPCityRegionModel.getCountryWithRegionString(citySubTitleView.editTextField.text) ?? "",
                                                       KPCityRegionModel.getKeyWithRegionString(citySubTitleView.editTextField.text) ?? "",
                                                       selectedCoordinate.latitude,
                                                       selectedCoordinate.longitude,
