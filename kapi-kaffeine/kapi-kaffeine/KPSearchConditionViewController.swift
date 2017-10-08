@@ -125,9 +125,11 @@ class KPSearchConditionViewController: KPViewController {
         view.backgroundColor = UIColor.white
         navigationController?.navigationBar.topItem?.title = "篩選偏好設定"
 
-        dismissButton = KPBounceButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30),
+        dismissButton = KPBounceButton(frame: CGRect.zero,
                                        image: R.image.icon_close()!)
-        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(6, 6, 6, 6)
+        dismissButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        dismissButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(6, 7, 8, 7)
         dismissButton.addTarget(self,
                                      action: #selector(KPSearchConditionViewController.handleDismissButtonOnTapped),
                                      for: .touchUpInside)

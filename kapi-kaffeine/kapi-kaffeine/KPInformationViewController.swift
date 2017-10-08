@@ -151,8 +151,10 @@ class KPInformationViewController: KPViewController {
         navigationItem.title = informationDataModel.name
         navigationController?.delegate = self
         
-        dismissButton = KPBounceButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30),
+        dismissButton = KPBounceButton(frame: CGRect.zero,
                                        image: showBackButton ? R.image.icon_back()! : R.image.icon_close()!)
+        dismissButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        dismissButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
         dismissButton.contentEdgeInsets = showBackButton ? UIEdgeInsetsMake(3, 3, 3, 3) : UIEdgeInsetsMake(6, 7, 8, 7)
         dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor
         dismissButton.addTarget(self,
@@ -160,16 +162,20 @@ class KPInformationViewController: KPViewController {
                                 for: .touchUpInside)
         
         
-        moreButton = KPBounceButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30),
+        moreButton = KPBounceButton(frame: CGRect.zero,
                                     image: R.image.icon_more()!)
+        moreButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        moreButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
         moreButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4)
         moreButton.tintColor = KPColorPalette.KPTextColor.whiteColor
         moreButton.addTarget(self,
                              action: #selector(KPInformationViewController.handleMoreButtonOnTapped),
                              for: .touchUpInside)
         
-        shareButton = KPBounceButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30),
+        shareButton = KPBounceButton(frame: CGRect.zero,
                                      image: R.image.icon_share()!)
+        shareButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        shareButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
         shareButton.contentEdgeInsets = UIEdgeInsetsMake(6, 6, 6, 6)
         shareButton.tintColor = KPColorPalette.KPTextColor.whiteColor
         shareButton.addTarget(self,
@@ -190,7 +196,6 @@ class KPInformationViewController: KPViewController {
         actionController = UIAlertController(title: nil,
                                              message: nil,
                                              preferredStyle: .actionSheet)
-//        actionController.view.tintColor = KPColorPalette.KPTextColor.grayColor_level2
         let editButton = UIAlertAction(title: "編輯店家資料",
                                        style: .default) {
                                         [unowned self] (_) in

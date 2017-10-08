@@ -101,16 +101,16 @@ class KPInputExpandTransition: NSObject, UIViewControllerAnimatedTransitioning {
                        initialSpringVelocity: 0.3,
                        options: .curveEaseOut,
                        animations: {
-                        if let titleFrame = self.toDelegate?.inputSubTitleLabelFrame() {
-                            titleFrame?.origin = CGPoint(x: (titleFrame?.origin.x)!, y: (titleFrame?.origin.y)!-20)
+                        if var titleFrame = self.toDelegate?.inputSubTitleLabelFrame() {
+                            titleFrame.origin = CGPoint(x: titleFrame.origin.x, y: titleFrame.origin.y-20)
+                            self.subTitleLabel.frame = titleFrame
                         }
                         
-                        if let fieldFrame = self.toDelegate?.inputTextfieldFrame() {
-                            fieldFrame?.origin = CGPoint(x: (fieldFrame?.origin.x)!, y: (fieldFrame?.origin.y)!-20)
+                        if var fieldFrame = self.toDelegate?.inputTextfieldFrame() {
+                            fieldFrame.origin = CGPoint(x: fieldFrame.origin.x, y: fieldFrame.origin.y-20)
+                            self.editTextField.frame = fieldFrame
                         }
                         
-                        self.subTitleLabel.frame = titleFrame!
-                        self.editTextField.frame = fieldFrame!
                         
                         backgroundView.frame = toVC.view.frame
         }) { (_) in

@@ -143,12 +143,11 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
             navigationController?.navigationBar.topItem?.title = "修改店家"
         }
 
-        dismissButton = KPBounceButton(frame: CGRect(x: 0,
-                                                     y: 0,
-                                                     width: 24,
-                                                     height: 24),
-                                       image:R.image.icon_close()!)
-        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4)
+        dismissButton = KPBounceButton(frame: CGRect.zero,
+                                       image: R.image.icon_close()!)
+        dismissButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        dismissButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(6, 7, 8, 7)
         dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor
         dismissButton.addTarget(self,
                                 action: #selector(handleDismissButtonOnTapped),

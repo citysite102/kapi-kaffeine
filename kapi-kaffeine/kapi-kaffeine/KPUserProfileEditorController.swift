@@ -85,9 +85,11 @@ class KPUserProfileEditorController: UIViewController, UITextFieldDelegate, UITe
         navigationItem.title = "資料編輯"
         navigationItem.hidesBackButton = true
         
-        dismissButton = KPBounceButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30),
+        dismissButton = KPBounceButton(frame: CGRect.zero,
                                        image: R.image.icon_close()!)
-        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(6, 6, 6, 6)
+        dismissButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        dismissButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(6, 7, 8, 7)
         dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor;
         dismissButton.addTarget(self,
                                 action: #selector(KPUserProfileEditorController.handleDismissButtonOnTapped),

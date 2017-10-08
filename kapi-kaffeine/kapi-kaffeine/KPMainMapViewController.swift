@@ -487,7 +487,7 @@ GMUClusterRendererDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        if let dataModel = self.displayDataModel[indexPath.row] as KPDataModel {
+        if let dataModel = self.displayDataModel[indexPath.row] as? KPDataModel {
             KPAnalyticManager.sendCellClickEvent(dataModel.name,
                                                  dataModel.averageRate?.stringValue,
                                                  KPAnalyticsEventValue.source.source_map)

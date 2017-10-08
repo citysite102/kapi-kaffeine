@@ -46,8 +46,10 @@ class KPSettingViewController: KPViewController {
         navigationController?.navigationBar.topItem?.title = "設定"
         
         
-        dismissButton = KPBounceButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30),
+        dismissButton = KPBounceButton(frame: CGRect.zero,
                                        image: R.image.icon_close()!)
+        dismissButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        dismissButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
         dismissButton.contentEdgeInsets = UIEdgeInsetsMake(6, 7, 8, 7)
         dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor
         dismissButton.addTarget(self,

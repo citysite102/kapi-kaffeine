@@ -93,8 +93,10 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
                                                                     for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
 
-        dismissButton = KPBounceButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30),
+        dismissButton = KPBounceButton(frame: CGRect.zero,
                                        image: R.image.icon_close()!)
+        dismissButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        dismissButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
         dismissButton.contentEdgeInsets = UIEdgeInsetsMake(6, 7, 8, 7)
         dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor
         dismissButton.addTarget(self,
@@ -110,8 +112,10 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
         navigationItem.leftBarButtonItems = [negativeSpacer, barItem]
         
 
-        editButton = KPBounceButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30),
-                                       image: R.image.icon_edit()!)
+        editButton = KPBounceButton(frame: CGRect.zero,
+                                    image: R.image.icon_edit()!)
+        editButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        editButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
         editButton.contentEdgeInsets = UIEdgeInsetsMake(5, 5, 5, 5)
         editButton.tintColor = KPColorPalette.KPTextColor.whiteColor
         editButton.addTarget(self,
