@@ -114,7 +114,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
-        return SDKApplicationDelegate.shared.application(app, open: url, options: options)
+        if KPSchemeHandler.sharedHandler.shouldHandleURLScheme(url) {
+            return KPSchemeHandler.sharedHandler.handleURLScheme(url)
+        } else {
+            return SDKApplicationDelegate.shared.application(app, open: url, options: options)
+        }
     }
     
     func applicationWillResignActive(_ application: UIApplication) {
