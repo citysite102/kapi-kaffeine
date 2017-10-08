@@ -276,9 +276,20 @@ class KPMainViewController: KPViewController {
     // MARK: Data
     
     func fetchRemoteData() {
-        KPServiceHandler.sharedHandler.fetchRemoteData() {
-            (results: [KPDataModel]?,
-            error: NetworkRequestError?) in
+        let rightTop = mainMapViewController?.mapView.projection.visibleRegion().farRight
+        let leftBottom = mainMapViewController?.mapView.projection.visibleRegion().nearLeft
+        KPServiceHandler.sharedHandler.fetchRemoteData(nil,
+                                                       nil,
+                                                       nil,
+                                                       nil,
+                                                       nil,
+                                                       rightTop,
+                                                       leftBottom) { (results, error) in
+                                                        
+//        }
+//        KPServiceHandler.sharedHandler.fetchRemoteData() {
+//            (results: [KPDataModel]?,
+//            error: NetworkRequestError?) in
             DispatchQueue.main.async {
                 if results != nil {
                     self.setDisplayDataModel(KPFilter.sharedFilter.currentFilterCafeDatas(),
