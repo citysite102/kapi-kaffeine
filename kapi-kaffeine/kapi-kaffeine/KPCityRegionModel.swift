@@ -14,6 +14,7 @@ struct regionData {
     var icon: UIImage
     var cities: [String]
     var cityKeys: [String]
+    var countryKeys: [String]
     var cityCoordinate: [CLLocationCoordinate2D]
     var expanded: Bool
 }
@@ -25,6 +26,7 @@ class KPCityRegionModel: NSObject {
                            icon:R.image.icon_taipei()!,
                            cities:["台北 Taipei", "基隆 Keelung", "桃園 Taoyuan", "新竹 Hsinchu"],
                            cityKeys:["taipei", "keelung", "taoyuan", "hsinchu"],
+                           countryKeys:["tw", "tw", "tw", "tw",],
                            cityCoordinate: [CLLocationCoordinate2D(latitude: 25.0470462,
                                                                    longitude: 121.5156119),
                                             CLLocationCoordinate2D(latitude: 25.131736,
@@ -38,6 +40,7 @@ class KPCityRegionModel: NSObject {
                            icon:R.image.icon_taitung()!,
                            cities:["宜蘭 Yilan", "花蓮 Hualien", "台東 Taitung", "澎湖 Penghu"],
                            cityKeys:["yilan", "hualien", "taitung", "penghu"],
+                           countryKeys:["tw", "tw", "tw", "tw",],
                            cityCoordinate: [CLLocationCoordinate2D(latitude: 24.7543117,
                                                                    longitude: 121.756184),
                                             CLLocationCoordinate2D(latitude: 23.9929463,
@@ -51,6 +54,7 @@ class KPCityRegionModel: NSObject {
                            icon:R.image.icon_taichung()!,
                            cities:["苗栗 Miaoli", "台中 Taichung", "南投 Nantou", "彰化 Changhua", "雲林 Yunlin"],
                            cityKeys:["miaoli", "taichung", "nantou", "changhua", "yunlin"],
+                           countryKeys:["tw", "tw", "tw", "tw",],
                            cityCoordinate: [CLLocationCoordinate2D(latitude: 24.57002,
                                                                    longitude: 120.820149),
                                             CLLocationCoordinate2D(latitude: 24.1375758,
@@ -66,6 +70,7 @@ class KPCityRegionModel: NSObject {
                            icon:R.image.icon_pingtung()!,
                            cities:["嘉義 Chiayi", "台南 Tainan", "高雄 Kaohsiung", "屏東 Pingtung"],
                            cityKeys:["chiayi", "tainan", "kaohsiung", "pingtung"],
+                           countryKeys:["tw", "tw", "tw", "tw",],
                            cityCoordinate: [CLLocationCoordinate2D(latitude: 23.4791187,
                                                                    longitude: 120.4389442),
                                             CLLocationCoordinate2D(latitude: 22.9719654,
@@ -78,7 +83,8 @@ class KPCityRegionModel: NSObject {
                 regionData(name:"其他國家",
                            icon:R.image.icon_global()!,
                            cities:["日本 Japan", "英國 England", "美國 United States"],
-                           cityKeys:["chiayi", "tainan", "kaohsiung", "pingtung"],
+                           cityKeys:["jp", "gb", "us"],
+                           countryKeys:["jp", "gb", "us"],
                            cityCoordinate: [CLLocationCoordinate2D(latitude: 35.6811673,
                                                                    longitude: 139.7648576),
                                             CLLocationCoordinate2D(latitude: 51.5316396,
@@ -115,6 +121,23 @@ class KPCityRegionModel: NSObject {
             }
         }
         return nil
+    }
+    
+    static func getCountryWithRegionString(_ region: String?) -> String? {
+        if region == nil || region == "" {
+            return nil
+        }
+        
+        for regionData in defaultRegionData {
+            for (index, regionString) in regionData.cities.enumerated() {
+                if region == regionString {
+                    return regionData.countryKeys[index]
+                }
+            }
+        }
+        return nil
+        
+        
     }
     
 }
