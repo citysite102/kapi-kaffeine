@@ -285,11 +285,6 @@ class KPMainViewController: KPViewController {
                                                        nil,
                                                        rightTop,
                                                        leftBottom) { (results, error) in
-                                                        
-//        }
-//        KPServiceHandler.sharedHandler.fetchRemoteData() {
-//            (results: [KPDataModel]?,
-//            error: NetworkRequestError?) in
             DispatchQueue.main.async {
                 if results != nil {
                     self.setDisplayDataModel(KPFilter.sharedFilter.currentFilterCafeDatas(),

@@ -66,6 +66,8 @@ class KPCafeRequest: NetworkRequest {
         self.standingDesk = standingDesk
         self.mrt = mrt
         self.city = city
+        self.rightTopCoordinate = rightTop
+        self.leftBottomCoordinate = leftBottom
         return networkClient.performRequest(self).then(execute: responseHandler)
     }
 }
