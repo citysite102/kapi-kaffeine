@@ -97,7 +97,7 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
                                        image: R.image.icon_close()!)
         dismissButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
         dismissButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(6, 7, 8, 7)
+        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(6, 0, 8, 14)
         dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor
         dismissButton.addTarget(self,
                                 action: #selector(KPInformationViewController.handleDismissButtonOnTapped),

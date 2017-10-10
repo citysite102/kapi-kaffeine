@@ -155,7 +155,7 @@ class KPInformationViewController: KPViewController {
                                        image: showBackButton ? R.image.icon_back()! : R.image.icon_close()!)
         dismissButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
         dismissButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        dismissButton.contentEdgeInsets = showBackButton ? UIEdgeInsetsMake(3, 3, 3, 3) : UIEdgeInsetsMake(6, 7, 8, 7)
+        dismissButton.contentEdgeInsets = showBackButton ? UIEdgeInsetsMake(3, 3, 3, 3) : UIEdgeInsetsMake(6, 0, 8, 14)
         dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor
         dismissButton.addTarget(self,
                                 action: #selector(KPInformationViewController.handleDismissButtonOnTapped),
@@ -166,7 +166,7 @@ class KPInformationViewController: KPViewController {
                                     image: R.image.icon_more()!)
         moreButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
         moreButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        moreButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4)
+        moreButton.contentEdgeInsets = UIEdgeInsetsMake(4, 8, 4, 0)
         moreButton.tintColor = KPColorPalette.KPTextColor.whiteColor
         moreButton.addTarget(self,
                              action: #selector(KPInformationViewController.handleMoreButtonOnTapped),
