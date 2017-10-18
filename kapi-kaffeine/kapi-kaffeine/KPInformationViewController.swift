@@ -62,6 +62,12 @@ class KPInformationViewController: KPViewController {
         }
     }
     
+    var displayMenuInformations: [PhotoInformation] = [] {
+        didSet {
+            (menuInformationView.infoView as! KPShopPhotoInfoView).displayPhotoInformations = displayMenuInformations
+        }
+    }
+    
     var snapshotPhotoView: UIView  {
         get {
             let snapShotView = UIImageView(image: informationHeaderView.shopPhoto.image)
@@ -94,6 +100,7 @@ class KPInformationViewController: KPViewController {
     var rateInformationView: KPInformationSharedInfoView!
     var commentInformationView: KPInformationSharedInfoView!
     var photoInformationView: KPInformationSharedInfoView!
+    var menuInformationView: KPInformationSharedInfoView!
     var recommendInformationView: KPInformationSharedInfoView!
     var commentInfoView: KPShopCommentInfoView!
     var informationView: KPShopInfoView!
@@ -528,6 +535,27 @@ class KPInformationViewController: KPViewController {
                                                handler:{[unowned self] (infoView) -> () in
                                                 self.photoUpload()
         })]
+        
+        
+        
+        let menuInfoView = KPShopPhotoInfoView()
+        menuInfoView.informationController = self
+        menuInformationView = KPInformationSharedInfoView()
+        menuInformationView.emptyLabel.text = "成為第一個上傳的人吧:D"
+        menuInformationView.infoView = menuInfoView
+        menuInformationView.infoTitleLabel.text = "菜單"
+        scrollContainer.addSubview(menuInformationView)
+        menuInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                             "V:[$view0]-24-[$self]"],
+                                            views: [photoInformationView])
+        menuInformationView.actions = [Action(title: "上傳菜單",
+                                               style:.normal,
+                                               color:KPColorPalette.KPMainColor.mainColor!,
+                                               icon:(R.image.icon_camera()?.withRenderingMode( .alwaysTemplate))!,
+                                               handler:{[unowned self] (infoView) -> () in
+//                                                self.photoUpload()
+        })]
+        
 
         let shopRecommendView = KPShopRecommendView()
         shopRecommendView.informationController = self
@@ -538,7 +566,7 @@ class KPInformationViewController: KPViewController {
         scrollContainer.addSubview(recommendInformationView)
         recommendInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                                   "V:[$view0]-24-[$self]-32-|"],
-                                                     views: [photoInformationView])
+                                                     views: [menuInformationView])
 
         
         NotificationCenter.default.addObserver(self,
@@ -592,6 +620,7 @@ class KPInformationViewController: KPViewController {
         refreshComments()
         refreshRatings()
         refreshPhoto()
+        refreshMenu()
         
         KPServiceHandler.sharedHandler.fetchStoreInformation(informationDataModel.identifier) {
             [weak self] (result) in
@@ -603,6 +632,43 @@ class KPInformationViewController: KPViewController {
             }
         }
     }
+    
+    
+    func refreshMenu() {
+        KPServiceHandler.sharedHandler.getMenus {
+            [weak self] (successed, photos) in
+            if let weSelf = self {
+                if successed == true && photos != nil {
+                    var index: Int = 0
+                    var photoInformations: [PhotoInformation] = []
+                    for urlInfo in photos! {
+                        let urlString = urlInfo["url"] as? String ?? ""
+                        let thumbnailString = urlInfo["thumbnail"] as? String ?? ""
+                        if let url = URL(string: urlString),
+                           let thumbnailurl = URL(string: thumbnailString) {
+                            photoInformations.append(PhotoInformation(title: "",
+                                                                      imageURL: url,
+                                                                      thumbnailURL: thumbnailurl,
+                                                                      index: index))
+                            index += 1
+                        }
+                    }
+                    weSelf.displayMenuInformations = photoInformations
+                    
+                    if weSelf.displayMenuInformations.count == 0 {
+                        weSelf.menuInformationView.isEmpty = true
+                    } else {
+                        weSelf.menuInformationView.infoSupplementLabel.text = "\(weSelf.displayMenuInformations.count) 張照片"
+                        weSelf.menuInformationView.isEmpty = false
+                    }
+                } else {
+                    weSelf.menuInformationView.infoSupplementLabel.text = "尚無照片"
+                    weSelf.menuInformationView.isEmpty = true
+                }
+            }
+        }
+    }
+    
     
     func refreshPhoto() {
         KPServiceHandler.sharedHandler.getPhotos {
@@ -926,7 +992,6 @@ class KPInformationViewController: KPViewController {
                     imagePickerController.allowsEditing = false
                     imagePickerController.sourceType = .photoLibrary
                     imagePickerController.delegate = self
-                    //                                                        imagePickerController.mediaTypes = [kUTTypeImage as String]
                     self.present(imagePickerController, animated: true, completion: nil)
                 })
                 controller.addAction(UIAlertAction(title: "開啟相機", style: .default) { (action) in
@@ -934,7 +999,40 @@ class KPInformationViewController: KPViewController {
                     imagePickerController.allowsEditing = false
                     imagePickerController.sourceType = .camera
                     imagePickerController.delegate = self
-                    //                                                        imagePickerController.mediaTypes = [kUTTypeImage as String]
+                    self.present(imagePickerController, animated: true, completion: nil)
+                })
+                
+                controller.addAction(UIAlertAction(title: "取消", style: .cancel) { (action) in
+                    
+                })
+                
+                self.present(controller, animated: true) {
+                    
+                }
+            }
+        }
+    }
+    
+    func menuUpload() {
+        if KPUserManager.sharedManager.currentUser == nil {
+            KPPopoverView.popoverLoginView()
+        } else {
+            if KPServiceHandler.sharedHandler.isCurrentShopClosed {
+                KPPopoverView.popoverClosedView()
+            } else {
+                let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+                controller.addAction(UIAlertAction(title: "從相簿中選擇", style: .default) { (action) in
+                    let imagePickerController = UIImagePickerController()
+                    imagePickerController.allowsEditing = false
+                    imagePickerController.sourceType = .photoLibrary
+                    imagePickerController.delegate = self
+                    self.present(imagePickerController, animated: true, completion: nil)
+                })
+                controller.addAction(UIAlertAction(title: "開啟相機", style: .default) { (action) in
+                    let imagePickerController = UIImagePickerController()
+                    imagePickerController.allowsEditing = false
+                    imagePickerController.sourceType = .camera
+                    imagePickerController.delegate = self
                     self.present(imagePickerController, animated: true, completion: nil)
                 })
                 
@@ -1172,6 +1270,18 @@ extension KPInformationViewController : UIImagePickerControllerDelegate {
         
         picker.dismiss(animated: true) {
             if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+//                KPServiceHandler.sharedHandler.uploadMenus([image],
+//                                                           self.informationDataModel.identifier,
+//                                                           true,
+//                                                           { (success) in
+//                                                            if success {
+//                                                                print("upload successed")
+//                                                            } else {
+//                                                                print("upload failed")
+//                                                            }
+//                })
+                
+                
                 KPServiceHandler.sharedHandler.uploadPhotos([image],
                                                             self.informationDataModel.identifier,
                                                             true,

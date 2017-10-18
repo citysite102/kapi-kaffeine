@@ -81,6 +81,8 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
     var facebookSubTitleView: KPSubTitleEditView!
     var photoUploadSubTitleView: KPSubTitlePhotoUploadView!
     
+    var menuPhotoUploadSubTitleView: KPSubTitlePhotoUploadView!
+    
     var nameInputController: KPSubtitleInputController!
     var ratingController: KPRatingViewController!
     var countrySelectController: KPCountrySelectController?
@@ -661,14 +663,19 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
                                          views: [phoneSubTitleView])
         facebookSubTitleView.content = dataModel?.facebookURL
         
-        
         if type == .add {
         
-            photoUploadSubTitleView = KPSubTitlePhotoUploadView()
+            menuPhotoUploadSubTitleView = KPSubTitlePhotoUploadView(title: "上傳菜單")
+            menuPhotoUploadSubTitleView.controller = self
+            sectionTwoContainer.addSubview(menuPhotoUploadSubTitleView)
+            menuPhotoUploadSubTitleView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$view0][$self]"],
+                                                       views: [facebookSubTitleView])
+            
+            photoUploadSubTitleView = KPSubTitlePhotoUploadView(title: "上傳店家照片")
             photoUploadSubTitleView.controller = self
             sectionTwoContainer.addSubview(photoUploadSubTitleView)
             photoUploadSubTitleView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$view0][$self]-16-|"],
-                                                   views: [facebookSubTitleView])
+                                                   views: [menuPhotoUploadSubTitleView])
             
         } else if type == .modify {
             facebookSubTitleView.addConstraint(from: "V:[$self]-16-|")
@@ -794,6 +801,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
                                                       tags,
                                                       businessHour,
                                                       KPPriceSelectController.priceRanges.index(of: priceSubTitleView.editTextField.text ?? "") ?? -1,
+                                                      menuPhotoUploadSubTitleView.images,
                                                       photoUploadSubTitleView.images) {[unowned self] (success) in
                                                         if success == true {
                                                             KPPopoverView.popoverStoreInReviewNotification()
@@ -808,8 +816,9 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
             }
         } else {
             
+            
             if nameSubTitleView.editTextField.text == nil ||
-                nameSubTitleView.editTextField.text?.characters.count == 0 {
+                nameSubTitleView.editTextField.text?.count == 0 {
                 nameSubTitleView.sType = .Warning
                 KPPopoverView.popoverNotification("修改失敗",
                                                   "店家名稱尚未填寫！",
@@ -819,7 +828,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
             }
             
             if citySubTitleView.editTextField.text == nil ||
-                citySubTitleView.editTextField.text?.characters.count == 0 {
+                citySubTitleView.editTextField.text?.count == 0 {
                 citySubTitleView.sType = .Warning
                 KPPopoverView.popoverNotification("修改失敗",
                                                   "店家所在城市尚未選擇！",
@@ -829,7 +838,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
             }
             
             if addressSubTitleView.editTextView.text == nil ||
-                addressSubTitleView.editTextView.text?.characters.count == 0 {
+                addressSubTitleView.editTextView.text?.count == 0 {
                 addressSubTitleView.sType = .Warning
                 KPPopoverView.popoverNotification("修改失敗",
                                                   "店家地址尚未填寫！",
@@ -839,7 +848,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
             }
             
             if phoneSubTitleView.editTextField.text == nil ||
-                phoneSubTitleView.editTextField.text?.characters.count == 0 {
+                phoneSubTitleView.editTextField.text?.count == 0 {
                 phoneSubTitleView.sType = .Warning
                 KPPopoverView.popoverNotification("修改失敗",
                                                   "店家電話尚未填寫！",
@@ -981,7 +990,7 @@ extension KPNewStoreController: KPSubtitleInputDelegate {
                 phoneSubTitleView.content = placeInformation.phoneNumber ?? ""
                 if let formattedAddress = placeInformation.formattedAddress {
                     addressSubTitleView.content = formattedAddress
-                    addressSubTitleView.placeHolderContent = formattedAddress.characters.count > 0 ? "" : "請輸入店家地址"
+                    addressSubTitleView.placeHolderContent = formattedAddress.count > 0 ? "" : "請輸入店家地址"
                 } else {
                     addressSubTitleView.content = ""
                     addressSubTitleView.placeHolderContent = "請輸入店家地址"

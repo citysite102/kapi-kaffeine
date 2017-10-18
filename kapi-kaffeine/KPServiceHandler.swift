@@ -160,6 +160,7 @@ class KPServiceHandler {
                     _ tags: [KPDataTagModel],
                     _ business_hour: [String: String],
                     _ price_average: Int,
+                    _ menus: [UIImage],
                     _ photos: [UIImage],
                     _ completion: ((_ successed: Bool) -> Swift.Void)?) {
         
@@ -202,6 +203,9 @@ class KPServiceHandler {
                                     
                                     if let cafeID = result["data"]["cafe_id"].string {
                                         self.uploadPhotos(photos, cafeID, false, { (success) in
+                                            // TODO: upload failed error handle
+                                        })
+                                        self.uploadMenus(menus, cafeID, false, { (success) in
                                             // TODO: upload failed error handle
                                         })
                                     }
@@ -592,6 +596,20 @@ class KPServiceHandler {
     }
     
     
+    // MARK: Menu API
+    
+    func getMenus(_ completion: ((_ successed: Bool,
+        _ photos: [[String: Any]]?) -> Swift.Void)?) {
+        
+        let getMenuRequest = KPGetMenuRequest()
+        getMenuRequest.perform((currentDisplayModel?.identifier)!).then { result -> Void in
+            completion?(true, result["data"].arrayObject as? [[String: Any]])
+            }.catch { (error) in
+                completion?(false, nil)
+        }
+    }
+    
+    
     // MARK: Favorite / Visit
     
     func addFavoriteCafe(_ completion: ((Bool) -> Swift.Void)? = nil) {
@@ -781,6 +799,68 @@ class KPServiceHandler {
                 completion?(false)
         }
     }
+    
+    
+    func uploadMenus(_ menus: [UIImage],
+                     _ cafeID: String?,
+                     _ showLoading: Bool = true,
+                     _ completion: ((_ success: Bool) -> Void)?) {
+        let loadingView = KPLoadingView(("上傳中...", "上傳成功", "上傳失敗"))
+        if showLoading {
+            UIApplication.shared.KPTopViewController().view.addSubview(loadingView)
+            loadingView.addConstraints(fromStringArray: ["V:|[$self]|",
+                                                         "H:|[$self]|"])
+        }
+        
+        var uploadRequests = [Promise<(RawJsonResult)>]()
+        for menu in menus {
+            if let imageData = UIImageJPEGRepresentation(menu, 1) {
+                let uploadPhotoRequest = KPMenuUploadRequest()
+                let uploadPromise = uploadPhotoRequest.perform(cafeID ?? (currentDisplayModel?.identifier)!,
+                                                               nil,
+                                                               imageData)
+                uploadRequests.append(uploadPromise)
+            } else {
+                loadingView.state = .failed
+                completion?(false)
+            }
+        }
+        
+        /*
+         The other two functions are when and join. Those fulfill after all the specified promises are fulfilled.
+         Where these two differ is in the rejected case.
+         join always waits for all the promises to complete before rejected if one of them rejects,
+         but when(fulfilled:) rejects as soon as any one of the promises rejects.
+         There’s also a when(resolved:) that waits for all the promises to complete, but always calls the then block and never the catch.
+         */
+        
+        join(uploadRequests).then { (result) -> Void in
+            print("result : \(result)")
+            if let uploadResult = result.first?["result"].bool {
+                if uploadResult {
+                    let notification = Notification.Name(KPNotification.information.photoInformation)
+                    NotificationCenter.default.post(name: notification, object: nil)
+                    loadingView.state = .successed
+                    if showLoading {
+                        DispatchQueue.main.asyncAfter(deadline: .now()+1.0,
+                                                      execute: {
+                                                        KPPopoverView.popoverPhotoInReviewNotification()
+                        })
+                    }
+                } else {
+                    loadingView.state = .failed
+                }
+                completion?(uploadResult)
+            } else {
+                loadingView.state = .failed
+                completion?(false)
+            }
+            }.catch { (error) in
+                print("error : \(error)")
+                completion?(false)
+        }
+    }
+    
     
     func uploadPhotos(_ photos: [UIImage],
                       _ cafeID: String?,

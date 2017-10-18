@@ -23,10 +23,10 @@ class KPSubTitlePhotoUploadView: UIView {
     
     var images = [UIImage]()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(title: String) {
+        super.init(frame: CGRect.zero)
         
-        subTitleView = KPSubTitleEditView(.Bottom, .Custom, "上傳店家照片")
+        subTitleView = KPSubTitleEditView(.Bottom, .Custom, title)
         addSubview(subTitleView)
         subTitleView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"])
         
@@ -45,7 +45,7 @@ class KPSubTitlePhotoUploadView: UIView {
         collectionView.showsVerticalScrollIndicator = false
         collectionView.delaysContentTouches = true
         collectionView.register(KPShopPhotoCell.self,
-                                     forCellWithReuseIdentifier:
+                                forCellWithReuseIdentifier:
             KPSubTitlePhotoUploadView.KPSubTitlePhotoUploadViewCellReuseIdentifier)
         collectionView.register(KPPhotoAddCell.self,
                                 forCellWithReuseIdentifier:
@@ -59,7 +59,6 @@ class KPSubTitlePhotoUploadView: UIView {
                                       views:[subTitleView.subTitleLabel])
         
         collectionView.addConstraint(forHeight: 112)
-
     }
     
     required init?(coder aDecoder: NSCoder) {
