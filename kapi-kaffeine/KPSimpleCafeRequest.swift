@@ -31,8 +31,8 @@ class KPSimpleCafeRequest: NetworkRequest {
     
     var method: Alamofire.HTTPMethod { return .get }
     
-    public func perform(_ identifier: String? = nil) -> Promise<(ResponseType)> {
-        self.identifier = identifier
+    public func perform(_ cafeID: String? = nil) -> Promise<(ResponseType)> {
+        self.identifier = cafeID
         return networkClient.performRequest(self).then(execute: responseHandler)
     }
 }

@@ -8,13 +8,20 @@
 
 import Foundation
 
-class KPSchemeHandler {
+class KPSchemeHandler: KPMainViewControllerDelegate {
+    
     
     let defaultCustomScheme = [
         "coffeeshop"
     ]
     
     static let sharedHandler = KPSchemeHandler()
+    
+    var currentDataModel: KPDataModel?
+    var selectedDataModel: KPDataModel? {
+        return currentDataModel
+    }
+
     
     func shouldHandleURLScheme(_ url: URL) -> Bool {
         return defaultCustomScheme.contains(url.scheme ?? "")
@@ -36,9 +43,10 @@ class KPSchemeHandler {
         if let identifier = parameters["cafe_id"] as String! {
             KPServiceHandler.sharedHandler.fetchSimpleStoreInformation(identifier, { (result) in
                 if result != nil {
+                    self.currentDataModel = result
                     let appDelegate = UIApplication.shared.delegate as! AppDelegate
-                    let rootViewController = appDelegate.window?.rootViewController
-                    print("RootViewController:\(rootViewController)")
+                    let rootViewController = appDelegate.window?.rootViewController as! KPMainViewController
+                    rootViewController.performSegue(withIdentifier: "datailedInformationSegue", sender: self)
                     
                 }
             })

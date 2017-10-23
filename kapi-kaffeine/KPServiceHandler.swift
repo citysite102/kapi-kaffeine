@@ -72,6 +72,7 @@ class KPServiceHandler {
     // MARK: Initialization    
     private init() {
         kapiDataRequest = KPCafeRequest()
+        kapiSimpleInfoRequest = KPSimpleCafeRequest()
         kapiDetailedInfoRequest = KPCafeDetailedInfoRequest()
     }
     
@@ -131,8 +132,7 @@ class KPServiceHandler {
     func fetchSimpleStoreInformation(_ cafeID: String!,
                                      _ completion:((_ result: KPDataModel?) -> Void)!) {
         
-        print("\(cafeID!)")
-        kapiSimpleInfoRequest.perform(cafeID!).then {result -> Void in
+        kapiSimpleInfoRequest.perform(cafeID).then {result -> Void in
             if let data = result["data"].dictionaryObject {
                 if let cafeData = KPDataModel(JSON: data) {
                     completion(cafeData)
