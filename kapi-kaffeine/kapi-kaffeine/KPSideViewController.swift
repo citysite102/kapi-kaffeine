@@ -8,6 +8,7 @@
 
 import UIKit
 import SideMenu
+import StoreKit
 
 class KPSideViewController: KPViewController {
 
@@ -303,7 +304,12 @@ class KPSideViewController: KPViewController {
                                                        icon:R.image.icon_star()!,
                                                        handler:{()->() in
                                                         DispatchQueue.main.asyncAfter(deadline: .now()) {
-                                                            iRate.sharedInstance().promptIfNetworkAvailable()
+                                                            
+                                                            if #available(iOS 10.3, *) {
+                                                                SKStoreReviewController.requestReview()
+                                                            } else {
+                                                                iRate.sharedInstance().promptIfNetworkAvailable()
+                                                            }
                                                         }
                                         }),
                                         informationData(title:"設定",
