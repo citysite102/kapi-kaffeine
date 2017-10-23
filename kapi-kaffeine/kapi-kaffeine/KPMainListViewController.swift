@@ -57,6 +57,7 @@ class KPMainListViewController:
     var state: ControllerState! = .loading
     {
         didSet {
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
             if state == .noInternet {
                 statusContainerView.isHidden = false
                 tableView.isHidden = true
@@ -66,6 +67,10 @@ class KPMainListViewController:
             } else if state == .loading {
                 statusContainerView.isHidden = true
                 tableView.isHidden = false
+            } else if state == .barLoading {
+                statusContainerView.isHidden = true
+                tableView.isHidden = false
+                UIApplication.shared.isNetworkActivityIndicatorVisible = true
             }
         }
     }

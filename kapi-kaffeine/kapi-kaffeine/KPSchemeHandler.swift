@@ -11,13 +11,13 @@ import Foundation
 class KPSchemeHandler {
     
     let defaultCustomScheme = [
-        "coffeeshop://"
+        "coffeeshop"
     ]
     
     static let sharedHandler = KPSchemeHandler()
     
     func shouldHandleURLScheme(_ url: URL) -> Bool {
-        return defaultCustomScheme.contains(url.absoluteString)
+        return defaultCustomScheme.contains(url.scheme ?? "")
     }
     
     
@@ -31,6 +31,17 @@ class KPSchemeHandler {
         var parameters = [String: String]()
         for item in queryItems {
             parameters[item.name] = item.value
+        }
+        
+        if let identifier = parameters["cafe_id"] as String! {
+            KPServiceHandler.sharedHandler.fetchSimpleStoreInformation(identifier, { (result) in
+                if result != nil {
+                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                    let rootViewController = appDelegate.window?.rootViewController
+                    print("RootViewController:\(rootViewController)")
+                    
+                }
+            })
         }
         
         

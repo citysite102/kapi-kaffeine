@@ -17,6 +17,7 @@ class KPServiceHandler {
     static let sharedHandler = KPServiceHandler()
     
     private var kapiDataRequest: KPCafeRequest!
+    private var kapiSimpleInfoRequest: KPSimpleCafeRequest!
     private var kapiDetailedInfoRequest: KPCafeDetailedInfoRequest!
     
     // 目前儲存所有的咖啡店
@@ -123,6 +124,24 @@ class KPServiceHandler {
             DispatchQueue.global().async {
                 completion?(nil, (error as! NetworkRequestError))
             }
+        }
+    }
+    
+    
+    func fetchSimpleStoreInformation(_ cafeID: String!,
+                                     _ completion:((_ result: KPDataModel?) -> Void)!) {
+        
+        print("\(cafeID!)")
+        kapiSimpleInfoRequest.perform(cafeID!).then {result -> Void in
+            if let data = result["data"].dictionaryObject {
+                if let cafeData = KPDataModel(JSON: data) {
+                    completion(cafeData)
+                }
+            } else {
+                completion(nil)
+            }
+        }.catch { error in
+            completion(nil)
         }
     }
     

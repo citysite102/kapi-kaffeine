@@ -18,6 +18,7 @@ protocol KPMainViewControllerDelegate {
 public enum ControllerState {
     case normal
     case loading
+    case barLoading
     case noInternet
     case failed
 }
@@ -311,10 +312,10 @@ class KPMainViewController: KPViewController {
         KPServiceHandler.sharedHandler.fetchTagList()
     }
     
-    func reFetchRemoteData() {
-        mainListViewController?.state = .loading
+    func reFetchRemoteData(_ showLoading: Bool? = true) {
+        mainListViewController?.state = showLoading! ? .loading : .barLoading
         mainListViewController?.tableView.reloadData()
-        mainMapViewController?.state = .loading
+        mainMapViewController?.state = showLoading! ? .loading : .barLoading
         fetchRemoteData()
     }
     

@@ -55,6 +55,7 @@
 		7743342E1F265E3A000CCDFA /* KPLikeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7743342D1F265E3A000CCDFA /* KPLikeModel.swift */; };
 		774334401F28D96B000CCDFA /* KPSimpleMemberModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7743343F1F28D96B000CCDFA /* KPSimpleMemberModel.swift */; };
 		7745C0821EF050D100244541 /* KPLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7745C0811EF050D100244541 /* KPLoginViewController.swift */; };
+		7747BE711F9E3C0B006F2C8A /* KPSimpleCafeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7747BE701F9E3C0B006F2C8A /* KPSimpleCafeRequest.swift */; };
 		774AD6BF1F15FDA3002ACB47 /* KPPriceSelectController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774AD6BE1F15FDA3002ACB47 /* KPPriceSelectController.swift */; };
 		77594B471EC89DAF0013BB56 /* KPPhotoAddCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77594B461EC89DAF0013BB56 /* KPPhotoAddCell.swift */; };
 		77594B491EC8AEB40013BB56 /* KPBounceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77594B481EC8AEB40013BB56 /* KPBounceView.swift */; };
@@ -272,6 +273,7 @@
 		7743342D1F265E3A000CCDFA /* KPLikeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPLikeModel.swift; sourceTree = "<group>"; };
 		7743343F1F28D96B000CCDFA /* KPSimpleMemberModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSimpleMemberModel.swift; sourceTree = "<group>"; };
 		7745C0811EF050D100244541 /* KPLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPLoginViewController.swift; sourceTree = "<group>"; };
+		7747BE701F9E3C0B006F2C8A /* KPSimpleCafeRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSimpleCafeRequest.swift; sourceTree = "<group>"; };
 		774AD6BE1F15FDA3002ACB47 /* KPPriceSelectController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = KPPriceSelectController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		77594B461EC89DAF0013BB56 /* KPPhotoAddCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPPhotoAddCell.swift; sourceTree = "<group>"; };
 		77594B481EC8AEB40013BB56 /* KPBounceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPBounceView.swift; sourceTree = "<group>"; };
@@ -603,6 +605,7 @@
 				77869E1B1EB771BC0027CA98 /* KPCafeRequest.swift */,
 				7762E33E1F12017D0006E205 /* KPCafeDetailedInfoRequest.swift */,
 				77421FAF1EB8EE0C00064FF0 /* KPNomadRequest.swift */,
+				7747BE701F9E3C0B006F2C8A /* KPSimpleCafeRequest.swift */,
 			);
 			name = Request;
 			sourceTree = "<group>";
@@ -1675,6 +1678,7 @@
 				77A2019B1EBC5BF800F3497F /* KPCheckBoxStrokeController.swift in Sources */,
 				773463481ED74AFE00EA78F0 /* KPNomadDataModel.swift in Sources */,
 				771EECB11EBC3291004A34B8 /* KPCheckBoxPathGenerator.swift in Sources */,
+				7747BE711F9E3C0B006F2C8A /* KPSimpleCafeRequest.swift in Sources */,
 				77869E1C1EB771BC0027CA98 /* KPCafeRequest.swift in Sources */,
 				77DA2F521F17150200DB2EC5 /* KPReportController.swift in Sources */,
 				77427BE21EF7F58B005D7AE4 /* KPNewRatingRequest.swift in Sources */,

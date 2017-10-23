@@ -51,6 +51,7 @@ GMUClusterRendererDelegate {
     var state: ControllerState! = .loading {
         didSet {
             if mainController.currentController == self {
+                UIApplication.shared.isNetworkActivityIndicatorVisible = false
                 if state == .normal {
                     if loadingView.superview != nil {
                         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1,
@@ -78,6 +79,8 @@ GMUClusterRendererDelegate {
                                                         self.loadingView.dismiss()
                         })
                     }
+                } else if state == .barLoading {
+                    UIApplication.shared.isNetworkActivityIndicatorVisible = true
                 }
             }
         }
@@ -597,7 +600,7 @@ GMUClusterRendererDelegate {
     
     func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition) {
         if draggingByUser == true {
-            mainController.reFetchRemoteData()
+            mainController.reFetchRemoteData(false)
         } else {
             draggingByUser = true
         }
