@@ -101,6 +101,15 @@ class KPInformationViewController: KPViewController {
     var commentInformationView: KPInformationSharedInfoView!
     var photoInformationView: KPInformationSharedInfoView!
     var menuInformationView: KPInformationSharedInfoView!
+    
+    enum ImagePickerType {
+        case photo
+        case menu
+        case none
+    }
+    
+    var pickerType: ImagePickerType = .none
+    
     var recommendInformationView: KPInformationSharedInfoView!
     var commentInfoView: KPShopCommentInfoView!
     var informationView: KPShopInfoView!
@@ -553,7 +562,7 @@ class KPInformationViewController: KPViewController {
                                                color:KPColorPalette.KPMainColor.mainColor!,
                                                icon:(R.image.icon_camera()?.withRenderingMode( .alwaysTemplate))!,
                                                handler:{[unowned self] (infoView) -> () in
-//                                                self.photoUpload()
+                                                self.menuUpload()
         })]
         
 
@@ -987,7 +996,9 @@ class KPInformationViewController: KPViewController {
                 KPPopoverView.popoverClosedView()
             } else {
                 let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+                
                 controller.addAction(UIAlertAction(title: "從相簿中選擇", style: .default) { (action) in
+                    self.pickerType = .photo
                     let imagePickerController = UIImagePickerController()
                     imagePickerController.allowsEditing = false
                     imagePickerController.sourceType = .photoLibrary
@@ -995,6 +1006,7 @@ class KPInformationViewController: KPViewController {
                     self.present(imagePickerController, animated: true, completion: nil)
                 })
                 controller.addAction(UIAlertAction(title: "開啟相機", style: .default) { (action) in
+                    self.pickerType = .photo
                     let imagePickerController = UIImagePickerController()
                     imagePickerController.allowsEditing = false
                     imagePickerController.sourceType = .camera
@@ -1022,6 +1034,7 @@ class KPInformationViewController: KPViewController {
             } else {
                 let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
                 controller.addAction(UIAlertAction(title: "從相簿中選擇", style: .default) { (action) in
+                    self.pickerType = .menu
                     let imagePickerController = UIImagePickerController()
                     imagePickerController.allowsEditing = false
                     imagePickerController.sourceType = .photoLibrary
@@ -1029,6 +1042,7 @@ class KPInformationViewController: KPViewController {
                     self.present(imagePickerController, animated: true, completion: nil)
                 })
                 controller.addAction(UIAlertAction(title: "開啟相機", style: .default) { (action) in
+                    self.pickerType = .menu
                     let imagePickerController = UIImagePickerController()
                     imagePickerController.allowsEditing = false
                     imagePickerController.sourceType = .camera
@@ -1270,28 +1284,31 @@ extension KPInformationViewController : UIImagePickerControllerDelegate {
         
         picker.dismiss(animated: true) {
             if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
-//                KPServiceHandler.sharedHandler.uploadMenus([image],
-//                                                           self.informationDataModel.identifier,
-//                                                           true,
-//                                                           { (success) in
-//                                                            if success {
-//                                                                print("upload successed")
-//                                                            } else {
-//                                                                print("upload failed")
-//                                                            }
-//                })
                 
-                
-                KPServiceHandler.sharedHandler.uploadPhotos([image],
-                                                            self.informationDataModel.identifier,
-                                                            true,
-                                                            { (success) in
-                    if success {
-                        print("upload successed")
-                    } else {
-                        print("upload failed")
-                    }
-                })
+                if self.pickerType == .menu {
+                    KPServiceHandler.sharedHandler.uploadMenus([image],
+                                                               self.informationDataModel.identifier,
+                                                               true,
+                                                               { (success) in
+                                                                if success {
+                                                                    print("upload successed")
+                                                                } else {
+                                                                    print("upload failed")
+                                                                }
+                    })
+                } else if self.pickerType == .photo {
+                    KPServiceHandler.sharedHandler.uploadPhotos([image],
+                                                                self.informationDataModel.identifier,
+                                                                true,
+                                                                { (success) in
+                        if success {
+                            print("upload successed")
+                        } else {
+                            print("upload failed")
+                        }
+                    })
+                }
+                self.pickerType = .none
             }
         }
     }

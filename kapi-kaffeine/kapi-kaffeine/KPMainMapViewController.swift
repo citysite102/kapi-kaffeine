@@ -491,14 +491,12 @@ GMUClusterRendererDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        if let dataModel = self.displayDataModel[indexPath.row] as? KPDataModel {
-            KPAnalyticManager.sendCellClickEvent(dataModel.name,
-                                                 dataModel.averageRate?.stringValue,
-                                                 KPAnalyticsEventValue.source.source_map)
-            self.currentDataModel = dataModel
-            self.mainController.performSegue(withIdentifier: "datailedInformationSegue", sender: self)
-        }
+        let dataModel = self.displayDataModel[indexPath.row]
+        KPAnalyticManager.sendCellClickEvent(dataModel.name,
+                                             dataModel.averageRate?.stringValue,
+                                             KPAnalyticsEventValue.source.source_map)
+        self.currentDataModel = dataModel
+        self.mainController.performSegue(withIdentifier: "datailedInformationSegue", sender: self)
     }
     
     func scrollViewWillEndDragging(_ scrollView: UIScrollView,

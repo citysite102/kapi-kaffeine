@@ -31,7 +31,7 @@ class KPShopRatingCell: UITableViewCell {
             var availableRateCount: CGFloat = 0
             
             if let wifi = rateData.wifi {
-                rateContents.append(rateData.wifi?.stringValue.characters.count == 1 ?
+                rateContents.append(rateData.wifi?.stringValue.count == 1 ?
                     "\((rateData.wifi?.stringValue)!).0" :
                     "\((rateData.wifi?.stringValue)!)")
                 
@@ -44,7 +44,7 @@ class KPShopRatingCell: UITableViewCell {
             }
             
             if let quiet = rateData.quiet {
-                rateContents.append(rateData.quiet?.stringValue.characters.count == 1 ?
+                rateContents.append(rateData.quiet?.stringValue.count == 1 ?
                     "\((rateData.quiet?.stringValue)!).0" :
                     "\((rateData.quiet?.stringValue)!)")
                 
@@ -57,7 +57,7 @@ class KPShopRatingCell: UITableViewCell {
             }
             
             if let cheap = rateData.cheap {
-                rateContents.append(rateData.cheap?.stringValue.characters.count == 1 ?
+                rateContents.append(rateData.cheap?.stringValue.count == 1 ?
                     "\((rateData.cheap?.stringValue)!).0" :
                     "\((rateData.cheap?.stringValue)!)")
                 
@@ -70,7 +70,7 @@ class KPShopRatingCell: UITableViewCell {
             }
 
             if let seat = rateData.seat {
-                rateContents.append(rateData.seat?.stringValue.characters.count == 1 ?
+                rateContents.append(rateData.seat?.stringValue.count == 1 ?
                     "\((rateData.seat?.stringValue)!).0" :
                     "\((rateData.seat?.stringValue)!)")
                 
@@ -83,7 +83,7 @@ class KPShopRatingCell: UITableViewCell {
             }
             
             if let tasty = rateData.tasty {
-                rateContents.append(rateData.tasty?.stringValue.characters.count == 1 ?
+                rateContents.append(rateData.tasty?.stringValue.count == 1 ?
                     "\((rateData.tasty?.stringValue)!).0" :
                     "\((rateData.tasty?.stringValue)!)")
                 
@@ -96,7 +96,7 @@ class KPShopRatingCell: UITableViewCell {
             }
             
             if let food = rateData.food {
-                rateContents.append(rateData.food?.stringValue.characters.count == 1 ?
+                rateContents.append(rateData.food?.stringValue.count == 1 ?
                     "\((rateData.food?.stringValue)!).0" :
                     "\((rateData.food?.stringValue)!)")
                 
@@ -109,7 +109,7 @@ class KPShopRatingCell: UITableViewCell {
             }
             
             if let music = rateData.music {
-                rateContents.append(rateData.music?.stringValue.characters.count == 1 ?
+                rateContents.append(rateData.music?.stringValue.count == 1 ?
                     "\((rateData.music?.stringValue)!).0" :
                     "\((rateData.music?.stringValue)!)")
                 

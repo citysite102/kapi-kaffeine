@@ -26,37 +26,37 @@ class KPShopRateInfoView: UIView {
         didSet {
             rateContents = []
             rateContents.append(dataModel.wifiAverage != nil ?
-                (dataModel.wifiAverage?.stringValue.characters.count == 1 ?
+                (dataModel.wifiAverage?.stringValue.count == 1 ?
                     "\((dataModel.wifiAverage?.stringValue)!).0" :
                     "\((dataModel.wifiAverage?.stringValue)!)") :
                 "0.0")
             rateContents.append(dataModel.quietAverage != nil ?
-                (dataModel.quietAverage?.stringValue.characters.count == 1 ?
+                (dataModel.quietAverage?.stringValue.count == 1 ?
                     "\((dataModel.quietAverage?.stringValue)!).0" :
                     "\((dataModel.quietAverage?.stringValue)!)") :
                 "0.0")
             rateContents.append(dataModel.cheapAverage != nil ?
-                (dataModel.cheapAverage?.stringValue.characters.count == 1 ?
+                (dataModel.cheapAverage?.stringValue.count == 1 ?
                     "\((dataModel.cheapAverage?.stringValue)!).0" :
                     "\((dataModel.cheapAverage?.stringValue)!)") :
                 "0.0")
             rateContents.append(dataModel.seatAverage != nil ?
-                (dataModel.seatAverage?.stringValue.characters.count == 1 ?
+                (dataModel.seatAverage?.stringValue.count == 1 ?
                     "\((dataModel.seatAverage?.stringValue)!).0" :
                     "\((dataModel.seatAverage?.stringValue)!)") :
                 "0.0")
             rateContents.append(dataModel.tastyAverage != nil ?
-                (dataModel.tastyAverage?.stringValue.characters.count == 1 ?
+                (dataModel.tastyAverage?.stringValue.count == 1 ?
                     "\((dataModel.tastyAverage?.stringValue)!).0" :
                     "\((dataModel.tastyAverage?.stringValue)!)") :
                 "0.0")
             rateContents.append(dataModel.foodAverage != nil ?
-                (dataModel.foodAverage?.stringValue.characters.count == 1 ?
+                (dataModel.foodAverage?.stringValue.count == 1 ?
                     "\((dataModel.foodAverage?.stringValue)!).0" :
                     "\((dataModel.foodAverage?.stringValue)!)") :
                 "0.0")
             rateContents.append(dataModel.musicAverage != nil ?
-                (dataModel.musicAverage?.stringValue.characters.count == 1 ?
+                (dataModel.musicAverage?.stringValue.count == 1 ?
                     "\((dataModel.musicAverage?.stringValue)!).0" :
                     "\((dataModel.musicAverage?.stringValue)!)") :
                 "0.0")
@@ -112,37 +112,37 @@ class KPShopRateInfoView: UIView {
         didSet {
             rateContents = []
             rateContents.append(rateData.wifiAverage != nil ?
-                (rateData.wifiAverage?.stringValue.characters.count == 1 ?
+                (rateData.wifiAverage?.stringValue.count == 1 ?
                     "\((rateData.wifiAverage?.stringValue)!).0" :
                     "\((rateData.wifiAverage?.stringValue)!)") :
                 "0.0")
             rateContents.append(rateData.quietAverage != nil ?
-                (rateData.quietAverage?.stringValue.characters.count == 1 ?
+                (rateData.quietAverage?.stringValue.count == 1 ?
                     "\((rateData.quietAverage?.stringValue)!).0" :
                     "\((rateData.quietAverage?.stringValue)!)") :
                 "0.0")
             rateContents.append(rateData.cheapAverage != nil ?
-                (rateData.cheapAverage?.stringValue.characters.count == 1 ?
+                (rateData.cheapAverage?.stringValue.count == 1 ?
                     "\((rateData.cheapAverage?.stringValue)!).0" :
                     "\((rateData.cheapAverage?.stringValue)!)") :
                 "0.0")
             rateContents.append(rateData.seatAverage != nil ?
-                (rateData.seatAverage?.stringValue.characters.count == 1 ?
+                (rateData.seatAverage?.stringValue.count == 1 ?
                     "\((rateData.seatAverage?.stringValue)!).0" :
                     "\((rateData.seatAverage?.stringValue)!)") :
                 "0.0")
             rateContents.append(rateData.tastyAverage != nil ?
-                (rateData.tastyAverage?.stringValue.characters.count == 1 ?
+                (rateData.tastyAverage?.stringValue.count == 1 ?
                     "\((rateData.tastyAverage?.stringValue)!).0" :
                     "\((rateData.tastyAverage?.stringValue)!)") :
                 "0.0")
             rateContents.append(rateData.foodAverage != nil ?
-                (rateData.foodAverage?.stringValue.characters.count == 1 ?
+                (rateData.foodAverage?.stringValue.count == 1 ?
                     "\((rateData.foodAverage?.stringValue)!).0" :
                     "\((rateData.foodAverage?.stringValue)!)") :
                 "0.0")
             rateContents.append(rateData.musicAverage != nil ?
-                (rateData.musicAverage?.stringValue.characters.count == 1 ?
+                (rateData.musicAverage?.stringValue.count == 1 ?
                     "\((rateData.musicAverage?.stringValue)!).0" :
                     "\((rateData.musicAverage?.stringValue)!)") :
                 "0.0")

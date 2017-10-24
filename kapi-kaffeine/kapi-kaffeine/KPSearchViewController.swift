@@ -231,18 +231,34 @@ extension KPSearchViewController: UISearchResultsUpdating, UISearchBarDelegate {
             return
         }
         
-        filteredDataModel = displayDataModel.filter({ (dataModel) -> Bool in
-            return (dataModel.name as NSString).range(of: searchString,
-                                                      options: .caseInsensitive).location != NSNotFound
-        })
-        
-        
-        if filteredDataModel.count == 0 && (searchController.searchBar.text?.characters.count)! > 0 {
-            emptyResult = true
-        } else {
-            emptyResult = false
+        if searchString.count < 1 {
+            filteredDataModel = []
             tableView.reloadData()
+            return
         }
+        
+//        filteredDataModel = displayDataModel.filter({ (dataModel) -> Bool in
+//            return (dataModel.name as NSString).range(of: searchString,
+//                                                      options: .caseInsensitive).location != NSNotFound
+//        })
+        
+        KPServiceHandler.sharedHandler.fetchRemoteData(nil,
+                                                       nil,
+                                                       nil,
+                                                       nil,
+                                                       nil,
+                                                       nil,
+                                                       nil,
+                                                       searchString) { (results, error) in
+                                                        DispatchQueue.main.async {[unowned self] in
+                                                            if results != nil {
+                                                                self.filteredDataModel = results!
+                                                                self.emptyResult = false
+                                                            } else {
+                                                                self.emptyResult = true
+                                                            }
+                                                            self.tableView.reloadData()
+                                                        }}
     }
 }
 

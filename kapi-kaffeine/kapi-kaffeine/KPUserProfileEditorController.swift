@@ -201,11 +201,11 @@ class KPUserProfileEditorController: UIViewController, UITextFieldDelegate, UITe
         }
         
         
-        if introTextView.text.characters.count == 0 {
+        if introTextView.text.count == 0 {
             introTextNumberLabel.isHidden = true
             introTextViewPlaceHolder.isHidden = false
         } else {
-            introTextNumberLabel.text = "\(introTextView.text.characters.count)/30"
+            introTextNumberLabel.text = "\(introTextView.text.count)/30"
             introTextNumberLabel.isHidden = false
             introTextViewPlaceHolder.isHidden = true
         }
@@ -400,11 +400,11 @@ class KPUserProfileEditorController: UIViewController, UITextFieldDelegate, UITe
             introTextNumberLabel.isHidden = false
             introTextViewPlaceHolder.isHidden = true
         }
-        introTextNumberLabel.text = "\(textView.text.characters.count)/30"
+        introTextNumberLabel.text = "\(textView.text.count)/30"
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        if textView.text.characters.count - range.length + text.characters.count > 30 {
+        if textView.text.count - range.length + text.count > 30 {
             return false
         }
         return true

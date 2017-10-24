@@ -130,12 +130,12 @@ class KPEditCommentController: KPViewController {
         textFieldContainerView.addSubview(remainingTextLabel)
         remainingTextLabel.addConstraints(fromStringArray: ["V:[$self]-16-|",
                                                             "H:[$self]-16-|"])
-        remainingTextLabel.setText(text: "\(defaultCommentModel?.content?.characters.count ?? 0)/\(KPEditCommentController.commentMaximumTextLength)")
+        remainingTextLabel.setText(text: "\(defaultCommentModel?.content?.count ?? 0)/\(KPEditCommentController.commentMaximumTextLength)")
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        sendButton.alpha = (inputTextView.text.characters.count > 0 &&
+        sendButton.alpha = (inputTextView.text.count > 0 &&
             inputTextView.text != defaultCommentModel?.content) ?
                 1.0 : 0.6
     }
@@ -183,7 +183,7 @@ class KPEditCommentController: KPViewController {
     }
     
     func textViewDidChange(_ textView: UITextView) {
-        placeholderLabel.isHidden = textView.text.characters.count > 0 ? true : false
+        placeholderLabel.isHidden = textView.text.count > 0 ? true : false
         remainingTextLabel.text = "\((textView.text! as NSString).length)/200"
     }
     
@@ -198,7 +198,7 @@ class KPEditCommentController: KPViewController {
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
-        placeholderLabel.isHidden = textView.text.characters.count > 0 ? true : false
+        placeholderLabel.isHidden = textView.text.count > 0 ? true : false
     }
     
     

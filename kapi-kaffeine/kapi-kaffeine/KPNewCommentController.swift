@@ -212,7 +212,7 @@ class KPNewCommentController: KPViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        sendButtonItem.customView!.alpha = inputTextView.text.characters.count > 0 ? 1.0 : 0.6
+        sendButtonItem.customView!.alpha = inputTextView.text.count > 0 ? 1.0 : 0.6
     }
     
     override func didReceiveMemoryWarning() {
@@ -284,7 +284,7 @@ class KPNewCommentController: KPViewController {
     }
     
     func textViewDidChange(_ textView: UITextView) {
-        placeholderLabel.isHidden = textView.text.characters.count > 0 ? true : false
+        placeholderLabel.isHidden = textView.text.count > 0 ? true : false
         remainingTextLabel.text = "\((textView.text! as NSString).length)/200"
     }
     
@@ -299,7 +299,7 @@ class KPNewCommentController: KPViewController {
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
-        placeholderLabel.isHidden = textView.text.characters.count > 0 ? true : false
+        placeholderLabel.isHidden = textView.text.count > 0 ? true : false
     }
 }
 

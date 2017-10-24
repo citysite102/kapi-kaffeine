@@ -52,7 +52,7 @@ class KPSubTitleEditView: UIView {
                 let placeholder = NSMutableAttributedString(string: placeHolderContent)
                 placeholder.addAttribute(NSForegroundColorAttributeName,
                                          value: KPColorPalette.KPTextColor.default_placeholder!,
-                                         range: NSRange.init(location: 0, length: placeHolderContent.characters.count))
+                                         range: NSRange.init(location: 0, length: placeHolderContent.count))
                 editTextField.attributedPlaceholder = placeholder
             }
         }
@@ -62,7 +62,7 @@ class KPSubTitleEditView: UIView {
         didSet {
             if dType == .MultiLine {
                 self.editTextView.text = content
-                if editTextView.text.characters.count == 0 {
+                if editTextView.text.count == 0 {
                     placeHolderLabel.isHidden = false
                 } else {
                     placeHolderLabel.isHidden = true
@@ -95,7 +95,7 @@ class KPSubTitleEditView: UIView {
                     let placeholder = NSMutableAttributedString(string: placeHolderContent)
                     placeholder.addAttribute(NSForegroundColorAttributeName,
                                              value: KPColorPalette.KPTextColor.default_placeholder!,
-                                             range: NSRange.init(location: 0, length: placeHolderContent.characters.count))
+                                             range: NSRange.init(location: 0, length: placeHolderContent.count))
                     editTextField.attributedPlaceholder = placeholder
                     editTextField.layer.pop_removeAllAnimations()
                 }
@@ -113,7 +113,7 @@ class KPSubTitleEditView: UIView {
                     let placeholder = NSMutableAttributedString(string: content)
                     placeholder.addAttribute(NSForegroundColorAttributeName,
                                              value: KPColorPalette.KPTextColor.warningColor!,
-                                             range: NSRange.init(location: 0, length: content.characters.count))
+                                             range: NSRange.init(location: 0, length: content.count))
                     editTextField.attributedPlaceholder = placeholder
                     
                     let anim = POPSpringAnimation(propertyNamed: kPOPLayerPositionX)
@@ -298,7 +298,7 @@ extension KPSubTitleEditView: UITextViewDelegate {
         
         sType = .Normal
         
-        if textView.text.characters.count == 0 {
+        if textView.text.count == 0 {
             placeHolderLabel.isHidden = false
         } else {
             placeHolderLabel.isHidden = true

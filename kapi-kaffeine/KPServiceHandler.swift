@@ -97,6 +97,7 @@ class KPServiceHandler {
                          _ city: String? = nil,
                          _ rightTop: CLLocationCoordinate2D? = nil,
                          _ leftBottom: CLLocationCoordinate2D? = nil,
+                         _ searchText: String? = nil,
                          _ completion:((_ result: [KPDataModel]?, _ error: NetworkRequestError?) -> Void)!) {
         kapiDataRequest.perform(limitedTime,
                                 socket,
@@ -104,7 +105,8 @@ class KPServiceHandler {
                                 mrt,
                                 city,
                                 rightTop,
-                                leftBottom).then { result -> Void in
+                                leftBottom,
+                                searchText).then { result -> Void in
                                     DispatchQueue.global().async {
                                         var cafeDatas = [KPDataModel]()
                                         if result["data"].arrayObject != nil {

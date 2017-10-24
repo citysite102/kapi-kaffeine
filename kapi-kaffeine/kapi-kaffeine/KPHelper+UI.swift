@@ -101,7 +101,7 @@ public extension UIView {
 public extension UILabel {
     public func setText(text: String,
                         lineSpacing: CGFloat = 1.0) {
-        if lineSpacing < 0.01 || text.characters.count == 0 {
+        if lineSpacing < 0.01 || text.count == 0 {
             self.text = text
             return
         }

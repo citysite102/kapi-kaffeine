@@ -726,7 +726,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
         } else if type == .add {
         
             if nameSubTitleView.editTextField.text == nil ||
-                nameSubTitleView.editTextField.text?.characters.count == 0 {
+                nameSubTitleView.editTextField.text?.count == 0 {
                 nameSubTitleView.sType = .Warning
                 KPPopoverView.popoverNotification("新增失敗",
                                                   "店家名稱尚未填寫！",
@@ -736,7 +736,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
             }
             
             if citySubTitleView.editTextField.text == nil ||
-                citySubTitleView.editTextField.text?.characters.count == 0 {
+                citySubTitleView.editTextField.text?.count == 0 {
                 citySubTitleView.sType = .Warning
                 KPPopoverView.popoverNotification("新增失敗",
                                                   "店家所在城市尚未選擇！",
@@ -746,7 +746,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
             }
             
             if addressSubTitleView.editTextView.text == nil ||
-                addressSubTitleView.editTextView.text?.characters.count == 0 {
+                addressSubTitleView.editTextView.text?.count == 0 {
                 addressSubTitleView.sType = .Warning
                 KPPopoverView.popoverNotification("新增失敗",
                                                   "店家地址尚未填寫！",
@@ -756,7 +756,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
             }
             
             if phoneSubTitleView.editTextField.text == nil ||
-                phoneSubTitleView.editTextField.text?.characters.count == 0 {
+                phoneSubTitleView.editTextField.text?.count == 0 {
                 phoneSubTitleView.sType = .Warning
                 KPPopoverView.popoverNotification("新增失敗",
                                                   "店家電話尚未填寫！",

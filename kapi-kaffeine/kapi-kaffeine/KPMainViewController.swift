@@ -285,7 +285,8 @@ class KPMainViewController: KPViewController {
                                                        nil,
                                                        nil,
                                                        rightTop,
-                                                       leftBottom) { (results, error) in
+                                                       leftBottom,
+                                                       nil) { (results, error) in
             DispatchQueue.main.async {
                 if results != nil {
                     self.setDisplayDataModel(KPFilter.sharedFilter.currentFilterCafeDatas(),
