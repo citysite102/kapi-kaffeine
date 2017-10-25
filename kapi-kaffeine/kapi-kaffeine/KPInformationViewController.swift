@@ -25,6 +25,8 @@ class KPInformationViewController: KPViewController {
         }
     }
     
+    
+    var viewHasAppeared: Bool = false
     var showBackButton: Bool = false
     var dismissWithDefaultType: Bool = false
     
@@ -171,7 +173,7 @@ class KPInformationViewController: KPViewController {
                                        image: showBackButton ? R.image.icon_back()! : R.image.icon_close()!)
         dismissButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
         dismissButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        dismissButton.contentEdgeInsets = showBackButton ? UIEdgeInsetsMake(3, 3, 3, 3) : UIEdgeInsetsMake(6, 0, 8, 14)
+        dismissButton.contentEdgeInsets = showBackButton ? UIEdgeInsetsMake(3, 0, 3, 6) : UIEdgeInsetsMake(6, 0, 8, 14)
         dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor
         dismissButton.addTarget(self,
                                 action: #selector(KPInformationViewController.handleDismissButtonOnTapped),
@@ -204,7 +206,7 @@ class KPInformationViewController: KPViewController {
         let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace,
                                              target: nil,
                                              action: nil)
-        negativeSpacer.width = -7
+        negativeSpacer.width = -8
         navigationItem.leftBarButtonItems = [negativeSpacer, barItem]
         navigationItem.rightBarButtonItems = [negativeSpacer, rightBarItem]
         
@@ -607,6 +609,7 @@ class KPInformationViewController: KPViewController {
         shopLocationInfoView.dataModel = informationDataModel
         locationInformationView.infoView = shopLocationInfoView
         navBarFixBound = navigationController!.navigationBar.bounds
+        viewHasAppeared = true
         informationHeaderView.shopPhoto.isHidden = false
     }
     
@@ -1183,36 +1186,39 @@ extension KPInformationViewController: UINavigationControllerDelegate {
 
 extension KPInformationViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        scrollContainer.contentOffset = CGPoint(x: 0,
-                                                y: scrollContainer.contentOffset.y <= -120 ?
-                                                    -120 :
-                                                    scrollContainer.contentOffset.y)
         
-        if scrollContainer.contentOffset.y <= 0 && scrollContainer.contentOffset.y >= -120 {
-            let scaleRatio = 1 - scrollContainer.contentOffset.y/300
-            let scaleRatioContainer = 1 - scrollContainer.contentOffset.y/240
-            let oldFrame = informationHeaderView.shopPhotoContainer.frame
+        if viewHasAppeared {
+            scrollContainer.contentOffset = CGPoint(x: 0,
+                                                    y: scrollContainer.contentOffset.y <= -120 ?
+                                                        -120 :
+                                                        scrollContainer.contentOffset.y)
             
-            animatedHeaderConstraint.constant = 0
-            informationHeaderView.shopPhoto.transform = .identity
-            informationHeaderView.isUserInteractionEnabled = true
-            
-            informationHeaderView.shopPhotoContainer.layer.anchorPoint = CGPoint(x: 0.5, y: 1)
-            informationHeaderView.shopPhotoContainer.frame = oldFrame
-            informationHeaderView.shopPhotoContainer.transform = .identity
-            informationHeaderView.shopPhotoContainer.transform = CGAffineTransform(scaleX: scaleRatioContainer,
-                                                                                   y: scaleRatioContainer)
-            informationHeaderView.shopPhoto.transform = .identity
-            informationHeaderView.shopPhoto.transform = CGAffineTransform(scaleX: scaleRatio,
-                                                                          y: scaleRatio)
-            
-            self.view.layoutIfNeeded()
-        } else if scrollContainer.contentOffset.y > 0 && scrollContainer.contentOffset.y < 200 {
-            animatedHeaderConstraint.constant = -scrollContainer.contentOffset.y*9/20
-            informationHeaderView.shopPhoto.transform = CGAffineTransform(translationX: 0,
-                                                                          y: scrollContainer.contentOffset.y*9/20)
-            informationHeaderView.isUserInteractionEnabled = false
-            view.layoutIfNeeded()
+            if scrollContainer.contentOffset.y <= 0 && scrollContainer.contentOffset.y >= -120 {
+                let scaleRatio = 1 - scrollContainer.contentOffset.y/300
+                let scaleRatioContainer = 1 - scrollContainer.contentOffset.y/240
+                let oldFrame = informationHeaderView.shopPhotoContainer.frame
+                
+                animatedHeaderConstraint.constant = 0
+                informationHeaderView.shopPhoto.transform = .identity
+                informationHeaderView.isUserInteractionEnabled = true
+                
+                informationHeaderView.shopPhotoContainer.layer.anchorPoint = CGPoint(x: 0.5, y: 1)
+                informationHeaderView.shopPhotoContainer.frame = oldFrame
+                informationHeaderView.shopPhotoContainer.transform = .identity
+                informationHeaderView.shopPhotoContainer.transform = CGAffineTransform(scaleX: scaleRatioContainer,
+                                                                                       y: scaleRatioContainer)
+                informationHeaderView.shopPhoto.transform = .identity
+                informationHeaderView.shopPhoto.transform = CGAffineTransform(scaleX: scaleRatio,
+                                                                              y: scaleRatio)
+                
+                self.view.layoutIfNeeded()
+            } else if scrollContainer.contentOffset.y > 0 && scrollContainer.contentOffset.y < 200 {
+                animatedHeaderConstraint.constant = -scrollContainer.contentOffset.y*9/20
+                informationHeaderView.shopPhoto.transform = CGAffineTransform(translationX: 0,
+                                                                              y: scrollContainer.contentOffset.y*9/20)
+                informationHeaderView.isUserInteractionEnabled = false
+                view.layoutIfNeeded()
+            }
         }
     }
 }
