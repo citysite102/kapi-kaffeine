@@ -535,7 +535,7 @@ extension KPMainListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if !displayDataModel.isEmpty  && state != .loading, let tableItem = displayDataModel[indexPath.row] as? GADNativeExpressAdView {
+        if !displayDataModel.isEmpty  && state != .barLoading  && state != .loading, let tableItem = displayDataModel[indexPath.row] as? GADNativeExpressAdView {
             let isAdLoaded = loadStateForAds[tableItem]
             return isAdLoaded == true ? Constant.adViewHeight : 0
         }

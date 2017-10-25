@@ -648,10 +648,10 @@ extension KPSideViewController: UITableViewDelegate, UITableViewDataSource {
             } else {
                 let regionIndex = getRegionIndex(expandIndex: indexPath.row)
                 let regionContent = regionContents[regionIndex]
-                let cityName = regionContent?.cityKeys[indexPath.row-regionIndex-1]
-                KPServiceHandler.sharedHandler.currentCity = cityName
-                mainController.mainListViewController?.state = .loading
-                mainController.setDisplayDataModel(KPFilter.sharedFilter.currentFilterCafeDatas(), true)
+//                let cityName = regionContent?.cityKeys[indexPath.row-regionIndex-1]
+//                KPServiceHandler.sharedHandler.currentCity = cityName
+//                mainController.mainListViewController?.state = .loading
+//                mainController.setDisplayDataModel(KPFilter.sharedFilter.currentFilterCafeDatas(), true)
                 if let mapView = mainController.mainMapViewController?.mapView {
                     mapView.animate(to: GMSCameraPosition.camera(withTarget: (regionContent?.cityCoordinate[indexPath.row-regionIndex-1])!,
                                                                  zoom: mapView.camera.zoom))
