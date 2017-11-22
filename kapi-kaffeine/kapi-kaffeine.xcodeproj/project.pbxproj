@@ -196,11 +196,15 @@
 		C05CF8781EF8019800F3DF2A /* KPDataBusinessHourModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05CF8771EF8019800F3DF2A /* KPDataBusinessHourModel.swift */; };
 		C05D10191F3B691C000731D9 /* KPSubTitlePhotoUploadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05D10181F3B691C000731D9 /* KPSubTitlePhotoUploadView.swift */; };
 		C0686B671F95DBE000007FAA /* KPMenuUploadRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0686B661F95DBE000007FAA /* KPMenuUploadRequest.swift */; };
+		C068791B1FC58DB4004160C9 /* KPExplorationSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C068791A1FC58DB4004160C9 /* KPExplorationSectionView.swift */; };
+		C068791D1FC59893004160C9 /* KPExplorationSectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C068791C1FC59893004160C9 /* KPExplorationSectionCell.swift */; };
 		C09C69C41F1F56A70051C42F /* KPFeatureTagRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09C69C31F1F56A70051C42F /* KPFeatureTagRequest.swift */; };
 		C0B21FC81F05079100925A89 /* KPUserProfileEditorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B21FC71F05079100925A89 /* KPUserProfileEditorController.swift */; };
 		C0B49D971EA13BC100BA95D8 /* KPMainMapViewCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B49D961EA13BC100BA95D8 /* KPMainMapViewCollectionCell.swift */; };
 		C0D7EE7B1F550FCD00A3BC57 /* KPCityRegionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D7EE7A1F550FCD00A3BC57 /* KPCityRegionModel.swift */; };
 		C0D7EE7D1F557D7D00A3BC57 /* KPModifyCafeDataRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D7EE7C1F557D7D00A3BC57 /* KPModifyCafeDataRequest.swift */; };
+		C0E6CBEF1FC3D58100517EB8 /* KPExplorationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E6CBEE1FC3D58100517EB8 /* KPExplorationViewController.swift */; };
+		C0E6CBF11FC3E25200517EB8 /* KPArticleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E6CBF01FC3E25200517EB8 /* KPArticleCell.swift */; };
 		C0EA89571F9748BD000BFFC9 /* KPGetMenuRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EA89561F9748BD000BFFC9 /* KPGetMenuRequest.swift */; };
 		C0EBE5431ECB29800021653E /* KPBusinessHourViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EBE5421ECB29800021653E /* KPBusinessHourViewController.swift */; };
 		C0F11FAC1F26531000E9AC60 /* KPSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F11FAB1F26531000E9AC60 /* KPSegmentedControl.swift */; };
@@ -447,11 +451,15 @@
 		C05CF8771EF8019800F3DF2A /* KPDataBusinessHourModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPDataBusinessHourModel.swift; sourceTree = "<group>"; };
 		C05D10181F3B691C000731D9 /* KPSubTitlePhotoUploadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSubTitlePhotoUploadView.swift; sourceTree = "<group>"; };
 		C0686B661F95DBE000007FAA /* KPMenuUploadRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPMenuUploadRequest.swift; sourceTree = "<group>"; };
+		C068791A1FC58DB4004160C9 /* KPExplorationSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPExplorationSectionView.swift; sourceTree = "<group>"; };
+		C068791C1FC59893004160C9 /* KPExplorationSectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPExplorationSectionCell.swift; sourceTree = "<group>"; };
 		C09C69C31F1F56A70051C42F /* KPFeatureTagRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPFeatureTagRequest.swift; sourceTree = "<group>"; };
 		C0B21FC71F05079100925A89 /* KPUserProfileEditorController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPUserProfileEditorController.swift; sourceTree = "<group>"; };
 		C0B49D961EA13BC100BA95D8 /* KPMainMapViewCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPMainMapViewCollectionCell.swift; sourceTree = "<group>"; };
 		C0D7EE7A1F550FCD00A3BC57 /* KPCityRegionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPCityRegionModel.swift; sourceTree = "<group>"; };
 		C0D7EE7C1F557D7D00A3BC57 /* KPModifyCafeDataRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPModifyCafeDataRequest.swift; sourceTree = "<group>"; };
+		C0E6CBEE1FC3D58100517EB8 /* KPExplorationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPExplorationViewController.swift; sourceTree = "<group>"; };
+		C0E6CBF01FC3E25200517EB8 /* KPArticleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPArticleCell.swift; sourceTree = "<group>"; };
 		C0EA89561F9748BD000BFFC9 /* KPGetMenuRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPGetMenuRequest.swift; sourceTree = "<group>"; };
 		C0EBE5421ECB29800021653E /* KPBusinessHourViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = KPBusinessHourViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C0F11FAB1F26531000E9AC60 /* KPSegmentedControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSegmentedControl.swift; sourceTree = "<group>"; };
@@ -1104,6 +1112,7 @@
 		C02AFE381E7D260D008FFB33 = {
 			isa = PBXGroup;
 			children = (
+				C0E6CBED1FC3D39800517EB8 /* Exploration */,
 				C02AFE431E7D260D008FFB33 /* kapi-kaffeine */,
 				77BFC54E1EB73D5800610F55 /* kapi-service */,
 				772748401ED5D18B00C42FB6 /* kapi-user */,
@@ -1220,6 +1229,17 @@
 				C0B49D961EA13BC100BA95D8 /* KPMainMapViewCollectionCell.swift */,
 			);
 			name = View;
+			sourceTree = "<group>";
+		};
+		C0E6CBED1FC3D39800517EB8 /* Exploration */ = {
+			isa = PBXGroup;
+			children = (
+				C0E6CBEE1FC3D58100517EB8 /* KPExplorationViewController.swift */,
+				C0E6CBF01FC3E25200517EB8 /* KPArticleCell.swift */,
+				C068791A1FC58DB4004160C9 /* KPExplorationSectionView.swift */,
+				C068791C1FC59893004160C9 /* KPExplorationSectionCell.swift */,
+			);
+			path = Exploration;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1591,6 +1611,7 @@
 				C055B0051EF0CAEF00C651CC /* KPTabView.swift in Sources */,
 				776ACAF41E9BAFA200B629A2 /* KPSearchHeaderView.swift in Sources */,
 				77BFC5521EB740CE00610F55 /* KPUser.swift in Sources */,
+				C0E6CBF11FC3E25200517EB8 /* KPArticleCell.swift in Sources */,
 				77E495631EC9EEF0003B7EBC /* KPTimePicker.swift in Sources */,
 				774208F11EA5F04B00C78A00 /* KPShopPhotoCell.swift in Sources */,
 				77B66FA31EA91488008B6652 /* KPCityTableViewCell.swift in Sources */,
@@ -1670,6 +1691,7 @@
 				C02AFE451E7D260D008FFB33 /* AppDelegate.swift in Sources */,
 				77869E1E1EB79CF40027CA98 /* KPSimpleRequest.swift in Sources */,
 				770AB5D31EB70E8E00EE8A3B /* R.generated.swift in Sources */,
+				C068791B1FC58DB4004160C9 /* KPExplorationSectionView.swift in Sources */,
 				776ACAF81E9BAFE900B629A2 /* KPSearchFooterView.swift in Sources */,
 				C05D10191F3B691C000731D9 /* KPSubTitlePhotoUploadView.swift in Sources */,
 				C01AC63A1EAAEA8F000390F7 /* GQTPointQuadTreeChild.m in Sources */,
@@ -1695,10 +1717,12 @@
 				771EECB31EBC32E4004A34B8 /* KPCheckBoxRadioPathGenerator.swift in Sources */,
 				77E6BAA91F13F18300802992 /* KPExpNotificationView.swift in Sources */,
 				770904321F55C70000A9CCE3 /* KPAnalyticManager.swift in Sources */,
+				C068791D1FC59893004160C9 /* KPExplorationSectionCell.swift in Sources */,
 				776ACB081E9BE51600B629A2 /* KPMainListCellFeatureContainer.swift in Sources */,
 				77869E1A1EB76F690027CA98 /* NetworkErrorHandler.swift in Sources */,
 				77869E161EB75B5C0027CA98 /* NetworkClient.swift in Sources */,
 				C0F11FAC1F26531000E9AC60 /* KPSegmentedControl.swift in Sources */,
+				C0E6CBEF1FC3D58100517EB8 /* KPExplorationViewController.swift in Sources */,
 				77B66FA91EACF74C008B6652 /* KPPopoverSensingView.swift in Sources */,
 				779EB1441EC0DFD4008AAFF0 /* KPPhotoDisplayViewController.swift in Sources */,
 				C0EA89571F9748BD000BFFC9 /* KPGetMenuRequest.swift in Sources */,
