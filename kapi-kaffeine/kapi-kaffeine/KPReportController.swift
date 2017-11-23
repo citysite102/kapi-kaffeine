@@ -141,7 +141,7 @@ class KPReportController: KPViewController {
     }
     
     func textViewDidChange(_ textView: UITextView) {
-        placeholderLabel.isHidden = textView.text.characters.count > 0 ? true : false
+        placeholderLabel.isHidden = textView.text.count > 0 ? true : false
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
@@ -155,7 +155,7 @@ class KPReportController: KPViewController {
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
-        placeholderLabel.isHidden = textView.text.characters.count > 0 ? true : false
+        placeholderLabel.isHidden = textView.text.count > 0 ? true : false
     }
 }
 

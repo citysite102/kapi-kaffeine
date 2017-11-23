@@ -15,35 +15,64 @@ class KPExplorationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = UIColor(hexString: "f8f8f8")
-        
-        let scrollView = UIScrollView()
-        view.addSubview(scrollView)
-        scrollView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"])
-        
-        let scrollContainer = UIView()
-        scrollView.addSubview(scrollContainer)
-        scrollContainer.addConstraintForHavingSameWidth(with: scrollView)
-        scrollContainer.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"])
         
         let articleLayout = UICollectionViewFlowLayout()
         articleLayout.scrollDirection = .horizontal
-
-        articleCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: articleLayout)
+        
+        articleCollectionView = UICollectionView(frame: CGRect(x: 0,
+                                                               y: 0,
+                                                               width: UIScreen.main.bounds.width,
+                                                               height: 260),
+                                                 collectionViewLayout: articleLayout)
         articleCollectionView.showsHorizontalScrollIndicator = false
         articleCollectionView.decelerationRate = UIScrollViewDecelerationRateFast
         articleCollectionView.dataSource = self
         articleCollectionView.delegate = self
         articleCollectionView.register(KPArticleCell.self, forCellWithReuseIdentifier: "ArticleCell")
         articleCollectionView.backgroundColor = UIColor.clear
+
         
-        scrollContainer.addSubview(articleCollectionView)
-        articleCollectionView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|-100-[$self(260)]"])
+        let tableView = UITableView(frame: CGRect.zero, style: .plain)
+        tableView.contentInset = UIEdgeInsets(top: 100, left: 0, bottom: 30, right: 0)
+        tableView.dataSource = self
+        tableView.separatorStyle = .none
+        tableView.allowsSelection = false
+        tableView.showsVerticalScrollIndicator = false
+        tableView.register(KPExplorationSectionView.self, forCellReuseIdentifier: "cell")
+        view.addSubview(tableView)
+        tableView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"])
+        tableView.tableHeaderView = articleCollectionView
         
-        let sectionView = KPExplorationSectionView()
-        scrollContainer.addSubview(sectionView)
-        sectionView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$view0]-[$self]-20-|"],
-                                   views: [articleCollectionView])
+        
+//        view.backgroundColor = UIColor(hexString: "f8f8f8")
+//
+//        let scrollView = UIScrollView()
+//        view.addSubview(scrollView)
+//        scrollView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"])
+//
+//        let scrollContainer = UIView()
+//        scrollView.addSubview(scrollContainer)
+//        scrollContainer.addConstraintForHavingSameWidth(with: scrollView)
+//        scrollContainer.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"])
+//
+//        let articleLayout = UICollectionViewFlowLayout()
+//        articleLayout.scrollDirection = .horizontal
+//
+//        articleCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: articleLayout)
+//        articleCollectionView.showsHorizontalScrollIndicator = false
+//        articleCollectionView.decelerationRate = UIScrollViewDecelerationRateFast
+//        articleCollectionView.dataSource = self
+//        articleCollectionView.delegate = self
+//        articleCollectionView.register(KPArticleCell.self, forCellWithReuseIdentifier: "ArticleCell")
+//        articleCollectionView.backgroundColor = UIColor.clear
+//
+//        scrollContainer.addSubview(articleCollectionView)
+//        articleCollectionView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|-100-[$self(260)]"])
+//
+//        let sectionView = KPExplorationSectionView()
+//        scrollContainer.addSubview(sectionView)
+//        sectionView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$view0]-[$self]-20-|"],
+//                                   views: [articleCollectionView])
     }
 
     override func didReceiveMemoryWarning() {
@@ -54,6 +83,22 @@ class KPExplorationViewController: UIViewController {
 }
 
 
+extension KPExplorationViewController: UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 3
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        return cell
+    }
+    
+}
 
 extension KPExplorationViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     

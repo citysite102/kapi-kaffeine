@@ -17,20 +17,20 @@ class KPExplorationSectionCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        backgroundColor = UIColor.white
+        backgroundColor = UIColor.clear
         
         contentView.clipsToBounds = true
         contentView.layer.cornerRadius = 2
         contentView.backgroundColor = UIColor.white
-        layer.shouldRasterize = true
-        
+
         layer.shadowColor = UIColor.lightGray.cgColor
         layer.shadowOffset = CGSize(width: 0, height: 2.0)
         layer.shadowRadius = 5.0
-        layer.shadowOpacity = 0.5
+        layer.shadowOpacity = 1
         layer.masksToBounds = false
         
         imageView = UIImageView()
+        imageView.layer.shouldRasterize = true
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         contentView.addSubview(imageView)

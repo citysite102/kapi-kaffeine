@@ -393,7 +393,7 @@ class KPUserProfileEditorController: UIViewController, UITextFieldDelegate, UITe
     }
     
     func textViewDidChange(_ textView: UITextView) {
-        if textView.text.characters.count == 0 {
+        if textView.text.count == 0 {
             introTextNumberLabel.isHidden = true
             introTextViewPlaceHolder.isHidden = false
         } else {

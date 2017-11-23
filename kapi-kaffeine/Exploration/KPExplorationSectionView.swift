@@ -8,29 +8,29 @@
 
 import UIKit
 
-class KPExplorationSectionView: UIView {
+class KPExplorationSectionView: UITableViewCell {
 
     var collectionView: UICollectionView!
     
     var sectionTitleLabel: UILabel!
     var sectionDescriptionLabel: UILabel!
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         backgroundColor = UIColor.white
         
         sectionTitleLabel = UILabel()
         sectionTitleLabel.font = UIFont.boldSystemFont(ofSize: 16)
         sectionTitleLabel.textColor = UIColor(hexString: "585858")
-        addSubview(sectionTitleLabel)
+        contentView.addSubview(sectionTitleLabel)
         sectionTitleLabel.addConstraints(fromStringArray: ["H:|-20-[$self]", "V:|-12-[$self]"])
         sectionTitleLabel.text = "IG 人氣打卡店家"
         
         sectionDescriptionLabel = UILabel()
         sectionDescriptionLabel.font = UIFont.systemFont(ofSize: 12)
         sectionDescriptionLabel.textColor = UIColor(hexString: "979797")
-        addSubview(sectionDescriptionLabel)
+        contentView.addSubview(sectionDescriptionLabel)
         sectionDescriptionLabel.addConstraints(fromStringArray: ["H:|-20-[$self]", "V:[$view0]-4-[$self]"], views: [sectionTitleLabel])
         sectionDescriptionLabel.text = "由知名部落客們聯手推薦的知名店家。"
         
@@ -43,7 +43,7 @@ class KPExplorationSectionView: UIView {
         collectionView.delegate = self
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.register(KPExplorationSectionCell.self, forCellWithReuseIdentifier: "ExplorationSectionCell")
-        addSubview(collectionView)
+        contentView.addSubview(collectionView)
         collectionView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$view0]-4-[$self(180)]|"], views: [sectionDescriptionLabel])
         
         
