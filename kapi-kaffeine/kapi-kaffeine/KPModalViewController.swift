@@ -299,7 +299,7 @@ class KPModalViewController: KPViewController {
     }
     
     
-    func handleKeyboardWillShow(_ notification: NSNotification) {
+    @objc func handleKeyboardWillShow(_ notification: NSNotification) {
         keyboardIsShowing = true
         if !contentMoveWithKeyboard {
             return
@@ -321,7 +321,7 @@ class KPModalViewController: KPViewController {
         }
     }
     
-    func handleKeyboardWillHide(_ notification: NSNotification) {
+    @objc func handleKeyboardWillHide(_ notification: NSNotification) {
         keyboardIsShowing = false
         if !contentMoveWithKeyboard {
             return

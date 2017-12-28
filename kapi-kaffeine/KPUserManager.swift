@@ -70,13 +70,13 @@ public class KPUserManager {
         
         self.loadingView.state = .loading
         loginManager.loginBehavior = LoginBehavior.native;
-        loginManager.logIn([.publicProfile],
+        loginManager.logIn(readPermissions: [.publicProfile],
                            viewController: viewController) { (loginResult) in
-                            
+
                             viewController.view.addSubview(self.loadingView)
                             self.loadingView.addConstraints(fromStringArray: ["V:|[$self]|",
                                                                               "H:|[$self]|"])
-                            
+
                             switch loginResult {
                             case .failed(_):
                                 self.loadingView.state = .failed
@@ -85,52 +85,52 @@ public class KPUserManager {
                                 self.loadingView.state = .failed
                                 completion?(false)
                             case .success( _, _, let accessToken):
-                                
+
                                 let credential = FacebookAuthProvider.credential(withAccessToken: accessToken.authenticationToken)
                                 Auth.auth().signIn(with: credential,
                                                    completion: { (user, error) in
-                                                        
+
                                                         if let error = error {
                                                             CLSLogv("Login Error %@", getVaList(["\(error.localizedDescription)"]))
-                                                            
+
                                                             self.showAlert(viewController, error)
                                                             self.loadingView.state = .failed
                                                             completion?(false)
                                                             return
                                                         }
-                                                        
-                                                        
+
+
                                                         let loginRequest = KPLoginRequest()
                                                         loginRequest.perform(user?.uid,
                                                                              user?.displayName,
                                                                              user?.photoURL?.absoluteString,
                                                                              user?.email ?? "unknown").then { result -> Void in
-                                                                                
+
                                                                                 KPUserDefaults.accessToken = result["token"].string
-                                                                                
+
                                                                                 // 建立 Current User
                                                                                 self.currentUser =
                                                                                     Mapper<KPUser>().map(JSONObject: result["data"].dictionaryObject)
                                                                                 self.currentUser?.accessToken = result["token"].string
                                                                                 self.storeUserInformation()
                                                                                 self.loadingView.state = .successed
-                                                                                
+
                                                                                 Crashlytics.sharedInstance().setUserIdentifier(self.currentUser?.identifier)
                                                                                 Crashlytics.sharedInstance().setUserEmail(self.currentUser?.email)
                                                                                 Crashlytics.sharedInstance().setUserName(self.currentUser?.displayName)
-                                                                                
+
                                                                                 Amplitude.instance().setUserId(self.currentUser?.identifier)
                                                                                 Amplitude.instance().setUserProperties(["name": self.currentUser?.displayName ?? "No Name",
                                                                                                                         "email": self.currentUser?.email ?? "No Email"])
-                                                                                
+
                                                                                 completion?(true)
-                                                                                
+
                                                                                 DispatchQueue.main.asyncAfter(deadline: .now()+1.0) {
                                                                                     viewController.dismiss(animated: true, completion: {
                                                                                         print("Successfully Logged In")
                                                                                     })
                                                                                 }
-                                                                            
+
                                                             }.catch { error in
                                                                 CLSLogv("Login Error %@", getVaList(["\(error.localizedDescription)"]))
                                                                 self.showAlert(viewController, error)

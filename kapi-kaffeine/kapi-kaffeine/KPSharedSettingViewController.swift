@@ -112,7 +112,7 @@ class KPSharedSettingViewController: KPViewController {
         
     }
     
-    func handleDismissButtonOnTapped() {
+    @objc func handleDismissButtonOnTapped() {
         self.dismiss(animated: true, completion: nil);
     }
     

@@ -377,7 +377,7 @@ class KPSideViewController: KPViewController {
     }
     
     
-    func userDidChanged(notification: Notification) {
+    @objc func userDidChanged(notification: Notification) {
         setCurrentUser(KPUserManager.sharedManager.currentUser)
     }
     
@@ -399,11 +399,11 @@ class KPSideViewController: KPViewController {
         }
     }
     
-    func handleUserInfoButtonOnTapped() {
+    @objc func handleUserInfoButtonOnTapped() {
         handleUserContainerOnTapped(nil)
     }
     
-    func handleUserContainerOnTapped(_ sender: UITapGestureRecognizer?) {
+    @objc func handleUserContainerOnTapped(_ sender: UITapGestureRecognizer?) {
         if KPUserManager.sharedManager.currentUser == nil {
             let controller = KPModalViewController()
             controller.edgeInset = UIEdgeInsets(top: 0,

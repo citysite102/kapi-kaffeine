@@ -292,11 +292,11 @@ class KPAboutUsViewController: KPViewController {
     }
     
 
-    func handleDismissButtonOnTapped() {
+    @objc func handleDismissButtonOnTapped() {
         appModalController()?.dismissControllerWithDefaultDuration()
     }
     
-    func handleMoreFeatureButtonOnTapped() {
+    @objc func handleMoreFeatureButtonOnTapped() {
         let controller = KPModalViewController()
         controller.edgeInset = UIEdgeInsets(top: 0,
                                             left: 0,

@@ -709,16 +709,16 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
     }
     
 
-    func handleDismissButtonOnTapped() {
+    @objc func handleDismissButtonOnTapped() {
         KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.new_dismiss_button)
         appModalController()?.dismissControllerWithDefaultDuration()
     }
     
-    func handleTapGesture(tapGesture: UITapGestureRecognizer) {
+    @objc func handleTapGesture(tapGesture: UITapGestureRecognizer) {
         view.endEditing(true)
     }
     
-    func handleSendButtonOnTapped() {
+    @objc func handleSendButtonOnTapped() {
         KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.new_send_button)
         if KPUserManager.sharedManager.currentUser == nil {
             KPPopoverView.popoverLoginView()
@@ -903,7 +903,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
         }
     }
     
-    func handleAddressMapViewOnTap(_ gesture: UITapGestureRecognizer) {
+    @objc func handleAddressMapViewOnTap(_ gesture: UITapGestureRecognizer) {
         let controller = KPModalViewController()
         controller.edgeInset = UIEdgeInsets(top: 0,
                                             left: 0,
@@ -922,14 +922,14 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
         controller.presentModalView()
     }
     
-    func handleMapInputViewSendButtonOnTap(_ sender: UIButton) {
+    @objc func handleMapInputViewSendButtonOnTap(_ sender: UIButton) {
         self.mapInputController.appModalController()?.dismissControllerWithDefaultDuration()
         addressSubTitleView.editTextView.text = mapInputController.address
         addressSubTitleView.editTextView.delegate?.textViewDidChange?(addressSubTitleView.editTextView)
         selectedCoordinate = mapInputController.coordinate
     }
     
-    func keyboardWillShown(notification: Notification) {
+    @objc func keyboardWillShown(notification: Notification) {
         
         let info : NSDictionary = notification.userInfo! as NSDictionary
         let ooooframe = (info[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
@@ -955,7 +955,7 @@ class KPNewStoreController: KPViewController, UITextFieldDelegate {
         
     }
     
-    func keyboardWillBeHidden(notification: Notification) {
+    @objc func keyboardWillBeHidden(notification: Notification) {
         let contentInsets : UIEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, 0, 0.0)
         _scrollView.contentInset = contentInsets
         _scrollView.scrollIndicatorInsets = contentInsets

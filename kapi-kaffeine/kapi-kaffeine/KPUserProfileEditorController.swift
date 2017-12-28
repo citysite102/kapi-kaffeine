@@ -232,7 +232,7 @@ class KPUserProfileEditorController: UIViewController, UITextFieldDelegate, UITe
     }
     
     
-    func keyboardWillShown(notification: Notification) {
+    @objc func keyboardWillShown(notification: Notification) {
         
         let info : NSDictionary = notification.userInfo! as NSDictionary
         let ooooframe = (info[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
@@ -258,7 +258,7 @@ class KPUserProfileEditorController: UIViewController, UITextFieldDelegate, UITe
         
     }
     
-    func keyboardWillBeHidden(notification: Notification) {
+    @objc func keyboardWillBeHidden(notification: Notification) {
         let contentInsets : UIEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, 0, 0.0)
         _scrollView.contentInset = contentInsets
         _scrollView.scrollIndicatorInsets = contentInsets
@@ -266,7 +266,7 @@ class KPUserProfileEditorController: UIViewController, UITextFieldDelegate, UITe
     }
     
     
-    func handlePhotoTapGesture(tapGesture: UITapGestureRecognizer) {
+    @objc func handlePhotoTapGesture(tapGesture: UITapGestureRecognizer) {
         view.endEditing(true)
         
         
@@ -298,15 +298,15 @@ class KPUserProfileEditorController: UIViewController, UITextFieldDelegate, UITe
 //        }
     }
 
-    func handleTapGesture(tapGesture: UITapGestureRecognizer) {
+    @objc func handleTapGesture(tapGesture: UITapGestureRecognizer) {
         view.endEditing(true)
     }
     
-    func handleDismissButtonOnTapped() {
+    @objc func handleDismissButtonOnTapped() {
         navigationController?.popToRootViewController(animated: true)
     }
     
-    func handleSaveButtonOnTapped() {
+    @objc func handleSaveButtonOnTapped() {
         
         if let user = KPUserManager.sharedManager.currentUser {
             

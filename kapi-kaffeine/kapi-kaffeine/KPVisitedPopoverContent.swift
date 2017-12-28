@@ -145,11 +145,11 @@ class KPVisitedPopoverContent: UIView, PopoverProtocol {
                                      views:[cancelButton])
     }
     
-    func handleCancelButtonOnTapped() {
+    @objc func handleCancelButtonOnTapped() {
         popoverView.dismiss()
     }
     
-    func handleConfirmButtonOnTapped() {
+    @objc func handleConfirmButtonOnTapped() {
         if confirmAction != nil {
             confirmAction!(self)
         }

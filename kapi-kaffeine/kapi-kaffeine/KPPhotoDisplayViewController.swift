@@ -199,14 +199,14 @@ class KPPhotoDisplayViewController: KPViewController {
         }
     }
     
-    func handleDismissButtonOnTapped() {
+    @objc func handleDismissButtonOnTapped() {
         self.dismissing = true
         self.dismiss(animated: true) {
         }
     }
    
     
-    func handlePhotoLongPressed(_ sender: UILongPressGestureRecognizer) {
+    @objc func handlePhotoLongPressed(_ sender: UILongPressGestureRecognizer) {
         let cell = collectionView.cellForItem(at: selectedIndexPath) as! KPPhotoDisplayCell
         switch sender.state {
         case .began:

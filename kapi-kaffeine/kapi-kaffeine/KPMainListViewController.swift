@@ -258,7 +258,7 @@ class KPMainListViewController:
     
     // MARK: UI Event
     
-    func handleStatusErrorButtonOnTapped() {
+    @objc func handleStatusErrorButtonOnTapped() {
         statusErrorButton.isLoading = true
         let fadeTransition = CATransition()
         fadeTransition.duration = 0.2
@@ -274,7 +274,7 @@ class KPMainListViewController:
         CATransaction.commit()
     }
     
-    func handleAddButtonTapped(_ sender: UIButton) {
+    @objc func handleAddButtonTapped(_ sender: UIButton) {
         
         KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.list_add_store_button)
         

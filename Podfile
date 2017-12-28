@@ -8,7 +8,7 @@ target 'kapi-kaffeine' do
   use_frameworks!
 
   # Pods for kapi-kaffeine
-  pod 'BenzeneFoundation'
+  pod 'BenzeneFoundation', :inhibit_warnings => true
 
   pod 'GoogleMaps'
   pod 'GooglePlacePicker'
@@ -21,12 +21,12 @@ target 'kapi-kaffeine' do
   pod 'pop', '~> 1.0'
   pod 'Shimmer', :inhibit_warnings => true
   pod 'lottie-ios', :inhibit_warnings => true
-  pod 'SKPhotoBrowser', :git => 'git@github.com:citysite102/SKPhotoBrowser.git'
+  pod 'SKPhotoBrowser', '~> 5.0', :inhibit_warnings => true #:git => 'git@github.com:citysite102/SKPhotoBrowser.git'
 
 
   # Model
-  pod 'ObjectMapper', '~> 2.2'
-  pod 'AlamofireObjectMapper', '~> 4.0'
+  pod 'ObjectMapper', '~> 3.1'
+  pod 'AlamofireObjectMapper', '~> 5.0'
   pod 'R.swift'
   pod 'SwiftyJSON'
 
@@ -35,10 +35,10 @@ target 'kapi-kaffeine' do
   pod 'AlamofireImage'
 
   # Login
-  pod 'FacebookCore'
+  pod 'FacebookCore', :inhibit_warnings => true
   pod 'FacebookLogin'
-  # pod 'FacebookShare', :inhibit_warnings => true
-  pod 'FacebookShare', :git => 'https://github.com/1amageek/facebook-sdk-swift', :inhibit_warnings => true
+  pod 'FacebookShare', :inhibit_warnings => true
+  # pod 'FacebookShare', :git => 'https://github.com/1amageek/facebook-sdk-swift', :inhibit_warnings => true
   pod 'Firebase/Core'
   pod 'Firebase/Auth'
   pod 'Firebase/Database'
@@ -54,7 +54,16 @@ target 'kapi-kaffeine' do
   # Ad
   pod 'Google-Mobile-Ads-SDK'
 
-  swift_version = "3.0"
   pod "PromiseKit", "~> 4.0"
+
+  # post_install do |installer|
+  #   installer.pods_project.targets.each do |target|
+  #       if target.name == 'SKPhotoBrowser'
+  #           target.build_configurations.each do |config|
+  #               config.build_settings['SWIFT_VERSION'] = '3.2'
+  #           end
+  #       end
+  #   end
+  # end
 
 end

@@ -180,7 +180,7 @@ class KPSearchViewController: KPViewController {
     
     
     // MARK: UI Event
-    func handleDismissButtonOnTapped() {
+    @objc func handleDismissButtonOnTapped() {
         self.appModalController()?.dismissControllerWithDefaultDuration()
     }
     
@@ -188,7 +188,7 @@ class KPSearchViewController: KPViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
-    func handleNewStoreButtonOnTap(_ sender: UIButton) {
+    @objc func handleNewStoreButtonOnTap(_ sender: UIButton) {
         let controller = KPModalViewController()
         controller.edgeInset = UIEdgeInsets(top: 0,
                                             left: 0,

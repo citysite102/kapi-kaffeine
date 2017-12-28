@@ -105,7 +105,7 @@ class KPSegmentedControl: UIControl {
     
     
     // MARK: UI Event
-    func handleSegmentOnTap(_ sender: UIButton) {
+    @objc func handleSegmentOnTap(_ sender: UIButton) {
         if sender.isSelected == true {
             return
         }

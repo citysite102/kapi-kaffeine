@@ -105,7 +105,7 @@ class KPRatingViewController: KPSharedSettingViewController {
         super.handleDismissButtonOnTapped()
     }
     
-    func handleSendButtonOnTapped() {
+    @objc func handleSendButtonOnTapped() {
         returnValue = (ratingViews[0].currentRate,
                        ratingViews[1].currentRate,
                        ratingViews[2].currentRate,

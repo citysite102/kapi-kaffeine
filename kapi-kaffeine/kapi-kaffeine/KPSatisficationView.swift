@@ -115,7 +115,7 @@ class KPSatisficationView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func handleDismissButtonOnTapped() {
+    @objc func handleDismissButtonOnTapped() {
         hideSatisfication()
     }
     

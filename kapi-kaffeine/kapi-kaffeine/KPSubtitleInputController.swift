@@ -128,11 +128,11 @@ class KPSubtitleInputController: KPViewController {
         editTextField.becomeFirstResponder()
     }
     
-    func handleDismissButtonOnTapped() {
+    @objc func handleDismissButtonOnTapped() {
         dismiss(animated: true, completion: nil);
     }
     
-    func handleSendButtonOnTapped() {
+    @objc func handleSendButtonOnTapped() {
         outputValue = editTextField.text
         delegate?.outputValueSet(self)
         appModalController()?.dismissControllerWithDefaultDuration()

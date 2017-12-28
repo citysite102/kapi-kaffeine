@@ -144,13 +144,13 @@ class KPIntroViewController: KPViewController {
         return statusBarShouldBeHidden
     }
     
-    func facebookLoginButtonOnTapped(_ sender: UIButton) {
+    @objc func facebookLoginButtonOnTapped(_ sender: UIButton) {
         KPUserManager.sharedManager.logIn(self)
     }
     
     // MARK: UI Event
     
-    func skipButtonOnTapped(_ sender: UIButton) {
+    @objc func skipButtonOnTapped(_ sender: UIButton) {
         
         if appModalController() != nil {
             appModalController()?.dismissControllerWithDefaultDuration()

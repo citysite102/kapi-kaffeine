@@ -339,7 +339,7 @@ class KPCheckBox: UIControl {
     }
     
     
-    func handleTap(_ sender: UITapGestureRecognizer) {
+    @objc func handleTap(_ sender: UITapGestureRecognizer) {
 //        if sender.state == .began || sender.state == .changed {
 //            isSelected = true
 //        } else {

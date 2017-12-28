@@ -123,7 +123,7 @@ class KPBusinessTimeViewController: UIViewController {
         appModalController()?.dismissControllerWithDefaultDuration()
     }
     
-    func handleTap(_ sender: UITapGestureRecognizer) {
+    @objc func handleTap(_ sender: UITapGestureRecognizer) {
         appModalController()?.dismissControllerWithDefaultDuration()
     }
     

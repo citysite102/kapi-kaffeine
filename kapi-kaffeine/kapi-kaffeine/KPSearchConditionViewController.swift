@@ -150,7 +150,7 @@ class KPSearchConditionViewController: KPViewController {
                                            style: UIBarButtonItemStyle.plain,
                                            target: self,
                                            action: #selector(handleRestoreButtonOnTapped))
-        barRightItem.setTitleTextAttributes([NSFontAttributeName: UIFont.systemFont(ofSize: 16)],
+        barRightItem.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 16)],
                                             for: .normal)
         
         let spacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace,
@@ -463,7 +463,7 @@ class KPSearchConditionViewController: KPViewController {
         searchButton.addTarget(self, action: #selector(handleSearchButtonOnTap(_:)), for: .touchUpInside)
     }
     
-    func handleSearchButtonOnTap(_ sender: UIButton) {
+    @objc func handleSearchButtonOnTap(_ sender: UIButton) {
         KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.condition_search_button)
         delegate?.searchConditionControllerDidSearch(self)
         appModalController()?.dismissControllerWithDefaultDuration()
@@ -474,11 +474,11 @@ class KPSearchConditionViewController: KPViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func handleDismissButtonOnTapped() {
+    @objc func handleDismissButtonOnTapped() {
         appModalController()?.dismissControllerWithDefaultDuration()
     }
     
-    func handleRestoreButtonOnTapped() {
+    @objc func handleRestoreButtonOnTapped() {
         sortSegmentedControl.selectedSegmentIndex = 0
         quickSettingButtonOne.isSelected = false
         quickSettingButtonTwo.isSelected = false
@@ -499,7 +499,7 @@ class KPSearchConditionViewController: KPViewController {
         othersCheckBoxOne.checkBox.checkState = .unchecked
     }
     
-    func handleQuickSettingButtonOnTap(_ sender: UIButton) {
+    @objc func handleQuickSettingButtonOnTap(_ sender: UIButton) {
         if sender == quickSettingButtonOne {
             quickSettingButtonOne.isSelected = true
             quickSettingButtonTwo.isSelected = false
@@ -536,7 +536,7 @@ class KPSearchConditionViewController: KPViewController {
         }
     }
     
-    func handleBusinessCheckBoxTwoOnTap(_ sender: KPCheckBox) {
+    @objc func handleBusinessCheckBoxTwoOnTap(_ sender: KPCheckBox) {
         if sender.checkState == .checked {
             let controller = KPModalViewController()
             controller.dismissWhenTouchingOnBackground = false

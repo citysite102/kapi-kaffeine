@@ -244,20 +244,20 @@ class KPRatingView: UIView {
     
     // MARK:Button Type UI Event
     
-    func handleAddButtonOnTapped() {
+    @objc func handleAddButtonOnTapped() {
         if currentRate < 5 {
             currentRate += 1
         }
     }
     
-    func handleMinusButtonOnTapped() {
+    @objc func handleMinusButtonOnTapped() {
         if currentRate > 0 {
             currentRate -= 1
         }
     }
     
     // MARK:Star Type UI Event
-    func handlePanGesture(panGesture: UIPanGestureRecognizer) {
+    @objc func handlePanGesture(panGesture: UIPanGestureRecognizer) {
         switch panGesture.state {
         case .began:
             break
@@ -278,7 +278,7 @@ class KPRatingView: UIView {
         
     }
     
-    func handleTapGesture(tapGesture: UITapGestureRecognizer) {
+    @objc func handleTapGesture(tapGesture: UITapGestureRecognizer) {
         let touchPoint = tapGesture.location(in: self)
         for (index, starView) in starViews.enumerated() {
             if starView.frame.contains(touchPoint) {
@@ -289,7 +289,7 @@ class KPRatingView: UIView {
     }
     
     //MARK: Segmented Type UI Event
-    func handleSegmentedValueChanged(_ sender: KPSegmentedControl) {
+    @objc func handleSegmentedValueChanged(_ sender: KPSegmentedControl) {
         if sender.selectedSegmentIndex == 0 {
             currentRate = 0
         } else if sender.selectedSegmentIndex == 1 {

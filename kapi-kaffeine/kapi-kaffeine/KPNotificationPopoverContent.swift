@@ -94,7 +94,7 @@ class KPNotificationPopoverContent: UIView, PopoverProtocol {
     }
     
     
-    func handleConfirmButtonOnTapped() {
+    @objc func handleConfirmButtonOnTapped() {
         if confirmAction != nil {
             confirmAction!(self)
         } else {

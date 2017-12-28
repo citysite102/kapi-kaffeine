@@ -121,7 +121,7 @@ class KPShopCommentCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func handleVoteUpButtonOnTapped() {
+    @objc func handleVoteUpButtonOnTapped() {
         if voteDownButton.buttonSelected && !voteUpButton.buttonSelected {
             voteDownButton.buttonSelected = false
             voteDownButton.iconButton.isSelected = false
@@ -137,7 +137,7 @@ class KPShopCommentCell: UITableViewCell {
         }
     }
     
-    func handleVoteDownButtonOnTapped() {
+    @objc func handleVoteDownButtonOnTapped() {
         if voteUpButton.buttonSelected && !voteDownButton.buttonSelected {
             voteUpButton.buttonSelected = false
             voteUpButton.iconButton.isSelected = false

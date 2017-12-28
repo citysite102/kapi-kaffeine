@@ -104,7 +104,7 @@ class KPPhotoGalleryViewController: KPViewController {
     
     // MARK: Photo Refresh
     
-    func refreshPhoto() {
+    @objc func refreshPhoto() {
         KPServiceHandler.sharedHandler.getPhotos {
             [weak self] (successed, photos) in
             if let weSelf = self {
@@ -168,7 +168,7 @@ class KPPhotoGalleryViewController: KPViewController {
         }
     }
     
-    func handleBackButtonOnTapped() {
+    @objc func handleBackButtonOnTapped() {
         navigationController?.popViewController(animated: true)
     }
     

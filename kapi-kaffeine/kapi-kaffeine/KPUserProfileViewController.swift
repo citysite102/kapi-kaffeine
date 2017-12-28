@@ -303,7 +303,7 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
         self.appModalController()?.dismissControllerWithDefaultDuration()
     }
     
-    func handleEditButtonOnTapped() {
+    @objc func handleEditButtonOnTapped() {
         self.navigationController?.pushViewController(KPUserProfileEditorController(), animated: true)
     }
 

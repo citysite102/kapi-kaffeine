@@ -16,12 +16,12 @@ class KPMainMapMarkerInfoWindow: UIView {
         
         let textRect = NSString(string: dataModel.name).boundingRect(with: CGSize(width: 300, height: 30),
                                                                      options: .usesFontLeading,
-                                                                     attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 12)],
+                                                                     attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 12)],
                                                                      context: nil)
         
         let scoreRect = NSString(string: "\(dataModel.averageRate ?? 0)").boundingRect(with: CGSize(width: 200, height: 30),
                                                                      options: .usesFontLeading,
-                                                                     attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 12)],
+                                                                     attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 12)],
                                                                      context: nil)
         
         super.init(frame: CGRect(x: 0, y: 0, width: textRect.width + scoreRect.width + 63 + 7 , height: 30))
@@ -79,8 +79,8 @@ class KPMainMapMarkerInfoWindow: UIView {
                                                    "V:|[$view2]|"],
                                  views: [titleLabel, starImageView, scoreLabel])
         
-        scoreLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
-        titleLabel.setContentCompressionResistancePriority(UILayoutPriorityDefaultLow, for: .horizontal)
+        scoreLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .horizontal)
+        titleLabel.setContentCompressionResistancePriority(UILayoutPriority.defaultLow, for: .horizontal)
         
     }
     

@@ -347,7 +347,7 @@ GMUClusterRendererDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    func receiveLocationInformation() {
+    @objc func receiveLocationInformation() {
         moveToMyLocation()
         NotificationCenter.default.removeObserver(self)
     }
@@ -383,13 +383,13 @@ GMUClusterRendererDelegate {
     
     // MARK: UI Event
     
-    func handleMapViewSwiped(_ sender: UISwipeGestureRecognizer) {
+    @objc func handleMapViewSwiped(_ sender: UISwipeGestureRecognizer) {
         if isCollectionViewShow {
             isCollectionViewShow = false
         }
     }
     
-    func handleAddButtonTapped(_ sender: UIButton) {
+    @objc func handleAddButtonTapped(_ sender: UIButton) {
         
         KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.map_add_store_button)
         
@@ -404,7 +404,7 @@ GMUClusterRendererDelegate {
         controller.presentModalView()
     }
     
-    func handleCurrentLocationButtonOnTap(_ sender: UIButton) {
+    @objc func handleCurrentLocationButtonOnTap(_ sender: UIButton) {
         
         KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.map_navigation_button)
         
@@ -420,7 +420,7 @@ GMUClusterRendererDelegate {
         }
     }
     
-    func handleNearestButtonOnTap(_ sender: UIButton) {
+    @objc func handleNearestButtonOnTap(_ sender: UIButton) {
         
         KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.map_near_button)
         

@@ -50,7 +50,7 @@ class KPSubTitleEditView: UIView {
                 placeHolderLabel.text = placeHolderContent
             } else {
                 let placeholder = NSMutableAttributedString(string: placeHolderContent)
-                placeholder.addAttribute(NSForegroundColorAttributeName,
+                placeholder.addAttribute(NSAttributedStringKey.foregroundColor,
                                          value: KPColorPalette.KPTextColor.default_placeholder!,
                                          range: NSRange.init(location: 0, length: placeHolderContent.count))
                 editTextField.attributedPlaceholder = placeholder
@@ -93,7 +93,7 @@ class KPSubTitleEditView: UIView {
                     editTextView.layer.pop_removeAllAnimations()
                 } else {
                     let placeholder = NSMutableAttributedString(string: placeHolderContent)
-                    placeholder.addAttribute(NSForegroundColorAttributeName,
+                    placeholder.addAttribute(NSAttributedStringKey.foregroundColor,
                                              value: KPColorPalette.KPTextColor.default_placeholder!,
                                              range: NSRange.init(location: 0, length: placeHolderContent.count))
                     editTextField.attributedPlaceholder = placeholder
@@ -111,7 +111,7 @@ class KPSubTitleEditView: UIView {
                     editTextView.layer.pop_add(anim, forKey: "warning")
                 } else {
                     let placeholder = NSMutableAttributedString(string: content)
-                    placeholder.addAttribute(NSForegroundColorAttributeName,
+                    placeholder.addAttribute(NSAttributedStringKey.foregroundColor,
                                              value: KPColorPalette.KPTextColor.warningColor!,
                                              range: NSRange.init(location: 0, length: content.count))
                     editTextField.attributedPlaceholder = placeholder
@@ -259,7 +259,7 @@ class KPSubTitleEditView: UIView {
         }
     }
     
-    func handleTapGesture(tapGesture: UITapGestureRecognizer) {
+    @objc func handleTapGesture(tapGesture: UITapGestureRecognizer) {
         if editTextField.isEnabled {
             editTextField.becomeFirstResponder()
         } else {

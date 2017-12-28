@@ -114,7 +114,7 @@ class KPItemCheckedView: UIView {
         }
     }
     
-    func handleTapGesture(tapGesture: UITapGestureRecognizer) {
+    @objc func handleTapGesture(tapGesture: UITapGestureRecognizer) {
         customInputAction?()
     }
 }

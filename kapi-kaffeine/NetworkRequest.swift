@@ -121,14 +121,14 @@ extension NetworkRequest where ResponseType == RawJsonResult {
     }
 
     private func rawJsonResponseHandler(_ data: Data) throws -> ResponseType {
-        if let responseResult = JSON(data: data).dictionary?["result"] {
+        if let responseResult = try JSON(data: data).dictionary?["result"] {
             if responseResult.boolValue {
-                return JSON(data: data)
+                return try JSON(data: data)
             } else {
                 throw NetworkRequestError.resultUnavailable
             }
         }
-        return JSON(data: data)
+        return try JSON(data: data)
     }
 }
 
@@ -212,7 +212,7 @@ extension NetworkUploadRequest where ResponseType == RawJsonResult {
     public var responseHandler: (Data) throws -> ResponseType { return rawJsonResponseHandler }
     
     private func rawJsonResponseHandler(_ data: Data) throws -> ResponseType {
-        return JSON(data: data)
+        return try JSON(data: data)
     }
 }
 

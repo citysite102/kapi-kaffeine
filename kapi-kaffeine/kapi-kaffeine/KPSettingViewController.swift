@@ -136,7 +136,7 @@ class KPSettingViewController: KPViewController {
     }
     
     
-    func handleDismissButtonOnTapped() {
+    @objc func handleDismissButtonOnTapped() {
         appModalController()?.dismissControllerWithDefaultDuration()
     }
     

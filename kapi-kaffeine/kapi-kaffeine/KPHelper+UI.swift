@@ -72,7 +72,7 @@ public extension UIImage {
 
 public extension UIView {
     
-    public func screenshot() -> UIImage? {
+    @objc public func screenshot() -> UIImage? {
         return self.screenshot(croppingRect: self.bounds)
     }
     
@@ -113,7 +113,7 @@ public extension UILabel {
         descriptionStyle.lineSpacing = lineSpacing
         
         let attributedString = NSMutableAttributedString(string: text)
-        attributedString.addAttributes([NSParagraphStyleAttributeName: descriptionStyle],
+        attributedString.addAttributes([NSAttributedStringKey.paragraphStyle: descriptionStyle],
                                        range: NSRange(location: 0, length: attributedString.length))
         
         self.attributedText = attributedString

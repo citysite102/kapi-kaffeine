@@ -56,7 +56,7 @@ class KPNewCommentController: KPViewController {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12.0)
         label.textColor = KPColorPalette.KPTextColor.mainColor
-        label.text = "0/\(commentMaximumTextLength)"
+        label.text = "0/\(KPNewCommentController.commentMaximumTextLength)"
         return label
     }()
     
@@ -132,9 +132,9 @@ class KPNewCommentController: KPViewController {
         inputTextView.returnKeyType = .done
         inputTextView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
         inputTextView.textContainerInset = UIEdgeInsetsMake(0, 0, 0, 0)
-        inputTextView.typingAttributes = [NSParagraphStyleAttributeName: paragraphStyle,
-                                          NSFontAttributeName: UIFont.systemFont(ofSize: 17),
-                                          NSForegroundColorAttributeName: KPColorPalette.KPTextColor.grayColor_level2!]
+        inputTextView.typingAttributes = [NSAttributedStringKey.paragraphStyle.rawValue: paragraphStyle,
+                                          NSAttributedStringKey.font.rawValue: UIFont.systemFont(ofSize: 17),
+                                          NSAttributedStringKey.foregroundColor.rawValue: KPColorPalette.KPTextColor.grayColor_level2!]
         
         textFieldContainerView.addSubview(inputTextView)
         inputTextView.addConstraints(fromStringArray: ["V:[$view0]-8-[$self]-40-|",
@@ -220,13 +220,13 @@ class KPNewCommentController: KPViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func handleResignTapGesture(_ tapGesture: UITapGestureRecognizer) {
+    @objc func handleResignTapGesture(_ tapGesture: UITapGestureRecognizer) {
         if inputTextView.isFirstResponder {
             inputTextView.resignFirstResponder()
         }
     }
     
-    func checkBoxValueChanged(_ sender: KPCheckBox) {
+    @objc func checkBoxValueChanged(_ sender: KPCheckBox) {
         switch sender.checkState {
         case .checked:
             for rateView in ratingViews {
@@ -241,11 +241,11 @@ class KPNewCommentController: KPViewController {
         }
     }
 
-    func handleDismissButtonOnTapped() {
+    @objc func handleDismissButtonOnTapped() {
         navigationController?.popViewController(animated: true)
     }
     
-    func handleSendButtonOnTapped() {
+    @objc func handleSendButtonOnTapped() {
         inputTextView.resignFirstResponder()
         
         if self.ratingCheckbox.checkBox.checkState == .checked {
@@ -275,7 +275,7 @@ class KPNewCommentController: KPViewController {
         
     }
     
-    func handleTapGesture(tapGesture: UITapGestureRecognizer) {
+    @objc func handleTapGesture(tapGesture: UITapGestureRecognizer) {
         if inputTextView.isFirstResponder {
             inputTextView.resignFirstResponder()
         } else {

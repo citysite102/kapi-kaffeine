@@ -66,7 +66,7 @@ class KPAllRatingViewController: KPViewController {
     }
     
     
-    func handleBackButtonOnTapped() {
+    @objc func handleBackButtonOnTapped() {
         navigationController?.popViewController(animated: true)
     }
     

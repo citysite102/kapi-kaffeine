@@ -46,7 +46,7 @@ class KPCountrySelectController: KPSharedSettingViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func handleSendButtonOnTapped() {
+    @objc func handleSendButtonOnTapped() {
         delegate?.returnValueSet(self)
         appModalController()?.dismissControllerWithDefaultDuration()
     }

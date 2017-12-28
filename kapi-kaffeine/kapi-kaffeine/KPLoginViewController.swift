@@ -71,11 +71,11 @@ class KPLoginViewController: KPViewController {
     
     }
 
-    func facebookLoginButtonOnTapped(_ sender: UIButton) {
+    @objc func facebookLoginButtonOnTapped(_ sender: UIButton) {
         KPUserManager.sharedManager.logIn(self)
     }
     
-    func skipButtonOnTapped(_ sender: UIButton) {
+    @objc func skipButtonOnTapped(_ sender: UIButton) {
         
         UserDefaults.standard.set(true,
                                   forKey: AppConstant.cancelLogInKey)

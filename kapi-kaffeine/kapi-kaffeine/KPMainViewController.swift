@@ -166,14 +166,14 @@ class KPMainViewController: KPViewController {
         menuLeftNavigationController.leftSide = true
         
         
-        SideMenuManager.menuLeftNavigationController = menuLeftNavigationController
-        SideMenuManager.menuPresentMode = .menuSlideIn
-        SideMenuManager.menuFadeStatusBar = false
-        SideMenuManager.menuShadowOpacity = 0.6
-        SideMenuManager.menuShadowRadius = 3
-        SideMenuManager.menuAnimationFadeStrength = 0.5
-        SideMenuManager.menuAnimationBackgroundColor = UIColor.black
-        SideMenuManager.menuWidth = 260
+//        SideMenuManager.menuLeftNavigationController = menuLeftNavigationController
+//        SideMenuManager.menuPresentMode = .menuSlideIn
+//        SideMenuManager.menuFadeStatusBar = false
+//        SideMenuManager.menuShadowOpacity = 0.6
+//        SideMenuManager.menuShadowRadius = 3
+//        SideMenuManager.menuAnimationFadeStrength = 0.5
+//        SideMenuManager.menuAnimationBackgroundColor = UIColor.black
+//        SideMenuManager.menuWidth = 260
         
         
         
@@ -216,7 +216,7 @@ class KPMainViewController: KPViewController {
         
     }
     
-    func windowDidBecomeVisible(_ notification:Notification){
+    @objc func windowDidBecomeVisible(_ notification:Notification){
         
         let window = notification.object as! UIWindow
         let windows = UIApplication.shared.windows
@@ -276,7 +276,7 @@ class KPMainViewController: KPViewController {
     
     // MARK: Data
     
-    func fetchRemoteData() {
+    @objc func fetchRemoteData() {
         let rightTop = mainMapViewController?.mapView.projection.visibleRegion().farRight
         let leftBottom = mainMapViewController?.mapView.projection.visibleRegion().nearLeft
         KPServiceHandler.sharedHandler.fetchRemoteData(nil,
@@ -350,7 +350,7 @@ class KPMainViewController: KPViewController {
         }
     }
     
-    func handleStatusContainerOnTapped(_ sender: UITapGestureRecognizer) {
+    @objc func handleStatusContainerOnTapped(_ sender: UITapGestureRecognizer) {
         statusContainer.isUserInteractionEnabled = false
         UIView.animate(withDuration: 0.1,
                        animations: { 
@@ -361,7 +361,7 @@ class KPMainViewController: KPViewController {
         }
     }
     
-    func switchSideBar() {
+    @objc func switchSideBar() {
         
         KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.main_menu_button)
         
@@ -371,11 +371,11 @@ class KPMainViewController: KPViewController {
         }
         
         opacityView.isHidden = false
-        present(SideMenuManager.menuLeftNavigationController!,
+        present(SideMenuManager.default.menuLeftNavigationController!,
                 animated: true, completion: nil)
     }
     
-    func changeStyle() {
+    @objc func changeStyle() {
         
         KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.main_switch_mode_button)
         
@@ -512,7 +512,7 @@ class KPMainViewController: KPViewController {
         }
     }
 
-    func search() {
+    @objc func search() {
         
         KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.main_search_button)
         
@@ -530,7 +530,7 @@ class KPMainViewController: KPViewController {
         controller.presentModalView()
     }
     
-    func showAllLocation() {
+    @objc func showAllLocation() {
         
         searchHeaderView.searchTagView.deselectAllSearchTag()
         mainListViewController?.state = .loading
@@ -554,7 +554,7 @@ class KPMainViewController: KPViewController {
         view.addGestureRecognizer(edgePanGesture)
     }
     
-    func edgePanGesture(edgePanGesture: UIScreenEdgePanGestureRecognizer) {
+    @objc func edgePanGesture(edgePanGesture: UIScreenEdgePanGestureRecognizer) {
         
         let progress = edgePanGesture.translation(in: self.view).x / self.view.bounds.width
         

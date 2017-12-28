@@ -338,7 +338,7 @@ class KPInformationHeaderView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func handleShopPhotoLongPressed(_ sender: UILongPressGestureRecognizer) {
+    @objc func handleShopPhotoLongPressed(_ sender: UILongPressGestureRecognizer) {
         
         if sender.state == .began {
             UIView.animate(withDuration: 0.2,
@@ -355,7 +355,7 @@ class KPInformationHeaderView: UIView {
         }
     }
     
-    func handleScoreContainerOnTapped(_ sender: UITapGestureRecognizer) {
+    @objc func handleScoreContainerOnTapped(_ sender: UITapGestureRecognizer) {
         scoreHandler?()
     }
     

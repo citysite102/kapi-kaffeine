@@ -190,7 +190,7 @@ class KPMainListTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func locationDidUpdate() {
+    @objc func locationDidUpdate() {
         if let distanceInMeter = dataModel.distanceInMeter {
             var distance = distanceInMeter
             var unit = "m"

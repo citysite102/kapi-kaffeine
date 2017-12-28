@@ -199,7 +199,7 @@ class KPTimePickerViewController: UIViewController, KPTimePickerDelegate, KPTabV
         }
     }
     
-    func handleButtonOnTap(sender: UIButton) {
+    @objc func handleButtonOnTap(sender: UIButton) {
         if delegate != nil {
             delegate!.timePickerButtonDidTap(self, selectedIndex: sender.tag)
         }

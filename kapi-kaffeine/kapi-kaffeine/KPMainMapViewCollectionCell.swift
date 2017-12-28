@@ -160,7 +160,7 @@ class KPMainMapViewCollectionCell: UICollectionViewCell {
         NotificationCenter.default.removeObserver(self)
     }
     
-    func locationDidUpdate() {
+    @objc func locationDidUpdate() {
         if let distanceInMeter = dataModel.distanceInMeter {
             var distance = distanceInMeter
             var unit = "m"

@@ -71,11 +71,11 @@ class KPAllCommentController: KPViewController {
     }
     
 
-    func handleBackButtonOnTapped() {
+    @objc func handleBackButtonOnTapped() {
         navigationController?.popViewController(animated: true)
     }
     
-    func handleEditButtonOnTapped() {
+    @objc func handleEditButtonOnTapped() {
         
         if let comment = self.informationController?.hasCommentDataModel {
             let editCommentViewController = KPEditCommentController()

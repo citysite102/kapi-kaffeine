@@ -155,7 +155,7 @@ class KPInformationSharedInfoView: UIView {
     }
     
     
-    func handleButtonOnTapped(button: UIButton) {
+    @objc func handleButtonOnTapped(button: UIButton) {
         actions[button.tag].handler(self)
     }
 

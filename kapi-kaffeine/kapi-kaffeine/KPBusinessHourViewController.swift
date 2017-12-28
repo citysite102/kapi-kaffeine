@@ -18,14 +18,14 @@ class KPBusinessHourViewController: KPSharedSettingViewController, KPTimePickerV
     var currentSelectedButton: UIButton?
     
     var attrs = [
-        NSFontAttributeName : UIFont.systemFont(ofSize: 19.0),
-        NSForegroundColorAttributeName : KPColorPalette.KPTextColor.grayColor_level3!,
-        NSUnderlineStyleAttributeName : 1] as [String : Any]
+        NSAttributedStringKey.font : UIFont.systemFont(ofSize: 19.0),
+        NSAttributedStringKey.foregroundColor : KPColorPalette.KPTextColor.grayColor_level3!,
+        NSAttributedStringKey.underlineStyle : 1] as [NSAttributedStringKey : Any]
     
     var editAttrs = [
-        NSFontAttributeName : UIFont.systemFont(ofSize: 19.0),
-        NSForegroundColorAttributeName : KPColorPalette.KPTextColor.mainColor!,
-        NSUnderlineStyleAttributeName : 1] as [String : Any]
+        NSAttributedStringKey.font : UIFont.systemFont(ofSize: 19.0),
+        NSAttributedStringKey.foregroundColor : KPColorPalette.KPTextColor.mainColor!,
+        NSAttributedStringKey.underlineStyle : 1] as [NSAttributedStringKey : Any]
     
     var defaultBusinessHour: [String: String]?
     
@@ -164,17 +164,17 @@ class KPBusinessHourViewController: KPSharedSettingViewController, KPTimePickerV
         super.handleDismissButtonOnTapped()
     }
     
-    func startTimeSelectButtonOnTap(button: UIButton) {
+    @objc func startTimeSelectButtonOnTap(button: UIButton) {
         currentSelectedButton = button
         showTimePicker(0)
     }
     
-    func endTimeSelectButtonOnTap(button: UIButton) {
+    @objc func endTimeSelectButtonOnTap(button: UIButton) {
         currentSelectedButton = button
         showTimePicker(1)
     }
     
-    func handleCheckBoxOnTap(checkBox: KPCheckBox) {
+    @objc func handleCheckBoxOnTap(checkBox: KPCheckBox) {
         if checkBox.checkState == .checked {
             startTimeButtons[checkBox.tag].isEnabled = true
             endTimeButtons[checkBox.tag].isEnabled = true
@@ -236,7 +236,7 @@ class KPBusinessHourViewController: KPSharedSettingViewController, KPTimePickerV
         // Dispose of any resources that can be recreated.
     }
     
-    func handleSendButtonOnTapped() {
+    @objc func handleSendButtonOnTapped() {
         var value: [String: String] = [:]
         for (index, checkBoxView) in checkBoxViews.enumerated() {
             if checkBoxView.checkBox.checkState == .checked {

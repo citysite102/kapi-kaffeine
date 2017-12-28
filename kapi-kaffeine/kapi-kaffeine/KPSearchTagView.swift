@@ -109,7 +109,7 @@ class KPSearchTagView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func handlePreferenceButtonOnTapped() {
+    @objc func handlePreferenceButtonOnTapped() {
         let controller = KPModalViewController()
         controller.edgeInset = UIEdgeInsets.init(top: 0,
                                                  left: 0,
@@ -189,7 +189,7 @@ extension KPSearchTagView: UICollectionViewDelegate, UICollectionViewDataSource,
             return CGSize.init(width: 68, height: 32)
         } else {
             let contentSize = NSString.init(string: self.headerTagContents[indexPath.row].rawValue).boundingRect(with: CGSize.init(width: Double.greatestFiniteMagnitude, height: 32),
-                                                                                                                 options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 13)],
+                                                                                                                 options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 13)],
                                                                                                                  context: nil).size
 
             

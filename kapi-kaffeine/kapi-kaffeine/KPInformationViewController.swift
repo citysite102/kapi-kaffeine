@@ -343,7 +343,7 @@ class KPInformationViewController: KPViewController {
                                                        action: #selector(KPInformationViewController.handleFacebookButtonOnTapped),
                                                         for: UIControlEvents.touchUpInside)
         informationHeaderView.scoreHandler = {
-            [weak self] (_) in
+            [weak self] () -> Void in
             if let weSelf = self {
                 if var rates = weSelf.rateDataModel?.rates {
                     
@@ -525,7 +525,7 @@ class KPInformationViewController: KPViewController {
         if let commentCount = informationDataModel.commentCount {
             commentInformationView.infoSupplementLabel.text = "\(commentCount) 人已留言"
             commentInformationView.isEmpty = (commentCount == 0)
-            updateCommentsLayout(Int(commentCount))
+            updateCommentsLayout(Int(truncating: commentCount))
         }
         
 
@@ -682,7 +682,7 @@ class KPInformationViewController: KPViewController {
     }
     
     
-    func refreshPhoto() {
+    @objc func refreshPhoto() {
         KPServiceHandler.sharedHandler.getPhotos {
             [weak self] (successed, photos) in
             if let weSelf = self {
@@ -735,7 +735,7 @@ class KPInformationViewController: KPViewController {
         }
     }
     
-    func refreshRatings() {
+    @objc func refreshRatings() {
         
         // 取得 Rating 資料
         KPServiceHandler.sharedHandler.getRatings {
@@ -899,7 +899,7 @@ class KPInformationViewController: KPViewController {
 
     }
     
-    func refreshComments() {
+    @objc func refreshComments() {
         
         // 取得 Comment 資料
         KPServiceHandler.sharedHandler.getComments {
@@ -1064,7 +1064,7 @@ class KPInformationViewController: KPViewController {
         }
     }
     
-    func handleMorePhotoButtonOnTapped() {
+    @objc func handleMorePhotoButtonOnTapped() {
         if self.displayPhotoInformations.count == 0 {
             photoUpload()
         } else {
@@ -1078,7 +1078,7 @@ class KPInformationViewController: KPViewController {
         }
     }
     
-    func handleFacebookButtonOnTapped() {
+    @objc func handleFacebookButtonOnTapped() {
         UIApplication.shared.open(URL(string: informationDataModel.facebookURL!)!,
                                   options: [:]) { (_) in
                                     
@@ -1086,7 +1086,7 @@ class KPInformationViewController: KPViewController {
     }
     
     
-    func handleOtherTimeButtonOnTapped() {
+    @objc func handleOtherTimeButtonOnTapped() {
         
         let controller = KPModalViewController()
         let businessTimeViewController = KPBusinessTimeViewController()
@@ -1103,7 +1103,7 @@ class KPInformationViewController: KPViewController {
         controller.presentModalView()
     }
     
-    func handleDismissButtonOnTapped() {
+    @objc func handleDismissButtonOnTapped() {
         if self.navigationController?.viewControllers.first is KPUserProfileViewController {
             self.navigationController?.popViewController(animated: true)
         } else {
@@ -1112,14 +1112,14 @@ class KPInformationViewController: KPViewController {
         }
     }
     
-    func handleMoreButtonOnTapped() {
+    @objc func handleMoreButtonOnTapped() {
         KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.store_more_button)
         present(actionController,
                 animated: true,
                 completion: nil)
     }
     
-    func handleShareButtonOnTapped() {
+    @objc func handleShareButtonOnTapped() {
         
     }
     

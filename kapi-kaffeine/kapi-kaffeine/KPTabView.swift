@@ -96,7 +96,7 @@ class KPTabView: UIView {
         
     }
     
-    func handleButtonOnTap(sender: UIButton) {
+    @objc func handleButtonOnTap(sender: UIButton) {
         
         if sender.isSelected {
             return
