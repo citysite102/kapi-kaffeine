@@ -29,12 +29,20 @@ class KPSubtitleInputController: KPViewController {
         textField.placeholder = "請輸入店家名稱"
         textField.delegate = self
         textField.returnKeyType = .done
-        textField.font = UIFont.systemFont(ofSize: 20)
+        textField.font = UIFont.systemFont(ofSize: 24)
+        
+        let searchImageView = UIImageView(image: R.image.icon_search())
+        searchImageView.contentMode = .left
+        searchImageView.frame = CGRect(x: 0, y: 0, width: 35, height: 30)
+        searchImageView.tintColor = KPColorPalette.KPTextColor.grayColor_level5
+        textField.leftView = searchImageView
+        textField.leftViewMode = .always
+        
         return textField
     }()
     
     weak open var delegate: KPSubtitleInputDelegate?
-    var dismissButton: KPBounceButton!
+    var dismissButton: UIButton!
     var sendButton: UIButton!
     var tableView: UITableView!
     lazy var separator: UIView = {
@@ -58,33 +66,34 @@ class KPSubtitleInputController: KPViewController {
         view.backgroundColor = UIColor.white
         view.addSubview(subTitleLabel)
         
-        dismissButton = KPBounceButton()
-        dismissButton.setImage(R.image.icon_close()?.withRenderingMode(.alwaysTemplate),
-                               for: .normal)
-        dismissButton.tintColor = KPColorPalette.KPMainColor.mainColor
+        dismissButton = UIButton()
+        dismissButton.setTitle("取消", for: .normal)
+        dismissButton.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        dismissButton.setTitleColor(KPColorPalette.KPMainColor.mainColor, for: .normal)
+        dismissButton.setTitleColor(KPColorPalette.KPMainColor.whiteColor_level1, for: .highlighted)
         dismissButton.addTarget(self,
                                 action: #selector(KPSubtitleInputController.handleDismissButtonOnTapped),
                                 for: .touchUpInside)
         
         view.addSubview(dismissButton)
-        dismissButton.addConstraints(fromStringArray: ["H:|-12-[$self(30)]",
+        dismissButton.addConstraints(fromStringArray: ["H:|-12-[$self]",
                                                        "V:|-24-[$self(30)]"])
         dismissButton.contentEdgeInsets = UIEdgeInsetsMake(6, 6, 6, 6)
         
         
-        subTitleLabel.addConstraints(fromStringArray: ["V:[$view0]-24-[$self]",
-                                                       "H:|-16-[$self]-16-|"],
-                                     views: [dismissButton])
+//        subTitleLabel.addConstraints(fromStringArray: ["V:[$view0]-24-[$self]",
+//                                                       "H:|-16-[$self]-16-|"],
+//                                     views: [dismissButton])
         
         view.addSubview(editTextField)
         editTextField.addConstraints(fromStringArray: ["V:[$view0]-12-[$self]",
                                                        "H:|-16-[$self]-16-|"],
-                                     views: [subTitleLabel])
+                                     views: [dismissButton])
         
         let bottomBorderView = UIView()
         bottomBorderView.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
         view.addSubview(bottomBorderView)
-        bottomBorderView.addConstraints(fromStringArray: ["H:|-16-[$self]|",
+        bottomBorderView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                           "V:[$view0]-12-[$self(1)]"],
                                         views:[editTextField])
         
@@ -94,7 +103,7 @@ class KPSubtitleInputController: KPViewController {
         tableView.dataSource = self
         tableView.separatorColor = UIColor.clear
         view.addSubview(self.tableView)
-        tableView.addConstraints(fromStringArray: ["V:[$view0]-12-[$self]|",
+        tableView.addConstraints(fromStringArray: ["V:[$view0][$self]|",
                                                    "H:|[$self]|"],
                                  views: [bottomBorderView])
         tableView.register(KPInputRecommendCell.self,
@@ -102,24 +111,24 @@ class KPSubtitleInputController: KPViewController {
         tableView.allowsSelection = true
         
         
-        sendButton = UIButton.init(type: .custom)
-        sendButton.setTitle("確認名稱", for: .normal)
-        sendButton.setTitleColor(KPColorPalette.KPTextColor.mainColor,
-                                 for: .normal)
-        sendButton.addTarget(self,
-                             action: #selector(KPSubtitleInputController.handleSendButtonOnTapped),
-                             for: .touchUpInside)
-        sendButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
-        view.addSubview(sendButton)
-        view.addSubview(separator)
-        
-        sendButton.addConstraints(fromStringArray: ["V:[$view0]-16-[$self(30)]-16-|"],
-                                  views: [separator])
-        sendButton.addConstraintForCenterAligningToSuperview(in: .horizontal)
-        
-        separator.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
-                                                   "V:[$self(1)]-16-[$view0]"],
-                                 views: [sendButton])
+//        sendButton = UIButton.init(type: .custom)
+//        sendButton.setTitle("確認名稱", for: .normal)
+//        sendButton.setTitleColor(KPColorPalette.KPTextColor.mainColor,
+//                                 for: .normal)
+//        sendButton.addTarget(self,
+//                             action: #selector(KPSubtitleInputController.handleSendButtonOnTapped),
+//                             for: .touchUpInside)
+//        sendButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+//        view.addSubview(sendButton)
+//        view.addSubview(separator)
+//
+//        sendButton.addConstraints(fromStringArray: ["V:[$view0]-16-[$self(30)]-16-|"],
+//                                  views: [separator])
+//        sendButton.addConstraintForCenterAligningToSuperview(in: .horizontal)
+//
+//        separator.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
+//                                                   "V:[$self(1)]-16-[$view0]"],
+//                                 views: [sendButton])
         
     }
     
@@ -234,9 +243,9 @@ extension KPSubtitleInputController: UITableViewDelegate, UITableViewDataSource 
         return 1
     }
 
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 56
-    }
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return 56
+//    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return apiContents.count

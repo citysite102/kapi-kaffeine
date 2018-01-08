@@ -922,6 +922,10 @@ class KPServiceHandler {
          There’s also a when(resolved:) that waits for all the promises to complete, but always calls the then block and never the catch.
          */
         
+//        when(resolved: uploadRequests).then { (results) -> Void in
+//            
+//        }
+        
         join(uploadRequests).then { (result) -> Void in
             print("result : \(result)")
             if let uploadResult = result.first?["result"].bool {

@@ -90,10 +90,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let navigationBarAppearace = UINavigationBar.appearance()
         
         navigationBarAppearace.isTranslucent = false
-        navigationBarAppearace.tintColor = KPColorPalette.KPTextColor.whiteColor
-        navigationBarAppearace.barTintColor = KPColorPalette.KPMainColor.mainColor_light
-        navigationBarAppearace.titleTextAttributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 20),
-                                                      NSAttributedStringKey.foregroundColor: KPColorPalette.KPTextColor.whiteColor!]
+
+//        navigationBarAppearace.tintColor = KPColorPalette.KPTextColor.whiteColor
+//        navigationBarAppearace.barTintColor = KPColorPalette.KPMainColor.mainColor_light
+//        navigationBarAppearace.titleTextAttributes = [NSFontAttributeName: UIFont.systemFont(ofSize: 20),
+//                                                      NSForegroundColorAttributeName: KPColorPalette.KPTextColor.whiteColor!]
         
         return true
     }

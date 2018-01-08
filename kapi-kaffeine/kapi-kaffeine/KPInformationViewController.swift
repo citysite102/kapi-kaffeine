@@ -217,18 +217,18 @@ class KPInformationViewController: KPViewController {
         let editButton = UIAlertAction(title: "編輯店家資料",
                                        style: .default) {
                                         [unowned self] (_) in
-                                        let controller = KPModalViewController()
-                                        controller.edgeInset = UIEdgeInsets(top: 0,
-                                                                            left: 0,
-                                                                            bottom: 0,
-                                                                            right: 0)
-                                        let newStoreController = KPNewStoreController(.modify)
-                                        newStoreController.dataModel = self.informationDataModel
-                                        newStoreController.rateDataModel = self.hasRatedDataModel
-                                        let navigationController =
-                                            UINavigationController(rootViewController: newStoreController)
-                                        controller.contentController = navigationController
-                                        controller.presentModalView()
+//                                        let controller = KPModalViewController()
+//                                        controller.edgeInset = UIEdgeInsets(top: 0,
+//                                                                            left: 0,
+//                                                                            bottom: 0,
+//                                                                            right: 0)
+//                                        let newStoreController = KPNewStoreController(.modify)
+//                                        newStoreController.dataModel = self.informationDataModel
+//                                        newStoreController.rateDataModel = self.hasRatedDataModel
+//                                        let navigationController =
+//                                            UINavigationController(rootViewController: newStoreController)
+//                                        controller.contentController = navigationController
+//                                        controller.presentModalView()
         }
         
         let reportButton = UIAlertAction(title: "錯誤回報",

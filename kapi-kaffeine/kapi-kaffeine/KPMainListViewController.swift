@@ -283,8 +283,13 @@ class KPMainListViewController:
                                             left: 0,
                                             bottom: 0,
                                             right: 0)
-        let newStoreController = KPNewStoreController(.add)
+        let newStoreController = KPNewStoreController()
         let navigationController = UINavigationController(rootViewController: newStoreController)
+        if #available(iOS 11.0, *) {
+            navigationController.navigationBar.prefersLargeTitles = true
+        } else {
+            // Fallback on earlier versions
+        }
         controller.contentController = navigationController
         controller.presentModalView()
     }

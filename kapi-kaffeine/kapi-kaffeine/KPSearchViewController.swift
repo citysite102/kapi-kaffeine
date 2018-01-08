@@ -194,7 +194,7 @@ class KPSearchViewController: KPViewController {
                                             left: 0,
                                             bottom: 0,
                                             right: 0)
-        let newStoreController = KPNewStoreController(.add)
+        let newStoreController = KPNewStoreController()
         let navigationController = UINavigationController(rootViewController: newStoreController)
         controller.contentController = navigationController
         controller.presentModalView()
