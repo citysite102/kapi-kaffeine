@@ -113,6 +113,10 @@ class KPMainViewController: KPViewController {
         searchHeaderView.addConstraints(fromStringArray: ["V:|[$self(104)]",
                                                           "H:|[$self]|"])
         
+        searchHeaderView.searchTagView.preferenceHintButton.addTarget(self,
+                                                                      action: #selector(handlePreferenceButtonOnTapped),
+                                                                       for: .touchUpInside)
+        
         statusContainer = UIView()
         statusContainer.isHidden = true
         statusContainer.alpha = 0.0
@@ -224,6 +228,20 @@ class KPMainViewController: KPViewController {
         print("\nwindow目前總數：\(windows.count)")
         print("Become Visible資訊：\(window)")
         print("windowLevel數值：\(window.windowLevel)\n")
+    }
+    
+    @objc func handlePreferenceButtonOnTapped() {
+        let controller = KPModalViewController()
+        controller.edgeInset = UIEdgeInsets.init(top: 0,
+                                                 left: 0,
+                                                 bottom: 0,
+                                                 right: 0)
+        let preferenceController = KPPreferenceSearchViewController()
+        let navigationController = UINavigationController.init(rootViewController: preferenceController)
+        preferenceController.delegate = self
+        
+        controller.contentController = navigationController
+        controller.presentModalView()
     }
     
     
@@ -748,7 +766,7 @@ extension KPMainViewController: KPSearchTagViewDelegate, KPSearchConditionViewCo
         
     }
     
-    func searchConditionControllerDidSearch(_ searchConditionController: KPSearchConditionViewController) {
+    func searchConditionControllerDidSearch(_ searchConditionController: KPPreferenceSearchViewController) {
         
         mainListViewController?.state = .loading
         mainMapViewController?.state = .loading

@@ -115,7 +115,7 @@
 		77B66FB01EAD17DA008B6652 /* KPSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B66FAF1EAD17DA008B6652 /* KPSettingViewController.swift */; };
 		77B66FB31EAF171E008B6652 /* KPAboutUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B66FB21EAF171D008B6652 /* KPAboutUsViewController.swift */; };
 		77B66FB51EAFC46B008B6652 /* KPUserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B66FB41EAFC46B008B6652 /* KPUserProfileViewController.swift */; };
-		77B66FB71EAFC9D2008B6652 /* KPSearchConditionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B66FB61EAFC9D2008B6652 /* KPSearchConditionViewController.swift */; };
+		77B66FB71EAFC9D2008B6652 /* KPPreferenceSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B66FB61EAFC9D2008B6652 /* KPPreferenceSearchViewController.swift */; };
 		77BB39261ED350AD00958AFE /* KPFirstIntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77BB39251ED350AD00958AFE /* KPFirstIntroView.swift */; };
 		77BB39281ED3DD4300958AFE /* KPSecondIntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77BB39271ED3DD4300958AFE /* KPSecondIntroView.swift */; };
 		77BB392A1ED3DD5700958AFE /* KPThirdIntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77BB39291ED3DD5700958AFE /* KPThirdIntroView.swift */; };
@@ -342,7 +342,7 @@
 		77B66FAF1EAD17DA008B6652 /* KPSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSettingViewController.swift; sourceTree = "<group>"; };
 		77B66FB21EAF171D008B6652 /* KPAboutUsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPAboutUsViewController.swift; sourceTree = "<group>"; };
 		77B66FB41EAFC46B008B6652 /* KPUserProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPUserProfileViewController.swift; sourceTree = "<group>"; };
-		77B66FB61EAFC9D2008B6652 /* KPSearchConditionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSearchConditionViewController.swift; sourceTree = "<group>"; };
+		77B66FB61EAFC9D2008B6652 /* KPPreferenceSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPPreferenceSearchViewController.swift; sourceTree = "<group>"; };
 		77BB39251ED350AD00958AFE /* KPFirstIntroView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPFirstIntroView.swift; sourceTree = "<group>"; };
 		77BB39271ED3DD4300958AFE /* KPSecondIntroView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSecondIntroView.swift; sourceTree = "<group>"; };
 		77BB39291ED3DD5700958AFE /* KPThirdIntroView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPThirdIntroView.swift; sourceTree = "<group>"; };
@@ -697,7 +697,7 @@
 			isa = PBXGroup;
 			children = (
 				77421FB21EB8F7EE00064FF0 /* View */,
-				77B66FB61EAFC9D2008B6652 /* KPSearchConditionViewController.swift */,
+				77B66FB61EAFC9D2008B6652 /* KPPreferenceSearchViewController.swift */,
 			);
 			name = ConditionController;
 			sourceTree = "<group>";
@@ -1571,7 +1571,7 @@
 				C01AC62A1EAAEA0A000390F7 /* GMUNonHierarchicalDistanceBasedAlgorithm.m in Sources */,
 				C031E9071EA5F0BF00E87FB1 /* KPLocationManager.swift in Sources */,
 				77427BE71EF96EF8005D7AE4 /* KPFilter.swift in Sources */,
-				77B66FB71EAFC9D2008B6652 /* KPSearchConditionViewController.swift in Sources */,
+				77B66FB71EAFC9D2008B6652 /* KPPreferenceSearchViewController.swift in Sources */,
 				776ACAFA1E9BB01B00B629A2 /* KPMainListViewController.swift in Sources */,
 				776ACB0B1E9C783E00B629A2 /* KPInformationViewController.swift in Sources */,
 				7762E33A1F0FA44F0006E205 /* KPBusinessTimeViewController.swift in Sources */,

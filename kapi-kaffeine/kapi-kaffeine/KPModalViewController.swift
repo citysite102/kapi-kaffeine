@@ -89,7 +89,6 @@ class KPModalViewController: KPViewController {
         backgroundSensingView = KPPopoverSensingView()
         backgroundSensingView.delegate = self
         backgroundSensingView.backgroundColor = UIColor.clear
-//        backgroundSensingView.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level4
         view.addSubview(backgroundSensingView)
         backgroundSensingView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                                "V:|[$self]"])
@@ -97,10 +96,6 @@ class KPModalViewController: KPViewController {
         
         containerSensingView.delegate = self
         backgroundSensingView.addSubview(containerSensingView)
-        
-//        containerWidthConstraint = containerSensingView.constraint(forWidth: contentSize.width)
-//        containerHeightConstraint = containerSensingView.constraint(forHeight: contentSize.height)
-        
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillShow(_:)),
                                                name: NSNotification.Name.UIKeyboardWillShow,
@@ -171,9 +166,9 @@ class KPModalViewController: KPViewController {
                                                                edgeInset.left,
                                                                edgeInset.right])
             containerPoint = CGPoint(x: edgeInset.left,
-                                          y: edgeInset.top)
+                                     y: edgeInset.top)
             containerSize = CGSize(width: backgroundSensingView.frame.size.width - edgeInset.left - edgeInset.right,
-                                        height: backgroundSensingView.frame.size.height - edgeInset.top - edgeInset.bottom)
+                                   height: backgroundSensingView.frame.size.height - edgeInset.top - edgeInset.bottom)
         }
         
         switch self.presentationStyle {
@@ -192,20 +187,20 @@ class KPModalViewController: KPViewController {
         default:
             print("Not Implement")
         }
-        
+    
         let containerFrame = CGRect(origin: containerPoint,
-                                         size: containerSize)
+                                    size: containerSize)
         
         self.containerSensingView.frame = containerFrame
         self.contentView.frame = CGRect(origin: CGPoint(x: 0, y: 0),
-                                             size: containerSize)
-        
-        self.contentView.layoutIfNeeded()
+                                        size: containerSize)
+        self.containerSensingView.layoutIfNeeded()
         
         if cornerRadius != nil {
-            let path = UIBezierPath(roundedRect:CGRect(x: 0, y: 0,
-                                                            width: contentView.frameSize.width,
-                                                            height: contentView.frameSize.height),
+            let path = UIBezierPath(roundedRect:CGRect(x: 0,
+                                                       y: 0,
+                                                       width: contentView.frameSize.width,
+                                                       height: contentView.frameSize.height),
                                     byRoundingCorners:cornerRadius!,
                                     cornerRadii: CGSize(width: 4, height:  4))
             let maskLayer = CAShapeLayer()
@@ -214,7 +209,8 @@ class KPModalViewController: KPViewController {
         }
         
         if presentationStyle == .popout {
-            self.containerSensingView.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
+            self.containerSensingView.transform = CGAffineTransform(scaleX: 0.5,
+                                                                    y: 0.5)
             duration = 0.3
             damping = 0.7
         }
@@ -229,8 +225,9 @@ class KPModalViewController: KPViewController {
                         self.backgroundSensingView.layoutIfNeeded()
                         self.containerSensingView.isHidden = false
                         self.containerSensingView.alpha = 1.0
+                        self.contentView.setNeedsLayout()
+                        self.contentView.layoutIfNeeded()
         }) { (_) in
-            
         }
         
         UIView.animate(withDuration: 0.3) { 

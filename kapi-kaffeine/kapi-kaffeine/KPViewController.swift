@@ -12,6 +12,13 @@ class KPViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if #available(iOS 11.0, *) {
+            navigationController?.navigationBar.prefersLargeTitles = true
+        } else {
+            // Fallback on earlier versions
+        }
+        
 //        modalPresentationCapturesStatusBarAppearance = true
     }
 
@@ -21,7 +28,7 @@ class KPViewController: UIViewController {
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+        return .default
     }
     
     override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
@@ -32,6 +39,6 @@ class KPViewController: UIViewController {
 
 extension UINavigationController {
     override open var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+        return .default
     }
 }

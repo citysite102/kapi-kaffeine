@@ -29,8 +29,8 @@ class KPSearchTagView: UIView {
 
     weak open var delegate: (KPSearchTagViewDelegate & KPSearchConditionViewControllerDelegate)?
     
-    var collectionView:UICollectionView!
-    var collectionLayout:UICollectionViewFlowLayout!
+    var collectionView: UICollectionView!
+    var collectionLayout: UICollectionViewFlowLayout!
     
     
     var preferenceHintButton: KPPreferenceHintButton!
@@ -39,6 +39,7 @@ class KPSearchTagView: UIView {
     var preferenceHintIcon: UIImageView!
     var preferenceHintLabel: UILabel!
 //    var currentSelectTags: [searchTagType]! = [searchTagType]()
+    
     var headerTagContents = [searchTagType.wifi,
                              searchTagType.socket,
                              searchTagType.limitTime,
@@ -70,9 +71,6 @@ class KPSearchTagView: UIView {
         preferenceHintButton.imageView?.tintColor = UIColor.white
         preferenceHintButton.layer.cornerRadius = 3.0
         preferenceHintButton.layer.masksToBounds = true
-        preferenceHintButton.addTarget(self,
-                                       action: #selector(handlePreferenceButtonOnTapped),
-                                       for: .touchUpInside)
         addSubview(preferenceHintButton)
         preferenceHintButton.addConstraints(fromStringArray: ["V:|-4-[$self]-4-|",
                                                               "H:|-8-[$self(96)]"])
@@ -107,19 +105,6 @@ class KPSearchTagView: UIView {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    @objc func handlePreferenceButtonOnTapped() {
-        let controller = KPModalViewController()
-        controller.edgeInset = UIEdgeInsets.init(top: 0,
-                                                 left: 0,
-                                                 bottom: 0,
-                                                 right: 0)
-        let preferenceController = KPSearchConditionViewController()
-        preferenceController.delegate = delegate
-        let navigationController = UINavigationController.init(rootViewController: preferenceController)
-        controller.contentController = navigationController
-        controller.presentModalView()
     }
     
     func deselectAllSearchTag() {
