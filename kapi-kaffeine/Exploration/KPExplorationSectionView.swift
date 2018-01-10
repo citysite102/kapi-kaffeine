@@ -21,17 +21,17 @@ class KPExplorationSectionView: UITableViewCell {
         backgroundColor = UIColor.white
         
         sectionTitleLabel = UILabel()
-        sectionTitleLabel.font = UIFont.boldSystemFont(ofSize: 16)
+        sectionTitleLabel.font = UIFont.boldSystemFont(ofSize: 22)
         sectionTitleLabel.textColor = UIColor(hexString: "585858")
         contentView.addSubview(sectionTitleLabel)
         sectionTitleLabel.addConstraints(fromStringArray: ["H:|-20-[$self]", "V:|-12-[$self]"])
         sectionTitleLabel.text = "IG 人氣打卡店家"
         
         sectionDescriptionLabel = UILabel()
-        sectionDescriptionLabel.font = UIFont.systemFont(ofSize: 12)
+        sectionDescriptionLabel.font = UIFont.systemFont(ofSize: 14)
         sectionDescriptionLabel.textColor = UIColor(hexString: "979797")
         contentView.addSubview(sectionDescriptionLabel)
-        sectionDescriptionLabel.addConstraints(fromStringArray: ["H:|-20-[$self]", "V:[$view0]-4-[$self]"], views: [sectionTitleLabel])
+        sectionDescriptionLabel.addConstraints(fromStringArray: ["H:|-20-[$self]", "V:[$view0]-[$self]"], views: [sectionTitleLabel])
         sectionDescriptionLabel.text = "由知名部落客們聯手推薦的知名店家。"
         
         let collectionViewLayout = UICollectionViewFlowLayout()
@@ -44,8 +44,7 @@ class KPExplorationSectionView: UITableViewCell {
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.register(KPExplorationSectionCell.self, forCellWithReuseIdentifier: "ExplorationSectionCell")
         contentView.addSubview(collectionView)
-        collectionView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$view0]-4-[$self(180)]|"], views: [sectionDescriptionLabel])
-        
+        collectionView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$view0]-4-[$self(210)]|"], views: [sectionDescriptionLabel])
         
     }
     
@@ -93,7 +92,7 @@ extension KPExplorationSectionView: UICollectionViewDataSource, UICollectionView
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 130, height: 160)
+        return CGSize(width: 130, height: 190)
     }
     
 }

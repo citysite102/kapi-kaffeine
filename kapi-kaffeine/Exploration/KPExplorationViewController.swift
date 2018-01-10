@@ -15,6 +15,15 @@ class KPExplorationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 330))
+        
+        
+        let articleLabel = UILabel()
+        headerView.addSubview(articleLabel)
+        articleLabel.text = "精選文章"
+        articleLabel.textColor = KPColorPalette.KPTextColor.grayColor_level1
+        articleLabel.font = UIFont.systemFont(ofSize: 22)
+        articleLabel.addConstraints(fromStringArray: ["H:|-20-[$self]", "V:|[$self(30)]"])
         
         let articleLayout = UICollectionViewFlowLayout()
         articleLayout.scrollDirection = .horizontal
@@ -22,7 +31,7 @@ class KPExplorationViewController: UIViewController {
         articleCollectionView = UICollectionView(frame: CGRect(x: 0,
                                                                y: 0,
                                                                width: UIScreen.main.bounds.width,
-                                                               height: 260),
+                                                               height: 300),
                                                  collectionViewLayout: articleLayout)
         articleCollectionView.showsHorizontalScrollIndicator = false
         articleCollectionView.decelerationRate = UIScrollViewDecelerationRateFast
@@ -30,7 +39,9 @@ class KPExplorationViewController: UIViewController {
         articleCollectionView.delegate = self
         articleCollectionView.register(KPArticleCell.self, forCellWithReuseIdentifier: "ArticleCell")
         articleCollectionView.backgroundColor = UIColor.clear
-
+        headerView.addSubview(articleCollectionView)
+        articleCollectionView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$view0]-[$self]-|"],
+                                             views: [articleLabel])
         
         let tableView = UITableView(frame: CGRect.zero, style: .plain)
         tableView.contentInset = UIEdgeInsets(top: 100, left: 0, bottom: 30, right: 0)
@@ -41,7 +52,7 @@ class KPExplorationViewController: UIViewController {
         tableView.register(KPExplorationSectionView.self, forCellReuseIdentifier: "cell")
         view.addSubview(tableView)
         tableView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"])
-        tableView.tableHeaderView = articleCollectionView
+        tableView.tableHeaderView = headerView
         
         
 //        view.backgroundColor = UIColor(hexString: "f8f8f8")
@@ -140,7 +151,7 @@ extension KPExplorationViewController: UICollectionViewDataSource, UICollectionV
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: UIScreen.main.bounds.width/2 - 16*1.5, height: 220)
+        return CGSize(width: UIScreen.main.bounds.width/2 - 20*1.5, height: 260)
     }
     
     func collectionView(_ collectionView: UICollectionView, targetContentOffsetForProposedContentOffset proposedContentOffset: CGPoint) -> CGPoint {
