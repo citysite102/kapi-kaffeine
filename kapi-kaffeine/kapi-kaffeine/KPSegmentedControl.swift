@@ -51,7 +51,7 @@ class KPSegmentedControl: UIControl {
     func setupUI() {
         
         backgroundColor = UIColor.clear
-        layer.cornerRadius = 3.0
+        layer.cornerRadius = 6.0
         layer.borderColor = KPColorPalette.KPMainColor.mainColor?.cgColor
         layer.borderWidth = 2
         layer.masksToBounds = true
@@ -81,12 +81,14 @@ class KPSegmentedControl: UIControl {
             
             
             if index == 0 {
-                segment.addConstraints(fromStringArray: ["H:|[$self]","V:|[$self]|"])
+                segment.addConstraints(fromStringArray: ["H:|[$self]",
+                                                         "V:|[$self]|"])
             } else {
                 let seporator = UIView()
                 addSubview(seporator)
                 seporator.backgroundColor = KPColorPalette.KPMainColor.mainColor
-                seporator.addConstraints(fromStringArray: ["H:[$view0][$self(2)][$view1]", "V:|[$self]|", "V:|[$view1]|"],
+                seporator.addConstraints(fromStringArray: ["H:[$view0][$self(2)][$view1]",
+                                                           "V:|[$self]|", "V:|[$view1]|"],
                                          views: [segments.last!, segment])
                 segment.addConstraintForHavingSameWidth(with: segments.last!)
             }

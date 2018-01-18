@@ -118,6 +118,10 @@ struct KPColorPalette {
         static let grayColor_level7 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.05)
         
         static let whiteColor_level1 = UIColor(hexString: "#ffffffaa")
+        
+        
+        //v2
+        
     }
     
     struct KPTextColor {
@@ -129,6 +133,12 @@ struct KPColorPalette {
 //        static let mainColor = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.7)
         static let whiteColor = UIColor(hexString: "#ffffff")
         static let warningColor = UIColor(hexString: "#FF4040")
+        
+        
+        // v2
+        static let mainColor_title = UIColor(hexString: "#585858")
+        static let mainColor_subtitle = UIColor(hexString: "#585858")
+        static let mainColor_description = UIColor(hexString: "#888888")
         
         
         static let default_placeholder = UIColor(hexString: "#C7C7CD")

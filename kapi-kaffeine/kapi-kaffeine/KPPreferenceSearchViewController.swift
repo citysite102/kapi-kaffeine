@@ -35,14 +35,14 @@ class KPPreferenceSearchViewController: KPViewController {
     
     weak var delegate: KPSearchConditionViewControllerDelegate?
     
-    // Section 1
     var sortLabel: UILabel!
     var sortSegmentedControl: KPSegmentedControl!
+    var priceSegmentedControl: KPSegmentedControl!
     
-    var quickSettingLabel: UILabel!
-    var quickSettingButtonOne: UIButton!
-    var quickSettingButtonTwo: UIButton!
-    var quickSettingButtonThree: UIButton!
+    
+    var priceSettingLabel: UILabel!
+    var priceSettingDescriptionLabel: UILabel!
+    
     
     lazy var seperator_one: UIView = {
         let view = UIView()
@@ -113,8 +113,8 @@ class KPPreferenceSearchViewController: KPViewController {
     
     func titleLabel(_ title: String) -> UILabel {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 14.0)
-        label.textColor = KPColorPalette.KPTextColor.mainColor
+        label.font = UIFont.systemFont(ofSize: 22.0)
+        label.textColor = KPColorPalette.KPTextColor.mainColor_subtitle
         label.text = title
         return label
     }
@@ -132,6 +132,8 @@ class KPPreferenceSearchViewController: KPViewController {
 
         view.backgroundColor = UIColor.white
         navigationController?.navigationBar.topItem?.title = "篩選偏好設定"
+        navigationController?.navigationBar.shadowImage = UIImage()
+        
     
         let barRightItem = UIBarButtonItem(title: "清除",
                                            style: .plain,
@@ -154,13 +156,14 @@ class KPPreferenceSearchViewController: KPViewController {
         scrollView.showsVerticalScrollIndicator = false
         view.addSubview(scrollView)
         scrollView.addConstraints(fromStringArray: ["V:|[$self]|",
-                                                         "H:|[$self]|"])
+                                                    "H:|[$self]|"])
         scrollView.addConstraintForCenterAligningToSuperview(in: .horizontal)
         
         
         containerView = UIView()
         scrollView.addSubview(containerView)
-        containerView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"])
+        containerView.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                       "V:|[$self]|"])
         containerView.addConstraintForHavingSameWidth(with: view)
         
         
@@ -170,52 +173,47 @@ class KPPreferenceSearchViewController: KPViewController {
         sortLabel.addConstraints(fromStringArray: ["H:|-16-[$self]",
                                                    "V:|-24-[$self]"])
         
-        sortSegmentedControl = KPSegmentedControl.init(["距離近到遠", "評分高到低"])
+        sortSegmentedControl = KPSegmentedControl.init(["距離最近",
+                                                        "評分最高"])
         sortSegmentedControl.selectedSegmentIndex = KPFilter.sharedFilter.sortedby == .distance ? 0 : 1
         containerView.addSubview(sortSegmentedControl)
         sortSegmentedControl.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
-                                                              "V:[$view0]-8-[$self(30)]"],
+                                                              "V:[$view0]-12-[$self(36)]"],
                                             views: [sortLabel])
         
-        quickSettingLabel = titleLabel("使用快速設定")
-        containerView.addSubview(quickSettingLabel)
-        quickSettingLabel.addConstraints(fromStringArray: ["H:|-16-[$self]",
-                                                           "V:[$view0]-24-[$self]"],
+        priceSettingLabel = titleLabel("價格區間")
+        containerView.addSubview(priceSettingLabel)
+        priceSettingLabel.addConstraints(fromStringArray: ["H:|-16-[$self]",
+                                                           "V:[$view0]-40-[$self]"],
                                          views: [sortSegmentedControl])
         
-        quickSettingButtonOne = buttonWithTitle(title: "適合讀書工作")
-        quickSettingButtonOne.addTarget(self,
-                                        action: #selector(handleQuickSettingButtonOnTap(_:)),
-                                        for: .touchUpInside)
-        quickSettingButtonTwo = buttonWithTitle(title: "C/P值高")
-        quickSettingButtonTwo.addTarget(self,
-                                        action: #selector(handleQuickSettingButtonOnTap(_:)),
-                                        for: .touchUpInside)
-        quickSettingButtonThree = buttonWithTitle(title: "平均四分")
-        quickSettingButtonThree.addTarget(self,
-                                          action: #selector(handleQuickSettingButtonOnTap(_:)),
-                                          for: .touchUpInside)
-        containerView.addSubview(quickSettingButtonOne)
-        containerView.addSubview(quickSettingButtonTwo)
-        containerView.addSubview(quickSettingButtonThree)
+        priceSettingDescriptionLabel = UILabel()
+        priceSettingDescriptionLabel.font = UIFont.systemFont(ofSize: 14.0)
+        priceSettingDescriptionLabel.textColor = KPColorPalette.KPTextColor.mainColor_description
+        priceSettingDescriptionLabel.text = "$=低於99元 / $$=100-199元 / $$$=高於200元"
+        containerView.addSubview(priceSettingDescriptionLabel)
+        priceSettingDescriptionLabel.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
+                                                                      "V:[$view0]-8-[$self]"],
+                                             views: [priceSettingLabel])
         
-        quickSettingButtonOne.addConstraints(fromStringArray: ["H:|-16-[$self(110)]",
+        
+        priceSegmentedControl = KPSegmentedControl.init(["$ (3間)",
+                                                         "$$ (25間)",
+                                                         "$$$ (12間)"])
+        priceSegmentedControl.selectedSegmentIndex = 0
+        containerView.addSubview(priceSegmentedControl)
+        priceSegmentedControl.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
                                                                "V:[$view0]-8-[$self(36)]"],
-                                                  views: [quickSettingLabel])
-        quickSettingButtonTwo.addConstraints(fromStringArray: ["H:[$view1]-8-[$self(80)]",
-                                                               "V:[$view0]-8-[$self(36)]"],
-                                                  views: [quickSettingLabel, quickSettingButtonOne])
-        quickSettingButtonThree.addConstraints(fromStringArray: ["H:[$view1]-8-[$self(80)]",
-                                                                 "V:[$view0]-8-[$self(36)]"],
-                                                    views: [quickSettingLabel, quickSettingButtonTwo])
+                                            views: [priceSettingDescriptionLabel])
+        
+       
         containerView.addSubview(seperator_one)
         seperator_one.addConstraints(fromStringArray: ["H:|[$self]|",
                                                        "V:[$view0]-24-[$self(1)]"],
-                                          views: [quickSettingButtonOne])
-        
+                                          views: [priceSegmentedControl])
         
         // Section 2
-        adjustPointLabel = titleLabel("調整分數至你的需求")
+        adjustPointLabel = titleLabel("特殊需求")
         containerView.addSubview(adjustPointLabel)
         adjustPointLabel.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
                                                           "V:[$view0]-16-[$self]"],
@@ -470,9 +468,6 @@ class KPPreferenceSearchViewController: KPViewController {
     
     @objc func handleRestoreButtonOnTapped() {
         sortSegmentedControl.selectedSegmentIndex = 0
-        quickSettingButtonOne.isSelected = false
-        quickSettingButtonTwo.isSelected = false
-        quickSettingButtonThree.isSelected = false
         
         ratingViews[0].currentRate = 0
         ratingViews[1].currentRate = 0
@@ -489,42 +484,42 @@ class KPPreferenceSearchViewController: KPViewController {
         othersCheckBoxOne.checkBox.checkState = .unchecked
     }
     
-    @objc func handleQuickSettingButtonOnTap(_ sender: UIButton) {
-        if sender == quickSettingButtonOne {
-            quickSettingButtonOne.isSelected = true
-            quickSettingButtonTwo.isSelected = false
-            quickSettingButtonThree.isSelected = false
-            ratingViews[0].currentRate = 4
-            ratingViews[1].currentRate = 3
-            ratingViews[2].currentRate = 3
-            ratingViews[3].currentRate = 4
-            ratingViews[4].currentRate = 3
-            ratingViews[5].currentRate = 3
-            ratingViews[6].currentRate = 4
-        } else if sender == quickSettingButtonTwo {
-            quickSettingButtonOne.isSelected = false
-            quickSettingButtonTwo.isSelected = true
-            quickSettingButtonThree.isSelected = false
-            ratingViews[0].currentRate = 3
-            ratingViews[1].currentRate = 3
-            ratingViews[2].currentRate = 4
-            ratingViews[3].currentRate = 3
-            ratingViews[4].currentRate = 4
-            ratingViews[5].currentRate = 3
-            ratingViews[6].currentRate = 4
-        } else if sender == quickSettingButtonThree {
-            quickSettingButtonOne.isSelected = false
-            quickSettingButtonTwo.isSelected = false
-            quickSettingButtonThree.isSelected = true
-            ratingViews[0].currentRate = 4
-            ratingViews[1].currentRate = 4
-            ratingViews[2].currentRate = 4
-            ratingViews[3].currentRate = 4
-            ratingViews[4].currentRate = 4
-            ratingViews[5].currentRate = 4
-            ratingViews[6].currentRate = 4
-        }
-    }
+//    @objc func handleQuickSettingButtonOnTap(_ sender: UIButton) {
+//        if sender == quickSettingButtonOne {
+//            quickSettingButtonOne.isSelected = true
+//            quickSettingButtonTwo.isSelected = false
+//            quickSettingButtonThree.isSelected = false
+//            ratingViews[0].currentRate = 4
+//            ratingViews[1].currentRate = 3
+//            ratingViews[2].currentRate = 3
+//            ratingViews[3].currentRate = 4
+//            ratingViews[4].currentRate = 3
+//            ratingViews[5].currentRate = 3
+//            ratingViews[6].currentRate = 4
+//        } else if sender == quickSettingButtonTwo {
+//            quickSettingButtonOne.isSelected = false
+//            quickSettingButtonTwo.isSelected = true
+//            quickSettingButtonThree.isSelected = false
+//            ratingViews[0].currentRate = 3
+//            ratingViews[1].currentRate = 3
+//            ratingViews[2].currentRate = 4
+//            ratingViews[3].currentRate = 3
+//            ratingViews[4].currentRate = 4
+//            ratingViews[5].currentRate = 3
+//            ratingViews[6].currentRate = 4
+//        } else if sender == quickSettingButtonThree {
+//            quickSettingButtonOne.isSelected = false
+//            quickSettingButtonTwo.isSelected = false
+//            quickSettingButtonThree.isSelected = true
+//            ratingViews[0].currentRate = 4
+//            ratingViews[1].currentRate = 4
+//            ratingViews[2].currentRate = 4
+//            ratingViews[3].currentRate = 4
+//            ratingViews[4].currentRate = 4
+//            ratingViews[5].currentRate = 4
+//            ratingViews[6].currentRate = 4
+//        }
+//    }
     
     @objc func handleBusinessCheckBoxTwoOnTap(_ sender: KPCheckBox) {
         if sender.checkState == .checked {
