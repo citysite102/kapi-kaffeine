@@ -220,16 +220,10 @@ class KPRatingView: UIView {
             rateTitleLabel.addConstraints(fromStringArray: ["H:[$view0]-16-[$self]"],
                                           views: [iconImageView])
             rateTitleLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
-            
-            segmentedControl = KPSegmentedControl.init(["不限", "尚可", "優秀"],
-                                                       [KPColorPalette.KPMainColor.mainColor_light!,
-                                                        KPColorPalette.KPMainColor.starColor!,
-                                                        KPColorPalette.KPMainColor.mainColor_sub!],
-                                                       [KPColorPalette.KPTextColor.whiteColor!,
-                                                        KPColorPalette.KPTextColor.mainColor!,
-                                                        KPColorPalette.KPTextColor.whiteColor!])
-            
-            segmentedControl.addTarget(self, action: #selector(handleSegmentedValueChanged(_:)), for: .valueChanged)
+            segmentedControl = KPSegmentedControl.init(["不限", "尚可", "優秀"])
+            segmentedControl.addTarget(self, 
+                                       action: #selector(handleSegmentedValueChanged(_:)),
+                                       for: .valueChanged)
             
             addSubview(segmentedControl)
             segmentedControl.addConstraints(fromStringArray: ["H:|-(\(KPSearchConditionViewControllerConstants.leftPadding-16))-[$self]-8-|",

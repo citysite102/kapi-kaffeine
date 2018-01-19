@@ -60,28 +60,15 @@ class KPPreferenceSearchViewController: KPViewController {
     }()
     
     // Section 3
-    var timeLimitLabel: UILabel!
-    var timeRadioBoxOne: KPCheckView!
-    var timeRadioBoxTwo: KPCheckView!
-    var timeRadioBoxThree: KPCheckView!
-    var timeRadioBoxFour: KPCheckView!
     
     var startSearchTime: String?
     var endSearchTime: String?
-    
-    var socketLabel: UILabel!
-    var socketRadioBoxOne: KPCheckView!
-    var socketRadioBoxTwo: KPCheckView!
-    var socketRadioBoxThree: KPCheckView!
     
     var businessHourLabel: UILabel!
     var businessCheckBoxOne: KPCheckView!
     var businessCheckBoxTwo: KPCheckView!
     var businessCheckBoxThree: KPCheckView!
     var timeSupplementView: KPSpecificTimeSupplementView!
-    
-    var othersLabel: UILabel!
-    var othersCheckBoxOne: KPCheckView!
     
     lazy var seperator_three: UIView = {
         let view = UIView()
@@ -101,12 +88,12 @@ class KPPreferenceSearchViewController: KPViewController {
                              for: .selected)
         button.setBackgroundImage(UIImage(color: UIColor.white),
                                   for: .normal)
-        button.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.mainColor!),
+        button.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor_v2.mainColor!),
                                   for: .selected)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         button.layer.cornerRadius = 18.0
         button.layer.borderWidth = 2.0
-        button.layer.borderColor = KPColorPalette.KPMainColor.mainColor?.cgColor
+        button.layer.borderColor = KPColorPalette.KPMainColor_v2.mainColor?.cgColor
         button.layer.masksToBounds = true
         return button
     }
@@ -263,112 +250,11 @@ class KPPreferenceSearchViewController: KPViewController {
                                                        "V:[$view0]-16-[$self(1)]"],
                                           views: [ratingViews.last!])
         
-        
-        // Section 3
-        timeLimitLabel = titleLabel("有無時間限制")
-        containerView.addSubview(timeLimitLabel)
-        timeLimitLabel.addConstraints(fromStringArray: ["H:|-16-[$self]",
-                                                        "V:[$view0]-16-[$self]"],
-                                           views: [seperator_two])
-        timeRadioBoxOne = KPCheckView(.radio, "不設定")
-        timeRadioBoxOne.customValue = 4
-        timeRadioBoxOne.checkBox.checkState = .checked
-        containerView.addSubview(timeRadioBoxOne)
-        timeRadioBoxOne.addConstraints(fromStringArray: ["H:|-16-[$self]",
-                                                         "V:[$view0]-16-[$self]"],
-                                            views: [timeLimitLabel])
-        timeRadioBoxTwo = KPCheckView(.radio, "客滿/人多限時")
-        timeRadioBoxTwo.customValue = 3
-        containerView.addSubview(timeRadioBoxTwo)
-        timeRadioBoxTwo.addConstraints(fromStringArray: ["H:|-16-[$self]",
-                                                         "V:[$view0]-16-[$self]"],
-                                            views: [timeRadioBoxOne])
-        timeRadioBoxThree = KPCheckView(.radio, "有限時")
-        timeRadioBoxThree.customValue = 1
-        containerView.addSubview(timeRadioBoxThree)
-        timeRadioBoxThree.addConstraints(fromStringArray: ["H:|-16-[$self]",
-                                                           "V:[$view0]-16-[$self]"],
-                                         views: [timeRadioBoxTwo])
-        timeRadioBoxFour = KPCheckView(.radio, "不限時")
-        timeRadioBoxFour.customValue = 2
-        containerView.addSubview(timeRadioBoxFour)
-        timeRadioBoxFour.addConstraints(fromStringArray: ["H:|-16-[$self]",
-                                                          "V:[$view0]-16-[$self]"],
-                                              views: [timeRadioBoxThree])
-        
-        timeRadioBoxOne.deselectCheckViews = [timeRadioBoxTwo,
-                                              timeRadioBoxThree,
-                                              timeRadioBoxFour]
-        timeRadioBoxTwo.deselectCheckViews = [timeRadioBoxOne,
-                                              timeRadioBoxThree,
-                                              timeRadioBoxFour]
-        timeRadioBoxThree.deselectCheckViews = [timeRadioBoxTwo,
-                                                timeRadioBoxOne,
-                                                timeRadioBoxFour]
-        timeRadioBoxFour.deselectCheckViews = [timeRadioBoxTwo,
-                                               timeRadioBoxOne,
-                                               timeRadioBoxThree]
-        
-        if KPFilter.sharedFilter.limited_time == 1 {
-            timeRadioBoxThree.checkBox.checkState = .checked
-        } else if KPFilter.sharedFilter.limited_time == 2 {
-            timeRadioBoxFour.checkBox.checkState = .checked
-        } else if KPFilter.sharedFilter.limited_time == 3 {
-            timeRadioBoxTwo.checkBox.checkState = .checked
-        } else if KPFilter.sharedFilter.limited_time == 4 {
-            timeRadioBoxOne.checkBox.checkState = .checked
-        }
-        
-        
-        socketLabel = titleLabel("插座數量")
-        containerView.addSubview(socketLabel)
-        socketLabel.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",
-                                                     "V:[$view0]-16-[$self]"],
-                                        metrics:[KPSearchConditionViewControllerConstants.leftPadding],
-                                        views: [seperator_two])
-        
-        socketRadioBoxOne = KPCheckView(.radio, "不設定")
-        socketRadioBoxOne.customValue = 4
-        containerView.addSubview(socketRadioBoxOne)
-        socketRadioBoxOne.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",
-                                                           "V:[$view0]-16-[$self]"],
-                                              metrics:[KPSearchConditionViewControllerConstants.leftPadding],
-                                              views: [socketLabel])
-        socketRadioBoxTwo = KPCheckView(.radio, "部分座位有")
-        socketRadioBoxTwo.customValue = 2
-        containerView.addSubview(socketRadioBoxTwo)
-        socketRadioBoxTwo.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",
-                                                           "V:[$view0]-16-[$self]"],
-                                              metrics:[KPSearchConditionViewControllerConstants.leftPadding],
-                                              views: [socketRadioBoxOne])
-        socketRadioBoxThree = KPCheckView(.radio, "很多插座")
-        socketRadioBoxThree.customValue = 1
-        containerView.addSubview(socketRadioBoxThree)
-        socketRadioBoxThree.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",
-                                                             "V:[$view0]-16-[$self]"],
-                                                metrics:[KPSearchConditionViewControllerConstants.leftPadding],
-                                                views: [socketRadioBoxTwo])
-        
-        socketRadioBoxOne.deselectCheckViews = [socketRadioBoxTwo,
-                                                socketRadioBoxThree]
-        socketRadioBoxTwo.deselectCheckViews = [socketRadioBoxOne,
-                                                socketRadioBoxThree]
-        socketRadioBoxThree.deselectCheckViews = [socketRadioBoxTwo,
-                                                  socketRadioBoxOne]
-        
-        if KPFilter.sharedFilter.socket == 1 {
-            socketRadioBoxThree.checkBox.checkState = .checked
-        } else if KPFilter.sharedFilter.socket == 2 {
-            socketRadioBoxTwo.checkBox.checkState = .checked
-        } else if KPFilter.sharedFilter.socket == 4 {
-            socketRadioBoxOne.checkBox.checkState = .checked
-        }
-        
         businessHourLabel = titleLabel("營業時間")
         containerView.addSubview(businessHourLabel)
         businessHourLabel.addConstraints(fromStringArray: ["H:|-16-[$self]",
-                                                           "V:[$view0]-24-[$self]"],
-                                              views: [timeRadioBoxFour])
+                                                           "V:[$view0]-16-[$self]"],
+                                              views: [seperator_two])
         
         businessCheckBoxOne = KPCheckView(.radio, "不設定")
         businessCheckBoxOne.checkBox.checkState = .checked
@@ -407,24 +293,9 @@ class KPPreferenceSearchViewController: KPViewController {
         }
         
         
-        
         timeSupplementView = KPSpecificTimeSupplementView()
         businessCheckBoxThree.supplementInfoView = timeSupplementView
         timeSupplementView.addConstraint(forWidth: 90)
-        
-        othersLabel = titleLabel("其他選項")
-        containerView.addSubview(othersLabel)
-        othersLabel.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",
-                                                     "V:[$view0]-24-[$self]"],
-                                        metrics:[KPSearchConditionViewControllerConstants.leftPadding],
-                                        views: [timeRadioBoxFour])
-        othersCheckBoxOne = KPCheckView(.checkmark, "可站立工作")
-        containerView.addSubview(othersCheckBoxOne)
-        othersCheckBoxOne.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",
-                                                           "V:[$view0]-16-[$self]"],
-                                              metrics:[KPSearchConditionViewControllerConstants.leftPadding],
-                                              views: [othersLabel])
-        
         
         searchButtonContainer = UIView()
         searchButtonContainer.backgroundColor = UIColor.white
@@ -439,7 +310,7 @@ class KPPreferenceSearchViewController: KPViewController {
         searchButton = UIButton()
         searchButton.setTitle("開始搜尋", for: .normal)
         searchButton.setTitleColor(UIColor.white, for: .normal)
-        searchButton.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.mainColor!),
+        searchButton.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor_v2.greenColor!),
                                                 for: .normal)
         searchButton.layer.cornerRadius = 4.0
         searchButton.layer.masksToBounds = true
@@ -477,11 +348,7 @@ class KPPreferenceSearchViewController: KPViewController {
         ratingViews[5].currentRate = 0
         ratingViews[6].currentRate = 0
         
-        timeRadioBoxOne.checkBox.checkState = .checked
-        socketRadioBoxOne.checkBox.checkState = .checked
-        
         businessCheckBoxOne.checkBox.checkState = .checked
-        othersCheckBoxOne.checkBox.checkState = .unchecked
     }
     
 //    @objc func handleQuickSettingButtonOnTap(_ sender: UIButton) {

@@ -52,20 +52,23 @@ class KPSegmentedControl: UIControl {
         
         backgroundColor = UIColor.clear
         layer.cornerRadius = 6.0
-        layer.borderColor = KPColorPalette.KPMainColor.mainColor?.cgColor
-        layer.borderWidth = 2
+        layer.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7?.cgColor
         layer.masksToBounds = true
         
         for (index, title) in self.titles.enumerated() {
             
             let segment = UIButton(type: .custom)
-            segment.setTitleColor(KPColorPalette.KPMainColor.mainColor, for: .normal)
+            segment.setTitleColor(KPColorPalette.KPMainColor_v2.mainColor, for: .normal)
             segment.setTitle(title, for: .normal)
+            segment.layer.cornerRadius = 4.0
+            segment.layer.masksToBounds = true
             
-            segment.addTarget(self, action: #selector(handleSegmentOnTap(_:)), for: .touchUpInside)
+            segment.addTarget(self,
+                              action: #selector(handleSegmentOnTap(_:)), for: .touchUpInside)
             
             if selectionTitleColors.count > index {
-                segment.setTitleColor(selectionTitleColors[index], for: .selected)
+                segment.setTitleColor(selectionTitleColors[index],
+                                      for: .selected)
             } else {
                 segment.setTitleColor(KPColorPalette.KPTextColor.whiteColor!, for: .selected)
             }
@@ -73,7 +76,7 @@ class KPSegmentedControl: UIControl {
             if selectionBackgroundColors.count > index {
                 segment.setBackgroundImage(UIImage(color: selectionBackgroundColors[index]), for: .selected)
             } else {
-                segment.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor.mainColor!), for: .selected)
+                segment.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor_v2.mainColor!), for: .selected)
             }
             
             segment.titleLabel?.font = UIFont.systemFont(ofSize: 15.0)
@@ -81,24 +84,23 @@ class KPSegmentedControl: UIControl {
             
             
             if index == 0 {
-                segment.addConstraints(fromStringArray: ["H:|[$self]",
-                                                         "V:|[$self]|"])
+                segment.addConstraints(fromStringArray: ["H:|-4-[$self]",
+                                                         "V:|-4-[$self]-4-|"])
             } else {
                 let seporator = UIView()
                 addSubview(seporator)
-                seporator.backgroundColor = KPColorPalette.KPMainColor.mainColor
-                seporator.addConstraints(fromStringArray: ["H:[$view0][$self(2)][$view1]",
-                                                           "V:|[$self]|", "V:|[$view1]|"],
-                                         views: [segments.last!, segment])
+                seporator.addConstraints(fromStringArray: ["H:[$view0][$self(4)][$view1]",
+                                                           "V:|[$self]|",
+                                                           "V:|-4-[$view1]-4-|"],
+                                         views: [segments.last!,
+                                                 segment])
                 segment.addConstraintForHavingSameWidth(with: segments.last!)
             }
-            
             segments.append(segment)
-            
         }
         
         if segments.count > 0 {
-            segments.last!.addConstraint(from: "H:[$self]|")
+            segments.last!.addConstraint(from: "H:[$self]-4-|")
             selectedSegmentIndex = 0
         }
         

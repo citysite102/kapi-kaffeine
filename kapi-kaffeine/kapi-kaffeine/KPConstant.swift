@@ -98,6 +98,30 @@ struct KPNotification {
 
 struct KPColorPalette {
 
+    
+    struct KPMainColor_v2 {
+        
+        static let mainColor_light = UIColor(hexString: "#6790E0")
+        static let mainColor = UIColor(hexString: "#416FCB")
+
+        static let starColor = UIColor(hexString: "#f9c816")
+        
+        static let greenColor = UIColor(hexString: "#26A567")
+        static let redColor = UIColor(hexString: "#FF7878")
+        static let yellowColor = UIColor(hexString: "#FFD475")
+        
+        
+        static let grayColor_level1 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 1.0)
+        static let grayColor_level2 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.7)
+        static let grayColor_level3 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.5)
+        static let grayColor_level4 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.3)
+        static let grayColor_level5 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.2)
+        static let grayColor_level6 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.1)
+        static let grayColor_level7 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.05)
+        
+        static let whiteColor_level1 = UIColor(hexString: "#ffffffaa")
+    }
+    
     struct KPMainColor {
         static let mainColor_light = UIColor(hexString: "#c8955e")
         static let mainColor = UIColor(hexString: "#784d1f")
@@ -118,10 +142,6 @@ struct KPColorPalette {
         static let grayColor_level7 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.05)
         
         static let whiteColor_level1 = UIColor(hexString: "#ffffffaa")
-        
-        
-        //v2
-        
     }
     
     struct KPTextColor {

@@ -801,8 +801,8 @@ extension KPMainViewController: KPSearchTagViewDelegate, KPSearchConditionViewCo
         KPFilter.sharedFilter.musicRate = Double(searchConditionController.ratingViews[6].currentRate)
         
         
-        KPFilter.sharedFilter.limited_time = (searchConditionController.timeRadioBoxOne.groupValue as! Int)
-        KPFilter.sharedFilter.socket = (searchConditionController.socketRadioBoxOne.groupValue as! Int)
+//        KPFilter.sharedFilter.limited_time = (searchConditionController.timeRadioBoxOne.groupValue as! Int)
+//        KPFilter.sharedFilter.socket = (searchConditionController.socketRadioBoxOne.groupValue as! Int)
         
         if let index = self.searchHeaderView.searchTagView.headerTagContents.index(of: .limitTime) {
             if KPFilter.sharedFilter.limited_time == 2 {
@@ -866,7 +866,7 @@ extension KPMainViewController: KPSearchTagViewDelegate, KPSearchConditionViewCo
         }
         
         
-        KPFilter.sharedFilter.standingDesk = searchConditionController.othersCheckBoxOne.checkBox.checkState == .checked ? true : false
+//        KPFilter.sharedFilter.standingDesk = searchConditionController.othersCheckBoxOne.checkBox.checkState == .checked ? true : false
         
         
         // 更新選取tag的數量
