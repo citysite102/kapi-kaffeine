@@ -94,7 +94,7 @@ class KPPreferenceSearchViewController: KPViewController {
     
     func titleLabel(_ title: String) -> UILabel {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 22.0)
+        label.font = UIFont.boldSystemFont(ofSize: 20.0)
         label.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
         label.text = title
         return label
@@ -112,7 +112,12 @@ class KPPreferenceSearchViewController: KPViewController {
         super.viewDidLoad()
 
         view.backgroundColor = UIColor.white
-        navigationController?.navigationBar.topItem?.title = "篩選偏好設定"
+        navigationController?.navigationBar.topItem?.title = "偏好篩選"
+        if #available(iOS 11.0, *) {
+            navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedStringKey.foregroundColor: KPColorPalette.KPTextColor_v2.mainColor_title!]
+        } else {
+            navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: KPColorPalette.KPTextColor_v2.mainColor_title!]
+        }
         navigationController?.navigationBar.shadowImage = UIImage()
         
     
@@ -164,7 +169,7 @@ class KPPreferenceSearchViewController: KPViewController {
         priceSettingTitleLabel = titleLabel("價格區間")
         containerView.addSubview(priceSettingTitleLabel)
         priceSettingTitleLabel.addConstraints(fromStringArray: ["H:|-16-[$self]",
-                                                                "V:[$view0]-40-[$self]"],
+                                                                "V:[$view0]-32-[$self]"],
                                          views: [sortSegmentedControl])
         
         priceSettingDescriptionLabel = UILabel()
@@ -183,7 +188,7 @@ class KPPreferenceSearchViewController: KPViewController {
         priceSegmentedControl.selectedSegmentIndex = 0
         containerView.addSubview(priceSegmentedControl)
         priceSegmentedControl.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
-                                                               "V:[$view0]-8-[$self(40)]"],
+                                                               "V:[$view0]-10-[$self(40)]"],
                                             views: [priceSettingDescriptionLabel])
         
        
@@ -220,11 +225,11 @@ class KPPreferenceSearchViewController: KPViewController {
             containerView.addSubview(condition)
             
             if index == 0 {
-                condition.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
+                condition.addConstraints(fromStringArray: ["H:|-17-[$self]-16-|",
                                                            "V:[$view0]-12-[$self]"],
                                           views: [conditionTitleLabel])
             } else {
-                condition.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
+                condition.addConstraints(fromStringArray: ["H:|-17-[$self]-16-|",
                                                            "V:[$view0]-12-[$self]"],
                                           views: [conditions[index-1]])
             }

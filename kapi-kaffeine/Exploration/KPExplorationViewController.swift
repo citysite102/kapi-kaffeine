@@ -12,6 +12,13 @@ class KPExplorationViewController: UIViewController {
 
     var articleCollectionView: UICollectionView!
     
+    let demoImages = [R.image.demo_1(),
+                      R.image.demo_2(),
+                      R.image.demo_3(),
+                      R.image.demo_4(),
+                      R.image.demo_5(),
+                      R.image.demo_6()]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -19,11 +26,13 @@ class KPExplorationViewController: UIViewController {
         
         
         let articleLabel = UILabel()
-        headerView.addSubview(articleLabel)
+        articleLabel.font = UIFont.boldSystemFont(ofSize: 22.0)
+        articleLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_title
         articleLabel.text = "精選文章"
-        articleLabel.textColor = KPColorPalette.KPTextColor.grayColor_level1
-        articleLabel.font = UIFont.systemFont(ofSize: 22)
-        articleLabel.addConstraints(fromStringArray: ["H:|-20-[$self]", "V:|[$self(30)]"])
+        
+        headerView.addSubview(articleLabel)
+        articleLabel.addConstraints(fromStringArray: ["H:|-20-[$self]",
+                                                      "V:|[$self(30)]"])
         
         let articleLayout = UICollectionViewFlowLayout()
         articleLayout.scrollDirection = .horizontal
@@ -51,7 +60,8 @@ class KPExplorationViewController: UIViewController {
         tableView.showsVerticalScrollIndicator = false
         tableView.register(KPExplorationSectionView.self, forCellReuseIdentifier: "cell")
         view.addSubview(tableView)
-        tableView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"])
+        tableView.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                   "V:|[$self]|"])
         tableView.tableHeaderView = headerView
         
         
@@ -123,10 +133,9 @@ extension KPExplorationViewController: UICollectionViewDataSource, UICollectionV
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ArticleCell", for: indexPath) as! KPArticleCell
-        let imageView = UIImageView(image: R.image.demo_6()!)
+        let imageView = UIImageView(image: demoImages[Int(arc4random())%6])
         imageView.contentMode = .scaleAspectFill
         cell.backgroundView = imageView
-        cell.titleLabel.text = "Demo"
         return cell
     }
     

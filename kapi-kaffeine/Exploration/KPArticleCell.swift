@@ -16,14 +16,17 @@ class KPArticleCell: UICollectionViewCell {
         super.init(frame: frame)
         clipsToBounds = true
         layer.cornerRadius = 5
+        layer.rasterizationScale = UIScreen.main.scale
         layer.shouldRasterize = true
         
         titleLabel = UILabel()
         titleLabel.font = UIFont.boldSystemFont(ofSize: 20)
         titleLabel.textColor = UIColor.white
         titleLabel.numberOfLines = 2
+        titleLabel.text = "測試用"
         contentView.addSubview(titleLabel)
-        titleLabel.addConstraints(fromStringArray: ["H:|-10-[$self]", "V:[$self]-16-|"])
+        titleLabel.addConstraints(fromStringArray: ["H:|-10-[$self]",
+                                                    "V:[$self]-16-|"])
     }
     
     required init?(coder aDecoder: NSCoder) {

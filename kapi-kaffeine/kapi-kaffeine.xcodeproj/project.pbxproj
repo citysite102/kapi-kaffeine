@@ -147,6 +147,8 @@
 		77DA2F521F17150200DB2EC5 /* KPReportController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DA2F511F17150200DB2EC5 /* KPReportController.swift */; };
 		77DD7E3D1F0B7647007B0E17 /* KPDefaultPopoverContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DD7E3C1F0B7647007B0E17 /* KPDefaultPopoverContent.swift */; };
 		77DD7E3F1F0B9283007B0E17 /* KPPopoverViewUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DD7E3E1F0B9283007B0E17 /* KPPopoverViewUtility.swift */; };
+		77E2D988201884B7009244EB /* KPMainTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E2D987201884B7009244EB /* KPMainTabController.swift */; };
+		77E2D98A20189218009244EB /* KPTabBarAddButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E2D98920189218009244EB /* KPTabBarAddButton.swift */; };
 		77E495551EC98BE0003B7EBC /* KPRatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E495541EC98BE0003B7EBC /* KPRatingViewController.swift */; };
 		77E4955B1EC9E9B1003B7EBC /* KPSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E4955A1EC9E9B0003B7EBC /* KPSearchViewController.swift */; };
 		77E4955F1EC9EA09003B7EBC /* KPSearchViewDefaultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E4955E1EC9EA09003B7EBC /* KPSearchViewDefaultCell.swift */; };
@@ -375,6 +377,8 @@
 		77DA2F511F17150200DB2EC5 /* KPReportController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPReportController.swift; sourceTree = "<group>"; };
 		77DD7E3C1F0B7647007B0E17 /* KPDefaultPopoverContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPDefaultPopoverContent.swift; sourceTree = "<group>"; };
 		77DD7E3E1F0B9283007B0E17 /* KPPopoverViewUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPPopoverViewUtility.swift; sourceTree = "<group>"; };
+		77E2D987201884B7009244EB /* KPMainTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPMainTabController.swift; sourceTree = "<group>"; };
+		77E2D98920189218009244EB /* KPTabBarAddButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPTabBarAddButton.swift; sourceTree = "<group>"; };
 		77E495541EC98BE0003B7EBC /* KPRatingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = KPRatingViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		77E4955A1EC9E9B0003B7EBC /* KPSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSearchViewController.swift; sourceTree = "<group>"; };
 		77E4955E1EC9EA09003B7EBC /* KPSearchViewDefaultCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSearchViewDefaultCell.swift; sourceTree = "<group>"; };
@@ -758,10 +762,10 @@
 		776ACAEF1E9BAE3A00B629A2 /* MainController */ = {
 			isa = PBXGroup;
 			children = (
-				776ACB001E9BB49E00B629A2 /* KPMainViewController.swift */,
+				77E2D987201884B7009244EB /* KPMainTabController.swift */,
+				77E2D98920189218009244EB /* KPTabBarAddButton.swift */,
 				7745C0811EF050D100244541 /* KPLoginViewController.swift */,
-				C0B49D921EA11C3200BA95D8 /* List */,
-				C0B49D931EA11C4700BA95D8 /* Map */,
+				77E2D98B20189228009244EB /* Main */,
 				776ACAED1E9BAE0200B629A2 /* Search */,
 			);
 			name = MainController;
@@ -973,6 +977,16 @@
 				77DD7E3E1F0B9283007B0E17 /* KPPopoverViewUtility.swift */,
 			);
 			name = Popover;
+			sourceTree = "<group>";
+		};
+		77E2D98B20189228009244EB /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				776ACB001E9BB49E00B629A2 /* KPMainViewController.swift */,
+				C0B49D921EA11C3200BA95D8 /* List */,
+				C0B49D931EA11C4700BA95D8 /* Map */,
+			);
+			name = Main;
 			sourceTree = "<group>";
 		};
 		77E495521EC98B05003B7EBC /* Head Photo */ = {
@@ -1676,6 +1690,7 @@
 				7745C0821EF050D100244541 /* KPLoginViewController.swift in Sources */,
 				77427BDD1EF6E592005D7AE4 /* KPNewCommentRequest.swift in Sources */,
 				C01AC6391EAAEA8F000390F7 /* GQTPointQuadTree.m in Sources */,
+				77E2D98A20189218009244EB /* KPTabBarAddButton.swift in Sources */,
 				778ED5BD1F8A3B330006524A /* KPSchemeHandler.swift in Sources */,
 				C0686B671F95DBE000007FAA /* KPMenuUploadRequest.swift in Sources */,
 				77C0E0FD1E9D489900398852 /* KPInformationHeaderView.swift in Sources */,
@@ -1693,6 +1708,7 @@
 				774208ED1EA5B97300C78A00 /* KPShopCommentCell.swift in Sources */,
 				77F718251ED190AB00755AA2 /* KPSelectCell.swift in Sources */,
 				774208F71EA61D4400C78A00 /* KPShopRecommendView.swift in Sources */,
+				77E2D988201884B7009244EB /* KPMainTabController.swift in Sources */,
 				C01AC62D1EAAEA0A000390F7 /* GMUClusterManager.m in Sources */,
 				77FBE95B1ECC926C00EBBB9B /* KPFeatureTagCell.swift in Sources */,
 				C02AFE451E7D260D008FFB33 /* AppDelegate.swift in Sources */,

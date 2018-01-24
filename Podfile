@@ -19,6 +19,7 @@ target 'kapi-kaffeine' do
   pod 'M13ProgressSuite'
   pod 'SideMenu'
   pod 'pop', '~> 1.0'
+  pod "ESTabBarController-swift"
   pod 'Shimmer', :inhibit_warnings => true
   pod 'lottie-ios', :inhibit_warnings => true
   pod 'SKPhotoBrowser', '~> 5.0', :inhibit_warnings => true #:git => 'git@github.com:citysite102/SKPhotoBrowser.git'

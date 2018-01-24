@@ -15,23 +15,32 @@ class KPExplorationSectionView: UITableViewCell {
     var sectionTitleLabel: UILabel!
     var sectionDescriptionLabel: UILabel!
     
+    let demoImages = [R.image.demo_1(),
+                      R.image.demo_2(),
+                      R.image.demo_3(),
+                      R.image.demo_4(),
+                      R.image.demo_5(),
+                      R.image.demo_6()]
+    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         backgroundColor = UIColor.white
         
         sectionTitleLabel = UILabel()
-        sectionTitleLabel.font = UIFont.boldSystemFont(ofSize: 22)
-        sectionTitleLabel.textColor = UIColor(hexString: "585858")
+        sectionTitleLabel.font = UIFont.boldSystemFont(ofSize: 22.0)
+        sectionTitleLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_title
         contentView.addSubview(sectionTitleLabel)
         sectionTitleLabel.addConstraints(fromStringArray: ["H:|-20-[$self]", "V:|-12-[$self]"])
         sectionTitleLabel.text = "IG 人氣打卡店家"
         
         sectionDescriptionLabel = UILabel()
         sectionDescriptionLabel.font = UIFont.systemFont(ofSize: 14)
-        sectionDescriptionLabel.textColor = UIColor(hexString: "979797")
+        sectionDescriptionLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_description
         contentView.addSubview(sectionDescriptionLabel)
-        sectionDescriptionLabel.addConstraints(fromStringArray: ["H:|-20-[$self]", "V:[$view0]-[$self]"], views: [sectionTitleLabel])
+        sectionDescriptionLabel.addConstraints(fromStringArray: ["H:|-20-[$self]",
+                                                                 "V:[$view0]-6-[$self]"],
+                                               views: [sectionTitleLabel])
         sectionDescriptionLabel.text = "由知名部落客們聯手推薦的知名店家。"
         
         let collectionViewLayout = UICollectionViewFlowLayout()
@@ -44,7 +53,8 @@ class KPExplorationSectionView: UITableViewCell {
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.register(KPExplorationSectionCell.self, forCellWithReuseIdentifier: "ExplorationSectionCell")
         contentView.addSubview(collectionView)
-        collectionView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$view0]-4-[$self(210)]|"], views: [sectionDescriptionLabel])
+        collectionView.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                        "V:[$view0]-4-[$self(210)]|"], views: [sectionDescriptionLabel])
         
     }
     
@@ -67,7 +77,7 @@ extension KPExplorationSectionView: UICollectionViewDataSource, UICollectionView
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ExplorationSectionCell", for: indexPath) as! KPExplorationSectionCell
-        cell.imageView.image = R.image.demo_6()
+        cell.imageView.image = demoImages[Int(arc4random())%6]
         return cell
     }
     
@@ -92,7 +102,7 @@ extension KPExplorationSectionView: UICollectionViewDataSource, UICollectionView
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 130, height: 190)
+        return CGSize(width: 130, height: 184)
     }
     
 }

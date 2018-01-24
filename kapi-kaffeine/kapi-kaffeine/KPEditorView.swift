@@ -17,28 +17,32 @@ class KPEditorView: UIView {
         case Custom
     }
     
-    init(type:EditorType, title: String) {
+    init(type: EditorType,
+         title: String,
+         placeHolder: String) {
         editorType = type
         super.init(frame: CGRect.zero)
         
         backgroundColor = UIColor.white
         
         let titleLabel = UILabel()
-        titleLabel.font = UIFont.boldSystemFont(ofSize: 17)
+        titleLabel.font = UIFont.boldSystemFont(ofSize: 18)
         titleLabel.text = title
-        titleLabel.textColor = KPColorPalette.KPTextColor.grayColor
+        titleLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
         addSubview(titleLabel)
-        titleLabel.addConstraints(fromStringArray: ["H:|[$self]", "V:|[$self]"])
+        titleLabel.addConstraints(fromStringArray: ["H:|[$self]",
+                                                    "V:|[$self]"])
         
         
         let textField = UITextField()
-        textField.placeholder = "輸入店家名稱"
+        textField.placeholder = placeHolder
         textField.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
         textField.layer.cornerRadius = 5
-        textField.font = UIFont.systemFont(ofSize: 14)
+        textField.font = UIFont.systemFont(ofSize: 16)
         textField.delegate = self
         addSubview(textField)
-        textField.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$view0(25)]-5-[$self(30)]|"],
+        textField.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                   "V:[$view0(24)]-8-[$self(32)]|"],
                                  views:[titleLabel])
         
         let paddingView: UIView = UIView.init(frame: CGRect(x: 0, y: 0, width: 10, height: 40))

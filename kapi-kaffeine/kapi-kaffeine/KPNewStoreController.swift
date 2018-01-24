@@ -18,22 +18,34 @@ class KPNewStoreController: KPViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "新增店家"
         view.backgroundColor = UIColor.white
+        navigationController?.navigationBar.topItem?.title = "新增店家"
+        navigationController?.navigationBar.shadowImage = UIImage()
         
-        let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel,
-                                           target: self,
-                                           action: #selector(handleCancelButtonOnTap(_:)))
-        navigationItem.leftBarButtonItem = cancelButton
+        let barLeftItem = UIBarButtonItem(title: "取消",
+                                          style: .plain,
+                                          target: self,
+                                          action: #selector(handleCancelButtonOnTap(_:)))
+        barLeftItem.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 16), NSAttributedStringKey.foregroundColor: UIColor.gray],
+                                           for: .normal)
+        
+        navigationItem.leftBarButtonItem = barLeftItem
+    
         
         
-        let storeNameEditor = KPEditorView(type: .Text,title: "店家名稱")
+        let storeNameEditor = KPEditorView(type: .Text,
+                                           title: "店家名稱" ,
+                                           placeHolder: "請輸入店家名稱")
         view.addSubview(storeNameEditor)
-        storeNameEditor.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|", "V:|-20-[$self]"])
+        storeNameEditor.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|",
+                                                         "V:|-20-[$self]"])
         
-        let locationEditor = KPEditorView(type: .Custom,title: "所在城市")
+        let locationEditor = KPEditorView(type: .Custom,
+                                          title: "所在位置",
+                                          placeHolder: "請選擇所在位置")
         view.addSubview(locationEditor)
-        locationEditor.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|", "V:[$view0]-20-[$self]"],
+        locationEditor.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|",
+                                                        "V:[$view0]-20-[$self]"],
                                       views: [storeNameEditor])
         
     }

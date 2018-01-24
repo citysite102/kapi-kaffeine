@@ -22,6 +22,7 @@ PODS:
   - Bolts/Tasks (1.8.4)
   - Crashlytics (3.9.3):
     - Fabric (~> 1.7.2)
+  - ESTabBarController-swift (2.5)
   - Fabric (1.7.2)
   - FacebookCore (0.3.0):
     - Bolts (~> 1.8)
@@ -173,6 +174,7 @@ DEPENDENCIES:
   - Amplitude-iOS (~> 3.14.1)
   - BenzeneFoundation
   - Crashlytics
+  - ESTabBarController-swift
   - Fabric
   - FacebookCore
   - FacebookLogin
@@ -204,6 +206,7 @@ SPEC CHECKSUMS:
   BenzeneFoundation: 7a44807ff32cd32d8776deccf2b7fd2f92ed8159
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
   Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
+  ESTabBarController-swift: 8daa432f2a9be8ebd25101dc46c84472fd760512
   Fabric: 9cd6a848efcf1b8b07497e0b6a2e7d336353ba15
   FacebookCore: 3ffa190a3f1f96cec0e44d3fc221bc322c595ffa
   FacebookLogin: 0af839ea858faef99550d16596b87b4a8e8906e6
@@ -240,6 +243,6 @@ SPEC CHECKSUMS:
   SKPhotoBrowser: 6de77f7004442e79059f19d86e2e7e6a03b43a13
   SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
 
-PODFILE CHECKSUM: e263a666c30932756ce30559d5bc1080c32a3e1a
+PODFILE CHECKSUM: 08125db46c6ef90190c297044d934375102c0cdf
 
 COCOAPODS: 1.1.1
