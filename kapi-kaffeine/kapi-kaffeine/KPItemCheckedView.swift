@@ -9,41 +9,24 @@
 import UIKit
 
 class KPItemCheckedView: UIView {
-
-    enum BorderType {
-        case Top
-        case Bottom
-        case Both
-        case None
-    }
     
-    private var bType: BorderType!
-    var uncheckContent: String!
-    var checkContent: String!
-    var checkedIconView: KPCheckBox!
-    var checked: Bool = false {
-        didSet {
-            stateLabel.text = checked ? checkContent : uncheckContent
-            stateLabel.textColor = checked ?
-                KPColorPalette.KPTextColor.grayColor_level2 :
-                KPColorPalette.KPTextColor.grayColor_level4
-        }
-    }
+    var checkBox: KPCheckBox!
+//    var checked: Bool = false {
+//        didSet {
+//            stateLabel.text = checked ? checkContent : uncheckContent
+//            stateLabel.textColor = checked ?
+//                KPColorPalette.KPTextColor.grayColor_level2 :
+//                KPColorPalette.KPTextColor.grayColor_level4
+//        }
+//    }
     
-    var customInputAction: (() -> Void)?
+//    var customInputAction: (() -> Void)?
     var tapGesture: UITapGestureRecognizer!
     
-    lazy var itemLabel: UILabel = {
+    lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16.0)
-        label.textColor = KPColorPalette.KPTextColor.mainColor
-        return label
-    }()
-    
-    lazy var stateLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16.0)
-        label.textColor = KPColorPalette.KPTextColor.grayColor_level4
+        label.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
         return label
     }()
     
@@ -55,30 +38,29 @@ class KPItemCheckedView: UIView {
         super.init(frame: frame)
     }
     
-    convenience init(_ title: String,
-                     _ uncheckTitle: String,
-                     _ checkTitle: String,
-                     _ borderType: BorderType) {
+    convenience init(_ title: String) {
         
         self.init(frame: .zero)
         
-        uncheckContent = uncheckTitle
-        checkContent = checkTitle
+        titleLabel.text = title
+        addSubview(titleLabel)
         
-        itemLabel.text = title
-        stateLabel.text = uncheckTitle
-        bType = borderType
+        titleLabel.addConstraints(fromStringArray: ["H:|[$self]",
+                                                    "V:|-8-[$self]-8-|"])
+        titleLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
         
-        addSubview(itemLabel)
-        addSubview(stateLabel)
+        checkBox = KPCheckBox()
+        checkBox.setMarkType(markType: .checkmark,
+                             animated: true)
+        checkBox.stateChangeAnimation = .fill
+        checkBox.secondaryTintColor = KPColorPalette.KPBackgroundColor.grayColor_level7
+        checkBox.setCheckState(.checked, animated: false)
+        addSubview(checkBox)
         
-        itemLabel.addConstraints(fromStringArray: ["H:|-16-[$self]"])
-        itemLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
-        
-        stateLabel.addConstraints(fromStringArray: ["H:[$self]-16-|"])
-        stateLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
-        
-        makeBorder()
+        checkBox.addConstraints(fromStringArray: ["H:[$self(24)]|",
+                                                  "V:[$self(24)]"])
+        checkBox.addConstraintForCenterAligningToSuperview(in: .vertical)
+
         
         tapGesture = UITapGestureRecognizer(target: self,
                                             action: #selector(handleTapGesture(tapGesture:)))
@@ -86,35 +68,7 @@ class KPItemCheckedView: UIView {
         addGestureRecognizer(tapGesture)
     }
     
-    func makeBorder() {
-        let topBorderView = UIView()
-        let bottomBorderView = UIView()
-        
-        topBorderView.backgroundColor = KPColorPalette.KPMainColor.grayColor_level6
-        bottomBorderView.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
-        
-        switch bType! {
-        case .Bottom:
-            addSubview(bottomBorderView)
-            bottomBorderView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                              "V:[$self(1)]|"])
-        case .Top:
-            addSubview(topBorderView)
-            topBorderView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                           "V:|[$self(1)]"])
-        case .Both:
-            addSubview(topBorderView)
-            topBorderView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                           "V:|[$self(1)]"])
-            addSubview(bottomBorderView)
-            bottomBorderView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                              "V:[$self(1)]|"])
-        default:
-            print("No border")
-        }
-    }
-    
     @objc func handleTapGesture(tapGesture: UITapGestureRecognizer) {
-        customInputAction?()
+//        customInputAction?()
     }
 }

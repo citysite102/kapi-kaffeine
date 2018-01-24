@@ -66,12 +66,6 @@ class KPCheckBoxController {
             default:
                 newPathGenerator = KPCheckBoxRadioPathGenerator()
                 break
-//            case .addRemove:
-//                newPathGenerator = M13CheckboxAddRemovePathGenerator()
-//                break
-//            case .disclosure:
-//                newPathGenerator = M13CheckboxDisclosurePathGenerator()
-//                break
             }
             
             newPathGenerator?.boxLineWidth = pathGenerator.boxLineWidth

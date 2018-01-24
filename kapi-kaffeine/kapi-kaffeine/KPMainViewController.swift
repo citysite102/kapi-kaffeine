@@ -828,43 +828,43 @@ extension KPMainViewController: KPSearchTagViewDelegate, KPSearchConditionViewCo
         
         
         // 時間
-        if searchConditionController.businessCheckBoxOne.checkBox.checkState == .checked {
-            // 不設定
-            KPFilter.sharedFilter.currentOpening = false
-            KPFilter.sharedFilter.searchTime = nil
-            
-            // 取消 營業中 的tag
-            if let index = self.searchHeaderView.searchTagView.headerTagContents.index(of: .opening) {
-                self.searchHeaderView.searchTagView.collectionView.deselectItem(at: IndexPath.init(row: index, section:0),
-                                                                                animated: false)
-            }
-            
-        } else if  searchConditionController.businessCheckBoxThree.checkBox.checkState == .checked {
-            // 特定時段
-            KPFilter.sharedFilter.currentOpening = false
-            if let startTime = searchConditionController.timeSupplementView.startTime,
-                let endTime = searchConditionController.timeSupplementView.endTime {
-                KPFilter.sharedFilter.searchTime = "\(startTime)~\(endTime)"
-            }
-            
-            // 取消 營業中 的tag
-            if let index = self.searchHeaderView.searchTagView.headerTagContents.index(of: .opening) {
-                self.searchHeaderView.searchTagView.collectionView.deselectItem(at: IndexPath.init(row: index, section:0),
-                                                                                animated: false)
-            }
-            
-        } else if searchConditionController.businessCheckBoxTwo.checkBox.checkState == .checked {
-            // 目前營業中
-            KPFilter.sharedFilter.currentOpening = true
-            
-            // 選取 營業中 的tag
-            if let index = self.searchHeaderView.searchTagView.headerTagContents.index(of: .opening) {
-                self.searchHeaderView.searchTagView.collectionView.selectItem(at: IndexPath.init(row: index, section: 0),
-                                                                              animated: false,
-                                                                              scrollPosition: [])
-            }
-        }
-        
+//        if searchConditionController.businessCheckBoxOne.checkBox.checkState == .checked {
+//            // 不設定
+//            KPFilter.sharedFilter.currentOpening = false
+//            KPFilter.sharedFilter.searchTime = nil
+//
+//            // 取消 營業中 的tag
+//            if let index = self.searchHeaderView.searchTagView.headerTagContents.index(of: .opening) {
+//                self.searchHeaderView.searchTagView.collectionView.deselectItem(at: IndexPath.init(row: index, section:0),
+//                                                                                animated: false)
+//            }
+//
+//        } else if  searchConditionController.businessCheckBoxThree.checkBox.checkState == .checked {
+//            // 特定時段
+//            KPFilter.sharedFilter.currentOpening = false
+//            if let startTime = searchConditionController.timeSupplementView.startTime,
+//                let endTime = searchConditionController.timeSupplementView.endTime {
+//                KPFilter.sharedFilter.searchTime = "\(startTime)~\(endTime)"
+//            }
+//
+//            // 取消 營業中 的tag
+//            if let index = self.searchHeaderView.searchTagView.headerTagContents.index(of: .opening) {
+//                self.searchHeaderView.searchTagView.collectionView.deselectItem(at: IndexPath.init(row: index, section:0),
+//                                                                                animated: false)
+//            }
+//
+//        } else if searchConditionController.businessCheckBoxTwo.checkBox.checkState == .checked {
+//            // 目前營業中
+//            KPFilter.sharedFilter.currentOpening = true
+//
+//            // 選取 營業中 的tag
+//            if let index = self.searchHeaderView.searchTagView.headerTagContents.index(of: .opening) {
+//                self.searchHeaderView.searchTagView.collectionView.selectItem(at: IndexPath.init(row: index, section: 0),
+//                                                                              animated: false,
+//                                                                              scrollPosition: [])
+//            }
+//        }
+//
         
 //        KPFilter.sharedFilter.standingDesk = searchConditionController.othersCheckBoxOne.checkBox.checkState == .checked ? true : false
         

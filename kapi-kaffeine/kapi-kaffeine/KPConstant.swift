@@ -106,7 +106,7 @@ struct KPColorPalette {
 
         static let starColor = UIColor(hexString: "#f9c816")
         
-        static let greenColor = UIColor(hexString: "#26A567")
+        static let greenColor = UIColor(hexString: "#29B571")
         static let redColor = UIColor(hexString: "#FF7878")
         static let yellowColor = UIColor(hexString: "#FFD475")
         
@@ -144,21 +144,19 @@ struct KPColorPalette {
         static let whiteColor_level1 = UIColor(hexString: "#ffffffaa")
     }
     
+    struct KPTextColor_v2 {
+        static let mainColor_title = UIColor(hexString: "#585858")
+        static let mainColor_subtitle = UIColor(hexString: "#585858")
+        static let mainColor_description = UIColor(hexString: "#8a8a8a")
+    }
+    
     struct KPTextColor {
         static let grayColor = UIColor(hexString: "#333333")
         static let mainColor_light = UIColor(hexString: "#c8955e")
         static let mainColor = UIColor(hexString: "#784d1f")
         static let mainColor_60 = UIColor(hexString: "#784d1f99")
-//        static let mainColor_light = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.5)
-//        static let mainColor = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.7)
         static let whiteColor = UIColor(hexString: "#ffffff")
         static let warningColor = UIColor(hexString: "#FF4040")
-        
-        
-        // v2
-        static let mainColor_title = UIColor(hexString: "#585858")
-        static let mainColor_subtitle = UIColor(hexString: "#585858")
-        static let mainColor_description = UIColor(hexString: "#888888")
         
         
         static let default_placeholder = UIColor(hexString: "#C7C7CD")

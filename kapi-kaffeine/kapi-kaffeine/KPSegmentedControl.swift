@@ -79,7 +79,7 @@ class KPSegmentedControl: UIControl {
                 segment.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor_v2.mainColor!), for: .selected)
             }
             
-            segment.titleLabel?.font = UIFont.systemFont(ofSize: 15.0)
+            segment.titleLabel?.font = UIFont.systemFont(ofSize: 16.0)
             addSubview(segment)
             
             

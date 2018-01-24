@@ -155,9 +155,12 @@ class KPCheckBoxStrokeController: KPCheckBoxController {
     
     override func layoutLayers() {
         // Frames
-        unselectedBoxLayer.frame = CGRect(x: 0.0, y: 0.0, width: pathGenerator.size, height: pathGenerator.size)
-        selectedBoxLayer.frame = CGRect(x: 0.0, y: 0.0, width: pathGenerator.size, height: pathGenerator.size)
-        markLayer.frame = CGRect(x: 0.0, y: 0.0, width: pathGenerator.size, height: pathGenerator.size)
+        unselectedBoxLayer.frame = CGRect(x: 0.0, y: 0.0, width: pathGenerator.size,
+                                          height: pathGenerator.size)
+        selectedBoxLayer.frame = CGRect(x: 0.0, y: 0.0, width: pathGenerator.size,
+                                        height: pathGenerator.size)
+        markLayer.frame = CGRect(x: 0.0, y: 0.0, width: pathGenerator.size,
+                                 height: pathGenerator.size)
         // Paths
         unselectedBoxLayer.path = pathGenerator.pathForBox()?.cgPath
         selectedBoxLayer.path = pathGenerator.pathForBox()?.cgPath

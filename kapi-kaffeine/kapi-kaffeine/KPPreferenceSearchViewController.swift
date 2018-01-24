@@ -18,30 +18,30 @@ struct KPSearchConditionViewControllerConstants {
 
 class KPPreferenceSearchViewController: KPViewController {
 
+    weak var delegate: KPSearchConditionViewControllerDelegate?
+    
     var dismissButton: UIButton!
     var scrollView: UIScrollView!
     var containerView: UIView!
     
-    var ratingTitles = ["Wifi穩定", "安靜程度",
-                        "價格實惠", "座位數量",
-                        "咖啡品質", "餐點美味", "環境舒適"]
-    
-    var ratingImages = [R.image.icon_wifi(), R.image.icon_sleep(),
-                        R.image.icon_money(), R.image.icon_seat(),
-                        R.image.icon_cup(), R.image.icon_cutlery(),
-                        R.image.icon_pic()]
+    var conditionTitles = ["有 Wifi",
+                           "有插座",
+                           "無時間限制",
+                           "站立工作"]
     
     var ratingViews = [KPRatingView]()
+    var conditions = [KPItemCheckedView]()
     
-    weak var delegate: KPSearchConditionViewControllerDelegate?
+    var sortTitleLabel: UILabel!
+    var priceSettingTitleLabel: UILabel!
+    var priceSettingDescriptionLabel: UILabel!
+    var conditionTitleLabel: UILabel!
+    var businessHourTitleLabel: UILabel!
+    var businessHourResultLabel: UILabel!
     
-    var sortLabel: UILabel!
+    
     var sortSegmentedControl: KPSegmentedControl!
     var priceSegmentedControl: KPSegmentedControl!
-    
-    
-    var priceSettingLabel: UILabel!
-    var priceSettingDescriptionLabel: UILabel!
     
     
     lazy var seperator_one: UIView = {
@@ -50,24 +50,18 @@ class KPPreferenceSearchViewController: KPViewController {
         return view
     }()
     
-    // Section 2
-    var adjustPointLabel: UILabel!
-    
     lazy var seperator_two: UIView = {
         let view = UIView()
         view.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
         return view
     }()
     
-    // Section 3
+    var selectAllButton: UIButton!
     
     var startSearchTime: String?
     var endSearchTime: String?
     
-    var businessHourLabel: UILabel!
-    var businessCheckBoxOne: KPCheckView!
-    var businessCheckBoxTwo: KPCheckView!
-    var businessCheckBoxThree: KPCheckView!
+    var businessCheckBox: KPCheckView!
     var timeSupplementView: KPSpecificTimeSupplementView!
     
     lazy var seperator_three: UIView = {
@@ -100,8 +94,8 @@ class KPPreferenceSearchViewController: KPViewController {
     
     func titleLabel(_ title: String) -> UILabel {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 22.0)
-        label.textColor = KPColorPalette.KPTextColor.mainColor_subtitle
+        label.font = UIFont.boldSystemFont(ofSize: 22.0)
+        label.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
         label.text = title
         return label
     }
@@ -153,35 +147,34 @@ class KPPreferenceSearchViewController: KPViewController {
                                                        "V:|[$self]|"])
         containerView.addConstraintForHavingSameWidth(with: view)
         
-        
         // Section 1
-        sortLabel = titleLabel("排序方式")
-        containerView.addSubview(sortLabel)
-        sortLabel.addConstraints(fromStringArray: ["H:|-16-[$self]",
-                                                   "V:|-24-[$self]"])
+        sortTitleLabel = titleLabel("排序方式")
+        containerView.addSubview(sortTitleLabel)
+        sortTitleLabel.addConstraints(fromStringArray: ["H:|-16-[$self]",
+                                                        "V:|-24-[$self]"])
         
         sortSegmentedControl = KPSegmentedControl.init(["距離最近",
                                                         "評分最高"])
         sortSegmentedControl.selectedSegmentIndex = KPFilter.sharedFilter.sortedby == .distance ? 0 : 1
         containerView.addSubview(sortSegmentedControl)
         sortSegmentedControl.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
-                                                              "V:[$view0]-12-[$self(36)]"],
-                                            views: [sortLabel])
+                                                              "V:[$view0]-12-[$self(40)]"],
+                                            views: [sortTitleLabel])
         
-        priceSettingLabel = titleLabel("價格區間")
-        containerView.addSubview(priceSettingLabel)
-        priceSettingLabel.addConstraints(fromStringArray: ["H:|-16-[$self]",
-                                                           "V:[$view0]-40-[$self]"],
+        priceSettingTitleLabel = titleLabel("價格區間")
+        containerView.addSubview(priceSettingTitleLabel)
+        priceSettingTitleLabel.addConstraints(fromStringArray: ["H:|-16-[$self]",
+                                                                "V:[$view0]-40-[$self]"],
                                          views: [sortSegmentedControl])
         
         priceSettingDescriptionLabel = UILabel()
-        priceSettingDescriptionLabel.font = UIFont.systemFont(ofSize: 14.0)
-        priceSettingDescriptionLabel.textColor = KPColorPalette.KPTextColor.mainColor_description
+        priceSettingDescriptionLabel.font = UIFont.systemFont(ofSize: 12.0)
+        priceSettingDescriptionLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_description
         priceSettingDescriptionLabel.text = "$=低於99元 / $$=100-199元 / $$$=高於200元"
         containerView.addSubview(priceSettingDescriptionLabel)
-        priceSettingDescriptionLabel.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
+        priceSettingDescriptionLabel.addConstraints(fromStringArray: ["H:|-17-[$self]-16-|",
                                                                       "V:[$view0]-8-[$self]"],
-                                             views: [priceSettingLabel])
+                                             views: [priceSettingTitleLabel])
         
         
         priceSegmentedControl = KPSegmentedControl.init(["$ (3間)",
@@ -190,7 +183,7 @@ class KPPreferenceSearchViewController: KPViewController {
         priceSegmentedControl.selectedSegmentIndex = 0
         containerView.addSubview(priceSegmentedControl)
         priceSegmentedControl.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
-                                                               "V:[$view0]-8-[$self(36)]"],
+                                                               "V:[$view0]-8-[$self(40)]"],
                                             views: [priceSettingDescriptionLabel])
         
        
@@ -200,103 +193,70 @@ class KPPreferenceSearchViewController: KPViewController {
                                           views: [priceSegmentedControl])
         
         // Section 2
-        adjustPointLabel = titleLabel("特殊需求")
-        containerView.addSubview(adjustPointLabel)
-        adjustPointLabel.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
-                                                          "V:[$view0]-16-[$self]"],
-                                             views: [seperator_one])
+        conditionTitleLabel = titleLabel("特殊需求")
+        containerView.addSubview(conditionTitleLabel)
+        conditionTitleLabel.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
+                                                             "V:[$view0]-24-[$self]"],
+                                                views: [seperator_one])
         
-        for (index, title) in ratingTitles.enumerated() {
-            let ratingView = KPRatingView(.segmented,
-                                               ratingImages[index]!,
-                                               title)
-            ratingViews.append(ratingView)
-            containerView.addSubview(ratingView)
+        
+        selectAllButton = UIButton()
+        selectAllButton?.setTitle("全選",
+                                  for: .normal)
+        selectAllButton?.setTitleColor(KPColorPalette.KPTextColor_v2.mainColor_description,
+                                       for: .normal)
+        selectAllButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        selectAllButton.addTarget(self,
+                                  action: #selector(handleSelectAllButtonOnTapped), for: .touchUpInside)
+        containerView.addSubview(selectAllButton)
+        let _ = selectAllButton?.addConstraintForCenterAligning(to: conditionTitleLabel,
+                                                        in: .vertical)
+        let _ = selectAllButton?.addConstraints(fromStringArray: ["H:[$self]-16-|"])
+        
+        for (index, title) in conditionTitles.enumerated() {
+            
+            let condition = KPItemCheckedView(title)
+            conditions.append(condition)
+            containerView.addSubview(condition)
             
             if index == 0 {
-                ratingView.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
-                                                            "V:[$view0]-12-[$self]"],
-                                          views: [adjustPointLabel])
+                condition.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
+                                                           "V:[$view0]-12-[$self]"],
+                                          views: [conditionTitleLabel])
             } else {
-                ratingView.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
-                                                            "V:[$view0]-12-[$self]"],
-                                          views: [ratingViews[index-1]])
+                condition.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
+                                                           "V:[$view0]-12-[$self]"],
+                                          views: [conditions[index-1]])
             }
-            
-            
-            switch index {
-            case 0:
-                ratingView.currentRate = Int(KPFilter.sharedFilter.wifiRate)
-            case 1:
-                ratingView.currentRate = Int(KPFilter.sharedFilter.quietRate)
-            case 2:
-                ratingView.currentRate = Int(KPFilter.sharedFilter.cheapRate)
-            case 3:
-                ratingView.currentRate = Int(KPFilter.sharedFilter.seatRate)
-            case 4:
-                ratingView.currentRate = Int(KPFilter.sharedFilter.tastyRate)
-            case 5:
-                ratingView.currentRate = Int(KPFilter.sharedFilter.foodRate)
-            case 6:
-                ratingView.currentRate = Int(KPFilter.sharedFilter.musicRate)
-            default:
-                fatalError()
-            }
-            
         }
         
         containerView.addSubview(seperator_two)
         seperator_two.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                       "V:[$view0]-16-[$self(1)]"],
-                                          views: [ratingViews.last!])
+                                                       "V:[$view0]-24-[$self(1)]"],
+                                          views: [conditions.last!])
         
-        businessHourLabel = titleLabel("營業時間")
-        containerView.addSubview(businessHourLabel)
-        businessHourLabel.addConstraints(fromStringArray: ["H:|-16-[$self]",
-                                                           "V:[$view0]-16-[$self]"],
-                                              views: [seperator_two])
+        businessHourTitleLabel = titleLabel("營業時間")
+        containerView.addSubview(businessHourTitleLabel)
+        businessHourTitleLabel.addConstraints(fromStringArray: ["H:|-16-[$self]",
+                                                                "V:[$view0]-24-[$self]"],
+                                                views: [seperator_two])
         
-        businessCheckBoxOne = KPCheckView(.radio, "不設定")
-        businessCheckBoxOne.checkBox.checkState = .checked
-        containerView.addSubview(businessCheckBoxOne)
-        businessCheckBoxOne.addConstraints(fromStringArray: ["H:|-16-[$self]",
-                                                             "V:[$view0]-16-[$self]"],
-                                                views: [businessHourLabel])
+        businessHourResultLabel = UILabel()
+        businessHourResultLabel.font = UIFont.systemFont(ofSize: 16.0)
+        businessHourResultLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
+        businessHourResultLabel.text = "從 8:00 營業至 19:00"
+        containerView.addSubview(businessHourResultLabel)
+        businessHourResultLabel.addConstraints(fromStringArray: ["H:|-16-[$self]",
+                                                                "V:[$view0]-8-[$self]-136-|"],
+                                              views: [businessHourTitleLabel])
         
-        businessCheckBoxTwo = KPCheckView(.radio, "目前營業中")
-        containerView.addSubview(businessCheckBoxTwo)
-        businessCheckBoxTwo.addConstraints(fromStringArray: ["H:|-16-[$self]",
-                                                             "V:[$view0]-16-[$self]"],
-                                                views: [businessCheckBoxOne])
 
-        
-        businessCheckBoxThree = KPCheckView(.radio, "特定營業時段")
-        containerView.addSubview(businessCheckBoxThree)
-        businessCheckBoxThree.addConstraints(fromStringArray: ["H:|-16-[$self]",
-                                                               "V:[$view0]-16-[$self]-88-|"],
-                                           views: [businessCheckBoxTwo])
-        businessCheckBoxThree.checkBox.addTarget(self,
-                                                 action: #selector(handleBusinessCheckBoxTwoOnTap(_:)),
-                                                 for: .valueChanged)
-        
-        businessCheckBoxOne.deselectCheckViews = [businessCheckBoxTwo, businessCheckBoxThree]
-        businessCheckBoxTwo.deselectCheckViews = [businessCheckBoxOne, businessCheckBoxThree]
-        businessCheckBoxThree.deselectCheckViews = [businessCheckBoxOne, businessCheckBoxTwo]
-        
-        
-        if KPFilter.sharedFilter.currentOpening == true {
-            businessCheckBoxTwo.checkBox.checkState = .checked
-        } else if KPFilter.sharedFilter.searchTime != nil {
-            businessCheckBoxThree.checkBox.checkState = .checked
-        } else {
-            businessCheckBoxOne.checkBox.checkState = .checked
-        }
-        
-        
-        timeSupplementView = KPSpecificTimeSupplementView()
-        businessCheckBoxThree.supplementInfoView = timeSupplementView
-        timeSupplementView.addConstraint(forWidth: 90)
-        
+        businessCheckBox = KPCheckView(.checkmark, "目前營業中")
+        containerView.addSubview(businessCheckBox)
+        businessCheckBox.addConstraints(fromStringArray: ["H:|-16-[$self]",
+                                                          "V:[$view0]-16-[$self]"],
+                                        views: [businessHourResultLabel])
+
         searchButtonContainer = UIView()
         searchButtonContainer.backgroundColor = UIColor.white
         view.addSubview(searchButtonContainer)
@@ -304,8 +264,7 @@ class KPPreferenceSearchViewController: KPViewController {
                                                                "H:|[$self]|"])
         searchButtonContainer.addSubview(seperator_three)
         seperator_three.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                         "V:|[$self(1)]"],
-                                       views: [businessCheckBoxThree])
+                                                         "V:|[$self(1)]"])
         
         searchButton = UIButton()
         searchButton.setTitle("開始搜尋", for: .normal)
@@ -337,18 +296,19 @@ class KPPreferenceSearchViewController: KPViewController {
         appModalController()?.dismissControllerWithDefaultDuration()
     }
     
+    @objc func handleSelectAllButtonOnTapped() {
+        for condition in conditions {
+            condition.checkBox.checkState = .checked
+        }
+    }
+    
     @objc func handleRestoreButtonOnTapped() {
         sortSegmentedControl.selectedSegmentIndex = 0
-        
-        ratingViews[0].currentRate = 0
-        ratingViews[1].currentRate = 0
-        ratingViews[2].currentRate = 0
-        ratingViews[3].currentRate = 0
-        ratingViews[4].currentRate = 0
-        ratingViews[5].currentRate = 0
-        ratingViews[6].currentRate = 0
-        
-        businessCheckBoxOne.checkBox.checkState = .checked
+        priceSegmentedControl.selectedSegmentIndex = 0
+        for condition in conditions {
+            condition.checkBox.checkState = .unchecked
+        }
+        businessCheckBox.checkBox.checkState = .unchecked
     }
     
 //    @objc func handleQuickSettingButtonOnTap(_ sender: UIButton) {
@@ -387,23 +347,6 @@ class KPPreferenceSearchViewController: KPViewController {
 //            ratingViews[6].currentRate = 4
 //        }
 //    }
-    
-    @objc func handleBusinessCheckBoxTwoOnTap(_ sender: KPCheckBox) {
-        if sender.checkState == .checked {
-            let controller = KPModalViewController()
-            controller.dismissWhenTouchingOnBackground = false
-            controller.presentationStyle = .popout
-            controller.contentSize = CGSize(width: 300, height: 350)
-            controller.presentationStyle = .popout
-            let timePickerController = KPTimePickerViewController()
-            timePickerController.startTimeValue = (timeSupplementView.startTime != nil) ? timeSupplementView.startTime! : "10:30"
-            timePickerController.endTimeValue = (timeSupplementView.endTime != nil) ? timeSupplementView.endTime! : "10:30"
-            timePickerController.delegate = self
-            timePickerController.setButtonTitles(["完成"])
-            controller.contentController = timePickerController
-            controller.presentModalView()
-        }
-    }
 }
 
 

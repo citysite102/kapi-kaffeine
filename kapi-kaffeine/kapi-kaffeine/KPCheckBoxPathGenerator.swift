@@ -21,7 +21,7 @@ class KPCheckBoxPathGenerator {
     var size: CGFloat = 0.0
     
     /// The line width of the created checkmark.
-    var checkmarkLineWidth: CGFloat = 1.5
+    var checkmarkLineWidth: CGFloat = 2.0
     
     /// The line width of the created box.
     var boxLineWidth: CGFloat = 1.0
@@ -30,7 +30,7 @@ class KPCheckBoxPathGenerator {
     var cornerRadius: CGFloat = 3.0
     
     /// The box type to create.
-    var boxType: KPCheckBox.BoxType = .circle
+    var boxType: KPCheckBox.BoxType = .square
     
     //----------------------------
     // MARK: - Box Paths
@@ -87,7 +87,8 @@ class KPCheckBoxPathGenerator {
         let tlY: CGFloat = 0.0 + lineOffset + cornerRadius
         let tl = CGPoint(x: tlX, y: tlY)
         
-        path.move(to: CGPoint(x: (tl.x + tr.x) / 2.0, y: ((tl.y + tr.y) / 2.0) - cornerRadius))
+        path.move(to: CGPoint(x: (tl.x + tr.x) / 2.0,
+                              y: ((tl.y + tr.y) / 2.0) - cornerRadius))
         
         // Top side.
         let trYCr: CGFloat = tr.y - cornerRadius
@@ -113,6 +114,7 @@ class KPCheckBoxPathGenerator {
                         endAngle: CGFloat.pi/2,
                         clockwise: true)
         }
+        
         // Bottom side.
         let blYCr: CGFloat = bl.y + cornerRadius
         path.addLine(to: CGPoint(x: bl.x , y: blYCr))

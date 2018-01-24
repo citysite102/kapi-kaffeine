@@ -155,13 +155,17 @@ class KPCheckBoxFillController: KPCheckBoxController {
     
     override func layoutLayers() {
         // Frames
-        unselectedBoxLayer.frame = CGRect(x: 0.0, y: 0.0, width: pathGenerator.size, height: pathGenerator.size)
-        selectedBoxLayer.frame = CGRect(x: 0.0, y: 0.0, width: pathGenerator.size, height: pathGenerator.size)
-        markLayer.frame = CGRect(x: 0.0, y: 0.0, width: pathGenerator.size, height: pathGenerator.size)
+        unselectedBoxLayer.frame = CGRect(x: 0.0, y: 0.0, width: pathGenerator.size,
+                                          height: pathGenerator.size)
+        selectedBoxLayer.frame = CGRect(x: 0.0, y: 0.0, width: pathGenerator.size,
+                                        height: pathGenerator.size)
+        markLayer.frame = CGRect(x: 0.0, y: 0.0, width: pathGenerator.size,
+                                 height: pathGenerator.size)
         // Paths
         unselectedBoxLayer.path = pathGenerator.pathForBox()?.cgPath
         selectedBoxLayer.path = pathGenerator.pathForBox()?.cgPath
         markLayer.path = pathGenerator.pathForMark(state)?.cgPath
+        
     }
     
     //----------------------------
@@ -177,6 +181,7 @@ class KPCheckBoxFillController: KPCheckBoxController {
         
         // Set the properties for the final states of each necessary property of each layer.
         unselectedBoxLayer.strokeColor = secondaryTintColor?.cgColor
+        unselectedBoxLayer.fillColor = secondaryTintColor?.cgColor
         unselectedBoxLayer.lineWidth = pathGenerator.boxLineWidth
         
         selectedBoxLayer.strokeColor = tintColor.cgColor

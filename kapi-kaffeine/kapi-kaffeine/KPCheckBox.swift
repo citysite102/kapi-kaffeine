@@ -21,6 +21,7 @@ class KPCheckBox: UIControl {
      - Checked: A checkmark is shown.
      - Mixed: A dash is shown.
      */
+    
     public enum CheckState: String, RawRepresentable {
         /// No check is shown.
         case unchecked = "Unchecked"
@@ -83,17 +84,6 @@ class KPCheckBox: UIControl {
         case fill
         /// Animates the check mark with a bouncy effect.
         case bounce(AnimationStyle)
-        /// Animates the checkmark and fills the box with a bouncy effect.
-//        case expand(AnimationStyle)
-//        /// Morphs the checkmark from a line.
-//        case flat(AnimationStyle)
-//        /// Animates the box and check as if they were drawn in one continuous line.
-//        case spiral
-//        /// Fades checkmark in or out. (opacity).
-//        case fade(AnimationStyle)
-//        /// Start the box as a dot, and expand the box.
-//        case dot(AnimationStyle)
-        
         
         /// The manager for the specific animation type.
         fileprivate var manager: KPCheckBoxController {
@@ -104,16 +94,6 @@ class KPCheckBox: UIControl {
                 return KPCheckBoxFillController()
             case let .bounce(style):
                 return KPCheckBoxBounceController(style: style)
-//            case let .expand(style):
-//                return M13CheckboxExpandController(style: style)
-//            case let .flat(style):
-//                return M13CheckboxFlatController(style: style)
-//            case .spiral:
-//                return M13CheckboxSpiralController()
-//            case let .fade(style):
-//                return M13CheckboxFadeController(style: style)
-//            case let .dot(style):
-//                return M13CheckboxDotController(style: style)
             }
         }
         
@@ -147,7 +127,7 @@ class KPCheckBox: UIControl {
             layer.addSublayer(aLayer)
         }
         
-        tintColor = KPColorPalette.KPMainColor.mainColor
+        tintColor = KPColorPalette.KPMainColor_v2.greenColor
         controller.tintColor = tintColor
         controller.secondaryTintColor = tintColor
         controller.resetLayersForState(.checked)
@@ -340,15 +320,7 @@ class KPCheckBox: UIControl {
     
     
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
-//        if sender.state == .began || sender.state == .changed {
-//            isSelected = true
-//        } else {
-//            isSelected = false
-//            if sender.state == .ended {
-                toggleCheckState(true)
-//                sendActions(for: .valueChanged)
-//            }
-//        }
+        toggleCheckState(true)
     }
     
     //----------------------------

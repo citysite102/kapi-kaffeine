@@ -79,7 +79,7 @@ class KPCheckView: UIView {
         self.init(frame: .zero)
         
         titleLabel = UILabel()
-        titleLabel.font = UIFont.systemFont(ofSize: 15.0)
+        titleLabel.font = UIFont.systemFont(ofSize: 16.0)
         titleLabel.textColor = KPColorPalette.KPTextColor.grayColor_level2
         titleLabel.text = title
         
@@ -94,15 +94,15 @@ class KPCheckView: UIView {
         case .checkmark:
             checkBox.setMarkType(markType: .checkmark,
                                  animated: true)
-            checkBox.boxLineWidth = 2.0
-            checkBox.stateChangeAnimation = .bounce(.fill)
+            checkBox.stateChangeAnimation = .fill
+            checkBox.secondaryTintColor = KPColorPalette.KPBackgroundColor.grayColor_level7
         }
         
         addSubview(checkBox)
         addSubview(titleLabel)
         checkBox.checkState = .unchecked
-        checkBox.addConstraints(fromStringArray: ["V:|[$self(20)]|",
-                                                  "H:|[$self(20)]"])
+        checkBox.addConstraints(fromStringArray: ["V:|[$self(24)]|",
+                                                  "H:|[$self(24)]"])
         
         titleLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]|"],
                                   views: [checkBox])
