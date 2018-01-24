@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ObjectMapper
 
 class KPExplorationViewController: UIViewController {
 
@@ -18,9 +19,65 @@ class KPExplorationViewController: UIViewController {
                       R.image.demo_4(),
                       R.image.demo_5(),
                       R.image.demo_6()]
+
+    let testJSONString = """
+        [
+          {
+            "priority": 1,
+            "title": "熱門 IG 打卡店家",
+            "description": "由知名部落客們聯手推薦的知名店家。",
+            "tag": "熱門",
+            "shops": [
+              {
+                "cafe_id": "00014645-38c8-4eb4-ad9b-faa871d7e511",
+                "address": "台北市中正區大安森林公園",
+                "latitude": 23.4838654,
+                "longitude": 120.4535834,
+                "name": "森林咖啡",
+                "place": "台北 大安區",
+                "rate_average": 4.7,
+                "covers": {
+                  "google_s": "https://maps.googleapis.com/maps/api/place/photo?xxxx",
+                  "google_l": "https://maps.googleapis.com/maps/api/place/photo?xxxx",
+                  "kapi_l": "https://api.kapi.tw/photos/acc73e436cd63f921fde961bac0c89f4fd056457.JPEG",
+                  "kapi_s": "https://api.kapi.tw/photos/acc73e436cd63f921fde961bac0c89f4fd056457.thumbnail.JPEG"
+                }
+              }
+            ]
+          },
+          {
+            "priority": 2,
+            "title": "熱門 Facebook 打卡店家",
+            "description": "由知名 Facebook 部落客們聯手推薦的知名店家。",
+            "tag": "推薦",
+            "shops": [
+              {
+                "cafe_id": "00014645-38c8-4eb4-ad9b-faa871d7e511",
+                "address": "台北市中正區大安森林公園",
+                "latitude": 23.4838654,
+                "longitude": 120.4535834,
+                "name": "森林咖啡",
+                "country": "tw",
+                "city": "taipei",
+                "rate_average": 4.7,
+                "covers": {
+                  "google_s": "https://maps.googleapis.com/maps/api/place/photo?xxxx",
+                  "google_l": "https://maps.googleapis.com/maps/api/place/photo?xxxx",
+                  "kapi_l": "https://api.kapi.tw/photos/acc73e436cd63f921fde961bac0c89f4fd056457.JPEG",
+                  "kapi_s": "https://api.kapi.tw/photos/acc73e436cd63f921fde961bac0c89f4fd056457.thumbnail.JPEG"
+                }
+              }
+            ]
+          }
+        ]
+        """
+    
+    var testData: [KPExplorationSection]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        testData = Mapper<KPExplorationSection>().mapArray(JSONString: testJSONString) ?? []
         
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 330))
         
@@ -63,37 +120,8 @@ class KPExplorationViewController: UIViewController {
         tableView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                    "V:|[$self]|"])
         tableView.tableHeaderView = headerView
+
         
-        
-//        view.backgroundColor = UIColor(hexString: "f8f8f8")
-//
-//        let scrollView = UIScrollView()
-//        view.addSubview(scrollView)
-//        scrollView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"])
-//
-//        let scrollContainer = UIView()
-//        scrollView.addSubview(scrollContainer)
-//        scrollContainer.addConstraintForHavingSameWidth(with: scrollView)
-//        scrollContainer.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"])
-//
-//        let articleLayout = UICollectionViewFlowLayout()
-//        articleLayout.scrollDirection = .horizontal
-//
-//        articleCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: articleLayout)
-//        articleCollectionView.showsHorizontalScrollIndicator = false
-//        articleCollectionView.decelerationRate = UIScrollViewDecelerationRateFast
-//        articleCollectionView.dataSource = self
-//        articleCollectionView.delegate = self
-//        articleCollectionView.register(KPArticleCell.self, forCellWithReuseIdentifier: "ArticleCell")
-//        articleCollectionView.backgroundColor = UIColor.clear
-//
-//        scrollContainer.addSubview(articleCollectionView)
-//        articleCollectionView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|-100-[$self(260)]"])
-//
-//        let sectionView = KPExplorationSectionView()
-//        scrollContainer.addSubview(sectionView)
-//        sectionView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$view0]-[$self]-20-|"],
-//                                   views: [articleCollectionView])
     }
 
     override func didReceiveMemoryWarning() {
@@ -111,11 +139,14 @@ extension KPExplorationViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return testData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! KPExplorationSectionView
+        cell.sectionTitleLabel.text = testData[indexPath.row].title
+        cell.sectionDescriptionLabel.text = testData[indexPath.row].explorationDescription
+        cell.shops = testData[indexPath.row].shops
         return cell
     }
     

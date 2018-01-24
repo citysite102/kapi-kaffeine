@@ -21,6 +21,11 @@ class KPExplorationSectionView: UITableViewCell {
                       R.image.demo_4(),
                       R.image.demo_5(),
                       R.image.demo_6()]
+    var shops: [KPExplorationShop] = [] {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -72,12 +77,15 @@ extension KPExplorationSectionView: UICollectionViewDataSource, UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return shops.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ExplorationSectionCell", for: indexPath) as! KPExplorationSectionCell
         cell.imageView.image = demoImages[Int(arc4random())%6]
+        cell.nameLabel.text = shops[indexPath.row].name
+        cell.regionLabel.text = shops[indexPath.row].address
+//        cell.imageView.af_setImage(withURL: URL(string: shops[indexPath.row].imageURL)!)
         return cell
     }
     
