@@ -15,6 +15,12 @@ class KPExplorationSectionView: UITableViewCell {
     var sectionTitleLabel: UILabel!
     var sectionDescriptionLabel: UILabel!
     
+    var shops: [KPExplorationShop] = [] {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
+    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -62,12 +68,15 @@ extension KPExplorationSectionView: UICollectionViewDataSource, UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return shops.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ExplorationSectionCell", for: indexPath) as! KPExplorationSectionCell
-        cell.imageView.image = R.image.demo_6()
+        cell.nameLabel.text = shops[indexPath.row].name
+        cell.regionLabel.text = shops[indexPath.row].address
+        cell.imageView.af_setImage(withURL: URL(string: shops[indexPath.row].imageURL)!)
+//        cell.imageView.image = R.image.demo_6()
         return cell
     }
     
