@@ -78,7 +78,11 @@ extension KPEditorView: UITextFieldDelegate {
                                                 left: 0,
                                                 bottom: 0,
                                                 right: 0)
-            controller.contentController = KPSubtitleInputController()
+            
+            let subTitleInputViewController = KPSubtitleInputController()
+//            controller.contentController = subTitleInputViewController
+            let navigationController = UINavigationController(rootViewController: subTitleInputViewController)
+            controller.contentController = navigationController
             controller.presentModalView()
             return false
         }

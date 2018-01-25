@@ -9,18 +9,15 @@
 import UIKit
 import GooglePlaces
 
-struct KPNewStoreControllerConstants {
-    static let leftPadding = 168
-}
-
 class KPNewStoreController: KPViewController {
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         
         view.backgroundColor = UIColor.white
-        navigationController?.navigationBar.topItem?.title = "新增店家"
-        navigationController?.navigationBar.shadowImage = UIImage()
+        title = "新增店家"
+//        navigationController?.navigationBar.shadowImage = UIImage()
         
         let barLeftItem = UIBarButtonItem(title: "取消",
                                           style: .plain,
@@ -31,7 +28,6 @@ class KPNewStoreController: KPViewController {
         
         navigationItem.leftBarButtonItem = barLeftItem
     
-        
         
         let storeNameEditor = KPEditorView(type: .Text,
                                            title: "店家名稱" ,
@@ -48,10 +44,44 @@ class KPNewStoreController: KPViewController {
                                                         "V:[$view0]-20-[$self]"],
                                       views: [storeNameEditor])
         
+        
+        let buttonContainer = UIView()
+        buttonContainer.backgroundColor = UIColor.white
+        view.addSubview(buttonContainer)
+        
+        buttonContainer.addConstraints(fromStringArray: ["H:|-(-1)-[$self]-(-1)-|", "V:[$self(60)]"])
+        buttonContainer.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor).isActive = true
+        
+        buttonContainer.layer.borderColor = KPColorPalette.KPBackgroundColor.grayColor_level6?.cgColor
+        buttonContainer.layer.borderWidth = 1
+        
+        let nextButton = UIButton(type: .custom)
+        nextButton.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor_v2.greenColor!), for: .normal)
+        nextButton.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor_v2.grayColor_level4!), for: .disabled)
+        nextButton.setTitleColor(KPColorPalette.KPMainColor_v2.whiteColor_level1!, for: .normal)
+        nextButton.setTitle("下一步", for: .normal)
+        nextButton.clipsToBounds = true
+        nextButton.layer.cornerRadius = 3
+        buttonContainer.addSubview(nextButton)
+        nextButton.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|", "V:|-10-[$self]-10-|"])
+        nextButton.addTarget(self, action: #selector(KPNewStoreController.handleNextButtonOnTap(_:)), for: .touchUpInside)
+        
+//        nextButton.isEnabled = false
+        
+//        let seperator = UIView()
+//        seperator.backgroundColor = KPColorPalette.KPMainColor_v2.grayColor_level6
+//        view.addSubview(seperator)
+//        seperator.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$self(1)][$view0]"],
+//                                 views: [buttonContainer])
+        
+    }
+    
+    @objc func handleNextButtonOnTap(_ sender: UIButton) {
+        navigationController?.pushViewController(KPNewStoreDetailInfoViewController(), animated: true)
     }
 
     @objc func handleCancelButtonOnTap(_ sender: UIBarButtonItem) {
-        self.appModalController()?.dismissControllerWithDefaultDuration()
+        appModalController()?.dismissControllerWithDefaultDuration()
     }
 
 }
