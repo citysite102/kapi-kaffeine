@@ -11,9 +11,11 @@ import UIKit
 class KPExplorationSectionCell: UICollectionViewCell {
     
     var imageView: UIImageView!
+    
     var regionLabel: UILabel!
     var nameLabel: UILabel!
     var rateLabel: UILabel!
+    var scoreLabel: UILabel!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -66,9 +68,7 @@ class KPExplorationSectionCell: UICollectionViewCell {
         rateLabel.font = UIFont.systemFont(ofSize: 12)
         rateLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_description
         rateLabel.text = "4.8"
-        
-        
-        
+
     }
     
     required init?(coder aDecoder: NSCoder) {

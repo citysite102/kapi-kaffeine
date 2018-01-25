@@ -33,16 +33,61 @@ class KPExplorationViewController: UIViewController {
                 "address": "台北市中正區大安森林公園",
                 "latitude": 23.4838654,
                 "longitude": 120.4535834,
-                "name": "森林咖啡",
+                "name": "老木咖啡",
                 "place": "台北 大安區",
                 "rate_average": 4.7,
                 "covers": {
                   "google_s": "https://maps.googleapis.com/maps/api/place/photo?xxxx",
                   "google_l": "https://maps.googleapis.com/maps/api/place/photo?xxxx",
                   "kapi_l": "https://api.kapi.tw/photos/acc73e436cd63f921fde961bac0c89f4fd056457.JPEG",
-                  "kapi_s": "https://api.kapi.tw/photos/acc73e436cd63f921fde961bac0c89f4fd056457.thumbnail.JPEG"
+                  "kapi_s": "https://farm4.staticflickr.com/3928/15425389946_e53b2dd92b_z.jpg"
                 }
-              }
+              },
+                {
+                    "cafe_id": "00014645-38c8-4eb4-ad9b-faa871d7e511",
+                    "address": "台北市中正區大安森林公園",
+                    "latitude": 23.4838654,
+                    "longitude": 120.4535834,
+                    "name": "Fika Fika Cafe",
+                    "place": "台北 大安區",
+                    "rate_average": 4.7,
+                    "covers": {
+                      "google_s": "https://maps.googleapis.com/maps/api/place/photo?xxxx",
+                      "google_l": "https://maps.googleapis.com/maps/api/place/photo?xxxx",
+                      "kapi_l": "https://api.kapi.tw/photos/acc73e436cd63f921fde961bac0c89f4fd056457.JPEG",
+                      "kapi_s": "https://pic.pimg.tw/cindylo326/1483925400-2421597698_n.jpg"
+                    }
+                },
+                {
+                    "cafe_id": "00014645-38c8-4eb4-ad9b-faa871d7e511",
+                    "address": "台北市中正區大安森林公園",
+                    "latitude": 23.4838654,
+                    "longitude": 120.4535834,
+                    "name": "極簡咖啡",
+                    "place": "台北 大安區",
+                    "rate_average": 4.7,
+                    "covers": {
+                      "google_s": "https://maps.googleapis.com/maps/api/place/photo?xxxx",
+                      "google_l": "https://maps.googleapis.com/maps/api/place/photo?xxxx",
+                      "kapi_l": "https://api.kapi.tw/photos/acc73e436cd63f921fde961bac0c89f4fd056457.JPEG",
+                      "kapi_s": "https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/2017/07/28/1/3808271.jpg&x=0&y=0&sw=0&sh=0&sl=W&fw=1050&exp=3600"
+                    }
+                },
+                {
+                    "cafe_id": "00014645-38c8-4eb4-ad9b-faa871d7e511",
+                    "address": "台北市中正區大安森林公園",
+                    "latitude": 23.4838654,
+                    "longitude": 120.4535834,
+                    "name": "樹樂集咖啡",
+                    "place": "台北 大安區",
+                    "rate_average": 4.7,
+                    "covers": {
+                      "google_s": "https://maps.googleapis.com/maps/api/place/photo?xxxx",
+                      "google_l": "https://maps.googleapis.com/maps/api/place/photo?xxxx",
+                      "kapi_l": "https://api.kapi.tw/photos/acc73e436cd63f921fde961bac0c89f4fd056457.JPEG",
+                      "kapi_s": "https://img.hiromishi.com/2014-04-24-041347-36.jpg"
+                    }
+                }
             ]
           },
           {
@@ -57,8 +102,7 @@ class KPExplorationViewController: UIViewController {
                 "latitude": 23.4838654,
                 "longitude": 120.4535834,
                 "name": "森林咖啡",
-                "country": "tw",
-                "city": "taipei",
+                "place": "台北 信義區",
                 "rate_average": 4.7,
                 "covers": {
                   "google_s": "https://maps.googleapis.com/maps/api/place/photo?xxxx",

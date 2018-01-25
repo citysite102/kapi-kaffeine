@@ -14,6 +14,7 @@ class KPExplorationShop: NSObject, Mappable {
     
     var cafe_id: String!
     var address: String!
+    var place: String!
     var name: String!
     
     var imageURL: String!
@@ -28,6 +29,7 @@ class KPExplorationShop: NSObject, Mappable {
         cafe_id         <-  map["cafe_id"]
         address         <-  map["address"]
         name            <-  map["name"]
+        place           <-  map["place"]
         
         imageURL        <-  map["covers.kapi_s"]
     }
