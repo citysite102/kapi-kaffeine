@@ -24,6 +24,7 @@ class KPArticleViewController: KPViewController {
     var imageMaskLayer: CAGradientLayer!
     
     var animationHasPerformed: Bool = false
+    var viewIsDimissing: Bool = false
     var articleTitleLabel: UILabel!
     var articleSubTitleLabel: UILabel!
     var articleFirstParagraphTextView: UITextView!
@@ -34,6 +35,10 @@ class KPArticleViewController: KPViewController {
     var scrollDownButton: UIButton!
     var lastOffset: CGFloat!
     
+    var toolBarContainer: UIView!
+    var separator: UIView!
+    var collectButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -41,19 +46,13 @@ class KPArticleViewController: KPViewController {
         
         scrollContainer = UIScrollView()
         scrollContainer.delegate = self
-        scrollContainer.bounces = false
+//        scrollContainer.bounces = false
         scrollContainer.decelerationRate = UIScrollViewDecelerationRateFast
-        scrollContainer.alwaysBounceVertical = false
-        scrollContainer.alwaysBounceHorizontal = false
+//        scrollContainer.alwaysBounceVertical = true
+//        scrollContainer.alwaysBounceHorizontal = false
         view.addSubview(scrollContainer)
         scrollContainer.addConstraints(fromStringArray: ["V:|[$self]|",
                                                          "H:|[$self]|"])
-//        dismissButton.addTarget(self,
-//                                action: #selector(KPInformationViewController.handleDismissButtonOnTapped),
-//                                for: .touchUpInside)
-        
-        
-        
         
         heroCoverImageView = UIImageView(image: R.image.demo_2())
         heroCoverImageView.contentMode = .scaleAspectFill
@@ -91,8 +90,9 @@ class KPArticleViewController: KPViewController {
                                               lineSpacing: 3.0)
         heroCoverImageView.addSubview(articleFirstParagraphTextView)
         articleFirstParagraphTextView.addConstraints(fromStringArray: ["V:[$self]-64-|",
-                                                                       "H:|-16-[$self]-16-|"])
-        
+                                                                       "H:[$self($metric0)]"],
+                                                     metrics: [view.bounds.width - 32])
+        articleFirstParagraphTextView.addConstraintForCenterAligningToSuperview(in: .horizontal)
         
         articleSubTitleLabel = UILabel()
         articleSubTitleLabel.alpha = 0
@@ -105,8 +105,10 @@ class KPArticleViewController: KPViewController {
         articleSubTitleLabel.numberOfLines = 0
         heroCoverImageView.addSubview(articleSubTitleLabel)
         articleSubTitleLabel.addConstraints(fromStringArray: ["V:[$self]-8-[$view0]",
-                                                              "H:|-16-[$self]-16-|"],
+                                                              "H:[$self($metric0)]"],
+                                            metrics: [view.bounds.width - 32],
                                             views: [articleFirstParagraphTextView])
+        articleSubTitleLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
         
         
         articleTitleLabel = UILabel()
@@ -119,9 +121,12 @@ class KPArticleViewController: KPViewController {
         articleTitleLabel.setText(text: "一窺東倫敦新興咖啡社群 - Hello Hackney",
                                   lineSpacing: 3.0)
         heroCoverImageView.addSubview(articleTitleLabel)
+        
         articleTitleLabel.addConstraints(fromStringArray: ["V:[$self]-16-[$view0]",
-                                                           "H:|-16-[$self]-16-|"],
-                                            views: [articleSubTitleLabel])
+                                                           "H:[$self($metric0)]"],
+                                         metrics: [view.bounds.width - 32],
+                                         views: [articleSubTitleLabel])
+        articleTitleLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
         
         articleContainer = UIView()
         articleContainer.alpha = 0
@@ -142,6 +147,32 @@ class KPArticleViewController: KPViewController {
                                                        "H:|-16-[$self(24)]"])
         dismissButton.addTarget(self,
                                 action: #selector(handleDismissButtonOnTapped), for: .touchUpInside)
+        
+        
+        separator = UIView()
+        separator.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
+        
+        toolBarContainer = UIView()
+        toolBarContainer.backgroundColor = UIColor.white
+        view.addSubview(toolBarContainer)
+        toolBarContainer.addConstraints(fromStringArray: ["V:[$self(56)]|",
+                                                          "H:|[$self]|"])
+        toolBarContainer.transform = CGAffineTransform(translationX: 0, y: 64)
+        toolBarContainer.addSubview(separator)
+        separator.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                   "V:|[$self(1)]"])
+        
+        collectButton = UIButton(type: .roundedRect)
+        collectButton.setTitle("收藏文章", for: .normal)
+        collectButton.setTitleColor(KPColorPalette.KPTextColor_v2.mainColor_subtitle, for: .normal)
+        collectButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+        collectButton.imageEdgeInsets = UIEdgeInsetsMake(2, -2, 2, 2)
+        collectButton.setImage(R.image.icon_collect_border()!,
+                               for: .normal)
+        collectButton.tintColor = KPColorPalette.KPMainColor_v2.redColor
+        toolBarContainer.addSubview(collectButton)
+        collectButton.addConstraintForCenterAligningToSuperview(in: .vertical)
+        collectButton.addConstraint(from: "H:|-16-[$self]")
         
         addSampleContent()
     }
@@ -288,7 +319,20 @@ extension KPArticleViewController: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
-        if (scrollView.contentOffset.y <= KPArticleViewController.scrollAnimationThreshold) {
+        
+        // 處理 Tool Bar
+        UIView.animate(withDuration: 0.2,
+                       delay: 0,
+                       options: .curveEaseIn,
+                       animations: {
+                        self.toolBarContainer.transform = scrollView.contentOffset.y > 100 ? CGAffineTransform.identity : CGAffineTransform(translationX: 0, y: 64)
+        }, completion: { (_) in
+            
+        })
+        
+        // 處理上半部分 Hero Image 的狀態
+        if (scrollView.contentOffset.y <= KPArticleViewController.scrollAnimationThreshold &&
+            scrollView.contentOffset.y >= 0) {
             
             let moveOffsetY = scrollView.contentOffset.y >= 0 ?
                 -scrollView.contentOffset.y * 0.6 : 0
@@ -325,11 +369,41 @@ extension KPArticleViewController: UIScrollViewDelegate {
             self.articleContainer.alpha = opacity < 0.3 ? 1 - opacity/0.3 : 0
             lastOffset = scrollView.contentOffset.y
         } else {
-            print("Offset:\(self.scrollContainer.contentOffset)")
-            if self.scrollContainer.contentOffset.y > 420 {
-                dismissButton.tintColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
+            
+            if self.scrollContainer.contentOffset.y < -60 {
+                if !viewIsDimissing {
+                    self.appModalController()?.view.backgroundColor = UIColor.clear
+                    view.backgroundColor = UIColor.clear
+                    scrollContainer.backgroundColor = UIColor.clear
+                    viewIsDimissing = true
+                    UIView.animate(withDuration: 0.3,
+                                   delay: 0,
+                                   options: .curveEaseIn,
+                                   animations: {
+                                    self.view.transform = CGAffineTransform(translationX: 0,
+                                                                            y: self.view.bounds.height)
+                    }, completion: { (_) in
+                        self.appModalController()?.dismissController(duration: 0)
+                    })
+                }
+                
             } else {
-                dismissButton.tintColor = UIColor.white
+                if self.scrollContainer.contentOffset.y > 420 {
+                    dismissButton.tintColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
+                } else if self.scrollContainer.contentOffset.y <= 0 &&
+                    self.scrollContainer.contentOffset.y > -60 {
+                    
+                    let updatedFrame = CGRect(x: self.scrollContainer.contentOffset.y,
+                                              y: self.scrollContainer.contentOffset.y,
+                                              width: view.bounds.width - 2*(self.scrollContainer.contentOffset.y),
+                                              height: view.bounds.height - self.scrollContainer.contentOffset.y)
+                    heroCoverImageView.frame = updatedFrame
+                    imageMaskLayer.frame = CGRect(x: 0, y: 0,
+                                                  width: updatedFrame.width*2,
+                                                  height: updatedFrame.height)
+                } else {
+                    dismissButton.tintColor = UIColor.white
+                }
             }
         }
     }
@@ -373,7 +447,7 @@ extension KPArticleViewController: UIScrollViewDelegate {
                         self.gradientView.alpha = opacity
                         self.articleContainer.alpha = opacity < 0.3 ? 1 - opacity/0.3 : 0
                         self.heroCoverImageView.frame = CGRect(x: 0,
-                                                               y: 0,
+                                                               y: -20,
                                                                width: self.view.bounds.size.width,
                                                                height: height)
                         
