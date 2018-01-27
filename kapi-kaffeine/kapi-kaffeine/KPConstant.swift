@@ -148,6 +148,8 @@ struct KPColorPalette {
         static let mainColor_title = UIColor(hexString: "#444444")
         static let mainColor_subtitle = UIColor(hexString: "#585858")
         static let mainColor_description = UIColor(hexString: "#8a8a8a")
+        
+        static let yellow_color = UIColor(hexString: "#FFE453")
     }
     
     struct KPTextColor {

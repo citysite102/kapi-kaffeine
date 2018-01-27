@@ -44,13 +44,13 @@ class KPPreferenceSearchViewController: KPViewController {
     var priceSegmentedControl: KPSegmentedControl!
     
     
-    lazy var seperator_one: UIView = {
+    lazy var separator_one: UIView = {
         let view = UIView()
         view.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
         return view
     }()
     
-    lazy var seperator_two: UIView = {
+    lazy var separator_two: UIView = {
         let view = UIView()
         view.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
         return view
@@ -64,7 +64,7 @@ class KPPreferenceSearchViewController: KPViewController {
     var businessCheckBox: KPCheckView!
     var timeSupplementView: KPSpecificTimeSupplementView!
     
-    lazy var seperator_three: UIView = {
+    lazy var separator_three: UIView = {
         let view = UIView()
         view.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
         return view
@@ -192,8 +192,8 @@ class KPPreferenceSearchViewController: KPViewController {
                                             views: [priceSettingDescriptionLabel])
         
        
-        containerView.addSubview(seperator_one)
-        seperator_one.addConstraints(fromStringArray: ["H:|[$self]|",
+        containerView.addSubview(separator_one)
+        separator_one.addConstraints(fromStringArray: ["H:|[$self]|",
                                                        "V:[$view0]-24-[$self(1)]"],
                                           views: [priceSegmentedControl])
         
@@ -202,7 +202,7 @@ class KPPreferenceSearchViewController: KPViewController {
         containerView.addSubview(conditionTitleLabel)
         conditionTitleLabel.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
                                                              "V:[$view0]-24-[$self]"],
-                                                views: [seperator_one])
+                                                views: [separator_one])
         
         
         selectAllButton = UIButton()
@@ -235,8 +235,8 @@ class KPPreferenceSearchViewController: KPViewController {
             }
         }
         
-        containerView.addSubview(seperator_two)
-        seperator_two.addConstraints(fromStringArray: ["H:|[$self]|",
+        containerView.addSubview(separator_two)
+        separator_two.addConstraints(fromStringArray: ["H:|[$self]|",
                                                        "V:[$view0]-24-[$self(1)]"],
                                           views: [conditions.last!])
         
@@ -244,7 +244,7 @@ class KPPreferenceSearchViewController: KPViewController {
         containerView.addSubview(businessHourTitleLabel)
         businessHourTitleLabel.addConstraints(fromStringArray: ["H:|-16-[$self]",
                                                                 "V:[$view0]-24-[$self]"],
-                                                views: [seperator_two])
+                                                views: [separator_two])
         
         businessHourResultLabel = UILabel()
         businessHourResultLabel.font = UIFont.systemFont(ofSize: 16.0)
@@ -267,8 +267,8 @@ class KPPreferenceSearchViewController: KPViewController {
         view.addSubview(searchButtonContainer)
         searchButtonContainer.addConstraints(fromStringArray: ["V:[$self]|",
                                                                "H:|[$self]|"])
-        searchButtonContainer.addSubview(seperator_three)
-        seperator_three.addConstraints(fromStringArray: ["H:|[$self]|",
+        searchButtonContainer.addSubview(separator_three)
+        separator_three.addConstraints(fromStringArray: ["H:|[$self]|",
                                                          "V:|[$self(1)]"])
         
         searchButton = UIButton()
@@ -282,7 +282,7 @@ class KPPreferenceSearchViewController: KPViewController {
         searchButtonContainer.addSubview(searchButton)
         searchButton.addConstraints(fromStringArray: ["V:[$view0]-16-[$self(40)]-16-|",
                                                       "H:|-16-[$self]-16-|"],
-                                         views: [seperator_three])
+                                         views: [separator_three])
         searchButton.addTarget(self, action: #selector(handleSearchButtonOnTap(_:)), for: .touchUpInside)
     }
     

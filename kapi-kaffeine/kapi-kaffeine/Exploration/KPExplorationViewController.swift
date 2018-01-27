@@ -9,7 +9,7 @@
 import UIKit
 import ObjectMapper
 
-class KPExplorationViewController: UIViewController {
+class KPExplorationViewController: KPViewController {
 
     var articleCollectionView: UICollectionView!
     
@@ -182,12 +182,14 @@ extension KPExplorationViewController: UITableViewDataSource {
         return 1
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection
+        section: Int) -> Int {
         return testData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! KPExplorationSectionView
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell",
+                                                 for: indexPath) as! KPExplorationSectionView
         cell.sectionTitleLabel.text = testData[indexPath.row].title
         cell.sectionDescriptionLabel.text = testData[indexPath.row].explorationDescription
         cell.shops = testData[indexPath.row].shops
@@ -212,6 +214,18 @@ extension KPExplorationViewController: UICollectionViewDataSource, UICollectionV
         imageView.contentMode = .scaleAspectFill
         cell.backgroundView = imageView
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let controller = KPModalViewController()
+        controller.edgeInset = UIEdgeInsets(top: 0,
+                                            left: 0,
+                                            bottom: 0,
+                                            right: 0)
+        let articleController = KPArticleViewController()
+        controller.contentController = articleController
+        controller.presentModalView()
     }
     
     func collectionView(_ collectionView: UICollectionView,

@@ -97,6 +97,28 @@ public extension UIView {
     }
 }
 
+public extension UITextView {
+    public func setText(text: String,
+                        lineSpacing: CGFloat = 1.0) {
+        if lineSpacing < 0.01 || text.count == 0 {
+            self.text = text
+            return
+        }
+        
+        let descriptionStyle = NSMutableParagraphStyle()
+        
+        descriptionStyle.alignment = self.textAlignment
+        descriptionStyle.lineSpacing = lineSpacing
+        
+        let attributedString = NSMutableAttributedString(string: text)
+        attributedString.addAttributes([NSAttributedStringKey.paragraphStyle: descriptionStyle,
+                                        NSAttributedStringKey.foregroundColor: textColor ?? UIColor.white,
+                                        NSAttributedStringKey.font: font ?? UIFont.systemFont(ofSize: 14)],
+                                       range: NSRange(location: 0, length: attributedString.length))
+        
+        self.attributedText = attributedString
+    }
+}
 
 public extension UILabel {
     public func setText(text: String,
