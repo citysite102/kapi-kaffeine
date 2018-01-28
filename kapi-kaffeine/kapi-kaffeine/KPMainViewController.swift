@@ -265,30 +265,30 @@ class KPMainViewController: KPViewController {
         super.viewDidAppear(animated)
     
         // 使用者第一次使用
-        if !UserDefaults.standard.bool(forKey: AppConstant.introShownKey) {
-            
-            UserDefaults.standard.set(true,
-                                      forKey: AppConstant.introShownKey)
-            
-            let controller = KPModalViewController()
-            controller.edgeInset = UIEdgeInsets(top: 0,
-                                                left: 0,
-                                                bottom: 0,
-                                                right: 0);
-            let introController = KPIntroViewController()
-            self.present(introController, animated: true, completion: nil)
-        } else {
-            if KPUserManager.sharedManager.currentUser == nil &&
-                !UserDefaults.standard.bool(forKey: AppConstant.cancelLogInKey) {
-                let controller = KPModalViewController()
-                controller.edgeInset = UIEdgeInsets(top: 0,
-                                                    left: 0,
-                                                    bottom: 0,
-                                                    right: 0);
-                let loginController = KPLoginViewController()
-                self.present(loginController, animated: true, completion: nil)
-            }
-        }
+//        if !UserDefaults.standard.bool(forKey: AppConstant.introShownKey) {
+//
+//            UserDefaults.standard.set(true,
+//                                      forKey: AppConstant.introShownKey)
+//
+//            let controller = KPModalViewController()
+//            controller.edgeInset = UIEdgeInsets(top: 0,
+//                                                left: 0,
+//                                                bottom: 0,
+//                                                right: 0);
+//            let introController = KPIntroViewController()
+//            self.present(introController, animated: true, completion: nil)
+//        } else {
+//            if KPUserManager.sharedManager.currentUser == nil &&
+//                !UserDefaults.standard.bool(forKey: AppConstant.cancelLogInKey) {
+//                let controller = KPModalViewController()
+//                controller.edgeInset = UIEdgeInsets(top: 0,
+//                                                    left: 0,
+//                                                    bottom: 0,
+//                                                    right: 0);
+//                let loginController = KPLoginViewController()
+//                self.present(loginController, animated: true, completion: nil)
+//            }
+//        }
     }
     
     

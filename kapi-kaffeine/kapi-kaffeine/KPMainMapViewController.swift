@@ -149,7 +149,7 @@ GMUClusterRendererDelegate {
                             })
                         }
                     } else {
-                        self.collectionViewBottomConstraint.constant = -16
+                        self.collectionViewBottomConstraint.constant = 0
                         self.collectionView.reloadData()
                         if let dataModel = self.mapView.selectedMarker?.userData as? KPDataModel,
                             let selectedIndex =  self.displayDataModel.index(where: {($0.name == dataModel.name)}) {
@@ -169,7 +169,7 @@ GMUClusterRendererDelegate {
                     }
                     
                 } else {
-                    self.collectionViewBottomConstraint.constant = 100
+                    self.collectionViewBottomConstraint.constant = 200
                     
                     UIView.animate(withDuration: 0.5,
                                    delay: 0,
@@ -215,20 +215,20 @@ GMUClusterRendererDelegate {
         mapView.delegate = self
         mapView.preferredFrameRate = .maximum
         
-        do {
-            // Set the map style by passing the URL of the local file.
-            if let styleURL = Bundle.main.url(forResource: "style", withExtension: "json") {
-                mapView.mapStyle = try GMSMapStyle(contentsOfFileURL: styleURL)
-            } else {
-                NSLog("Unable to find style.json")
-            }
-        } catch {
-            NSLog("One or more of the map styles failed to load. \(error)")
-        }
+//        do {
+//            // Set the map style by passing the URL of the local file.
+//            if let styleURL = Bundle.main.url(forResource: "style", withExtension: "json") {
+//                mapView.mapStyle = try GMSMapStyle(contentsOfFileURL: styleURL)
+//            } else {
+//                NSLog("Unable to find style.json")
+//            }
+//        } catch {
+//            NSLog("One or more of the map styles failed to load. \(error)")
+//        }
         
         self.view.addSubview(self.mapView)
         
-        self.mapView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|-100-[$self]-(-40)-|"])
+        self.mapView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|-100-[$self]|"])
         
         // Set up the cluster manager with the supplied icon generator and
         // renderer.
@@ -246,14 +246,13 @@ GMUClusterRendererDelegate {
         self.mapView.isMyLocationEnabled = true
         
         let flowLayout = UICollectionViewFlowLayout()
-        flowLayout.itemSize = CGSize(width: UIScreen.main.bounds.size.width - 60, height: 80)
+        flowLayout.itemSize = CGSize(width: UIScreen.main.bounds.size.width/2, height: 180)
         flowLayout.scrollDirection = .horizontal
-        flowLayout.minimumLineSpacing = 15
         
         self.collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 0, height: 0),
                                                collectionViewLayout: flowLayout)
-        self.collectionView.contentInset = UIEdgeInsetsMake(0, 30, 0, 30)
-        self.collectionView.backgroundColor = UIColor.clear
+        self.collectionView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
+        self.collectionView.backgroundColor = UIColor.white
         self.collectionView.dataSource = self
         self.collectionView.delegate = self
         self.collectionView.decelerationRate = UIScrollViewDecelerationRateFast
@@ -262,10 +261,12 @@ GMUClusterRendererDelegate {
                                      forCellWithReuseIdentifier: "cell")
         
         self.view.addSubview(self.collectionView)
-        self.collectionView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$self(100)]"])
-        self.collectionViewBottomConstraint = self.collectionView.addConstraintForAligning(to: .bottom,
-                                                                                           of: self.view,
-                                                                                           constant: 100).first as! NSLayoutConstraint
+        self.collectionView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$self(200)]"])
+        collectionViewBottomConstraint = collectionView.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant: 200)
+        collectionViewBottomConstraint.isActive = true
+//        self.collectionViewBottomConstraint = self.collectionView.addConstraintForAligning(to: .bottom,
+//                                                                                           of: self.view,
+//                                                                                           constant: 200).first as! NSLayoutConstraint
         
         let currentLocationButton = UIButton(type: .custom)
         currentLocationButton.setImage(R.image.icon_currentLocation_alpha(), for: .normal)
@@ -481,7 +482,7 @@ GMUClusterRendererDelegate {
         
     }
     
-    // MARK: UICollectionView DataSource
+    // MARK: - UICollectionView DataSource
     
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {

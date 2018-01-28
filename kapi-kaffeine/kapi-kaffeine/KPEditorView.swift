@@ -14,6 +14,7 @@ class KPEditorView: UIView {
     
     enum EditorType {
         case Text
+        case Search
         case Custom
     }
     
@@ -62,6 +63,15 @@ extension KPEditorView: UITextFieldDelegate {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         if editorType == .Text {
             return true
+        } else if editorType == .Search {
+            let controller = KPModalViewController()
+            controller.edgeInset = UIEdgeInsets(top: 0,
+                                                left: 0,
+                                                bottom: 0,
+                                                right: 0)
+            controller.contentController = KPSubtitleInputController()
+            controller.presentModalView()
+            return false
         } else {
             let controller = KPModalViewController()
             controller.edgeInset = UIEdgeInsets(top: 0,

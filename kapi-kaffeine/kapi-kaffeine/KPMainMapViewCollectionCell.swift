@@ -77,30 +77,31 @@ class KPMainMapViewCollectionCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = UIColor.white
+        contentView.backgroundColor = UIColor.white
         
-        self.layer.cornerRadius = 4
-        
-        self.layer.shadowColor = UIColor.black.cgColor
-        self.layer.shadowOpacity = 0.2
-        self.layer.shadowRadius = 3.0
-        self.layer.shadowOffset = CGSize(width: 2.0, height: 4.0)
+//        self.layer.cornerRadius = 4
+//
+//        self.layer.shadowColor = UIColor.black.cgColor
+//        self.layer.shadowOpacity = 0.2
+//        self.layer.shadowRadius = 3.0
+//        self.layer.shadowOffset = CGSize(width: 2.0, height: 4.0)
         
         shopImageView = UIImageView(image: UIImage(named: "demo_6"))
         shopImageView.contentMode = .scaleAspectFill
-        addSubview(shopImageView)
-        shopImageView.addConstraints(fromStringArray: ["H:|-8-[$self(64)]",
-                                                       "V:|-8-[$self(64)]-8-|"])
+        shopImageView.clipsToBounds = true
+        contentView.addSubview(shopImageView)
+        shopImageView.addConstraints(fromStringArray: ["H:|-[$self]-|",
+                                                       "V:|-10-[$self(80)]"])
         
         self.shopNameLabel = KPLayerLabel()
-        self.shopNameLabel.font = UIFont.systemFont(ofSize: 14.0)
+        self.shopNameLabel.font = UIFont.systemFont(ofSize: 18.0)
         self.shopNameLabel.textColor = KPColorPalette.KPTextColor.grayColor
         self.shopNameLabel.lineBreakMode = .byTruncatingTail
         self.shopNameLabel.text = "覺旅咖啡"
         self.addSubview(self.shopNameLabel)
         
-        self.shopNameLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]",
-                                                            "V:|-[$self]"],
+        self.shopNameLabel.addConstraints(fromStringArray: ["H:|-[$self]-|",
+                                                            "V:[$view0]-[$self]"],
                                           metrics: [UIScreen.main.bounds.size.width/2],
                                           views: [self.shopImageView])
         
@@ -108,10 +109,9 @@ class KPMainMapViewCollectionCell: UICollectionViewCell {
         self.shopStatusHint.backgroundColor = KPColorPalette.KPShopStatusColor.opened
         self.shopStatusHint.layer.cornerRadius = 3.0
         self.addSubview(self.shopStatusHint)
-        self.shopStatusHint.addConstraints(fromStringArray: ["H:[$view0]-9-[$self(6)]",
-                                                             "V:[$view1]-9-[$self(6)]"],
-                                           views: [self.shopImageView,
-                                                   self.shopNameLabel])
+        self.shopStatusHint.addConstraints(fromStringArray: ["H:|-[$self(6)]",
+                                                             "V:[$view0]-[$self(6)]"],
+                                           views: [self.shopNameLabel])
         
         self.shopStatusLabel = KPLayerLabel()
         self.shopStatusLabel.font = UIFont.systemFont(ofSize: 12.0)
@@ -120,34 +120,32 @@ class KPMainMapViewCollectionCell: UICollectionViewCell {
         self.addSubview(self.shopStatusLabel)
         self.shopStatusLabel.addConstraints(fromStringArray: ["H:[$view0]-5-[$self($metric0)]"],
                                             metrics: [UIScreen.main.bounds.size.width/2],
-                                            views: [self.shopStatusHint,
-                                                    self.shopNameLabel])
+                                            views: [self.shopStatusHint])
         self.shopStatusLabel.addConstraintForCenterAligning(to: self.shopStatusHint, in: .vertical)
         
         self.shopDistanceLabel = KPLayerLabel()
-        self.shopDistanceLabel.font = UIFont.systemFont(ofSize: 20.0)
+        self.shopDistanceLabel.font = UIFont.systemFont(ofSize: 13.0)
         self.shopDistanceLabel.textColor = KPColorPalette.KPTextColor.mainColor
         self.shopDistanceLabel.text = "-"
         self.shopDistanceLabel.layoutMargins = UIEdgeInsetsMake(0, 0, 0, 0)
         self.addSubview(self.shopDistanceLabel)
-        self.shopDistanceLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]",
-                                                                "V:[$self]-|"],
-                                              views: [self.shopImageView,
-                                                      self.shopStatusLabel])
+        self.shopDistanceLabel.addConstraints(fromStringArray: ["H:[$self]|",
+                                                                "V:[$view0]-4-[$self]-|"],
+                                              views: [self.shopStatusLabel])
         
         self.scoreLabel = KPMainListCellScoreLabel()
         self.scoreLabel.contentBackgroundColor = KPColorPalette.KPBackgroundColor.mainColor
         self.scoreLabel.score = "4.3"
         self.addSubview(self.scoreLabel)
-        self.scoreLabel.addConstraints(fromStringArray: ["H:[$view0]-4-[$self(30)]-8-|",
-                                                         "V:|-(-4)-[$self(22)]"],
-                                       views:[shopNameLabel])
+        self.scoreLabel.addConstraints(fromStringArray: ["H:|-[$self(30)]",
+                                                         "V:[$self(22)]-|"],
+                                       views:[shopStatusLabel])
         
         self.featureContainer = KPMainListCellFeatureContainer()
         self.featureContainer.featureContents = ["燈光美", "氣氛佳"]
         self.addSubview(self.featureContainer)
-        self.featureContainer.addConstraints(fromStringArray: ["H:[$self]-8-|",
-                                                               "V:[$self]-|"])
+//        self.featureContainer.addConstraints(fromStringArray: ["H:[$self]-8-|",
+//                                                               "V:[$self]-|"])
         
         NotificationCenter.default.addObserver(self, selector: #selector(locationDidUpdate), name: .KPLocationDidUpdate, object: nil)
     }
