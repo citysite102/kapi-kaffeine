@@ -66,7 +66,8 @@ class KPMainTabController: ESTabBarController, UITabBarControllerDelegate {
                                                      image: R.image.tab_button_add(),
                                                      selectedImage: R.image.tab_button_add(), tag: 2)
         
-        let listController = KPMainViewController()
+        let listController = UIStoryboard.init(name: "Main",
+                                               bundle: nil).instantiateViewController(withIdentifier: "mainViewController") as! KPMainViewController
         listController.tabBarItem = UITabBarItem(title: "清單",
                                                  image: R.image.icon_msg(), selectedImage: R.image.icon_cup())
         

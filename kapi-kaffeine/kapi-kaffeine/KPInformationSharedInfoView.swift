@@ -26,6 +26,7 @@ class KPInformationSharedInfoView: UIView {
     var infoTitleLabel: UILabel!
     var infoSupplementLabel: UILabel!
     var infoContainer: UIView!
+    var separator: UIView!
     var emptyLabel: UILabel!
     
     var buttonContainer: UIView!
@@ -63,7 +64,8 @@ class KPInformationSharedInfoView: UIView {
             let separator = UIView()
             separator.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
             buttonContainer.addSubview(separator)
-            separator.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self(1)]"])
+            separator.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                       "V:|[$self(1)]"])
             
             for (index, action) in (actions?.enumerated())! {
                 let actionButton = UIButton(type: .custom)
@@ -107,32 +109,34 @@ class KPInformationSharedInfoView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        layer.shadowColor = UIColor.black.cgColor
-        layer.shadowOpacity = 0.1
-        layer.shadowRadius = 2.0
-        layer.shadowOffset = CGSize(width: 0.0, height: 2.0)
+//        layer.shadowColor = UIColor.black.cgColor
+//        layer.shadowOpacity = 0.1
+//        layer.shadowRadius = 2.0
+//        layer.shadowOffset = CGSize(width: 0.0, height: 2.0)
+        
+        backgroundColor = UIColor.white
         
         infoTitleLabel = UILabel()
-        infoTitleLabel.font = UIFont.systemFont(ofSize: 13)
-        infoTitleLabel.textColor = KPColorPalette.KPTextColor.grayColor_level3
+        infoTitleLabel.font = UIFont.boldSystemFont(ofSize: 18)
+        infoTitleLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_title
         addSubview(infoTitleLabel)
-        infoTitleLabel.addConstraints(fromStringArray: ["V:|-8-[$self]",
-                                                        "H:|-8-[$self]"])
-        
+        infoTitleLabel.addConstraints(fromStringArray: ["V:|-24-[$self]",
+                                                        "H:|-16-[$self]"])
+
         infoSupplementLabel = UILabel()
-        infoSupplementLabel.font = UIFont.systemFont(ofSize: 13)
-        infoSupplementLabel.textColor = KPColorPalette.KPTextColor.grayColor_level3
+        infoSupplementLabel.font = UIFont.systemFont(ofSize: 14)
+        infoSupplementLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
         addSubview(infoSupplementLabel)
-        infoSupplementLabel.addConstraints(fromStringArray: ["V:|-8-[$self]",
-                                                             "H:[$self]-8-|"])
+        infoSupplementLabel.addConstraints(fromStringArray: ["V:|-20-[$self]",
+                                                             "H:[$self]-16-|"])
         
         infoContainer = UIView()
         infoContainer.backgroundColor = UIColor.white
         addSubview(infoContainer)
-        infoContainer.addConstraints(fromStringArray: ["V:[$view0]-8-[$self(>=64)]",
+        infoContainer.addConstraints(fromStringArray: ["V:[$view0]-16-[$self(>=64)]|",
                                                        "H:|[$self]|"],
                                      views: [infoTitleLabel])
-        
+    
         emptyLabel = UILabel()
         emptyLabel.font = UIFont.systemFont(ofSize: 14.0)
         emptyLabel.textColor = KPColorPalette.KPTextColor.grayColor_level3
@@ -144,10 +148,17 @@ class KPInformationSharedInfoView: UIView {
         
         buttonContainer = UIView()
         buttonContainer.backgroundColor = UIColor.white
-        addSubview(self.buttonContainer)
-        buttonContainer.addConstraints(fromStringArray: ["V:[$view0][$self]|",
-                                                         "H:|[$self]|"],
-                                       views: [infoContainer])
+//        addSubview(self.buttonContainer)
+//        buttonContainer.addConstraints(fromStringArray: ["V:[$view0][$self]|",
+//                                                         "H:|[$self]|"],
+//                                       views: [infoContainer])
+        
+//        separator = UIView()
+//        separator.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
+//        addSubview(separator)
+//        separator.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
+//                                                   "V:[$self(1)]|"])
+        
     }
 
     required init?(coder aDecoder: NSCoder) {

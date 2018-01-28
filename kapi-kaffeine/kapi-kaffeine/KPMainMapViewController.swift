@@ -37,16 +37,16 @@ GMUClusterRendererDelegate {
         return shadowButton
     }()
     
-    lazy var addButton: KPShadowButton = {
-        let shadowButton = KPShadowButton()
-        shadowButton.backgroundColor = KPColorPalette.KPBackgroundColor.scoreButtonColor!
-        shadowButton.button.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.scoreButtonColor!), for: .normal)
-        shadowButton.button.setImage(R.image.icon_add(), for: .normal)
-        shadowButton.button.tintColor = UIColor.white
-        shadowButton.button.imageEdgeInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
-        shadowButton.layer.cornerRadius = 28
-        return shadowButton
-    }()
+//    lazy var addButton: KPShadowButton = {
+//        let shadowButton = KPShadowButton()
+//        shadowButton.backgroundColor = KPColorPalette.KPBackgroundColor.scoreButtonColor!
+//        shadowButton.button.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.scoreButtonColor!), for: .normal)
+//        shadowButton.button.setImage(R.image.icon_add(), for: .normal)
+//        shadowButton.button.tintColor = UIColor.white
+//        shadowButton.button.imageEdgeInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+//        shadowButton.layer.cornerRadius = 28
+//        return shadowButton
+//    }()
     
     var state: ControllerState! = .loading {
         didSet {
@@ -170,7 +170,6 @@ GMUClusterRendererDelegate {
                     
                 } else {
                     self.collectionViewBottomConstraint.constant = 200
-                    
                     UIView.animate(withDuration: 0.5,
                                    delay: 0,
                                    usingSpringWithDamping: 0.8,
@@ -303,13 +302,6 @@ GMUClusterRendererDelegate {
                                                        "V:[$self(40)]-16-[$view0]"],
                                      views: [collectionView])
         
-        view.addSubview(addButton)
-        addButton.button.addTarget(self,
-                                   action: #selector(handleAddButtonTapped(_:)), for: .touchUpInside)
-        addButton.addConstraints(fromStringArray: ["H:[$self(56)]-18-|",
-                                                   "V:[$self(56)]-16-[$view0]"],
-                                 views: [collectionView])
-        
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(receiveLocationInformation),
                                                name: NSNotification.Name.KPLocationDidUpdate,
@@ -389,26 +381,26 @@ GMUClusterRendererDelegate {
             isCollectionViewShow = false
         }
     }
-    
-    @objc func handleAddButtonTapped(_ sender: UIButton) {
-        
-        KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.map_add_store_button)
-        
-        let controller = KPModalViewController()
-        controller.edgeInset = UIEdgeInsets(top: 0,
-                                            left: 0,
-                                            bottom: 0,
-                                            right: 0)
-        let newStoreController = KPNewStoreController()
-        let navigationController = UINavigationController(rootViewController: newStoreController)
-        if #available(iOS 11.0, *) {
-            navigationController.navigationBar.prefersLargeTitles = true
-        } else {
-            // Fallback on earlier versions
-        }
-        controller.contentController = navigationController
-        controller.presentModalView()
-    }
+
+//    @objc func handleAddButtonTapped(_ sender: UIButton) {
+//
+//        KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.map_add_store_button)
+//
+//        let controller = KPModalViewController()
+//        controller.edgeInset = UIEdgeInsets(top: 0,
+//                                            left: 0,
+//                                            bottom: 0,
+//                                            right: 0)
+//        let newStoreController = KPNewStoreController()
+//        let navigationController = UINavigationController(rootViewController: newStoreController)
+//        if #available(iOS 11.0, *) {
+//            navigationController.navigationBar.prefersLargeTitles = true
+//        } else {
+//            // Fallback on earlier versions
+//        }
+//        controller.contentController = navigationController
+//        controller.presentModalView()
+//    }
     
     @objc func handleCurrentLocationButtonOnTap(_ sender: UIButton) {
         
@@ -588,7 +580,6 @@ GMUClusterRendererDelegate {
         UIView.animate(withDuration: 0.15,
                        animations: {
                         self.nearestButton.alpha = 0.6
-                        self.addButton.alpha = 0.6
         })
         
         UIView.animate(withDuration: 0.4,
@@ -611,7 +602,6 @@ GMUClusterRendererDelegate {
         UIView.animate(withDuration: 0.2,
                        animations: {
                         self.nearestButton.alpha = 1.0
-                        self.addButton.alpha = 1.0
         })
     }
     

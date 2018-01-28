@@ -8,8 +8,6 @@
 
 import UIKit
 
-
-
 class KPArticleViewController: KPViewController {
 
     static let scrollAnimationStartOffset: CGFloat = -20

@@ -16,7 +16,7 @@ class KPShopRateInfoView: UIView {
                       "插座數量"]
     var rateImages = [R.image.icon_wifi(), R.image.icon_sleep(), R.image.icon_money(),
                       R.image.icon_seat(), R.image.icon_cup(), R.image.icon_cutlery(),
-                      R.image.icon_pic(), R.image.icon_clock(), R.image.icon_stand(),
+                      R.image.icon_pic(), R.image.icon_time(), R.image.icon_stand(),
                       R.image.icon_socket()]
     
     var rateViews: [rateStatusView] = [rateStatusView]()
@@ -208,7 +208,7 @@ class KPShopRateInfoView: UIView {
             
             rateView!.addConstraint(forWidth: (UIScreen.main.bounds.size.width-48)/2)
             if index == 0 {
-                rateView!.addConstraints(fromStringArray: ["V:|-16-[$self(24)]",
+                rateView!.addConstraints(fromStringArray: ["V:|[$self(24)]",
                                                            "H:|-16-[$self]"])
                 
             } else if index == 4 {
@@ -217,13 +217,13 @@ class KPShopRateInfoView: UIView {
                                          views: [rateViews[index-1]])
                 
             } else if index == 5 {
-                rateView!.addConstraints(fromStringArray: ["V:|-16-[$self(24)]",
-                                                           "H:[$view0]-16-[$self]"],
+                rateView!.addConstraints(fromStringArray: ["V:|[$self(24)]",
+                                                           "H:[$view0]-24-[$self]"],
                                          views:[rateViews[0]])
 
             } else if index == 6 || index == 7 || index == 8 || index == 9 {
                 rateView!.addConstraints(fromStringArray: ["V:[$view0]-8-[$self(24)]",
-                                                           "H:[$view1]-16-[$self]"],
+                                                           "H:[$view1]-24-[$self]"],
                                          views:[rateViews[index-1],
                                                 rateViews[0]])
             } else {
@@ -260,15 +260,15 @@ class rateStatusView: UIView {
         self.init(frame:frame)
         
         iconImageView = UIImageView.init(image: icon)
-        iconImageView.tintColor = KPColorPalette.KPMainColor.mainColor
+        iconImageView.tintColor = KPColorPalette.KPMainColor_v2.textColor_level2
         addSubview(iconImageView)
-        iconImageView.addConstraints(fromStringArray: ["V:|[$self(24)]|",
-                                                       "H:|[$self(24)]"])
+        iconImageView.addConstraints(fromStringArray: ["V:|[$self(20)]|",
+                                                       "H:|[$self(20)]"])
         
         rateTitleLabel = UILabel()
         rateTitleLabel.font = UIFont.systemFont(ofSize: 13.0)
         rateTitleLabel.text = content
-        rateTitleLabel.textColor = KPColorPalette.KPTextColor.grayColor_level3
+        rateTitleLabel.textColor = KPColorPalette.KPMainColor_v2.textColor_level2
         addSubview(rateTitleLabel)
         rateTitleLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]"],
                                       views: [iconImageView])
@@ -277,7 +277,7 @@ class rateStatusView: UIView {
         rateContentLabel = UILabel()
         rateContentLabel.font = UIFont.systemFont(ofSize: 13.0)
         rateContentLabel.text = rateContent
-        rateContentLabel.textColor = KPColorPalette.KPTextColor.mainColor_light
+        rateContentLabel.textColor = KPColorPalette.KPMainColor_v2.mainColor
         addSubview(rateContentLabel)
         rateContentLabel.addConstraints(fromStringArray: ["H:[$self]|"],
                                          views: [rateTitleLabel])

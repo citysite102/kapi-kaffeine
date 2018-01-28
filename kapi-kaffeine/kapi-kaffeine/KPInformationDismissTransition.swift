@@ -19,7 +19,7 @@ class KPInformationDismissTransition: NSObject, UIViewControllerAnimatedTransiti
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         
         let fromVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from) as! UINavigationController;
-        let toVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to) as! KPMainViewController;
+        let toVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to) as! KPMainTabController;
         
         let container = transitionContext.containerView;
         let finalFrameForVC = transitionContext.finalFrame(for: toVC);

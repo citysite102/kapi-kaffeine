@@ -88,32 +88,42 @@ class KPShopInfoView: UIView {
         titleLabel = UILabel()
         titleLabel.font = UIFont.systemFont(ofSize: 16)
         titleLabel.textColor = KPColorPalette.KPTextColor.grayColor_level1
+        titleLabel.alpha = 0
         addSubview(titleLabel)
-        titleLabel.addConstraints(fromStringArray: ["V:|-16-[$self]",
+        titleLabel.addConstraints(fromStringArray: ["V:|-20-[$self]",
                                                     "H:|-16-[$self]"])
         
         if informationDataModel.featureContents.count > 0 {
             featureContainer = UIView()
             addSubview(featureContainer)
-            featureContainer.addConstraints(fromStringArray: ["V:[$view0]-8-[$self]",
+            featureContainer.addConstraints(fromStringArray: ["V:|-24-[$self]",
                                                               "H:|-16-[$self]"],
                                             views: [titleLabel])
             featureContents = informationDataModel.featureContents
             
             openTimeIcon = UIImageView(image: R.image.icon_tradehour())
-            openTimeIcon.tintColor = KPColorPalette.KPMainColor.mainColor
+            openTimeIcon.tintColor = KPColorPalette.KPMainColor_v2.textColor_level1
             addSubview(openTimeIcon)
-            openTimeIcon.addConstraints(fromStringArray: ["V:[$view0]-16-[$self(20)]",
+            openTimeIcon.addConstraints(fromStringArray: ["V:|[$self(20)]",
                                                           "H:|-16-[$self(20)]"],
                                         views: [featureContainer])
         } else {
             openTimeIcon = UIImageView(image: R.image.icon_tradehour())
-            openTimeIcon.tintColor = KPColorPalette.KPMainColor.mainColor
+            openTimeIcon.tintColor = KPColorPalette.KPMainColor_v2.textColor_level1
             addSubview(openTimeIcon)
-            openTimeIcon.addConstraints(fromStringArray: ["V:[$view0]-12-[$self(20)]",
+            openTimeIcon.addConstraints(fromStringArray: ["V:|[$self(20)]",
                                                           "H:|-16-[$self(20)]"],
                                         views: [titleLabel])
         }
+        
+        
+        openLabel = UILabel()
+        openLabel.font = UIFont.systemFont(ofSize: 14)
+        openLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_title
+        addSubview(openLabel)
+        openLabel.addConstraints(fromStringArray: ["H:[$view0]-5-[$self]"],
+                                 views: [openTimeIcon, titleLabel])
+        openLabel.addConstraintForCenterAligning(to: openTimeIcon, in: .vertical)
         
         openHint = UIView()
         openHint.layer.cornerRadius = 3.0
@@ -121,17 +131,9 @@ class KPShopInfoView: UIView {
         addSubview(openHint)
         openHint.addConstraints(fromStringArray: ["V:[$self(6)]",
                                                   "H:[$view0]-8-[$self(6)]"],
-                                views: [openTimeIcon])
+                                views: [openLabel])
         openHint.addConstraintForCenterAligning(to: openTimeIcon,
                                                 in: .vertical)
-        
-        openLabel = UILabel()
-        openLabel.font = UIFont.systemFont(ofSize: 14)
-        openLabel.textColor = KPColorPalette.KPTextColor.grayColor_level1
-        addSubview(openLabel)
-        openLabel.addConstraints(fromStringArray: ["H:[$view0]-5-[$self]"],
-                                 views: [openHint, titleLabel])
-        openLabel.addConstraintForCenterAligning(to: openTimeIcon, in: .vertical)
         
         otherTimeButton = UIButton(type: .custom)
         otherTimeButton.tintColor = KPColorPalette.KPMainColor.mainColor
@@ -147,12 +149,32 @@ class KPShopInfoView: UIView {
         otherTimeButton.addConstraintForCenterAligning(to: openLabel,
                                                        in: .vertical)
         
+        priceIcon = UIImageView(image: R.image.icon_money_l())
+        priceIcon.tintColor = KPColorPalette.KPMainColor_v2.textColor_level1
+        addSubview(priceIcon)
+        priceIcon.addConstraints(fromStringArray: ["V:[$self(20)]",
+                                                   "H:|-16-[$self(20)]"],
+                                 views: [openTimeIcon])
+        
+        priceLabel = UILabel()
+        priceLabel.font = UIFont.systemFont(ofSize: 14)
+        priceLabel.textColor = informationDataModel.address != nil ?
+            KPColorPalette.KPTextColor_v2.mainColor_title :
+            KPColorPalette.KPTextColor_v2.mainColor_subtitle
+        addSubview(priceLabel)
+        priceLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]",
+                                                    "V:[$view1]-16-[$self]"],
+                                  views: [priceIcon, openLabel])
+        priceIcon.addConstraintForCenterAligning(to: priceLabel,
+                                                 in: .vertical)
+        
+        
         phoneIcon = UIImageView(image: R.image.icon_phone())
-        phoneIcon.tintColor = KPColorPalette.KPMainColor.mainColor
+        phoneIcon.tintColor = KPColorPalette.KPMainColor_v2.textColor_level1
         addSubview(phoneIcon)
         phoneIcon.addConstraints(fromStringArray: ["V:[$self(20)]",
                                                    "H:|-16-[$self(20)]"],
-                                 views: [openTimeIcon])
+                                 views: [priceIcon])
         
         phoneLabel = UITextView()
         phoneLabel.isEditable = false
@@ -161,17 +183,17 @@ class KPShopInfoView: UIView {
         phoneLabel.textContainerInset = UIEdgeInsetsMake(1, 0, 0, 0)
         phoneLabel.textContainer.lineFragmentPadding = 0
         phoneLabel.textColor = informationDataModel.phone != nil ?
-            KPColorPalette.KPTextColor.grayColor_level1 :
-            KPColorPalette.KPTextColor.grayColor_level5
+            KPColorPalette.KPTextColor_v2.mainColor_title :
+            KPColorPalette.KPTextColor_v2.mainColor_subtitle
         addSubview(phoneLabel)
         phoneLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]-16-|",
                                                     "V:[$view1]-12-[$self(20)]"],
-                                  views: [phoneIcon, openLabel])
+                                  views: [phoneIcon, priceLabel])
         phoneIcon.addConstraintForCenterAligning(to: phoneLabel,
                                                  in: .vertical)
         
         locationIcon = UIImageView(image: R.image.icon_pin())
-        locationIcon.tintColor = KPColorPalette.KPMainColor.mainColor
+        locationIcon.tintColor = KPColorPalette.KPMainColor_v2.textColor_level1
         addSubview(locationIcon)
         locationIcon.addConstraints(fromStringArray: ["V:[$self(20)]",
                                                       "H:|-16-[$self(20)]"],
@@ -181,34 +203,15 @@ class KPShopInfoView: UIView {
         locationLabel.font = UIFont.systemFont(ofSize: 14)
         locationLabel.numberOfLines = 0
         locationLabel.textColor = informationDataModel.address != nil ?
-            KPColorPalette.KPTextColor.grayColor_level1 :
-            KPColorPalette.KPTextColor.grayColor_level5
+            KPColorPalette.KPTextColor_v2.mainColor_title :
+            KPColorPalette.KPTextColor_v2.mainColor_subtitle
         addSubview(locationLabel)
-        locationLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]-16-|",
-                                                       "V:[$view1]-12-[$self]"],
+        locationLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]-20-|",
+                                                       "V:[$view1]-12-[$self]-16-|"],
                                      views: [locationIcon,
                                              phoneLabel])
         locationIcon.addConstraintForCenterAligning(to: locationLabel,
                                                     in: .vertical)
-        
-        priceIcon = UIImageView(image: R.image.icon_money_l())
-        priceIcon.tintColor = KPColorPalette.KPMainColor.mainColor
-        addSubview(priceIcon)
-        priceIcon.addConstraints(fromStringArray: ["V:[$self(20)]",
-                                                   "H:|-16-[$self(20)]"],
-                                    views: [locationIcon])
-        
-        priceLabel = UILabel()
-        priceLabel.font = UIFont.systemFont(ofSize: 14)
-        priceLabel.textColor = informationDataModel.address != nil ?
-            KPColorPalette.KPTextColor.grayColor_level1 :
-            KPColorPalette.KPTextColor.grayColor_level5
-        addSubview(priceLabel)
-        priceLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]",
-                                                    "V:[$view1]-12-[$self]-16-|"],
-                                  views: [priceIcon, locationLabel])
-        priceIcon.addConstraintForCenterAligning(to: priceLabel,
-                                                 in: .vertical)
         
         
         titleLabel.setText(text: informationDataModel.closed ?

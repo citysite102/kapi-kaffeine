@@ -174,7 +174,7 @@ class KPInformationViewController: KPViewController {
         dismissButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
         dismissButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
         dismissButton.contentEdgeInsets = showBackButton ? UIEdgeInsetsMake(3, 0, 3, 6) : UIEdgeInsetsMake(6, 0, 8, 14)
-        dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor
+        dismissButton.tintColor = KPColorPalette.KPMainColor_v2.textColor_level2
         dismissButton.addTarget(self,
                                 action: #selector(KPInformationViewController.handleDismissButtonOnTapped),
                                 for: .touchUpInside)
@@ -302,6 +302,7 @@ class KPInformationViewController: KPViewController {
 
         scrollContainer = UIScrollView()
         scrollContainer.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7
+//        scrollContainer.backgroundColor = UIColor.white
         scrollContainer.delegate = self
         scrollContainer.canCancelContentTouches = false
         view.addSubview(scrollContainer)
@@ -431,38 +432,38 @@ class KPInformationViewController: KPViewController {
         } else {
             locationInformationView.infoSupplementLabel.text = "你身在神秘的星球"
         }
-        locationInformationView.actions = [
-            Action(title:"街景模式",
-                   style:.normal,
-                   color:KPColorPalette.KPMainColor.mainColor_sub!,
-                   icon:R.image.icon_street(),
-                   handler:{
-                    [weak self] (infoView) -> () in
-                    if let weSelf = self {
-                        if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
-                            UIApplication.shared.open(URL(string:
-                                "comgooglemaps://?center=\(weSelf.informationDataModel.latitude!),\(weSelf.informationDataModel.longitude!)&mapmode=streetview")!,
-                                                      options: [:],
-                                                      completionHandler: nil)
-                        } else {
-                            print("Can't use comgooglemaps://")
-                        }
-                    }
-            }),
-            Action(title:"開啟導航",
-                   style:.normal,
-                   color:KPColorPalette.KPMainColor.mainColor!,
-                   icon:(R.image.icon_navi()?.withRenderingMode(.alwaysTemplate))!,
-                   handler:{ [weak self] (infoView) -> () in
-                    KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.store_navigation_button)
-                    if let weSelf = self {
-                        weSelf.present(weSelf.mapActionController,
-                                       animated: true,
-                                       completion: nil)
-                    }
-
-            })
-        ]
+//        locationInformationView.actions = [
+//            Action(title:"街景模式",
+//                   style:.normal,
+//                   color:KPColorPalette.KPMainColor.mainColor_sub!,
+//                   icon:R.image.icon_street(),
+//                   handler:{
+//                    [weak self] (infoView) -> () in
+//                    if let weSelf = self {
+//                        if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
+//                            UIApplication.shared.open(URL(string:
+//                                "comgooglemaps://?center=\(weSelf.informationDataModel.latitude!),\(weSelf.informationDataModel.longitude!)&mapmode=streetview")!,
+//                                                      options: [:],
+//                                                      completionHandler: nil)
+//                        } else {
+//                            print("Can't use comgooglemaps://")
+//                        }
+//                    }
+//            }),
+//            Action(title:"開啟導航",
+//                   style:.normal,
+//                   color:KPColorPalette.KPMainColor.mainColor!,
+//                   icon:(R.image.icon_navi()?.withRenderingMode(.alwaysTemplate))!,
+//                   handler:{ [weak self] (infoView) -> () in
+//                    KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.store_navigation_button)
+//                    if let weSelf = self {
+//                        weSelf.present(weSelf.mapActionController,
+//                                       animated: true,
+//                                       completion: nil)
+//                    }
+//
+//            })
+//        ]
         
         scrollContainer.addSubview(locationInformationView)
         locationInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
@@ -475,36 +476,36 @@ class KPInformationViewController: KPViewController {
         rateInformationView.infoView = shopRateInfoView
         rateInformationView.infoTitleLabel.text = "店家評分"
         rateInformationView.infoSupplementLabel.text = "\(informationDataModel.rateCount ?? 0) 人已評分"
-        rateInformationView.actions = [Action(title:"我要評分",
-                                              style:.normal,
-                                              color:KPColorPalette.KPMainColor.mainColor!,
-                                              icon:(R.image.icon_star()?.withRenderingMode(.alwaysTemplate))!,
-                                              handler:{
-                                                [weak self] (infoView) -> () in
-                                                if let weSelf = self {
-                                                    if KPUserManager.sharedManager.currentUser == nil {
-                                                        KPPopoverView.popoverLoginView()
-                                                    } else {
-                                                        if KPServiceHandler.sharedHandler.isCurrentShopClosed {
-                                                            KPPopoverView.popoverClosedView()
-                                                        } else {
-                                                            let controller = KPModalViewController()
-                                                            controller.edgeInset = UIEdgeInsets(top: UIDevice().isSuperCompact ? 32 : 72,
-                                                                                                    left: 0,
-                                                                                                    bottom: 0,
-                                                                                                    right: 0)
-                                                            controller.cornerRadius = [.topRight, .topLeft]
-                                                            let ratingViewController = KPRatingViewController()
-                                                                
-                                                            if weSelf.hasRatedDataModel != nil {
-                                                                ratingViewController.defaultRateModel = weSelf.hasRatedDataModel
-                                                            }
-                                                            controller.contentController = ratingViewController
-                                                            controller.presentModalView()
-                                                        }
-                                                    }
-                                                }
-        })]
+//        rateInformationView.actions = [Action(title:"我要評分",
+//                                              style:.normal,
+//                                              color:KPColorPalette.KPMainColor.mainColor!,
+//                                              icon:(R.image.icon_star()?.withRenderingMode(.alwaysTemplate))!,
+//                                              handler:{
+//                                                [weak self] (infoView) -> () in
+//                                                if let weSelf = self {
+//                                                    if KPUserManager.sharedManager.currentUser == nil {
+//                                                        KPPopoverView.popoverLoginView()
+//                                                    } else {
+//                                                        if KPServiceHandler.sharedHandler.isCurrentShopClosed {
+//                                                            KPPopoverView.popoverClosedView()
+//                                                        } else {
+//                                                            let controller = KPModalViewController()
+//                                                            controller.edgeInset = UIEdgeInsets(top: UIDevice().isSuperCompact ? 32 : 72,
+//                                                                                                    left: 0,
+//                                                                                                    bottom: 0,
+//                                                                                                    right: 0)
+//                                                            controller.cornerRadius = [.topRight, .topLeft]
+//                                                            let ratingViewController = KPRatingViewController()
+//
+//                                                            if weSelf.hasRatedDataModel != nil {
+//                                                                ratingViewController.defaultRateModel = weSelf.hasRatedDataModel
+//                                                            }
+//                                                            controller.contentController = ratingViewController
+//                                                            controller.presentModalView()
+//                                                        }
+//                                                    }
+//                                                }
+//        })]
         scrollContainer.addSubview(rateInformationView)
         rateInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                              "V:[$view0]-24-[$self]"],
@@ -539,13 +540,13 @@ class KPInformationViewController: KPViewController {
         photoInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                               "V:[$view0]-24-[$self]"],
                                                     views: [commentInformationView])
-        photoInformationView.actions = [Action(title: "上傳照片",
-                                               style:.normal,
-                                               color:KPColorPalette.KPMainColor.mainColor!,
-                                               icon:(R.image.icon_camera()?.withRenderingMode( .alwaysTemplate))!,
-                                               handler:{[unowned self] (infoView) -> () in
-                                                self.photoUpload()
-        })]
+//        photoInformationView.actions = [Action(title: "上傳照片",
+//                                               style:.normal,
+//                                               color:KPColorPalette.KPMainColor.mainColor!,
+//                                               icon:(R.image.icon_camera()?.withRenderingMode( .alwaysTemplate))!,
+//                                               handler:{[unowned self] (infoView) -> () in
+//                                                self.photoUpload()
+//        })]
         
         
         
@@ -559,13 +560,13 @@ class KPInformationViewController: KPViewController {
         menuInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                              "V:[$view0]-24-[$self]"],
                                             views: [photoInformationView])
-        menuInformationView.actions = [Action(title: "上傳菜單",
-                                               style:.normal,
-                                               color:KPColorPalette.KPMainColor.mainColor!,
-                                               icon:(R.image.icon_camera()?.withRenderingMode( .alwaysTemplate))!,
-                                               handler:{[unowned self] (infoView) -> () in
-                                                self.menuUpload()
-        })]
+//        menuInformationView.actions = [Action(title: "上傳菜單",
+//                                               style:.normal,
+//                                               color:KPColorPalette.KPMainColor.mainColor!,
+//                                               icon:(R.image.icon_camera()?.withRenderingMode( .alwaysTemplate))!,
+//                                               handler:{[unowned self] (infoView) -> () in
+//                                                self.menuUpload()
+//        })]
         
 
         let shopRecommendView = KPShopRecommendView()
@@ -599,7 +600,7 @@ class KPInformationViewController: KPViewController {
         SKPhotoBrowserOptions.displayAction = false
         SKPhotoBrowserOptions.displayStatusbar = true
         
-        syncRemoteData()
+//        syncRemoteData()
     }
     
     override func viewDidAppear(_ animated: Bool) {

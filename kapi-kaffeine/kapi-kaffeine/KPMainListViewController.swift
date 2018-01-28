@@ -40,18 +40,6 @@ class KPMainListViewController:
     var adLoader: GADAdLoader!
     var oldScrollOffsetY: CGFloat = 80.0
     var currentSearchTagTranslateY: CGFloat = 0.0
-    
-    lazy var addButton: KPShadowButton = {
-        let shadowButton = KPShadowButton()
-        shadowButton.backgroundColor = KPColorPalette.KPBackgroundColor.scoreButtonColor!
-        shadowButton.button.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.scoreButtonColor!), for: .normal)
-        shadowButton.button.setImage(R.image.icon_add(), for: .normal)
-        shadowButton.button.tintColor = UIColor.white
-        shadowButton.button.imageEdgeInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
-        shadowButton.layer.cornerRadius = 28
-        return shadowButton
-    }()
-    
     var currentDataModel: KPDataModel?
     var currentSelectedCell: KPMainListTableViewCell?
     var state: ControllerState! = .loading
@@ -206,15 +194,6 @@ class KPMainListViewController:
         snapshotView.addConstraints(fromStringArray: ["V:|-100-[$self]-(-40)-|",
                                                       "H:|[$self]|"])
         
-//        view.bringSubview(toFront: searchFooterView)
-        
-        view.addSubview(addButton)
-        addButton.button.addTarget(self,
-                                   action: #selector(handleAddButtonTapped(_:)), for: .touchUpInside)
-        addButton.addConstraints(fromStringArray: ["H:[$self(56)]-18-|",
-                                                   "V:[$self(56)]-16-|"])
-        
-        
         satisficationView = KPSatisficationView()
         expNotificationView = KPExpNotificationView()
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
@@ -272,26 +251,6 @@ class KPMainListViewController:
         statusErrorDescriptionLabel.text = ""
         statusErrorDescriptionLabel.layer.add(fadeTransition, forKey: nil)
         CATransaction.commit()
-    }
-    
-    @objc func handleAddButtonTapped(_ sender: UIButton) {
-        
-        KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.list_add_store_button)
-        
-        let controller = KPModalViewController()
-        controller.edgeInset = UIEdgeInsets(top: 0,
-                                            left: 0,
-                                            bottom: 0,
-                                            right: 0)
-        let newStoreController = KPNewStoreController()
-        let navigationController = UINavigationController(rootViewController: newStoreController)
-        if #available(iOS 11.0, *) {
-            navigationController.navigationBar.prefersLargeTitles = true
-        } else {
-            // Fallback on earlier versions
-        }
-        controller.contentController = navigationController
-        controller.presentModalView()
     }
     
     // MARK: Ads
@@ -381,70 +340,6 @@ extension KPMainListViewController: GADNativeExpressAdViewDelegate {
 
 extension KPMainListViewController: UITableViewDelegate, UITableViewDataSource {
     
-//    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-//        if !scrollView.isDecelerating && !scrollView.isDragging {
-//            var translate: CGFloat
-//            if (scrollView.contentOffset.y + 1) >= (scrollView.contentSize.height - scrollView.frame.size.height) {
-//                translate = -80
-//            } else {
-//                translate = self.currentSearchTagTranslateY < -40 ? -80 : 0.0
-//            }
-//            self.currentSearchTagTranslateY = translate
-//            UIView.animate(withDuration: 0.1,
-//                           animations: { 
-//                            self.mainController.searchHeaderView.searchTagView.transform = CGAffineTransform(translationX: 0,
-//                                                                                                             y: self.currentSearchTagTranslateY/2)
-//                            self.mainController.mainMapViewController?.mapView.transform = CGAffineTransform(translationX: 0,
-//                                                                                                             y: self.currentSearchTagTranslateY/2)
-//                            self.tableView.transform = CGAffineTransform(translationX: 0, y: self.currentSearchTagTranslateY/2)
-//                            self.snapshotView.transform = CGAffineTransform(translationX: 0, y: self.currentSearchTagTranslateY/2)
-//            }, completion: { (_) in
-//                
-//            })
-//        }
-//    }
-    
-//    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-//        print("Did End Decelerate")
-//        if self.currentSearchTagTranslateY != -80 || self.currentSearchTagTranslateY != 0 {
-//            var translate: CGFloat
-//            if (scrollView.contentOffset.y + 1) >= (scrollView.contentSize.height - scrollView.frame.size.height) {
-//                translate = -80
-//            } else {
-//                translate = self.currentSearchTagTranslateY < -40 ? -80 : 0.0
-//            }
-//            self.currentSearchTagTranslateY = translate
-//            UIView.animate(withDuration: 0.1,
-//                           animations: {
-//                            self.mainController.searchHeaderView.searchTagView.transform = CGAffineTransform(translationX: 0,
-//                                                                                                             y: self.currentSearchTagTranslateY/2)
-//                            self.mainController.mainMapViewController?.mapView.transform = CGAffineTransform(translationX: 0,
-//                                                                                                             y: self.currentSearchTagTranslateY/2)
-//                            self.tableView.transform = CGAffineTransform(translationX: 0, y: self.currentSearchTagTranslateY/2)
-//                            self.snapshotView.transform = CGAffineTransform(translationX: 0, y: self.currentSearchTagTranslateY/2)
-//            }, completion: { (_) in
-//                
-//            })
-//        }
-//    }
-    
-//    func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
-//        print("Will Begin Decelerate")
-//        let translate: CGFloat = self.currentSearchTagTranslateY < -40 ? -80 : 0.0
-//        self.currentSearchTagTranslateY = translate
-//        UIView.animate(withDuration: 0.1,
-//                       animations: {
-//                        self.mainController.searchHeaderView.searchTagView.transform = CGAffineTransform(translationX: 0,
-//                                                                                                         y: self.currentSearchTagTranslateY/2)
-//                        self.mainController.mainMapViewController?.mapView.transform = CGAffineTransform(translationX: 0,
-//                                                                                                         y: self.currentSearchTagTranslateY/2)
-//                        self.tableView.transform = CGAffineTransform(translationX: 0, y: self.currentSearchTagTranslateY/2)
-//                        self.snapshotView.transform = CGAffineTransform(translationX: 0, y: self.currentSearchTagTranslateY/2)
-//        }, completion: { (_) in
-//            
-//        })
-//    }
-    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView.contentOffset.y > 80 &&
             (scrollView.contentOffset.y + scrollView.frameSize.height) < scrollView.contentSize.height {
@@ -494,7 +389,6 @@ extension KPMainListViewController: UITableViewDelegate, UITableViewDataSource {
                                                                                                              y: self.currentSearchTagTranslateY/2)
                             self.tableView.transform = CGAffineTransform(translationX: 0, y: self.currentSearchTagTranslateY/2)
                             self.snapshotView.transform = CGAffineTransform(translationX: 0, y: self.currentSearchTagTranslateY/2)
-                            self.addButton.transform = CGAffineTransform(translationX: 0, y: buttonTranslate)
             }, completion: { (_) in
                 self.oldScrollOffsetY = scrollView.contentOffset.y
             })

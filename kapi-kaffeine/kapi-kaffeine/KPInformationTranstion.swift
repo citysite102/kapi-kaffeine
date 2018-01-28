@@ -15,7 +15,7 @@ class KPInformationTranstion: NSObject, UIViewControllerAnimatedTransitioning {
     }
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-        let fromVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from) as! KPMainViewController;
+        let fromVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from) as! KPMainTabController;
         let toVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to) as! UINavigationController;
         
         let container = transitionContext.containerView;
