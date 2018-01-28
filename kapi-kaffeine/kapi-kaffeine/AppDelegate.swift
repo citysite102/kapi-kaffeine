@@ -16,7 +16,6 @@ import UserNotifications
 import Fabric
 import Crashlytics
 import Amplitude_iOS
-//import BaltoSDK
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, MessagingDelegate {

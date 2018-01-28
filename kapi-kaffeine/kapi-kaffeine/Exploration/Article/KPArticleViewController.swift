@@ -33,7 +33,9 @@ class KPArticleViewController: KPViewController {
     var scrollDownButton: UIButton!
     var lastOffset: CGFloat!
     
+    var topBarContainer: UIView!
     var toolBarContainer: UIView!
+    var separator_top: UIView!
     var separator: UIView!
     var collectButton: UIButton!
     
@@ -136,13 +138,28 @@ class KPArticleViewController: KPViewController {
         articleYConstaint = articleContainer.addConstraint(from: "V:|-667-[$self]").first as! NSLayoutConstraint
         lastOffset = KPArticleViewController.scrollAnimationStartOffset
         
+        topBarContainer = UIView()
+        topBarContainer.backgroundColor = UIColor.white
+        topBarContainer.alpha = 0
+        view.addSubview(topBarContainer)
+        topBarContainer.addConstraints(fromStringArray: ["V:|[$self(64)]",
+                                                          "H:|[$self]|"])
+        separator_top = UIView()
+        separator_top.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
+        topBarContainer.addSubview(separator_top)
+        separator_top.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                       "V:[$self(1)]|"])
+        
         dismissButton = KPBounceButton(frame: CGRect.zero,
                                        image: R.image.icon_close()!)
         dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor
         dismissButton.alpha = 0.9
         view.addSubview(dismissButton)
-        dismissButton.addConstraints(fromStringArray: ["V:|-40-[$self(24)]",
-                                                       "H:|-16-[$self(24)]"])
+        dismissButton.addConstraints(fromStringArray: ["V:[$self(20)]",
+                                                       "H:|-16-[$self(20)]"])
+        dismissButton.addConstraintForCenterAligning(to: topBarContainer,
+                                                     in: .vertical,
+                                                     constant: 6)
         dismissButton.addTarget(self,
                                 action: #selector(handleDismissButtonOnTapped), for: .touchUpInside)
         
@@ -317,7 +334,6 @@ extension KPArticleViewController: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
-        
         // 處理 Tool Bar
         UIView.animate(withDuration: 0.2,
                        delay: 0,
@@ -386,7 +402,9 @@ extension KPArticleViewController: UIScrollViewDelegate {
                 }
                 
             } else {
-                if self.scrollContainer.contentOffset.y > 420 {
+                if self.scrollContainer.contentOffset.y >= 380 {
+                    print("Offset:\(self.scrollContainer.contentOffset.y)")
+                    topBarContainer.alpha = (self.scrollContainer.contentOffset.y - 380) / 40
                     dismissButton.tintColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
                 } else if self.scrollContainer.contentOffset.y <= 0 &&
                     self.scrollContainer.contentOffset.y > -60 {
@@ -400,6 +418,7 @@ extension KPArticleViewController: UIScrollViewDelegate {
                                                   width: updatedFrame.width*2,
                                                   height: updatedFrame.height)
                 } else {
+                    topBarContainer.alpha = 0
                     dismissButton.tintColor = UIColor.white
                 }
             }
