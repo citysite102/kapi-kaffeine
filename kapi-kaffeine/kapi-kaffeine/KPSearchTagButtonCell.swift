@@ -26,11 +26,17 @@ class KPSearchTagButtonCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        backgroundColor = KPColorPalette.KPMainColor.mainColor
+        layer.borderWidth = 1.0
+        layer.borderColor = KPColorPalette.KPMainColor_v2.textColor_level3?.cgColor
+        layer.cornerRadius = 16.0
+        layer.masksToBounds = true
+        
+        backgroundColor = KPColorPalette.KPBackgroundColor.whiteColor
         tagTitle = UILabel()
         tagTitle.font = UIFont.systemFont(ofSize: 13.0)
-        tagTitle.textColor = KPColorPalette.KPTextColor.whiteColor
+        tagTitle.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
         addSubview(tagTitle)
+        tagTitle.addConstraints(fromStringArray: ["H:|-12-[$self]-12-|"])
         tagTitle.addConstraintForCenterAligningToSuperview(in: .vertical)
         tagTitle.addConstraintForCenterAligningToSuperview(in: .horizontal)
         

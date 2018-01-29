@@ -51,14 +51,23 @@ class KPMainTabController: ESTabBarController, UITabBarControllerDelegate {
         }
         
         
-        
         let exploreController = KPExplorationViewController()
-        exploreController.tabBarItem = UITabBarItem(title: "探索",
-                                                    image: R.image.icon_map(), selectedImage: R.image.icon_cup())
+//        let exploreItem = ESTabBarItem.init(ESTabBarItemContentView(),
+//                                            title: nil,
+//                                            image: R.image.icon_explore(),
+//                                            selectedImage: R.image.icon_explore())
+        let exploreItem = UITabBarItem(title: "探索",
+                                       image: R.image.icon_explore(),
+                                       selectedImage: R.image.icon_explore())
+        exploreItem.imageInsets = UIEdgeInsetsMake(2, 2, 2, 2)
+        exploreController.tabBarItem = exploreItem
         
         let searchController = KPSearchViewController()
-        searchController.tabBarItem = UITabBarItem(title: "搜尋",
-                                                   image: R.image.icon_pic(), selectedImage: R.image.icon_cup())
+        let searchItem = UITabBarItem(title: "搜尋",
+                                      image: R.image.icon_search(),
+                                      selectedImage: R.image.icon_search())
+        searchItem.imageInsets = UIEdgeInsetsMake(2, 2, 2, 2)
+        searchController.tabBarItem = searchItem
         
         let newStoreController = KPNewStoreController()
         newStoreController.tabBarItem = ESTabBarItem(KPTabBarAddButton(),
@@ -69,14 +78,18 @@ class KPMainTabController: ESTabBarController, UITabBarControllerDelegate {
         let listController = UIStoryboard.init(name: "Main",
                                                bundle: nil).instantiateViewController(withIdentifier: "mainViewController") as! KPMainViewController
         listController.tabBarItem = UITabBarItem(title: "清單",
-                                                 image: R.image.icon_msg(), selectedImage: R.image.icon_cup())
+                                                 image: R.image.icon_listView(),
+                                                 selectedImage: R.image.icon_listView())
         
+        let profileItem = UITabBarItem(title: "我的",
+                                       image: R.image.icon_profile(),
+                                       selectedImage: R.image.icon_profile())
+        profileItem.imageInsets = UIEdgeInsetsMake(2, 2, 2, 2)
         
         if (KPUserManager.sharedManager.currentUser != nil) {
             
             let profileController = KPUserProfileViewController()
-            profileController.tabBarItem = UITabBarItem(title: "我的",
-                                                        image: R.image.icon_door(), selectedImage: R.image.icon_cup())
+            profileController.tabBarItem = profileItem
             viewControllers = [exploreController,
                                searchController,
                                newStoreController,
@@ -84,8 +97,7 @@ class KPMainTabController: ESTabBarController, UITabBarControllerDelegate {
                                profileController]
         } else {
             let loginController = KPLoginViewController()
-            loginController.tabBarItem = UITabBarItem(title: "我的",
-                                                        image: R.image.icon_door(), selectedImage: R.image.icon_cup())
+            loginController.tabBarItem = profileItem
             viewControllers = [exploreController,
                                searchController,
                                newStoreController,
@@ -93,8 +105,9 @@ class KPMainTabController: ESTabBarController, UITabBarControllerDelegate {
                                loginController]
         }
         
-        
-        
+        UITabBar.appearance().barTintColor = UIColor.white
+        UITabBar.appearance().unselectedItemTintColor = KPColorPalette.KPMainColor_v2.textColor_level4
+        UITabBar.appearance().tintColor = KPColorPalette.KPMainColor_v2.mainColor
     }
 
     override func didReceiveMemoryWarning() {

@@ -112,7 +112,8 @@ struct KPColorPalette {
         
         static let textColor_level1 = UIColor(hexString: "#444444")
         static let textColor_level2 = UIColor(hexString: "#585858")
-        static let textColor_level3 = UIColor(hexString: "#8a8a8a")
+        static let textColor_level3 = UIColor(hexString: "#787878")
+        static let textColor_level4 = UIColor(hexString: "#8a8a8a")
         
         
         static let grayColor_level1 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 1.0)
@@ -191,6 +192,7 @@ struct KPColorPalette {
         
         static let mainColor_ripple = UIColor(rgbaHexValue: 0xc8955eaa)
         
+        static let whiteColor = UIColor(rgbaHexValue: 0xffffffff)
         static let grayColor_level2 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.7)
         static let grayColor_level3 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.5)
         static let grayColor_level4 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.3)

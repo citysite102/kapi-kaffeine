@@ -110,12 +110,12 @@ class KPMainViewController: KPViewController {
         searchHeaderView.searchTagView.isUserInteractionEnabled = false
         searchHeaderView.searchTagView.delegate = self
         view.addSubview(searchHeaderView)
-        searchHeaderView.addConstraints(fromStringArray: ["V:|[$self(104)]",
+        searchHeaderView.addConstraints(fromStringArray: ["V:|[$self]",
                                                           "H:|[$self]|"])
         
-        searchHeaderView.searchTagView.preferenceHintButton.addTarget(self,
-                                                                      action: #selector(handlePreferenceButtonOnTapped),
-                                                                       for: .touchUpInside)
+//        searchHeaderView.searchTagView.preferenceHintButton.addTarget(self,
+//                                                                      action: #selector(handlePreferenceButtonOnTapped),
+//                                                                       for: .touchUpInside)
         
         statusContainer = UIView()
         statusContainer.isHidden = true
@@ -158,9 +158,9 @@ class KPMainViewController: KPViewController {
         searchHeaderView.menuButton.addTarget(self,
                                               action: #selector(switchSideBar),
                                               for: .touchUpInside)
-        searchHeaderView.styleButton.addTarget(self,
-                                               action: #selector(changeStyle),
-                                               for: .touchUpInside)
+        searchHeaderView.filterButton.addTarget(self,
+                                                action: #selector(changeStyle),
+                                                for: .touchUpInside)
         searchHeaderView.searchButton.addTarget(self,
                                                 action: #selector(search),
                                                 for: .touchUpInside)

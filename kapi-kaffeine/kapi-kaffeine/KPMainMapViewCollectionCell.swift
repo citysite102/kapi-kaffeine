@@ -91,18 +91,19 @@ class KPMainMapViewCollectionCell: UICollectionViewCell {
         shopImageView.clipsToBounds = true
         contentView.addSubview(shopImageView)
         shopImageView.addConstraints(fromStringArray: ["H:|-[$self]-|",
-                                                       "V:|-10-[$self(80)]"])
+                                                       "V:|-8-[$self(80)]"])
         
         self.shopNameLabel = KPLayerLabel()
-        self.shopNameLabel.font = UIFont.systemFont(ofSize: 18.0)
-        self.shopNameLabel.textColor = KPColorPalette.KPTextColor.grayColor
-        self.shopNameLabel.lineBreakMode = .byTruncatingTail
+        self.shopNameLabel.font = UIFont.systemFont(ofSize: 16.0)
+        self.shopNameLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_title
+//        self.shopNameLabel.lineBreakMode = .byTruncatingTail
         self.shopNameLabel.text = "覺旅咖啡"
+        shopNameLabel.isOpaque = true
+        shopNameLabel.layer.masksToBounds = true
         self.addSubview(self.shopNameLabel)
         
         self.shopNameLabel.addConstraints(fromStringArray: ["H:|-[$self]-|",
-                                                            "V:[$view0]-[$self]"],
-                                          metrics: [UIScreen.main.bounds.size.width/2],
+                                                            "V:[$view0]-[$self(24)]"],
                                           views: [self.shopImageView])
         
         self.shopStatusHint = UIView()
@@ -110,21 +111,24 @@ class KPMainMapViewCollectionCell: UICollectionViewCell {
         self.shopStatusHint.layer.cornerRadius = 3.0
         self.addSubview(self.shopStatusHint)
         self.shopStatusHint.addConstraints(fromStringArray: ["H:|-[$self(6)]",
-                                                             "V:[$view0]-[$self(6)]"],
+                                                             "V:[$view0]-8-[$self(6)]"],
                                            views: [self.shopNameLabel])
         
-        self.shopStatusLabel = KPLayerLabel()
-        self.shopStatusLabel.font = UIFont.systemFont(ofSize: 12.0)
-        self.shopStatusLabel.textColor = KPColorPalette.KPTextColor.mainColor
-        self.shopStatusLabel.text = "營業中 12:00-21:00"
+        shopStatusLabel = KPLayerLabel()
+        shopStatusLabel.font = UIFont.systemFont(ofSize: 14.0)
+        shopStatusLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
+        shopStatusLabel.text = "營業時間 未知"
+        shopStatusLabel.isOpaque = true
+        shopStatusLabel.layer.masksToBounds = true
         self.addSubview(self.shopStatusLabel)
-        self.shopStatusLabel.addConstraints(fromStringArray: ["H:[$view0]-5-[$self($metric0)]"],
+        self.shopStatusLabel.addConstraints(fromStringArray: ["H:[$view0]-4-[$self($metric0)]"],
                                             metrics: [UIScreen.main.bounds.size.width/2],
                                             views: [self.shopStatusHint])
-        self.shopStatusLabel.addConstraintForCenterAligning(to: self.shopStatusHint, in: .vertical)
+        self.shopStatusLabel.addConstraintForCenterAligning(to: self.shopStatusHint,
+                                                            in: .vertical)
         
         self.shopDistanceLabel = KPLayerLabel()
-        self.shopDistanceLabel.font = UIFont.systemFont(ofSize: 13.0)
+        self.shopDistanceLabel.font = UIFont.systemFont(ofSize: 14.0)
         self.shopDistanceLabel.textColor = KPColorPalette.KPTextColor.mainColor
         self.shopDistanceLabel.text = "-"
         self.shopDistanceLabel.layoutMargins = UIEdgeInsetsMake(0, 0, 0, 0)

@@ -46,10 +46,7 @@ class KPArticleViewController: KPViewController {
         
         scrollContainer = UIScrollView()
         scrollContainer.delegate = self
-//        scrollContainer.bounces = false
         scrollContainer.decelerationRate = UIScrollViewDecelerationRateFast
-//        scrollContainer.alwaysBounceVertical = true
-//        scrollContainer.alwaysBounceHorizontal = false
         view.addSubview(scrollContainer)
         scrollContainer.addConstraints(fromStringArray: ["V:|[$self]|",
                                                          "H:|[$self]|"])
@@ -70,7 +67,7 @@ class KPArticleViewController: KPViewController {
                                                       "H:|[$self]|"])
         
         imageMaskLayer = CAGradientLayer()
-        imageMaskLayer.opacity = 0.8
+        imageMaskLayer.opacity = 0.7
         imageMaskLayer.frame = view.bounds
         imageMaskLayer.colors = [UIColor.init(r: 0, g: 0, b: 0, a: 0.7).cgColor,
                                  UIColor.init(r: 0, g: 0, b: 0, a: 0.0).cgColor]
@@ -78,6 +75,18 @@ class KPArticleViewController: KPViewController {
         imageMaskLayer.endPoint = CGPoint(x: 0.5, y: 0.0)
         gradientView.layer.addSublayer(imageMaskLayer)
 
+        scrollDownButton = UIButton(type: .roundedRect)
+        scrollDownButton.setImage(R.image.icon_scrolldown()!,
+                               for: .normal)
+        scrollDownButton.alpha = 0.0
+        scrollDownButton.transform = CGAffineTransform(translationX: 0,
+                                                       y: 60)
+        scrollDownButton.tintColor = UIColor.white
+        heroCoverImageView.addSubview(scrollDownButton)
+        scrollDownButton.addConstraints(fromStringArray: ["V:[$self]-16-|"])
+        scrollDownButton.addConstraintForCenterAligningToSuperview(in: .horizontal)
+        
+        
         articleFirstParagraphTextView = UITextView()
         articleFirstParagraphTextView.alpha = 0
         articleFirstParagraphTextView.transform = CGAffineTransform(translationX: 0,
@@ -155,8 +164,8 @@ class KPArticleViewController: KPViewController {
         dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor
         dismissButton.alpha = 0.9
         view.addSubview(dismissButton)
-        dismissButton.addConstraints(fromStringArray: ["V:[$self(20)]",
-                                                       "H:|-16-[$self(20)]"])
+        dismissButton.addConstraints(fromStringArray: ["V:[$self(18)]",
+                                                       "H:|-16-[$self(18)]"])
         dismissButton.addConstraintForCenterAligning(to: topBarContainer,
                                                      in: .vertical,
                                                      constant: 6)
@@ -203,9 +212,11 @@ class KPArticleViewController: KPViewController {
                             self.articleTitleLabel.alpha = 1.0
                             self.articleSubTitleLabel.alpha = 1.0
                             self.articleFirstParagraphTextView.alpha = 1.0
+                            self.scrollDownButton.alpha = 0.8
                             self.articleTitleLabel.transform = CGAffineTransform.identity
                             self.articleSubTitleLabel.transform = CGAffineTransform.identity
                             self.articleFirstParagraphTextView.transform = CGAffineTransform.identity
+                            self.scrollDownButton.transform = CGAffineTransform.identity
                             
             }, completion: { (_) in
                 self.animationHasPerformed = true
@@ -334,12 +345,14 @@ extension KPArticleViewController: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
+        
         // 處理 Tool Bar
         UIView.animate(withDuration: 0.2,
                        delay: 0,
                        options: .curveEaseIn,
                        animations: {
                         self.toolBarContainer.transform = scrollView.contentOffset.y > 100 ? CGAffineTransform.identity : CGAffineTransform(translationX: 0, y: 64)
+                        self.scrollDownButton.alpha = (scrollView.contentOffset.y < 10) ? 0.8 : 0
         }, completion: { (_) in
             
         })

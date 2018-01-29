@@ -33,7 +33,8 @@ class KPMainListViewController:
     var statusErrorDescriptionLabel: UILabel!
     var statusErrorButton: KPLoadingButton!
     
-    
+    var sortContainerView: UIView!
+    var sortLabel: UILabel!
     var tableView: UITableView!
     var satisficationView: KPSatisficationView!
     var expNotificationView: KPExpNotificationView!
@@ -114,10 +115,12 @@ class KPMainListViewController:
         
         KPAnalyticManager.sendPageViewEvent(KPAnalyticsEventValue.page.list_page)
         
+        view.backgroundColor = KPColorPalette.KPBackgroundColor.whiteColor
+        
         statusContainerView = UIView()
         statusContainerView.backgroundColor = UIColor.white
         view.addSubview(statusContainerView)
-        statusContainerView.addConstraints(fromStringArray: ["V:|-100-[$self]|",
+        statusContainerView.addConstraints(fromStringArray: ["V:|-120-[$self]|",
                                                              "H:|[$self]|"])
         
         statusErrorImageView = UIImageView(image: R.image.image_sorry())
@@ -158,13 +161,29 @@ class KPMainListViewController:
                                                            "H:[$self(160)]"],
                                          views: [statusErrorImageView])
         
+        sortContainerView = UIView()
+        sortContainerView.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7
+        view.addSubview(sortContainerView)
+        sortContainerView.addConstraints(fromStringArray: ["V:|-118-[$self(32)]",
+                                                           "H:|[$self]|"])
+        
+        sortLabel = UILabel()
+        sortLabel.font = UIFont.boldSystemFont(ofSize: 13.0)
+        sortLabel.text = "依照距離排列"
+        sortLabel.textColor = KPColorPalette.KPMainColor_v2.mainColor
+        sortContainerView.addSubview(sortLabel)
+        sortLabel.addConstraints(fromStringArray: ["H:|-12-[$self]|"])
+        sortLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
+        
         tableView = UITableView()
+        tableView.backgroundColor = KPColorPalette.KPBackgroundColor.whiteColor
+        tableView.contentInset = UIEdgeInsetsMake(8, 0, 0, 0)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.isUserInteractionEnabled = false
         tableView.separatorColor = UIColor.clear
         view.addSubview(tableView)
-        tableView.addConstraints(fromStringArray: ["V:|-100-[$self]-(-40)-|",
+        tableView.addConstraints(fromStringArray: ["V:|-152-[$self]-(-40)-|",
                                                    "H:|[$self]|"])
         tableView.register(KPMainListTableViewCell.self,
                                 forCellReuseIdentifier: Constant.KPMainListViewCellReuseIdentifier)
@@ -191,7 +210,7 @@ class KPMainListViewController:
         snapshotView.clipsToBounds = true
         snapshotView.isHidden = true
         view.addSubview(snapshotView)
-        snapshotView.addConstraints(fromStringArray: ["V:|-100-[$self]-(-40)-|",
+        snapshotView.addConstraints(fromStringArray: ["V:|-152-[$self]-(-40)-|",
                                                       "H:|[$self]|"])
         
         satisficationView = KPSatisficationView()
@@ -370,7 +389,7 @@ extension KPMainListViewController: UITableViewDelegate, UITableViewDataSource {
             
             if scrollView.contentOffset.y > oldScrollOffsetY {
                 // 往下
-                translate = -80
+                translate = -100
                 buttonTranslate = 120
             } else {
                 // 往上
@@ -387,6 +406,7 @@ extension KPMainListViewController: UITableViewDelegate, UITableViewDataSource {
                                                                                                              y: self.currentSearchTagTranslateY/2)
                             self.mainController.mainMapViewController?.mapView.transform = CGAffineTransform(translationX: 0,
                                                                                                              y: self.currentSearchTagTranslateY/2)
+                            self.sortContainerView.transform = CGAffineTransform(translationX: 0, y: self.currentSearchTagTranslateY/2)
                             self.tableView.transform = CGAffineTransform(translationX: 0, y: self.currentSearchTagTranslateY/2)
                             self.snapshotView.transform = CGAffineTransform(translationX: 0, y: self.currentSearchTagTranslateY/2)
             }, completion: { (_) in

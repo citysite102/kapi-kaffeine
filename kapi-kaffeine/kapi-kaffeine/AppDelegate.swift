@@ -43,12 +43,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // Amplitude
         Amplitude.instance().initializeApiKey("4f5f1d32e1e9fde0c7d307c92340944b")
         
-        // Balto
-//        Balto.with()
-//        Balto.with(options: [kBaltoHideMenu: true])
-//        Balto.withLongPress(minimumPressDuration: 1.5, options: [kBaltoHideMenu: true])
-//        Balto.withCustomSwipe(numberOfTouchesRequired: 2, direction: .down, options: [kBaltoHideMenu: true])
-        
         // iRate
         iRate.sharedInstance().appStoreID = 1261224197
         if iRate.sharedInstance().ratedThisVersion {
