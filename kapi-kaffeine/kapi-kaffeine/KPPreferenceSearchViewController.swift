@@ -278,7 +278,7 @@ class KPPreferenceSearchViewController: KPViewController {
                                                 for: .normal)
         searchButton.layer.cornerRadius = 4.0
         searchButton.layer.masksToBounds = true
-        searchButton.titleLabel?.font = UIFont.systemFont(ofSize: 15.0)
+        searchButton.titleLabel?.font = UIFont.systemFont(ofSize: 16.0)
         searchButtonContainer.addSubview(searchButton)
         searchButton.addConstraints(fromStringArray: ["V:[$view0]-16-[$self(40)]-16-|",
                                                       "H:|-16-[$self]-16-|"],

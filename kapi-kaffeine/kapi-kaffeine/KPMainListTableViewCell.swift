@@ -141,11 +141,11 @@ class KPMainListTableViewCell: UITableViewCell {
         
         shopStatusHint = UIView()
         shopStatusHint.backgroundColor = KPColorPalette.KPShopStatusColor.opened
-        shopStatusHint.layer.cornerRadius = 3.0
+        shopStatusHint.layer.cornerRadius = 4.0
         shopStatusHint.isOpaque = true
         contentView.addSubview(shopStatusHint)
-        shopStatusHint.addConstraints(fromStringArray: ["H:[$view0]-12-[$self(6)]",
-                                                        "V:[$view1]-16-[$self(6)]"],
+        shopStatusHint.addConstraints(fromStringArray: ["H:[$view0]-12-[$self(8)]",
+                                                        "V:[$view1]-15-[$self(8)]"],
                                           views: [shopImageView,
                                                   shopNameLabel])
         

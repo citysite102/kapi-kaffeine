@@ -29,7 +29,7 @@ class KPEditorView: UIView {
         backgroundColor = UIColor.white
         
         let titleLabel = UILabel()
-        titleLabel.font = UIFont.boldSystemFont(ofSize: 18)
+        titleLabel.font = UIFont.boldSystemFont(ofSize: 20)
         titleLabel.text = title
         titleLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
         addSubview(titleLabel)
@@ -39,13 +39,13 @@ class KPEditorView: UIView {
         
         textField = UITextField()
         textField.placeholder = placeHolder
-        textField.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
+        textField.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7
         textField.layer.cornerRadius = 5
         textField.font = UIFont.systemFont(ofSize: 16)
         textField.delegate = self
         addSubview(textField)
         textField.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                   "V:[$view0(24)]-8-[$self(32)]|"],
+                                                   "V:[$view0(24)]-12-[$self(40)]|"],
                                  views:[titleLabel])
         
         let paddingView: UIView = UIView.init(frame: CGRect(x: 0, y: 0, width: 10, height: 40))

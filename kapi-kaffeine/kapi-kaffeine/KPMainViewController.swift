@@ -158,6 +158,9 @@ class KPMainViewController: KPViewController {
         searchHeaderView.menuButton.addTarget(self,
                                               action: #selector(switchSideBar),
                                               for: .touchUpInside)
+//        searchHeaderView.filterButton.addTarget(self,
+//                                                action: #selector(handlePreferenceButtonOnTapped),
+//                                                for: .touchUpInside)
         searchHeaderView.filterButton.addTarget(self,
                                                 action: #selector(changeStyle),
                                                 for: .touchUpInside)
