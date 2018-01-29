@@ -18,6 +18,8 @@ class KPEditorView: UIView {
         case Custom
     }
     
+    var textField: UITextField!
+    
     init(type: EditorType,
          title: String,
          placeHolder: String) {
@@ -35,7 +37,7 @@ class KPEditorView: UIView {
                                                     "V:|[$self]"])
         
         
-        let textField = UITextField()
+        textField = UITextField()
         textField.placeholder = placeHolder
         textField.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
         textField.layer.cornerRadius = 5
@@ -78,13 +80,12 @@ extension KPEditorView: UITextFieldDelegate {
                                                 left: 0,
                                                 bottom: 0,
                                                 right: 0)
-            
             let subTitleInputViewController = KPSubtitleInputController()
-//            controller.contentController = subTitleInputViewController
             let navigationController = UINavigationController(rootViewController: subTitleInputViewController)
             controller.contentController = navigationController
             controller.presentModalView()
             return false
         }
     }
+    
 }

@@ -9,8 +9,8 @@
 import UIKit
 import GooglePlaces
 
-protocol KPSubtitleInputDelegate: NSObjectProtocol {
-    func outputValueSet(_ controller: KPSubtitleInputController)
+protocol KPSubtitleInputDelegate: class {
+    func outputValueSet<T>(_ controller: KPViewController,  value: T)
 }
 
 class KPSubtitleInputController: KPViewController {
@@ -71,7 +71,7 @@ class KPSubtitleInputController: KPViewController {
 //        searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "搜尋咖啡店名稱..."
-//        searchController.searchBar.delegate = self
+        searchController.searchBar.delegate = self
         searchController.hidesNavigationBarDuringPresentation = false
         if #available(iOS 11.0, *) {
             navigationController?.navigationBar.prefersLargeTitles = true
@@ -103,7 +103,7 @@ class KPSubtitleInputController: KPViewController {
     
 }
 
-extension KPSubtitleInputController: UITextFieldDelegate {
+extension KPSubtitleInputController: UITextFieldDelegate, UISearchBarDelegate {
     
 //    func textField(_ textField: UITextField,
 //                   shouldChangeCharactersIn range: NSRange,
@@ -121,6 +121,13 @@ extension KPSubtitleInputController: UITextFieldDelegate {
 //        }
 //        return true
 //    }
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.count > 0 {
+            placeAutoComplete(searchText)
+        } else {
+            apiContents = []
+        }
+    }
     
     func placeAutoComplete(_ placeName: String) {
         let filter = GMSAutocompleteFilter()
@@ -185,6 +192,7 @@ extension KPSubtitleInputController: UITableViewDelegate, UITableViewDataSource 
 //        tableView.deselectRow(at: tableView.indexPathForSelectedRow!,
 //                              animated: false)
 //        delegate?.outputValueSet(self)
+        delegate?.outputValueSet(self, value: apiContents)
         appModalController()?.dismissControllerWithDefaultDuration()
     }
     

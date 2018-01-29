@@ -9,7 +9,23 @@
 import UIKit
 import GooglePlaces
 
-class KPNewStoreController: KPViewController {
+class KPNewStoreController: KPViewController, KPSubtitleInputDelegate {
+    
+    func outputValueSet<GMSPlace>(_ controller: KPViewController, value: GMSPlace) {
+        if controller.isKind(of: KPSubtitleInputController.self) {
+            
+        }
+    }
+    
+    var storeNameEditor,
+        locationEditor,
+        addressEditor,
+        phoneEditor,
+        urlEditor: KPEditorView!
+    
+    var scrollContainer: UIView!
+    var scrollView: UIScrollView!
+    var buttonContainer: UIView!
     
     override func viewDidLoad() {
         
@@ -27,33 +43,70 @@ class KPNewStoreController: KPViewController {
                                            for: .normal)
         
         navigationItem.leftBarButtonItem = barLeftItem
+        
+        scrollView = UIScrollView()
+        scrollView.backgroundColor = KPColorPalette.KPMainColor_v2.whiteColor_level1
+        view.addSubview(scrollView)
+        
+        scrollView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor).isActive = true
+        scrollView.addConstraint(from: "H:|[$self]|")
+        
+        scrollContainer = UIView()
+        scrollContainer.backgroundColor = KPColorPalette.KPMainColor_v2.whiteColor_level1
+        scrollView.addSubview(scrollContainer)
+        scrollContainer.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"])
+        scrollContainer.addConstraintForHavingSameWidth(with: view)
+        
+        buttonContainer = UIView()
+        buttonContainer.backgroundColor = KPColorPalette.KPMainColor_v2.whiteColor_level1
+        view.addSubview(buttonContainer)
+        buttonContainer.layer.borderColor = KPColorPalette.KPBackgroundColor.grayColor_level6?.cgColor
+        buttonContainer.layer.borderWidth = 1
+        
+        buttonContainer.addConstraints(fromStringArray: ["H:|-(-1)-[$self]-(-1)-|", "V:[$view0][$self(60)]"],
+                                       views: [scrollView])
+        buttonContainer.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor).isActive = true
     
         
-        let storeNameEditor = KPEditorView(type: .Text,
-                                           title: "店家名稱" ,
-                                           placeHolder: "請輸入店家名稱")
-        view.addSubview(storeNameEditor)
+        storeNameEditor = KPEditorView(type: .Text,
+                                       title: "店家名稱" ,
+                                       placeHolder: "請輸入店家名稱")
+        scrollContainer.addSubview(storeNameEditor)
         storeNameEditor.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|",
                                                          "V:|-20-[$self]"])
         
-        let locationEditor = KPEditorView(type: .Custom,
+        locationEditor = KPEditorView(type: .Text,
                                           title: "所在位置",
                                           placeHolder: "請選擇所在位置")
-        view.addSubview(locationEditor)
+        scrollContainer.addSubview(locationEditor)
         locationEditor.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|",
                                                         "V:[$view0]-20-[$self]"],
                                       views: [storeNameEditor])
         
+        addressEditor = KPEditorView(type: .Text,
+                                     title: "地址",
+                                     placeHolder: "請輸入地址")
+        scrollContainer.addSubview(addressEditor)
+        addressEditor.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|",
+                                                       "V:[$view0]-20-[$self]"],
+                                      views: [locationEditor])
         
-        let buttonContainer = UIView()
-        buttonContainer.backgroundColor = UIColor.white
-        view.addSubview(buttonContainer)
+        phoneEditor = KPEditorView(type: .Text,
+                                   title: "聯絡電話",
+                                   placeHolder: "請輸入聯絡電話")
+        scrollContainer.addSubview(phoneEditor)
+        phoneEditor.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|",
+                                                     "V:[$view0]-20-[$self]"],
+                                      views: [addressEditor])
         
-        buttonContainer.addConstraints(fromStringArray: ["H:|-(-1)-[$self]-(-1)-|", "V:[$self(60)]"])
-        buttonContainer.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor).isActive = true
+        urlEditor = KPEditorView(type: .Text,
+                                 title: "網址或Facebook",
+                                 placeHolder: "")
+        scrollContainer.addSubview(urlEditor)
+        urlEditor.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|",
+                                                   "V:[$view0]-20-[$self]-20-|"],
+                                      views: [phoneEditor])
         
-        buttonContainer.layer.borderColor = KPColorPalette.KPBackgroundColor.grayColor_level6?.cgColor
-        buttonContainer.layer.borderWidth = 1
         
         let nextButton = UIButton(type: .custom)
         nextButton.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor_v2.greenColor!), for: .normal)
@@ -67,12 +120,6 @@ class KPNewStoreController: KPViewController {
         nextButton.addTarget(self, action: #selector(KPNewStoreController.handleNextButtonOnTap(_:)), for: .touchUpInside)
         
 //        nextButton.isEnabled = false
-        
-//        let seperator = UIView()
-//        seperator.backgroundColor = KPColorPalette.KPMainColor_v2.grayColor_level6
-//        view.addSubview(seperator)
-//        seperator.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$self(1)][$view0]"],
-//                                 views: [buttonContainer])
         
     }
     
