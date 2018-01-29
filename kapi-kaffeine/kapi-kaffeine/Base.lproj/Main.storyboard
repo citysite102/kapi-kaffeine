@@ -9,82 +9,6 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--清單-->
-        <scene sceneID="bp8-x9-Gr1">
-            <objects>
-                <viewController id="Vcd-zV-x5a" customClass="KPMainViewController" customModule="kapi_kaffeine" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="kyA-zy-hCS"/>
-                        <viewControllerLayoutGuide type="bottom" id="gKl-ra-g9k"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="NOS-4d-dAX">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="清單" image="icon_list" id="sLQ-FA-Ohz"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="LSk-Jt-iDl" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-720" y="2"/>
-        </scene>
-        <!--筆記-->
-        <scene sceneID="ZVz-ca-Wkh">
-            <objects>
-                <viewController id="Zaz-qR-ZYe" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="LEG-N0-uGp"/>
-                        <viewControllerLayoutGuide type="bottom" id="Wan-Df-Qep"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="qNH-Fk-dw2">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="筆記" image="icon_edit" id="Y13-Kg-Tgq"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="we7-Tl-zc9" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-721" y="699"/>
-        </scene>
-        <!--Item-->
-        <scene sceneID="6GQ-QB-MnF">
-            <objects>
-                <viewController id="b9C-zK-q5c" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="9o2-ig-5qZ"/>
-                        <viewControllerLayoutGuide type="bottom" id="14g-7K-g2G"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="ef7-ZR-g9A">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Item" id="Spg-66-Wtg"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="PhT-yl-9dT" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-721" y="1382"/>
-        </scene>
-        <!--探索-->
-        <scene sceneID="kXk-Uu-6jO">
-            <objects>
-                <viewController id="Kth-OA-OvJ" customClass="KPExplorationViewController" customModule="kapi_kaffeine" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="ETz-EZ-2jA"/>
-                        <viewControllerLayoutGuide type="bottom" id="tuL-eD-W6f"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Tl1-uu-M3r">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="探索" image="icon_collect" id="3h8-OI-PZi"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="pfu-tc-4bn" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-720" y="-663"/>
-        </scene>
         <!--Main Tab Controller-->
         <scene sceneID="qg9-cD-Krw">
             <objects>
@@ -161,9 +85,4 @@
             <point key="canvasLocation" x="1639" y="1"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="icon_collect" width="30" height="30"/>
-        <image name="icon_edit" width="30" height="30"/>
-        <image name="icon_list" width="24" height="24"/>
-    </resources>
 </document>

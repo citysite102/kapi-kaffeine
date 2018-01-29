@@ -9,37 +9,13 @@
 import UIKit
 import GooglePlaces
 
-protocol KPSubtitleInputDelegate: NSObjectProtocol {
-    func outputValueSet(_ controller: KPSubtitleInputController)
+protocol KPSubtitleInputDelegate: class {
+    func outputValueSet<T>(_ controller: KPViewController,  value: T)
 }
 
 class KPSubtitleInputController: KPViewController {
-
-    lazy var subTitleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "店家名稱"
-        label.font = UIFont.systemFont(ofSize: 12.0)
-        label.textColor = KPColorPalette.KPTextColor.mainColor
-        return label
-    }()
     
-    lazy var editTextField: UITextField = {
-        let textField = UITextField()
-        textField.textColor = KPColorPalette.KPTextColor.grayColor_level2
-        textField.placeholder = "請輸入店家名稱"
-        textField.delegate = self
-        textField.returnKeyType = .done
-        textField.font = UIFont.systemFont(ofSize: 24)
-        
-        let searchImageView = UIImageView(image: R.image.icon_search())
-        searchImageView.contentMode = .left
-        searchImageView.frame = CGRect(x: 0, y: 0, width: 35, height: 30)
-        searchImageView.tintColor = KPColorPalette.KPTextColor.grayColor_level5
-        textField.leftView = searchImageView
-        textField.leftViewMode = .always
-        
-        return textField
-    }()
+    var searchController: UISearchController!
     
     weak open var delegate: KPSubtitleInputDelegate?
     var dismissButton: UIButton!
@@ -64,88 +40,61 @@ class KPSubtitleInputController: KPViewController {
         super.viewDidLoad()
 
         view.backgroundColor = UIColor.white
-        view.addSubview(subTitleLabel)
+        title = "輸入店家名稱"
         
-        dismissButton = UIButton()
-        dismissButton.setTitle("取消", for: .normal)
-        dismissButton.titleLabel?.font = UIFont.systemFont(ofSize: 14)
-        dismissButton.setTitleColor(KPColorPalette.KPMainColor.mainColor, for: .normal)
-        dismissButton.setTitleColor(KPColorPalette.KPMainColor.whiteColor_level1, for: .highlighted)
-        dismissButton.addTarget(self,
-                                action: #selector(KPSubtitleInputController.handleDismissButtonOnTapped),
-                                for: .touchUpInside)
+        // Cancel button
+        let barLeftItem = UIBarButtonItem(title: "取消",
+                                          style: .plain,
+                                          target: self,
+                                          action: #selector(KPSubtitleInputController.handleCancelButtonOnTap))
+        barLeftItem.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 16), NSAttributedStringKey.foregroundColor: UIColor.gray],
+                                           for: .normal)
+        navigationItem.leftBarButtonItem = barLeftItem
         
-        view.addSubview(dismissButton)
-        dismissButton.addConstraints(fromStringArray: ["H:|-12-[$self]",
-                                                       "V:|-24-[$self(30)]"])
-        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(6, 6, 6, 6)
-        
-        
-//        subTitleLabel.addConstraints(fromStringArray: ["V:[$view0]-24-[$self]",
-//                                                       "H:|-16-[$self]-16-|"],
-//                                     views: [dismissButton])
-        
-        view.addSubview(editTextField)
-        editTextField.addConstraints(fromStringArray: ["V:[$view0]-12-[$self]",
-                                                       "H:|-16-[$self]-16-|"],
-                                     views: [dismissButton])
-        
-        let bottomBorderView = UIView()
-        bottomBorderView.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
-        view.addSubview(bottomBorderView)
-        bottomBorderView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                          "V:[$view0]-12-[$self(1)]"],
-                                        views:[editTextField])
-        
+        configureSearchController()
         
         tableView = UITableView()
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorColor = UIColor.clear
         view.addSubview(self.tableView)
-        tableView.addConstraints(fromStringArray: ["V:[$view0][$self]|",
-                                                   "H:|[$self]|"],
-                                 views: [bottomBorderView])
+        tableView.addConstraints(fromStringArray: ["V:|[$self]|",
+                                                   "H:|[$self]|"])
         tableView.register(KPInputRecommendCell.self,
                            forCellReuseIdentifier: "cell")
         tableView.allowsSelection = true
         
-        
-//        sendButton = UIButton.init(type: .custom)
-//        sendButton.setTitle("確認名稱", for: .normal)
-//        sendButton.setTitleColor(KPColorPalette.KPTextColor.mainColor,
-//                                 for: .normal)
-//        sendButton.addTarget(self,
-//                             action: #selector(KPSubtitleInputController.handleSendButtonOnTapped),
-//                             for: .touchUpInside)
-//        sendButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
-//        view.addSubview(sendButton)
-//        view.addSubview(separator)
-//
-//        sendButton.addConstraints(fromStringArray: ["V:[$view0]-16-[$self(30)]-16-|"],
-//                                  views: [separator])
-//        sendButton.addConstraintForCenterAligningToSuperview(in: .horizontal)
-//
-//        separator.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
-//                                                   "V:[$self(1)]-16-[$view0]"],
-//                                 views: [sendButton])
-        
+    }
+    
+    func configureSearchController() {
+        searchController = UISearchController(searchResultsController: nil)
+//        searchController.searchResultsUpdater = self
+        searchController.dimsBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "搜尋咖啡店名稱..."
+        searchController.searchBar.delegate = self
+        searchController.hidesNavigationBarDuringPresentation = false
+        if #available(iOS 11.0, *) {
+            navigationController?.navigationBar.prefersLargeTitles = true
+            navigationItem.searchController = searchController
+        } else {
+            // Fallback on earlier versions
+            navigationItem.titleView = searchController.searchBar
+        }
+        definesPresentationContext = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        editTextField.becomeFirstResponder()
+        searchController.searchBar.becomeFirstResponder()
     }
     
-    @objc func handleDismissButtonOnTapped() {
-        dismiss(animated: true, completion: nil);
-    }
-    
-    @objc func handleSendButtonOnTapped() {
-        outputValue = editTextField.text
-        delegate?.outputValueSet(self)
+    @objc func handleCancelButtonOnTap() {
         appModalController()?.dismissControllerWithDefaultDuration()
     }
+    
+//    @objc func handleSendButtonOnTapped() {
+//        appModalController()?.dismissControllerWithDefaultDuration()
+//    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -154,23 +103,30 @@ class KPSubtitleInputController: KPViewController {
     
 }
 
-extension KPSubtitleInputController: UITextFieldDelegate {
+extension KPSubtitleInputController: UITextFieldDelegate, UISearchBarDelegate {
     
-    func textField(_ textField: UITextField,
-                   shouldChangeCharactersIn range: NSRange,
-                   replacementString string: String) -> Bool {
-        let returnKey = (string as NSString).range(of: "\n").location == NSNotFound
-        
-        if !returnKey {
-            textField.resignFirstResponder()
-            return false
+//    func textField(_ textField: UITextField,
+//                   shouldChangeCharactersIn range: NSRange,
+//                   replacementString string: String) -> Bool {
+//        let returnKey = (string as NSString).range(of: "\n").location == NSNotFound
+//
+//        if !returnKey {
+//            textField.resignFirstResponder()
+//            return false
+//        }
+//        if !(textField.text?.isEmpty)! {
+//            let oString = textField.text! as NSString
+//            let nString = oString.replacingCharacters(in: range, with: string)
+//            placeAutoComplete(nString)
+//        }
+//        return true
+//    }
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.count > 0 {
+            placeAutoComplete(searchText)
+        } else {
+            apiContents = []
         }
-        if !(textField.text?.isEmpty)! {
-            let oString = textField.text! as NSString
-            let nString = oString.replacingCharacters(in: range, with: string)
-            placeAutoComplete(nString)
-        }
-        return true
     }
     
     func placeAutoComplete(_ placeName: String) {
@@ -231,11 +187,12 @@ extension KPSubtitleInputController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        outputValue = apiContents[indexPath.row]
-        editTextField.text = apiContents[indexPath.row].name
-        tableView.deselectRow(at: tableView.indexPathForSelectedRow!,
-                              animated: false)
-        delegate?.outputValueSet(self)
+//        outputValue = apiContents[indexPath.row]
+//        editTextField.text = apiContents[indexPath.row].name
+//        tableView.deselectRow(at: tableView.indexPathForSelectedRow!,
+//                              animated: false)
+//        delegate?.outputValueSet(self)
+        delegate?.outputValueSet(self, value: apiContents)
         appModalController()?.dismissControllerWithDefaultDuration()
     }
     

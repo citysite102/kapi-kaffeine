@@ -71,29 +71,20 @@ class KPSearchViewController: KPViewController {
 
         KPAnalyticManager.sendPageViewEvent(KPAnalyticsEventValue.page.search_page)
 
+        title = "搜尋"
+        
         view.backgroundColor = UIColor.white
         ref = Database.database().reference()
         
-        dismissButton = KPBounceButton(frame: CGRect.zero,
-                                       image: R.image.icon_back()!)
-        dismissButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
-        dismissButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(6, 6, 6, 6)
-        dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor
-        dismissButton.addTarget(self,
-                                action: #selector(KPSearchViewController.handleDismissButtonOnTapped),
-                                for: .touchUpInside)
+        // Cancel button
+        let barLeftItem = UIBarButtonItem(title: "取消",
+                                          style: .plain,
+                                          target: self,
+                                          action: #selector(KPSearchViewController.handleCancelButtonOnTap))
+        barLeftItem.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 16), NSAttributedStringKey.foregroundColor: UIColor.gray],
+                                           for: .normal)
+        navigationItem.leftBarButtonItem = barLeftItem
         
-        let dismissBarButtonItem = UIBarButtonItem(image: R.image.icon_back(),
-                                                   style: .plain,
-                                                   target: self,
-                                                   action: #selector(KPSearchViewController.handleDismissButtonOnTapped))
-        dismissBarButtonItem.imageInsets = UIEdgeInsetsMake(6, 0, 0, 6)
-        let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace,
-                                             target: nil,
-                                             action: nil)
-        negativeSpacer.width = -5
-        navigationItem.leftBarButtonItems = [negativeSpacer, dismissBarButtonItem]
         tableView = UITableView()
         tableView.delegate = self
         tableView.dataSource = self
@@ -145,6 +136,11 @@ class KPSearchViewController: KPViewController {
         configureSearchController()
         readSearchData()
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        searchController.searchBar.becomeFirstResponder()
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -158,7 +154,14 @@ class KPSearchViewController: KPViewController {
         searchController.searchBar.placeholder = "搜尋咖啡店名稱..."
         searchController.searchBar.delegate = self
         searchController.hidesNavigationBarDuringPresentation = false
-        self.navigationItem.titleView = searchController.searchBar
+        if #available(iOS 11.0, *) {
+            navigationController?.navigationBar.prefersLargeTitles = true
+            navigationItem.searchController = searchController
+        } else {
+            // Fallback on earlier versions
+            navigationItem.titleView = searchController.searchBar
+        }
+        definesPresentationContext = true
     }
     
     func readSearchData() {
@@ -184,8 +187,9 @@ class KPSearchViewController: KPViewController {
         self.appModalController()?.dismissControllerWithDefaultDuration()
     }
     
-    func handleBackButtonOnTapped() {
-        self.navigationController?.popViewController(animated: true)
+    @objc func handleCancelButtonOnTap() {
+        appModalController()?.dismissControllerWithDefaultDuration()
+//        self.navigationController?.popViewController(animated: true)
     }
     
     @objc func handleNewStoreButtonOnTap(_ sender: UIButton) {
