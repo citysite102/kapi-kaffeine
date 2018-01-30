@@ -260,7 +260,7 @@ class KPInformationHeaderView: UIView {
         shopPhoto.isUserInteractionEnabled = true
         shopPhotoContainer.addSubview(shopPhoto)
         shopPhoto.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                   "V:|[$self(240)]|"])
+                                                   "V:|[$self(260)]|"])
         
         shopSelectView = UIView()
         shopSelectView.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level5

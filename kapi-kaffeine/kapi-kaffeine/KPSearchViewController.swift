@@ -90,10 +90,6 @@ class KPSearchViewController: KPViewController {
                                     for: .touchUpInside)
             
             let barLeftItem = UIBarButtonItem(customView: dismissButton)
-//            let barLeftItem = UIBarButtonItem(title: "取消",
-//                                              style: .plain,
-//                                              target: self,
-//                                              action: #selector(KPSearchViewController.handleCancelButtonOnTap))
             barLeftItem.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 16),
                                                 NSAttributedStringKey.foregroundColor: UIColor.gray],
                                                for: .normal)

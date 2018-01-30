@@ -43,6 +43,11 @@ class KPInformationViewController: KPViewController {
     var moreButton: KPBounceButton!
     var shareButton: KPBounceButton!
     
+    var titleLabel: UILabel!
+    var topBarContainer: UIView!
+    var separator_top: UIView!
+    
+    
     var transitionController: KPPhotoDisplayTransition = KPPhotoDisplayTransition()
     var percentDrivenTransition: UIPercentDrivenInteractiveTransition!
     var currentPhotoIndexPath: IndexPath = IndexPath(item: 0, section: 0) {
@@ -166,49 +171,51 @@ class KPInformationViewController: KPViewController {
         KPAnalyticManager.sendPageViewEvent(KPAnalyticsEventValue.page.detail_page)
         
         view.backgroundColor = UIColor.white
+        navigationController?.navigationBar.isHidden = true
         navigationItem.title = informationDataModel.name
         navigationController?.delegate = self
         
-        dismissButton = KPBounceButton(frame: CGRect.zero,
-                                       image: showBackButton ? R.image.icon_back()! : R.image.icon_close()!)
-        dismissButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
-        dismissButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        dismissButton.contentEdgeInsets = showBackButton ? UIEdgeInsetsMake(3, 0, 3, 6) : UIEdgeInsetsMake(6, 0, 8, 14)
-        dismissButton.tintColor = KPColorPalette.KPMainColor_v2.textColor_level2
-        dismissButton.addTarget(self,
-                                action: #selector(KPInformationViewController.handleDismissButtonOnTapped),
-                                for: .touchUpInside)
+        
+//        dismissButton = KPBounceButton(frame: CGRect.zero,
+//                                       image: showBackButton ? R.image.icon_back()! : R.image.icon_close()!)
+//        dismissButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
+//        dismissButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
+//        dismissButton.contentEdgeInsets = showBackButton ? UIEdgeInsetsMake(3, 0, 3, 6) : UIEdgeInsetsMake(6, 0, 8, 14)
+//        dismissButton.tintColor = KPColorPalette.KPMainColor_v2.textColor_level2
+//        dismissButton.addTarget(self,
+//                                action: #selector(KPInformationViewController.handleDismissButtonOnTapped),
+//                                for: .touchUpInside)
         
         
-        moreButton = KPBounceButton(frame: CGRect.zero,
-                                    image: R.image.icon_more()!)
-        moreButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
-        moreButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        moreButton.contentEdgeInsets = UIEdgeInsetsMake(4, 8, 4, 0)
-        moreButton.tintColor = KPColorPalette.KPTextColor.whiteColor
-        moreButton.addTarget(self,
-                             action: #selector(KPInformationViewController.handleMoreButtonOnTapped),
-                             for: .touchUpInside)
+//        moreButton = KPBounceButton(frame: CGRect.zero,
+//                                    image: R.image.icon_more()!)
+//        moreButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
+//        moreButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
+//        moreButton.contentEdgeInsets = UIEdgeInsetsMake(4, 8, 4, 0)
+//        moreButton.tintColor = KPColorPalette.KPTextColor.whiteColor
+//        moreButton.addTarget(self,
+//                             action: #selector(KPInformationViewController.handleMoreButtonOnTapped),
+//                             for: .touchUpInside)
         
-        shareButton = KPBounceButton(frame: CGRect.zero,
-                                     image: R.image.icon_share()!)
-        shareButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
-        shareButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        shareButton.contentEdgeInsets = UIEdgeInsetsMake(6, 6, 6, 6)
-        shareButton.tintColor = KPColorPalette.KPTextColor.whiteColor
-        shareButton.addTarget(self,
-                              action: #selector(KPInformationViewController.handleShareButtonOnTapped),
-                              for: .touchUpInside)
+//        shareButton = KPBounceButton(frame: CGRect.zero,
+//                                     image: R.image.icon_share()!)
+//        shareButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
+//        shareButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
+//        shareButton.contentEdgeInsets = UIEdgeInsetsMake(6, 6, 6, 6)
+//        shareButton.tintColor = KPColorPalette.KPTextColor.whiteColor
+//        shareButton.addTarget(self,
+//                              action: #selector(KPInformationViewController.handleShareButtonOnTapped),
+//                              for: .touchUpInside)
         
 
-        let barItem = UIBarButtonItem(customView: dismissButton)
-        let rightBarItem = UIBarButtonItem(customView: moreButton)
-        let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace,
-                                             target: nil,
-                                             action: nil)
-        negativeSpacer.width = -8
-        navigationItem.leftBarButtonItems = [negativeSpacer, barItem]
-        navigationItem.rightBarButtonItems = [negativeSpacer, rightBarItem]
+//        let barItem = UIBarButtonItem(customView: dismissButton)
+//        let rightBarItem = UIBarButtonItem(customView: moreButton)
+//        let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace,
+//                                             target: nil,
+//                                             action: nil)
+//        negativeSpacer.width = -8
+//        navigationItem.leftBarButtonItems = [negativeSpacer, barItem]
+//        navigationItem.rightBarButtonItems = [negativeSpacer, rightBarItem]
         
         
         actionController = UIAlertController(title: nil,
@@ -302,7 +309,6 @@ class KPInformationViewController: KPViewController {
 
         scrollContainer = UIScrollView()
         scrollContainer.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7
-//        scrollContainer.backgroundColor = UIColor.white
         scrollContainer.delegate = self
         scrollContainer.canCancelContentTouches = false
         view.addSubview(scrollContainer)
@@ -334,7 +340,8 @@ class KPInformationViewController: KPViewController {
         
         //informationDataModel
         scrollContainer.addSubview(informationHeaderView)
-        informationHeaderView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]"])
+        informationHeaderView.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                               "V:|-(-20)-[$self]"])
         
         informationHeaderView.addConstraintForHavingSameWidth(with: view)
         informationHeaderView.morePhotoButton.addTarget(self,
@@ -413,7 +420,7 @@ class KPInformationViewController: KPViewController {
         
         shopInformationView = KPInformationSharedInfoView()
         shopInformationView.infoView = informationView
-        shopInformationView.infoTitleLabel.text = "店家資訊"
+        shopInformationView.infoTitleLabel.text = informationDataModel.name
         scrollContainer.addSubview(shopInformationView)
         shopInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                              "V:[$view0]-16-[$self]"],
@@ -600,6 +607,7 @@ class KPInformationViewController: KPViewController {
         SKPhotoBrowserOptions.displayAction = false
         SKPhotoBrowserOptions.displayStatusbar = true
         
+        updateTopToolBar()
 //        syncRemoteData()
     }
     
@@ -624,6 +632,63 @@ class KPInformationViewController: KPViewController {
     }
     
     
+    func updateTopToolBar() {
+        
+        topBarContainer = UIView()
+        topBarContainer.backgroundColor = UIColor.white
+        topBarContainer.alpha = 0
+        view.addSubview(topBarContainer)
+        topBarContainer.addConstraints(fromStringArray: ["V:|[$self(64)]",
+                                                         "H:|[$self]|"])
+        separator_top = UIView()
+        separator_top.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
+        topBarContainer.addSubview(separator_top)
+        separator_top.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                       "V:[$self(1)]|"])
+        
+        titleLabel = UILabel()
+        titleLabel.font = UIFont.boldSystemFont(ofSize: 18.0)
+        titleLabel.textColor = KPColorPalette.KPTextColor_v2.whiteColor
+        titleLabel.text = informationDataModel.name
+        view.addSubview(titleLabel)
+        titleLabel.addConstraint(from: "H:[$self(<=280)]")
+        titleLabel.addConstraintForCenterAligning(to: topBarContainer,
+                                                  in: .vertical,
+                                                  constant: 6)
+        titleLabel.addConstraintForCenterAligning(to: topBarContainer,
+                                                  in: .horizontal,
+                                                  constant: 0)
+        
+        dismissButton = KPBounceButton(frame: CGRect.zero,
+                                       image: R.image.icon_close()!)
+        dismissButton.tintColor = KPColorPalette.KPTextColor_v2.whiteColor
+        dismissButton.alpha = 0.9
+        view.addSubview(dismissButton)
+        dismissButton.addConstraints(fromStringArray: ["V:[$self(24)]",
+                                                       "H:|-16-[$self(24)]"])
+        dismissButton.addConstraintForCenterAligning(to: topBarContainer,
+                                                     in: .vertical,
+                                                     constant: 6)
+        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4)
+        dismissButton.addTarget(self,
+                                action: #selector(handleDismissButtonOnTapped), for: .touchUpInside)
+        
+        moreButton = KPBounceButton(frame: CGRect.zero,
+                                    image: R.image.icon_more()!)
+        moreButton.tintColor = KPColorPalette.KPTextColor_v2.whiteColor
+        moreButton.addTarget(self,
+                             action: #selector(KPInformationViewController.handleMoreButtonOnTapped),
+                             for: .touchUpInside)
+        view.addSubview(moreButton)
+        moreButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4)
+        moreButton.addConstraints(fromStringArray: ["V:[$self(24)]",
+                                                    "H:[$self(24)]-16-|"])
+        moreButton.addConstraintForCenterAligning(to: topBarContainer,
+                                                     in: .vertical,
+                                                     constant: 6)
+        
+        
+    }
     // MARK: UI Update
     
     func syncRemoteData() {
@@ -1189,6 +1254,24 @@ extension KPInformationViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
         if viewHasAppeared {
+            
+            // 處理 Tool Bar
+            if self.scrollContainer.contentOffset.y >= 120 {
+                print("Offset:\(self.scrollContainer.contentOffset.y)")
+                topBarContainer.alpha = (self.scrollContainer.contentOffset.y - 120) / 40
+                dismissButton.tintColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
+                moreButton.tintColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
+                titleLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
+            } else {
+                topBarContainer.alpha = 0
+                dismissButton.tintColor = KPColorPalette.KPTextColor_v2.whiteColor
+                moreButton.tintColor = KPColorPalette.KPTextColor_v2.whiteColor
+                titleLabel.textColor = KPColorPalette.KPTextColor_v2.whiteColor
+            }
+            
+            
+            
+            
             scrollContainer.contentOffset = CGPoint(x: 0,
                                                     y: scrollContainer.contentOffset.y <= -120 ?
                                                         -120 :

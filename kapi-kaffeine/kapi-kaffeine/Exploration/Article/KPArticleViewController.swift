@@ -164,11 +164,12 @@ class KPArticleViewController: KPViewController {
         dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor
         dismissButton.alpha = 0.9
         view.addSubview(dismissButton)
-        dismissButton.addConstraints(fromStringArray: ["V:[$self(18)]",
-                                                       "H:|-16-[$self(18)]"])
+        dismissButton.addConstraints(fromStringArray: ["V:[$self(24)]",
+                                                       "H:|-16-[$self(24)]"])
         dismissButton.addConstraintForCenterAligning(to: topBarContainer,
                                                      in: .vertical,
                                                      constant: 6)
+        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4)
         dismissButton.addTarget(self,
                                 action: #selector(handleDismissButtonOnTapped), for: .touchUpInside)
         
