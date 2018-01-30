@@ -8,7 +8,11 @@
 
 import UIKit
 
-class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, KPTabViewDelegate {
+class KPUserProfileViewController: KPViewController,
+UITableViewDataSource,
+UITableViewDelegate,
+UIScrollViewDelegate,
+KPTabViewDelegate {
 
     var dismissButton: KPBounceButton!
     var editButton: KPBounceButton!
@@ -25,16 +29,15 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
     
     lazy var userContainer: UIView = {
         let containerView = UIView()
-        containerView.backgroundColor = KPColorPalette.KPBackgroundColor.mainColor_light
+        containerView.backgroundColor = KPColorPalette.KPBackgroundColor.whiteColor
         return containerView
     }()
     
     lazy var userPhoto: UIImageView = {
         let imageView = UIImageView()
-        imageView.backgroundColor = KPColorPalette.KPBackgroundColor.mainColor
-        imageView.layer.borderWidth = 2.0
-        imageView.layer.borderColor = UIColor.white.cgColor
-        imageView.layer.cornerRadius = 5.0
+        imageView.layer.borderWidth = 1.0
+        imageView.layer.borderColor = KPColorPalette.KPMainColor_v2.grayColor_level6?.cgColor
+        imageView.layer.cornerRadius = 44.0
         imageView.layer.masksToBounds = true
         imageView.image = R.image.demo_profile()
         imageView.contentMode = .scaleAspectFill
@@ -43,9 +46,9 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
     
     lazy var userNameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont  (ofSize: 16.0)
-        label.textColor = KPColorPalette.KPTextColor.whiteColor
-        label.text = "我是一隻蟲"
+        label.font = UIFont.systemFont(ofSize: 24.0)
+        label.textColor = KPColorPalette.KPTextColor_v2.mainColor_title
+        label.text = "Hello, 一隻蟲"
         return label
     }()
     
@@ -59,8 +62,8 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
     
     lazy var userBioLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12.0)
-        label.textColor = KPColorPalette.KPTextColor.whiteColor
+        label.font = UIFont.systemFont(ofSize: 14.0)
+        label.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
         label.text = "被你看到這個隱藏的內容？！肯定有Bug，快回報給我們吧！"
         label.numberOfLines = 0
         return label
@@ -88,69 +91,70 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
         KPAnalyticManager.sendPageViewEvent(KPAnalyticsEventValue.page.profile_page)
         
         view.backgroundColor = UIColor.white
-        navigationController?.navigationBar.topItem?.title = "個人資料"
-        navigationController?.navigationBar.setBackgroundImage(UIImage(),
-                                                                    for: .default)
-        navigationController?.navigationBar.shadowImage = UIImage()
-
-        dismissButton = KPBounceButton(frame: CGRect.zero,
-                                       image: R.image.icon_close()!)
-        dismissButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
-        dismissButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(6, 0, 8, 14)
-        dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor
-        dismissButton.addTarget(self,
-                                action: #selector(KPInformationViewController.handleDismissButtonOnTapped),
-                                for: .touchUpInside)
-        
-        
-        let barItem = UIBarButtonItem(customView: dismissButton)
-        let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace,
-                                             target: nil,
-                                             action: nil)
-        negativeSpacer.width = -7
-        navigationItem.leftBarButtonItems = [negativeSpacer, barItem]
-        
-
-        editButton = KPBounceButton(frame: CGRect.zero,
-                                    image: R.image.icon_edit()!)
-        editButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
-        editButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        editButton.contentEdgeInsets = UIEdgeInsetsMake(5, 5, 5, 5)
-        editButton.tintColor = KPColorPalette.KPTextColor.whiteColor
-        editButton.addTarget(self,
-                             action: #selector(KPUserProfileViewController.handleEditButtonOnTapped),
-                             for: .touchUpInside)
-        
-        
-        let rightBarItem = UIBarButtonItem(customView: editButton)
-        navigationItem.leftBarButtonItems = [negativeSpacer, barItem]
-        navigationItem.rightBarButtonItems = [negativeSpacer, rightBarItem]
+//        navigationController?.navigationBar.topItem?.title = "個人資料"
+//        navigationController?.navigationBar.setBackgroundImage(UIImage(),
+//                                                                    for: .default)
+//        navigationController?.navigationBar.shadowImage = UIImage()
+//
+//        dismissButton = KPBounceButton(frame: CGRect.zero,
+//                                       image: R.image.icon_close()!)
+//        dismissButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
+//        dismissButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
+//        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(6, 0, 8, 14)
+//        dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor
+//        dismissButton.addTarget(self,
+//                                action: #selector(KPInformationViewController.handleDismissButtonOnTapped),
+//                                for: .touchUpInside)
+//
+//
+//        let barItem = UIBarButtonItem(customView: dismissButton)
+//        let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace,
+//                                             target: nil,
+//                                             action: nil)
+//        negativeSpacer.width = -7
+//        navigationItem.leftBarButtonItems = [negativeSpacer, barItem]
+//
+//
+//        editButton = KPBounceButton(frame: CGRect.zero,
+//                                    image: R.image.icon_edit()!)
+//        editButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
+//        editButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
+//        editButton.contentEdgeInsets = UIEdgeInsetsMake(5, 5, 5, 5)
+//        editButton.tintColor = KPColorPalette.KPTextColor.whiteColor
+//        editButton.addTarget(self,
+//                             action: #selector(KPUserProfileViewController.handleEditButtonOnTapped),
+//                             for: .touchUpInside)
+//
+//
+//        let rightBarItem = UIBarButtonItem(customView: editButton)
+//        navigationItem.leftBarButtonItems = [negativeSpacer, barItem]
+//        navigationItem.rightBarButtonItems = [negativeSpacer, rightBarItem]
         
         view.addSubview(userContainer)
-        userContainer.addConstraints(fromStringArray: ["V:|[$self]",
+        userContainer.addConstraints(fromStringArray: ["V:|[$self(200)]",
                                                        "H:|[$self]|"])
         
         userContainer.addSubview(userPhoto)
-        userPhoto.addConstraints(fromStringArray: ["H:|-16-[$self(64)]",
-                                                   "V:|-16-[$self(64)]-16-|"])
+        userPhoto.addConstraints(fromStringArray: ["H:[$self(88)]-40-|",
+                                                   "V:|-48-[$self(88)]"])
         
         userContainer.addSubview(userNameLabel)
-        userNameLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]",
-                                                       "V:|-16-[$self]"],
-                                          views: [userPhoto])
+        userNameLabel.addConstraints(fromStringArray: ["H:|-16-[$self]",
+                                                       "V:|-50-[$self]"])
         
-        userContainer.addSubview(userCityLabel)
-        userCityLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]",
-                                                       "V:[$view1]-2-[$self]"],
-                                          views: [userPhoto,
-                                                  userNameLabel])
+//        userContainer.addSubview(userCityLabel)
+//        userCityLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]",
+//                                                       "V:[$view1]-2-[$self]"],
+//                                          views: [userPhoto,
+//                                                  userNameLabel])
         
         userContainer.addSubview(userBioLabel)
-        userBioLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self(150)]",
-                                                      "V:[$view1]-4-[$self]"],
+        userBioLabel.addConstraints(fromStringArray: ["H:|-16-[$self(200)]",
+                                                      "V:[$view1]-8-[$self]"],
                                           views: [userPhoto,
-                                                  userCityLabel])
+                                                  userNameLabel])
+        userBioLabel.setText(text:  "被你看到這個隱藏的內容？！肯定有Bug，快回報給我們吧！肯定有Bug！",
+                             lineSpacing: 3.0)
         
         
         tabView = KPTabView(titles: tabTitles.map {$0.title})
@@ -217,9 +221,9 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
             if let photoURL = URL(string: user.photoURL ?? "") {
                 userPhoto.af_setImage(withURL: photoURL)
             }
-            userNameLabel.text = user.displayName ?? ""
-            userCityLabel.text = user.defaultLocation ?? ""
-            userBioLabel.text = user.intro ?? ""
+//            userNameLabel.text = user.displayName ?? ""
+//            userCityLabel.text = user.defaultLocation ?? ""
+//            userBioLabel.text = user.intro ?? ""
             
             for (index, tabTitle) in tabTitles.enumerated() {
                 
@@ -240,9 +244,9 @@ class KPUserProfileViewController: KPViewController, UITableViewDataSource, UITa
             if let photoURL = URL(string: user.photoURL ?? "") {
                 userPhoto.af_setImage(withURL: photoURL)
             }
-            userNameLabel.text = user.displayName ?? ""
-            userCityLabel.text = user.defaultLocation ?? ""
-            userBioLabel.text = user.intro ?? ""
+//            userNameLabel.text = user.displayName ?? ""
+//            userCityLabel.text = user.defaultLocation ?? ""
+//            userBioLabel.text = user.intro ?? ""
         }
         
         if !dataloaded {

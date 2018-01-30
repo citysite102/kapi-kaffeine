@@ -18,7 +18,7 @@ class KPTabView: UIView {
     
     lazy var hintView: UIView = {
         let view = UIView()
-        view.backgroundColor = KPColorPalette.KPBackgroundColor.mainColor
+        view.backgroundColor = KPColorPalette.KPMainColor_v2.textColor_level2
         return view
     }()
     
@@ -66,22 +66,25 @@ class KPTabView: UIView {
         var preButton: UIButton? = nil
         for title in titles {
             let button = UIButton(type: .custom)
-            button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 13)
-            button.setTitleColor(KPColorPalette.KPTextColor.grayColor_level4, for: .normal)
-            button.setTitleColor(KPColorPalette.KPTextColor.mainColor, for: .selected)
+            button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+            button.setTitleColor(KPColorPalette.KPTextColor_v2.mainColor_description,
+                                 for: .normal)
+            button.setTitleColor(KPColorPalette.KPTextColor_v2.mainColor_title, for: .selected)
             button.setTitle(title, for: .normal)
             button.addTarget(self, action: #selector(handleButtonOnTap(sender:)), for: .touchUpInside)
             tabs.append(button)
             self.addSubview(button)
             if preButton == nil {
-                button.addConstraints(fromStringArray: ["H:|[$self]", "V:|[$self]|"])
+                button.addConstraints(fromStringArray: ["H:|[$self]",
+                                                        "V:|[$self]|"])
                 button.isSelected = true
                 self.addSubview(hintView)
                 hintView.addConstraintForHavingSameWidth(with: button)
                 self.addConstraint(NSLayoutConstraint(item: button, attribute: .leading, relatedBy: .equal, toItem: hintView, attribute: .leading, multiplier: 1, constant: 0))
                 hintView.addConstraint(from: "V:[$self(2)]|")
             } else {
-                button.addConstraints(fromStringArray: ["H:[$view0][$self]", "V:|[$self]|"], views: [preButton!])
+                button.addConstraints(fromStringArray: ["H:[$view0][$self]",
+                                                        "V:|[$self]|"], views: [preButton!])
                 button.addConstraintForHavingSameWidth(with: preButton)
             }
             preButton = button

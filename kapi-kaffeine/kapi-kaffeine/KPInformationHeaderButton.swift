@@ -60,7 +60,7 @@ class KPInformationHeaderButton: UIView {
             icon.tintColor = selected ?
                 KPColorPalette.KPMainColor_v2.mainColor :
                 KPColorPalette.KPMainColor.grayColor_level5
-            titleLabel.textColor = KPColorPalette.KPTextColor.mainColor
+            titleLabel.textColor = KPColorPalette.KPMainColor_v2.mainColor
 //            numberValue = self.numberValue + (selected ? 1 : (self.numberValue > 0 ? -1 : 0))
         }
     }
@@ -87,12 +87,12 @@ class KPInformationHeaderButton: UIView {
         icon.addConstraint(from: "V:|-12-[$self(24)]")
         icon.addConstraint(from: "H:[$self(24)]")
         icon.tintColor = selected ?
-            KPColorPalette.KPMainColor.mainColor :
+            KPColorPalette.KPMainColor_v2.mainColor :
             KPColorPalette.KPMainColor.grayColor_level5
         
         titleLabel = UILabel()
         titleLabel.font = UIFont.systemFont(ofSize: 13)
-        titleLabel.textColor = KPColorPalette.KPTextColor.mainColor
+        titleLabel.textColor = KPColorPalette.KPMainColor_v2.mainColor
         addSubview(titleLabel)
         titleLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
         titleLabel.addConstraint(from: "V:[$view0]-4-[$self]",
