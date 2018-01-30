@@ -11,6 +11,11 @@ import UIKit
 class KPLayerLabel: UILabel {
 
     
+    override var intrinsicContentSize: CGSize {
+        return CGSize(width: super.intrinsicContentSize.width + 8,
+                      height: super.intrinsicContentSize.height)
+    }
+    
     override var text: String? {
         didSet {
             super.text = text

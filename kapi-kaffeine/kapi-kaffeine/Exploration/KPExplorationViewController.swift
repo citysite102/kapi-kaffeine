@@ -11,6 +11,12 @@ import ObjectMapper
 
 class KPExplorationViewController: KPViewController {
 
+    var searchContainerShadowView: UIView!
+    var searchContainer: UIView!
+    var searchIcon: UIImageView!
+    var searchLabel: UILabel!
+    var filterButton: KPBounceButton!
+    
     var articleCollectionView: UICollectionView!
     
     let demoImages = [R.image.demo_1(),
@@ -123,13 +129,62 @@ class KPExplorationViewController: KPViewController {
         
         testData = Mapper<KPExplorationSection>().mapArray(JSONString: testJSONString) ?? []
         
-        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 330))
+        view.backgroundColor = KPColorPalette.KPBackgroundColor.whiteColor
+        
+        
+        searchContainerShadowView = UIView()
+//        searchContainerShadowView.backgroundColor = KPColorPalette.KPBackgroundColor.whiteColor
+//        searchContainerShadowView.layer.shadowColor = KPColorPalette.KPBackgroundColor.grayColor_level4?.cgColor
+//        searchContainerShadowView.layer.shadowOpacity = 0.4
+//        searchContainerShadowView.layer.shadowOffset = CGSize(width: 0,
+//                                                              height: 4)
+//        searchContainerShadowView.layer.shadowRadius = 4.0
+//        searchContainerShadowView.layer.cornerRadius = 6.0
+        view.addSubview(searchContainerShadowView)
+        searchContainerShadowView.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|",
+                                                                   "V:|-40-[$self(48)]"])
+        
+        searchContainer = UIView()
+        searchContainer.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7
+        searchContainer.layer.cornerRadius = 6.0
+        searchContainer.layer.masksToBounds = true
+//        searchContainer.layer.borderWidth = 1.0
+//        searchContainer.layer.borderColor = KPColorPalette.KPBackgroundColor.grayColor_level6?.cgColor
+        
+        searchContainerShadowView.addSubview(searchContainer)
+//        searchContainer.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|",
+//                                                         "V:|-32-[$self(48)]"])
+        searchContainer.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                         "V:|[$self]|"])
+        
+        searchIcon = UIImageView(image: R.image.icon_search())
+        searchIcon.tintColor = KPColorPalette.KPMainColor_v2.textColor_level4
+        searchContainer.addSubview(searchIcon)
+        searchIcon.addConstraints(fromStringArray: ["V:[$self(24)]",
+                                                    "H:|-12-[$self(24)]"])
+        searchIcon.addConstraintForCenterAligning(to: searchContainer,
+                                                  in: .vertical,
+                                                  constant: 0)
+        
+        searchLabel = UILabel()
+        searchLabel.font = UIFont.systemFont(ofSize: 16.0)
+        searchLabel.text = "搜尋店家名稱、標籤、地點"
+        searchLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_description
+        searchContainer.addSubview(searchLabel)
+        searchLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]"],
+                                   views:[searchIcon])
+        searchLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
+        
+        let headerView = UIView(frame: CGRect(x: 0,
+                                              y: 0,
+                                              width: UIScreen.main.bounds.width,
+                                              height: 330))
         
         
         let articleLabel = UILabel()
         articleLabel.font = UIFont.boldSystemFont(ofSize: 22.0)
         articleLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_title
-        articleLabel.text = "精選文章"
+        articleLabel.text = "編輯精選文章"
         
         headerView.addSubview(articleLabel)
         articleLabel.addConstraints(fromStringArray: ["H:|-20-[$self]",
@@ -150,11 +205,15 @@ class KPExplorationViewController: KPViewController {
         articleCollectionView.register(KPArticleCell.self, forCellWithReuseIdentifier: "ArticleCell")
         articleCollectionView.backgroundColor = UIColor.clear
         headerView.addSubview(articleCollectionView)
-        articleCollectionView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$view0]-[$self]-|"],
+        articleCollectionView.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                               "V:[$view0]-[$self]-|"],
                                              views: [articleLabel])
         
         let tableView = UITableView(frame: CGRect.zero, style: .plain)
-        tableView.contentInset = UIEdgeInsets(top: 100, left: 0, bottom: 30, right: 0)
+        tableView.contentInset = UIEdgeInsets(top: 0,
+                                              left: 0,
+                                              bottom: 30,
+                                              right: 0)
         tableView.dataSource = self
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
@@ -162,7 +221,7 @@ class KPExplorationViewController: KPViewController {
         tableView.register(KPExplorationSectionView.self, forCellReuseIdentifier: "cell")
         view.addSubview(tableView)
         tableView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                   "V:|[$self]|"])
+                                                   "V:|-110-[$self]|"])
         tableView.tableHeaderView = headerView
 
         

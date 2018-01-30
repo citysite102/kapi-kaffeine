@@ -389,7 +389,7 @@ extension KPMainListViewController: UITableViewDelegate, UITableViewDataSource {
             
             if scrollView.contentOffset.y > oldScrollOffsetY {
                 // 往下
-                translate = -100
+                translate = -96
                 buttonTranslate = 120
             } else {
                 // 往上

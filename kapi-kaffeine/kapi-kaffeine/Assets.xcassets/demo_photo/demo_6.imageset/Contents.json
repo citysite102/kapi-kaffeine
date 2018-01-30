@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "image_shop_demo.png",
+      "filename" : "roman-bozhko-251412.jpg",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "image_shop_demo@2x.png",
+      "filename" : "roman-bozhko-251413.jpg",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "image_shop_demo@3x.png",
+      "filename" : "roman-bozhko-251414.jpg",
       "scale" : "3x"
     }
   ],

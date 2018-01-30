@@ -57,7 +57,7 @@ class KPSearchHeaderView: UIView {
         
         searchLabel = UILabel()
         searchLabel.font = UIFont.systemFont(ofSize: 14.0)
-        searchLabel.text = "地點..."
+        searchLabel.text = "搜尋店家名稱、標籤、地點"
         searchLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_description
         searchContainer.addSubview(searchLabel)
         searchLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]"],
@@ -132,7 +132,7 @@ class KPSearchHeaderView: UIView {
                                      views:[searchContainer])
         
         separator = UIView()
-        separator.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
+        separator.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level5_5
         searchTagView.addSubview(separator)
         separator.addConstraints(fromStringArray: ["V:[$self(1)]|",
                                                    "H:|[$self]|"])

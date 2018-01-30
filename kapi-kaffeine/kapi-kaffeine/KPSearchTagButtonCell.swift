@@ -27,7 +27,7 @@ class KPSearchTagButtonCell: UICollectionViewCell {
         super.init(frame: frame)
         
         layer.borderWidth = 1.0
-        layer.borderColor = KPColorPalette.KPMainColor_v2.textColor_level3?.cgColor
+        layer.borderColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle?.cgColor
         layer.cornerRadius = 16.0
         layer.masksToBounds = true
         
@@ -49,6 +49,18 @@ class KPSearchTagButtonCell: UICollectionViewCell {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override var isSelected: Bool {
+        didSet {
+            if isSelected == true {
+                backgroundColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
+                tagTitle.textColor = KPColorPalette.KPBackgroundColor.whiteColor
+            } else {
+                backgroundColor = KPColorPalette.KPBackgroundColor.whiteColor
+                tagTitle.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
+            }
+        }
     }
     
     

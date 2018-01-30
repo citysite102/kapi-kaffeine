@@ -77,8 +77,8 @@ class KPMainListTableViewCell: UITableViewCell {
     var shopImageView: UIImageView!
     var shopNameLabel: KPLayerLabel!
     
-    var shopStarIcon: UIImageView!
-    var shopRateLabel: KPLayerLabel!
+    var starIcon: UIImageView!
+    var rateLabel: KPLayerLabel!
     
     var shopLocationIcon: UIImageView!
     var shopLocationLabel: KPLayerLabel!
@@ -104,7 +104,7 @@ class KPMainListTableViewCell: UITableViewCell {
         contentView.addSubview(shopImageView)
             
         shopImageView.addConstraints(fromStringArray: ["H:|-12-[$self(72)]",
-                                                       "V:|-20-[$self(72)]-20-|"])
+                                                       "V:|-16-[$self(72)]-16-|"])
         
         shopNameLabel = KPLayerLabel()
         shopNameLabel.font = UIFont.systemFont(ofSize: 16.0)
@@ -114,29 +114,29 @@ class KPMainListTableViewCell: UITableViewCell {
         contentView.addSubview(shopNameLabel)
 
         shopNameLabel.addConstraints(fromStringArray: ["H:[$view0]-12-[$self($metric0)]",
-                                                       "V:|-20-[$self]"],
+                                                       "V:|-16-[$self]"],
                                           metrics: [UIScreen.main.bounds.size.width/2],
                                           views: [shopImageView])
         
-        shopStarIcon = UIImageView(image: R.image.icon_star())
-        shopStarIcon.tintColor = KPColorPalette.KPMainColor_v2.yellowColor
-        contentView.addSubview(shopStarIcon)
-        shopStarIcon.addConstraints(fromStringArray: ["H:[$self(18)]-12-|",
-                                                      "V:|-20-[$self(18)]"])
+        starIcon = UIImageView(image: R.image.icon_star_filled())
+        starIcon.tintColor = KPColorPalette.KPMainColor_v2.starColor
+        contentView.addSubview(starIcon)
+        starIcon.addConstraints(fromStringArray: ["H:[$self(18)]-12-|",
+                                                  "V:|-18-[$self(18)]"])
         
-        shopRateLabel = KPLayerLabel()
-        shopRateLabel.font = UIFont.systemFont(ofSize: 16.0)
-        shopRateLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
-        shopRateLabel.text = "4.8"
-        shopRateLabel.isOpaque = true
-        shopRateLabel.layer.masksToBounds = true
-        contentView.addSubview(shopRateLabel)
+        rateLabel = KPLayerLabel()
+        rateLabel.font = UIFont.boldSystemFont(ofSize: 16.0)
+        rateLabel.textColor = KPColorPalette.KPMainColor_v2.starColor
+        rateLabel.text = "4.8"
+        rateLabel.isOpaque = true
+        rateLabel.layer.masksToBounds = true
+        contentView.addSubview(rateLabel)
 
-        shopRateLabel.addConstraints(fromStringArray: ["H:[$self(28)][$view0]"],
-                                     views: [shopStarIcon])
-        shopRateLabel.addConstraintForCenterAligning(to: shopStarIcon,
-                                                     in: .vertical,
-                                                     constant: 0)
+        rateLabel.addConstraints(fromStringArray: ["H:[$self(28)]-1-[$view0]"],
+                                        views: [starIcon])
+        rateLabel.addConstraintForCenterAligning(to: starIcon,
+                                                 in: .vertical,
+                                                 constant: 0)
         
         
         shopStatusHint = UIView()
@@ -145,7 +145,7 @@ class KPMainListTableViewCell: UITableViewCell {
         shopStatusHint.isOpaque = true
         contentView.addSubview(shopStatusHint)
         shopStatusHint.addConstraints(fromStringArray: ["H:[$view0]-12-[$self(8)]",
-                                                        "V:[$view1]-15-[$self(8)]"],
+                                                        "V:[$view1]-14-[$self(8)]"],
                                           views: [shopImageView,
                                                   shopNameLabel])
         
@@ -156,20 +156,20 @@ class KPMainListTableViewCell: UITableViewCell {
         shopStatusLabel.isOpaque = true
         shopStatusLabel.layer.masksToBounds = true
         contentView.addSubview(shopStatusLabel)
-        shopStatusLabel.addConstraints(fromStringArray: ["H:[$view0]-5-[$self($metric0)]"],
+        shopStatusLabel.addConstraints(fromStringArray: ["H:[$view0]-6-[$self($metric0)]"],
                                             metrics: [UIScreen.main.bounds.size.width/2],
                                             views: [shopStatusHint,
                                                     shopNameLabel])
         shopStatusLabel.addConstraintForCenterAligning(to: shopStatusHint,
                                                        in: .vertical,
-                                                       constant: -2)
+                                                       constant: 0)
         
         
         shopLocationIcon = UIImageView(image: R.image.icon_pin_fill())
         shopLocationIcon.tintColor = KPColorPalette.KPMainColor_v2.textColor_level2
         contentView.addSubview(shopLocationIcon)
-        shopLocationIcon.addConstraints(fromStringArray: ["H:[$view0]-8-[$self(16)]",
-                                                          "V:[$self(16)]-20-|"],
+        shopLocationIcon.addConstraints(fromStringArray: ["H:[$view0]-9-[$self(14)]",
+                                                          "V:[$self(14)]-16-|"],
                                          views: [shopImageView])
         
         shopLocationLabel = KPLayerLabel()
@@ -180,7 +180,7 @@ class KPMainListTableViewCell: UITableViewCell {
         shopLocationLabel.layer.masksToBounds = true
         contentView.addSubview(shopLocationLabel)
         shopLocationLabel.addConstraints(fromStringArray: ["H:[$view0]-6-[$self]",
-                                                           "V:[$self]-21-|"],
+                                                           "V:[$self]-15-|"],
                                          views: [shopLocationIcon])
         
         
@@ -193,7 +193,7 @@ class KPMainListTableViewCell: UITableViewCell {
         shopDistanceLabel.layoutMargins = UIEdgeInsetsMake(0, 0, 0, 0)
         contentView.addSubview(shopDistanceLabel)
         shopDistanceLabel.addConstraints(fromStringArray: ["H:[$view0]-16-[$self]",
-                                                           "V:[$self]-20-|"],
+                                                           "V:[$self]-15-|"],
                                               views: [shopLocationLabel])
         
         scoreLabel = KPMainListCellScoreLabel()

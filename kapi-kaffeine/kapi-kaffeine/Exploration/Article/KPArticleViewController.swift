@@ -51,7 +51,7 @@ class KPArticleViewController: KPViewController {
         scrollContainer.addConstraints(fromStringArray: ["V:|[$self]|",
                                                          "H:|[$self]|"])
         
-        heroCoverImageView = UIImageView(image: R.image.demo_2())
+        heroCoverImageView = UIImageView(image: R.image.demo_6())
         heroCoverImageView.contentMode = .scaleAspectFill
         heroCoverImageView.clipsToBounds = true
         heroCoverImageView.layer.anchorPoint = CGPoint(x: 0.5, y: 0)

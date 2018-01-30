@@ -152,9 +152,9 @@ extension KPSearchTagView: UICollectionViewDelegate, UICollectionViewDataSource,
         }
 //        let cell = collectionView.cellForItem(at: indexPath)
 //        currentSelectTags.append(headerTagContents[indexPath.row])
-        delegate?.searchTagDidSelect(headerTagContents[indexPath.row])
+//        delegate?.searchTagDidSelect(headerTagContents[indexPath.row])
 //        cell?.alpha = 1.0
-        preferenceHintButton.hintCount = collectionView.indexPathsForSelectedItems?.count ?? 0
+//        preferenceHintButton.hintCount = collectionView.indexPathsForSelectedItems?.count ?? 0
 //        preferenceHintButton.hintCount = currentSelectTags.count
     }
     
