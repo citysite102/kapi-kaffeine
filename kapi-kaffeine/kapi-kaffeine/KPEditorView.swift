@@ -39,10 +39,11 @@ class KPEditorView: UIView {
         
         textField = UITextField()
         textField.placeholder = placeHolder
+        textField.returnKeyType = .done
         textField.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7
         textField.layer.cornerRadius = 5
         textField.font = UIFont.systemFont(ofSize: 16)
-//        textField.delegate = self
+        textField.delegate = self
         addSubview(textField)
         textField.addConstraints(fromStringArray: ["H:|[$self]|",
                                                    "V:[$view0(24)]-12-[$self(40)]|"],
@@ -62,29 +63,34 @@ class KPEditorView: UIView {
 
 extension KPEditorView: UITextFieldDelegate {
     
-    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        if editorType == .Text {
-            return true
-        } else if editorType == .Search {
-            let controller = KPModalViewController()
-            controller.edgeInset = UIEdgeInsets(top: 0,
-                                                left: 0,
-                                                bottom: 0,
-                                                right: 0)
-            controller.contentController = KPNewStoreSearchViewController()
-            controller.presentModalView()
-            return false
-        } else {
-            let controller = KPModalViewController()
-            controller.edgeInset = UIEdgeInsets(top: 0,
-                                                left: 0,
-                                                bottom: 0,
-                                                right: 0)
-            let subTitleInputViewController = KPNewStoreSearchViewController()
-            let navigationController = UINavigationController(rootViewController: subTitleInputViewController)
-            controller.contentController = navigationController
-            controller.presentModalView()
-            return false
-        }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
+    
+//    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+//        if editorType == .Text {
+//            return true
+//        } else if editorType == .Search {
+//            let controller = KPModalViewController()
+//            controller.edgeInset = UIEdgeInsets(top: 0,
+//                                                left: 0,
+//                                                bottom: 0,
+//                                                right: 0)
+//            controller.contentController = KPNewStoreSearchViewController()
+//            controller.presentModalView()
+//            return false
+//        } else {
+//            let controller = KPModalViewController()
+//            controller.edgeInset = UIEdgeInsets(top: 0,
+//                                                left: 0,
+//                                                bottom: 0,
+//                                                right: 0)
+//            let subTitleInputViewController = KPNewStoreSearchViewController()
+//            let navigationController = UINavigationController(rootViewController: subTitleInputViewController)
+//            controller.contentController = navigationController
+//            controller.presentModalView()
+//            return false
+//        }
+//    }
 }

@@ -65,7 +65,7 @@ class KPNewStoreController: KPViewController, KPSubtitleInputDelegate {
         buttonContainer.layer.borderColor = KPColorPalette.KPBackgroundColor.grayColor_level6?.cgColor
         buttonContainer.layer.borderWidth = 1
         
-        buttonContainer.addConstraints(fromStringArray: ["H:|-(-1)-[$self]-(-1)-|", "V:[$view0][$self]"],
+        buttonContainer.addConstraints(fromStringArray: ["H:|-(-1)-[$self]-(-1)-|", "V:[$view0][$self(60)]"],
                                        views: [scrollView])
         buttonContainer.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor).isActive = true
     
@@ -121,11 +121,36 @@ class KPNewStoreController: KPViewController, KPSubtitleInputDelegate {
         nextButton.layer.cornerRadius = 4.0
         nextButton.titleLabel?.font = UIFont.systemFont(ofSize: 16.0)
         buttonContainer.addSubview(nextButton)
-        nextButton.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|", "V:|-16-[$self(40)]-16-|"])
+        nextButton.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|", "V:|-10-[$self(40)]-10-|"])
         nextButton.addTarget(self, action: #selector(KPNewStoreController.handleNextButtonOnTap(_:)), for: .touchUpInside)
         
         nextButton.isEnabled = false
         
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(KPNewStoreController.keyboardShow(_:)),
+                                               name: Notification.Name.UIKeyboardWillShow,
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(KPNewStoreController.keyboardHide(_:)),
+                                               name: Notification.Name.UIKeyboardWillHide,
+                                               object: nil)
+        
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    
+    @objc func keyboardShow(_ notification: Notification) {
+        if let keyboardFrame = (notification.userInfo![UIKeyboardFrameEndUserInfoKey] as AnyObject).cgRectValue {
+            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardFrame.size.height, right: 0)
+        }
+    }
+    
+    @objc func keyboardHide(_ notification: Notification) {
+        scrollView.contentInset = UIEdgeInsets.zero
     }
     
     @objc func handleNextButtonOnTap(_ sender: UIButton) {

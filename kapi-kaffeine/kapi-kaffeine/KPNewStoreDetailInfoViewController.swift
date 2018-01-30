@@ -13,6 +13,10 @@ class KPNewStoreDetailInfoViewController: KPViewController {
     fileprivate var scrollView: UIScrollView!
     fileprivate var scrollContainerView: UIView!
     
+    fileprivate var comsumptionInfoButton: KPNewStoreDetailCheckButton!
+    fileprivate var businessTimeButton: KPNewStoreDetailCheckButton!
+    fileprivate var additionalInfoButton: KPNewStoreDetailCheckButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -67,27 +71,36 @@ class KPNewStoreDetailInfoViewController: KPViewController {
         detailTitleLabel.addConstraints(fromStringArray: ["H:|-20-[$self]|", "V:|-20-[$self]"])
         
         
-        let comsumptionInfoView = KPNewStoreDetailCheckButton("消費體驗資訊")
-        scrollContainerView.addSubview(comsumptionInfoView)
-        comsumptionInfoView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$view0]-20-[$self(70)]"],
+        comsumptionInfoButton = KPNewStoreDetailCheckButton("消費體驗資訊")
+        comsumptionInfoButton.addTarget(self,
+                                        action: #selector(KPNewStoreDetailInfoViewController.handleInfoButtonOnTap(_:)),
+                                        for: .touchUpInside)
+        scrollContainerView.addSubview(comsumptionInfoButton)
+        comsumptionInfoButton.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$view0]-20-[$self(70)]"],
                                            views: [detailTitleLabel])
         
-        let businessTimeView = KPNewStoreDetailCheckButton("店家營業時間")
-        scrollContainerView.addSubview(businessTimeView)
-        businessTimeView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$view0][$self(70)]"],
-                                        views: [comsumptionInfoView])
+        businessTimeButton = KPNewStoreDetailCheckButton("店家營業時間")
+        businessTimeButton.addTarget(self,
+                                    action: #selector(KPNewStoreDetailInfoViewController.handleInfoButtonOnTap(_:)),
+                                    for: .touchUpInside)
+        scrollContainerView.addSubview(businessTimeButton)
+        businessTimeButton.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$view0][$self(70)]"],
+                                          views: [comsumptionInfoButton])
         
-        let additionalInfoView = KPNewStoreDetailCheckButton("提供設備")
-        scrollContainerView.addSubview(additionalInfoView)
-        additionalInfoView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$view0][$self(70)]"],
-                                        views: [businessTimeView])
+        additionalInfoButton = KPNewStoreDetailCheckButton("提供設備")
+        additionalInfoButton.addTarget(self,
+                                       action: #selector(KPNewStoreDetailInfoViewController.handleInfoButtonOnTap(_:)),
+                                       for: .touchUpInside)
+        scrollContainerView.addSubview(additionalInfoButton)
+        additionalInfoButton.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$view0][$self(70)]"],
+                                        views: [businessTimeButton])
         
         
         
         let photoUploadView = KPPhotoUploadView("上傳照片")
         scrollContainerView.addSubview(photoUploadView)
         photoUploadView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$view0][$self]"],
-                                       views: [additionalInfoView])
+                                       views: [additionalInfoButton])
         
         let menuUploadView = KPPhotoUploadView("上傳菜單")
         scrollContainerView.addSubview(menuUploadView)
@@ -132,6 +145,18 @@ class KPNewStoreDetailInfoViewController: KPViewController {
     
     @objc func handleCancelButtonOnTap(_ sender: UIBarButtonItem) {
         appModalController()?.dismissControllerWithDefaultDuration()
+    }
+    
+    @objc func handleInfoButtonOnTap(_ sender: KPNewStoreDetailCheckButton) {
+        if sender == comsumptionInfoButton {
+            let consumption = KPConsumptionInfoViewController()
+            consumption.title = title
+            navigationController?.pushViewController(consumption, animated: true)
+        } else if sender == businessTimeButton {
+            
+        } else if sender == additionalInfoButton {
+            
+        }
     }
 
 }
