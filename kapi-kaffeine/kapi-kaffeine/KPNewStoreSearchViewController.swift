@@ -13,7 +13,7 @@ protocol KPSubtitleInputDelegate: class {
     func outputValueSet<T>(_ controller: KPViewController,  value: T)
 }
 
-class KPSubtitleInputController: KPViewController {
+class KPNewStoreSearchViewController: KPViewController {
     
     var searchController: UISearchController!
     
@@ -46,7 +46,7 @@ class KPSubtitleInputController: KPViewController {
         let barLeftItem = UIBarButtonItem(title: "取消",
                                           style: .plain,
                                           target: self,
-                                          action: #selector(KPSubtitleInputController.handleCancelButtonOnTap))
+                                          action: #selector(KPNewStoreSearchViewController.handleCancelButtonOnTap))
         barLeftItem.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 16), NSAttributedStringKey.foregroundColor: UIColor.gray],
                                            for: .normal)
         navigationItem.leftBarButtonItem = barLeftItem
@@ -103,7 +103,7 @@ class KPSubtitleInputController: KPViewController {
     
 }
 
-extension KPSubtitleInputController: UITextFieldDelegate, UISearchBarDelegate {
+extension KPNewStoreSearchViewController: UITextFieldDelegate, UISearchBarDelegate {
     
 //    func textField(_ textField: UITextField,
 //                   shouldChangeCharactersIn range: NSRange,
@@ -174,7 +174,7 @@ extension KPSubtitleInputController: UITextFieldDelegate, UISearchBarDelegate {
     }
 }
 
-extension KPSubtitleInputController: UITableViewDelegate, UITableViewDataSource {
+extension KPNewStoreSearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
