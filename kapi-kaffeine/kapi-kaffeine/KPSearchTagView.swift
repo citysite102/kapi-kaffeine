@@ -41,7 +41,7 @@ class KPSearchTagView: UIView {
                              searchTagType.limitTime,
                              searchTagType.opening,
                              searchTagType.highRate]
-    var headerTagImages = [R.image.icon_wifi(),     R.image.icon_socket(),
+    var headerTagImages = [R.image.icon_wifi(), R.image.icon_socket(),
                            R.image.icon_clock(), R.image.icon_door(),
                            R.image.icon_star()]
 

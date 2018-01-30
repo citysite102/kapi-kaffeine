@@ -32,7 +32,7 @@ class KPMainListTableViewCell: UITableViewCell {
                         self.shopStatusLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
                         self.shopStatusLabel.text = shopStatus.status
                         self.shopStatusHint.backgroundColor = shopStatus.isOpening ?
-                                KPColorPalette.KPShopStatusColor.opened :
+                                KPColorPalette.KPMainColor_v2.greenColor :
                                 KPColorPalette.KPShopStatusColor.closed
                     } else {
                         self.shopStatusLabel.textColor = KPColorPalette.KPTextColor.grayColor_level5
@@ -140,7 +140,7 @@ class KPMainListTableViewCell: UITableViewCell {
         
         
         shopStatusHint = UIView()
-        shopStatusHint.backgroundColor = KPColorPalette.KPShopStatusColor.opened
+        shopStatusHint.backgroundColor = KPColorPalette.KPMainColor_v2.greenColor
         shopStatusHint.layer.cornerRadius = 4.0
         shopStatusHint.isOpaque = true
         contentView.addSubview(shopStatusHint)
@@ -162,7 +162,7 @@ class KPMainListTableViewCell: UITableViewCell {
                                                     shopNameLabel])
         shopStatusLabel.addConstraintForCenterAligning(to: shopStatusHint,
                                                        in: .vertical,
-                                                       constant: 0)
+                                                       constant: -0.5)
         
         
         shopLocationIcon = UIImageView(image: R.image.icon_pin_fill())

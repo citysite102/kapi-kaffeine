@@ -104,7 +104,7 @@ struct KPColorPalette {
         static let mainColor_light = UIColor(hexString: "#6790E0")
         static let mainColor = UIColor(hexString: "#416FCB")
 
-        static let starColor = UIColor(hexString: "#FFAF1A")
+        static let starColor = UIColor(hexString: "#FCB227")
         
         static let greenColor = UIColor(hexString: "#29B571")
         static let redColor = UIColor(hexString: "#FF7878")

@@ -58,7 +58,7 @@ class KPInformationHeaderButton: UIView {
     var selected: Bool = false {
         didSet {
             icon.tintColor = selected ?
-                KPColorPalette.KPMainColor.mainColor :
+                KPColorPalette.KPMainColor_v2.mainColor :
                 KPColorPalette.KPMainColor.grayColor_level5
             titleLabel.textColor = KPColorPalette.KPTextColor.mainColor
 //            numberValue = self.numberValue + (selected ? 1 : (self.numberValue > 0 ? -1 : 0))
