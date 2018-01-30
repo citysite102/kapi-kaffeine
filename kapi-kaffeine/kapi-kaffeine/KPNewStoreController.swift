@@ -12,7 +12,7 @@ import GooglePlaces
 class KPNewStoreController: KPViewController, KPSubtitleInputDelegate {
     
     func outputValueSet<GMSPlace>(_ controller: KPViewController, value: GMSPlace) {
-        if controller.isKind(of: KPSubtitleInputController.self) {
+        if controller.isKind(of: KPNewStoreSearchViewController.self) {
             
         }
     }
@@ -26,6 +26,8 @@ class KPNewStoreController: KPViewController, KPSubtitleInputDelegate {
     var scrollContainer: UIView!
     var scrollView: UIScrollView!
     var buttonContainer: UIView!
+    
+    var nextButton: UIButton!
     
     override func viewDidLoad() {
         
@@ -75,6 +77,8 @@ class KPNewStoreController: KPViewController, KPSubtitleInputDelegate {
         storeNameEditor.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|",
                                                          "V:|-20-[$self]"])
         
+        storeNameEditor.textField.addTarget(self, action: #selector(KPNewStoreController.handleStoreNameDidChanged(_:)), for: .editingChanged)
+        
         locationEditor = KPEditorView(type: .Text,
                                           title: "所在位置",
                                           placeHolder: "請選擇所在位置")
@@ -108,10 +112,10 @@ class KPNewStoreController: KPViewController, KPSubtitleInputDelegate {
                                       views: [phoneEditor])
         
         
-        let nextButton = UIButton(type: .custom)
+        nextButton = UIButton(type: .custom)
         nextButton.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor_v2.greenColor!), for: .normal)
         nextButton.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor_v2.grayColor_level4!), for: .disabled)
-        nextButton.setTitleColor(KPColorPalette.KPMainColor_v2.whiteColor_level1!, for: .normal)
+        nextButton.setTitleColor(UIColor.white, for: .normal)
         nextButton.setTitle("下一步", for: .normal)
         nextButton.clipsToBounds = true
         nextButton.layer.cornerRadius = 4.0
@@ -120,16 +124,22 @@ class KPNewStoreController: KPViewController, KPSubtitleInputDelegate {
         nextButton.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|", "V:|-16-[$self(40)]-16-|"])
         nextButton.addTarget(self, action: #selector(KPNewStoreController.handleNextButtonOnTap(_:)), for: .touchUpInside)
         
-//        nextButton.isEnabled = false
+        nextButton.isEnabled = false
         
     }
     
     @objc func handleNextButtonOnTap(_ sender: UIButton) {
-        navigationController?.pushViewController(KPNewStoreDetailInfoViewController(), animated: true)
+        let detailInfoViewController = KPNewStoreDetailInfoViewController()
+        detailInfoViewController.title = storeNameEditor.textField.text
+        navigationController?.pushViewController(detailInfoViewController, animated: true)
     }
 
     @objc func handleCancelButtonOnTap(_ sender: UIBarButtonItem) {
         appModalController()?.dismissControllerWithDefaultDuration()
+    }
+    
+    @objc func handleStoreNameDidChanged(_ sender: UITextField) {
+        nextButton.isEnabled = !sender.text!.isEmpty
     }
 
 }

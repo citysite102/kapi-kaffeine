@@ -9,12 +9,14 @@
 import UIKit
 
 class KPNewStoreDetailInfoViewController: KPViewController {
-
+    
+    fileprivate var scrollView: UIScrollView!
+    fileprivate var scrollContainerView: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         view.backgroundColor = UIColor.white
-        title = "老木咖啡"
         //        navigationController?.navigationBar.shadowImage = UIImage()
         
         let barLeftItem = UIBarButtonItem(title: "取消",
@@ -37,9 +39,66 @@ class KPNewStoreDetailInfoViewController: KPViewController {
         buttonContainer.layer.borderWidth = 1
         
         
+        
+        scrollView = UIScrollView()
+        view.addSubview(scrollView)
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor).isActive = true
+        scrollView.addConstraint(from: "V:[$self][$view0]", views:[buttonContainer])
+        if #available(iOS 11.0, *) {
+            scrollView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
+            scrollView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
+        } else {
+            scrollView.addConstraint(from: "H:|[$self]|")
+        }
+
+        
+        
+        scrollContainerView = UIView()
+        scrollView.addSubview(scrollContainerView)
+        scrollContainerView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"])
+        scrollContainerView.addConstraintForHavingSameWidth(with: scrollView)
+        
+        
+        let detailTitleLabel = UILabel()
+        detailTitleLabel.text = "提供店家相關資訊"
+        detailTitleLabel.font = UIFont.boldSystemFont(ofSize: 20)
+        scrollContainerView.addSubview(detailTitleLabel)
+        detailTitleLabel.addConstraints(fromStringArray: ["H:|-20-[$self]|", "V:|-20-[$self]"])
+        
+        
+        let comsumptionInfoView = KPNewStoreDetailCheckButton("消費體驗資訊")
+        scrollContainerView.addSubview(comsumptionInfoView)
+        comsumptionInfoView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$view0]-20-[$self(70)]"],
+                                           views: [detailTitleLabel])
+        
+        let businessTimeView = KPNewStoreDetailCheckButton("店家營業時間")
+        scrollContainerView.addSubview(businessTimeView)
+        businessTimeView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$view0][$self(70)]"],
+                                        views: [comsumptionInfoView])
+        
+        let additionalInfoView = KPNewStoreDetailCheckButton("提供設備")
+        scrollContainerView.addSubview(additionalInfoView)
+        additionalInfoView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$view0][$self(70)]"],
+                                        views: [businessTimeView])
+        
+        
+        
+        let photoUploadView = KPPhotoUploadView("上傳照片")
+        scrollContainerView.addSubview(photoUploadView)
+        photoUploadView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$view0][$self]"],
+                                       views: [additionalInfoView])
+        
+        let menuUploadView = KPPhotoUploadView("上傳菜單")
+        scrollContainerView.addSubview(menuUploadView)
+        menuUploadView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$view0][$self]|"],
+                                      views: [photoUploadView])
+        
+        
+        
         let submitButton = UIButton(type: .custom)
         submitButton.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor_v2.greenColor!), for: .normal)
-        submitButton.setTitleColor(KPColorPalette.KPMainColor_v2.whiteColor_level1!, for: .normal)
+        submitButton.setTitleColor(UIColor.white, for: .normal)
         submitButton.setTitle("確認新增", for: .normal)
         submitButton.clipsToBounds = true
         submitButton.layer.cornerRadius = 3

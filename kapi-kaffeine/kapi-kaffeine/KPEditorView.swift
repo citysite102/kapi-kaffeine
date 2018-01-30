@@ -42,7 +42,7 @@ class KPEditorView: UIView {
         textField.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7
         textField.layer.cornerRadius = 5
         textField.font = UIFont.systemFont(ofSize: 16)
-        textField.delegate = self
+//        textField.delegate = self
         addSubview(textField)
         textField.addConstraints(fromStringArray: ["H:|[$self]|",
                                                    "V:[$view0(24)]-12-[$self(40)]|"],
@@ -71,7 +71,7 @@ extension KPEditorView: UITextFieldDelegate {
                                                 left: 0,
                                                 bottom: 0,
                                                 right: 0)
-            controller.contentController = KPSubtitleInputController()
+            controller.contentController = KPNewStoreSearchViewController()
             controller.presentModalView()
             return false
         } else {
@@ -80,12 +80,11 @@ extension KPEditorView: UITextFieldDelegate {
                                                 left: 0,
                                                 bottom: 0,
                                                 right: 0)
-            let subTitleInputViewController = KPSubtitleInputController()
+            let subTitleInputViewController = KPNewStoreSearchViewController()
             let navigationController = UINavigationController(rootViewController: subTitleInputViewController)
             controller.contentController = navigationController
             controller.presentModalView()
             return false
         }
     }
-    
 }
