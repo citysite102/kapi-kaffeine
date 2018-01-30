@@ -36,7 +36,7 @@ class KPExplorationSectionView: UITableViewCell {
         sectionTitleLabel.font = UIFont.boldSystemFont(ofSize: 22.0)
         sectionTitleLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_title
         contentView.addSubview(sectionTitleLabel)
-        sectionTitleLabel.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
+        sectionTitleLabel.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|",
                                                            "V:|-24-[$self]"])
         sectionTitleLabel.text = "IG 人氣打卡店家"
         
@@ -44,7 +44,7 @@ class KPExplorationSectionView: UITableViewCell {
         sectionDescriptionLabel.font = UIFont.systemFont(ofSize: 14)
         sectionDescriptionLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_description
         contentView.addSubview(sectionDescriptionLabel)
-        sectionDescriptionLabel.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
+        sectionDescriptionLabel.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|",
                                                                  "V:[$view0]-6-[$self]"],
                                                views: [sectionTitleLabel])
         sectionDescriptionLabel.text = "由知名部落客們聯手推薦的知名店家。"
@@ -67,7 +67,7 @@ class KPExplorationSectionView: UITableViewCell {
         separatar = UIView()
         separatar.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
         contentView.addSubview(separatar)
-        separatar.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
+        separatar.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|",
                                                    "V:[$view0]-24-[$self(1)]|"],
                                  views:[collectionView])
     }

@@ -38,19 +38,25 @@ class KPSearchHeaderView: UIView {
         containerView.addConstraints(fromStringArray: ["V:|[$self]",
                                                        "H:|[$self]|"],
                                      views: [])
+        
+        let longPressGesture = UILongPressGestureRecognizer(target: self,
+                                                      action: #selector(handleSearchContainerLongPressed(_:)))
+        longPressGesture.minimumPressDuration = 0
+        
         searchContainer = UIView()
         searchContainer.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7
         searchContainer.layer.cornerRadius = 6.0
         searchContainer.layer.masksToBounds = true
         containerView.addSubview(searchContainer)
+        searchContainer.addGestureRecognizer(longPressGesture)
         searchContainer.addConstraints(fromStringArray: ["H:|-12-[$self]-56-|",
                                                          "V:|-28-[$self(36)]|"])
         
         searchIcon = UIImageView(image: R.image.icon_search())
         searchIcon.tintColor = KPColorPalette.KPMainColor_v2.textColor_level4
         searchContainer.addSubview(searchIcon)
-        searchIcon.addConstraints(fromStringArray: ["V:[$self(20)]",
-                                                    "H:|-10-[$self(20)]"])
+        searchIcon.addConstraints(fromStringArray: ["V:[$self(18)]",
+                                                    "H:|-10-[$self(18)]"])
         searchIcon.addConstraintForCenterAligning(to: searchContainer,
                                                   in: .vertical,
                                                   constant: 0)
@@ -139,6 +145,29 @@ class KPSearchHeaderView: UIView {
         
         bringSubview(toFront: containerView)
         
+    }
+    
+    @objc func handleSearchContainerLongPressed(_ gesture: UILongPressGestureRecognizer) {
+        
+        if (gesture.state == .began) {
+            UIView.animate(withDuration: 0.1,
+                           animations: {
+                            self.searchContainer.transform = CGAffineTransform(scaleX: 0.98,
+                                                                               y: 0.98)
+            }) { (_) in
+            }
+        } else if (gesture.state == .ended) {
+            let controller = KPModalViewController()
+            controller.edgeInset = UIEdgeInsets(top: 0,
+                                                left: 0,
+                                                bottom: 0,
+                                                right: 0)
+            let searchController = KPSearchViewController()
+            let navigationController = UINavigationController(rootViewController: searchController)
+            controller.contentController = navigationController
+            controller.presentModalView()
+            self.searchContainer.transform = CGAffineTransform.identity
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -18,6 +18,7 @@ class KPSearchViewController: KPViewController {
     
     var ref: DatabaseReference!
 
+    var showDismissButton: Bool = true
     var dismissButton: KPBounceButton!
     var tableView: UITableView!
     var searchController: UISearchController!
@@ -76,19 +77,34 @@ class KPSearchViewController: KPViewController {
         view.backgroundColor = UIColor.white
         ref = Database.database().reference()
         
-        // Cancel button
-        let barLeftItem = UIBarButtonItem(title: "取消",
-                                          style: .plain,
-                                          target: self,
-                                          action: #selector(KPSearchViewController.handleCancelButtonOnTap))
-        barLeftItem.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 16), NSAttributedStringKey.foregroundColor: UIColor.gray],
-                                           for: .normal)
-        navigationItem.leftBarButtonItem = barLeftItem
+        if showDismissButton {
+            // Cancel button
+            let dismissButton = KPBounceButton(frame: CGRect.zero,
+                                               image: R.image.icon_close()!)
+            dismissButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
+            dismissButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
+            dismissButton.contentEdgeInsets = UIEdgeInsetsMake(12, 2, 2, 12)
+            dismissButton.tintColor = KPColorPalette.KPMainColor_v2.textColor_level2
+            dismissButton.addTarget(self,
+                                    action: #selector(KPInformationViewController.handleDismissButtonOnTapped),
+                                    for: .touchUpInside)
+            
+            let barLeftItem = UIBarButtonItem(customView: dismissButton)
+//            let barLeftItem = UIBarButtonItem(title: "取消",
+//                                              style: .plain,
+//                                              target: self,
+//                                              action: #selector(KPSearchViewController.handleCancelButtonOnTap))
+            barLeftItem.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 16),
+                                                NSAttributedStringKey.foregroundColor: UIColor.gray],
+                                               for: .normal)
+            navigationItem.leftBarButtonItem = barLeftItem
+        }
         
         tableView = UITableView()
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorColor = UIColor.clear
+        tableView.contentInset = UIEdgeInsetsMake(8, 0, 0, 0)
         view.addSubview(self.tableView)
         tableView.addConstraints(fromStringArray: ["V:|[$self]|",
                                                    "H:|[$self]|"])
@@ -153,14 +169,23 @@ class KPSearchViewController: KPViewController {
         searchController.dimsBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "搜尋咖啡店名稱..."
         searchController.searchBar.delegate = self
+        searchController.searchBar.tintColor = KPColorPalette.KPTextColor_v2.mainColor_description
         searchController.hidesNavigationBarDuringPresentation = false
+        
+        if let txfSearchField = searchController.searchBar.value(forKey: "_searchField") as? UITextField {
+            txfSearchField.subviews.first?.isHidden = true
+            txfSearchField.layer.cornerRadius = 6.0
+            txfSearchField.layer.masksToBounds = true
+            txfSearchField.layer.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7?.cgColor
+        }
+        
         if #available(iOS 11.0, *) {
-            navigationController?.navigationBar.prefersLargeTitles = true
-            navigationItem.searchController = searchController
+            navigationController?.navigationBar.prefersLargeTitles = false
         } else {
             // Fallback on earlier versions
-            navigationItem.titleView = searchController.searchBar
         }
+        navigationItem.titleView = searchController.searchBar
+        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).title = "清除"
         definesPresentationContext = true
     }
     
@@ -241,11 +266,6 @@ extension KPSearchViewController: UISearchResultsUpdating, UISearchBarDelegate {
             return
         }
         
-//        filteredDataModel = displayDataModel.filter({ (dataModel) -> Bool in
-//            return (dataModel.name as NSString).range(of: searchString,
-//                                                      options: .caseInsensitive).location != NSNotFound
-//        })
-        
         KPServiceHandler.sharedHandler.fetchRemoteData(nil,
                                                        nil,
                                                        nil,
@@ -276,17 +296,17 @@ extension KPSearchViewController: UITableViewDelegate, UITableViewDataSource {
             cell.shopNameLabel.text = filteredDataModel[indexPath.row].name
             cell.rateLabel.text = String(format: "%.1f", filteredDataModel[indexPath.row].averageRate?.doubleValue ?? 0.0)
             
-            if let distanceInMeter = filteredDataModel[indexPath.row].distanceInMeter {
-                var distance = distanceInMeter
-                var unit = "m"
-                if distance > 1000 {
-                    unit = "km"
-                    distance = distance/1000
-                }
-                cell.distanceLabel.text = String(format: "%.1f%@", distance, unit)
-            } else {
-                cell.distanceLabel.text = "-"
-            }
+//            if let distanceInMeter = filteredDataModel[indexPath.row].distanceInMeter {
+//                var distance = distanceInMeter
+//                var unit = "m"
+//                if distance > 1000 {
+//                    unit = "km"
+//                    distance = distance/1000
+//                }
+//                cell.distanceLabel.text = String(format: "%.1f%@", distance, unit)
+//            } else {
+//                cell.distanceLabel.text = "-"
+//            }
             
             return cell
         } else {
@@ -301,17 +321,17 @@ extension KPSearchViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.shopNameLabel.text = displayDataModel[indexPath.row].name
                 cell.rateLabel.text = String(format: "%.1f", displayDataModel[indexPath.row].averageRate?.doubleValue ?? 0.0)
                 
-                if let distanceInMeter = displayDataModel[indexPath.row].distanceInMeter {
-                    var distance = distanceInMeter
-                    var unit = "m"
-                    if distance > 1000 {
-                        unit = "km"
-                        distance = distance/1000
-                    }
-                    cell.distanceLabel.text = String(format: "%.1f%@", distance, unit)
-                } else {
-                    cell.distanceLabel.text = "-"
-                }
+//                if let distanceInMeter = displayDataModel[indexPath.row].distanceInMeter {
+//                    var distance = distanceInMeter
+//                    var unit = "m"
+//                    if distance > 1000 {
+//                        unit = "km"
+//                        distance = distance/1000
+//                    }
+//                    cell.distanceLabel.text = String(format: "%.1f%@", distance, unit)
+//                } else {
+//                    cell.distanceLabel.text = "-"
+//                }
                 
                 return cell
             }

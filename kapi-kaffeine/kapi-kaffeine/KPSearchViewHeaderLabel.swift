@@ -12,8 +12,8 @@ class KPSearchViewHeaderLabel: UIView {
 
     lazy var headerLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 14)
-        label.textColor = KPColorPalette.KPTextColor.mainColor
+        label.font = UIFont.boldSystemFont(ofSize: 20.0)
+        label.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
         label.text = "搜尋結果"
         return label
     }()

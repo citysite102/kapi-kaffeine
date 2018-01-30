@@ -62,12 +62,17 @@ class KPMainTabController: ESTabBarController, UITabBarControllerDelegate {
         exploreItem.imageInsets = UIEdgeInsetsMake(2, 2, 2, 2)
         exploreController.tabBarItem = exploreItem
         
-        let searchController = KPSearchViewController()
+        
+        let navSearchController = KPSearchViewController()
+        let searchController = UINavigationController(rootViewController: navSearchController)
+        
         let searchItem = UITabBarItem(title: "搜尋",
                                       image: R.image.icon_search(),
                                       selectedImage: R.image.icon_search())
         searchItem.imageInsets = UIEdgeInsetsMake(2, 2, 2, 2)
+        navSearchController.showDismissButton = false
         searchController.tabBarItem = searchItem
+        
         
         let newStoreController = KPNewStoreController()
         newStoreController.tabBarItem = ESTabBarItem(KPTabBarAddButton(),

@@ -132,6 +132,10 @@ class KPExplorationViewController: KPViewController {
         view.backgroundColor = KPColorPalette.KPBackgroundColor.whiteColor
         
         
+        let longPressGesture = UILongPressGestureRecognizer(target: self,
+                                                            action: #selector(handleSearchContainerLongPressed(_:)))
+        longPressGesture.minimumPressDuration = 0
+        
         searchContainerShadowView = UIView()
 //        searchContainerShadowView.backgroundColor = KPColorPalette.KPBackgroundColor.whiteColor
 //        searchContainerShadowView.layer.shadowColor = KPColorPalette.KPBackgroundColor.grayColor_level4?.cgColor
@@ -152,16 +156,14 @@ class KPExplorationViewController: KPViewController {
 //        searchContainer.layer.borderColor = KPColorPalette.KPBackgroundColor.grayColor_level6?.cgColor
         
         searchContainerShadowView.addSubview(searchContainer)
-//        searchContainer.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|",
-//                                                         "V:|-32-[$self(48)]"])
         searchContainer.addConstraints(fromStringArray: ["H:|[$self]|",
                                                          "V:|[$self]|"])
-        
+        searchContainer.addGestureRecognizer(longPressGesture)
         searchIcon = UIImageView(image: R.image.icon_search())
         searchIcon.tintColor = KPColorPalette.KPMainColor_v2.textColor_level4
         searchContainer.addSubview(searchIcon)
-        searchIcon.addConstraints(fromStringArray: ["V:[$self(24)]",
-                                                    "H:|-12-[$self(24)]"])
+        searchIcon.addConstraints(fromStringArray: ["V:[$self(20)]",
+                                                    "H:|-12-[$self(20)]"])
         searchIcon.addConstraintForCenterAligning(to: searchContainer,
                                                   in: .vertical,
                                                   constant: 0)
@@ -174,6 +176,7 @@ class KPExplorationViewController: KPViewController {
         searchLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]"],
                                    views:[searchIcon])
         searchLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
+        
         
         let headerView = UIView(frame: CGRect(x: 0,
                                               y: 0,
@@ -232,6 +235,28 @@ class KPExplorationViewController: KPViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @objc func handleSearchContainerLongPressed(_ gesture: UILongPressGestureRecognizer) {
+        
+        if (gesture.state == .began) {
+            UIView.animate(withDuration: 0.1,
+                           animations: {
+                            self.searchContainer.transform = CGAffineTransform(scaleX: 0.98,
+                                                                               y: 0.98)
+            }) { (_) in
+            }
+        } else if (gesture.state == .ended) {
+            let controller = KPModalViewController()
+            controller.edgeInset = UIEdgeInsets(top: 0,
+                                                left: 0,
+                                                bottom: 0,
+                                                right: 0)
+            let searchController = KPSearchViewController()
+            let navigationController = UINavigationController(rootViewController: searchController)
+            controller.contentController = navigationController
+            controller.presentModalView()
+            self.searchContainer.transform = CGAffineTransform.identity
+        }
+    }
 }
 
 
