@@ -101,8 +101,14 @@ struct KPColorPalette {
     
     struct KPMainColor_v2 {
         
-        static let mainColor_light = UIColor(hexString: "#6790E0")
-        static let mainColor = UIColor(hexString: "#416FCB")
+//        static let mainColor_light = UIColor(hexString: "#6790E0")
+//        static let mainColor = UIColor(hexString: "#416FCB")
+
+        static let mainColor_light = UIColor(hexString: "#20AAE9")
+        static let mainColor = UIColor(hexString: "#1E4782")
+        static let shadow_mainColor = UIColor(hexString: "#11223A")
+        static let mainColor_unselect = UIColor(hexString: "#CED8E6")
+        static let mainColor_bg = UIColor(hexString: "#FCFCFC")
 
         static let starColor = UIColor(hexString: "#FCB227")
         
@@ -116,7 +122,7 @@ struct KPColorPalette {
         static let textColor_level4 = UIColor(hexString: "#8a8a8a")
         
         
-        static let grayColor_level1 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 1.0)
+        static let grayColor_level1 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.9)
         static let grayColor_level2 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.7)
         static let grayColor_level3 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.5)
         static let grayColor_level4 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.3)
@@ -153,6 +159,7 @@ struct KPColorPalette {
         static let mainColor_title = UIColor(hexString: "#444444")
         static let mainColor_subtitle = UIColor(hexString: "#585858")
         static let mainColor_description = UIColor(hexString: "#8a8a8a")
+        static let mainColor_hint = UIColor(hexString: "#A8A8A8")
         
         static let yellow_color = UIColor(hexString: "#FFE453")
         static let whiteColor = UIColor(hexString: "#ffffff")
@@ -194,6 +201,7 @@ struct KPColorPalette {
         static let mainColor_ripple = UIColor(rgbaHexValue: 0xc8955eaa)
         
         static let whiteColor = UIColor(rgbaHexValue: 0xffffffff)
+        static let grayColor_level1 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.9)
         static let grayColor_level2 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.7)
         static let grayColor_level3 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.5)
         static let grayColor_level4 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.3)

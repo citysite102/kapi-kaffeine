@@ -164,7 +164,7 @@ class KPMainListViewController:
         sortContainerView = UIView()
         sortContainerView.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7
         view.addSubview(sortContainerView)
-        sortContainerView.addConstraints(fromStringArray: ["V:|-118-[$self(32)]",
+        sortContainerView.addConstraints(fromStringArray: ["V:|-148-[$self(32)]",
                                                            "H:|[$self]|"])
         
         sortLabel = UILabel()
@@ -183,8 +183,9 @@ class KPMainListViewController:
         tableView.isUserInteractionEnabled = false
         tableView.separatorColor = UIColor.clear
         view.addSubview(tableView)
-        tableView.addConstraints(fromStringArray: ["V:|-152-[$self]-(-40)-|",
-                                                   "H:|[$self]|"])
+        tableView.addConstraints(fromStringArray: ["V:[$view0][$self]-(-40)-|",
+                                                   "H:|[$self]|"],
+                                 views:[sortContainerView])
         tableView.register(KPMainListTableViewCell.self,
                                 forCellReuseIdentifier: Constant.KPMainListViewCellReuseIdentifier)
         tableView.register(KPDefaultLoadingTableCell.self,
@@ -385,16 +386,19 @@ extension KPMainListViewController: UITableViewDelegate, UITableViewDataSource {
 //        }
           
             var translate: CGFloat
+            var opacity: CGFloat
             var buttonTranslate: CGFloat
             
             if scrollView.contentOffset.y > oldScrollOffsetY {
                 // 往下
-                translate = -96
+                translate = -108
                 buttonTranslate = 120
+                opacity = 0
             } else {
                 // 往上
                 translate = 0.0
                 buttonTranslate = 0
+                opacity = 1.0
             }
             
             self.currentSearchTagTranslateY = translate
@@ -404,6 +408,7 @@ extension KPMainListViewController: UITableViewDelegate, UITableViewDataSource {
                            animations: {
                             self.mainController.searchHeaderView.searchTagView.transform = CGAffineTransform(translationX: 0,
                                                                                                              y: self.currentSearchTagTranslateY/2)
+                            self.mainController.searchHeaderView.searchTagView.alpha = opacity
                             self.mainController.mainMapViewController?.mapView.transform = CGAffineTransform(translationX: 0,
                                                                                                              y: self.currentSearchTagTranslateY/2)
                             self.sortContainerView.transform = CGAffineTransform(translationX: 0, y: self.currentSearchTagTranslateY/2)

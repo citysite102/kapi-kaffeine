@@ -22,9 +22,9 @@ class KPMainTabController: ESTabBarController, UITabBarControllerDelegate {
         
         shouldHijackHandler = {
             tabbarController, viewController, index in
-            if index == 2 {
-                return true
-            }
+//            if index == 2 {
+//                return true
+//            }
             return false
         }
         
@@ -56,62 +56,72 @@ class KPMainTabController: ESTabBarController, UITabBarControllerDelegate {
 //                                            title: nil,
 //                                            image: R.image.icon_explore(),
 //                                            selectedImage: R.image.icon_explore())
-        let exploreItem = UITabBarItem(title: "探索",
+        let exploreItem = UITabBarItem(title: "",
                                        image: R.image.icon_explore(),
                                        selectedImage: R.image.icon_explore())
-        exploreItem.imageInsets = UIEdgeInsetsMake(2, 2, 2, 2)
+        exploreItem.imageInsets = UIEdgeInsetsMake(7, 0, -7, 0)
+        exploreItem.titlePositionAdjustment = UIOffset(horizontal: 40, vertical: 0)
         exploreController.tabBarItem = exploreItem
         
         
-        let navSearchController = KPSearchViewController()
-        let searchController = UINavigationController(rootViewController: navSearchController)
+//        let navSearchController = KPSearchViewController()
+//        let searchController = UINavigationController(rootViewController: navSearchController)
+//
+//        let searchItem = UITabBarItem(title: "搜尋",
+//                                      image: R.image.icon_search(),
+//                                      selectedImage: R.image.icon_search())
+//        searchItem.imageInsets = UIEdgeInsetsMake(2, 2, 2, 2)
+//        navSearchController.showDismissButton = false
+//        searchController.tabBarItem = searchItem
         
-        let searchItem = UITabBarItem(title: "搜尋",
-                                      image: R.image.icon_search(),
-                                      selectedImage: R.image.icon_search())
-        searchItem.imageInsets = UIEdgeInsetsMake(2, 2, 2, 2)
-        navSearchController.showDismissButton = false
-        searchController.tabBarItem = searchItem
         
+//        let newStoreController = KPNewStoreController()
+//        newStoreController.tabBarItem = ESTabBarItem(KPTabBarAddButton(),
+//                                                     title: nil,
+//                                                     image: R.image.tab_button_add(),
+//                                                     selectedImage: R.image.tab_button_add(), tag: 2)
         
-        let newStoreController = KPNewStoreController()
-        newStoreController.tabBarItem = ESTabBarItem(KPTabBarAddButton(),
-                                                     title: nil,
-                                                     image: R.image.tab_button_add(),
-                                                     selectedImage: R.image.tab_button_add(), tag: 2)
+        let listItem = UITabBarItem(title: "",
+                                    image: R.image.icon_listView(),
+                                    selectedImage: R.image.icon_listView())
+        listItem.imageInsets = UIEdgeInsetsMake(7, 0, -7, 0)
         
         let listController = UIStoryboard.init(name: "Main",
                                                bundle: nil).instantiateViewController(withIdentifier: "mainViewController") as! KPMainViewController
-        listController.tabBarItem = UITabBarItem(title: "清單",
-                                                 image: R.image.icon_listView(),
-                                                 selectedImage: R.image.icon_listView())
+        listController.tabBarItem = listItem
         
-        let profileItem = UITabBarItem(title: "我的",
+        let profileItem = UITabBarItem(title: "",
                                        image: R.image.icon_profile(),
                                        selectedImage: R.image.icon_profile())
-        profileItem.imageInsets = UIEdgeInsetsMake(2, 2, 2, 2)
-        
+        profileItem.imageInsets = UIEdgeInsetsMake(7, 0, -7, 0)
+        profileItem.titlePositionAdjustment = UIOffset(horizontal: -40, vertical: 0)
         if (KPUserManager.sharedManager.currentUser != nil) {
             
             let profileController = KPUserProfileViewController()
             profileController.tabBarItem = profileItem
             viewControllers = [exploreController,
-                               searchController,
-                               newStoreController,
                                listController,
                                profileController]
+//            viewControllers = [exploreController,
+//                               searchController,
+//                               newStoreController,
+//                               listController,
+//                               profileController]
         } else {
             let loginController = KPLoginViewController()
             loginController.tabBarItem = profileItem
             viewControllers = [exploreController,
-                               searchController,
-                               newStoreController,
                                listController,
                                loginController]
+//            viewControllers = [exploreController,
+//                               searchController,
+//                               newStoreController,
+//                               listController,
+//                               loginController]
         }
         
-        UITabBar.appearance().barTintColor = UIColor.white
-        UITabBar.appearance().unselectedItemTintColor = KPColorPalette.KPMainColor_v2.textColor_level4
+        UITabBar.appearance().barTintColor = KPColorPalette.KPMainColor_v2.mainColor_bg
+        UITabBar.appearance().unselectedItemTintColor = KPColorPalette.KPMainColor_v2.mainColor_unselect
         UITabBar.appearance().tintColor = KPColorPalette.KPMainColor_v2.mainColor
     }
 

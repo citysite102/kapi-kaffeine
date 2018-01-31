@@ -41,7 +41,7 @@ class KPExplorationSectionCell: UICollectionViewCell {
                                                    relatedBy: NSLayoutRelation.equal,
                                                    toItem: imageView,
                                                    attribute: NSLayoutAttribute.width,
-                                                   multiplier: 0.9,
+                                                   multiplier: 0.8,
                                                    constant: 0))
 
         nameLabel = UILabel()
@@ -49,16 +49,16 @@ class KPExplorationSectionCell: UICollectionViewCell {
         nameLabel.addConstraints(fromStringArray: ["H:|[$self]|",
                                                    "V:[$view0]-(>=4)-[$self]"],
                                  views: [imageView])
-        nameLabel.font = UIFont.boldSystemFont(ofSize: 18)
-        nameLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
+        nameLabel.font = UIFont.boldSystemFont(ofSize: 14)
+        nameLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_title
         nameLabel.text = "老木咖啡"
         
         regionLabel = UILabel()
         contentView.addSubview(regionLabel)
         regionLabel.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                     "V:[$view0]-4-[$self]"],
+                                                     "V:[$view0]-5-[$self]"],
                                    views: [nameLabel])
-        regionLabel.font = UIFont.systemFont(ofSize: 12)
+        regionLabel.font = UIFont.systemFont(ofSize: 11)
         regionLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_description
         regionLabel.text = "台北市, 大安區"
         
@@ -67,27 +67,27 @@ class KPExplorationSectionCell: UICollectionViewCell {
         rateLabel.addConstraints(fromStringArray: ["H:|[$self]",
                                                    "V:[$view0]-5-[$self]|"],
                                    views: [regionLabel])
-        rateLabel.font = UIFont.boldSystemFont(ofSize: 12)
+        rateLabel.font = UIFont.boldSystemFont(ofSize: 11)
         rateLabel.textColor = KPColorPalette.KPMainColor_v2.starColor
         rateLabel.text = "4.8"
         
         starIcon = UIImageView(image: R.image.icon_star_filled())
         starIcon.tintColor = KPColorPalette.KPMainColor_v2.starColor
         contentView.addSubview(starIcon)
-        starIcon.addConstraints(fromStringArray: ["H:[$view0]-2-[$self(12)]",
-                                                  "V:[$self(12)]"],
+        starIcon.addConstraints(fromStringArray: ["H:[$view0]-2-[$self(13)]",
+                                                  "V:[$self(13)]"],
                                 views:[rateLabel])
         starIcon.addConstraintForCenterAligning(to: rateLabel,
                                                 in: .vertical)
         
-        visitedLabel = UILabel()
-        contentView.addSubview(visitedLabel)
-        visitedLabel.addConstraints(fromStringArray: ["H:[$self]|"])
-        visitedLabel.addConstraintForCenterAligning(to: rateLabel,
-                                                    in: .vertical)
-        visitedLabel.font = UIFont.systemFont(ofSize: 12)
-        visitedLabel.textColor = KPColorPalette.KPMainColor_v2.mainColor
-        visitedLabel.text = "132人已去過"
+//        visitedLabel = UILabel()
+//        contentView.addSubview(visitedLabel)
+//        visitedLabel.addConstraints(fromStringArray: ["H:[$self]|"])
+//        visitedLabel.addConstraintForCenterAligning(to: rateLabel,
+//                                                    in: .vertical)
+//        visitedLabel.font = UIFont.systemFont(ofSize: 12)
+//        visitedLabel.textColor = KPColorPalette.KPMainColor_v2.mainColor
+//        visitedLabel.text = "132人已去過"
 
     }
     

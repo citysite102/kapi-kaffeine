@@ -14,7 +14,7 @@ class KPSearchHeaderView: UIView {
     var containerView: UIView!
     var titleLabel: UILabel!
     
-//    var searchBar: UISearchBar!
+    var locationSelectView: KPLocationSelect!
     var searchContainer: UIView!
     var searchIcon: UIImageView!
     var searchLabel: UILabel!
@@ -43,17 +43,25 @@ class KPSearchHeaderView: UIView {
                                                       action: #selector(handleSearchContainerLongPressed(_:)))
         longPressGesture.minimumPressDuration = 0
         
+        locationSelectView = KPLocationSelect()
+        containerView.addSubview(locationSelectView)
+        locationSelectView.addConstraints(fromStringArray: ["H:|-20-[$self]",
+                                                            "V:|-40-[$self(36)]|"])
+        
         searchContainer = UIView()
-        searchContainer.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7
-        searchContainer.layer.cornerRadius = 6.0
+        searchContainer.backgroundColor = KPColorPalette.KPBackgroundColor.whiteColor
+        searchContainer.layer.cornerRadius = 4.0
         searchContainer.layer.masksToBounds = true
+        searchContainer.layer.borderWidth = 1.0
+        searchContainer.layer.borderColor = KPColorPalette.KPMainColor_v2.grayColor_level5?.cgColor
         containerView.addSubview(searchContainer)
         searchContainer.addGestureRecognizer(longPressGesture)
-        searchContainer.addConstraints(fromStringArray: ["H:|-12-[$self]-56-|",
-                                                         "V:|-28-[$self(36)]|"])
+        searchContainer.addConstraints(fromStringArray: ["H:[$view0]-16-[$self]-12-|",
+                                                         "V:|-40-[$self(36)]"],
+                                       views:[locationSelectView])
         
         searchIcon = UIImageView(image: R.image.icon_search())
-        searchIcon.tintColor = KPColorPalette.KPMainColor_v2.textColor_level4
+        searchIcon.tintColor = KPColorPalette.KPTextColor_v2.mainColor_hint
         searchContainer.addSubview(searchIcon)
         searchIcon.addConstraints(fromStringArray: ["V:[$self(18)]",
                                                     "H:|-10-[$self(18)]"])
@@ -64,7 +72,7 @@ class KPSearchHeaderView: UIView {
         searchLabel = UILabel()
         searchLabel.font = UIFont.systemFont(ofSize: 14.0)
         searchLabel.text = "搜尋店家名稱、標籤、地點"
-        searchLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_description
+        searchLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_hint
         searchContainer.addSubview(searchLabel)
         searchLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]"],
                                    views:[searchIcon])
@@ -88,13 +96,13 @@ class KPSearchHeaderView: UIView {
         
         filterButton = KPBounceButton.init(frame: .zero,
                                            image: R.image.icon_filter()!)
-        filterButton.tintColor = KPColorPalette.KPMainColor_v2.textColor_level4
-        containerView.addSubview(filterButton)
-        filterButton.addConstraints(fromStringArray: ["V:[$self(30)]",
-                                                      "H:[$self(30)]-16-|"])
-        filterButton.addConstraintForCenterAligning(to: searchContainer,
-                                                    in: .vertical,
-                                                    constant: 0)
+//        filterButton.tintColor = KPColorPalette.KPMainColor_v2.textColor_level4
+//        containerView.addSubview(filterButton)
+//        filterButton.addConstraints(fromStringArray: ["V:[$self(30)]",
+//                                                      "H:[$self(30)]-16-|"])
+//        filterButton.addConstraintForCenterAligning(to: searchContainer,
+//                                                    in: .vertical,
+//                                                    constant: 0)
         
         titleLabel = UILabel()
 //        titleLabel.font = UIFont.systemFont(ofSize: 20.0)
