@@ -35,6 +35,7 @@ class KPMainListViewController:
     var sortContainerView: UIView!
     var sortLabel: UILabel!
     var sortIcon: UIImageView!
+    var actionController: UIAlertController!
     var tableView: UITableView!
     var satisficationView: KPSatisficationView!
     var expNotificationView: KPExpNotificationView!
@@ -186,6 +187,10 @@ class KPMainListViewController:
         sortContainerView.addConstraints(fromStringArray: ["V:|-147-[$self(32)]",
                                                            "H:|[$self]|"])
         
+        let sortTapGesture = UITapGestureRecognizer(target: self,
+                                                    action: #selector(handleSortOptionTapped))
+        sortContainerView.addGestureRecognizer(sortTapGesture)
+        
         sortLabel = UILabel()
         sortLabel.font = UIFont.boldSystemFont(ofSize: 13.0)
         sortLabel.text = "依照距離排列"
@@ -200,6 +205,30 @@ class KPMainListViewController:
         sortIcon.addConstraints(fromStringArray: ["H:[$view0]-4-[$self(12)]",
                                                   "V:[$self(12)]"], views: [sortLabel])
         sortIcon.addConstraintForCenterAligningToSuperview(in: .vertical)
+        
+        actionController = UIAlertController(title: nil,
+                                             message: nil,
+                                             preferredStyle: .actionSheet)
+        let sortDistance = UIAlertAction(title: "依照距離排列",
+                                         style: .default) { (_) in
+                                            self.sortLabel.text = "依照距離排列"
+        }
+        
+        let sortRate = UIAlertAction(title: "依照評分排列",
+                                        style: .default) {(_) in
+                                            self.sortLabel.text = "依照評分排列"
+        }
+        
+        let cancelButton = UIAlertAction(title: "取消",
+                                         style: .destructive) { (_) in
+                                            print("取消")
+        }
+        
+        actionController.addAction(sortDistance)
+        actionController.addAction(sortRate)
+        actionController.addAction(cancelButton)
+        
+        
         
         tableView = UITableView()
         tableView.backgroundColor = KPColorPalette.KPBackgroundColor.whiteColor
@@ -274,6 +303,13 @@ class KPMainListViewController:
             self.statusErrorDescriptionLabel.alpha = 1.0
             self.statusErrorButton.alpha = 1.0
         }
+    }
+    
+    @objc func handleSortOptionTapped() {
+        present(actionController,
+                animated: true,
+                completion: nil)
+        actionController.view.tintColor = KPColorPalette.KPMainColor_v2.mainColor
     }
     
     @objc func handleStatusErrorButtonOnTapped() {
