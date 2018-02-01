@@ -14,8 +14,7 @@ import GoogleMobileAds
 
 class KPMainListViewController:
     KPViewController,
-    KPMainViewControllerDelegate,
-    KPSearchFooterViewDelegate {
+    KPMainViewControllerDelegate {
     
     struct Constant {
         static let KPMainListViewCellReuseIdentifier = "cell"
@@ -64,7 +63,28 @@ class KPMainListViewController:
             }
         }
     }
+
+    lazy var mapButton: KPShadowButton = {
+        let shadowButton = KPShadowButton()
+        shadowButton.button.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.whiteColor!), for: .normal)
+        shadowButton.button.setImage(R.image.icon_map(), for: .normal)
+        shadowButton.button.setTitle("地圖",
+                                     for: .normal)
+        shadowButton.button.setTitleColor(KPColorPalette.KPMainColor_v2.mainColor,
+                                          for: .normal)
+        shadowButton.button.titleLabel?.font = UIFont.systemFont(ofSize: 14.0)
+        shadowButton.button.tintColor = KPColorPalette.KPMainColor_v2.mainColor
+        shadowButton.button.imageView?.contentMode = .scaleAspectFit
+        shadowButton.button.imageEdgeInsets = UIEdgeInsets(top: 8,
+                                                           left: 8,
+                                                           bottom: 8,
+                                                           right: 16)
+        shadowButton.layer.cornerRadius = 20
+        return shadowButton
+    }()
     
+    
+    // Ads
     var adsAdded: Bool = false
     var snapShotShowing: Bool = false {
         didSet {
@@ -81,9 +101,7 @@ class KPMainListViewController:
         }
     }
     
-    private var searchFooterView: KPSearchFooterView!
     var snapshotView: UIImageView!
-    
     var selectedDataModel: KPDataModel? {
         return currentDataModel
     }
@@ -165,7 +183,7 @@ class KPMainListViewController:
         sortContainerView = UIView()
         sortContainerView.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7
         view.addSubview(sortContainerView)
-        sortContainerView.addConstraints(fromStringArray: ["V:|-148-[$self(32)]",
+        sortContainerView.addConstraints(fromStringArray: ["V:|-147-[$self(32)]",
                                                            "H:|[$self]|"])
         
         sortLabel = UILabel()
@@ -190,6 +208,7 @@ class KPMainListViewController:
         tableView.dataSource = self
         tableView.isUserInteractionEnabled = false
         tableView.separatorColor = UIColor.clear
+        tableView.delaysContentTouches = false
         view.addSubview(tableView)
         tableView.addConstraints(fromStringArray: ["V:[$view0][$self]-(-40)-|",
                                                    "H:|[$self]|"],
@@ -203,24 +222,19 @@ class KPMainListViewController:
         tableView.allowsSelection = false
         tableView.rowHeight = UITableViewAutomaticDimension
         
-//        searchFooterView = KPSearchFooterView()
-//        searchFooterView.delegate = self
-//        searchFooterView.layer.shadowColor = UIColor.black.cgColor
-//        searchFooterView.layer.shadowOpacity = 0.15
-//        searchFooterView.layer.shadowOffset = CGSize(width: 0.0, height: -1.0)
-//        searchFooterView.isHidden = true
-//        view.addSubview(searchFooterView)
-//        searchFooterView.addConstraints(fromStringArray: ["V:[$view0][$self(40)]|",
-//                                                          "H:|[$self]|"],
-//                                        views:[tableView])
-        
         snapshotView = UIImageView()
         snapshotView.contentMode = .top
         snapshotView.clipsToBounds = true
         snapshotView.isHidden = true
         view.addSubview(snapshotView)
-        snapshotView.addConstraints(fromStringArray: ["V:|-152-[$self]-(-40)-|",
-                                                      "H:|[$self]|"])
+        snapshotView.addConstraints(fromStringArray: ["V:[$view0][$self]-(-40)-|",
+                                                      "H:|[$self]|"],
+                                    views:[sortContainerView])
+
+        view.addSubview(mapButton)
+        mapButton.addConstraints(fromStringArray: ["V:[$self(40)]-72-|",
+                                                   "H:[$self(88)]"])
+        mapButton.addConstraintForCenterAligningToSuperview(in: .horizontal)
         
         satisficationView = KPSatisficationView()
         expNotificationView = KPExpNotificationView()
@@ -261,9 +275,6 @@ class KPMainListViewController:
             self.statusErrorButton.alpha = 1.0
         }
     }
-    
-    
-    // MARK: UI Event
     
     @objc func handleStatusErrorButtonOnTapped() {
         statusErrorButton.isLoading = true
@@ -343,12 +354,6 @@ class KPMainListViewController:
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
         
-    }
-    
-    func searchFooterView(_ searchFooterView: KPSearchFooterView,
-                          didSelectItemWith name: String) {
-        print("Footer Name:\(name)")
-        satisficationView.showSatisfication()
     }
 }
 

@@ -107,7 +107,7 @@ class KPMainListTableViewCell: UITableViewCell {
                                                        "V:|-18-[$self(76)]-18-|"])
         
         shopNameLabel = KPLayerLabel()
-        shopNameLabel.font = UIFont.boldSystemFont(ofSize: 16.0)
+        shopNameLabel.font = UIFont.systemFont(ofSize: 16.0)
         shopNameLabel.textColor = KPColorPalette.KPMainColor_v2.mainColor
         shopNameLabel.isOpaque = true
         shopNameLabel.layer.masksToBounds = true
@@ -180,20 +180,18 @@ class KPMainListTableViewCell: UITableViewCell {
         shopLocationLabel.layer.masksToBounds = true
         contentView.addSubview(shopLocationLabel)
         shopLocationLabel.addConstraints(fromStringArray: ["H:[$view0]-6-[$self]",
-                                                           "V:[$self]-18-|"],
+                                                           "V:[$self(17)]-18-|"],
                                          views: [shopLocationIcon])
         
         
         shopDistanceLabel = KPLayerLabel()
-        shopDistanceLabel.font = UIFont.systemFont(ofSize: 1.0)
+        shopDistanceLabel.font = UIFont.systemFont(ofSize: 14.0)
         shopDistanceLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
-        shopDistanceLabel.text = "0m"
         shopDistanceLabel.isOpaque = true
         shopDistanceLabel.layer.masksToBounds = true
-        shopDistanceLabel.layoutMargins = UIEdgeInsetsMake(0, 0, 0, 0)
         contentView.addSubview(shopDistanceLabel)
         shopDistanceLabel.addConstraints(fromStringArray: ["H:[$view0]-16-[$self]",
-                                                           "V:[$self]-18-|"],
+                                                           "V:[$self(17)]-18-|"],
                                               views: [shopLocationLabel])
         
         scoreLabel = KPMainListCellScoreLabel()
@@ -247,7 +245,8 @@ class KPMainListTableViewCell: UITableViewCell {
                 unit = "km"
                 distance = distance/1000
             }
-            self.shopDistanceLabel.text = String(format: "%.1f%@", distance, unit)
+            self.shopDistanceLabel.text = "步行 5 min"
+//            self.shopDistanceLabel.text = String(format: "%.1f%@", distance, unit)
         } else {
             self.shopDistanceLabel.text = "步行 5 min"
         }

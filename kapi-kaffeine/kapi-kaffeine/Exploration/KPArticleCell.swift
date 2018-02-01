@@ -33,4 +33,28 @@ class KPArticleCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        print("Touch Began")
+        UIView.animate(withDuration: 0.1) {
+            self.transform = CGAffineTransform(scaleX: 0.96,
+                                               y: 0.96)
+        }
+        super.touchesBegan(touches, with: event)
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        print("Touch End")
+        UIView.animate(withDuration: 0.1) {
+            self.transform = CGAffineTransform.identity
+        }
+        super.touchesEnded(touches, with: event)
+    }
+    
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        print("Touch Cancel")
+        UIView.animate(withDuration: 0.1) {
+            self.transform = CGAffineTransform.identity
+        }
+        super.touchesCancelled(touches, with: event)
+    }
 }

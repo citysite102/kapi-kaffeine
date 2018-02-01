@@ -35,11 +35,11 @@ class KPShadowButton: UIView {
                 self.layer.cornerRadius).cgPath
             shadowLayer.fillColor = self.backgroundColor?.cgColor
             
-            shadowLayer.shadowColor = UIColor.darkGray.cgColor
+            shadowLayer.shadowColor = KPColorPalette.KPMainColor_v2.shadow_mainColor?.cgColor
             shadowLayer.shadowPath = shadowLayer.path
-            shadowLayer.shadowOffset = CGSize(width: 0.0, height: 4.0)
+            shadowLayer.shadowOffset = CGSize(width: 0.0, height: 3.0)
             shadowLayer.shadowOpacity = 0.4
-            shadowLayer.shadowRadius = 2
+            shadowLayer.shadowRadius = 3
             
             self.button.layer.cornerRadius = self.layer.cornerRadius
             self.button.layer.masksToBounds = true

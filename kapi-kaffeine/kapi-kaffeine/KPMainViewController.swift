@@ -62,9 +62,6 @@ class KPMainViewController: KPViewController {
             DispatchQueue.main.asyncAfter(deadline: .now()) {
                 self.mainListViewController?.displayDataModel = self.displayDataModel
                 self.mainMapViewController?.allDataModel = self.displayDataModel
-                self.searchHeaderView.styleButton.isEnabled = true
-                self.searchHeaderView.searchButton.isEnabled = true
-                self.searchHeaderView.menuButton.isEnabled = true
                 self.searchHeaderView.searchTagView.isUserInteractionEnabled = true
             }
         }
@@ -103,18 +100,22 @@ class KPMainViewController: KPViewController {
 
         
         searchHeaderView = KPSearchHeaderView()
-        searchHeaderView.searchButton.isEnabled = false
-        searchHeaderView.menuButton.isEnabled = false
-        searchHeaderView.styleButton.isEnabled = false
         searchHeaderView.searchTagView.isUserInteractionEnabled = false
         searchHeaderView.searchTagView.delegate = self
         view.addSubview(searchHeaderView)
         searchHeaderView.addConstraints(fromStringArray: ["V:|[$self]",
                                                           "H:|[$self]|"])
         
-//        searchHeaderView.searchTagView.preferenceHintButton.addTarget(self,
-//                                                                      action: #selector(handlePreferenceButtonOnTapped),
-//                                                                       for: .touchUpInside)
+        searchHeaderView?.filterButton.addTarget(self,
+                                                 action: #selector(handlePreferenceButtonOnTapped),
+                                                              for: .touchUpInside)
+        
+        mainListViewController?.mapButton.button.addTarget(self,
+                                                           action: #selector(changeStyle),
+                                                              for: .touchUpInside)
+        mainMapViewController?.mapButton.button.addTarget(self,
+                                                          action: #selector(changeStyle),
+                                                          for: .touchUpInside)
         
         statusContainer = UIView()
         statusContainer.isHidden = true
@@ -154,24 +155,8 @@ class KPMainViewController: KPViewController {
         opacityView.addConstraints(fromStringArray: ["V:|[$self]|",
                                                      "H:|[$self]|"])
         
-        searchHeaderView.menuButton.addTarget(self,
-                                              action: #selector(switchSideBar),
-                                              for: .touchUpInside)
-//        searchHeaderView.filterButton.addTarget(self,
-//                                                action: #selector(handlePreferenceButtonOnTapped),
-//                                                for: .touchUpInside)
-        searchHeaderView.filterButton.addTarget(self,
-                                                action: #selector(changeStyle),
-                                                for: .touchUpInside)
-        searchHeaderView.searchButton.addTarget(self,
-                                                action: #selector(search),
-                                                for: .touchUpInside)
-        
-        
-        let menuLeftNavigationController = UISideMenuNavigationController(rootViewController: sideBarController)
-        menuLeftNavigationController.leftSide = true
-        
-        
+//        let menuLeftNavigationController = UISideMenuNavigationController(rootViewController: sideBarController)
+//        menuLeftNavigationController.leftSide = true
 //        SideMenuManager.menuLeftNavigationController = menuLeftNavigationController
 //        SideMenuManager.menuPresentMode = .menuSlideIn
 //        SideMenuManager.menuFadeStatusBar = false
@@ -180,8 +165,6 @@ class KPMainViewController: KPViewController {
 //        SideMenuManager.menuAnimationFadeStrength = 0.5
 //        SideMenuManager.menuAnimationBackgroundColor = UIColor.black
 //        SideMenuManager.menuWidth = 260
-        
-        
         
         let reachabilityManager = NetworkReachabilityManager()
         reachabilityManager?.startListening()

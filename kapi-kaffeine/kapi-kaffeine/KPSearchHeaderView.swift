@@ -56,7 +56,7 @@ class KPSearchHeaderView: UIView {
         searchContainer.layer.borderColor = KPColorPalette.KPMainColor_v2.grayColor_level5?.cgColor
         containerView.addSubview(searchContainer)
         searchContainer.addGestureRecognizer(longPressGesture)
-        searchContainer.addConstraints(fromStringArray: ["H:[$view0]-16-[$self]-12-|",
+        searchContainer.addConstraints(fromStringArray: ["H:[$view0]-16-[$self]",
                                                          "V:|-40-[$self(36)]"],
                                        views:[locationSelectView])
         
@@ -80,64 +80,19 @@ class KPSearchHeaderView: UIView {
         
         
         
-//        searchBar = UISearchBar()
-//        searchBar.searchBarStyle = .minimal
-//        searchBar.barTintColor = KPColorPalette.KPBackgroundColor.whiteColor
-//        containerView.addSubview(searchBar)
-//        searchBar.addConstraints(fromStringArray: ["H:|-8-[$self]-48-|",
-//                                                   "V:|-24-[$self]|"])
-//
-//        if let txfSearchField = searchBar.value(forKey: "_searchField") as? UITextField {
-//            txfSearchField.subviews.first?.isHidden = true
-//            txfSearchField.layer.cornerRadius = 6.0
-//            txfSearchField.layer.masksToBounds = true
-//            txfSearchField.layer.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7?.cgColor
-//        }
-        
         filterButton = KPBounceButton.init(frame: .zero,
                                            image: R.image.icon_filter()!)
-//        filterButton.tintColor = KPColorPalette.KPMainColor_v2.textColor_level4
-//        containerView.addSubview(filterButton)
-//        filterButton.addConstraints(fromStringArray: ["V:[$self(30)]",
-//                                                      "H:[$self(30)]-16-|"])
-//        filterButton.addConstraintForCenterAligning(to: searchContainer,
-//                                                    in: .vertical,
-//                                                    constant: 0)
+        filterButton.tintColor = KPColorPalette.KPMainColor_v2.mainColor
+        containerView.addSubview(filterButton)
+        filterButton.addConstraints(fromStringArray: ["V:[$self(30)]",
+                                                      "H:[$view0]-12-[$self(30)]-12-|"], views:[searchContainer])
+        filterButton.addConstraintForCenterAligning(to: searchContainer,
+                                                    in: .vertical,
+                                                    constant: 0)
         
         titleLabel = UILabel()
-//        titleLabel.font = UIFont.systemFont(ofSize: 20.0)
-//        titleLabel.textColor = KPColorPalette.KPTextColor.whiteColor
-//        titleLabel.text = "找咖啡"
-//        containerView.addSubview(titleLabel)
-//        titleLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
-//        titleLabel.addConstraint(from: "V:|-32-[$self]")
-        
         styleButton = KPBounceButton.init(frame: .zero, image: R.image.icon_list()!)
-//        containerView.addSubview(styleButton)
-//        styleButton.addConstraints(fromStringArray: ["H:[$self(30)]-5-|",
-//                                                     "V:[$self(30)]"])
-//        styleButton.contentEdgeInsets = UIEdgeInsetsMake(3, 3, 3, 3)
-//        styleButton.addConstraintForCenterAligning(to: titleLabel, in: .vertical)
-//        styleButton.tintColor = UIColor.white
-//
-        searchButton = KPBounceButton.init(frame: .zero, image: R.image.icon_search()!)
-//        containerView.addSubview(searchButton)
-//        searchButton.addConstraints(fromStringArray: ["H:[$self(30)]-5-[$view0]",
-//                                                      "V:[$self(30)]"],
-//                                         views: [styleButton])
-//        searchButton.contentEdgeInsets = UIEdgeInsetsMake(3, 3, 3, 3)
-//        searchButton.addConstraintForCenterAligning(to: titleLabel, in: .vertical)
-//        searchButton.tintColor = UIColor.white
-//        searchButton.imageView?.tintColor = UIColor.white
-        
-        menuButton = KPBounceButton.init(frame: .zero, image: R.image.icon_menu()!)
-//        containerView.addSubview(menuButton)
-//        menuButton.addConstraints(fromStringArray: ["H:|-5-[$self(30)]",
-//                                                    "V:[$self(30)]"])
-//        menuButton.contentEdgeInsets = UIEdgeInsetsMake(3, 3, 3, 3)
-//        menuButton.addConstraintForCenterAligning(to: titleLabel, in: .vertical)
-//        menuButton.tintColor = UIColor.white
-        
+
         
         searchTagView = KPSearchTagView()
         addSubview(searchTagView)

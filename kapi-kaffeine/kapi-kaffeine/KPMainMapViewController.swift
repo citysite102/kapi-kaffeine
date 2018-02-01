@@ -37,16 +37,24 @@ GMUClusterRendererDelegate {
         return shadowButton
     }()
     
-//    lazy var addButton: KPShadowButton = {
-//        let shadowButton = KPShadowButton()
-//        shadowButton.backgroundColor = KPColorPalette.KPBackgroundColor.scoreButtonColor!
-//        shadowButton.button.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.scoreButtonColor!), for: .normal)
-//        shadowButton.button.setImage(R.image.icon_add(), for: .normal)
-//        shadowButton.button.tintColor = UIColor.white
-//        shadowButton.button.imageEdgeInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
-//        shadowButton.layer.cornerRadius = 28
-//        return shadowButton
-//    }()
+    lazy var mapButton: KPShadowButton = {
+        let shadowButton = KPShadowButton()
+        shadowButton.button.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.whiteColor!), for: .normal)
+        shadowButton.button.setImage(R.image.icon_list(), for: .normal)
+        shadowButton.button.setTitle("清單",
+                                     for: .normal)
+        shadowButton.button.setTitleColor(KPColorPalette.KPMainColor_v2.mainColor,
+                                          for: .normal)
+        shadowButton.button.titleLabel?.font = UIFont.systemFont(ofSize: 14.0)
+        shadowButton.button.tintColor = KPColorPalette.KPMainColor_v2.mainColor
+        shadowButton.button.imageView?.contentMode = .scaleAspectFit
+        shadowButton.button.imageEdgeInsets = UIEdgeInsets(top: 8,
+                                                           left: 8,
+                                                           bottom: 8,
+                                                           right: 16)
+        shadowButton.layer.cornerRadius = 20
+        return shadowButton
+    }()
     
     var state: ControllerState! = .loading {
         didSet {
@@ -96,7 +104,6 @@ GMUClusterRendererDelegate {
     }
     
     var reloadNeeded: Bool = true
-    
     var draggingByUser: Bool = true
     
     
@@ -225,12 +232,12 @@ GMUClusterRendererDelegate {
             NSLog("One or more of the map styles failed to load. \(error)")
         }
         
-        self.view.addSubview(self.mapView)
+        view.addSubview(self.mapView)
         
-        self.mapView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|-100-[$self]|"])
+        mapView.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                 "V:|-100-[$self]|"])
         
-        // Set up the cluster manager with the supplied icon generator and
-        // renderer.
+        // Set up the cluster manager with the supplied icon generator and renderer.
         let iconGenerator = GMUDefaultClusterIconGenerator()
         let algorithm = GMUNonHierarchicalDistanceBasedAlgorithm()
         clusterRenderer = GMUDefaultClusterRenderer(mapView: mapView,
@@ -240,32 +247,41 @@ GMUClusterRendererDelegate {
                                            renderer: clusterRenderer)
         
         // Register self to listen to both GMUClusterManagerDelegate and GMSMapViewDelegate events.
+        
         clusterManager.setDelegate(self, mapDelegate: self)
         
-        self.mapView.isMyLocationEnabled = true
+        mapView.isMyLocationEnabled = true
         
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.itemSize = CGSize(width: UIScreen.main.bounds.size.width/2, height: 180)
         flowLayout.scrollDirection = .horizontal
         
-        self.collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 0, height: 0),
+        collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 0,
+                                                        height: 0),
                                                collectionViewLayout: flowLayout)
-        self.collectionView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
-        self.collectionView.backgroundColor = UIColor.white
-        self.collectionView.dataSource = self
-        self.collectionView.delegate = self
-        self.collectionView.decelerationRate = UIScrollViewDecelerationRateFast
-        self.collectionView.showsHorizontalScrollIndicator = false
-        self.collectionView.register(KPMainMapViewCollectionCell.classForCoder(),
-                                     forCellWithReuseIdentifier: "cell")
+        collectionView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
+        collectionView.backgroundColor = KPColorPalette.KPBackgroundColor.whiteColor
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.decelerationRate = UIScrollViewDecelerationRateFast
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.register(KPMainMapViewCollectionCell.classForCoder(),
+                                forCellWithReuseIdentifier: "cell")
         
-        self.view.addSubview(self.collectionView)
-        self.collectionView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$self(200)]"])
+        view.addSubview(self.collectionView)
+        collectionView.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                        "V:[$self(200)]"])
         collectionViewBottomConstraint = collectionView.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant: 200)
         collectionViewBottomConstraint.isActive = true
 //        self.collectionViewBottomConstraint = self.collectionView.addConstraintForAligning(to: .bottom,
 //                                                                                           of: self.view,
 //                                                                                           constant: 200).first as! NSLayoutConstraint
+        
+        view.addSubview(mapButton)
+        mapButton.addConstraints(fromStringArray: ["V:[$self(40)]-24-[$view0]",
+                                                   "H:[$self(88)]"],
+                                 views:[collectionView])
+        mapButton.addConstraintForCenterAligningToSuperview(in: .horizontal)
         
         let currentLocationButton = UIButton(type: .custom)
         currentLocationButton.setImage(R.image.icon_currentLocation_alpha(), for: .normal)
