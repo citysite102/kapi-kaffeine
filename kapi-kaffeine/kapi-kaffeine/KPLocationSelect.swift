@@ -23,14 +23,14 @@ class KPLocationSelect: UIView {
         locationLabel = UILabel()
         locationLabel.font = UIFont.systemFont(ofSize: 16.0)
         locationLabel.text = "台北"
-        locationLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_title
+        locationLabel.textColor = KPColorPalette.KPMainColor_v2.mainColor
         addSubview(locationLabel)
         locationLabel.addConstraints(fromStringArray: ["H:|[$self]"])
         locationLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
         
         
         dropDownIcon = UIImageView(image: R.image.icon_dropdown())
-        dropDownIcon.tintColor = KPColorPalette.KPTextColor_v2.mainColor_title
+        dropDownIcon.tintColor = KPColorPalette.KPMainColor_v2.mainColor
         addSubview(dropDownIcon)
         dropDownIcon.addConstraints(fromStringArray: ["V:[$self(18)]",
                                                       "H:[$view0]-4-[$self(18)]|"], views:[locationLabel])

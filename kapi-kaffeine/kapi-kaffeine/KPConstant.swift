@@ -104,17 +104,20 @@ struct KPColorPalette {
 //        static let mainColor_light = UIColor(hexString: "#6790E0")
 //        static let mainColor = UIColor(hexString: "#416FCB")
 
-        static let mainColor_light = UIColor(hexString: "#20AAE9")
-        static let mainColor = UIColor(hexString: "#1E4782")
-        static let shadow_mainColor = UIColor(hexString: "#11223A")
+        static let mainColor_light = UIColor(hexString: "#334A76")
+        static let mainColor = UIColor(hexString: "#2F3746")
+        static let shadow_mainColor = UIColor(hexString: "#2F3746")
         static let mainColor_unselect = UIColor(hexString: "#CED8E6")
         static let mainColor_bg = UIColor(hexString: "#FCFCFC")
 
-        static let starColor = UIColor(hexString: "#FCB227")
-        
-        static let greenColor = UIColor(hexString: "#29B571")
-        static let redColor = UIColor(hexString: "#FF7878")
-        static let yellowColor = UIColor(hexString: "#FFD475")
+//        static let starColor = UIColor(hexString: "#FCB227")
+//        static let greenColor = UIColor(hexString: "#29B571")
+//        static let redColor = UIColor(hexString: "#FF7878")
+//        static let yellowColor = UIColor(hexString: "#FFD475")
+        static let starColor = UIColor(hexString: "#F4B635")
+        static let greenColor = UIColor(hexString: "#0DB9A3")
+        static let redColor = UIColor(hexString: "#DF6B6B")
+        static let yellowColor = UIColor(hexString: "#F4B635")
         
         static let textColor_level1 = UIColor(hexString: "#444444")
         static let textColor_level2 = UIColor(hexString: "#585858")

@@ -15,6 +15,7 @@ UIScrollViewDelegate,
 KPTabViewDelegate {
 
     var dismissButton: KPBounceButton!
+    var logOutButton: KPBounceButton!
     var editButton: KPBounceButton!
     
     let tabTitles: [(title: String, key: String)] = [("已收藏", "favorites"),
@@ -139,17 +140,11 @@ KPTabViewDelegate {
                                                    "V:|-48-[$self(88)]"])
         
         userContainer.addSubview(userNameLabel)
-        userNameLabel.addConstraints(fromStringArray: ["H:|-16-[$self]",
+        userNameLabel.addConstraints(fromStringArray: ["H:|-20-[$self]",
                                                        "V:|-50-[$self]"])
         
-//        userContainer.addSubview(userCityLabel)
-//        userCityLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]",
-//                                                       "V:[$view1]-2-[$self]"],
-//                                          views: [userPhoto,
-//                                                  userNameLabel])
-        
         userContainer.addSubview(userBioLabel)
-        userBioLabel.addConstraints(fromStringArray: ["H:|-16-[$self(200)]",
+        userBioLabel.addConstraints(fromStringArray: ["H:|-20-[$self(200)]",
                                                       "V:[$view1]-8-[$self]"],
                                           views: [userPhoto,
                                                   userNameLabel])
@@ -157,11 +152,41 @@ KPTabViewDelegate {
                              lineSpacing: 3.0)
         
         
+        
+        logOutButton = KPBounceButton(frame: CGRect.zero)
+        logOutButton.setTitle("登出", for: .normal)
+        logOutButton.setTitleColor(KPColorPalette.KPTextColor_v2.mainColor_subtitle,
+                                   for: .normal)
+        logOutButton.layer.borderColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle?.cgColor
+        logOutButton.layer.borderWidth = 1.0
+        logOutButton.layer.cornerRadius = 16.0
+        logOutButton.layer.masksToBounds = true
+        logOutButton.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        userContainer.addSubview(logOutButton)
+        logOutButton.addConstraints(fromStringArray: ["V:[$view0]-16-[$self(32)]", "H:|-19-[$self(64)]"],
+                                    views: [userBioLabel
+            ])
+        
+        editButton = KPBounceButton(frame: CGRect.zero)
+        editButton.setTitle("編輯", for: .normal)
+        editButton.setTitleColor(KPColorPalette.KPTextColor_v2.mainColor_subtitle,
+                                   for: .normal)
+        editButton.layer.borderColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle?.cgColor
+        editButton.layer.borderWidth = 1.0
+        editButton.layer.cornerRadius = 16.0
+        editButton.layer.masksToBounds = true
+        editButton.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        userContainer.addSubview(editButton)
+        editButton.addConstraints(fromStringArray: ["V:[$view0]-16-[$self(32)]", "H:[$view1]-16-[$self(64)]"],
+                                    views: [userBioLabel, logOutButton
+            ])
+        
+        
         tabView = KPTabView(titles: tabTitles.map {$0.title})
         tabView.delegate = self
         view.addSubview(tabView)
         tabView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                 "V:[$view0][$self(44)]"], views: [userContainer])
+                                                 "V:[$view0]-8-[$self(44)]"], views: [userContainer])
         
         scrollView = UIScrollView()
         scrollView.delegate = self

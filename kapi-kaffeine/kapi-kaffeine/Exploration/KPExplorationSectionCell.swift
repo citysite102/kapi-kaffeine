@@ -11,6 +11,7 @@ import UIKit
 class KPExplorationSectionCell: UICollectionViewCell {
     
     var imageView: UIImageView!
+    var collectButton: KPBounceButton!
     
     var regionLabel: UILabel!
     var nameLabel: UILabel!
@@ -43,6 +44,13 @@ class KPExplorationSectionCell: UICollectionViewCell {
                                                    attribute: NSLayoutAttribute.width,
                                                    multiplier: 0.8,
                                                    constant: 0))
+        
+        collectButton = KPBounceButton(frame: CGRect.zero,
+                                       image: R.image.icon_collect_border()!)
+        collectButton.tintColor = KPColorPalette.KPBackgroundColor.whiteColor
+        imageView.addSubview(collectButton)
+        collectButton.addConstraints(fromStringArray: ["V:|-4-[$self(24)]",
+                                                       "H:[$self(24)]-4-|"])
 
         nameLabel = UILabel()
         contentView.addSubview(nameLabel)
@@ -50,7 +58,7 @@ class KPExplorationSectionCell: UICollectionViewCell {
                                                    "V:[$view0]-(>=4)-[$self]"],
                                  views: [imageView])
         nameLabel.font = UIFont.boldSystemFont(ofSize: 14)
-        nameLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_title
+        nameLabel.textColor = KPColorPalette.KPMainColor_v2.mainColor
         nameLabel.text = "老木咖啡"
         
         regionLabel = UILabel()
@@ -59,7 +67,7 @@ class KPExplorationSectionCell: UICollectionViewCell {
                                                      "V:[$view0]-5-[$self]"],
                                    views: [nameLabel])
         regionLabel.font = UIFont.systemFont(ofSize: 11)
-        regionLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_description
+        regionLabel.textColor = KPColorPalette.KPMainColor_v2.mainColor_light
         regionLabel.text = "台北市, 大安區"
         
         rateLabel = UILabel()

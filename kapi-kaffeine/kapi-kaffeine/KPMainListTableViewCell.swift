@@ -107,8 +107,8 @@ class KPMainListTableViewCell: UITableViewCell {
                                                        "V:|-18-[$self(76)]-18-|"])
         
         shopNameLabel = KPLayerLabel()
-        shopNameLabel.font = UIFont.systemFont(ofSize: 16.0)
-        shopNameLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_title
+        shopNameLabel.font = UIFont.boldSystemFont(ofSize: 16.0)
+        shopNameLabel.textColor = KPColorPalette.KPMainColor_v2.mainColor
         shopNameLabel.isOpaque = true
         shopNameLabel.layer.masksToBounds = true
         contentView.addSubview(shopNameLabel)
@@ -125,7 +125,7 @@ class KPMainListTableViewCell: UITableViewCell {
                                                   "V:|-20-[$self(18)]"])
         
         rateLabel = KPLayerLabel()
-        rateLabel.font = UIFont.boldSystemFont(ofSize: 16.0)
+        rateLabel.font = UIFont.systemFont(ofSize: 16.0)
         rateLabel.textColor = KPColorPalette.KPMainColor_v2.starColor
         rateLabel.text = "4.8"
         rateLabel.isOpaque = true

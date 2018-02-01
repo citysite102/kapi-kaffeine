@@ -122,7 +122,7 @@ class KPMainTabController: ESTabBarController, UITabBarControllerDelegate {
         
         UITabBar.appearance().barTintColor = KPColorPalette.KPMainColor_v2.mainColor_bg
         UITabBar.appearance().unselectedItemTintColor = KPColorPalette.KPMainColor_v2.mainColor_unselect
-        UITabBar.appearance().tintColor = KPColorPalette.KPMainColor_v2.mainColor
+        UITabBar.appearance().tintColor = KPColorPalette.KPMainColor_v2.mainColor_light
     }
 
     override func didReceiveMemoryWarning() {

@@ -178,13 +178,13 @@ class KPExplorationViewController: KPViewController {
                                               height: 260))
         
         
-//        let articleLabel = UILabel()
-//        articleLabel.font = UIFont.boldSystemFont(ofSize: 22.0)
-//        articleLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_title
-//        articleLabel.text = "編輯精選文章"
-//        headerView.addSubview(articleLabel)
-//        articleLabel.addConstraints(fromStringArray: ["H:|-20-[$self]",
-//                                                      "V:|[$self(30)]"])
+        let articleLabel = UILabel()
+        articleLabel.font = UIFont.boldSystemFont(ofSize: 20.0)
+        articleLabel.textColor = KPColorPalette.KPMainColor_v2.mainColor
+        articleLabel.text = "編輯精選"
+        headerView.addSubview(articleLabel)
+        articleLabel.addConstraints(fromStringArray: ["H:|-24-[$self]",
+                                                      "V:|[$self(30)]"])
         
         let articleLayout = UICollectionViewFlowLayout()
         articleLayout.scrollDirection = .horizontal
@@ -198,14 +198,14 @@ class KPExplorationViewController: KPViewController {
         articleCollectionView.register(KPArticleCell.self, forCellWithReuseIdentifier: "ArticleCell")
         articleCollectionView.backgroundColor = UIColor.clear
         headerView.addSubview(articleCollectionView)
-//        articleCollectionView.addConstraints(fromStringArray: ["H:|[$self]|",
-//                                                               "V:[$view0]-[$self]-|"],
-//                                             views: [articleLabel])
         articleCollectionView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                               "V:|-20-[$self]-|"])
+                                                               "V:[$view0]-[$self]-24-|"],
+                                             views: [articleLabel])
+//        articleCollectionView.addConstraints(fromStringArray: ["H:|[$self]|",
+//                                                               "V:|-20-[$self]-|"])
         
         let tableView = UITableView(frame: CGRect.zero, style: .plain)
-        tableView.contentInset = UIEdgeInsets(top: 72,
+        tableView.contentInset = UIEdgeInsets(top: 110,
                                               left: 0,
                                               bottom: 30,
                                               right: 0)
@@ -234,7 +234,7 @@ class KPExplorationViewController: KPViewController {
         
         locationSelectView = KPLocationSelect()
         headerContainer.addSubview(locationSelectView)
-        locationSelectView.addConstraints(fromStringArray: ["H:|-20-[$self]",
+        locationSelectView.addConstraints(fromStringArray: ["H:|-24-[$self]",
                                                             "V:|-52-[$self(44)]"])
         
         searchContainerShadowView = UIView()
@@ -387,9 +387,9 @@ extension KPExplorationViewController: UICollectionViewDataSource, UICollectionV
                         layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 20,
-                            left: 20,
+                            left: 24,
                             bottom: 20,
-                            right: 20)
+                            right: 24)
     }
     
     func collectionView(_ collectionView: UICollectionView,

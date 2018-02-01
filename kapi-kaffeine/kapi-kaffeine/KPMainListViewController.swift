@@ -35,6 +35,7 @@ class KPMainListViewController:
     
     var sortContainerView: UIView!
     var sortLabel: UILabel!
+    var sortIcon: UIImageView!
     var tableView: UITableView!
     var satisficationView: KPSatisficationView!
     var expNotificationView: KPExpNotificationView!
@@ -172,8 +173,15 @@ class KPMainListViewController:
         sortLabel.text = "依照距離排列"
         sortLabel.textColor = KPColorPalette.KPMainColor_v2.mainColor
         sortContainerView.addSubview(sortLabel)
-        sortLabel.addConstraints(fromStringArray: ["H:|-12-[$self]|"])
+        sortLabel.addConstraints(fromStringArray: ["H:|-12-[$self]"])
         sortLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
+        
+        sortIcon = UIImageView(image: R.image.icon_sort()!)
+        sortIcon.tintColor = KPColorPalette.KPMainColor_v2.mainColor
+        sortContainerView.addSubview(sortIcon)
+        sortIcon.addConstraints(fromStringArray: ["H:[$view0]-4-[$self(12)]",
+                                                  "V:[$self(12)]"], views: [sortLabel])
+        sortIcon.addConstraintForCenterAligningToSuperview(in: .vertical)
         
         tableView = UITableView()
         tableView.backgroundColor = KPColorPalette.KPBackgroundColor.whiteColor

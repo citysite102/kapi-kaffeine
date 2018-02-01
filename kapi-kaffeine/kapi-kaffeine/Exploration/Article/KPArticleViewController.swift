@@ -124,7 +124,7 @@ class KPArticleViewController: KPViewController {
         articleTitleLabel.alpha = 0
         articleTitleLabel.transform = CGAffineTransform(translationX: 0,
                                                                     y: 24)
-        articleTitleLabel.font = UIFont.boldSystemFont(ofSize: 35)
+        articleTitleLabel.font = UIFont.boldSystemFont(ofSize: 40)
         articleTitleLabel.textColor = UIColor.white
         articleTitleLabel.numberOfLines = 0
         articleTitleLabel.setText(text: "一窺東倫敦新興咖啡社群 - Hello Hackney",
