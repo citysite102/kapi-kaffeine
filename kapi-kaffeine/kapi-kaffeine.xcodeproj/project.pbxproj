@@ -34,6 +34,7 @@
 		7734634D1ED74C5400EA78F0 /* KPDataRateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7734634C1ED74C5400EA78F0 /* KPDataRateModel.swift */; };
 		7734634F1ED74FE000EA78F0 /* KPServiceHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7734634E1ED74FE000EA78F0 /* KPServiceHandler.swift */; };
 		773463521ED7547B00EA78F0 /* KPLoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773463511ED7547B00EA78F0 /* KPLoginRequest.swift */; };
+		77383BDB2024CA8000E50109 /* KPDynamicLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77383BDA2024CA8000E50109 /* KPDynamicLayout.swift */; };
 		773844FA1F4468A100B4BBD5 /* KPEditCommentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773844F91F4468A100B4BBD5 /* KPEditCommentController.swift */; };
 		773E24871F1E5A1600C7C094 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 773E24861F1E5A1600C7C094 /* Security.framework */; };
 		773E24891F1E5A4200C7C094 /* KeychainItemWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773E24881F1E5A4200C7C094 /* KeychainItemWrapper.swift */; };
@@ -270,6 +271,7 @@
 		7734634C1ED74C5400EA78F0 /* KPDataRateModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPDataRateModel.swift; sourceTree = "<group>"; };
 		7734634E1ED74FE000EA78F0 /* KPServiceHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPServiceHandler.swift; sourceTree = "<group>"; };
 		773463511ED7547B00EA78F0 /* KPLoginRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPLoginRequest.swift; sourceTree = "<group>"; };
+		77383BDA2024CA8000E50109 /* KPDynamicLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPDynamicLayout.swift; sourceTree = "<group>"; };
 		773844F91F4468A100B4BBD5 /* KPEditCommentController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPEditCommentController.swift; sourceTree = "<group>"; };
 		773E24861F1E5A1600C7C094 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		773E24881F1E5A4200C7C094 /* KeychainItemWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainItemWrapper.swift; sourceTree = "<group>"; };
@@ -1289,6 +1291,7 @@
 				C0E6CBF01FC3E25200517EB8 /* KPArticleCell.swift */,
 				C068791A1FC58DB4004160C9 /* KPExplorationSectionView.swift */,
 				C068791C1FC59893004160C9 /* KPExplorationSectionCell.swift */,
+				77383BDA2024CA8000E50109 /* KPDynamicLayout.swift */,
 			);
 			path = Exploration;
 			sourceTree = "<group>";
@@ -1702,6 +1705,7 @@
 				77D98A691F1BA5F200FE1832 /* KPInputExpandTransition.swift in Sources */,
 				77C0E1051E9D48F500398852 /* KPShopLocationInfoView.swift in Sources */,
 				77BB392A1ED3DD5700958AFE /* KPThirdIntroView.swift in Sources */,
+				77383BDB2024CA8000E50109 /* KPDynamicLayout.swift in Sources */,
 				771F90B31EF2424900D66C14 /* KPShadowButton.swift in Sources */,
 				C055B0051EF0CAEF00C651CC /* KPTabView.swift in Sources */,
 				776ACAF41E9BAFA200B629A2 /* KPSearchHeaderView.swift in Sources */,

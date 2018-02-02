@@ -42,7 +42,7 @@ class KPExplorationSectionView: UITableViewCell {
         
         sectionDescriptionLabel = UILabel()
         sectionDescriptionLabel.numberOfLines = 0
-        sectionDescriptionLabel.font = UIFont.systemFont(ofSize: 12)
+        sectionDescriptionLabel.font = UIFont.systemFont(ofSize: 14)
         sectionDescriptionLabel.textColor = KPColorPalette.KPMainColor_v2.mainColor
         contentView.addSubview(sectionDescriptionLabel)
         sectionDescriptionLabel.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|",
@@ -50,8 +50,7 @@ class KPExplorationSectionView: UITableViewCell {
                                                views: [sectionTitleLabel])
         sectionDescriptionLabel.text = "由知名部落客們聯手推薦的知名店家。"
         
-        let collectionViewLayout = UICollectionViewFlowLayout()
-        collectionViewLayout.scrollDirection = .horizontal
+        let collectionViewLayout = KPDynamicLayout()
         
         collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: collectionViewLayout)
         collectionView.backgroundColor = UIColor.clear
@@ -61,7 +60,7 @@ class KPExplorationSectionView: UITableViewCell {
         collectionView.register(KPExplorationSectionCell.self, forCellWithReuseIdentifier: "ExplorationSectionCell")
         contentView.addSubview(collectionView)
         collectionView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                        "V:[$view0][$self(190)]"],
+                                                        "V:[$view0]-2-[$self(190)]"],
                                       views: [sectionDescriptionLabel])
         
         
@@ -97,30 +96,5 @@ extension KPExplorationSectionView: UICollectionViewDataSource, UICollectionView
         cell.regionLabel.text = shops[indexPath.row].place
         cell.imageView.af_setImage(withURL: URL(string: shops[indexPath.row].imageURL)!)
         return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 16
-    }
-    
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 16
-    }
-    
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 130, height: 164)
-    }
-    
+    }    
 }

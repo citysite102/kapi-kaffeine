@@ -73,7 +73,7 @@ class KPExplorationSectionCell: UICollectionViewCell {
         rateLabel = UILabel()
         contentView.addSubview(rateLabel)
         rateLabel.addConstraints(fromStringArray: ["H:|[$self]",
-                                                   "V:[$view0]-5-[$self]|"],
+                                                   "V:[$view0]-6-[$self]|"],
                                    views: [regionLabel])
         rateLabel.font = UIFont.boldSystemFont(ofSize: 11)
         rateLabel.textColor = KPColorPalette.KPMainColor_v2.starColor
