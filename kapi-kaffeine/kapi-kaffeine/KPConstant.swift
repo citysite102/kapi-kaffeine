@@ -106,7 +106,9 @@ struct KPColorPalette {
 
         static let mainColor_light = UIColor(hexString: "#334A76")
         static let mainColor = UIColor(hexString: "#2F3746")
+        static let mainColor_dark = UIColor(hexString: "#202735")
         static let shadow_mainColor = UIColor(hexString: "#2F3746")
+        static let shadow_darkColor = UIColor(hexString: "#111111")
         static let shadow_mainColor_black = UIColor(hexString: "#2F3746")
         static let mainColor_unselect = UIColor(hexString: "#CED8E6")
         static let mainColor_bg = UIColor(hexString: "#FCFCFC")
@@ -164,6 +166,7 @@ struct KPColorPalette {
         static let mainColor_subtitle = UIColor(hexString: "#585858")
         static let mainColor_description = UIColor(hexString: "#8a8a8a")
         static let mainColor_hint = UIColor(hexString: "#A8A8A8")
+        static let mainColor_hint_light = UIColor(hexString: "#C8C8C8")
         
         static let yellow_color = UIColor(hexString: "#FFE453")
         static let whiteColor = UIColor(hexString: "#ffffff")
@@ -205,6 +208,9 @@ struct KPColorPalette {
         static let mainColor_ripple = UIColor(rgbaHexValue: 0xc8955eaa)
         
         static let whiteColor = UIColor(rgbaHexValue: 0xffffffff)
+        static let white_level1 = UIColor(white: 1.0, alpha: 0.95)
+        static let white_level2 = UIColor(white: 1.0, alpha: 0.15)
+        static let white_level3 = UIColor(white: 1.0, alpha: 0.15)
         static let grayColor_level1 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.9)
         static let grayColor_level2 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.7)
         static let grayColor_level3 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.5)

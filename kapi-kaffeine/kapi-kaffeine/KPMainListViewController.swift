@@ -18,6 +18,7 @@ class KPMainListViewController:
     
     struct Constant {
         static let KPMainListViewCellReuseIdentifier = "cell"
+        static let KPMainListViewAddCellReuseIdentifier = "cell_add"
         static let KPMainListViewLoadingCellReuseIdentifier = "cell_loading"
         static let KPMainListViewAdCellReuseIdentifier = "cell_ad"
         static let adInterval = 12
@@ -115,6 +116,10 @@ class KPMainListViewController:
                 })
             } else {
                 state = .normal
+                if let displayModel = displayDataModel.first as? KPDataModel, displayModel.identifier != "empty" {
+                    let emptyModel = KPDataModel(JSON: ["cafe_id": "empty"])
+                    displayDataModel.insert(emptyModel!, at: 0)
+                }
                 self.tableView.isUserInteractionEnabled = true
                 self.tableView.allowsSelection = true
                 self.tableView.reloadData()
@@ -242,6 +247,9 @@ class KPMainListViewController:
         tableView.addConstraints(fromStringArray: ["V:[$view0][$self]-(-40)-|",
                                                    "H:|[$self]|"],
                                  views:[sortContainerView])
+        tableView.register(KPMainListAddCell.self,
+                           forCellReuseIdentifier: Constant.KPMainListViewAddCellReuseIdentifier
+                           )
         tableView.register(KPMainListTableViewCell.self,
                                 forCellReuseIdentifier: Constant.KPMainListViewCellReuseIdentifier)
         tableView.register(KPDefaultLoadingTableCell.self,
@@ -484,13 +492,21 @@ extension KPMainListViewController: UITableViewDelegate, UITableViewDataSource {
                 nativeExpressAdView.center = cell.contentView.center
                 
                 return cell
-            } else {
-                let cell = tableView.dequeueReusableCell(withIdentifier:Constant.KPMainListViewCellReuseIdentifier,
-                                                         for: indexPath) as! KPMainListTableViewCell
-                
-                cell.selectionStyle = .none
-                cell.dataModel = self.displayDataModel[indexPath.row] as! KPDataModel
-                return cell
+            } else  {
+                let displayModel = displayDataModel[indexPath.row] as? KPDataModel
+                if displayModel?.identifier == "empty" {
+                    let cell = tableView.dequeueReusableCell(withIdentifier:Constant.KPMainListViewAddCellReuseIdentifier,
+                                                             for: indexPath) as! KPMainListAddCell
+                    cell.selectionStyle = .none
+                    return cell
+                } else {
+                    let cell = tableView.dequeueReusableCell(withIdentifier:Constant.KPMainListViewCellReuseIdentifier,
+                                                             for: indexPath) as! KPMainListTableViewCell
+                    
+                    cell.selectionStyle = .none
+                    cell.dataModel = self.displayDataModel[indexPath.row] as! KPDataModel
+                    return cell
+                }
             }
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier:Constant.KPMainListViewLoadingCellReuseIdentifier,
@@ -523,14 +539,33 @@ extension KPMainListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let dataModel = self.displayDataModel[indexPath.row] as? KPDataModel {
             
-            KPAnalyticManager.sendCellClickEvent(dataModel.name,
-                                                 dataModel.averageRate?.stringValue,
-                                                 KPAnalyticsEventValue.source.source_list)
-            
-            self.currentDataModel = dataModel
-            self.currentSelectedCell = tableView.cellForRow(at: indexPath) as? KPMainListTableViewCell
-            self.snapShotShowing = true
-            self.mainController.performSegue(withIdentifier: "datailedInformationSegue", sender: self)
+            if dataModel.identifier == "empty" {
+                KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.map_add_store_button)
+                
+                let controller = KPModalViewController()
+                controller.edgeInset = UIEdgeInsets(top: 0,
+                                                    left: 0,
+                                                    bottom: 0,
+                                                    right: 0)
+                let newStoreController = KPNewStoreController()
+                let navigationController = UINavigationController(rootViewController: newStoreController)
+                if #available(iOS 11.0, *) {
+                    navigationController.navigationBar.prefersLargeTitles = true
+                } else {
+                    // Fallback on earlier versions
+                }
+                controller.contentController = navigationController
+                controller.presentModalView()
+            } else {
+                KPAnalyticManager.sendCellClickEvent(dataModel.name,
+                                                     dataModel.averageRate?.stringValue,
+                                                     KPAnalyticsEventValue.source.source_list)
+                
+                self.currentDataModel = dataModel
+                self.currentSelectedCell = tableView.cellForRow(at: indexPath) as? KPMainListTableViewCell
+                self.snapShotShowing = true
+                self.mainController.performSegue(withIdentifier: "datailedInformationSegue", sender: self)
+            }
         }
     }
 }

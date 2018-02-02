@@ -26,7 +26,7 @@ class KPItemCheckedView: UIView {
     lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16.0)
-        label.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
+        label.textColor = KPColorPalette.KPTextColor_v2.mainColor_description
         return label
     }()
     
@@ -54,13 +54,15 @@ class KPItemCheckedView: UIView {
                              animated: true)
         checkBox.stateChangeAnimation = .fill
         checkBox.secondaryTintColor = KPColorPalette.KPBackgroundColor.grayColor_level7
-        checkBox.setCheckState(.checked, animated: false)
+        checkBox.setCheckState(.unchecked, animated: false)
         addSubview(checkBox)
         
         checkBox.addConstraints(fromStringArray: ["H:[$self(24)]|",
                                                   "V:[$self(24)]"])
         checkBox.addConstraintForCenterAligningToSuperview(in: .vertical)
-
+        checkBox.addTarget(self,
+                           action: #selector(handleCheckBoxStateChanged),
+                           for: UIControlEvents.valueChanged)
         
         tapGesture = UITapGestureRecognizer(target: self,
                                             action: #selector(handleTapGesture(tapGesture:)))
@@ -70,5 +72,11 @@ class KPItemCheckedView: UIView {
     
     @objc func handleTapGesture(tapGesture: UITapGestureRecognizer) {
 //        customInputAction?()
+    }
+    
+    @objc func handleCheckBoxStateChanged() {
+        titleLabel.textColor = self.checkBox.checkState == .checked ?
+            KPColorPalette.KPTextColor_v2.mainColor_subtitle :
+            KPColorPalette.KPTextColor_v2.mainColor_description
     }
 }

@@ -9,6 +9,7 @@
 import Foundation
 import BenzeneFoundation
 import UIKit
+import CoreImage
 
 public extension UIImage {
     
@@ -160,6 +161,41 @@ public extension UIApplication {
         } else {
             return self.KPTopViewControllerFromController(currentViewController:currentViewController.presentedViewController!)
         }
+    }
+}
+
+public extension UIImage {
+    
+    public func tint(_ color: UIColor, blendMode: CGBlendMode) -> UIImage {
+        let drawRect = CGRect(x: 0, y: 0,
+                              width: size.width,
+                              height: size.height)
+    
+        UIGraphicsBeginImageContextWithOptions(size, false, scale)
+        color.setFill()
+        UIRectFill(drawRect)
+        draw(in: drawRect,
+             blendMode: blendMode,
+             alpha: 1.0)
+        let tintedImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return tintedImage!
+    }
+    
+    public func blurImage() -> UIImage {
+        let gaussianBlurFilter = CIFilter(name: "CIGaussianBlur")
+        gaussianBlurFilter?.setDefaults()
+        let inputImage = CIImage(cgImage: self.cgImage!)
+        gaussianBlurFilter?.setValue(inputImage,
+                                     forKey: kCIInputImageKey)
+        gaussianBlurFilter?.setValue(10,
+                                     forKey: kCIInputRadiusKey)
+        let outputImage = gaussianBlurFilter?.outputImage
+        let context = CIContext(options: nil)
+        let cgImg = context.createCGImage(outputImage!,
+                                          from: inputImage.extent)
+        let convertedImage = UIImage(cgImage: cgImg!)
+        return convertedImage
     }
 }
 

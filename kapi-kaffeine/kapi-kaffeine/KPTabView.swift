@@ -8,13 +8,13 @@
 
 import UIKit
 
-protocol KPTabViewDelegate {
+protocol KPTabViewDelegate: NSObjectProtocol {
     func tabView(_: KPTabView, didSelectIndex index: Int)
 }
 
 class KPTabView: UIView {
     
-    var delegate: KPTabViewDelegate?
+    weak open var delegate: KPTabViewDelegate?
     
     lazy var hintView: UIView = {
         let view = UIView()
@@ -107,7 +107,7 @@ class KPTabView: UIView {
                 
         if let selectedIndex = tabs.index(of: sender) {
             currentIndex = selectedIndex
-            delegate?.tabView(self, didSelectIndex: currentIndex)
+            self.delegate?.tabView(self, didSelectIndex: currentIndex)
         }
         
     }

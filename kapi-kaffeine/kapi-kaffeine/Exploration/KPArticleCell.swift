@@ -10,14 +10,26 @@ import UIKit
 
 class KPArticleCell: UICollectionViewCell {
     
+    var articleHeroImageView: UIImageView!
     var titleLabel: UILabel!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        clipsToBounds = true
-        layer.cornerRadius = 4
-        layer.rasterizationScale = UIScreen.main.scale
-        layer.shouldRasterize = true
+        contentView.clipsToBounds = true
+        contentView.layer.cornerRadius = 4
+        contentView.layer.rasterizationScale = UIScreen.main.scale
+        contentView.layer.shouldRasterize = true
+        
+        layer.shadowColor = KPColorPalette.KPMainColor_v2.shadow_darkColor?.cgColor
+        layer.shadowOffset = CGSize(width: 0.0, height: 3.0)
+        layer.shadowOpacity = 0.5
+        layer.shadowRadius = 3
+        
+        articleHeroImageView = UIImageView()
+        articleHeroImageView.contentMode = .scaleAspectFill
+        contentView.addSubview(articleHeroImageView)
+        articleHeroImageView.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                              "V:|[$self]|"])
         
         titleLabel = UILabel()
         titleLabel.font = UIFont.boldSystemFont(ofSize: 20)
