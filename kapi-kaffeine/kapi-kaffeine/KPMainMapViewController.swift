@@ -281,12 +281,14 @@ GMUClusterRendererDelegate {
         
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.itemSize = CGSize(width: UIScreen.main.bounds.size.width/2, height: 180)
+        flowLayout.minimumLineSpacing = 24
+        flowLayout.minimumInteritemSpacing = 24
         flowLayout.scrollDirection = .horizontal
         
         collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 0,
                                                         height: 0),
                                                collectionViewLayout: flowLayout)
-        collectionView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
+        collectionView.contentInset = UIEdgeInsetsMake(0, 16, 0, 0)
         collectionView.backgroundColor = KPColorPalette.KPBackgroundColor.whiteColor
         collectionView.dataSource = self
         collectionView.delegate = self
