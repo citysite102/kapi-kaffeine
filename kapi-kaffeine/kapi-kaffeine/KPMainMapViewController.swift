@@ -37,6 +37,33 @@ GMUClusterRendererDelegate {
         return shadowButton
     }()
     
+    lazy var searchNearButton: KPShadowButton = {
+        let shadowButton = KPShadowButton()
+        shadowButton.button.setTitle("搜尋這個地區", for: .normal)
+        shadowButton.button.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor_v2.mainColor!),
+                                               for: .normal)
+        shadowButton.button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        shadowButton.button.setTitleColor(KPColorPalette.KPTextColor_v2.whiteColor,
+                                          for: .normal)
+        shadowButton.layer.cornerRadius = 18
+        return shadowButton
+    }()
+    
+    lazy var currentLocationButton: KPShadowButton = {
+        let shadowButton = KPShadowButton()
+        shadowButton.button.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.whiteColor!), for: .normal)
+        shadowButton.button.setImage(R.image.icon_location(), for: .normal)
+    
+        shadowButton.button.tintColor = KPColorPalette.KPMainColor_v2.mainColor
+        shadowButton.button.imageView?.contentMode = .scaleAspectFit
+        shadowButton.button.imageEdgeInsets = UIEdgeInsets(top: 12,
+                                                           left: 12,
+                                                           bottom: 12,
+                                                           right: 12)
+        shadowButton.layer.cornerRadius = 30
+        return shadowButton
+    }()
+    
     lazy var mapButton: KPShadowButton = {
         let shadowButton = KPShadowButton()
         shadowButton.button.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.whiteColor!), for: .normal)
@@ -277,21 +304,27 @@ GMUClusterRendererDelegate {
 //                                                                                           of: self.view,
 //                                                                                           constant: 200).first as! NSLayoutConstraint
         
+        view.addSubview(searchNearButton)
+        searchNearButton.addConstraints(fromStringArray: ["V:|-168-[$self(36)]",
+                                                          "H:[$self(100)]"])
+        searchNearButton.addConstraintForCenterAligningToSuperview(in: .horizontal)
+        
         view.addSubview(mapButton)
         mapButton.addConstraints(fromStringArray: ["V:[$self(40)]-24-[$view0]",
                                                    "H:[$self(88)]"],
                                  views:[collectionView])
         mapButton.addConstraintForCenterAligningToSuperview(in: .horizontal)
         
-        let currentLocationButton = UIButton(type: .custom)
-        currentLocationButton.setImage(R.image.icon_currentLocation_alpha(), for: .normal)
-        currentLocationButton.setImage(R.image.icon_currentLocation(), for: .highlighted)
-        currentLocationButton.addTarget(self,
+//        let currentLocationButton = UIButton(type: .custom)
+//        currentLocationButton.setImage(R.image.icon_currentLocation_alpha(), for: .normal)
+//        currentLocationButton.setImage(R.image.icon_currentLocation(), for: .highlighted)
+        
+        currentLocationButton.button.addTarget(self,
                                         action: #selector(handleCurrentLocationButtonOnTap(_:)),
                                         for: .touchUpInside)
-        self.view.addSubview(currentLocationButton)
-        currentLocationButton.addConstraints(fromStringArray: ["H:[$self(40)]-12-|",
-                                                               "V:|-120-[$self(40)]"])
+        view.addSubview(currentLocationButton)
+        currentLocationButton.addConstraints(fromStringArray: ["H:[$self(60)]-16-|",
+                                                               "V:[$self(60)]-24-[$view0]"], views:[collectionView])
         
         showAllButton = UIButton(type: .custom)
         showAllButton.layer.cornerRadius = 2.0
@@ -312,11 +345,11 @@ GMUClusterRendererDelegate {
         
         
         
-        view.addSubview(nearestButton)
-        nearestButton.button.addTarget(self, action: #selector(handleNearestButtonOnTap(_:)), for: .touchUpInside)
-        nearestButton.addConstraints(fromStringArray: ["H:|-16-[$self(90)]",
-                                                       "V:[$self(40)]-16-[$view0]"],
-                                     views: [collectionView])
+//        view.addSubview(nearestButton)
+//        nearestButton.button.addTarget(self, action: #selector(handleNearestButtonOnTap(_:)), for: .touchUpInside)
+//        nearestButton.addConstraints(fromStringArray: ["H:|-16-[$self(90)]",
+//                                                       "V:[$self(40)]-16-[$view0]"],
+//                                     views: [collectionView])
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(receiveLocationInformation),

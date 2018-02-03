@@ -11,6 +11,7 @@ import MapKit
 import BenzeneFoundation
 import SKPhotoBrowser
 
+
 class KPInformationViewController: KPViewController {
 
     var informationDataModel: KPDataModel! {
@@ -52,6 +53,7 @@ class KPInformationViewController: KPViewController {
     var percentDrivenTransition: UIPercentDrivenInteractiveTransition!
     var currentPhotoIndexPath: IndexPath = IndexPath(item: 0, section: 0) {
         didSet {
+        
             informationHeaderView.shopPhoto.af_setImage(withURL: displayPhotoInformations[currentPhotoIndexPath.row].imageURL,
                                                         placeholderImage: UIImage(color: KPColorPalette.KPBackgroundColor.grayColor_level6!),
                                                         filter: nil,
@@ -609,6 +611,15 @@ class KPInformationViewController: KPViewController {
         
         updateTopToolBar()
 //        syncRemoteData()
+        
+        
+        
+        UIView.animate(withDuration: 2,
+                       animations: {
+                        
+        }) { (_) in
+            // 動畫成功會做的事情
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {

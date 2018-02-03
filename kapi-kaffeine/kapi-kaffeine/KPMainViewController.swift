@@ -70,7 +70,7 @@ class KPMainViewController: KPViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = UIColor.black
+        view.backgroundColor = KPColorPalette.KPBackgroundColor.whiteColor
         mainListViewController = KPMainListViewController()
         mainMapViewController = KPMainMapViewController()
         sideBarController = KPSideViewController()
@@ -385,134 +385,182 @@ class KPMainViewController: KPViewController {
         let iconImage = (self.currentController == self.mainListViewController) ?
             R.image.icon_list()!.withRenderingMode(.alwaysTemplate) :
             R.image.icon_map()!.withRenderingMode(.alwaysTemplate)
-        
-        var transform   = CATransform3DMakeTranslation(0, 2, 0)
-        transform.m34 = -1.0/1000
-        
         self.mainListViewController?.snapShotShowing = true
-        self.mainListViewController?.view.layer.transform = transform
-        self.mainMapViewController?.view.layer.transform = transform
-        
         
         if self.currentController == self.mainListViewController {
             mainListViewController?.view.alpha = 1.0
             mainMapViewController?.view.alpha = 0.0
-            
-            if !(self.mainMapViewController?.isCollectionViewShow)! {
-                self.mainMapViewController?.collectionView.isHidden = true
-            }
-            self.mainMapViewController?.view.layer.transform =
-                CATransform3DRotate((self.mainMapViewController?.view.layer.transform)!,
-                                    CGFloat.pi, 0, 1, 0)
-            
-            UIView.animate(withDuration: 0.3,
+            UIView.animate(withDuration: 0.5,
                            delay: 0,
                            options: .curveEaseIn,
                            animations: {
-                            self.mainListViewController?.view.layer.transform =
-                                CATransform3DScale(CATransform3DRotate(transform,
-                                                                       CGFloat.pi/2,
-                                                                       0,
-                                                                       1,
-                                                                       0)
-                                    , 0.7
-                                    , 0.7
-                                    , 0.7)
-                            self.mainMapViewController?.view.layer.transform =
-                                CATransform3DScale(CATransform3DRotate(transform,
-                                                                       -CGFloat.pi/2,
-                                                                       0,
-                                                                       1,
-                                                                       0)
-                                    , 0.7
-                                    , 0.7
-                                    , 0.7)
-                            self.mainListViewController?.view.alpha = 0.2
+                            self.mainListViewController?.view.alpha = 0
             }, completion: { (_) in
                 self.mainListViewController?.view.alpha = 0.0
-                UIView.animate(withDuration: 0.3,
+                UIView.animate(withDuration: 0.5,
                                delay: 0,
                                options: .curveEaseOut,
                                animations: {
-                                self.searchHeaderView.styleButton.setImage(iconImage, for: .normal)
-                                if !(self.mainMapViewController?.isCollectionViewShow)! {
-                                    self.mainMapViewController?.collectionView.isHidden = true
-                                }
-                                
-                                self.mainListViewController?.view.layer.transform =
-                                    CATransform3DScale(CATransform3DRotate((self.mainMapViewController?.view.layer.transform)!,
-                                                                           -CGFloat.pi/2, 0, 1, 0), 1/0.7, 1/0.7, 1/0.7)
-                                
-                                self.mainMapViewController?.view.layer.transform =
-                                    CATransform3DScale(CATransform3DRotate((self.mainMapViewController?.view.layer.transform)!,
-                                                                           CGFloat.pi/2, 0, 1, 0), 1/0.7, 1/0.7, 1/0.7)
-                                
-                                self.mainMapViewController?.view.alpha = 1.0
+                                self.mainMapViewController?.view.alpha = 1
                 }, completion: { (_) in
-                    self.mainMapViewController?.collectionView.isHidden = false
                     self.currentController = self.mainMapViewController
                 })
             })
-
+            
         } else {
             mainListViewController?.view.alpha = 0.0
             mainMapViewController?.view.alpha = 1.0
-            
-            
-            if !(self.mainMapViewController?.isCollectionViewShow)! {
-                self.mainMapViewController?.collectionView.isHidden = true
-            }
-            self.mainListViewController?.view.layer.transform =
-                CATransform3DRotate((self.mainListViewController?.view.layer.transform)!,
-                                    CGFloat.pi, 0, 1, 0)
-            
-            
-            UIView.animate(withDuration: 0.3,
+            UIView.animate(withDuration: 0.5,
                            delay: 0,
                            options: .curveEaseIn,
                            animations: {
-                            self.mainListViewController?.view.layer.transform =
-                                CATransform3DScale(CATransform3DRotate(transform,
-                                                                       CGFloat.pi/2,
-                                                                       0,
-                                                                       1,
-                                                                       0)
-                                    , 0.7
-                                    , 0.7
-                                    , 0.7)
-                            self.mainMapViewController?.view.layer.transform =
-                                CATransform3DScale(CATransform3DRotate(transform,
-                                                                       -CGFloat.pi/2,
-                                                                       0,
-                                                                       1,
-                                                                       0)
-                                    , 0.7
-                                    , 0.7
-                                    , 0.7)
-                            self.mainMapViewController?.view.alpha = 0.2
+                            self.mainMapViewController?.view.alpha = 0
             }, completion: { (_) in
-                self.mainMapViewController?.view.alpha = 0.0
-                UIView.animate(withDuration: 0.3,
+                UIView.animate(withDuration: 0.5,
                                delay: 0,
                                options: .curveEaseOut,
                                animations: {
-                                self.searchHeaderView.styleButton.setImage(iconImage, for: .normal)
-                                self.mainListViewController?.view.layer.transform =
-                                    CATransform3DScale(CATransform3DRotate((self.mainListViewController?.view.layer.transform)!,
-                                                                           -CGFloat.pi/2, 0, 1, 0), 1/0.7, 1/0.7, 1/0.7)
-                                
-                                self.mainMapViewController?.view.layer.transform =
-                                    CATransform3DScale(CATransform3DRotate((self.mainMapViewController?.view.layer.transform)!,
-                                                                           -CGFloat.pi/2, 0, 1, 0), 1/0.7, 1/0.7, 1/0.7)
-                                
                                 self.mainListViewController?.view.alpha = 1.0
                 }, completion: { (_) in
                     self.mainListViewController?.snapShotShowing = false
-                    self.mainMapViewController?.collectionView.isHidden = false
+                    //                    self.mainMapViewController?.collectionView.isHidden = false
                     self.currentController = self.mainListViewController
                 })
             })
         }
+        
+        
+//        let iconImage = (self.currentController == self.mainListViewController) ?
+//            R.image.icon_list()!.withRenderingMode(.alwaysTemplate) :
+//            R.image.icon_map()!.withRenderingMode(.alwaysTemplate)
+//
+//        var transform   = CATransform3DMakeTranslation(0, 2, 0)
+//        transform.m34 = -1.0/1000
+//
+//        self.mainListViewController?.snapShotShowing = true
+//        self.mainListViewController?.view.layer.transform = transform
+//        self.mainMapViewController?.view.layer.transform = transform
+//
+//
+//        if self.currentController == self.mainListViewController {
+//            mainListViewController?.view.alpha = 1.0
+//            mainMapViewController?.view.alpha = 0.0
+//
+//            if !(self.mainMapViewController?.isCollectionViewShow)! {
+//                self.mainMapViewController?.collectionView.isHidden = true
+//            }
+//            self.mainMapViewController?.view.layer.transform =
+//                CATransform3DRotate((self.mainMapViewController?.view.layer.transform)!,
+//                                    CGFloat.pi, 0, 1, 0)
+//
+//            UIView.animate(withDuration: 0.5,
+//                           delay: 0,
+//                           options: .curveEaseIn,
+//                           animations: {
+//                            self.mainListViewController?.view.layer.transform =
+//                                CATransform3DScale(CATransform3DRotate(transform,
+//                                                                       CGFloat.pi/2,
+//                                                                       0,
+//                                                                       1,
+//                                                                       0)
+//                                    , 0.7
+//                                    , 0.7
+//                                    , 0.7)
+//                            self.mainMapViewController?.view.layer.transform =
+//                                CATransform3DScale(CATransform3DRotate(transform,
+//                                                                       -CGFloat.pi/2,
+//                                                                       0,
+//                                                                       1,
+//                                                                       0)
+//                                    , 0.7
+//                                    , 0.7
+//                                    , 0.7)
+//                            self.mainListViewController?.view.alpha = 0.2
+//            }, completion: { (_) in
+//                self.mainListViewController?.view.alpha = 0.0
+//                UIView.animate(withDuration: 0.5,
+//                               delay: 0,
+//                               options: .curveEaseOut,
+//                               animations: {
+//                                self.searchHeaderView.styleButton.setImage(iconImage, for: .normal)
+//                                if !(self.mainMapViewController?.isCollectionViewShow)! {
+//                                    self.mainMapViewController?.collectionView.isHidden = true
+//                                }
+//
+//                                self.mainListViewController?.view.layer.transform =
+//                                    CATransform3DScale(CATransform3DRotate((self.mainMapViewController?.view.layer.transform)!,
+//                                                                           -CGFloat.pi/2, 0, 1, 0), 1/0.7, 1/0.7, 1/0.7)
+//
+//                                self.mainMapViewController?.view.layer.transform =
+//                                    CATransform3DScale(CATransform3DRotate((self.mainMapViewController?.view.layer.transform)!,
+//                                                                           CGFloat.pi/2, 0, 1, 0), 1/0.7, 1/0.7, 1/0.7)
+//
+//                                self.mainMapViewController?.view.alpha = 1.0
+//                }, completion: { (_) in
+//                    self.mainMapViewController?.collectionView.isHidden = false
+//                    self.currentController = self.mainMapViewController
+//                })
+//            })
+//
+//        } else {
+//            mainListViewController?.view.alpha = 0.0
+//            mainMapViewController?.view.alpha = 1.0
+//
+//
+//            if !(self.mainMapViewController?.isCollectionViewShow)! {
+//                self.mainMapViewController?.collectionView.isHidden = true
+//            }
+//            self.mainListViewController?.view.layer.transform =
+//                CATransform3DRotate((self.mainListViewController?.view.layer.transform)!,
+//                                    CGFloat.pi, 0, 1, 0)
+//
+//
+//            UIView.animate(withDuration: 0.5,
+//                           delay: 0,
+//                           options: .curveEaseIn,
+//                           animations: {
+//                            self.mainListViewController?.view.layer.transform =
+//                                CATransform3DScale(CATransform3DRotate(transform,
+//                                                                       CGFloat.pi/2,
+//                                                                       0,
+//                                                                       1,
+//                                                                       0)
+//                                    , 0.7
+//                                    , 0.7
+//                                    , 0.7)
+//                            self.mainMapViewController?.view.layer.transform =
+//                                CATransform3DScale(CATransform3DRotate(transform,
+//                                                                       -CGFloat.pi/2,
+//                                                                       0,
+//                                                                       1,
+//                                                                       0)
+//                                    , 0.7
+//                                    , 0.7
+//                                    , 0.7)
+//                            self.mainMapViewController?.view.alpha = 0.2
+//            }, completion: { (_) in
+//                self.mainMapViewController?.view.alpha = 0.0
+//                UIView.animate(withDuration: 0.5,
+//                               delay: 0,
+//                               options: .curveEaseOut,
+//                               animations: {
+//                                self.searchHeaderView.styleButton.setImage(iconImage, for: .normal)
+//                                self.mainListViewController?.view.layer.transform =
+//                                    CATransform3DScale(CATransform3DRotate((self.mainListViewController?.view.layer.transform)!,
+//                                                                           -CGFloat.pi/2, 0, 1, 0), 1/0.7, 1/0.7, 1/0.7)
+//
+//                                self.mainMapViewController?.view.layer.transform =
+//                                    CATransform3DScale(CATransform3DRotate((self.mainMapViewController?.view.layer.transform)!,
+//                                                                           -CGFloat.pi/2, 0, 1, 0), 1/0.7, 1/0.7, 1/0.7)
+//
+//                                self.mainListViewController?.view.alpha = 1.0
+//                }, completion: { (_) in
+//                    self.mainListViewController?.snapShotShowing = false
+//                    self.mainMapViewController?.collectionView.isHidden = false
+//                    self.currentController = self.mainListViewController
+//                })
+//            })
+//        }
     }
 
     @objc func search() {
