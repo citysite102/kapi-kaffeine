@@ -11,6 +11,8 @@ import UIKit
 class KPExplorationSectionCell: UICollectionViewCell {
     
     var imageView: UIImageView!
+    var gradientView: UIView!
+    var imageMaskLayer: CAGradientLayer?
     var collectButton: KPBounceButton!
     
     var regionLabel: UILabel!
@@ -44,6 +46,12 @@ class KPExplorationSectionCell: UICollectionViewCell {
                                                    attribute: NSLayoutAttribute.width,
                                                    multiplier: 0.8,
                                                    constant: 0))
+        
+        
+        gradientView = UIView()
+        imageView.addSubview(gradientView)
+        gradientView.addConstraints(fromStringArray: ["V:|[$self]|",
+                                                      "H:|[$self]|"])
         
         collectButton = KPBounceButton(frame: CGRect.zero,
                                        image: R.image.icon_collect_border()!)
@@ -97,6 +105,22 @@ class KPExplorationSectionCell: UICollectionViewCell {
 //        visitedLabel.textColor = KPColorPalette.KPMainColor_v2.mainColor
 //        visitedLabel.text = "132人已去過"
 
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        if imageMaskLayer == nil && gradientView.frameSize.width != 0 {
+            imageMaskLayer = CAGradientLayer()
+            imageMaskLayer!.opacity = 0.5
+            imageMaskLayer!.frame = CGRect(x: 0, y: 0,
+                                           width: imageView.frame.width,
+                                           height: imageView.frame.height)
+            imageMaskLayer!.colors = [UIColor.init(r: 0, g: 0, b: 0, a: 0.7).cgColor,
+                                     UIColor.init(r: 0, g: 0, b: 0, a: 0.0).cgColor]
+            imageMaskLayer!.startPoint = CGPoint(x: 1.0, y: 0.0)
+            imageMaskLayer!.endPoint = CGPoint(x: 0.3, y: 0.7)
+            gradientView.layer.addSublayer(imageMaskLayer!)
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {

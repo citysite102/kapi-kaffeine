@@ -52,7 +52,7 @@ class KPMainTabController: ESTabBarController, UITabBarControllerDelegate {
         
         
         let exploreController = KPExplorationViewController()
-//        let exploreItem = ESTabBarItem.init(ESTabBarItemContentView(),
+//        let exploreItem = ESTabBarItem.init(KPBounceTabBarItem(),
 //                                            title: nil,
 //                                            image: R.image.icon_explore(),
 //                                            selectedImage: R.image.icon_explore())

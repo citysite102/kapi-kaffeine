@@ -12,6 +12,7 @@ import ObjectMapper
 class KPExplorationViewController: KPViewController {
 
     var headerContainer: UIView!
+    var backgroundView: UIView!
     var sectionBgImageView: UIImageView!
     var locationSelectView: KPLocationSelect!
     var searchContainerShadowView: UIView!
@@ -296,6 +297,17 @@ class KPExplorationViewController: KPViewController {
                 }, completion: { (_) in
                     
                 })
+                
+                UIView.animate(withDuration: 1.5,
+                               delay: 0.4,
+                               options: .curveEaseOut,
+                               animations: {
+                                self.sectionBgImageView.alpha = 0.5
+                                self.sectionBgImageView.transform = CGAffineTransform.identity
+                }, completion: { (_) in
+                    
+                })
+                
                 UIView.animate(withDuration: 0.6,
                                delay: 0.4,
                                options: UIViewAnimationOptions.curveEaseOut,
@@ -330,19 +342,20 @@ class KPExplorationViewController: KPViewController {
         backgroundPath.addLine(to: CGPoint(x: view.bounds.width,
                                            y: 0))
         backgroundPath.addLine(to: CGPoint(x: view.bounds.width,
-                                           y: 280))
+                                           y: 420))
         backgroundPath.addLine(to: CGPoint(x: 0,
-                                           y: 360))
+                                           y: 500))
         backgroundPath.close()
         
         let maskLayer = CAShapeLayer()
         maskLayer.path = backgroundPath.cgPath
         
-        let backgroundView = UIView()
+        backgroundView = UIView()
         backgroundView.backgroundColor = KPColorPalette.KPMainColor_v2.mainColor_dark
         backgroundView.layer.mask = maskLayer
         headerView.addSubview(backgroundView)
-        backgroundView.addConstraints(fromStringArray: ["V:|[$self]|",
+        headerView.clipsToBounds = false
+        backgroundView.addConstraints(fromStringArray: ["V:|-(-140)-[$self]|",
                                                         "H:|[$self]|"])
         
         let maskLayer_bg = CAShapeLayer()
@@ -351,9 +364,10 @@ class KPExplorationViewController: KPViewController {
         sectionBgImageView = UIImageView(image: R.image.demo_black()?.tint(KPColorPalette.KPMainColor_v2.mainColor_dark!, blendMode: .softLight))
         sectionBgImageView.contentMode = .scaleAspectFill
         sectionBgImageView.layer.mask = maskLayer_bg
-        sectionBgImageView.alpha = 0.5
+        sectionBgImageView.alpha = 0.2
+        sectionBgImageView.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
         headerView.addSubview(sectionBgImageView)
-        sectionBgImageView.addConstraints(fromStringArray: ["V:|[$self]|",
+        sectionBgImageView.addConstraints(fromStringArray: ["V:|-(-140)-[$self]|",
                                                             "H:|[$self]|"])
         
         let longPressGesture = UILongPressGestureRecognizer(target: self,
@@ -363,6 +377,7 @@ class KPExplorationViewController: KPViewController {
         headerContainer = UIView()
         headerContainer.backgroundColor = UIColor.clear
         headerView.addSubview(headerContainer)
+        headerContainer.addConstraintForHavingSameWidth(with: view)
         headerContainer.addConstraints(fromStringArray: ["V:|[$self(112)]",
                                                          "H:|[$self]|"])
         
@@ -382,8 +397,6 @@ class KPExplorationViewController: KPViewController {
         searchContainer.backgroundColor = KPColorPalette.KPBackgroundColor.white_level3
         searchContainer.layer.cornerRadius = 4.0
         searchContainer.layer.masksToBounds = true
-//        searchContainer.layer.borderWidth = 1.0
-//        searchContainer.layer.borderColor = KPColorPalette.KPBackgroundColor.white_level2.cgColor
         
         searchContainerShadowView.addSubview(searchContainer)
         searchContainer.addConstraints(fromStringArray: ["H:|[$self]|",
@@ -501,15 +514,27 @@ extension KPExplorationViewController: UITableViewDataSource, UITableViewDelegat
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        潔白版本
+//        if scrollView.isKind(of: UITableView.self) {
+//            if scrollView.contentOffset.y > -82 {
+//                headerContainer.layer.shadowColor = KPColorPalette.KPMainColor_v2.shadow_mainColor?.cgColor
+//                headerContainer.layer.shadowOpacity = 0.2
+//                headerContainer.layer.shadowOffset = CGSize(width: 0,
+//                                                                      height: 4)
+//                headerContainer.layer.shadowRadius = 4.0
+//            } else {
+//                headerContainer.layer.shadowOpacity = 0.0
+//            }
+//        }
+        print("Offset:\(scrollView.contentOffset.y)")
         if scrollView.isKind(of: UITableView.self) {
-            if scrollView.contentOffset.y > -82 {
-                headerContainer.layer.shadowColor = KPColorPalette.KPMainColor_v2.shadow_mainColor?.cgColor
-                headerContainer.layer.shadowOpacity = 0.2
-                headerContainer.layer.shadowOffset = CGSize(width: 0,
-                                                                      height: 4)
-                headerContainer.layer.shadowRadius = 4.0
+            if scrollView.contentOffset.y < -20 {
+                let scaleRatio = 1 + ((-20)-scrollView.contentOffset.y)/600
+                sectionBgImageView.transform = CGAffineTransform(scaleX: scaleRatio, y: scaleRatio)
+                backgroundView.transform = CGAffineTransform(scaleX: scaleRatio, y: scaleRatio)
             } else {
-                headerContainer.layer.shadowOpacity = 0.0
+                sectionBgImageView.transform = CGAffineTransform.identity
+                backgroundView.transform = CGAffineTransform.identity
             }
         }
     }
