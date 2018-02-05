@@ -269,9 +269,11 @@ class KPMainListViewController:
                                     views:[sortContainerView])
 
         view.addSubview(mapButton)
-        mapButton.addConstraints(fromStringArray: ["V:[$self(40)]-72-|",
+        mapButton.addConstraints(fromStringArray: ["V:[$self(40)]",
                                                    "H:[$self(88)]"])
         mapButton.addConstraintForCenterAligningToSuperview(in: .horizontal)
+        mapButton.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant: -24).isActive = true
+
         
         satisficationView = KPSatisficationView()
         expNotificationView = KPExpNotificationView()
