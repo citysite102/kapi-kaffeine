@@ -345,14 +345,14 @@ class KPModalViewController: KPViewController {
         // Dispose of any resources that can be recreated.
     }
     
-//    override var childViewControllerForStatusBarHidden: UIViewController? {
-//        return self.contentController
-//    }
-    
     override var prefersStatusBarHidden: Bool {
         return statusBarShouldBeHidden
     }
 
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return contentController.preferredStatusBarStyle
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         

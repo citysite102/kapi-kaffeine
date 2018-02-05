@@ -20,9 +20,11 @@ class KPExplorationViewController: KPViewController {
     var searchIcon: UIImageView!
     var searchLabel: UILabel!
     var animationHasPerformed: Bool = false
+    var shouldShowLightContent: Bool = true
     
     var filterButton: KPBounceButton!
     var headerView: UIView!
+    var currentArticleViewController: KPArticleViewController!
     var articleCollectionView: UICollectionView!
     var contentTableView: UITableView!
     
@@ -469,9 +471,9 @@ class KPExplorationViewController: KPViewController {
     }
     
     override open var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+        return shouldShowLightContent ? .lightContent : .default
     }
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -594,12 +596,14 @@ extension KPExplorationViewController: UICollectionViewDataSource, UICollectionV
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         let controller = KPModalViewController()
+        controller.preferStatusBarStyle = .lightContent
         controller.edgeInset = UIEdgeInsets(top: 0,
                                             left: 0,
                                             bottom: 0,
                                             right: 0)
-        let articleController = KPArticleViewController()
-        controller.contentController = articleController
+        currentArticleViewController = KPArticleViewController()
+        currentArticleViewController.explorationViewController = self
+        controller.contentController = currentArticleViewController
         controller.presentModalView()
     }
     

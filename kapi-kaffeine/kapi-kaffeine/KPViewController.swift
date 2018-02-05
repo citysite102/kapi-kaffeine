@@ -9,7 +9,9 @@
 import UIKit
 
 class KPViewController: UIViewController {
-
+    
+    var preferStatusBarStyle: UIStatusBarStyle = .default
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -28,7 +30,7 @@ class KPViewController: UIViewController {
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .default
+        return preferStatusBarStyle
     }
     
     override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {

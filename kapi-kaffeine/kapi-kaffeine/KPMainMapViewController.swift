@@ -624,6 +624,9 @@ GMUClusterRendererDelegate {
         UIView.animate(withDuration: 0.15,
                        animations: {
                         self.nearestButton.alpha = 0.6
+                        self.mapButton.alpha = 0.6
+                        self.currentLocationButton.alpha = 0.6
+                        self.searchNearButton.alpha = 0
         })
         
         UIView.animate(withDuration: 0.5,
@@ -646,9 +649,12 @@ GMUClusterRendererDelegate {
         } else {
             draggingByUser = true
         }
-        UIView.animate(withDuration: 0.2,
+        UIView.animate(withDuration: 0.4,
                        animations: {
                         self.nearestButton.alpha = 1.0
+                        self.mapButton.alpha = 1.0
+                        self.currentLocationButton.alpha = 1.0
+                        self.searchNearButton.alpha = 1.0
         })
     }
     

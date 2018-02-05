@@ -20,6 +20,7 @@ class KPArticleViewController: KPViewController {
     var heroCoverImageView: UIImageView!
     var gradientView: UIView!
     var imageMaskLayer: CAGradientLayer!
+    weak var explorationViewController: KPExplorationViewController!
     
     var animationHasPerformed: Bool = false
     var viewIsDimissing: Bool = false
@@ -205,6 +206,9 @@ class KPArticleViewController: KPViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        explorationViewController.shouldShowLightContent = true
+        setNeedsStatusBarAppearanceUpdate()
+        
         if !animationHasPerformed {
             UIView.animate(withDuration: 0.5,
                            delay: 0.2,
@@ -227,6 +231,7 @@ class KPArticleViewController: KPViewController {
     }
     
     @objc func handleDismissButtonOnTapped() {
+        explorationViewController.shouldShowLightContent = true
         appModalController()?.dismissControllerWithDefaultDuration()
     }
     
@@ -362,6 +367,12 @@ extension KPArticleViewController: UIScrollViewDelegate {
         if (scrollView.contentOffset.y <= KPArticleViewController.scrollAnimationThreshold &&
             scrollView.contentOffset.y >= 0) {
             
+            explorationViewController.shouldShowLightContent = true
+            UIView.animate(withDuration: 0.5,
+                           animations: {
+                self.setNeedsStatusBarAppearanceUpdate()
+            })
+            
             let moveOffsetY = scrollView.contentOffset.y >= 0 ?
                 -scrollView.contentOffset.y * 0.6 : 0
             let moveOffsetY_2 = scrollView.contentOffset.y >= 0 ?
@@ -416,9 +427,11 @@ extension KPArticleViewController: UIScrollViewDelegate {
                 }
                 
             } else {
+                explorationViewController.shouldShowLightContent = true
                 if self.scrollContainer.contentOffset.y >= 380 {
                     topBarContainer.alpha = (self.scrollContainer.contentOffset.y - 380) / 40
                     dismissButton.tintColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
+                    explorationViewController.shouldShowLightContent = false
                 } else if self.scrollContainer.contentOffset.y <= 0 &&
                     self.scrollContainer.contentOffset.y > -60 {
                     
@@ -434,6 +447,11 @@ extension KPArticleViewController: UIScrollViewDelegate {
                     topBarContainer.alpha = 0
                     dismissButton.tintColor = UIColor.white
                 }
+                
+                UIView.animate(withDuration: 0.5,
+                               animations: {
+                                self.setNeedsStatusBarAppearanceUpdate()
+                })
             }
         }
     }
