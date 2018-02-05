@@ -370,6 +370,11 @@ class KPExplorationViewController: KPViewController {
         sectionBgImageView.addConstraints(fromStringArray: ["V:|-(-140)-[$self]|",
                                                             "H:|[$self]|"])
         
+        let longPressGesture_location = UILongPressGestureRecognizer(target: self,
+                                                                     action: #selector(handleLocationContainerLongPressed(_:)))
+        longPressGesture_location.minimumPressDuration = 0
+        
+        
         let longPressGesture = UILongPressGestureRecognizer(target: self,
                                                             action: #selector(handleSearchContainerLongPressed(_:)))
         longPressGesture.minimumPressDuration = 0
@@ -385,6 +390,7 @@ class KPExplorationViewController: KPViewController {
         locationSelectView.locationLabel.textColor = KPColorPalette.KPBackgroundColor.white_level1
         locationSelectView.dropDownIcon.tintColor = KPColorPalette.KPBackgroundColor.white_level1
         headerContainer.addSubview(locationSelectView)
+        locationSelectView.addGestureRecognizer(longPressGesture_location)
         locationSelectView.addConstraints(fromStringArray: ["H:|-24-[$self]",
                                                             "V:|-44-[$self(44)]"])
         
@@ -413,7 +419,7 @@ class KPExplorationViewController: KPViewController {
         
         searchLabel = UILabel()
         searchLabel.font = UIFont.systemFont(ofSize: 14.0)
-        searchLabel.text = "搜尋店家名稱、標籤、地點"
+        searchLabel.text = "搜尋店家名稱、標籤..."
         searchLabel.textColor = KPColorPalette.KPBackgroundColor.white_level1
         searchContainer.addSubview(searchLabel)
         searchLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]"],
@@ -467,6 +473,28 @@ class KPExplorationViewController: KPViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @objc func handleLocationContainerLongPressed(_ gesture: UILongPressGestureRecognizer) {
+        if (gesture.state == .began) {
+            UIView.animate(withDuration: 0.1,
+                           animations: {
+                            self.locationSelectView.transform = CGAffineTransform(scaleX: 0.98,
+                                                                               y: 0.98)
+            }) { (_) in
+            }
+        } else if (gesture.state == .ended) {
+            let controller = KPModalViewController()
+            controller.edgeInset = UIEdgeInsets(top: 0,
+                                                left: 0,
+                                                bottom: 0,
+                                                right: 0)
+            let locationController = KPLocationSelectViewController()
+            let navigationController = UINavigationController(rootViewController: locationController)
+            controller.contentController = navigationController
+            controller.presentModalView()
+            self.locationSelectView.transform = CGAffineTransform.identity
+        }
+    }
+    
     @objc func handleSearchContainerLongPressed(_ gesture: UILongPressGestureRecognizer) {
         
         if (gesture.state == .began) {
@@ -510,6 +538,8 @@ extension KPExplorationViewController: UITableViewDataSource, UITableViewDelegat
         cell.sectionDescriptionLabel.setText(text: testData[indexPath.row].explorationDescription,
                                              lineSpacing: 3.0)
         cell.shops = testData[indexPath.row].shops
+        cell.shouldShowSeparatar = !(indexPath.row == testData.count-1)
+        
         return cell
     }
     
@@ -526,8 +556,8 @@ extension KPExplorationViewController: UITableViewDataSource, UITableViewDelegat
 //                headerContainer.layer.shadowOpacity = 0.0
 //            }
 //        }
-        print("Offset:\(scrollView.contentOffset.y)")
-        if scrollView.isKind(of: UITableView.self) {
+        if scrollView.isKind(of: UITableView.self) && animationHasPerformed 
+        {
             if scrollView.contentOffset.y < -20 {
                 let scaleRatio = 1 + ((-20)-scrollView.contentOffset.y)/600
                 sectionBgImageView.transform = CGAffineTransform(scaleX: scaleRatio, y: scaleRatio)

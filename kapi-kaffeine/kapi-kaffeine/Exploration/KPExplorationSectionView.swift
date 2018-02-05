@@ -14,6 +14,11 @@ class KPExplorationSectionView: UITableViewCell {
     var sectionDescriptionLabel: UILabel!
     var collectionView: UICollectionView!
     var separatar: UIView!
+    var shouldShowSeparatar: Bool = true {
+        didSet {
+            self.separatar.isHidden = !shouldShowSeparatar
+        }
+    }
     
     let demoImages = [R.image.demo_1(),
                       R.image.demo_2(),

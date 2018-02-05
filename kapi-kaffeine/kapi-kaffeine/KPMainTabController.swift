@@ -95,8 +95,8 @@ class KPMainTabController: ESTabBarController, UITabBarControllerDelegate {
                                        selectedImage: R.image.icon_profile())
         profileItem.imageInsets = UIEdgeInsetsMake(7, 0, -7, 0)
         profileItem.titlePositionAdjustment = UIOffset(horizontal: -40, vertical: 0)
-        if (KPUserManager.sharedManager.currentUser != nil) {
-            
+//        if (KPUserManager.sharedManager.currentUser != nil) {
+        
             let profileController = KPUserProfileViewController()
             profileController.tabBarItem = profileItem
             viewControllers = [exploreController,
@@ -107,18 +107,18 @@ class KPMainTabController: ESTabBarController, UITabBarControllerDelegate {
 //                               newStoreController,
 //                               listController,
 //                               profileController]
-        } else {
-            let loginController = KPLoginViewController()
-            loginController.tabBarItem = profileItem
-            viewControllers = [exploreController,
-                               listController,
-                               loginController]
+//        } else {
+//            let loginController = KPLoginViewController()
+//            loginController.tabBarItem = profileItem
+//            viewControllers = [exploreController,
+//                               listController,
+//                               loginController]
 //            viewControllers = [exploreController,
 //                               searchController,
 //                               newStoreController,
 //                               listController,
 //                               loginController]
-        }
+//        }
         
         UITabBar.appearance().barTintColor = KPColorPalette.KPMainColor_v2.mainColor_bg
         UITabBar.appearance().unselectedItemTintColor = KPColorPalette.KPMainColor_v2.mainColor_unselect

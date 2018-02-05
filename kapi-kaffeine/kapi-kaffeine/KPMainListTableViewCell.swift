@@ -205,7 +205,7 @@ class KPMainListTableViewCell: UITableViewCell {
 //                                                          "V:[$self]-10-|"])
         
         separator = UIView()
-        separator.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
+        separator.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7
         contentView.addSubview(separator)
         separator.addConstraints(fromStringArray: ["V:[$self(1)]|",
                                                    "H:|-8-[$self]-8-|"])
@@ -233,7 +233,7 @@ class KPMainListTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        backgroundColor = selected ? KPColorPalette.KPBackgroundColor.grayColor_level6 : UIColor.white
+        backgroundColor = selected ? KPColorPalette.KPBackgroundColor.grayColor_level7 : UIColor.white
         // Configure the view for the selected state
     }
     

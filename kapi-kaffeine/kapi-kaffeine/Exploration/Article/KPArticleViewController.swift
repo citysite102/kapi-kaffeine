@@ -417,7 +417,6 @@ extension KPArticleViewController: UIScrollViewDelegate {
                 
             } else {
                 if self.scrollContainer.contentOffset.y >= 380 {
-                    print("Offset:\(self.scrollContainer.contentOffset.y)")
                     topBarContainer.alpha = (self.scrollContainer.contentOffset.y - 380) / 40
                     dismissButton.tintColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
                 } else if self.scrollContainer.contentOffset.y <= 0 &&

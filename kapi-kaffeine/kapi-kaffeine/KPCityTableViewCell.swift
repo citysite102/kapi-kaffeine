@@ -22,14 +22,12 @@ class KPCityTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         cityLabel = UILabel();
-        cityLabel.font = UIFont.systemFont(ofSize: 12);
+        cityLabel.font = UIFont.systemFont(ofSize: 14);
         cityLabel.textColor = KPColorPalette.KPTextColor.grayColor;
-//        cityLabel.isOpaque = true
-//        cityLabel.backgroundColor = UIColor.white
         cityLabel.layer.masksToBounds = true
         addSubview(self.cityLabel);
-        cityLabel.addConstraints(fromStringArray: ["H:|-64-[$self]",
-                                                   "V:|-12-[$self(16)]-12-|"]);
+        cityLabel.addConstraints(fromStringArray: ["H:|-80-[$self]",
+                                                   "V:|-16-[$self(16)]-16-|"]);
         
         selectedBox = KPCheckBox()
         selectedBox.setMarkType(markType: .checkmark,

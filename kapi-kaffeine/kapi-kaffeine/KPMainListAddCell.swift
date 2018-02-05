@@ -54,7 +54,7 @@ class KPMainListAddCell: UITableViewCell {
         
         
         separator = UIView()
-        separator.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
+        separator.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7
         contentView.addSubview(separator)
         separator.addConstraints(fromStringArray: ["V:[$self(1)]|",
                                                    "H:|-8-[$self]-8-|"])

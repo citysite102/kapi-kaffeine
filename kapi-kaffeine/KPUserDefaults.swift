@@ -44,15 +44,20 @@ final public class KPUserDefaults {
         }
     }
     
+    static func loadRecentSearchInformation() {
+        recentSearch = UserDefaults.standard.object(forKey: UserInformationKey.recentSearch) as? Array
+    }
+    
     static func loadUserInformation() {
         userInformation = UserDefaults.standard.object(forKey: UserInformationKey.userInformation) as? Dictionary
-        recentSearch = UserDefaults.standard.object(forKey: UserInformationKey.recentSearch) as? Array
         
         let keychainItemWrapper = KeychainItemWrapper(identifier: UserInformationKey.accessToken,
                                                       accessGroup: UserInformationKey.accessGroup)
         if let secretToken = keychainItemWrapper[UserInformationKey.accessToken] as? String? {
             accessToken = secretToken
         }
+        
+        loadRecentSearchInformation()
     }
     
     static func clearUserInformation() {

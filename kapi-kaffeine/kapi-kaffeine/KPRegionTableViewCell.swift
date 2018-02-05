@@ -13,6 +13,12 @@ class KPRegionTableViewCell: UITableViewCell {
     var regionIcon: UIImageView!
     var regionLabel: UILabel!
     var expandIcon: UIImageView!
+    var separator: UIView!
+    var shouldShowSeparator: Bool! = true {
+        didSet {
+            self.separator.isHidden = !shouldShowSeparator
+        }
+    }
     private var expanded: Bool!
 
     func setExpanded(_ expanded: Bool, _ animated: Bool) {
@@ -59,25 +65,29 @@ class KPRegionTableViewCell: UITableViewCell {
         regionIcon.tintColor = KPColorPalette.KPMainColor.mainColor_light
         regionIcon.isOpaque = true
         addSubview(regionIcon)
-        regionIcon.addConstraints(fromStringArray: ["V:|-12-[$self(24)]-12-|",
-                                                    "H:|-16-[$self(24)]"])
+        regionIcon.addConstraints(fromStringArray: ["V:|-20-[$self(24)]-20-|",
+                                                    "H:|-18-[$self(24)]"])
         
         regionLabel = UILabel()
-        regionLabel.font = UIFont.boldSystemFont(ofSize: 14)
-        regionLabel.textColor = KPColorPalette.KPTextColor.grayColor_level2
-//        regionLabel.isOpaque = true
-//        regionLabel.backgroundColor = UIColor.white
+        regionLabel.font = UIFont.systemFont(ofSize: 16)
+        regionLabel.textColor = KPColorPalette.KPMainColor_v2.mainColor
         regionLabel.layer.masksToBounds = true
         addSubview(regionLabel)
         regionLabel.addConstraints(fromStringArray: ["H:[$view0]-24-[$self]"],
                                         views: [regionIcon])
-        regionLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
+        regionLabel.addConstraintForCenterAligning(to: regionIcon, in: .vertical)
         
         expandIcon = UIImageView(image: R.image.icon_down())
-        expandIcon.tintColor = KPColorPalette.KPMainColor.mainColor
+        expandIcon.tintColor = KPColorPalette.KPMainColor_v2.mainColor_light
         addSubview(expandIcon)
-        expandIcon.addConstraints(fromStringArray: ["V:|-12-[$self(24)]-12-|",
+        expandIcon.addConstraints(fromStringArray: ["V:|-20-[$self(24)]-20-|",
                                                     "H:[$self(24)]-16-|"])
+        
+        separator = UIView()
+        separator.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7
+        contentView.addSubview(separator)
+        separator.addConstraints(fromStringArray: ["V:[$self(1)]|",
+                                                   "H:|-16-[$self]-16-|"])
         
         expanded = false
         

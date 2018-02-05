@@ -20,6 +20,7 @@ class KPSearchViewController: KPViewController {
 
     var showDismissButton: Bool = true
     var dismissButton: KPBounceButton!
+    var loadingIndicator: UIActivityIndicatorView!
     var tableView: UITableView!
     var searchController: UISearchController!
 
@@ -60,7 +61,8 @@ class KPSearchViewController: KPViewController {
     var newStoreButton: UIButton!
     
     
-    var initialHeaderContent: [String] = ["最近搜尋紀錄"]
+    var initialHeaderContent: [String] = ["最近搜尋紀錄",
+                                          "熱門搜尋"]
     var recentSearchModel: [KPDataModel] = [KPDataModel]()
     var hotSearchModel: [String] = ["Demo1", "Demo2", "Demo3"]
     
@@ -101,7 +103,7 @@ class KPSearchViewController: KPViewController {
         tableView.dataSource = self
         tableView.separatorColor = UIColor.clear
         tableView.contentInset = UIEdgeInsetsMake(8, 0, 0, 0)
-        view.addSubview(self.tableView)
+        view.addSubview(tableView)
         tableView.addConstraints(fromStringArray: ["V:|[$self]|",
                                                    "H:|[$self]|"])
         tableView.register(KPSearchViewDefaultCell.self,
@@ -109,6 +111,11 @@ class KPSearchViewController: KPViewController {
         tableView.register(KPSearchViewRecentCell.self,
                            forCellReuseIdentifier: KPSearchViewController.KPSearchViewControllerRecentCellReuseIdentifier)
         tableView.allowsSelection = true
+        
+        loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+        view.addSubview(loadingIndicator)
+        loadingIndicator.addConstraintForCenterAligningToSuperview(in: .horizontal)
+        loadingIndicator.addConstraintForCenterAligningToSuperview(in: .vertical, constant: -32)
         
         
         emptyContainer = UIView()
@@ -151,7 +158,6 @@ class KPSearchViewController: KPViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        searchController.searchBar.becomeFirstResponder()
     }
 
     override func didReceiveMemoryWarning() {
@@ -163,7 +169,7 @@ class KPSearchViewController: KPViewController {
         searchController = UISearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "搜尋咖啡店名稱..."
+        searchController.searchBar.placeholder = "搜尋店家名稱、標籤..."
         searchController.searchBar.delegate = self
         searchController.searchBar.tintColor = KPColorPalette.KPTextColor_v2.mainColor_description
         searchController.hidesNavigationBarDuringPresentation = false
@@ -185,20 +191,20 @@ class KPSearchViewController: KPViewController {
         definesPresentationContext = true
     }
     
-    func readSearchData() {
-        
-        ref.child("all_of_user").child("searchHistories").observeSingleEvent(of: .value, with: { (_) in
-//            let value = snapshot.value as? NSArray
+    func readSearchData() { ref.child("all_of_user").child("searchHistories").observeSingleEvent(of: .value, with: { (_) in
         }) { (error) in
             print(error.localizedDescription)
         }
         
+        KPUserDefaults.loadRecentSearchInformation()
         if let recentSearch = KPUserDefaults.recentSearch {
             for dataModelJson in recentSearch {
                 if let dataModel = KPDataModel(JSON: dataModelJson) {
                     recentSearchModel.append(dataModel)
                 }
             }
+        } else {
+            initialHeaderContent.remove(at: 0)
         }
     }
     
@@ -262,6 +268,9 @@ extension KPSearchViewController: UISearchResultsUpdating, UISearchBarDelegate {
             return
         }
         
+        
+        loadingIndicator.startAnimating()
+        emptyContainer.isHidden = true
         KPServiceHandler.sharedHandler.fetchRemoteData(nil,
                                                        nil,
                                                        nil,
@@ -271,13 +280,14 @@ extension KPSearchViewController: UISearchResultsUpdating, UISearchBarDelegate {
                                                        nil,
                                                        searchString) { (results, error) in
                                                         DispatchQueue.main.async {[unowned self] in
-                                                            if results != nil {
+                                                            if results != nil && results?.count != 0 {
                                                                 self.filteredDataModel = results!
                                                                 self.emptyResult = false
                                                             } else {
                                                                 self.emptyResult = true
                                                             }
                                                             self.tableView.reloadData()
+                                                            self.loadingIndicator.stopAnimating()
                                                         }}
     }
 }
@@ -291,19 +301,6 @@ extension KPSearchViewController: UITableViewDelegate, UITableViewDataSource {
                                                      for: indexPath) as! KPSearchViewDefaultCell
             cell.shopNameLabel.text = filteredDataModel[indexPath.row].name
             cell.rateLabel.text = String(format: "%.1f", filteredDataModel[indexPath.row].averageRate?.doubleValue ?? 0.0)
-            
-//            if let distanceInMeter = filteredDataModel[indexPath.row].distanceInMeter {
-//                var distance = distanceInMeter
-//                var unit = "m"
-//                if distance > 1000 {
-//                    unit = "km"
-//                    distance = distance/1000
-//                }
-//                cell.distanceLabel.text = String(format: "%.1f%@", distance, unit)
-//            } else {
-//                cell.distanceLabel.text = "-"
-//            }
-            
             return cell
         } else {
             if indexPath.section == 0 {
@@ -314,21 +311,8 @@ extension KPSearchViewController: UITableViewDelegate, UITableViewDataSource {
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier:KPSearchViewController.KPSearchViewControllerDefaultCellReuseIdentifier,
                                                          for: indexPath) as! KPSearchViewDefaultCell
-                cell.shopNameLabel.text = displayDataModel[indexPath.row].name
-                cell.rateLabel.text = String(format: "%.1f", displayDataModel[indexPath.row].averageRate?.doubleValue ?? 0.0)
-                
-//                if let distanceInMeter = displayDataModel[indexPath.row].distanceInMeter {
-//                    var distance = distanceInMeter
-//                    var unit = "m"
-//                    if distance > 1000 {
-//                        unit = "km"
-//                        distance = distance/1000
-//                    }
-//                    cell.distanceLabel.text = String(format: "%.1f%@", distance, unit)
-//                } else {
-//                    cell.distanceLabel.text = "-"
-//                }
-                
+                cell.shopNameLabel.text = recentSearchModel[indexPath.row].name
+                cell.rateLabel.text = String(format: "%.1f", recentSearchModel[indexPath.row].averageRate?.doubleValue ?? 0.0)
                 return cell
             }
         }
@@ -357,8 +341,7 @@ extension KPSearchViewController: UITableViewDelegate, UITableViewDataSource {
         if shouldShowSearchResults {
             return 1
         } else {
-            // 暫時不處理熱門搜尋
-            return 1
+            return initialHeaderContent.count
         }
     }
     

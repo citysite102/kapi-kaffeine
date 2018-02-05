@@ -70,7 +70,7 @@ class KPNewStoreSearchViewController: KPViewController {
         searchController = UISearchController(searchResultsController: nil)
 //        searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "搜尋咖啡店名稱..."
+        searchController.searchBar.placeholder = "搜尋店家名稱、標籤..."
         searchController.searchBar.delegate = self
         searchController.hidesNavigationBarDuringPresentation = false
         if #available(iOS 11.0, *) {

@@ -16,7 +16,7 @@ class KPSearchViewRecentCell: UITableViewCell {
     lazy var shopNameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16.0)
-        label.textColor = KPColorPalette.KPTextColor.grayColor_level2
+        label.textColor = KPColorPalette.KPMainColor_v2.mainColor
         return label
     }()
     
@@ -25,7 +25,7 @@ class KPSearchViewRecentCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         recentIcon = UIImageView.init(image: R.image.icon_recent()!)
-        recentIcon.tintColor = KPColorPalette.KPMainColor.starColor
+        recentIcon.tintColor = KPColorPalette.KPMainColor_v2.mainColor_light
         addSubview(recentIcon)
         recentIcon.addConstraints(fromStringArray: ["H:|-16-[$self(28)]",
                                                     "V:[$self(28)]"],
@@ -33,12 +33,12 @@ class KPSearchViewRecentCell: UITableViewCell {
         recentIcon.addConstraintForCenterAligningToSuperview(in: .vertical)
         
         addSubview(shopNameLabel)
-        shopNameLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self(<=200)]"],
+        shopNameLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]-16-|"],
                                      views:[recentIcon])
         shopNameLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
         
         let separator = UIView()
-        separator.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
+        separator.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7
         addSubview(separator)
         separator.addConstraints(fromStringArray: ["V:[$self(1)]|",
                                                    "H:|-16-[$self]|"])

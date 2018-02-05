@@ -184,9 +184,6 @@ class KPSideViewController: KPViewController {
         var handler: () -> ()
     }
     
-    
-    
-    
     var regionContents = [regionData?]()
     var informationSectionContents = [informationData?]()
     

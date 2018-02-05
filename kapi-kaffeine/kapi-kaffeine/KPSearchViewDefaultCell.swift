@@ -72,7 +72,7 @@ class KPSearchViewDefaultCell: UITableViewCell {
 //        distanceNameLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
         
         let separator = UIView()
-        separator.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
+        separator.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7
         addSubview(separator)
         separator.addConstraints(fromStringArray: ["V:[$self(1)]|",
                                                    "H:|-16-[$self]|"])

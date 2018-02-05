@@ -19,7 +19,7 @@ UICollectionViewDelegateFlowLayout,
 KPMainViewControllerDelegate,
 GMUClusterRendererDelegate {
     
-    weak var mainController:KPMainViewController!
+    weak var mainController: KPMainViewController!
     private var snapshotView: UIImageView!
     var collectionView: UICollectionView!
     var collectionViewBottomConstraint: NSLayoutConstraint!
@@ -262,7 +262,7 @@ GMUClusterRendererDelegate {
         view.addSubview(self.mapView)
         
         mapView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                 "V:|-100-[$self]|"])
+                                                 "V:|-140-[$self]|"])
         
         // Set up the cluster manager with the supplied icon generator and renderer.
         let iconGenerator = GMUDefaultClusterIconGenerator()
@@ -302,12 +302,9 @@ GMUClusterRendererDelegate {
                                                         "V:[$self(200)]"])
         collectionViewBottomConstraint = collectionView.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant: 200)
         collectionViewBottomConstraint.isActive = true
-//        self.collectionViewBottomConstraint = self.collectionView.addConstraintForAligning(to: .bottom,
-//                                                                                           of: self.view,
-//                                                                                           constant: 200).first as! NSLayoutConstraint
         
         view.addSubview(searchNearButton)
-        searchNearButton.addConstraints(fromStringArray: ["V:|-168-[$self(36)]",
+        searchNearButton.addConstraints(fromStringArray: ["V:|-160-[$self(36)]",
                                                           "H:[$self(100)]"])
         searchNearButton.addConstraintForCenterAligningToSuperview(in: .horizontal)
         
@@ -316,10 +313,6 @@ GMUClusterRendererDelegate {
                                                    "H:[$self(88)]"],
                                  views:[collectionView])
         mapButton.addConstraintForCenterAligningToSuperview(in: .horizontal)
-        
-//        let currentLocationButton = UIButton(type: .custom)
-//        currentLocationButton.setImage(R.image.icon_currentLocation_alpha(), for: .normal)
-//        currentLocationButton.setImage(R.image.icon_currentLocation(), for: .highlighted)
         
         currentLocationButton.button.addTarget(self,
                                         action: #selector(handleCurrentLocationButtonOnTap(_:)),
@@ -633,14 +626,17 @@ GMUClusterRendererDelegate {
                         self.nearestButton.alpha = 0.6
         })
         
-        UIView.animate(withDuration: 0.4,
+        UIView.animate(withDuration: 0.5,
                        animations: {
-                        self.mainController.searchHeaderView.searchTagView.transform = CGAffineTransform(translationX: 0,
-                                                                                                         y: 0)
-                        self.mapView.transform = CGAffineTransform(translationX: 0, y: 0)
-                        self.mainController.mainListViewController?.tableView.transform = CGAffineTransform(translationX: 0, y: 0)
-                        self.mainController.mainListViewController?.snapshotView.transform = CGAffineTransform(translationX: 0, y: 0)
+                        self.mainController.searchHeaderView.searchTagView.transform = CGAffineTransform.identity
+                            self.mainController.searchHeaderView.searchTagView.alpha = 1.0
+                            self.mapView.transform = CGAffineTransform.identity
+                        self.mainController.mainListViewController?.tableView.transform = CGAffineTransform.identity
+                        self.mainController.mainListViewController?.sortContainerView.transform = CGAffineTransform.identity
+                        self.mainController.mainListViewController?.snapshotView.transform = CGAffineTransform.identity
                         self.mainController.mainListViewController?.currentSearchTagTranslateY = 0
+                        
+                        self.searchNearButton.transform = CGAffineTransform.identity
         })
     }
     

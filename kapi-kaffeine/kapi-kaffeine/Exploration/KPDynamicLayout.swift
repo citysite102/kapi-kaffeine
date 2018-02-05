@@ -25,11 +25,11 @@ class KPDynamicLayout: UICollectionViewFlowLayout {
 //    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
 //        return animator?.items(in: rect) as? [UICollectionViewLayoutAttributes]
 //    }
-    
+//    
 //    override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
 //        return animator?.layoutAttributesForCell(at:indexPath)
 //    }
-    
+//    
 //    override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
 //        let scrollView = collectionView
 //        let delta = newBounds.origin.x - (scrollView?.bounds.origin.x)!
@@ -39,7 +39,7 @@ class KPDynamicLayout: UICollectionViewFlowLayout {
 //            if let attBehavior = behavior as? UIAttachmentBehavior {
 //                let yDistanceFromTouch = fabsf(Float(touchLocation!.y - attBehavior.anchorPoint.y));
 //                let xDistanceFromTouch = fabsf(Float(touchLocation!.x - attBehavior.anchorPoint.x));
-//                let scrollResistance = (yDistanceFromTouch + xDistanceFromTouch) / 1000.0;
+//                let scrollResistance = (yDistanceFromTouch + xDistanceFromTouch) / 2000.0;
 //
 //                let item = attBehavior.items.first
 //                var center = item?.center
@@ -55,7 +55,7 @@ class KPDynamicLayout: UICollectionViewFlowLayout {
 //        }
 //        return false
 //    }
-    
+//    
 //    override func prepare() {
 //        super.prepare()
 //        let contentSize = collectionView?.contentSize
@@ -69,7 +69,7 @@ class KPDynamicLayout: UICollectionViewFlowLayout {
 //                                                    attachedToAnchor: item.center)
 //                behavior.length = 0.0
 //                behavior.damping = 0.8
-//                behavior.frequency = 1.0
+//                behavior.frequency = 0.8
 //                self.animator?.addBehavior(behavior)
 //            }
 //        }

@@ -385,7 +385,7 @@ class KPMainViewController: KPViewController {
         let iconImage = (self.currentController == self.mainListViewController) ?
             R.image.icon_list()!.withRenderingMode(.alwaysTemplate) :
             R.image.icon_map()!.withRenderingMode(.alwaysTemplate)
-        self.mainListViewController?.snapShotShowing = true
+//        self.mainListViewController?.snapShotShowing = true
         
         if self.currentController == self.mainListViewController {
             mainListViewController?.view.alpha = 1.0
@@ -423,7 +423,6 @@ class KPMainViewController: KPViewController {
                                 self.mainListViewController?.view.alpha = 1.0
                 }, completion: { (_) in
                     self.mainListViewController?.snapShotShowing = false
-                    //                    self.mainMapViewController?.collectionView.isHidden = false
                     self.currentController = self.mainListViewController
                 })
             })

@@ -1268,7 +1268,6 @@ extension KPInformationViewController: UIScrollViewDelegate {
             
             // 處理 Tool Bar
             if self.scrollContainer.contentOffset.y >= 120 {
-                print("Offset:\(self.scrollContainer.contentOffset.y)")
                 topBarContainer.alpha = (self.scrollContainer.contentOffset.y - 120) / 40
                 dismissButton.tintColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
                 moreButton.tintColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
