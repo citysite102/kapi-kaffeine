@@ -50,7 +50,7 @@ class KPBusinessTimeViewController: UIViewController {
         view.addGestureRecognizer(tapGesture)
         containerView = UIView()
         containerView.backgroundColor = UIColor.white
-        containerView.layer.cornerRadius = 4.0
+        containerView.layer.cornerRadius = 3.0
         containerView.layer.masksToBounds = true
         view.addSubview(containerView)
         containerView.addConstraintForCenterAligningToSuperview(in: .vertical)

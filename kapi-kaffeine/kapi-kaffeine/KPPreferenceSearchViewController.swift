@@ -276,7 +276,7 @@ class KPPreferenceSearchViewController: KPViewController {
         searchButton.setTitleColor(UIColor.white, for: .normal)
         searchButton.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor_v2.greenColor!),
                                                 for: .normal)
-        searchButton.layer.cornerRadius = 4.0
+        searchButton.layer.cornerRadius = 3.0
         searchButton.layer.masksToBounds = true
         searchButton.titleLabel?.font = UIFont.systemFont(ofSize: 16.0)
         searchButtonContainer.addSubview(searchButton)

@@ -118,7 +118,7 @@ class KPNewStoreController: KPViewController, KPSubtitleInputDelegate {
         nextButton.setTitleColor(UIColor.white, for: .normal)
         nextButton.setTitle("下一步", for: .normal)
         nextButton.clipsToBounds = true
-        nextButton.layer.cornerRadius = 4.0
+        nextButton.layer.cornerRadius = 3.0
         nextButton.titleLabel?.font = UIFont.systemFont(ofSize: 16.0)
         buttonContainer.addSubview(nextButton)
         nextButton.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|", "V:|-10-[$self(40)]-10-|"])

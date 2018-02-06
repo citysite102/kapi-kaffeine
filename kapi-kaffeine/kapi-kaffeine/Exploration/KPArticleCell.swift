@@ -16,7 +16,7 @@ class KPArticleCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.clipsToBounds = true
-        contentView.layer.cornerRadius = 4
+        contentView.layer.cornerRadius = 3
         contentView.layer.rasterizationScale = UIScreen.main.scale
         contentView.layer.shouldRasterize = true
         

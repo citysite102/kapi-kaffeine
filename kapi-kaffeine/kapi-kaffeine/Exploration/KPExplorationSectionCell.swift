@@ -34,7 +34,7 @@ class KPExplorationSectionCell: UICollectionViewCell {
         imageView = UIImageView()
         imageView.layer.shouldRasterize = true
         imageView.contentMode = .scaleAspectFill
-        imageView.layer.cornerRadius = 3
+        imageView.layer.cornerRadius = 2
         imageView.clipsToBounds = true
         contentView.addSubview(imageView)
         imageView.addConstraints(fromStringArray: ["H:|[$self]|",

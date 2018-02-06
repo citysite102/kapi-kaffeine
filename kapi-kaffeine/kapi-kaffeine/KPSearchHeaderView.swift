@@ -55,7 +55,7 @@ class KPSearchHeaderView: UIView {
         
         searchContainer = UIView()
         searchContainer.backgroundColor = KPColorPalette.KPBackgroundColor.whiteColor
-        searchContainer.layer.cornerRadius = 4.0
+        searchContainer.layer.cornerRadius = 3.0
         searchContainer.layer.masksToBounds = true
         searchContainer.layer.borderWidth = 1.0
         searchContainer.layer.borderColor = KPColorPalette.KPMainColor_v2.grayColor_level5?.cgColor

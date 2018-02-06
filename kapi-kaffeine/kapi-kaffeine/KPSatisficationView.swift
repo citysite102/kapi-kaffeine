@@ -43,8 +43,8 @@ class KPSatisficationView: UIView {
                                 action: #selector(KPSatisficationView.handleDismissButtonOnTapped),
                                 for: .touchUpInside)
         addSubview(dismissButton)
-        dismissButton.addConstraints(fromStringArray: ["V:|-12-[$self(24)]",
-                                                       "H:[$self(24)]-12-|"])
+        dismissButton.addConstraints(fromStringArray: ["V:|-12-[$self($metric0)]",
+                                                       "H:[$self($metric0)]-12-|"], metrics:[KPLayoutConstant.dismissButton_size])
         
         icon = UIImageView(image: R.image.image_icon_login())
         icon.contentMode = .scaleAspectFit

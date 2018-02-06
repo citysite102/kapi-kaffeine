@@ -152,21 +152,21 @@ class KPArticleViewController: KPViewController {
         topBarContainer.backgroundColor = UIColor.white
         topBarContainer.alpha = 0
         view.addSubview(topBarContainer)
-        topBarContainer.addConstraints(fromStringArray: ["V:|[$self(64)]",
-                                                          "H:|[$self]|"])
+        topBarContainer.addConstraints(fromStringArray: ["V:|[$self($metric0)]",
+                                                          "H:|[$self]|"], metrics:[KPLayoutConstant.topBar_height])
         separator_top = UIView()
         separator_top.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
         topBarContainer.addSubview(separator_top)
         separator_top.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                       "V:[$self(1)]|"])
+                                                       "V:[$self($metric0)]|"], metrics:[KPLayoutConstant.separator_height])
         
         dismissButton = KPBounceButton(frame: CGRect.zero,
                                        image: R.image.icon_close()!)
         dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor
         dismissButton.alpha = 0.9
         view.addSubview(dismissButton)
-        dismissButton.addConstraints(fromStringArray: ["V:[$self(24)]",
-                                                       "H:|-16-[$self(24)]"])
+        dismissButton.addConstraints(fromStringArray: ["V:[$self($metric0)]",
+                                                       "H:|-16-[$self($metric0)]"], metrics:[KPLayoutConstant.dismissButton_size])
         dismissButton.addConstraintForCenterAligning(to: topBarContainer,
                                                      in: .vertical,
                                                      constant: 6)
@@ -181,12 +181,12 @@ class KPArticleViewController: KPViewController {
         toolBarContainer = UIView()
         toolBarContainer.backgroundColor = UIColor.white
         view.addSubview(toolBarContainer)
-        toolBarContainer.addConstraints(fromStringArray: ["V:[$self(56)]|",
-                                                          "H:|[$self]|"])
+        toolBarContainer.addConstraints(fromStringArray: ["V:[$self($metric0)]|",
+                                                          "H:|[$self]|"], metrics:[KPLayoutConstant.bottomBar_height])
         toolBarContainer.transform = CGAffineTransform(translationX: 0, y: 64)
         toolBarContainer.addSubview(separator)
         separator.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                   "V:|[$self(1)]"])
+                                                   "V:|[$self($metric0)]"], metrics:[KPLayoutConstant.separator_height])
         
         collectButton = UIButton(type: .roundedRect)
         collectButton.setTitle("收藏文章", for: .normal)
@@ -258,7 +258,7 @@ class KPArticleViewController: KPViewController {
         sampleArticleTitleLabel.setText(text: "一窺東倫敦新興咖啡社群 - Hello Hackney",
                                         lineSpacing: 3.6)
         articleContainer.addSubview(sampleArticleTitleLabel)
-        sampleArticleTitleLabel.addConstraints(fromStringArray: ["V:|-32-[$self]",
+        sampleArticleTitleLabel.addConstraints(fromStringArray: ["V:|-24-[$self]",
                                                                  "H:|-16-[$self]-16-|"])
         
         sampleArticleSubTitleLabel = UILabel()

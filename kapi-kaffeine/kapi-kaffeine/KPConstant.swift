@@ -96,6 +96,16 @@ struct KPNotification {
     }
 }
 
+
+struct KPLayoutConstant {
+    static let topBar_height = 64
+    static let bottomBar_height = 56
+    static let separator_height = 1
+    
+    static let dismissButton_size = 24
+    
+}
+
 struct KPColorPalette {
 
     
@@ -136,6 +146,8 @@ struct KPColorPalette {
         static let grayColor_level5 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.2)
         static let grayColor_level6 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.1)
         static let grayColor_level7 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.05)
+        
+        static let separator_color = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.05)
         
         static let whiteColor_level1 = UIColor(hexString: "#ffffffaa")
     }
