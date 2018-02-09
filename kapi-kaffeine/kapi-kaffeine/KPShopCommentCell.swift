@@ -47,74 +47,80 @@ class KPShopCommentCell: UITableViewCell {
         
         userPicture = UIImageView(image: R.image.demo_profile())
         userPicture.contentMode = .scaleAspectFit
-        userPicture.layer.cornerRadius = 10.0
+        userPicture.layer.cornerRadius = 32.0
         userPicture.layer.borderWidth = 1.0
         userPicture.layer.borderColor = KPColorPalette.KPMainColor.grayColor_level5?.cgColor
         userPicture.layer.masksToBounds = true
         contentView.addSubview(userPicture)
-        userPicture.addConstraints(fromStringArray: ["H:|-16-[$self(32)]",
-                                                     "V:|-16-[$self(32)]"])
+        userPicture.addConstraints(fromStringArray: ["H:|-($metric0)-[$self(64)]",
+                                                     "V:|-20-[$self(64)]"],
+                                   metrics:[KPLayoutConstant.information_horizontal_offset])
         
 
         userNameLabel = UILabel()
-        userNameLabel.font = UIFont.systemFont(ofSize: 14.0)
+        userNameLabel.text = "神秘外星人"
+        userNameLabel.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
         userNameLabel.textColor = KPColorPalette.KPTextColor.grayColor_level1
         contentView.addSubview(userNameLabel)
-        userNameLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self(190)]",
-                                                       "V:|-16-[$self]"],
+        userNameLabel.addConstraints(fromStringArray: ["H:[$view0]-14-[$self(190)]",
+                                                       "V:|-20-[$self]"],
                                           metrics: [UIScreen.main.bounds.size.width/2],
                                           views: [userPicture])
         
         timeHintLabel = UILabel()
-        timeHintLabel.font = UIFont.systemFont(ofSize: 12.0)
+        timeHintLabel.text = "3天前"
+        timeHintLabel.font = UIFont.systemFont(ofSize: KPFontSize.infoContent)
         timeHintLabel.textColor = KPColorPalette.KPTextColor.grayColor_level4
         contentView.addSubview(timeHintLabel)
-        timeHintLabel.addConstraints(fromStringArray: ["H:[$self]-16-|",
-                                                       "V:|-16-[$self]"],
-                                          metrics: [UIScreen.main.bounds.size.width/2],
+        timeHintLabel.addConstraints(fromStringArray: ["H:[$self]-($metric0)-|",
+                                                       "V:|-18-[$self]"],
+                                          metrics: [KPLayoutConstant.information_horizontal_offset],
                                           views: [userPicture])
 
         userCommentLabel = UILabel()
-        userCommentLabel.font = UIFont.systemFont(ofSize: 14.0)
+        userCommentLabel.setText(text: "這是一則關於咖啡的評論，這是一則關於咖啡的評論，這是一則關於咖啡的評論",
+                                 lineSpacing: 3.0)
+        userCommentLabel.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
         userCommentLabel.numberOfLines = 0
         userCommentLabel.textColor = KPColorPalette.KPTextColor.grayColor_level3
         contentView.addSubview(userCommentLabel)
-        userCommentLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]-16-|",
-                                                          "V:[$view1]-4-[$self]"],
-                                          metrics: [UIScreen.main.bounds.size.width/2],
+        userCommentLabel.addConstraints(fromStringArray: ["H:[$view0]-14-[$self]-($metric0)-|",
+                                                          "V:[$view1]-8-[$self]-20-|"],
+                                          metrics: [KPLayoutConstant.information_horizontal_offset],
                                           views: [userPicture, userNameLabel])
         
-        voteUpButton = KPShopCommentCellButton.init(frame: .zero,
-                                                    icon: R.image.icon_upvote()!,
-                                                    count: 0)
-        voteUpButton.iconButton.addTarget(self,
-                                          action: #selector(KPShopCommentCell.handleVoteUpButtonOnTapped),
-                                          for: .touchUpInside);
-        
-        contentView.addSubview(voteUpButton)
-        voteUpButton.addConstraints(fromStringArray: ["H:[$view0]-4-[$self]",
-                                                      "V:[$view1]-12-[$self]-8-|"],
-                                         metrics: [UIScreen.main.bounds.size.width/2],
-                                         views: [userPicture, userCommentLabel])
-        
-        
-        voteDownButton = KPShopCommentCellButton(frame: .zero,
-                                                 icon: R.image.icon_downvote()!,
-                                                 count: 0)
-        voteDownButton.iconButton.addTarget(self,
-                                            action: #selector(KPShopCommentCell.handleVoteDownButtonOnTapped),
-                                            for: .touchUpInside);
-        contentView.addSubview(voteDownButton)
-        voteDownButton.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]",
-                                                        "V:[$view1]-12-[$self]-8-|"],
-                                           metrics: [UIScreen.main.bounds.size.width/2],
-                                           views: [voteUpButton, userCommentLabel])
+//        voteUpButton = KPShopCommentCellButton.init(frame: .zero,
+//                                                    icon: R.image.icon_upvote()!,
+//                                                    count: 0)
+//        voteUpButton.iconButton.addTarget(self,
+//                                          action: #selector(KPShopCommentCell.handleVoteUpButtonOnTapped),
+//                                          for: .touchUpInside);
+//
+//        contentView.addSubview(voteUpButton)
+//        voteUpButton.addConstraints(fromStringArray: ["H:[$view0]-4-[$self]",
+//                                                      "V:[$view1]-12-[$self]-8-|"],
+//                                         metrics: [UIScreen.main.bounds.size.width/2],
+//                                         views: [userPicture, userCommentLabel])
+//
+//
+//        voteDownButton = KPShopCommentCellButton(frame: .zero,
+//                                                 icon: R.image.icon_downvote()!,
+//                                                 count: 0)
+//        voteDownButton.iconButton.addTarget(self,
+//                                            action: #selector(KPShopCommentCell.handleVoteDownButtonOnTapped),
+//                                            for: .touchUpInside);
+//        contentView.addSubview(voteDownButton)
+//        voteDownButton.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]",
+//                                                        "V:[$view1]-12-[$self]-8-|"],
+//                                           metrics: [UIScreen.main.bounds.size.width/2],
+//                                           views: [voteUpButton, userCommentLabel])
         
         separator = UIView()
-        separator.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
+        separator.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7
         addSubview(separator)
         separator.addConstraints(fromStringArray: ["V:[$self(1)]|",
-                                                   "H:|-16-[$self]|"])
+                                                   "H:|-($metric0)-[$self]-($metric0)-|"],
+                                 metrics:[KPLayoutConstant.information_horizontal_offset])
     }
     
     required init?(coder aDecoder: NSCoder) {

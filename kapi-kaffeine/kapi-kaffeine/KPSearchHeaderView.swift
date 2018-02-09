@@ -75,7 +75,7 @@ class KPSearchHeaderView: UIView {
                                                   constant: 0)
         
         searchLabel = UILabel()
-        searchLabel.font = UIFont.systemFont(ofSize: 14.0)
+        searchLabel.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
         searchLabel.text = "搜尋店家名稱、標籤..."
         searchLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_hint
         searchContainer.addSubview(searchLabel)

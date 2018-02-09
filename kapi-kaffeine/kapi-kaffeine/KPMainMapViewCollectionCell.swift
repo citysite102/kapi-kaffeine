@@ -101,7 +101,7 @@ class KPMainMapViewCollectionCell: UICollectionViewCell {
                                                        "V:|-8-[$self(80)]"])
         
         self.shopNameLabel = KPLayerLabel()
-        self.shopNameLabel.font = UIFont.systemFont(ofSize: 16.0)
+        self.shopNameLabel.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
         self.shopNameLabel.textColor = KPColorPalette.KPMainColor_v2.mainColor
         self.shopNameLabel.lineBreakMode = .byTruncatingTail
         self.shopNameLabel.text = "覺旅咖啡"
@@ -122,7 +122,7 @@ class KPMainMapViewCollectionCell: UICollectionViewCell {
                                            views: [self.shopNameLabel])
         
         shopStatusLabel = KPLayerLabel()
-        shopStatusLabel.font = UIFont.systemFont(ofSize: 14.0)
+        shopStatusLabel.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
         shopStatusLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
         shopStatusLabel.text = "營業時間 未知"
         shopStatusLabel.isOpaque = true
@@ -142,7 +142,7 @@ class KPMainMapViewCollectionCell: UICollectionViewCell {
                                                           "V:[$self(14)]"])
         
         shopLocationLabel = KPLayerLabel()
-        shopLocationLabel.font = UIFont.systemFont(ofSize: 14.0)
+        shopLocationLabel.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
         shopLocationLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
         shopLocationLabel.text = "台北市, 萬華區"
         shopLocationLabel.isOpaque = true
@@ -154,7 +154,7 @@ class KPMainMapViewCollectionCell: UICollectionViewCell {
         shopLocationIcon.addConstraintForCenterAligning(to: shopLocationLabel, in: .vertical, constant: 1)
         
         shopDistanceLabel = KPLayerLabel()
-        shopDistanceLabel.font = UIFont.systemFont(ofSize: 14.0)
+        shopDistanceLabel.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
         shopDistanceLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
         shopDistanceLabel.isOpaque = true
         shopDistanceLabel.layer.masksToBounds = true
@@ -173,7 +173,7 @@ class KPMainMapViewCollectionCell: UICollectionViewCell {
                                                   "V:|-12-[$self(18)]"])
         
         rateLabel = KPLayerLabel()
-        rateLabel.font = UIFont.systemFont(ofSize: 16.0)
+        rateLabel.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
         rateLabel.textColor = KPColorPalette.KPMainColor_v2.starColor
         rateLabel.text = "4.8"
         rateLabel.isOpaque = true

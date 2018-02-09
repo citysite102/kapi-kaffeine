@@ -26,7 +26,6 @@ class KPInformationViewController: KPViewController {
         }
     }
     
-    
     var viewHasAppeared: Bool = false
     var showBackButton: Bool = false
     var dismissWithDefaultType: Bool = false
@@ -107,6 +106,8 @@ class KPInformationViewController: KPViewController {
     var scrollContainer: UIScrollView!
     var informationHeaderView: KPInformationHeaderView!
     var informationHeaderButtonBar: KPInformationHeaderButtonBar!
+    
+    var cardInformationContainer: KPInformationCardView!
     var shopInformationView: KPInformationSharedInfoView!
     var locationInformationView: KPInformationSharedInfoView!
     var rateInformationView: KPInformationSharedInfoView!
@@ -129,10 +130,25 @@ class KPInformationViewController: KPViewController {
     var currentPhotoIndex: Int!
     lazy var loadingLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 13.0)
+        label.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
         label.textColor = KPColorPalette.KPTextColor.grayColor_level5
         label.text = "載入中..."
         return label
+    }()
+    
+    lazy var addButton: KPShadowButton = {
+        let shadowButton = KPShadowButton()
+        shadowButton.button.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.whiteColor!), for: .normal)
+        shadowButton.button.setImage(R.image.icon_add(), for: .normal)
+        
+        shadowButton.button.tintColor = KPColorPalette.KPMainColor_v2.mainColor
+        shadowButton.button.imageView?.contentMode = .scaleAspectFit
+//        shadowButton.button.imageEdgeInsets = UIEdgeInsets(top: 6,
+//                                                           left: 6,
+//                                                           bottom: 6,
+//                                                           right: 6)
+        shadowButton.layer.cornerRadius = 30
+        return shadowButton
     }()
     
     var allCommentHasShown: Bool = false
@@ -179,49 +195,6 @@ class KPInformationViewController: KPViewController {
         navigationController?.navigationBar.isHidden = true
         navigationItem.title = informationDataModel.name
         navigationController?.delegate = self
-        
-        
-//        dismissButton = KPBounceButton(frame: CGRect.zero,
-//                                       image: showBackButton ? R.image.icon_back()! : R.image.icon_close()!)
-//        dismissButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
-//        dismissButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
-//        dismissButton.contentEdgeInsets = showBackButton ? UIEdgeInsetsMake(3, 0, 3, 6) : UIEdgeInsetsMake(6, 0, 8, 14)
-//        dismissButton.tintColor = KPColorPalette.KPMainColor_v2.textColor_level2
-//        dismissButton.addTarget(self,
-//                                action: #selector(KPInformationViewController.handleDismissButtonOnTapped),
-//                                for: .touchUpInside)
-        
-        
-//        moreButton = KPBounceButton(frame: CGRect.zero,
-//                                    image: R.image.icon_more()!)
-//        moreButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
-//        moreButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
-//        moreButton.contentEdgeInsets = UIEdgeInsetsMake(4, 8, 4, 0)
-//        moreButton.tintColor = KPColorPalette.KPTextColor.whiteColor
-//        moreButton.addTarget(self,
-//                             action: #selector(KPInformationViewController.handleMoreButtonOnTapped),
-//                             for: .touchUpInside)
-        
-//        shareButton = KPBounceButton(frame: CGRect.zero,
-//                                     image: R.image.icon_share()!)
-//        shareButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
-//        shareButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
-//        shareButton.contentEdgeInsets = UIEdgeInsetsMake(6, 6, 6, 6)
-//        shareButton.tintColor = KPColorPalette.KPTextColor.whiteColor
-//        shareButton.addTarget(self,
-//                              action: #selector(KPInformationViewController.handleShareButtonOnTapped),
-//                              for: .touchUpInside)
-        
-
-//        let barItem = UIBarButtonItem(customView: dismissButton)
-//        let rightBarItem = UIBarButtonItem(customView: moreButton)
-//        let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace,
-//                                             target: nil,
-//                                             action: nil)
-//        negativeSpacer.width = -8
-//        navigationItem.leftBarButtonItems = [negativeSpacer, barItem]
-//        navigationItem.rightBarButtonItems = [negativeSpacer, rightBarItem]
-        
         
         actionController = UIAlertController(title: nil,
                                              message: nil,
@@ -325,23 +298,24 @@ class KPInformationViewController: KPViewController {
         informationHeaderView.informationController = self
         informationHeaderView.scoreLabel.text = String(format: "%.1f", informationDataModel.averageRate?.doubleValue ?? 0.0)
         informationHeaderView.facebookButton.isHidden = !(informationDataModel.facebookURL != nil)
+        informationHeaderView.shopPhoto.image = R.image.demo_7()
         
-        if let photoURL = informationDataModel.covers?["kapi_l"] ?? informationDataModel.covers?["google_l"] {
-            informationHeaderView.shopPhoto.af_setImage(withURL: URL(string: photoURL)!,
-                                                        placeholderImage: nil,
-                                                        filter: nil,
-                                                        progress: nil,
-                                                        progressQueue: DispatchQueue.global(),
-                                                        imageTransition: UIImageView.ImageTransition.crossDissolve(0.2),
-                                                        runImageTransitionIfCached: true,
-                                                        completion: { response in
-                                                            if let responseImage = response.result.value {
-                                                                self.informationHeaderView.shopPhoto.image =  responseImage
-                                                            }
-                })
-        } else {
-            
-        }
+//        if let photoURL = informationDataModel.covers?["kapi_l"] ?? informationDataModel.covers?["google_l"] {
+//            informationHeaderView.shopPhoto.af_setImage(withURL: URL(string: photoURL)!,
+//                                                        placeholderImage: nil,
+//                                                        filter: nil,
+//                                                        progress: nil,
+//                                                        progressQueue: DispatchQueue.global(),
+//                                                        imageTransition: UIImageView.ImageTransition.crossDissolve(0.2),
+//                                                        runImageTransitionIfCached: true,
+//                                                        completion: { response in
+//                                                            if let responseImage = response.result.value {
+//                                                                self.informationHeaderView.shopPhoto.image =  responseImage
+//                                                            }
+//                })
+//        } else {
+//
+//        }
         
         //informationDataModel
         scrollContainer.addSubview(informationHeaderView)
@@ -394,93 +368,105 @@ class KPInformationViewController: KPViewController {
         loadingLabel.addConstraintForCenterAligningToSuperview(in: .horizontal,
                                                                constant:2)
         
-        informationHeaderButtonBar = KPInformationHeaderButtonBar(frame: .zero)
-        informationHeaderButtonBar.informationController = self
-        scrollContainer.addSubview(informationHeaderButtonBar)
-        informationHeaderButtonBar.addConstraints(fromStringArray: ["H:|[$self]|"],
-                                                  views: [informationHeaderView])
-        
-        animatedHeaderConstraint =
-            informationHeaderButtonBar.addConstraint(from: "V:[$view0][$self]",
-                                                     views:[informationHeaderView]).first as! NSLayoutConstraint
+        cardInformationContainer = KPInformationCardView()
+        scrollContainer.addSubview(cardInformationContainer)
+        cardInformationContainer.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
+                                                                  "V:[$view0]-(-70)-[$self(140)]"],
+                                                views: [informationHeaderView])
         
         informationView = KPShopInfoView(informationDataModel)
-        informationView.otherTimeButton.addTarget(self,
-                                                  action: #selector(KPInformationViewController.handleOtherTimeButtonOnTapped),
-                                                  for: .touchUpInside)
-        
-        if informationDataModel.businessHour != nil {
-            let shopStatus = informationDataModel.businessHour!.shopStatus
-            informationView.openLabel.textColor = KPColorPalette.KPTextColor.grayColor_level1
-            informationView.openLabel.text = shopStatus.status
-            informationView.openHint.backgroundColor = shopStatus.isOpening ?
-                KPColorPalette.KPShopStatusColor.opened :
-                KPColorPalette.KPShopStatusColor.closed
-        } else {
-            informationView.openLabel.textColor = KPColorPalette.KPTextColor.grayColor_level5
-            informationView.openHint.backgroundColor = KPColorPalette.KPTextColor.grayColor_level5
-            informationView.openLabel.text = "暫無資料"
-            informationView.otherTimeButton.isHidden = true
-        }
+//        informationView.otherTimeButton.addTarget(self,
+//                                                  action: #selector(KPInformationViewController.handleOtherTimeButtonOnTapped),
+//                                                  for: .touchUpInside)
+//
+//        if informationDataModel.businessHour != nil {
+//            let shopStatus = informationDataModel.businessHour!.shopStatus
+//            informationView.openLabel.textColor = KPColorPalette.KPTextColor.grayColor_level1
+//            informationView.openLabel.text = shopStatus.status
+//            informationView.openHint.backgroundColor = shopStatus.isOpening ?
+//                KPColorPalette.KPShopStatusColor.opened :
+//                KPColorPalette.KPShopStatusColor.closed
+//        } else {
+//            informationView.openLabel.textColor = KPColorPalette.KPTextColor.grayColor_level5
+//            informationView.openHint.backgroundColor = KPColorPalette.KPTextColor.grayColor_level5
+//            informationView.openLabel.text = "暫無資料"
+//            informationView.otherTimeButton.isHidden = true
+//        }
         
         shopInformationView = KPInformationSharedInfoView()
         shopInformationView.infoView = informationView
-        shopInformationView.infoTitleLabel.text = informationDataModel.name
+        shopInformationView.infoTitleLabel.text = "店家資訊"
         scrollContainer.addSubview(shopInformationView)
         shopInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                             "V:[$view0]-16-[$self]"],
-                                                      views: [informationHeaderButtonBar])
-
-        locationInformationView = KPInformationSharedInfoView()
-        locationInformationView.infoTitleLabel.text = "位置訊息"
-        if let distanceInMeter = informationDataModel.distanceInMeter {
-            var distance = distanceInMeter
-            var unit = "m"
-            if distance > 1000 {
-                unit = "km"
-                distance = distance/1000
-            }
-            locationInformationView.infoSupplementLabel.text = String(format: "%.1f%@", distance, unit)
-        } else {
-            locationInformationView.infoSupplementLabel.text = "你身在神秘的星球"
-        }
-//        locationInformationView.actions = [
-//            Action(title:"街景模式",
-//                   style:.normal,
-//                   color:KPColorPalette.KPMainColor.mainColor_sub!,
-//                   icon:R.image.icon_street(),
-//                   handler:{
-//                    [weak self] (infoView) -> () in
-//                    if let weSelf = self {
-//                        if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
-//                            UIApplication.shared.open(URL(string:
-//                                "comgooglemaps://?center=\(weSelf.informationDataModel.latitude!),\(weSelf.informationDataModel.longitude!)&mapmode=streetview")!,
-//                                                      options: [:],
-//                                                      completionHandler: nil)
-//                        } else {
-//                            print("Can't use comgooglemaps://")
-//                        }
-//                    }
-//            }),
-//            Action(title:"開啟導航",
-//                   style:.normal,
-//                   color:KPColorPalette.KPMainColor.mainColor!,
-//                   icon:(R.image.icon_navi()?.withRenderingMode(.alwaysTemplate))!,
-//                   handler:{ [weak self] (infoView) -> () in
-//                    KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.store_navigation_button)
-//                    if let weSelf = self {
-//                        weSelf.present(weSelf.mapActionController,
-//                                       animated: true,
-//                                       completion: nil)
-//                    }
-//
-//            })
-//        ]
+                                                             "V:[$view0]-100-[$self]"],
+                                           views: [informationHeaderView])
         
-        scrollContainer.addSubview(locationInformationView)
-        locationInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                                 "V:[$view0]-24-[$self(292)]"],
-                                                views: [shopInformationView])
+        
+        
+        commentInfoView = KPShopCommentInfoView()
+        commentInfoView.informationController = self
+        commentInformationView = KPInformationSharedInfoView()
+        commentInformationView.emptyLabel.text = "幫忙給點建議或分享吧:D"
+        commentInformationView.infoView = commentInfoView
+        commentInformationView.infoTitleLabel.text = "留言評論"
+        commentInformationView.infoSupplementLabel.text = "查看所有評論"
+        scrollContainer.addSubview(commentInformationView)
+        commentInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                                "V:[$view0]-24-[$self]"],
+                                              views: [shopInformationView])
+        
+//        if let commentCount = informationDataModel.commentCount {
+//            commentInformationView.infoSupplementLabel.text = "\(commentCount) 人已留言"
+//            commentInformationView.isEmpty = (commentCount == 0)
+//            updateCommentsLayout(Int(truncating: commentCount))
+//        }
+        
+        
+        let photoInfoView = KPShopPhotoInfoView()
+        photoInfoView.informationController = self
+        photoInformationView = KPInformationSharedInfoView()
+        photoInformationView.emptyLabel.text = "成為第一個上傳的人吧:D"
+        photoInformationView.infoView = photoInfoView
+        photoInformationView.infoTitleLabel.text = "店家照片"
+        photoInformationView.infoSupplementLabel.text = "查看所有照片"
+        scrollContainer.addSubview(photoInformationView)
+        photoInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                              "V:[$view0]-24-[$self]"],
+                                            views: [commentInformationView])
+        //        photoInformationView.actions = [Action(title: "上傳照片",
+        //                                               style:.normal,
+        //                                               color:KPColorPalette.KPMainColor.mainColor!,
+        //                                               icon:(R.image.icon_camera()?.withRenderingMode( .alwaysTemplate))!,
+        //                                               handler:{[unowned self] (infoView) -> () in
+        //                                                self.photoUpload()
+        //        })]
+        
+        
+        
+        let menuInfoView = KPShopPhotoInfoView()
+        menuInfoView.isMenu = true
+        menuInfoView.informationController = self
+        menuInformationView = KPInformationSharedInfoView()
+        menuInformationView.emptyLabel.text = "成為第一個上傳的人吧:D"
+        menuInformationView.infoView = menuInfoView
+        menuInformationView.infoTitleLabel.text = "菜單"
+        scrollContainer.addSubview(menuInformationView)
+        menuInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                             "V:[$view0]-(-24)-[$self]"],
+                                           views: [photoInformationView])
+        //        menuInformationView.actions = [Action(title: "上傳菜單",
+        //                                               style:.normal,
+        //                                               color:KPColorPalette.KPMainColor.mainColor!,
+        //                                               icon:(R.image.icon_camera()?.withRenderingMode( .alwaysTemplate))!,
+        //                                               handler:{[unowned self] (infoView) -> () in
+        //                                                self.menuUpload()
+        //        })]
+        
+        scrollContainer.bringSubview(toFront: photoInformationView)
+        
+        
+        
+        
 
         let shopRateInfoView = KPShopRateInfoView()
         shopRateInfoView.dataModel = informationDataModel
@@ -521,64 +507,59 @@ class KPInformationViewController: KPViewController {
         scrollContainer.addSubview(rateInformationView)
         rateInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                              "V:[$view0]-24-[$self]"],
-                                                views: [locationInformationView])
+                                                views: [menuInformationView])
         
         
-        commentInfoView = KPShopCommentInfoView()
-        commentInfoView.informationController = self
-        commentInformationView = KPInformationSharedInfoView()
-        commentInformationView.emptyLabel.text = "幫忙給點建議或分享吧:D"
-        commentInformationView.infoView = commentInfoView
-        commentInformationView.infoTitleLabel.text = "留言評論"
-        scrollContainer.addSubview(commentInformationView)
-        commentInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                                "V:[$view0]-24-[$self]"],
-                                                    views: [rateInformationView])
-        
-        if let commentCount = informationDataModel.commentCount {
-            commentInformationView.infoSupplementLabel.text = "\(commentCount) 人已留言"
-            commentInformationView.isEmpty = (commentCount == 0)
-            updateCommentsLayout(Int(truncating: commentCount))
+        locationInformationView = KPInformationSharedInfoView()
+        locationInformationView.infoTitleLabel.text = "位置訊息"
+        if let distanceInMeter = informationDataModel.distanceInMeter {
+            var distance = distanceInMeter
+            var unit = "m"
+            if distance > 1000 {
+                unit = "km"
+                distance = distance/1000
+            }
+            locationInformationView.infoSupplementLabel.text = String(format: "%.1f%@", distance, unit)
+        } else {
+            locationInformationView.infoSupplementLabel.text = "開啟導航"
         }
+        //        locationInformationView.actions = [
+        //            Action(title:"街景模式",
+        //                   style:.normal,
+        //                   color:KPColorPalette.KPMainColor.mainColor_sub!,
+        //                   icon:R.image.icon_street(),
+        //                   handler:{
+        //                    [weak self] (infoView) -> () in
+        //                    if let weSelf = self {
+        //                        if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
+        //                            UIApplication.shared.open(URL(string:
+        //                                "comgooglemaps://?center=\(weSelf.informationDataModel.latitude!),\(weSelf.informationDataModel.longitude!)&mapmode=streetview")!,
+        //                                                      options: [:],
+        //                                                      completionHandler: nil)
+        //                        } else {
+        //                            print("Can't use comgooglemaps://")
+        //                        }
+        //                    }
+        //            }),
+        //            Action(title:"開啟導航",
+        //                   style:.normal,
+        //                   color:KPColorPalette.KPMainColor.mainColor!,
+        //                   icon:(R.image.icon_navi()?.withRenderingMode(.alwaysTemplate))!,
+        //                   handler:{ [weak self] (infoView) -> () in
+        //                    KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.store_navigation_button)
+        //                    if let weSelf = self {
+        //                        weSelf.present(weSelf.mapActionController,
+        //                                       animated: true,
+        //                                       completion: nil)
+        //                    }
+        //
+        //            })
+        //        ]
         
-
-        let photoInfoView = KPShopPhotoInfoView()
-        photoInfoView.informationController = self
-        photoInformationView = KPInformationSharedInfoView()
-        photoInformationView.emptyLabel.text = "成為第一個上傳的人吧:D"
-        photoInformationView.infoView = photoInfoView
-        photoInformationView.infoTitleLabel.text = "店家照片"
-        scrollContainer.addSubview(photoInformationView)
-        photoInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                              "V:[$view0]-24-[$self]"],
-                                                    views: [commentInformationView])
-//        photoInformationView.actions = [Action(title: "上傳照片",
-//                                               style:.normal,
-//                                               color:KPColorPalette.KPMainColor.mainColor!,
-//                                               icon:(R.image.icon_camera()?.withRenderingMode( .alwaysTemplate))!,
-//                                               handler:{[unowned self] (infoView) -> () in
-//                                                self.photoUpload()
-//        })]
-        
-        
-        
-        let menuInfoView = KPShopPhotoInfoView()
-        menuInfoView.informationController = self
-        menuInformationView = KPInformationSharedInfoView()
-        menuInformationView.emptyLabel.text = "成為第一個上傳的人吧:D"
-        menuInformationView.infoView = menuInfoView
-        menuInformationView.infoTitleLabel.text = "菜單"
-        scrollContainer.addSubview(menuInformationView)
-        menuInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                             "V:[$view0]-24-[$self]"],
-                                            views: [photoInformationView])
-//        menuInformationView.actions = [Action(title: "上傳菜單",
-//                                               style:.normal,
-//                                               color:KPColorPalette.KPMainColor.mainColor!,
-//                                               icon:(R.image.icon_camera()?.withRenderingMode( .alwaysTemplate))!,
-//                                               handler:{[unowned self] (infoView) -> () in
-//                                                self.menuUpload()
-//        })]
+        scrollContainer.addSubview(locationInformationView)
+        locationInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                                 "V:[$view0]-24-[$self(292)]"],
+                                               views: [rateInformationView])
         
 
         let shopRecommendView = KPShopRecommendView()
@@ -589,8 +570,8 @@ class KPInformationViewController: KPViewController {
         recommendInformationView.infoTitleLabel.text = "你可能也會喜歡"
         scrollContainer.addSubview(recommendInformationView)
         recommendInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                                  "V:[$view0]-24-[$self]-32-|"],
-                                                     views: [menuInformationView])
+                                                                  "V:[$view0]-24-[$self]-16-|"],
+                                                     views: [locationInformationView])
 
         
         NotificationCenter.default.addObserver(self,
@@ -612,7 +593,7 @@ class KPInformationViewController: KPViewController {
         SKPhotoBrowserOptions.displayAction = false
         SKPhotoBrowserOptions.displayStatusbar = true
         
-        updateTopToolBar()
+        updateToolBar()
 //        syncRemoteData()
         
         
@@ -646,7 +627,7 @@ class KPInformationViewController: KPViewController {
     }
     
     
-    func updateTopToolBar() {
+    func updateToolBar() {
         
         topBarContainer = UIView()
         topBarContainer.backgroundColor = UIColor.white
@@ -664,6 +645,7 @@ class KPInformationViewController: KPViewController {
         separator.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
         
         toolBarContainer = UIView()
+        toolBarContainer.isHidden = true
         toolBarContainer.backgroundColor = UIColor.white
         view.addSubview(toolBarContainer)
         toolBarContainer.addConstraints(fromStringArray: ["V:[$self($metric0)]|",
@@ -673,14 +655,14 @@ class KPInformationViewController: KPViewController {
                                                    "V:|[$self($metric0)]"], metrics:[KPLayoutConstant.separator_height])
         
         titleLabel = UILabel()
-        titleLabel.font = UIFont.boldSystemFont(ofSize: 18.0)
+        titleLabel.font = UIFont.boldSystemFont(ofSize: KPFontSize.mainContent)
         titleLabel.textColor = KPColorPalette.KPTextColor_v2.whiteColor
         titleLabel.text = informationDataModel.name
         view.addSubview(titleLabel)
         titleLabel.addConstraint(from: "H:[$self(<=280)]")
         titleLabel.addConstraintForCenterAligning(to: topBarContainer,
                                                   in: .vertical,
-                                                  constant: 6)
+                                                  constant: 8)
         titleLabel.addConstraintForCenterAligning(to: topBarContainer,
                                                   in: .horizontal,
                                                   constant: 0)
@@ -694,7 +676,7 @@ class KPInformationViewController: KPViewController {
                                                        "H:|-16-[$self($metric0)]"], metrics:[KPLayoutConstant.dismissButton_size])
         dismissButton.addConstraintForCenterAligning(to: topBarContainer,
                                                      in: .vertical,
-                                                     constant: 6)
+                                                     constant: 8)
         dismissButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4)
         dismissButton.addTarget(self,
                                 action: #selector(handleDismissButtonOnTapped), for: .touchUpInside)
@@ -706,12 +688,24 @@ class KPInformationViewController: KPViewController {
                              action: #selector(KPInformationViewController.handleMoreButtonOnTapped),
                              for: .touchUpInside)
         view.addSubview(moreButton)
-        moreButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4)
+        moreButton.contentEdgeInsets = UIEdgeInsetsMake(3, 3, 3, 3)
         moreButton.addConstraints(fromStringArray: ["V:[$self(24)]",
                                                     "H:[$self(24)]-16-|"])
         moreButton.addConstraintForCenterAligning(to: topBarContainer,
                                                      in: .vertical,
-                                                     constant: 6)
+                                                     constant: 8)
+        
+        
+        informationHeaderButtonBar = KPInformationHeaderButtonBar(frame: .zero)
+        informationHeaderButtonBar.informationController = self
+        toolBarContainer.addSubview(informationHeaderButtonBar)
+        informationHeaderButtonBar.addConstraints(fromStringArray: ["H:[$self]|",
+                                                                    "V:|-1-[$self]|"])
+        
+        
+        view.addSubview(addButton)
+        addButton.addConstraints(fromStringArray: ["H:[$self(60)]-16-|",
+                                                   "V:[$self(60)]-24-|"])
         
         
     }
@@ -1307,7 +1301,7 @@ extension KPInformationViewController: UIScrollViewDelegate {
                 let scaleRatioContainer = 1 - scrollContainer.contentOffset.y/240
                 let oldFrame = informationHeaderView.shopPhotoContainer.frame
                 
-                animatedHeaderConstraint.constant = 0
+//                animatedHeaderConstraint.constant = 0
                 informationHeaderView.shopPhoto.transform = .identity
                 informationHeaderView.isUserInteractionEnabled = true
                 
@@ -1322,7 +1316,7 @@ extension KPInformationViewController: UIScrollViewDelegate {
                 
                 self.view.layoutIfNeeded()
             } else if scrollContainer.contentOffset.y > 0 && scrollContainer.contentOffset.y < 200 {
-                animatedHeaderConstraint.constant = -scrollContainer.contentOffset.y*9/20
+//                animatedHeaderConstraint.constant = -scrollContainer.contentOffset.y*9/20
                 informationHeaderView.shopPhoto.transform = CGAffineTransform(translationX: 0,
                                                                               y: scrollContainer.contentOffset.y*9/20)
                 informationHeaderView.isUserInteractionEnabled = false

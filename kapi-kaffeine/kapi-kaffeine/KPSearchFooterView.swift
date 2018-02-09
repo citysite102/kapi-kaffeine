@@ -70,7 +70,7 @@ class KPSearchFooterView: UIView {
         self.hotSpotContainer.addConstraintForCenterAligningToSuperview(in: .vertical)
         
         self.hotSpotLabel = UILabel()
-        self.hotSpotLabel.font = UIFont.systemFont(ofSize: 12.0)
+        self.hotSpotLabel.font = UIFont.systemFont(ofSize: KPFontSize.infoContent)
         self.hotSpotLabel.textColor = KPColorPalette.KPTextColor.whiteColor
         self.hotSpotLabel.text = "熱門"
         self.hotSpotContainer.addSubview(self.hotSpotLabel)

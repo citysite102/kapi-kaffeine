@@ -48,7 +48,7 @@ class KPTabView: UIView {
         }
     }
     
-    var font: UIFont = UIFont.boldSystemFont(ofSize: 13) {
+    var font: UIFont = UIFont.systemFont(ofSize: KPFontSize.subContent) {
         didSet {
             for button in tabs {
                 button.titleLabel?.font = font
@@ -66,7 +66,7 @@ class KPTabView: UIView {
         var preButton: UIButton? = nil
         for title in titles {
             let button = UIButton(type: .custom)
-            button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+            button.titleLabel?.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
             button.setTitleColor(KPColorPalette.KPTextColor_v2.mainColor_description,
                                  for: .normal)
             button.setTitleColor(KPColorPalette.KPTextColor_v2.mainColor_title, for: .selected)

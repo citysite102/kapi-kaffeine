@@ -69,18 +69,13 @@ class KPLocationSelectViewController: KPViewController {
 
         view.backgroundColor = KPColorPalette.KPBackgroundColor.whiteColor
         navigationController?.navigationBar.topItem?.title = "選擇地區"
-        if #available(iOS 11.0, *) {
-            navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedStringKey.foregroundColor: KPColorPalette.KPTextColor_v2.mainColor_title!]
-        } else {
-            navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: KPColorPalette.KPTextColor_v2.mainColor_title!]
-        }
         navigationController?.navigationBar.shadowImage = UIImage()
         
         let barLeftItem = UIBarButtonItem(title: "取消",
                                           style: .plain,
                                           target: self,
                                           action: #selector(handleDismissButtonOnTapped))
-        barLeftItem.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 16), NSAttributedStringKey.foregroundColor: UIColor.gray],
+        barLeftItem.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: KPFontSize.mainContent), NSAttributedStringKey.foregroundColor: UIColor.gray],
                                            for: .normal)
         
         navigationItem.leftBarButtonItem = barLeftItem

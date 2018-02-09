@@ -70,7 +70,7 @@ class KPInformationSharedInfoView: UIView {
             for (index, action) in (actions?.enumerated())! {
                 let actionButton = UIButton(type: .custom)
                 actionButton.setTitle(action.title, for: .normal)
-                actionButton.titleLabel?.font = UIFont.systemFont(ofSize: 14.0)
+                actionButton.titleLabel?.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
                 actionButton.setBackgroundImage(UIImage(color: action.color),
                                                 for: .normal)
                 
@@ -109,36 +109,35 @@ class KPInformationSharedInfoView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-//        layer.shadowColor = UIColor.black.cgColor
-//        layer.shadowOpacity = 0.1
-//        layer.shadowRadius = 2.0
-//        layer.shadowOffset = CGSize(width: 0.0, height: 2.0)
-        
         backgroundColor = UIColor.white
         
         infoTitleLabel = UILabel()
-        infoTitleLabel.font = UIFont.boldSystemFont(ofSize: 18)
+        infoTitleLabel.font = UIFont.systemFont(ofSize: KPFontSize.header,
+                                                weight: UIFont.Weight.light)
         infoTitleLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_title
         addSubview(infoTitleLabel)
         infoTitleLabel.addConstraints(fromStringArray: ["V:|-24-[$self]",
-                                                        "H:|-16-[$self]"])
+                                                        "H:|-($metric0)-[$self]"],
+                                      metrics:[KPLayoutConstant.information_horizontal_offset])
 
         infoSupplementLabel = UILabel()
-        infoSupplementLabel.font = UIFont.systemFont(ofSize: 14)
-        infoSupplementLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
+        infoSupplementLabel.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
+        infoSupplementLabel.textColor = KPColorPalette.KPMainColor_v2.mainColor_light
         addSubview(infoSupplementLabel)
-        infoSupplementLabel.addConstraints(fromStringArray: ["V:|-20-[$self]",
-                                                             "H:[$self]-16-|"])
+        infoSupplementLabel.addConstraints(fromStringArray: ["H:[$self]-($metric0)-|"],
+                                           metrics:[KPLayoutConstant.information_horizontal_offset])
+        infoSupplementLabel.addConstraintForCenterAligning(to: infoTitleLabel,
+                                                           in: .vertical)
         
         infoContainer = UIView()
         infoContainer.backgroundColor = UIColor.white
         addSubview(infoContainer)
-        infoContainer.addConstraints(fromStringArray: ["V:[$view0]-16-[$self(>=64)]|",
+        infoContainer.addConstraints(fromStringArray: ["V:[$view0]-24-[$self(>=64)]|",
                                                        "H:|[$self]|"],
                                      views: [infoTitleLabel])
     
         emptyLabel = UILabel()
-        emptyLabel.font = UIFont.systemFont(ofSize: 14.0)
+        emptyLabel.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
         emptyLabel.textColor = KPColorPalette.KPTextColor.grayColor_level3
         emptyLabel.text = "目前尚無內容喔！"
         emptyLabel.isHidden = true

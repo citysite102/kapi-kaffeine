@@ -19,7 +19,7 @@ class KPDynamicLayout: UICollectionViewFlowLayout {
         self.minimumLineSpacing = 16
         self.minimumInteritemSpacing = 16
         self.sectionInset = UIEdgeInsetsMake(10, 20, 10, 20)
-        self.itemSize = CGSize(width: 130, height: 164)
+        self.itemSize = CGSize(width: 130, height: 166)
     }
     
 //    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {

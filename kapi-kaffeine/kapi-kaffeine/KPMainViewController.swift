@@ -127,7 +127,7 @@ class KPMainViewController: KPViewController {
                                        views:[searchHeaderView])
         
         statusLabel = UILabel()
-        statusLabel.font = UIFont.systemFont(ofSize: 14)
+        statusLabel.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
         statusLabel.textColor = UIColor.white
         statusLabel.textAlignment = .center
         statusLabel.numberOfLines = 0

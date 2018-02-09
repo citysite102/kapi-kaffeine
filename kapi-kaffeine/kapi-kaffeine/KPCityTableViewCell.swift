@@ -22,7 +22,7 @@ class KPCityTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         cityLabel = UILabel();
-        cityLabel.font = UIFont.systemFont(ofSize: 14);
+        cityLabel.font = UIFont.systemFont(ofSize: KPFontSize.subContent);
         cityLabel.textColor = KPColorPalette.KPTextColor.grayColor;
         cityLabel.layer.masksToBounds = true
         addSubview(self.cityLabel);

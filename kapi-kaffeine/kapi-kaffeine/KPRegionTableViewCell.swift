@@ -69,7 +69,7 @@ class KPRegionTableViewCell: UITableViewCell {
                                                     "H:|-18-[$self(24)]"])
         
         regionLabel = UILabel()
-        regionLabel.font = UIFont.systemFont(ofSize: 16)
+        regionLabel.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
         regionLabel.textColor = KPColorPalette.KPMainColor_v2.mainColor
         regionLabel.layer.masksToBounds = true
         addSubview(regionLabel)

@@ -21,7 +21,7 @@ class KPLocationSelect: UIView {
         super.init(frame: frame)
         
         locationLabel = UILabel()
-        locationLabel.font = UIFont.systemFont(ofSize: 16.0)
+        locationLabel.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
         locationLabel.text = "台北"
         locationLabel.textColor = KPColorPalette.KPMainColor_v2.mainColor
         addSubview(locationLabel)

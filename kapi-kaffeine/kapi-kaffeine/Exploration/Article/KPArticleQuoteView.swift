@@ -41,7 +41,7 @@ class KPArticleQuoteView: UIView {
         sideHintHeightConstraint = sideHintView.addConstraint(forHeight: 0)
         
         quoteTextView = UITextView()
-        quoteTextView.font = UIFont.boldSystemFont(ofSize: 22)
+        quoteTextView.font = UIFont.boldSystemFont(ofSize: KPFontSize.header)
         quoteTextView.textColor = KPColorPalette.KPMainColor_v2.redColor
         quoteTextView.backgroundColor = UIColor.clear
         quoteTextView.isScrollEnabled = false

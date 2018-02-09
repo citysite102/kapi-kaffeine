@@ -12,6 +12,7 @@
 		770AB5D31EB70E8E00EE8A3B /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770AB5D21EB70E8E00EE8A3B /* R.generated.swift */; };
 		7712D4E31ED72A200024C176 /* KPUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7712D4E21ED72A200024C176 /* KPUserDefaults.swift */; };
 		7716491A2021EB2A00487F5A /* KPLocationSelect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771649192021EB2A00487F5A /* KPLocationSelect.swift */; };
+		7717C549202D5E6A00316CB0 /* KPShopSubInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7717C548202D5E6A00316CB0 /* KPShopSubInfoView.swift */; };
 		771EECA41EBC217B004A34B8 /* KPCheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771EECA31EBC217B004A34B8 /* KPCheckBox.swift */; };
 		771EECAA1EBC3106004A34B8 /* KPCheckBoxController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771EECA91EBC3106004A34B8 /* KPCheckBoxController.swift */; };
 		771EECAC1EBC3124004A34B8 /* KPCheckBoxBounceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771EECAB1EBC3124004A34B8 /* KPCheckBoxBounceController.swift */; };
@@ -64,6 +65,8 @@
 		775989911EA5171A0029989C /* KPHelper+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775989901EA5171A0029989C /* KPHelper+UI.swift */; };
 		775D32ED1F0CCCCF005EF0CE /* KPInformationPhotoTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775D32EC1F0CCCCF005EF0CE /* KPInformationPhotoTransition.swift */; };
 		775D32EF1F0D20E4005EF0CE /* KPExpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775D32EE1F0D20E4005EF0CE /* KPExpView.swift */; };
+		776177E3202CBCAF00EA635A /* GlidingLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776177E2202CBCAF00EA635A /* GlidingLayout.swift */; };
+		776177E5202D4E7700EA635A /* KPInformationCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776177E4202D4E7700EA635A /* KPInformationCardView.swift */; };
 		7762E33A1F0FA44F0006E205 /* KPBusinessTimeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7762E3391F0FA44F0006E205 /* KPBusinessTimeViewController.swift */; };
 		7762E33C1F0FA7A90006E205 /* KPBusinessTimeInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7762E33B1F0FA7A90006E205 /* KPBusinessTimeInfoView.swift */; };
 		7762E33F1F12017D0006E205 /* KPCafeDetailedInfoRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7762E33E1F12017D0006E205 /* KPCafeDetailedInfoRequest.swift */; };
@@ -251,6 +254,7 @@
 		770AB5D21EB70E8E00EE8A3B /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = SOURCE_ROOT; };
 		7712D4E21ED72A200024C176 /* KPUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPUserDefaults.swift; sourceTree = "<group>"; };
 		771649192021EB2A00487F5A /* KPLocationSelect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPLocationSelect.swift; sourceTree = "<group>"; };
+		7717C548202D5E6A00316CB0 /* KPShopSubInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPShopSubInfoView.swift; sourceTree = "<group>"; };
 		771EECA31EBC217B004A34B8 /* KPCheckBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPCheckBox.swift; sourceTree = "<group>"; };
 		771EECA91EBC3106004A34B8 /* KPCheckBoxController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPCheckBoxController.swift; sourceTree = "<group>"; };
 		771EECAB1EBC3124004A34B8 /* KPCheckBoxBounceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPCheckBoxBounceController.swift; sourceTree = "<group>"; };
@@ -303,6 +307,8 @@
 		775989901EA5171A0029989C /* KPHelper+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "KPHelper+UI.swift"; sourceTree = "<group>"; };
 		775D32EC1F0CCCCF005EF0CE /* KPInformationPhotoTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPInformationPhotoTransition.swift; sourceTree = "<group>"; };
 		775D32EE1F0D20E4005EF0CE /* KPExpView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPExpView.swift; sourceTree = "<group>"; };
+		776177E2202CBCAF00EA635A /* GlidingLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlidingLayout.swift; sourceTree = "<group>"; };
+		776177E4202D4E7700EA635A /* KPInformationCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPInformationCardView.swift; sourceTree = "<group>"; };
 		7762E3391F0FA44F0006E205 /* KPBusinessTimeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPBusinessTimeViewController.swift; sourceTree = "<group>"; };
 		7762E33B1F0FA7A90006E205 /* KPBusinessTimeInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPBusinessTimeInfoView.swift; sourceTree = "<group>"; };
 		7762E33E1F12017D0006E205 /* KPCafeDetailedInfoRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPCafeDetailedInfoRequest.swift; sourceTree = "<group>"; };
@@ -679,6 +685,7 @@
 			isa = PBXGroup;
 			children = (
 				77C0E1011E9D48E000398852 /* KPShopInfoView.swift */,
+				7717C548202D5E6A00316CB0 /* KPShopSubInfoView.swift */,
 				7762E33B1F0FA7A90006E205 /* KPBusinessTimeInfoView.swift */,
 				7762E3391F0FA44F0006E205 /* KPBusinessTimeViewController.swift */,
 				77A26B0C1F234A8D0045D46F /* KPCommentDetailedController.swift */,
@@ -832,6 +839,7 @@
 			isa = PBXGroup;
 			children = (
 				776ACB0A1E9C783E00B629A2 /* KPInformationViewController.swift */,
+				776177E4202D4E7700EA635A /* KPInformationCardView.swift */,
 				77C0E0FC1E9D489900398852 /* KPInformationHeaderView.swift */,
 				778521801EA3C91C00EA59D9 /* KPInformationHeaderButton.swift */,
 				77E495521EC98B05003B7EBC /* Head Photo */,
@@ -883,6 +891,7 @@
 		77A142EA201B104300B388EA /* Article */ = {
 			isa = PBXGroup;
 			children = (
+				776177E2202CBCAF00EA635A /* GlidingLayout.swift */,
 				77E2D98C2019DF6C009244EB /* KPArticleViewController.swift */,
 				77A142EB201B105D00B388EA /* KPArticleQuoteView.swift */,
 			);
@@ -1707,6 +1716,7 @@
 				77A980E21F17334B002010EC /* KPLoadingButton.m in Sources */,
 				77C0E1021E9D48E000398852 /* KPShopInfoView.swift in Sources */,
 				77B66FB01EAD17DA008B6652 /* KPSettingViewController.swift in Sources */,
+				7717C549202D5E6A00316CB0 /* KPShopSubInfoView.swift in Sources */,
 				7720D02F1F01403900E00F0B /* KPMainListNativeContentAdCell.swift in Sources */,
 				77D98A691F1BA5F200FE1832 /* KPInputExpandTransition.swift in Sources */,
 				77C0E1051E9D48F500398852 /* KPShopLocationInfoView.swift in Sources */,
@@ -1782,6 +1792,7 @@
 				77427BDD1EF6E592005D7AE4 /* KPNewCommentRequest.swift in Sources */,
 				C01AC6391EAAEA8F000390F7 /* GQTPointQuadTree.m in Sources */,
 				77E2D98A20189218009244EB /* KPTabBarAddButton.swift in Sources */,
+				776177E5202D4E7700EA635A /* KPInformationCardView.swift in Sources */,
 				778ED5BD1F8A3B330006524A /* KPSchemeHandler.swift in Sources */,
 				C0686B671F95DBE000007FAA /* KPMenuUploadRequest.swift in Sources */,
 				77C0E0FD1E9D489900398852 /* KPInformationHeaderView.swift in Sources */,
@@ -1831,6 +1842,7 @@
 				77B66FA61EAA70F3008B6652 /* KPBounceButton.swift in Sources */,
 				771EECB31EBC32E4004A34B8 /* KPCheckBoxRadioPathGenerator.swift in Sources */,
 				77E6BAA91F13F18300802992 /* KPExpNotificationView.swift in Sources */,
+				776177E3202CBCAF00EA635A /* GlidingLayout.swift in Sources */,
 				770904321F55C70000A9CCE3 /* KPAnalyticManager.swift in Sources */,
 				C068791D1FC59893004160C9 /* KPExplorationSectionCell.swift in Sources */,
 				776ACB081E9BE51600B629A2 /* KPMainListCellFeatureContainer.swift in Sources */,

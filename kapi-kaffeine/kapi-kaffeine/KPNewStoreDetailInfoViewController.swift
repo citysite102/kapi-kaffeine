@@ -27,7 +27,7 @@ class KPNewStoreDetailInfoViewController: KPViewController {
                                           style: .plain,
                                           target: self,
                                           action: #selector(handleCancelButtonOnTap(_:)))
-        barLeftItem.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 16), NSAttributedStringKey.foregroundColor: UIColor.gray],
+        barLeftItem.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: KPFontSize.mainContent), NSAttributedStringKey.foregroundColor: UIColor.gray],
                                            for: .normal)
         
         navigationItem.leftBarButtonItem = barLeftItem

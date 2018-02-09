@@ -15,14 +15,17 @@ class KPShopPhotoInfoView: UIView {
     
     var collectionView:UICollectionView!
     var collectionLayout:UICollectionViewFlowLayout!
+    var isMenu: Bool! = false
     
     var displayPhotoInformations: [PhotoInformation] = [] {
         didSet {
             DispatchQueue.main.async {
                 if self.displayPhotoInformations.count > 0 {
                     self.collectionView.removeAllRelatedConstraintsInSuperView()
-                    self.collectionView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"])
-                    self.collectionView.addConstraint(forHeight: 112)
+                    self.collectionView.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                                         "V:|[$self]-($metric0)-|"],
+                                                       metrics:[KPLayoutConstant.information_horizontal_offset])
+                    self.collectionView.addConstraint(forHeight: 96)
                 }
                 self.collectionView.layoutIfNeeded()
                 self.collectionView.reloadData()
@@ -38,7 +41,10 @@ class KPShopPhotoInfoView: UIView {
         //Collection view
         self.collectionLayout = UICollectionViewFlowLayout()
         self.collectionLayout.scrollDirection = .horizontal
-        self.collectionLayout.sectionInset = UIEdgeInsetsMake(8, 8, 8, 8)
+        self.collectionLayout.sectionInset = UIEdgeInsetsMake(0,
+                                                              CGFloat(KPLayoutConstant.information_horizontal_offset),
+                                                              0,
+                                                              CGFloat(KPLayoutConstant.information_horizontal_offset))
         self.collectionLayout.minimumLineSpacing = 8.0
         self.collectionLayout.itemSize = CGSize(width: 96, height: 96)
         
@@ -53,7 +59,9 @@ class KPShopPhotoInfoView: UIView {
                                      forCellWithReuseIdentifier: KPShopPhotoInfoView.KPShopPhotoInfoViewCellReuseIdentifier)
         
         self.addSubview(self.collectionView)
-        self.collectionView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"])
+        self.collectionView.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                             "V:|[$self]-($metric0)-|"], metrics:[KPLayoutConstant.information_horizontal_offset])
+        self.collectionView.addConstraint(forHeight: 96)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -69,27 +77,29 @@ extension KPShopPhotoInfoView: UICollectionViewDelegate, UICollectionViewDataSou
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return displayPhotoInformations.count
+//        return displayPhotoInformations.count
+        return isMenu ? 1 : 7
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: KPShopPhotoInfoView.KPShopPhotoInfoViewCellReuseIdentifier,
                                                       for: indexPath) as! KPShopPhotoCell
-        cell.shopPhoto.af_setImage(withURL: displayPhotoInformations[indexPath.row].thumbnailURL,
-                                   placeholderImage: UIImage(color: KPColorPalette.KPBackgroundColor.grayColor_level6!),
-                                   filter: nil,
-                                   progress: nil,
-                                   progressQueue: DispatchQueue.global(),
-                                   imageTransition: UIImageView.ImageTransition.crossDissolve(0.2),
-                                   runImageTransitionIfCached: false,
-                                   completion: { (response) in
-                                    
-                                    if let responseImage = response.result.value {
-                                        cell.shopPhoto.image = responseImage
-                                    } else {
-                                        cell.shopPhoto.image = R.image.image_failed_s()
-                                    }
-        })
+        cell.shopPhoto.image = isMenu ? R.image.demo_menu() : R.image.demo_7()
+//        cell.shopPhoto.af_setImage(withURL: displayPhotoInformations[indexPath.row].thumbnailURL,
+//                                   placeholderImage: UIImage(color: KPColorPalette.KPBackgroundColor.grayColor_level6!),
+//                                   filter: nil,
+//                                   progress: nil,
+//                                   progressQueue: DispatchQueue.global(),
+//                                   imageTransition: UIImageView.ImageTransition.crossDissolve(0.2),
+//                                   runImageTransitionIfCached: false,
+//                                   completion: { (response) in
+//
+//                                    if let responseImage = response.result.value {
+//                                        cell.shopPhoto.image = responseImage
+//                                    } else {
+//                                        cell.shopPhoto.image = R.image.image_failed_s()
+//                                    }
+//        })
         
         return cell
     }

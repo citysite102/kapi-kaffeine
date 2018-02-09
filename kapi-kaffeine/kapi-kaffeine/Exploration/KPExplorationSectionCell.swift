@@ -18,6 +18,7 @@ class KPExplorationSectionCell: UICollectionViewCell {
     var regionLabel: UILabel!
     var nameLabel: UILabel!
     var rateLabel: UILabel!
+    var rateCountLabel: UILabel!
     var starIcon: UIImageView!
     var scoreLabel: UILabel!
     var visitedLabel: UILabel!
@@ -63,10 +64,10 @@ class KPExplorationSectionCell: UICollectionViewCell {
         nameLabel = UILabel()
         contentView.addSubview(nameLabel)
         nameLabel.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                   "V:[$view0]-(>=4)-[$self]"],
+                                                   "V:[$view0]-(>=6)-[$self]"],
                                  views: [imageView])
-        nameLabel.font = UIFont.boldSystemFont(ofSize: 14)
-        nameLabel.textColor = KPColorPalette.KPMainColor_v2.mainColor
+        nameLabel.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
+        nameLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
         nameLabel.text = "老木咖啡"
         
         regionLabel = UILabel()
@@ -77,24 +78,52 @@ class KPExplorationSectionCell: UICollectionViewCell {
         regionLabel.font = UIFont.systemFont(ofSize: 11)
         regionLabel.textColor = KPColorPalette.KPMainColor_v2.mainColor_light
         regionLabel.text = "台北市, 大安區"
-        
-        rateLabel = UILabel()
-        contentView.addSubview(rateLabel)
-        rateLabel.addConstraints(fromStringArray: ["H:|[$self]",
-                                                   "V:[$view0]-6-[$self]|"],
-                                   views: [regionLabel])
-        rateLabel.font = UIFont.boldSystemFont(ofSize: 11)
-        rateLabel.textColor = KPColorPalette.KPMainColor_v2.starColor
-        rateLabel.text = "4.8"
+
         
         starIcon = UIImageView(image: R.image.icon_star_filled())
         starIcon.tintColor = KPColorPalette.KPMainColor_v2.starColor
         contentView.addSubview(starIcon)
-        starIcon.addConstraints(fromStringArray: ["H:[$view0]-2-[$self(13)]",
-                                                  "V:[$self(13)]"],
-                                views:[rateLabel])
-        starIcon.addConstraintForCenterAligning(to: rateLabel,
-                                                in: .vertical)
+        starIcon.addConstraints(fromStringArray: ["H:|[$self(13)]",
+                                                  "V:[$view0]-7-[$self(13)]"],
+                                views: [regionLabel])
+        
+        rateLabel = UILabel()
+        contentView.addSubview(rateLabel)
+        rateLabel.addConstraints(fromStringArray: ["H:[$view0]-2-[$self]"],
+                                 views: [starIcon])
+        rateLabel.font = UIFont.boldSystemFont(ofSize: 11)
+        rateLabel.textColor = KPColorPalette.KPMainColor_v2.starColor
+        rateLabel.text = "4.8"
+        rateLabel.addConstraintForCenterAligning(to: starIcon,
+                                                 in: .vertical)
+        
+        rateCountLabel = UILabel()
+        contentView.addSubview(rateCountLabel)
+        rateCountLabel.addConstraints(fromStringArray: ["H:[$view0]-2-[$self]"],
+                                      views: [rateLabel])
+        rateCountLabel.font = UIFont.systemFont(ofSize: 11)
+        rateCountLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_hint
+        rateCountLabel.text = "(24)"
+        rateCountLabel.addConstraintForCenterAligning(to: starIcon,
+                                                      in: .vertical)
+        
+//        rateLabel = UILabel()
+//        contentView.addSubview(rateLabel)
+//        rateLabel.addConstraints(fromStringArray: ["H:|[$self]",
+//                                                   "V:[$view0]-6-[$self]|"],
+//                                   views: [regionLabel])
+//        rateLabel.font = UIFont.boldSystemFont(ofSize: 11)
+//        rateLabel.textColor = KPColorPalette.KPMainColor_v2.starColor
+//        rateLabel.text = "4.8(24)"
+//
+//        starIcon = UIImageView(image: R.image.icon_star_filled())
+//        starIcon.tintColor = KPColorPalette.KPMainColor_v2.starColor
+//        contentView.addSubview(starIcon)
+//        starIcon.addConstraints(fromStringArray: ["H:[$view0]-2-[$self(13)]",
+//                                                  "V:[$self(13)]"],
+//                                views:[rateLabel])
+//        starIcon.addConstraintForCenterAligning(to: rateLabel,
+//                                                in: .vertical)
         
 //        visitedLabel = UILabel()
 //        contentView.addSubview(visitedLabel)

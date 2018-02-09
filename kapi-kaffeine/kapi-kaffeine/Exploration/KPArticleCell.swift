@@ -26,13 +26,14 @@ class KPArticleCell: UICollectionViewCell {
         layer.shadowRadius = 4
         
         articleHeroImageView = UIImageView()
+        articleHeroImageView.tag = 99
         articleHeroImageView.contentMode = .scaleAspectFill
         contentView.addSubview(articleHeroImageView)
         articleHeroImageView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                               "V:|[$self]|"])
         
         titleLabel = UILabel()
-        titleLabel.font = UIFont.boldSystemFont(ofSize: 20)
+        titleLabel.font = UIFont.boldSystemFont(ofSize: KPFontSize.header)
         titleLabel.textColor = UIColor.white
         titleLabel.numberOfLines = 2
         titleLabel.text = "測試用"

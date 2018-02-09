@@ -79,7 +79,7 @@ class KPCheckView: UIView {
         self.init(frame: .zero)
         
         titleLabel = UILabel()
-        titleLabel.font = UIFont.systemFont(ofSize: 16.0)
+        titleLabel.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
         titleLabel.textColor = KPColorPalette.KPTextColor.grayColor_level2
         titleLabel.text = title
         

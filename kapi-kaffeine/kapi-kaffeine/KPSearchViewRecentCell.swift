@@ -15,7 +15,7 @@ class KPSearchViewRecentCell: UITableViewCell {
     
     lazy var shopNameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16.0)
+        label.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
         label.textColor = KPColorPalette.KPMainColor_v2.mainColor
         return label
     }()

@@ -38,8 +38,9 @@ class KPExplorationSectionView: UITableViewCell {
         backgroundColor = UIColor.white
         
         sectionTitleLabel = UILabel()
-        sectionTitleLabel.font = UIFont.boldSystemFont(ofSize: 20.0)
-        sectionTitleLabel.textColor = KPColorPalette.KPMainColor_v2.mainColor
+        sectionTitleLabel.font = UIFont.systemFont(ofSize: KPFontSize.header,
+                                                   weight: UIFont.Weight.light)
+        sectionTitleLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_title
         contentView.addSubview(sectionTitleLabel)
         sectionTitleLabel.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|",
                                                            "V:|-16-[$self]"])
@@ -47,11 +48,11 @@ class KPExplorationSectionView: UITableViewCell {
         
         sectionDescriptionLabel = UILabel()
         sectionDescriptionLabel.numberOfLines = 0
-        sectionDescriptionLabel.font = UIFont.systemFont(ofSize: 14)
-        sectionDescriptionLabel.textColor = KPColorPalette.KPMainColor_v2.mainColor
+        sectionDescriptionLabel.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
+        sectionDescriptionLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_title
         contentView.addSubview(sectionDescriptionLabel)
         sectionDescriptionLabel.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|",
-                                                                 "V:[$view0]-6-[$self]"],
+                                                                 "V:[$view0]-8-[$self]"],
                                                views: [sectionTitleLabel])
         sectionDescriptionLabel.text = "由知名部落客們聯手推薦的知名店家。"
         
@@ -70,7 +71,7 @@ class KPExplorationSectionView: UITableViewCell {
         
         
         separatar = UIView()
-        separatar.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
+        separatar.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7
         contentView.addSubview(separatar)
         separatar.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|",
                                                    "V:[$view0]-24-[$self(1)]-16-|"],

@@ -29,7 +29,7 @@ class KPMainListAddCell: UITableViewCell {
                                                        "V:|-16-[$self(48)]-16-|"])
         
         addDescriptionLabel = KPLayerLabel()
-        addDescriptionLabel.font = UIFont.systemFont(ofSize: 14.0)
+        addDescriptionLabel.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
         addDescriptionLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_description
         addDescriptionLabel.text = "找不到喜歡的咖啡店嗎？"
         addDescriptionLabel.isOpaque = true
@@ -41,7 +41,7 @@ class KPMainListAddCell: UITableViewCell {
                                      views: [addImageView])
         
         addActionLabel = KPLayerLabel()
-        addActionLabel.font = UIFont.boldSystemFont(ofSize: 14.0)
+        addActionLabel.font = UIFont.boldSystemFont(ofSize: KPFontSize.subContent)
         addActionLabel.textColor = KPColorPalette.KPMainColor_v2.mainColor
         addActionLabel.text = "新增咖啡店"
         addActionLabel.isOpaque = true

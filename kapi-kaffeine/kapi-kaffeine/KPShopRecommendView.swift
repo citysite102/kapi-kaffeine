@@ -29,7 +29,7 @@ class KPShopRecommendView: UIView {
         self.tableView.isScrollEnabled = false
         tableView.separatorColor = UIColor.clear
         self.addSubview(self.tableView)
-        self.tableView.addConstraints(fromStringArray: ["V:|[$self(420)]|",
+        self.tableView.addConstraints(fromStringArray: ["V:|-(-16)-[$self(560)]|",
                                                         "H:|[$self]|"])
         self.tableView.register(KPMainListTableViewCell.self,
                                 forCellReuseIdentifier: KPShopRecommendView.KPShopRecommendViewCellReuseIdentifier)

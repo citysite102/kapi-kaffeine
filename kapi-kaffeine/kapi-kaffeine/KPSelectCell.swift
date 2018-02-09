@@ -12,7 +12,7 @@ class KPSelectCell: UITableViewCell {
 
     lazy var contentLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16.0)
+        label.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
         label.textColor = KPColorPalette.KPTextColor.grayColor_level2
         return label
     }()

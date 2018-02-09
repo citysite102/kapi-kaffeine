@@ -14,14 +14,14 @@ class KPSearchViewDefaultCell: UITableViewCell {
     
     lazy var shopNameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 18.0)
+        label.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
         label.textColor = KPColorPalette.KPTextColor.grayColor_level2
         return label
     }()
     
     lazy var rateLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 18.0)
+        label.font = UIFont.boldSystemFont(ofSize: KPFontSize.mainContent)
         label.textColor = KPColorPalette.KPMainColor_v2.starColor
         label.text = "4.0"
         return label
@@ -29,7 +29,7 @@ class KPSearchViewDefaultCell: UITableViewCell {
     
     lazy var distanceNameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12.0)
+        label.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
         label.textColor = KPColorPalette.KPTextColor.grayColor_level3
         label.text = "距離"
         return label

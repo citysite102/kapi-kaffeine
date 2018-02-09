@@ -31,7 +31,7 @@ GMUClusterRendererDelegate {
         let shadowButton = KPShadowButton()
         shadowButton.button.setTitle("離我最近", for: .normal)
         shadowButton.button.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.mainColor!), for: .normal)
-        shadowButton.button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        shadowButton.button.titleLabel?.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
         shadowButton.layer.cornerRadius = 5
         shadowButton.backgroundColor = KPColorPalette.KPBackgroundColor.mainColor!
         return shadowButton
@@ -42,7 +42,7 @@ GMUClusterRendererDelegate {
         shadowButton.button.setTitle("搜尋這個地區", for: .normal)
         shadowButton.button.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor_v2.mainColor!),
                                                for: .normal)
-        shadowButton.button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        shadowButton.button.titleLabel?.font = UIFont.systemFont(ofSize: KPFontSize.infoContent)
         shadowButton.button.setTitleColor(KPColorPalette.KPTextColor_v2.whiteColor,
                                           for: .normal)
         shadowButton.layer.cornerRadius = 18
@@ -72,7 +72,7 @@ GMUClusterRendererDelegate {
                                      for: .normal)
         shadowButton.button.setTitleColor(KPColorPalette.KPMainColor_v2.mainColor,
                                           for: .normal)
-        shadowButton.button.titleLabel?.font = UIFont.systemFont(ofSize: 14.0)
+        shadowButton.button.titleLabel?.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
         shadowButton.button.tintColor = KPColorPalette.KPMainColor_v2.mainColor
         shadowButton.button.imageView?.contentMode = .scaleAspectFit
         shadowButton.button.imageEdgeInsets = UIEdgeInsets(top: 8,
@@ -305,7 +305,7 @@ GMUClusterRendererDelegate {
         
         view.addSubview(searchNearButton)
         searchNearButton.addConstraints(fromStringArray: ["V:|-160-[$self(36)]",
-                                                          "H:[$self(100)]"])
+                                                          "H:[$self(104)]"])
         searchNearButton.addConstraintForCenterAligningToSuperview(in: .horizontal)
         
         view.addSubview(mapButton)
@@ -322,21 +322,21 @@ GMUClusterRendererDelegate {
                                                                "V:[$self(60)]-24-[$view0]"], views:[collectionView])
         
         showAllButton = UIButton(type: .custom)
-        showAllButton.layer.cornerRadius = 2.0
-        showAllButton.layer.masksToBounds = true
-        showAllButton.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.mainColor_light!) ,
-                                         for: .normal)
-        showAllButton.setTitle("顯示\n全部",
-                               for: .normal)
-        showAllButton.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0)
-        showAllButton.titleLabel?.font = UIFont.systemFont(ofSize: 10)
-        showAllButton.titleLabel?.numberOfLines = 2
-        showAllButton.titleLabel?.lineBreakMode = .byWordWrapping
-        showAllButton.isHidden = true
-        self.view.addSubview(showAllButton)
-        showAllButton.addConstraints(fromStringArray: ["H:[$self(32)]-16-|",
-                                                       "V:[$view0]-8-[$self(32)]"],
-                                     views: [currentLocationButton])
+//        showAllButton.layer.cornerRadius = 2.0
+//        showAllButton.layer.masksToBounds = true
+//        showAllButton.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.mainColor_light!) ,
+//                                         for: .normal)
+//        showAllButton.setTitle("顯示\n全部",
+//                               for: .normal)
+//        showAllButton.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0)
+//        showAllButton.titleLabel?.font = UIFont.systemFont(ofSize: 10)
+//        showAllButton.titleLabel?.numberOfLines = 2
+//        showAllButton.titleLabel?.lineBreakMode = .byWordWrapping
+//        showAllButton.isHidden = true
+//        self.view.addSubview(showAllButton)
+//        showAllButton.addConstraints(fromStringArray: ["H:[$self(32)]-16-|",
+//                                                       "V:[$view0]-8-[$self(32)]"],
+//                                     views: [currentLocationButton])
         
         
         

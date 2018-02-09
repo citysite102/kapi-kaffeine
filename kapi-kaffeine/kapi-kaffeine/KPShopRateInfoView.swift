@@ -206,29 +206,34 @@ class KPShopRateInfoView: UIView {
             addSubview(rateView!)
             rateViews.append(rateView!)
             
-            rateView!.addConstraint(forWidth: (UIScreen.main.bounds.size.width-48)/2)
+            rateView!.addConstraint(forWidth: (UIScreen.main.bounds.size.width-72)/2)
             if index == 0 {
                 rateView!.addConstraints(fromStringArray: ["V:|[$self(24)]",
-                                                           "H:|-16-[$self]"])
+                                                           "H:|-($metric0)-[$self]"],
+                                         metrics:[KPLayoutConstant.information_horizontal_offset])
                 
             } else if index == 4 {
-                rateView!.addConstraints(fromStringArray: ["V:[$view0]-8-[$self(24)]-16-|",
-                                                           "H:|-16-[$self]"],
+                rateView!.addConstraints(fromStringArray: ["V:[$view0]-8-[$self(24)]-($metric0)-|",
+                                                           "H:|-($metric0)-[$self]"],
+                                         metrics:[KPLayoutConstant.information_horizontal_offset],
                                          views: [rateViews[index-1]])
                 
             } else if index == 5 {
                 rateView!.addConstraints(fromStringArray: ["V:|[$self(24)]",
-                                                           "H:[$view0]-24-[$self]"],
+                                                           "H:[$self]-($metric0)-|"],
+                                         metrics:[KPLayoutConstant.information_horizontal_offset],
                                          views:[rateViews[0]])
 
             } else if index == 6 || index == 7 || index == 8 || index == 9 {
                 rateView!.addConstraints(fromStringArray: ["V:[$view0]-8-[$self(24)]",
-                                                           "H:[$view1]-24-[$self]"],
+                                                           "H:[$self]-($metric0)-|"],
+                                         metrics:[KPLayoutConstant.information_horizontal_offset],
                                          views:[rateViews[index-1],
                                                 rateViews[0]])
             } else {
                 rateView!.addConstraints(fromStringArray: ["V:[$view0]-8-[$self(24)]",
-                                                           "H:|-16-[$self]"],
+                                                           "H:|-($metric0)-[$self]"],
+                                         metrics:[KPLayoutConstant.information_horizontal_offset],
                                          views: [rateViews[index-1]])
             }
         }
@@ -260,24 +265,24 @@ class rateStatusView: UIView {
         self.init(frame:frame)
         
         iconImageView = UIImageView.init(image: icon)
-        iconImageView.tintColor = KPColorPalette.KPMainColor_v2.textColor_level2
-        addSubview(iconImageView)
-        iconImageView.addConstraints(fromStringArray: ["V:|[$self(20)]|",
-                                                       "H:|[$self(20)]"])
+//        iconImageView.tintColor = KPColorPalette.KPMainColor_v2.textColor_level2
+//        addSubview(iconImageView)
+//        iconImageView.addConstraints(fromStringArray: ["V:|[$self(20)]|",
+//                                                       "H:|[$self(20)]"])
         
         rateTitleLabel = UILabel()
-        rateTitleLabel.font = UIFont.systemFont(ofSize: 13.0)
+        rateTitleLabel.font = UIFont.systemFont(ofSize: 14.0)
         rateTitleLabel.text = content
-        rateTitleLabel.textColor = KPColorPalette.KPMainColor_v2.textColor_level2
+        rateTitleLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_description
         addSubview(rateTitleLabel)
-        rateTitleLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]"],
+        rateTitleLabel.addConstraints(fromStringArray: ["H:|[$self]"],
                                       views: [iconImageView])
         rateTitleLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
         
         rateContentLabel = UILabel()
-        rateContentLabel.font = UIFont.systemFont(ofSize: 13.0)
+        rateContentLabel.font = UIFont.systemFont(ofSize: 14.0)
         rateContentLabel.text = rateContent
-        rateContentLabel.textColor = KPColorPalette.KPMainColor_v2.mainColor
+        rateContentLabel.textColor = KPColorPalette.KPMainColor_v2.mainColor_light
         addSubview(rateContentLabel)
         rateContentLabel.addConstraints(fromStringArray: ["H:[$self]|"],
                                          views: [rateTitleLabel])

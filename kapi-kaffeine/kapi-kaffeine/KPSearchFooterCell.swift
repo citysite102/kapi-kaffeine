@@ -30,7 +30,7 @@ class KPSearchFooterCell: UICollectionViewCell {
         self.backgroundColor = UIColor.clear;
         
         self.locationLabel = UILabel();
-        self.locationLabel.font = UIFont.systemFont(ofSize: 14.0);
+        self.locationLabel.font = UIFont.systemFont(ofSize: KPFontSize.subContent);
         self.locationLabel.textColor = KPColorPalette.KPTextColor.whiteColor;
         self.locationLabel.alpha = 0.5;
         self.addSubview(self.locationLabel);

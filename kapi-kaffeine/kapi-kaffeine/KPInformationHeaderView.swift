@@ -49,38 +49,34 @@ class KPInformationHeaderButtonBar: UIView {
         
         collectButton = KPInformationHeaderButton()
         addSubview(collectButton)
-        collectButton.addConstraints(fromStringArray: ["H:|[$self($metric0)]",
-                                                       "V:|[$self(90)]|"],
-                                     metrics: [UIScreen.main.bounds.size.width/4])
+        collectButton.addConstraints(fromStringArray: ["H:|[$self(56)]",
+                                                       "V:|[$self]|"])
         
         
         visitButton = KPInformationHeaderButton()
         addSubview(visitButton)
-        visitButton.addConstraints(fromStringArray: ["H:[$view0]-(-1)-[$self($metric0)]",
-                                                     "V:|[$self(90)]|"],
-                                   metrics: [UIScreen.main.bounds.size.width/4+1],
+        visitButton.addConstraints(fromStringArray: ["H:[$view0][$self(56)]",
+                                                     "V:|[$self]|"],
                                    views: [collectButton])
         
         
         rateButton = KPInformationHeaderButton()
         addSubview(rateButton)
-        rateButton.addConstraints(fromStringArray: ["H:[$view0]-(-1)-[$self($metric0)]",
-                                                    "V:|[$self(90)]|"],
-                                  metrics: [UIScreen.main.bounds.size.width/4+1],
+        rateButton.addConstraints(fromStringArray: ["H:[$view0][$self(56)]",
+                                                    "V:|[$self]|"],
                                   views: [visitButton])
         
         
         commentButton = KPInformationHeaderButton()
         addSubview(commentButton)
-        commentButton.addConstraints(fromStringArray: ["H:[$view0]-(-1)-[$self($metric0)]",
-                                                       "V:|[$self(90)]|"],
-                                     metrics: [UIScreen.main.bounds.size.width/4+1],
+        commentButton.addConstraints(fromStringArray: ["H:[$view0][$self(56)]|",
+                                                       "V:|[$self]|"],
                                      views: [rateButton])
         
         collectButton.buttonInfo = HeaderButtonInfo(title: "收藏",
                                                     info: "%d人已收藏",
                                                     defaultInfo: "無人收藏",
-                                                    icon: R.image.icon_collect()!,
+                                                    icon: R.image.icon_collect_border()!,
                                                     handler: { [unowned self] (headerButton) -> () in
                                                         if headerButton.selected == false {
                                                             headerButton.selected = true
@@ -162,7 +158,7 @@ class KPInformationHeaderButtonBar: UIView {
         rateButton.buttonInfo = HeaderButtonInfo(title: "我要評分",
                                                  info: "%d人已評分",
                                                  defaultInfo: "尚無評分",
-                                                 icon: R.image.icon_star()!,
+                                                 icon: R.image.icon_star_border()!,
                                                  handler: { [unowned self] (headerButton) -> () in
                                                     
                                                     KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.store_rate_button)
@@ -184,7 +180,7 @@ class KPInformationHeaderButtonBar: UIView {
         commentButton.buttonInfo = HeaderButtonInfo(title: "我要評論",
                                                     info: "%d人已評論",
                                                     defaultInfo: "尚無評論",
-                                                    icon: R.image.icon_comment()!,
+                                                    icon: R.image.icon_comment_border()!,
                                                     handler: { [unowned self] (headerButton) -> () in
                                                         KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.store_comment_button)
                                                         let newCommentViewController = KPNewCommentController()

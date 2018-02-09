@@ -84,7 +84,7 @@ class KPPreferenceSearchViewController: KPViewController {
                                   for: .normal)
         button.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor_v2.mainColor!),
                                   for: .selected)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
         button.layer.cornerRadius = 18.0
         button.layer.borderWidth = 2.0
         button.layer.borderColor = KPColorPalette.KPMainColor_v2.mainColor?.cgColor
@@ -94,7 +94,8 @@ class KPPreferenceSearchViewController: KPViewController {
     
     func titleLabel(_ title: String) -> UILabel {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 20.0)
+        label.font = UIFont.systemFont(ofSize: KPFontSize.header,
+                                       weight: UIFont.Weight.light)
         label.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
         label.text = title
         return label
@@ -113,11 +114,14 @@ class KPPreferenceSearchViewController: KPViewController {
 
         view.backgroundColor = UIColor.white
         navigationController?.navigationBar.topItem?.title = "偏好篩選"
-        if #available(iOS 11.0, *) {
-            navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedStringKey.foregroundColor: KPColorPalette.KPTextColor_v2.mainColor_title!]
-        } else {
-            navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: KPColorPalette.KPTextColor_v2.mainColor_title!]
-        }
+        
+//        if #available(iOS 11.0, *) {
+//            navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedStringKey.foregroundColor: KPColorPalette.KPTextColor_v2.mainColor_title!,
+//                                                                            NSAttributedStringKey.font: UIFont.systemFont(ofSize: 32)]
+//        } else {
+//            navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: KPColorPalette.KPTextColor_v2.mainColor_title!,
+//                                                                       NSAttributedStringKey.font: UIFont.systemFont(ofSize: 32)]
+//        }
         navigationController?.navigationBar.shadowImage = UIImage()
         
     
@@ -125,13 +129,13 @@ class KPPreferenceSearchViewController: KPViewController {
                                            style: .plain,
                                            target: self,
                                            action: #selector(handleRestoreButtonOnTapped))
-        barRightItem.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 16)], for: .normal)
+        barRightItem.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: KPFontSize.mainContent)], for: .normal)
         
         let barLeftItem = UIBarButtonItem(title: "取消",
                                           style: .plain,
                                           target: self,
                                           action: #selector(handleDismissButtonOnTapped))
-        barLeftItem.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 16), NSAttributedStringKey.foregroundColor: UIColor.gray],
+        barLeftItem.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: KPFontSize.mainContent), NSAttributedStringKey.foregroundColor: UIColor.gray],
                                            for: .normal)
         
         
@@ -163,7 +167,7 @@ class KPPreferenceSearchViewController: KPViewController {
         sortSegmentedControl.selectedSegmentIndex = KPFilter.sharedFilter.sortedby == .distance ? 0 : 1
         containerView.addSubview(sortSegmentedControl)
         sortSegmentedControl.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
-                                                              "V:[$view0]-12-[$self(40)]"],
+                                                              "V:[$view0]-16-[$self(40)]"],
                                             views: [sortTitleLabel])
         
         priceSettingTitleLabel = titleLabel("價格區間")
@@ -173,12 +177,12 @@ class KPPreferenceSearchViewController: KPViewController {
                                          views: [sortSegmentedControl])
         
         priceSettingDescriptionLabel = UILabel()
-        priceSettingDescriptionLabel.font = UIFont.systemFont(ofSize: 12.0)
+        priceSettingDescriptionLabel.font = UIFont.systemFont(ofSize: KPFontSize.infoContent)
         priceSettingDescriptionLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_description
         priceSettingDescriptionLabel.text = "$=低於99元 / $$=100-199元 / $$$=高於200元"
         containerView.addSubview(priceSettingDescriptionLabel)
-        priceSettingDescriptionLabel.addConstraints(fromStringArray: ["H:|-17-[$self]-16-|",
-                                                                      "V:[$view0]-8-[$self]"],
+        priceSettingDescriptionLabel.addConstraints(fromStringArray: ["H:|-18-[$self]-16-|",
+                                                                      "V:[$view0]-10-[$self]"],
                                              views: [priceSettingTitleLabel])
         
         
@@ -188,7 +192,7 @@ class KPPreferenceSearchViewController: KPViewController {
         priceSegmentedControl.selectedSegmentIndex = 0
         containerView.addSubview(priceSegmentedControl)
         priceSegmentedControl.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
-                                                               "V:[$view0]-10-[$self(40)]"],
+                                                               "V:[$view0]-12-[$self(40)]"],
                                             views: [priceSettingDescriptionLabel])
         
        
@@ -210,7 +214,7 @@ class KPPreferenceSearchViewController: KPViewController {
                                   for: .normal)
         selectAllButton?.setTitleColor(KPColorPalette.KPTextColor_v2.mainColor_description,
                                        for: .normal)
-        selectAllButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        selectAllButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: KPFontSize.subContent)
         selectAllButton.addTarget(self,
                                   action: #selector(handleSelectAllButtonOnTapped), for: .touchUpInside)
         containerView.addSubview(selectAllButton)
@@ -226,7 +230,7 @@ class KPPreferenceSearchViewController: KPViewController {
             
             if index == 0 {
                 condition.addConstraints(fromStringArray: ["H:|-17-[$self]-16-|",
-                                                           "V:[$view0]-12-[$self]"],
+                                                           "V:[$view0]-16-[$self]"],
                                           views: [conditionTitleLabel])
             } else {
                 condition.addConstraints(fromStringArray: ["H:|-17-[$self]-16-|",
@@ -247,12 +251,12 @@ class KPPreferenceSearchViewController: KPViewController {
                                                 views: [separator_two])
         
         businessHourResultLabel = UILabel()
-        businessHourResultLabel.font = UIFont.systemFont(ofSize: 16.0)
+        businessHourResultLabel.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
         businessHourResultLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
         businessHourResultLabel.text = "從 8:00 營業至 19:00"
         containerView.addSubview(businessHourResultLabel)
         businessHourResultLabel.addConstraints(fromStringArray: ["H:|-16-[$self]",
-                                                                "V:[$view0]-8-[$self]-136-|"],
+                                                                "V:[$view0]-16-[$self]-136-|"],
                                               views: [businessHourTitleLabel])
         
 
@@ -278,7 +282,7 @@ class KPPreferenceSearchViewController: KPViewController {
                                                 for: .normal)
         searchButton.layer.cornerRadius = 3.0
         searchButton.layer.masksToBounds = true
-        searchButton.titleLabel?.font = UIFont.systemFont(ofSize: 16.0)
+        searchButton.titleLabel?.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
         searchButtonContainer.addSubview(searchButton)
         searchButton.addConstraints(fromStringArray: ["V:[$view0]-16-[$self(40)]-16-|",
                                                       "H:|-16-[$self]-16-|"],
@@ -362,7 +366,7 @@ class KPSpecificTimeSupplementView: UIView {
     
     lazy var timeLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 15.0)
+        label.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
         label.textColor = KPColorPalette.KPTextColor.mainColor
         label.text = "請選擇時段"
         return label

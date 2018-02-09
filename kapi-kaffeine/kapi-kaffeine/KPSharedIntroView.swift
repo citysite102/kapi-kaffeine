@@ -12,7 +12,7 @@ class KPSharedIntroView: UIView {
     
     lazy var introTitleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 22.0)
+        label.font = UIFont.boldSystemFont(ofSize: KPFontSize.header)
         label.textAlignment = .center
         label.textColor = KPColorPalette.KPTextColor.whiteColor
         return label

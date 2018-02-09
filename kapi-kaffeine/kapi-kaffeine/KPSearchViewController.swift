@@ -50,7 +50,7 @@ class KPSearchViewController: KPViewController {
     
     lazy var emptyLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16.0)
+        label.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
         label.textColor = KPColorPalette.KPTextColor.mainColor
         label.numberOfLines = 0
         label.textAlignment = .center
@@ -92,7 +92,7 @@ class KPSearchViewController: KPViewController {
                                     for: .touchUpInside)
             
             let barLeftItem = UIBarButtonItem(customView: dismissButton)
-            barLeftItem.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 16),
+            barLeftItem.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: KPFontSize.mainContent),
                                                 NSAttributedStringKey.foregroundColor: UIColor.gray],
                                                for: .normal)
             navigationItem.leftBarButtonItem = barLeftItem
@@ -140,7 +140,7 @@ class KPSearchViewController: KPViewController {
         newStoreButton.setTitle("我要新增店家", for: .normal)
         newStoreButton.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.mainColor!),
                                                  for: .normal)
-        newStoreButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+        newStoreButton.titleLabel?.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
         newStoreButton.layer.cornerRadius = 4
         newStoreButton.layer.masksToBounds = true
         newStoreButton.addTarget(self,

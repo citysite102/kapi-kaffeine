@@ -120,10 +120,23 @@ class KPMainTabController: ESTabBarController, UITabBarControllerDelegate {
 //                               listController,
 //                               loginController]
 //        }
+        setupDefaultUI()
+    }
+    
+    func setupDefaultUI() {
         
         UITabBar.appearance().barTintColor = KPColorPalette.KPMainColor_v2.mainColor_bg
         UITabBar.appearance().unselectedItemTintColor = KPColorPalette.KPMainColor_v2.mainColor_unselect
         UITabBar.appearance().tintColor = KPColorPalette.KPMainColor_v2.mainColor_sub
+        
+        if #available(iOS 11.0, *) {
+            UINavigationBar.appearance().largeTitleTextAttributes = [NSAttributedStringKey.foregroundColor: KPColorPalette.KPTextColor_v2.mainColor_title!,
+                                                                            NSAttributedStringKey.font: UIFont.systemFont(ofSize: 32)]
+        } else {
+            UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor: KPColorPalette.KPTextColor_v2.mainColor_title!,
+                                                                       NSAttributedStringKey.font: UIFont.systemFont(ofSize: 32)]
+        }
+        
     }
 
     override func didReceiveMemoryWarning() {

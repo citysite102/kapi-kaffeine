@@ -41,7 +41,7 @@ class KPNewStoreController: KPViewController, KPSubtitleInputDelegate {
                                           style: .plain,
                                           target: self,
                                           action: #selector(handleCancelButtonOnTap(_:)))
-        barLeftItem.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 16), NSAttributedStringKey.foregroundColor: UIColor.gray],
+        barLeftItem.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: KPFontSize.mainContent), NSAttributedStringKey.foregroundColor: UIColor.gray],
                                            for: .normal)
         
         navigationItem.leftBarButtonItem = barLeftItem
@@ -119,7 +119,7 @@ class KPNewStoreController: KPViewController, KPSubtitleInputDelegate {
         nextButton.setTitle("下一步", for: .normal)
         nextButton.clipsToBounds = true
         nextButton.layer.cornerRadius = 3.0
-        nextButton.titleLabel?.font = UIFont.systemFont(ofSize: 16.0)
+        nextButton.titleLabel?.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
         buttonContainer.addSubview(nextButton)
         nextButton.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|", "V:|-10-[$self(40)]-10-|"])
         nextButton.addTarget(self, action: #selector(KPNewStoreController.handleNextButtonOnTap(_:)), for: .touchUpInside)

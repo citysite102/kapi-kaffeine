@@ -74,7 +74,7 @@ class KPMainListViewController:
                                      for: .normal)
         shadowButton.button.setTitleColor(KPColorPalette.KPMainColor_v2.mainColor,
                                           for: .normal)
-        shadowButton.button.titleLabel?.font = UIFont.systemFont(ofSize: 14.0)
+        shadowButton.button.titleLabel?.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
         shadowButton.button.tintColor = KPColorPalette.KPMainColor_v2.mainColor
         shadowButton.button.imageView?.contentMode = .scaleAspectFit
         shadowButton.button.imageEdgeInsets = UIEdgeInsets(top: 8,
@@ -157,7 +157,7 @@ class KPMainListViewController:
         
         
         statusErrorDescriptionLabel = UILabel()
-        statusErrorDescriptionLabel.font = UIFont.systemFont(ofSize: 16.0)
+        statusErrorDescriptionLabel.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
         statusErrorDescriptionLabel.numberOfLines = 0
         statusErrorDescriptionLabel.textColor = KPColorPalette.KPTextColor.mainColor
         statusErrorDescriptionLabel.textAlignment = .center
@@ -176,7 +176,7 @@ class KPMainListViewController:
         statusErrorButton.layer.cornerRadius = 3.0
         statusErrorButton.layer.masksToBounds = true
         statusErrorButton.replaceText = true
-        statusErrorButton.titleLabel?.font = UIFont.systemFont(ofSize: 16.0)
+        statusErrorButton.titleLabel?.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
         statusErrorButton.addTarget(self,
                                     action: #selector(KPMainListViewController.handleStatusErrorButtonOnTapped),
                                     for: .touchUpInside)
@@ -197,11 +197,11 @@ class KPMainListViewController:
         sortContainerView.addGestureRecognizer(sortTapGesture)
         
         sortLabel = UILabel()
-        sortLabel.font = UIFont.boldSystemFont(ofSize: 13.0)
+        sortLabel.font = UIFont.boldSystemFont(ofSize: KPFontSize.infoContent)
         sortLabel.text = "依照距離排列"
         sortLabel.textColor = KPColorPalette.KPMainColor_v2.mainColor
         sortContainerView.addSubview(sortLabel)
-        sortLabel.addConstraints(fromStringArray: ["H:|-12-[$self]"])
+        sortLabel.addConstraints(fromStringArray: ["H:|-16-[$self]"])
         sortLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
         
         sortIcon = UIImageView(image: R.image.icon_sort()!)

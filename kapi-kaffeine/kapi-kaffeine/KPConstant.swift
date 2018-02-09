@@ -97,6 +97,13 @@ struct KPNotification {
 }
 
 
+struct KPFontSize {
+    static let header: CGFloat = 22.0
+    static let mainContent: CGFloat = 16.0
+    static let subContent: CGFloat = 14.0
+    static let infoContent: CGFloat = 13.0
+}
+    
 struct KPLayoutConstant {
     static let topBar_height = 64
     static let bottomBar_height = 56
@@ -104,11 +111,13 @@ struct KPLayoutConstant {
     
     static let dismissButton_size = 24
     
+    
+    static let information_horizontal_offset = 16
+    
 }
 
 struct KPColorPalette {
 
-    
     struct KPMainColor_v2 {
         
 //        static let mainColor_light = UIColor(hexString: "#6790E0")
