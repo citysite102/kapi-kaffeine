@@ -42,7 +42,7 @@ class KPMainListAddCell: UITableViewCell {
         
         addActionLabel = KPLayerLabel()
         addActionLabel.font = UIFont.boldSystemFont(ofSize: KPFontSize.subContent)
-        addActionLabel.textColor = KPColorPalette.KPMainColor_v2.mainColor
+        addActionLabel.textColor = KPColorPalette.KPMainColor_v2.mainColor_light
         addActionLabel.text = "新增咖啡店"
         addActionLabel.isOpaque = true
         addActionLabel.layer.masksToBounds = true

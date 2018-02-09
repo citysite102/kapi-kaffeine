@@ -345,9 +345,9 @@ class KPExplorationViewController: KPViewController {
         backgroundPath.addLine(to: CGPoint(x: view.bounds.width,
                                            y: 0))
         backgroundPath.addLine(to: CGPoint(x: view.bounds.width,
-                                           y: 420))
+                                           y: 400))
         backgroundPath.addLine(to: CGPoint(x: 0,
-                                           y: 500))
+                                           y: 480))
         backgroundPath.close()
         
         let maskLayer = CAShapeLayer()
@@ -430,47 +430,6 @@ class KPExplorationViewController: KPViewController {
         searchLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]"],
                                    views:[searchIcon])
         searchLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
-        
-        
-//        locationSelectView = KPLocationSelect()
-//        locationSelectView.locationLabel.textColor = KPColorPalette.KPBackgroundColor.white_level1
-//        locationSelectView.dropDownIcon.tintColor = KPColorPalette.KPBackgroundColor.white_level1
-//        headerContainer.addSubview(locationSelectView)
-//        locationSelectView.addGestureRecognizer(longPressGesture_location)
-//        locationSelectView.addConstraints(fromStringArray: ["H:|-24-[$self]",
-//                                                            "V:|-44-[$self(44)]"])
-//
-//        searchContainerShadowView = UIView()
-//        headerContainer.addSubview(searchContainerShadowView)
-//        searchContainerShadowView.addConstraints(fromStringArray: ["H:[$view0]-16-[$self]-16-|",
-//                                                                   "V:|-44-[$self(44)]"], views: [locationSelectView])
-//
-//        searchContainer = UIView()
-//        searchContainer.backgroundColor = KPColorPalette.KPBackgroundColor.white_level3
-//        searchContainer.layer.cornerRadius = 3.0
-//        searchContainer.layer.masksToBounds = true
-//
-//        searchContainerShadowView.addSubview(searchContainer)
-//        searchContainer.addConstraints(fromStringArray: ["H:|[$self]|",
-//                                                         "V:|[$self]|"])
-//        searchContainer.addGestureRecognizer(longPressGesture)
-//        searchIcon = UIImageView(image: R.image.icon_search())
-//        searchIcon.tintColor = KPColorPalette.KPBackgroundColor.white_level1
-//        searchContainer.addSubview(searchIcon)
-//        searchIcon.addConstraints(fromStringArray: ["V:[$self(18)]",
-//                                                    "H:|-12-[$self(18)]"])
-//        searchIcon.addConstraintForCenterAligning(to: searchContainer,
-//                                                  in: .vertical,
-//                                                  constant: 0)
-//
-//        searchLabel = UILabel()
-//        searchLabel.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
-//        searchLabel.text = "搜尋店家名稱、標籤..."
-//        searchLabel.textColor = KPColorPalette.KPBackgroundColor.white_level1
-//        searchContainer.addSubview(searchLabel)
-//        searchLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]"],
-//                                   views:[searchIcon])
-//        searchLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
         
         let articleLabel = UILabel()
         articleLabel.font = UIFont.systemFont(ofSize: KPFontSize.header,
