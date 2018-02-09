@@ -452,7 +452,7 @@ class KPInformationViewController: KPViewController {
         menuInformationView.infoTitleLabel.text = "菜單"
         scrollContainer.addSubview(menuInformationView)
         menuInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                             "V:[$view0]-(-24)-[$self]"],
+                                                             "V:[$view0]-(-8)-[$self]"],
                                            views: [photoInformationView])
         //        menuInformationView.actions = [Action(title: "上傳菜單",
         //                                               style:.normal,
