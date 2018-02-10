@@ -37,9 +37,7 @@ class KPRatingViewController: KPSharedSettingViewController {
         scoreLabel.addConstraintForCenterAligning(to: titleLabel, in: .vertical)
         
         for (index, title) in ratingTitles.enumerated() {
-            let ratingView = KPRatingView.init(.star,
-                                               ratingImages[index]!,
-                                               title)
+            let ratingView = KPRatingView.init()
             ratingView.delegate = self
             ratingView.tag = index
             ratingViews.append(ratingView)

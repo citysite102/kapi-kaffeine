@@ -186,9 +186,7 @@ class KPNewCommentController: KPViewController {
                                           for: .valueChanged)
         
         for (index, title) in ratingTitles.enumerated() {
-            let ratingView = KPRatingView(.star,
-                                               ratingImages[index]!,
-                                               title)
+            let ratingView = KPRatingView()
             ratingViews.append(ratingView)
             ratingContainer.addSubview(ratingView)
             ratingView.enable = false

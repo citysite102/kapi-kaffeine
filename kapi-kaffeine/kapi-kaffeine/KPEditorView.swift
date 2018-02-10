@@ -18,7 +18,8 @@ class KPEditorView: UIView {
         case Custom
     }
     
-    var textField: UITextField!
+    let textField = UITextField()
+    let containerView = UIView()
     
     init(type: EditorType,
          title: String,
@@ -38,21 +39,31 @@ class KPEditorView: UIView {
                                                     "V:|[$self]"])
         
         
-        textField = UITextField()
-        textField.placeholder = placeHolder
-        textField.returnKeyType = .done
-        textField.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7
-        textField.layer.cornerRadius = 5
-        textField.font = UIFont.systemFont(ofSize: 16)
-        textField.delegate = self
-        addSubview(textField)
-        textField.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                   "V:[$view0(24)]-12-[$self(40)]|"],
-                                 views:[titleLabel])
-        
-        let paddingView: UIView = UIView.init(frame: CGRect(x: 0, y: 0, width: 10, height: 40))
-        textField.leftView = paddingView
-        textField.leftViewMode = .always
+        if type == .Text {
+            
+            textField.placeholder = placeHolder
+            textField.returnKeyType = .done
+            textField.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7
+            textField.layer.cornerRadius = 5
+            textField.font = UIFont.systemFont(ofSize: 16)
+            textField.delegate = self
+            addSubview(textField)
+            textField.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                       "V:[$view0(24)]-12-[$self(40)]|"],
+                                     views:[titleLabel])
+            
+            let paddingView: UIView = UIView.init(frame: CGRect(x: 0, y: 0, width: 10, height: 40))
+            textField.leftView = paddingView
+            textField.leftViewMode = .always
+            
+        } else if type == .Custom {
+            
+            addSubview(containerView)
+            containerView.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                           "V:[$view0(24)]-12-[$self(40)]|"],
+                                         views:[titleLabel])
+            
+        }
         
     }
     
