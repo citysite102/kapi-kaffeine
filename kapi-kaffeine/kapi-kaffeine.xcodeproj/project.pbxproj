@@ -226,6 +226,10 @@
 		C0EB988420205372003B26AD /* KPPhotoUploadCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EB988320205372003B26AD /* KPPhotoUploadCollectionViewCell.swift */; };
 		C0EB988720206DE7003B26AD /* KPConsumptionInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EB988620206DE7003B26AD /* KPConsumptionInfoViewController.swift */; };
 		C0EBE5431ECB29800021653E /* KPBusinessHourViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EBE5421ECB29800021653E /* KPBusinessHourViewController.swift */; };
+		C0ED090A2030705500DC9A52 /* KPBusinessHoursEditorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0ED09092030705500DC9A52 /* KPBusinessHoursEditorController.swift */; };
+		C0ED090C2030706A00DC9A52 /* KPBusinessHoursEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0ED090B2030706A00DC9A52 /* KPBusinessHoursEditor.swift */; };
+		C0ED090E2030820900DC9A52 /* KPTimeSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0ED090D2030820900DC9A52 /* KPTimeSelector.swift */; };
+		C0ED0910203085CE00DC9A52 /* RangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0ED090F203085CE00DC9A52 /* RangeSlider.swift */; };
 		C0F11FAC1F26531000E9AC60 /* KPSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F11FAB1F26531000E9AC60 /* KPSegmentedControl.swift */; };
 /* End PBXBuildFile section */
 
@@ -500,6 +504,10 @@
 		C0EB988320205372003B26AD /* KPPhotoUploadCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPPhotoUploadCollectionViewCell.swift; sourceTree = "<group>"; };
 		C0EB988620206DE7003B26AD /* KPConsumptionInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPConsumptionInfoViewController.swift; sourceTree = "<group>"; };
 		C0EBE5421ECB29800021653E /* KPBusinessHourViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = KPBusinessHourViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		C0ED09092030705500DC9A52 /* KPBusinessHoursEditorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPBusinessHoursEditorController.swift; sourceTree = "<group>"; };
+		C0ED090B2030706A00DC9A52 /* KPBusinessHoursEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPBusinessHoursEditor.swift; sourceTree = "<group>"; };
+		C0ED090D2030820900DC9A52 /* KPTimeSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPTimeSelector.swift; sourceTree = "<group>"; };
+		C0ED090F203085CE00DC9A52 /* RangeSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RangeSlider.swift; sourceTree = "<group>"; };
 		C0F11FAB1F26531000E9AC60 /* KPSegmentedControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSegmentedControl.swift; sourceTree = "<group>"; };
 		CA73E4544076455C6DC0C065 /* Pods-kapi-kaffeine.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kapi-kaffeine.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-kapi-kaffeine/Pods-kapi-kaffeine.debug.xcconfig"; sourceTree = "<group>"; };
 		FA9A4A083D5D704A746B1C9A /* Pods_kapi_kaffeineTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_kapi_kaffeineTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1333,6 +1341,7 @@
 		C0EB988820206ED9003B26AD /* Detail Info */ = {
 			isa = PBXGroup;
 			children = (
+				C0ED09082030701400DC9A52 /* Business Time */,
 				C0EB988920206EF3003B26AD /* Consumption Info */,
 				C0B376092019F25C0095E4C5 /* KPNewStoreDetailInfoViewController.swift */,
 			);
@@ -1345,6 +1354,17 @@
 				C0EB988620206DE7003B26AD /* KPConsumptionInfoViewController.swift */,
 			);
 			name = "Consumption Info";
+			sourceTree = "<group>";
+		};
+		C0ED09082030701400DC9A52 /* Business Time */ = {
+			isa = PBXGroup;
+			children = (
+				C0ED09092030705500DC9A52 /* KPBusinessHoursEditorController.swift */,
+				C0ED090B2030706A00DC9A52 /* KPBusinessHoursEditor.swift */,
+				C0ED090D2030820900DC9A52 /* KPTimeSelector.swift */,
+				C0ED090F203085CE00DC9A52 /* RangeSlider.swift */,
+			);
+			name = "Business Time";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1675,6 +1695,7 @@
 				77BB39391ED49BD100958AFE /* KPSharedIntroView.swift in Sources */,
 				771F90B11EF1976B00D66C14 /* KPFavoriteRequest.swift in Sources */,
 				77421FB41EB8F82500064FF0 /* KPRatingView.swift in Sources */,
+				C0ED090E2030820900DC9A52 /* KPTimeSelector.swift in Sources */,
 				776ACAF61E9BAFBF00B629A2 /* KPSearchTagView.swift in Sources */,
 				C01AC62A1EAAEA0A000390F7 /* GMUNonHierarchicalDistanceBasedAlgorithm.m in Sources */,
 				C031E9071EA5F0BF00E87FB1 /* KPLocationManager.swift in Sources */,
@@ -1749,6 +1770,7 @@
 				775D32ED1F0CCCCF005EF0CE /* KPInformationPhotoTransition.swift in Sources */,
 				779F9E901F1A263000B8DC25 /* KPNewStoreSearchViewController.swift in Sources */,
 				77BB392C1ED3DD6000958AFE /* KPForthIntroView.swift in Sources */,
+				C0ED090C2030706A00DC9A52 /* KPBusinessHoursEditor.swift in Sources */,
 				774208F91EA675C800C78A00 /* KPCommentModel.swift in Sources */,
 				C00A6E111ECADE3700A05C9A /* KPTimePickerViewController.swift in Sources */,
 				C0EB987F20202D88003B26AD /* KPNewStoreDetailCheckButton.swift in Sources */,
@@ -1828,6 +1850,7 @@
 				C05D10191F3B691C000731D9 /* KPSubTitlePhotoUploadView.swift in Sources */,
 				C01AC63A1EAAEA8F000390F7 /* GQTPointQuadTreeChild.m in Sources */,
 				C0D7EE7D1F557D7D00A3BC57 /* KPModifyCafeDataRequest.swift in Sources */,
+				C0ED0910203085CE00DC9A52 /* RangeSlider.swift in Sources */,
 				7776EA621F0A735B0083ECC5 /* KPPopoverView.swift in Sources */,
 				77BFC5501EB73F3E00610F55 /* NetworkRequest.swift in Sources */,
 				778521811EA3C91C00EA59D9 /* KPInformationHeaderButton.swift in Sources */,
@@ -1855,6 +1878,7 @@
 				77869E1A1EB76F690027CA98 /* NetworkErrorHandler.swift in Sources */,
 				77869E161EB75B5C0027CA98 /* NetworkClient.swift in Sources */,
 				C0F11FAC1F26531000E9AC60 /* KPSegmentedControl.swift in Sources */,
+				C0ED090A2030705500DC9A52 /* KPBusinessHoursEditorController.swift in Sources */,
 				C0E6CBEF1FC3D58100517EB8 /* KPExplorationViewController.swift in Sources */,
 				77B66FA91EACF74C008B6652 /* KPPopoverSensingView.swift in Sources */,
 				779EB1441EC0DFD4008AAFF0 /* KPPhotoDisplayViewController.swift in Sources */,
