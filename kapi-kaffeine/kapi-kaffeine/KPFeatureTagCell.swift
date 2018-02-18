@@ -22,7 +22,7 @@ class KPFeatureTagCell: UICollectionViewCell {
         super.init(frame: frame);
         
         layer.borderWidth = 1.0
-        layer.borderColor = KPColorPalette.KPMainColor.mainColor_light?.cgColor
+        layer.borderColor = KPColorPalette.KPMainColor_v2.mainColor_light?.cgColor
         addSubview(featureLabel)
         featureLabel.addConstraint(from: "H:|-8-[$self]-8-|")
         featureLabel.addConstraint(from: "V:|-2-[$self]-2-|")
@@ -32,7 +32,7 @@ class KPFeatureTagCell: UICollectionViewCell {
     override var isSelected: Bool {
         didSet {
             layer.backgroundColor = isSelected ? KPColorPalette.KPBackgroundColor.mainColor_light?.cgColor : UIColor.white.cgColor
-            self.featureLabel.textColor = isSelected ? UIColor.white : KPColorPalette.KPMainColor.mainColor_light
+            self.featureLabel.textColor = isSelected ? UIColor.white : KPColorPalette.KPMainColor_v2.mainColor_light
         }
     }
     

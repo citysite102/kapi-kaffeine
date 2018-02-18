@@ -49,7 +49,7 @@ class KPShopCommentCell: UITableViewCell {
         userPicture.contentMode = .scaleAspectFit
         userPicture.layer.cornerRadius = 32.0
         userPicture.layer.borderWidth = 1.0
-        userPicture.layer.borderColor = KPColorPalette.KPMainColor.grayColor_level5?.cgColor
+        userPicture.layer.borderColor = KPColorPalette.KPMainColor_v2.grayColor_level5?.cgColor
         userPicture.layer.masksToBounds = true
         contentView.addSubview(userPicture)
         userPicture.addConstraints(fromStringArray: ["H:|-($metric0)-[$self(64)]",
@@ -188,8 +188,8 @@ class KPShopCommentCellButton: UIView {
                 currentCount = currentCount + (buttonSelected ? 1 : -1)
             }
             
-            iconButton.tintColor = buttonSelected ? KPColorPalette.KPMainColor.mainColor :
-                KPColorPalette.KPMainColor.grayColor_level3
+            iconButton.tintColor = buttonSelected ? KPColorPalette.KPMainColor_v2.mainColor :
+                KPColorPalette.KPMainColor_v2.grayColor_level3
             countLabel.textColor = buttonSelected ? KPColorPalette.KPTextColor.mainColor :
                     KPColorPalette.KPTextColor.grayColor_level3
         }
@@ -209,7 +209,7 @@ class KPShopCommentCellButton: UIView {
         
         iconButton = KPBounceButton()
         iconButton.setImage(icon, for: .normal)
-        iconButton.tintColor = KPColorPalette.KPMainColor.grayColor_level3
+        iconButton.tintColor = KPColorPalette.KPMainColor_v2.grayColor_level3
         iconButton.isSelected = false
         addSubview(iconButton)
         iconButton.addConstraints(fromStringArray: ["V:|-4@999-[$self(18@999)]-4@999-|",

@@ -58,7 +58,7 @@ class KPSharedSettingViewController: KPViewController {
         dismissButton = KPBounceButton()
         dismissButton.setImage(R.image.icon_close()?.withRenderingMode(.alwaysTemplate),
                                for: .normal)
-        dismissButton.tintColor = KPColorPalette.KPMainColor.mainColor
+        dismissButton.tintColor = KPColorPalette.KPMainColor_v2.mainColor
         dismissButton.addTarget(self,
                                 action: #selector(KPSharedSettingViewController.handleDismissButtonOnTapped),
                                 for: .touchUpInside)

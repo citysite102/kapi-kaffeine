@@ -48,7 +48,9 @@ class KPExplorationSectionView: UITableViewCell {
         
         sectionDescriptionLabel = UILabel()
         sectionDescriptionLabel.numberOfLines = 0
-        sectionDescriptionLabel.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
+        sectionDescriptionLabel.font = UIFont.systemFont(ofSize: KPFontSize.subContent,
+                                                         weight: UIFont.Weight.light)
+
         sectionDescriptionLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_title
         contentView.addSubview(sectionDescriptionLabel)
         sectionDescriptionLabel.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|",
@@ -66,7 +68,7 @@ class KPExplorationSectionView: UITableViewCell {
         collectionView.register(KPExplorationSectionCell.self, forCellWithReuseIdentifier: "ExplorationSectionCell")
         contentView.addSubview(collectionView)
         collectionView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                        "V:[$view0]-2-[$self(190)]"],
+                                                        "V:[$view0]-10-[$self(190)]"],
                                       views: [sectionDescriptionLabel])
         
         

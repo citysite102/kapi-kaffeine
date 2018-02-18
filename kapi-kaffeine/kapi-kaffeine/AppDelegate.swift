@@ -85,7 +85,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         navigationBarAppearace.isTranslucent = false
 
 //        navigationBarAppearace.tintColor = KPColorPalette.KPTextColor.whiteColor
-//        navigationBarAppearace.barTintColor = KPColorPalette.KPMainColor.mainColor_light
+//        navigationBarAppearace.barTintColor = KPColorPalette.KPMainColor_v2.mainColor_light
 //        navigationBarAppearace.titleTextAttributes = [NSFontAttributeName: UIFont.systemFont(ofSize: 20),
 //                                                      NSForegroundColorAttributeName: KPColorPalette.KPTextColor.whiteColor!]
         

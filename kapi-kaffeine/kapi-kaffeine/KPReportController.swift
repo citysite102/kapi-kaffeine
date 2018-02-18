@@ -42,7 +42,7 @@ class KPReportController: KPViewController {
         sendButton.setTitle("送出", for: .normal)
         sendButton.isEnabled = false
         sendButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
-        sendButton.tintColor = KPColorPalette.KPMainColor.mainColor
+        sendButton.tintColor = KPColorPalette.KPMainColor_v2.mainColor
         sendButton.isEnabled = false
         sendButton.addTarget(self,
                              action: #selector(KPNewCommentController.handleSendButtonOnTapped),

@@ -13,7 +13,8 @@ import BenzeneFoundation
 
 struct KPAnalyticsEvent {
     static let ads_click = "ads_click"
-    // 紀錄點開來的店相關的屬性（可以知道哪間店被點開次數最多/評分，透過哪個管道）--> 知道從哪一頁點進去的 Map/List/Search/Profile
+    // 紀錄點開來的店相關的屬性（可以知道哪間店被點開次數最多/評分，透過哪個管道）-->
+    // 知道從哪一頁點進去的 Map/List/Search/Profile
     static let cell_click = "cell_click"
     // 頁面
     static let page_event = "page_event"
@@ -112,7 +113,7 @@ struct KPLayoutConstant {
     static let dismissButton_size = 24
     
     
-    static let information_horizontal_offset = 16
+    static let information_horizontal_offset = 20
     
 }
 
@@ -120,33 +121,21 @@ struct KPColorPalette {
 
     struct KPMainColor_v2 {
         
-//        static let mainColor_light = UIColor(hexString: "#6790E0")
-//        static let mainColor = UIColor(hexString: "#416FCB")
-
         static let mainColor_light = UIColor(hexString: "#365CA4")
         static let mainColor = UIColor(hexString: "#2F3746")
         static let mainColor_sub = UIColor(hexString: "#0DB9A3")
         static let mainColor_dark = UIColor(hexString: "#202735")
+        
         static let shadow_mainColor = UIColor(hexString: "#2F3746")
         static let shadow_darkColor = UIColor(hexString: "#111111")
         static let shadow_mainColor_black = UIColor(hexString: "#2F3746")
+        
         static let mainColor_unselect = UIColor(hexString: "#CED8E6")
         static let mainColor_bg = UIColor(hexString: "#FCFCFC")
 
-//        static let starColor = UIColor(hexString: "#FCB227")
-//        static let greenColor = UIColor(hexString: "#29B571")
-//        static let redColor = UIColor(hexString: "#FF7878")
-//        static let yellowColor = UIColor(hexString: "#FFD475")
         static let starColor = UIColor(hexString: "#F4B635")
         static let greenColor = UIColor(hexString: "#25AF76")
         static let redColor = UIColor(hexString: "#F86666")
-        static let yellowColor = UIColor(hexString: "#F4B635")
-        
-        static let textColor_level1 = UIColor(hexString: "#444444")
-        static let textColor_level2 = UIColor(hexString: "#585858")
-        static let textColor_level3 = UIColor(hexString: "#787878")
-        static let textColor_level4 = UIColor(hexString: "#8a8a8a")
-        
         
         static let grayColor_level1 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.9)
         static let grayColor_level2 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.7)
@@ -161,31 +150,9 @@ struct KPColorPalette {
         static let whiteColor_level1 = UIColor(hexString: "#ffffffaa")
     }
     
-    struct KPMainColor {
-        static let mainColor_light = UIColor(hexString: "#c8955e")
-        static let mainColor = UIColor(hexString: "#784d1f")
-        static let mainColor_sub = UIColor(hexString: "#9f9426")
-        static let statusBarColor = UIColor(hexString: "#784d1f")
-        static let borderColor = UIColor(hexString: "#e6e6e6")
-        static let starColor = UIColor(hexString: "#f9c816")
-        static let warningColor = UIColor(hexString: "#FF4040")
-        
-        static let tempButtonCOlor = UIColor(hexString: "#4DA0D3")
-        
-        static let grayColor_level1 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 1.0)
-        static let grayColor_level2 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.7)
-        static let grayColor_level3 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.5)
-        static let grayColor_level4 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.3)
-        static let grayColor_level5 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.2)
-        static let grayColor_level6 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.1)
-        static let grayColor_level7 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.05)
-        
-        static let whiteColor_level1 = UIColor(hexString: "#ffffffaa")
-    }
-    
     struct KPTextColor_v2 {
-        static let mainColor_title = UIColor(hexString: "#444444")
-        static let mainColor_subtitle = UIColor(hexString: "#585858")
+        static let mainColor_title = UIColor(hexString: "#404040")
+        static let mainColor_subtitle = UIColor(hexString: "#545454")
         static let mainColor_description = UIColor(hexString: "#8a8a8a")
         static let mainColor_hint = UIColor(hexString: "#A8A8A8")
         static let mainColor_hint_light = UIColor(hexString: "#C8C8C8")
@@ -229,10 +196,11 @@ struct KPColorPalette {
         
         static let mainColor_ripple = UIColor(rgbaHexValue: 0xc8955eaa)
         
-        static let whiteColor = UIColor(rgbaHexValue: 0xffffffff)
+        static let whiteColor = UIColor(rgbaHexValue: 0xfafafaff)
         static let white_level1 = UIColor(white: 1.0, alpha: 0.95)
         static let white_level2 = UIColor(white: 1.0, alpha: 0.15)
         static let white_level3 = UIColor(white: 1.0, alpha: 0.15)
+        
         static let grayColor_level1 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.9)
         static let grayColor_level2 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.7)
         static let grayColor_level3 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.5)

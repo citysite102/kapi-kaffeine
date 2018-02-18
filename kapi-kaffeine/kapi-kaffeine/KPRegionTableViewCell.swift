@@ -62,7 +62,7 @@ class KPRegionTableViewCell: UITableViewCell {
         
         
         regionIcon = UIImageView(image: R.image.icon_taipei())
-        regionIcon.tintColor = KPColorPalette.KPMainColor.mainColor_light
+        regionIcon.tintColor = KPColorPalette.KPMainColor_v2.mainColor_light
         regionIcon.isOpaque = true
         addSubview(regionIcon)
         regionIcon.addConstraints(fromStringArray: ["V:|-20-[$self(24)]-20-|",

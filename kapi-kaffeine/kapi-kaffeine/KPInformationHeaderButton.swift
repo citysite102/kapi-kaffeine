@@ -59,7 +59,7 @@ class KPInformationHeaderButton: UIView {
         didSet {
             icon.tintColor = selected ?
                 KPColorPalette.KPMainColor_v2.mainColor :
-                KPColorPalette.KPMainColor.grayColor_level5
+                KPColorPalette.KPMainColor_v2.grayColor_level5
 //            titleLabel.textColor = KPColorPalette.KPMainColor_v2.mainColor
 //            numberValue = self.numberValue + (selected ? 1 : (self.numberValue > 0 ? -1 : 0))
         }
@@ -78,7 +78,7 @@ class KPInformationHeaderButton: UIView {
         super.init(frame: frame)
         
 //        layer.borderWidth = 1.0
-//        layer.borderColor = KPColorPalette.KPMainColor.borderColor?.cgColor
+//        layer.borderColor = KPColorPalette.KPMainColor_v2.borderColor?.cgColor
         backgroundColor = UIColor.white
         
         icon = UIImageView()
@@ -89,7 +89,7 @@ class KPInformationHeaderButton: UIView {
         icon.addConstraint(from: "H:[$self(30)]")
         icon.tintColor = selected ?
             KPColorPalette.KPMainColor_v2.mainColor :
-            KPColorPalette.KPMainColor.grayColor_level4
+            KPColorPalette.KPMainColor_v2.grayColor_level4
         
 //        icon = UIImageView()
 //        addSubview(icon)
@@ -98,7 +98,7 @@ class KPInformationHeaderButton: UIView {
 //        icon.addConstraint(from: "H:[$self(24)]")
 //        icon.tintColor = selected ?
 //            KPColorPalette.KPMainColor_v2.mainColor :
-//            KPColorPalette.KPMainColor.grayColor_level5
+//            KPColorPalette.KPMainColor_v2.grayColor_level5
 //
 //        titleLabel = UILabel()
 //        titleLabel.font = UIFont.systemFont(ofSize: 13)

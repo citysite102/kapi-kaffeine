@@ -128,7 +128,7 @@ class KPExpNotificationView: UIView {
 //                            self.frame = CGRect(x: self.frameOrigin.x + self.frameSize.width/2 - 5,
 //                                                y: self.frameOrigin.y + self.frameSize.height/2 - 5,
 //                                                width: 10, height: 10)
-//                            self.layer.backgroundColor = KPColorPalette.KPMainColor.mainColor?.cgColor
+//                            self.layer.backgroundColor = KPColorPalette.KPMainColor_v2.mainColor?.cgColor
 //            }, completion: { (_) in
 //                
 //                let movePath = UIBezierPath()

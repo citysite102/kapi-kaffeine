@@ -64,7 +64,7 @@ class KPSearchFooterView: UIView {
         self.hotSpotContainer.layer.cornerRadius = 2.0
         self.hotSpotContainer.layer.masksToBounds = true
         self.hotSpotContainer.layer.borderWidth = 1.0
-        self.hotSpotContainer.layer.borderColor = KPColorPalette.KPMainColor.mainColor_light?.cgColor
+        self.hotSpotContainer.layer.borderColor = KPColorPalette.KPMainColor_v2.mainColor_light?.cgColor
         self.hotSpotView.addSubview(self.hotSpotContainer)
         self.hotSpotContainer.addConstraintForCenterAligningToSuperview(in: .horizontal)
         self.hotSpotContainer.addConstraintForCenterAligningToSuperview(in: .vertical)

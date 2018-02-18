@@ -203,7 +203,7 @@ extension KPSettingViewController: UITableViewDelegate, UITableViewDataSource {
             }
         case .switchControl:
             let switchControl = UISwitch()
-            switchControl.onTintColor = KPColorPalette.KPMainColor.mainColor
+            switchControl.onTintColor = KPColorPalette.KPMainColor_v2.mainColor
             cell.contentView.addSubview(switchControl)
             switchControl.addConstraints(fromStringArray: ["H:[$self]-12-|"])
             switchControl.addConstraintForCenterAligningToSuperview(in: .vertical)

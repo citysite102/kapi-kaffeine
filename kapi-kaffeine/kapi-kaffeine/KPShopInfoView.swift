@@ -31,7 +31,7 @@ class KPShopInfoView: UIView {
 //                let featureView = UIView()
 //
 //                featureView.layer.borderWidth = 1.0
-//                featureView.layer.borderColor = KPColorPalette.KPMainColor.mainColor?.cgColor
+//                featureView.layer.borderColor = KPColorPalette.KPMainColor_v2.mainColor?.cgColor
 //                featureView.layer.cornerRadius = 12.0
 //                featureContainer.addSubview(featureView)
 //                featureContentViews.append(featureView)
@@ -191,7 +191,7 @@ class KPShopInfoView: UIView {
 //                                                in: .vertical)
 //
 //        otherTimeButton = UIButton(type: .custom)
-//        otherTimeButton.tintColor = KPColorPalette.KPMainColor.mainColor
+//        otherTimeButton.tintColor = KPColorPalette.KPMainColor_v2.mainColor
 //        otherTimeButton.setTitle("其他營業時間", for: .normal)
 //        otherTimeButton.setTitleColor(UIColor.white, for: .normal)
 //        otherTimeButton.titleLabel?.font = UIFont.systemFont(ofSize: 12)

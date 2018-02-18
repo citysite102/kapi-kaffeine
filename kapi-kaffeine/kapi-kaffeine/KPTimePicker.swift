@@ -70,7 +70,7 @@ class KPTimePicker: UIView, UIPickerViewDataSource, UIPickerViewDelegate {
 //        separatorLine1.addConstraint(forHeight: 2)
         
         let separatorLine1_top = UIView()
-        separatorLine1_top.backgroundColor = KPColorPalette.KPMainColor.mainColor
+        separatorLine1_top.backgroundColor = KPColorPalette.KPMainColor_v2.mainColor
         pickerView.addSubview(separatorLine1_top)
         pickerView.addConstraint(NSLayoutConstraint(item: separatorLine1_top, attribute: .bottom, relatedBy: .equal, toItem: pickerView, attribute: .bottom, multiplier: 0.357, constant: 0))
 

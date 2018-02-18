@@ -28,8 +28,8 @@ class KPShopLocationInfoView: UIView, GMSMapViewDelegate {
             
             let circle = GMSCircle(position: CLLocationCoordinate2DMake(dataModel.latitude+0.000073, dataModel.longitude), radius: 25)
             circle.strokeWidth = 2
-            circle.strokeColor = KPColorPalette.KPMainColor.mainColor?.withAlphaComponent(0.5)
-            circle.fillColor = KPColorPalette.KPMainColor.mainColor_light?.withAlphaComponent(0.3)
+            circle.strokeColor = KPColorPalette.KPMainColor_v2.mainColor?.withAlphaComponent(0.5)
+            circle.fillColor = KPColorPalette.KPMainColor_v2.mainColor_light?.withAlphaComponent(0.3)
             circle.map = mapView
             
             self.mapView.selectedMarker = marker

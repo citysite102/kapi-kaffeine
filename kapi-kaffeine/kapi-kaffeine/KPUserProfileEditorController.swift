@@ -330,7 +330,7 @@ class KPUserProfileEditorController: UIViewController, UITextFieldDelegate, UITe
     fileprivate func generateNewTitleLabel(title: String) -> UILabel {
         let titleLabel = UILabel()
         titleLabel.font = UIFont.boldSystemFont(ofSize: 16)
-        titleLabel.textColor = KPColorPalette.KPMainColor.mainColor
+        titleLabel.textColor = KPColorPalette.KPMainColor_v2.mainColor
         titleLabel.text = title
         return titleLabel
     }

@@ -82,7 +82,7 @@ class KPForthIntroView: KPSharedIntroView {
                                          views: [secondPopImageView])
         
         animateStarView =  UIImageView(image: R.image.image_onbroading_star_animate()?.withRenderingMode(.alwaysTemplate))
-        animateStarView.tintColor = KPColorPalette.KPMainColor.grayColor_level5
+        animateStarView.tintColor = KPColorPalette.KPMainColor_v2.grayColor_level5
         thirdPopImageView.addSubview(animateStarView)
         animateStarView.addConstraints(fromStringArray: ["V:|-16-[$self]",
                                                          "H:|-87-[$self]"])

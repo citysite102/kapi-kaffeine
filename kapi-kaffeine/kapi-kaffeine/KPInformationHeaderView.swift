@@ -281,7 +281,7 @@ class KPInformationHeaderView: UIView {
                                                         "V:[$self(28)]-16-|"])
         
         scoreIcon = UIImageView(image: R.image.icon_star())
-        scoreIcon.tintColor = KPColorPalette.KPMainColor.starColor
+        scoreIcon.tintColor = KPColorPalette.KPMainColor_v2.starColor
         scoreContainer.addSubview(scoreIcon)
         scoreIcon.addConstraints(fromStringArray: ["H:|-4-[$self(18)]",
                                                    "V:|-5-[$self]-5-|"])
@@ -306,7 +306,7 @@ class KPInformationHeaderView: UIView {
                                 for: .normal)
         facebookButton.layer.cornerRadius = 2.0
         facebookButton.layer.masksToBounds = true
-        facebookButton.imageView?.tintColor = KPColorPalette.KPMainColor.mainColor
+        facebookButton.imageView?.tintColor = KPColorPalette.KPMainColor_v2.mainColor
         container.addSubview(facebookButton)
         facebookButton.addConstraints(fromStringArray: ["H:[$view0]-8-[$self(28)]",
                                                         "V:[$self(28)]-16-|"],
@@ -319,7 +319,7 @@ class KPInformationHeaderView: UIView {
         morePhotoButton.layer.cornerRadius = 2.0
         morePhotoButton.layer.masksToBounds = true
         morePhotoButton.layer.borderWidth = 1.0
-        morePhotoButton.layer.borderColor = KPColorPalette.KPMainColor.whiteColor_level1?.cgColor
+        morePhotoButton.layer.borderColor = KPColorPalette.KPMainColor_v2.whiteColor_level1?.cgColor
         morePhotoButton.setTitle("上傳\n照片", for: .normal)
         morePhotoButton.titleLabel?.font = UIFont.systemFont(ofSize: 13)
         morePhotoButton.titleLabel?.numberOfLines = 0

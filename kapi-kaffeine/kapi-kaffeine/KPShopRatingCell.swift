@@ -139,7 +139,7 @@ class KPShopRatingCell: UITableViewCell {
         userPicture.contentMode = .scaleAspectFit
         userPicture.layer.cornerRadius = 10.0
         userPicture.layer.borderWidth = 1.0
-        userPicture.layer.borderColor = KPColorPalette.KPMainColor.grayColor_level5?.cgColor
+        userPicture.layer.borderColor = KPColorPalette.KPMainColor_v2.grayColor_level5?.cgColor
         userPicture.layer.masksToBounds = true
         contentView.addSubview(userPicture)
         userPicture.addConstraints(fromStringArray: ["H:|-16-[$self(40)]",

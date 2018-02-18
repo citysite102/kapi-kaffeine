@@ -59,7 +59,7 @@ class KPMainMapMarkerInfoWindow: UIView {
         titleLabel.text = dataModel.name
         
         let starImageView = UIImageView(image: R.image.icon_star())
-        starImageView.tintColor = KPColorPalette.KPMainColor.starColor
+        starImageView.tintColor = KPColorPalette.KPMainColor_v2.starColor
         starImageView.contentMode = .scaleAspectFit
 
         let scoreLabel = UILabel()

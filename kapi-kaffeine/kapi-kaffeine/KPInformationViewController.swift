@@ -354,7 +354,7 @@ class KPInformationViewController: KPViewController {
         
         
         loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
-        loadingIndicator.tintColor = KPColorPalette.KPMainColor.mainColor
+        loadingIndicator.tintColor = KPColorPalette.KPMainColor_v2.mainColor
         scrollContainer.addSubview(loadingIndicator)
         loadingIndicator.addConstraints(fromStringArray: ["V:[$view0]-24-[$self]"],
                                         views:[informationHeaderView])
@@ -435,7 +435,7 @@ class KPInformationViewController: KPViewController {
                                             views: [commentInformationView])
         //        photoInformationView.actions = [Action(title: "上傳照片",
         //                                               style:.normal,
-        //                                               color:KPColorPalette.KPMainColor.mainColor!,
+        //                                               color:KPColorPalette.KPMainColor_v2.mainColor!,
         //                                               icon:(R.image.icon_camera()?.withRenderingMode( .alwaysTemplate))!,
         //                                               handler:{[unowned self] (infoView) -> () in
         //                                                self.photoUpload()
@@ -456,7 +456,7 @@ class KPInformationViewController: KPViewController {
                                            views: [photoInformationView])
         //        menuInformationView.actions = [Action(title: "上傳菜單",
         //                                               style:.normal,
-        //                                               color:KPColorPalette.KPMainColor.mainColor!,
+        //                                               color:KPColorPalette.KPMainColor_v2.mainColor!,
         //                                               icon:(R.image.icon_camera()?.withRenderingMode( .alwaysTemplate))!,
         //                                               handler:{[unowned self] (infoView) -> () in
         //                                                self.menuUpload()
@@ -476,7 +476,7 @@ class KPInformationViewController: KPViewController {
         rateInformationView.infoSupplementLabel.text = "\(informationDataModel.rateCount ?? 0) 人已評分"
 //        rateInformationView.actions = [Action(title:"我要評分",
 //                                              style:.normal,
-//                                              color:KPColorPalette.KPMainColor.mainColor!,
+//                                              color:KPColorPalette.KPMainColor_v2.mainColor!,
 //                                              icon:(R.image.icon_star()?.withRenderingMode(.alwaysTemplate))!,
 //                                              handler:{
 //                                                [weak self] (infoView) -> () in
@@ -526,7 +526,7 @@ class KPInformationViewController: KPViewController {
         //        locationInformationView.actions = [
         //            Action(title:"街景模式",
         //                   style:.normal,
-        //                   color:KPColorPalette.KPMainColor.mainColor_sub!,
+        //                   color:KPColorPalette.KPMainColor_v2.mainColor_sub!,
         //                   icon:R.image.icon_street(),
         //                   handler:{
         //                    [weak self] (infoView) -> () in
@@ -543,7 +543,7 @@ class KPInformationViewController: KPViewController {
         //            }),
         //            Action(title:"開啟導航",
         //                   style:.normal,
-        //                   color:KPColorPalette.KPMainColor.mainColor!,
+        //                   color:KPColorPalette.KPMainColor_v2.mainColor!,
         //                   icon:(R.image.icon_navi()?.withRenderingMode(.alwaysTemplate))!,
         //                   handler:{ [weak self] (infoView) -> () in
         //                    KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.store_navigation_button)
@@ -868,7 +868,7 @@ class KPInformationViewController: KPViewController {
             self.commentInformationView.isEmpty = true
             self.commentInformationView.actions = [Action(title:"我要評論",
                                                           style:.normal,
-                                                          color:KPColorPalette.KPMainColor.mainColor!,
+                                                          color:KPColorPalette.KPMainColor_v2.mainColor!,
                                                           icon:(R.image.icon_comment()?.withRenderingMode(.alwaysTemplate))!,
                                                           handler:{ [weak self] (infoView) -> () in
                                                             if let weSelf = self {
@@ -898,7 +898,7 @@ class KPInformationViewController: KPViewController {
                 self.commentInformationView.actions = [
                     Action(title:"看更多評論(\(commentCount))",
                         style:.normal,
-                        color:KPColorPalette.KPMainColor.mainColor_sub!,
+                        color:KPColorPalette.KPMainColor_v2.mainColor_sub!,
                         icon:nil,
                         handler:{ [weak self] (infoView) -> () in
                             if let weSelf = self {
@@ -914,7 +914,7 @@ class KPInformationViewController: KPViewController {
                     }),
                     Action(title:"修改評論",
                            style:.normal,
-                           color:KPColorPalette.KPMainColor.mainColor!,
+                           color:KPColorPalette.KPMainColor_v2.mainColor!,
                            icon:(R.image.icon_comment()?.withRenderingMode(.alwaysTemplate))!,
                            handler:{ [weak self] (infoView) -> () in
                             if let weSelf = self {
@@ -938,7 +938,7 @@ class KPInformationViewController: KPViewController {
                 self.commentInformationView.actions = [
                     Action(title:"看更多評論(\(commentCount))",
                         style:.normal,
-                        color:KPColorPalette.KPMainColor.mainColor_sub!,
+                        color:KPColorPalette.KPMainColor_v2.mainColor_sub!,
                         icon:nil,
                         handler:{ [weak self] (infoView) -> () in
                             if let weSelf = self {
@@ -954,7 +954,7 @@ class KPInformationViewController: KPViewController {
                     }),
                     Action(title:"我要評論",
                            style:.normal,
-                           color:KPColorPalette.KPMainColor.mainColor!,
+                           color:KPColorPalette.KPMainColor_v2.mainColor!,
                            icon:(R.image.icon_comment()?.withRenderingMode(.alwaysTemplate))!,
                            handler:{ [weak self] (infoView) -> () in
                             if let weSelf = self {

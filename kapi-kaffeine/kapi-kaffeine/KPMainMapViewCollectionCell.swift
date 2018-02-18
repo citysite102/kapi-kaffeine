@@ -136,7 +136,7 @@ class KPMainMapViewCollectionCell: UICollectionViewCell {
                                                             constant: -1)
         
         shopLocationIcon = UIImageView(image: R.image.icon_pin_fill())
-        shopLocationIcon.tintColor = KPColorPalette.KPMainColor_v2.textColor_level2
+        shopLocationIcon.tintColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
         contentView.addSubview(shopLocationIcon)
         shopLocationIcon.addConstraints(fromStringArray: ["H:|[$self(14)]",
                                                           "V:[$self(14)]"])

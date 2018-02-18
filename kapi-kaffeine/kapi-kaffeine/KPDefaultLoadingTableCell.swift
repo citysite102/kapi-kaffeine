@@ -43,7 +43,7 @@ class KPDefaultLoadingTableCell: UITableViewCell {
         shimmerView.isShimmering = true
         
 //        defaultTitlePlace = UIView()
-//        defaultTitlePlace.backgroundColor = KPColorPalette.KPMainColor.grayColor_level6
+//        defaultTitlePlace.backgroundColor = KPColorPalette.KPMainColor_v2.grayColor_level6
 //        addSubview(defaultTitlePlace)
 //        defaultTitlePlace.addConstraints(fromStringArray: ["H:[$view0]-8-[$self($metric0)]",
 //                                                           "V:|-12-[$self(20)]"],
@@ -51,7 +51,7 @@ class KPDefaultLoadingTableCell: UITableViewCell {
 //                                        views: [defaultImagePlace]);
 //        
 //        defaultDescriptionPlace = UIView()
-//        defaultDescriptionPlace.backgroundColor = KPColorPalette.KPMainColor.grayColor_level6
+//        defaultDescriptionPlace.backgroundColor = KPColorPalette.KPMainColor_v2.grayColor_level6
 //        addSubview(defaultDescriptionPlace)
 //        defaultDescriptionPlace.addConstraints(fromStringArray: ["H:[$view0]-8-[$self($metric0)]",
 //                                                                 "V:[$view1]-6-[$self(14)]"],
@@ -59,7 +59,7 @@ class KPDefaultLoadingTableCell: UITableViewCell {
 //                                         views: [defaultImagePlace, defaultTitlePlace]);
 //        
 //        defaultDistancePlace = UIView()
-//        defaultDistancePlace.backgroundColor = KPColorPalette.KPMainColor.grayColor_level6
+//        defaultDistancePlace.backgroundColor = KPColorPalette.KPMainColor_v2.grayColor_level6
 //        addSubview(defaultDistancePlace)
 //        defaultTitlePlace.addConstraints(fromStringArray: ["H:[$view0]-8-[$self($metric0)]",
 //                                                           "V:[$view1]-6-[$self(14)]"],

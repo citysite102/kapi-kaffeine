@@ -34,7 +34,7 @@ class KPMainListCellFeatureContainer: UIView {
                 
                 addedTagView.layer.cornerRadius = 10.0
                 addedTagView.layer.borderWidth = 1.0
-                addedTagView.layer.borderColor = KPColorPalette.KPMainColor.mainColor_light?.cgColor
+                addedTagView.layer.borderColor = KPColorPalette.KPMainColor_v2.mainColor_light?.cgColor
                 
                 if index < maximumTagCount {
                     if index == 0 {
