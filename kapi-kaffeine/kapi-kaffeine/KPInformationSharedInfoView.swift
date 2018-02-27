@@ -109,11 +109,11 @@ class KPInformationSharedInfoView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        backgroundColor = UIColor.white
+        backgroundColor = KPColorPalette.KPBackgroundColor.whiteColor
         
         infoTitleLabel = UILabel()
-        infoTitleLabel.font = UIFont.systemFont(ofSize: KPFontSize.header,
-                                                weight: UIFont.Weight.light)
+        infoTitleLabel.font = UIFont.systemFont(ofSize: KPFontSize.sub_header,
+                                                weight: UIFont.Weight.medium)
         infoTitleLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_title
         addSubview(infoTitleLabel)
         infoTitleLabel.addConstraints(fromStringArray: ["V:|-24-[$self]",

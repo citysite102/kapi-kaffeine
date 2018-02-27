@@ -28,7 +28,7 @@ class KPShopPhotoCell: UICollectionViewCell {
         
         shopPhoto = UIImageView()
         shopPhoto.contentMode = .scaleAspectFit
-        shopPhoto.layer.cornerRadius = 2.0
+        shopPhoto.layer.cornerRadius = 4.0
         shopPhoto.layer.masksToBounds = true
         shopPhoto.contentMode = .scaleAspectFill
         addSubview(shopPhoto)

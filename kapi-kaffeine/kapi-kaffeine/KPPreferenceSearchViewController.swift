@@ -95,7 +95,7 @@ class KPPreferenceSearchViewController: KPViewController {
     func titleLabel(_ title: String) -> UILabel {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: KPFontSize.header,
-                                       weight: UIFont.Weight.light)
+                                       weight: UIFont.Weight.regular)
         label.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
         label.text = title
         return label

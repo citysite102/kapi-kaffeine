@@ -31,7 +31,7 @@ class KPEditorView: UIView {
         
         let titleLabel = UILabel()
         titleLabel.font = UIFont.systemFont(ofSize: 20,
-                                            weight: UIFont.Weight.light)
+                                            weight: UIFont.Weight.regular)
         titleLabel.text = title
         titleLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
         addSubview(titleLabel)

@@ -356,7 +356,7 @@ class KPInformationViewController: KPViewController {
         loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
         loadingIndicator.tintColor = KPColorPalette.KPMainColor_v2.mainColor
         scrollContainer.addSubview(loadingIndicator)
-        loadingIndicator.addConstraints(fromStringArray: ["V:[$view0]-24-[$self]"],
+        loadingIndicator.addConstraints(fromStringArray: ["V:[$view0]-16-[$self]"],
                                         views:[informationHeaderView])
         loadingIndicator.addConstraintForCenterAligningToSuperview(in: .horizontal)
         loadingIndicator.startAnimating()
@@ -370,69 +370,21 @@ class KPInformationViewController: KPViewController {
         
         cardInformationContainer = KPInformationCardView()
         scrollContainer.addSubview(cardInformationContainer)
-        cardInformationContainer.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
-                                                                  "V:[$view0]-(-70)-[$self(140)]"],
+        cardInformationContainer.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                                  "V:[$view0][$self(176)]"],
                                                 views: [informationHeaderView])
-        
-        informationView = KPShopInfoView(informationDataModel)
-//        informationView.otherTimeButton.addTarget(self,
-//                                                  action: #selector(KPInformationViewController.handleOtherTimeButtonOnTapped),
-//                                                  for: .touchUpInside)
-//
-//        if informationDataModel.businessHour != nil {
-//            let shopStatus = informationDataModel.businessHour!.shopStatus
-//            informationView.openLabel.textColor = KPColorPalette.KPTextColor.grayColor_level1
-//            informationView.openLabel.text = shopStatus.status
-//            informationView.openHint.backgroundColor = shopStatus.isOpening ?
-//                KPColorPalette.KPShopStatusColor.opened :
-//                KPColorPalette.KPShopStatusColor.closed
-//        } else {
-//            informationView.openLabel.textColor = KPColorPalette.KPTextColor.grayColor_level5
-//            informationView.openHint.backgroundColor = KPColorPalette.KPTextColor.grayColor_level5
-//            informationView.openLabel.text = "暫無資料"
-//            informationView.otherTimeButton.isHidden = true
-//        }
-        
-        shopInformationView = KPInformationSharedInfoView()
-        shopInformationView.infoView = informationView
-        shopInformationView.infoTitleLabel.text = "店家資訊"
-        scrollContainer.addSubview(shopInformationView)
-        shopInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                             "V:[$view0]-100-[$self]"],
-                                           views: [informationHeaderView])
-        
-        
-        
-        commentInfoView = KPShopCommentInfoView()
-        commentInfoView.informationController = self
-        commentInformationView = KPInformationSharedInfoView()
-        commentInformationView.emptyLabel.text = "幫忙給點建議或分享吧:D"
-        commentInformationView.infoView = commentInfoView
-        commentInformationView.infoTitleLabel.text = "留言評論"
-        commentInformationView.infoSupplementLabel.text = "查看所有評論"
-        scrollContainer.addSubview(commentInformationView)
-        commentInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                                "V:[$view0]-24-[$self]"],
-                                              views: [shopInformationView])
-        
-//        if let commentCount = informationDataModel.commentCount {
-//            commentInformationView.infoSupplementLabel.text = "\(commentCount) 人已留言"
-//            commentInformationView.isEmpty = (commentCount == 0)
-//            updateCommentsLayout(Int(truncating: commentCount))
-//        }
-        
         
         let photoInfoView = KPShopPhotoInfoView()
         photoInfoView.informationController = self
         photoInformationView = KPInformationSharedInfoView()
         photoInformationView.emptyLabel.text = "成為第一個上傳的人吧:D"
         photoInformationView.infoView = photoInfoView
-        photoInformationView.infoTitleLabel.text = "店家照片"
+        photoInformationView.infoTitleLabel.text = "照片（30）"
         photoInformationView.infoSupplementLabel.text = "查看所有照片"
         scrollContainer.addSubview(photoInformationView)
         photoInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                              "V:[$view0]-24-[$self]"],
-                                            views: [commentInformationView])
+                                                              "V:[$view0]-16-[$self]"],
+                                            views: [cardInformationContainer])
         //        photoInformationView.actions = [Action(title: "上傳照片",
         //                                               style:.normal,
         //                                               color:KPColorPalette.KPMainColor_v2.mainColor!,
@@ -449,10 +401,9 @@ class KPInformationViewController: KPViewController {
         menuInformationView = KPInformationSharedInfoView()
         menuInformationView.emptyLabel.text = "成為第一個上傳的人吧:D"
         menuInformationView.infoView = menuInfoView
-        menuInformationView.infoTitleLabel.text = "菜單"
         scrollContainer.addSubview(menuInformationView)
         menuInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                             "V:[$view0]-(-8)-[$self]"],
+                                                             "V:[$view0][$self]"],
                                            views: [photoInformationView])
         //        menuInformationView.actions = [Action(title: "上傳菜單",
         //                                               style:.normal,
@@ -462,7 +413,26 @@ class KPInformationViewController: KPViewController {
         //                                                self.menuUpload()
         //        })]
         
-        scrollContainer.bringSubview(toFront: photoInformationView)
+//        scrollContainer.bringSubview(toFront: photoInformationView)
+        
+        
+        commentInfoView = KPShopCommentInfoView()
+        commentInfoView.informationController = self
+        commentInformationView = KPInformationSharedInfoView()
+        commentInformationView.emptyLabel.text = "幫忙給點建議或分享吧:D"
+        commentInformationView.infoView = commentInfoView
+        commentInformationView.infoTitleLabel.text = "留言評論"
+        commentInformationView.infoSupplementLabel.text = "查看所有評論"
+        scrollContainer.addSubview(commentInformationView)
+        commentInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                                "V:[$view0]-16-[$self]"],
+                                              views: [menuInformationView])
+        
+//        if let commentCount = informationDataModel.commentCount {
+//            commentInformationView.infoSupplementLabel.text = "\(commentCount) 人已留言"
+//            commentInformationView.isEmpty = (commentCount == 0)
+//            updateCommentsLayout(Int(truncating: commentCount))
+//        }
         
         
         
@@ -506,8 +476,36 @@ class KPInformationViewController: KPViewController {
 //        })]
         scrollContainer.addSubview(rateInformationView)
         rateInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                             "V:[$view0]-24-[$self]"],
-                                                views: [menuInformationView])
+                                                             "V:[$view0]-16-[$self]"],
+                                                views: [commentInformationView])
+        
+        
+        informationView = KPShopInfoView(informationDataModel)
+        //        informationView.otherTimeButton.addTarget(self,
+        //                                                  action: #selector(KPInformationViewController.handleOtherTimeButtonOnTapped),
+        //                                                  for: .touchUpInside)
+        //
+        //        if informationDataModel.businessHour != nil {
+        //            let shopStatus = informationDataModel.businessHour!.shopStatus
+        //            informationView.openLabel.textColor = KPColorPalette.KPTextColor.grayColor_level1
+        //            informationView.openLabel.text = shopStatus.status
+        //            informationView.openHint.backgroundColor = shopStatus.isOpening ?
+        //                KPColorPalette.KPShopStatusColor.opened :
+        //                KPColorPalette.KPShopStatusColor.closed
+        //        } else {
+        //            informationView.openLabel.textColor = KPColorPalette.KPTextColor.grayColor_level5
+        //            informationView.openHint.backgroundColor = KPColorPalette.KPTextColor.grayColor_level5
+        //            informationView.openLabel.text = "暫無資料"
+        //            informationView.otherTimeButton.isHidden = true
+        //        }
+        
+        shopInformationView = KPInformationSharedInfoView()
+        shopInformationView.infoView = informationView
+        shopInformationView.infoTitleLabel.text = "店家資訊"
+        scrollContainer.addSubview(shopInformationView)
+        shopInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                             "V:[$view0]-16-[$self]"],
+                                           views: [rateInformationView])
         
         
         locationInformationView = KPInformationSharedInfoView()
@@ -558,8 +556,8 @@ class KPInformationViewController: KPViewController {
         
         scrollContainer.addSubview(locationInformationView)
         locationInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                                 "V:[$view0]-24-[$self(292)]"],
-                                               views: [rateInformationView])
+                                                                 "V:[$view0]-16-[$self(292)]"],
+                                               views: [shopInformationView])
         
 
         let shopRecommendView = KPShopRecommendView()
@@ -570,7 +568,7 @@ class KPInformationViewController: KPViewController {
         recommendInformationView.infoTitleLabel.text = "你可能也會喜歡"
         scrollContainer.addSubview(recommendInformationView)
         recommendInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                                  "V:[$view0]-24-[$self]-16-|"],
+                                                                  "V:[$view0]-16-[$self]-16-|"],
                                                      views: [locationInformationView])
 
         

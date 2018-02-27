@@ -100,6 +100,7 @@ struct KPNotification {
 
 struct KPFontSize {
     static let header: CGFloat = 24.0
+    static let sub_header: CGFloat = 18.0
     static let mainContent: CGFloat = 16.0
     static let subContent: CGFloat = 14.0
     static let infoContent: CGFloat = 13.0
@@ -196,7 +197,7 @@ struct KPColorPalette {
         
         static let mainColor_ripple = UIColor(rgbaHexValue: 0xc8955eaa)
         
-        static let whiteColor = UIColor(rgbaHexValue: 0xfafafaff)
+        static let whiteColor = UIColor(rgbaHexValue: 0xffffffff)
         static let white_level1 = UIColor(white: 1.0, alpha: 0.95)
         static let white_level2 = UIColor(white: 1.0, alpha: 0.15)
         static let white_level3 = UIColor(white: 1.0, alpha: 0.15)

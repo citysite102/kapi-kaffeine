@@ -93,60 +93,62 @@ class KPShopInfoView: UIView {
         
         self.informationDataModel = informationDataModel
         
-        shopWebsiteInfoView = KPShopSubInfoView("店家網站",
+        shopWebsiteInfoView = KPShopSubInfoView("網站",
                                                 "www.abc.com",
                                                 nil,
                                                 nil)
         addSubview(shopWebsiteInfoView)
-        shopWebsiteInfoView.addConstraints(fromStringArray: ["V:|[$self(40)]",
-                                                             "H:|-($metric1)-[$self($metric0)]"],
-                                           metrics:[(UIScreen.main.bounds.width-72)/2, KPLayoutConstant.information_horizontal_offset])
+        shopWebsiteInfoView.addConstraints(fromStringArray: ["V:|-(-16)-[$self]",
+                                                             "H:|-($metric0)-[$self]-($metric0)-|"],
+                                           metrics:[KPLayoutConstant.information_horizontal_offset])
         
         shopPhoneInfoView = KPShopSubInfoView("聯絡電話",
                                               "02-2300-3000",
                                               nil,
                                               nil)
         addSubview(shopPhoneInfoView)
-        shopPhoneInfoView.addConstraints(fromStringArray: ["V:|[$self(40)]",
-                                                           "H:[$self($metric0)]-($metric1)-|"],
-                                           metrics:[(UIScreen.main.bounds.width-72)/2, KPLayoutConstant.information_horizontal_offset])
+        shopPhoneInfoView.addConstraints(fromStringArray: ["V:[$view0][$self]",
+                                                           "H:|-($metric0)-[$self]-($metric0)-|"],
+                                         metrics:[KPLayoutConstant.information_horizontal_offset],
+                                         views:[shopWebsiteInfoView])
         
         shopFacebookInfoView = KPShopSubInfoView("粉絲專頁",
                                                  "西雅圖咖啡粉絲團",
                                                  nil,
                                                  nil)
         addSubview(shopFacebookInfoView)
-        shopFacebookInfoView.addConstraints(fromStringArray: ["V:[$view0]-24-[$self(40)]",
-                                                              "H:|-($metric1)-[$self($metric0)]"],
-                                         metrics:[(UIScreen.main.bounds.width-72)/2, KPLayoutConstant.information_horizontal_offset],
-                                         views:[shopWebsiteInfoView])
+        shopFacebookInfoView.addConstraints(fromStringArray: ["V:[$view0][$self]",
+                                                              "H:|-($metric0)-[$self]-($metric0)-|"],
+                                            metrics:[KPLayoutConstant.information_horizontal_offset],
+                                            views:[shopPhoneInfoView])
         
         shopPriceInfoView = KPShopSubInfoView("平均消費",
                                               "NT$1-100元 / 人",
                                               nil,
                                               nil)
         addSubview(shopPriceInfoView)
-        shopPriceInfoView.addConstraints(fromStringArray: ["V:[$view0]-24-[$self(40)]",
-                                                           "H:[$self($metric0)]-($metric1)-|"],
-                                            metrics:[(UIScreen.main.bounds.width-72)/2, KPLayoutConstant.information_horizontal_offset],
-                                            views:[shopWebsiteInfoView])
+        shopPriceInfoView.addConstraints(fromStringArray: ["V:[$view0][$self]",
+                                                           "H:|-($metric0)-[$self]-($metric0)-|"],
+                                         metrics:[KPLayoutConstant.information_horizontal_offset],
+                                         views:[shopFacebookInfoView])
         
-        shopLocationInfoView = KPShopSubInfoView("詳細地址",
+        shopLocationInfoView = KPShopSubInfoView("地址",
                                                  "台北市大安區新生南路 100 段 21 號一樓",
                                                  "開啟導航",
                                                  nil)
+        shopLocationInfoView.showSeparator = false
         addSubview(shopLocationInfoView)
-        shopLocationInfoView.addConstraints(fromStringArray: ["V:[$view0]-24-[$self(154)]-($metric1)-|",
-                                                              "H:|-($metric1)-[$self($metric0)]"],
-                                         metrics:[(UIScreen.main.bounds.width-72)/2, KPLayoutConstant.information_horizontal_offset],
-                                         views:[shopPriceInfoView])
-        
-        locationImageView = UIImageView(image: R.image.demo_map())
-        addSubview(locationImageView)
-        locationImageView.addConstraints(fromStringArray: ["V:[$view0]-24-[$self(140)]",
-                                                           "H:[$self(140)]"],
+        shopLocationInfoView.addConstraints(fromStringArray: ["V:[$view0][$self]-20-|",
+                                                              "H:|-($metric0)-[$self]-($metric0)-|"],
+                                            metrics:[KPLayoutConstant.information_horizontal_offset],
                                             views:[shopPriceInfoView])
-        locationImageView.leftAnchor.constraint(equalTo: shopPhoneInfoView.leftAnchor).isActive = true
+        
+//        locationImageView = UIImageView(image: R.image.demo_map())
+//        addSubview(locationImageView)
+//        locationImageView.addConstraints(fromStringArray: ["V:[$view0]-24-[$self(140)]",
+//                                                           "H:[$self(140)]"],
+//                                            views:[shopPriceInfoView])
+//        locationImageView.leftAnchor.constraint(equalTo: shopPhoneInfoView.leftAnchor).isActive = true
         
         
 //        if informationDataModel.featureContents.count > 0 {
