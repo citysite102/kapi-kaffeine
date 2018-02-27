@@ -108,7 +108,7 @@ class KPExplorationViewController: KPViewController {
           {
             "priority": 2,
             "title": "熱門 Facebook 店家",
-            "description": "由知名 Facebook 部落客們聯手推薦的知名店家。",
+            "description": "知名 Facebook 部落客們聯手推薦！",
             "tag": "推薦",
             "shops": [
               {
@@ -131,7 +131,7 @@ class KPExplorationViewController: KPViewController {
           {
             "priority": 3,
             "title": "東京文青十大咖啡廳",
-            "description": "帶著行李出發吧！讓我們一起去看看東京設計美學推薦的十大必訪咖啡廳。",
+            "description": "東京設計美學推薦十大必訪咖啡廳。",
             "tag": "推薦",
             "shops": [
               {
@@ -338,7 +338,7 @@ class KPExplorationViewController: KPViewController {
         headerView = UIView(frame: CGRect(x: 0,
                                           y: 0,
                                           width: UIScreen.main.bounds.width,
-                                          height: 410))
+                                          height: 400))
         headerView.alpha = 0
         let backgroundPath = UIBezierPath()
         backgroundPath.move(to: CGPoint(x: 0, y: 0))
@@ -396,13 +396,13 @@ class KPExplorationViewController: KPViewController {
         headerContainer.addSubview(locationSelectView)
         locationSelectView.addGestureRecognizer(longPressGesture_location)
         locationSelectView.addConstraints(fromStringArray: ["H:|-20-[$self]",
-                                                            "V:|-40-[$self(36)]"])
+                                                            "V:|-48-[$self(36)]"])
         
         
         searchContainerShadowView = UIView()
         headerContainer.addSubview(searchContainerShadowView)
         searchContainerShadowView.addConstraints(fromStringArray: ["H:[$view0]-16-[$self]-16-|",
-                                                                   "V:|-40-[$self(36)]"], views: [locationSelectView])
+                                                                   "V:|-48-[$self(36)]"], views: [locationSelectView])
 
         searchContainer = UIView()
         searchContainer.backgroundColor = KPColorPalette.KPBackgroundColor.white_level3
@@ -433,7 +433,7 @@ class KPExplorationViewController: KPViewController {
         
         let articleLabel = UILabel()
         articleLabel.font = UIFont.systemFont(ofSize: KPFontSize.header,
-                                              weight: UIFont.Weight.light)
+                                              weight: UIFont.Weight.medium)
         articleLabel.textColor = KPColorPalette.KPTextColor_v2.whiteColor
         articleLabel.text = "編輯精選"
         headerView.addSubview(articleLabel)
@@ -450,7 +450,8 @@ class KPExplorationViewController: KPViewController {
         articleCollectionView.decelerationRate = UIScrollViewDecelerationRateFast
         articleCollectionView.dataSource = self
         articleCollectionView.delegate = self
-        articleCollectionView.register(KPArticleCell.self, forCellWithReuseIdentifier: "ArticleCell")
+        articleCollectionView.register(KPArticleCell.self,
+                                       forCellWithReuseIdentifier: "ArticleCell")
         articleCollectionView.backgroundColor = UIColor.clear
         headerView.addSubview(articleCollectionView)
         articleCollectionView.delaysContentTouches = true
@@ -548,7 +549,7 @@ extension KPExplorationViewController: UITableViewDataSource, UITableViewDelegat
                                                  for: indexPath) as! KPExplorationSectionView
         cell.sectionTitleLabel.text = testData[indexPath.row].title
         cell.sectionDescriptionLabel.setText(text: testData[indexPath.row].explorationDescription,
-                                             lineSpacing: 3.0)
+                                             lineSpacing: 4.0)
         cell.shops = testData[indexPath.row].shops
         cell.shouldShowSeparatar = !(indexPath.row == testData.count-1)
         
@@ -639,6 +640,11 @@ extension KPExplorationViewController: UICollectionViewDataSource, UICollectionV
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
 //        return CGSize(width: UIScreen.main.bounds.width/2 - 20*1.5,
 //                      height: 260)
+        if let cell = collectionView.cellForItem(at: indexPath) {
+            cell.setNeedsLayout()
+            cell.layoutIfNeeded()
+        }
+        
         return CGSize(width: 140,
                       height: 200)
     }

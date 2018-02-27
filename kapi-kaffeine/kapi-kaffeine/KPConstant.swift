@@ -99,7 +99,7 @@ struct KPNotification {
 
 
 struct KPFontSize {
-    static let header: CGFloat = 22.0
+    static let header: CGFloat = 24.0
     static let mainContent: CGFloat = 16.0
     static let subContent: CGFloat = 14.0
     static let infoContent: CGFloat = 13.0
@@ -151,7 +151,7 @@ struct KPColorPalette {
     }
     
     struct KPTextColor_v2 {
-        static let mainColor_title = UIColor(hexString: "#404040")
+        static let mainColor_title = UIColor(hexString: "#3a3a3a")
         static let mainColor_subtitle = UIColor(hexString: "#545454")
         static let mainColor_description = UIColor(hexString: "#8a8a8a")
         static let mainColor_hint = UIColor(hexString: "#A8A8A8")

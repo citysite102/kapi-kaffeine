@@ -39,22 +39,22 @@ class KPExplorationSectionView: UITableViewCell {
         
         sectionTitleLabel = UILabel()
         sectionTitleLabel.font = UIFont.systemFont(ofSize: KPFontSize.header,
-                                                   weight: UIFont.Weight.light)
+                                                   weight: UIFont.Weight.medium)
         sectionTitleLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_title
         contentView.addSubview(sectionTitleLabel)
         sectionTitleLabel.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|",
-                                                           "V:|-16-[$self]"])
+                                                           "V:|-8-[$self]"])
         sectionTitleLabel.text = "IG 人氣打卡店家"
         
         sectionDescriptionLabel = UILabel()
         sectionDescriptionLabel.numberOfLines = 0
-        sectionDescriptionLabel.font = UIFont.systemFont(ofSize: KPFontSize.subContent,
-                                                         weight: UIFont.Weight.light)
+        sectionDescriptionLabel.font = UIFont.systemFont(ofSize: KPFontSize.mainContent,
+                                                         weight: UIFont.Weight.regular)
 
-        sectionDescriptionLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_title
+        sectionDescriptionLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_description
         contentView.addSubview(sectionDescriptionLabel)
         sectionDescriptionLabel.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|",
-                                                                 "V:[$view0]-8-[$self]"],
+                                                                 "V:[$view0]-7-[$self]"],
                                                views: [sectionTitleLabel])
         sectionDescriptionLabel.text = "由知名部落客們聯手推薦的知名店家。"
         
@@ -68,7 +68,7 @@ class KPExplorationSectionView: UITableViewCell {
         collectionView.register(KPExplorationSectionCell.self, forCellWithReuseIdentifier: "ExplorationSectionCell")
         contentView.addSubview(collectionView)
         collectionView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                        "V:[$view0]-10-[$self(190)]"],
+                                                        "V:[$view0]-4-[$self(190)]"],
                                       views: [sectionDescriptionLabel])
         
         
@@ -76,7 +76,7 @@ class KPExplorationSectionView: UITableViewCell {
         separatar.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7
         contentView.addSubview(separatar)
         separatar.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|",
-                                                   "V:[$view0]-24-[$self(1)]-16-|"],
+                                                   "V:[$view0]-16-[$self(1)]-8-|"],
                                  views:[collectionView])
     }
     

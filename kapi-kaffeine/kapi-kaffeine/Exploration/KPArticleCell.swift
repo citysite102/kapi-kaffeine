@@ -11,7 +11,10 @@ import UIKit
 class KPArticleCell: UICollectionViewCell {
     
     var articleHeroImageView: UIImageView!
+    var gradientView: UIView!
+    var imageMaskLayer: CAGradientLayer?
     var titleLabel: UILabel!
+    var subLabel: UILabel!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -21,7 +24,7 @@ class KPArticleCell: UICollectionViewCell {
         contentView.layer.shouldRasterize = true
         
         layer.shadowColor = KPColorPalette.KPMainColor_v2.shadow_darkColor?.cgColor
-        layer.shadowOffset = CGSize(width: 0.0, height: 3.0)
+        layer.shadowOffset = CGSize(width: 0.0, height: 4.0)
         layer.shadowOpacity = 0.5
         layer.shadowRadius = 4
         
@@ -32,15 +35,49 @@ class KPArticleCell: UICollectionViewCell {
         articleHeroImageView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                               "V:|[$self]|"])
         
+        gradientView = UIView()
+        contentView.addSubview(gradientView)
+        gradientView.addConstraints(fromStringArray: ["V:|[$self]|",
+                                                      "H:|[$self]|"])
+        
+        
+        subLabel = UILabel()
+        subLabel.font = UIFont.boldSystemFont(ofSize: 10)
+        subLabel.textColor = UIColor.white
+        subLabel.numberOfLines = 0
+        subLabel.text = "1024 人已看過"
+        contentView.addSubview(subLabel)
+        subLabel.addConstraints(fromStringArray: ["H:|-10-[$self]-10-|",
+                                                  "V:[$self]-10-|"])
+        
         titleLabel = UILabel()
-        titleLabel.font = UIFont.boldSystemFont(ofSize: KPFontSize.header)
+        titleLabel.font = UIFont.boldSystemFont(ofSize: 16)
         titleLabel.textColor = UIColor.white
-        titleLabel.numberOfLines = 2
-        titleLabel.text = "測試用"
+        titleLabel.numberOfLines = 0
+        titleLabel.setText(text: "倫敦，一座咖啡香四溢的城市",
+                           lineSpacing: 3.0)
         contentView.addSubview(titleLabel)
-        titleLabel.addConstraints(fromStringArray: ["H:|-10-[$self]",
-                                                    "V:[$self]-16-|"])
+        titleLabel.addConstraints(fromStringArray: ["H:|-10-[$self]-10-|",
+                                                    "V:[$self]-6-[$view0]"],
+                                  views: [subLabel])
     }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        if imageMaskLayer == nil && articleHeroImageView.frameSize.width != 0 {
+            imageMaskLayer = CAGradientLayer()
+            imageMaskLayer!.opacity = 0.3
+            imageMaskLayer!.frame = CGRect(x: 0, y: 0,
+                                           width: articleHeroImageView.frameSize.width,
+                                           height: articleHeroImageView.frameSize.height)
+            imageMaskLayer!.colors = [UIColor.init(r: 0, g: 0, b: 0, a: 0.0).cgColor,
+                                      UIColor.init(r: 0, g: 0, b: 0, a: 0.9).cgColor]
+            imageMaskLayer!.startPoint = CGPoint(x: 0.5, y: 0.2)
+            imageMaskLayer!.endPoint = CGPoint(x: 0.5, y: 1.0)
+            gradientView.layer.addSublayer(imageMaskLayer!)
+        }
+    }
+    
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

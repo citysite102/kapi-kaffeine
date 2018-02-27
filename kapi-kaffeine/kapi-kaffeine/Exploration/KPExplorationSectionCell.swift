@@ -76,7 +76,7 @@ class KPExplorationSectionCell: UICollectionViewCell {
                                                      "V:[$view0]-5-[$self]"],
                                    views: [nameLabel])
         regionLabel.font = UIFont.systemFont(ofSize: 11)
-        regionLabel.textColor = KPColorPalette.KPMainColor_v2.mainColor_light
+        regionLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
         regionLabel.text = "台北市, 大安區"
 
         
