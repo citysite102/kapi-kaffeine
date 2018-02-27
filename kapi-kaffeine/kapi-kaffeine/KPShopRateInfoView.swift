@@ -213,7 +213,7 @@ class KPShopRateInfoView: UIView {
                                          metrics:[KPLayoutConstant.information_horizontal_offset])
                 
             } else if index == 4 {
-                rateView!.addConstraints(fromStringArray: ["V:[$view0]-8-[$self(24)]-($metric0)-|",
+                rateView!.addConstraints(fromStringArray: ["V:[$view0]-14-[$self(24)]-($metric0)-|",
                                                            "H:|-($metric0)-[$self]"],
                                          metrics:[KPLayoutConstant.information_horizontal_offset],
                                          views: [rateViews[index-1]])
@@ -225,13 +225,13 @@ class KPShopRateInfoView: UIView {
                                          views:[rateViews[0]])
 
             } else if index == 6 || index == 7 || index == 8 || index == 9 {
-                rateView!.addConstraints(fromStringArray: ["V:[$view0]-8-[$self(24)]",
+                rateView!.addConstraints(fromStringArray: ["V:[$view0]-14-[$self(24)]",
                                                            "H:[$self]-($metric0)-|"],
                                          metrics:[KPLayoutConstant.information_horizontal_offset],
                                          views:[rateViews[index-1],
                                                 rateViews[0]])
             } else {
-                rateView!.addConstraints(fromStringArray: ["V:[$view0]-8-[$self(24)]",
+                rateView!.addConstraints(fromStringArray: ["V:[$view0]-14-[$self(24)]",
                                                            "H:|-($metric0)-[$self]"],
                                          metrics:[KPLayoutConstant.information_horizontal_offset],
                                          views: [rateViews[index-1]])
@@ -271,7 +271,7 @@ class rateStatusView: UIView {
 //                                                       "H:|[$self(20)]"])
         
         rateTitleLabel = UILabel()
-        rateTitleLabel.font = UIFont.systemFont(ofSize: 14.0)
+        rateTitleLabel.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
         rateTitleLabel.text = content
         rateTitleLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_description
         addSubview(rateTitleLabel)
@@ -280,7 +280,7 @@ class rateStatusView: UIView {
         rateTitleLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
         
         rateContentLabel = UILabel()
-        rateContentLabel.font = UIFont.systemFont(ofSize: 14.0)
+        rateContentLabel.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
         rateContentLabel.text = rateContent
         rateContentLabel.textColor = KPColorPalette.KPMainColor_v2.mainColor_light
         addSubview(rateContentLabel)

@@ -41,14 +41,14 @@ class KPInformationCardView: UIView {
         titleInfoLabel.textAlignment = .center
         titleInfoLabel.numberOfLines = 0
         container.addSubview(titleInfoLabel)
-        titleInfoLabel.addConstraints(fromStringArray: ["V:|-24-[$self]",
+        titleInfoLabel.addConstraints(fromStringArray: ["V:|-22-[$self]",
                                                         "H:|-16-[$self]-16-|"])
         titleInfoLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
         
         rateContainer = UIView()
         container.addSubview(rateContainer)
         rateContainer.addConstraintForCenterAligningToSuperview(in: .horizontal)
-        rateContainer.addConstraints(fromStringArray: ["V:[$view0]-12-[$self]"],
+        rateContainer.addConstraints(fromStringArray: ["V:[$view0]-16-[$self]"],
                                      views: [titleInfoLabel])
         
         starIcons = [UIImageView]()
@@ -85,7 +85,7 @@ class KPInformationCardView: UIView {
         
         locationInfoLabel = UILabel()
         locationInfoLabel.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
-        locationInfoLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
+        locationInfoLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_description
         locationInfoLabel.text = "台北 大安區"
         container.addSubview(locationInfoLabel)
         locationInfoLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
@@ -96,7 +96,7 @@ class KPInformationCardView: UIView {
 
         businessInfoLabel = UILabel()
         businessInfoLabel.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
-        businessInfoLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
+        businessInfoLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_description
         businessInfoLabel.text = "營業時間：平日：12:00 - 19:30"
         container.addSubview(businessInfoLabel)
         businessInfoLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)

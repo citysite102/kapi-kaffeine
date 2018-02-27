@@ -136,9 +136,9 @@ class KPShopInfoView: UIView {
                                                  "台北市大安區新生南路 100 段 21 號一樓",
                                                  "開啟導航",
                                                  nil)
-        shopLocationInfoView.showSeparator = false
         addSubview(shopLocationInfoView)
-        shopLocationInfoView.addConstraints(fromStringArray: ["V:[$view0][$self]-20-|",
+        shopLocationInfoView.showSeparator = false
+        shopLocationInfoView.addConstraints(fromStringArray: ["V:[$view0][$self]-8-|",
                                                               "H:|-($metric0)-[$self]-($metric0)-|"],
                                             metrics:[KPLayoutConstant.information_horizontal_offset],
                                             views:[shopPriceInfoView])
