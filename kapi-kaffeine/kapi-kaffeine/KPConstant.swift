@@ -114,7 +114,7 @@ struct KPLayoutConstant {
     static let dismissButton_size = 24
     
     
-    static let information_horizontal_offset = 20
+    static let information_horizontal_offset = 18
     
 }
 

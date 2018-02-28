@@ -371,7 +371,7 @@ class KPInformationViewController: KPViewController {
         cardInformationContainer = KPInformationCardView()
         scrollContainer.addSubview(cardInformationContainer)
         cardInformationContainer.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                                  "V:[$view0][$self(176)]"],
+                                                                  "V:[$view0][$self]"],
                                                 views: [informationHeaderView])
         
         let photoInfoView = KPShopPhotoInfoView()
@@ -508,19 +508,19 @@ class KPInformationViewController: KPViewController {
                                            views: [rateInformationView])
         
         
-        locationInformationView = KPInformationSharedInfoView()
-        locationInformationView.infoTitleLabel.text = "位置訊息"
-        if let distanceInMeter = informationDataModel.distanceInMeter {
-            var distance = distanceInMeter
-            var unit = "m"
-            if distance > 1000 {
-                unit = "km"
-                distance = distance/1000
-            }
-            locationInformationView.infoSupplementLabel.text = String(format: "%.1f%@", distance, unit)
-        } else {
-            locationInformationView.infoSupplementLabel.text = "開啟導航"
-        }
+//        locationInformationView = KPInformationSharedInfoView()
+//        locationInformationView.infoTitleLabel.text = "位置訊息"
+//        if let distanceInMeter = informationDataModel.distanceInMeter {
+//            var distance = distanceInMeter
+//            var unit = "m"
+//            if distance > 1000 {
+//                unit = "km"
+//                distance = distance/1000
+//            }
+//            locationInformationView.infoSupplementLabel.text = String(format: "%.1f%@", distance, unit)
+//        } else {
+//            locationInformationView.infoSupplementLabel.text = "開啟導航"
+//        }
         //        locationInformationView.actions = [
         //            Action(title:"街景模式",
         //                   style:.normal,
@@ -553,11 +553,10 @@ class KPInformationViewController: KPViewController {
         //
         //            })
         //        ]
-        
-        scrollContainer.addSubview(locationInformationView)
-        locationInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                                 "V:[$view0]-16-[$self(292)]"],
-                                               views: [shopInformationView])
+//        scrollContainer.addSubview(locationInformationView)
+//        locationInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
+//                                                                 "V:[$view0]-16-[$self(292)]"],
+//                                               views: [shopInformationView])
         
 
         let shopRecommendView = KPShopRecommendView()
@@ -569,7 +568,7 @@ class KPInformationViewController: KPViewController {
         scrollContainer.addSubview(recommendInformationView)
         recommendInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                                   "V:[$view0]-16-[$self]-16-|"],
-                                                     views: [locationInformationView])
+                                                     views: [shopInformationView])
 
         
         NotificationCenter.default.addObserver(self,
@@ -606,10 +605,9 @@ class KPInformationViewController: KPViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        let shopLocationInfoView = KPShopLocationInfoView()
-        
-        shopLocationInfoView.dataModel = informationDataModel
-        locationInformationView.infoView = shopLocationInfoView
+//        let shopLocationInfoView = KPShopLocationInfoView()
+//        shopLocationInfoView.dataModel = informationDataModel
+//        locationInformationView.infoView = shopLocationInfoView
         navBarFixBound = navigationController!.navigationBar.bounds
         viewHasAppeared = true
         informationHeaderView.shopPhoto.isHidden = false

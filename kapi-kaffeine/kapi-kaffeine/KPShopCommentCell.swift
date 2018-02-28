@@ -114,13 +114,13 @@ class KPShopCommentCell: UITableViewCell {
 //                                                        "V:[$view1]-12-[$self]-8-|"],
 //                                           metrics: [UIScreen.main.bounds.size.width/2],
 //                                           views: [voteUpButton, userCommentLabel])
-        
-        separator = UIView()
-        separator.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7
-        addSubview(separator)
-        separator.addConstraints(fromStringArray: ["V:[$self(1)]|",
-                                                   "H:|-($metric0)-[$self]-($metric0)-|"],
-                                 metrics:[KPLayoutConstant.information_horizontal_offset])
+//
+//        separator = UIView()
+//        separator.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7
+//        addSubview(separator)
+//        separator.addConstraints(fromStringArray: ["V:[$self(1)]|",
+//                                                   "H:|-($metric0)-[$self]-($metric0)-|"],
+//                                 metrics:[KPLayoutConstant.information_horizontal_offset])
     }
     
     required init?(coder aDecoder: NSCoder) {

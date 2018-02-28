@@ -31,7 +31,7 @@ class KPShopSubInfoView: UIView {
         titleLabel = UILabel()
         titleLabel.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
         titleLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_description
-        titleLabel.text = title
+        titleLabel.setText(text: title, lineSpacing: 4)
         addSubview(titleLabel)
         titleLabel.addConstraints(fromStringArray: ["H:|[$self]"])
         titleLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
@@ -39,7 +39,7 @@ class KPShopSubInfoView: UIView {
         contentLabel = UILabel()
         contentLabel.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
         contentLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_title
-        contentLabel.setText(text: content, lineSpacing: 3)
+        contentLabel.setText(text: content, lineSpacing: 4)
         contentLabel.textAlignment = .right
         contentLabel.numberOfLines = 0
         addSubview(contentLabel)

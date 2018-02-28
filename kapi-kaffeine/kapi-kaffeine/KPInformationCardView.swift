@@ -41,8 +41,9 @@ class KPInformationCardView: UIView {
         titleInfoLabel.textAlignment = .center
         titleInfoLabel.numberOfLines = 0
         container.addSubview(titleInfoLabel)
-        titleInfoLabel.addConstraints(fromStringArray: ["V:|-22-[$self]",
-                                                        "H:|-16-[$self]-16-|"])
+        titleInfoLabel.addConstraints(fromStringArray: ["V:|-($metric0)-[$self]",
+                                                        "H:|-16-[$self]-16-|"],
+                                      metrics:[KPLayoutConstant.information_horizontal_offset])
         titleInfoLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
         
         rateContainer = UIView()
@@ -63,14 +64,14 @@ class KPInformationCardView: UIView {
                 starIcon.addConstraints(fromStringArray: ["H:|[$self(18)]",
                                                           "V:|[$self(18)]|"])
             } else {
-                starIcon.addConstraints(fromStringArray: ["H:[$view0]-8-[$self(18)]",
+                starIcon.addConstraints(fromStringArray: ["H:[$view0]-6-[$self(18)]",
                                                           "V:|[$self(18)]|"],
                                         views:[starIcons[index-1]])
             }
         }
         
         rateLabel = KPLayerLabel()
-        rateLabel.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
+        rateLabel.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
         rateLabel.textColor = KPColorPalette.KPMainColor_v2.starColor
         rateLabel.text = "4.8"
         rateLabel.isOpaque = true
@@ -84,24 +85,27 @@ class KPInformationCardView: UIView {
         
         
         locationInfoLabel = UILabel()
-        locationInfoLabel.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
-        locationInfoLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_description
+        locationInfoLabel.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
+        locationInfoLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
         locationInfoLabel.text = "台北 大安區"
         container.addSubview(locationInfoLabel)
         locationInfoLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
-        locationInfoLabel.addConstraints(fromStringArray: ["V:[$view0]-10-[$self]"],
+        locationInfoLabel.addConstraints(fromStringArray: ["V:[$view0]-8-[$self]"],
                                          views: [rateLabel])
         
         
 
         businessInfoLabel = UILabel()
-        businessInfoLabel.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
-        businessInfoLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_description
+        businessInfoLabel.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
+        businessInfoLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
         businessInfoLabel.text = "營業時間：平日：12:00 - 19:30"
         container.addSubview(businessInfoLabel)
         businessInfoLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
-        businessInfoLabel.addConstraints(fromStringArray: ["V:[$view0]-10-[$self]"],
+        businessInfoLabel.addConstraints(fromStringArray: ["V:[$view0]-8-[$self]-($metric0)-|"],
+                                         metrics:[KPLayoutConstant.information_horizontal_offset],
                                          views: [locationInfoLabel])
+        
+        
         
 //        separator = UIView()
 //        separator.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7

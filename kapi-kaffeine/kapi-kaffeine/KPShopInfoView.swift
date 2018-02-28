@@ -7,11 +7,37 @@
 //
 
 import UIKit
+import GoogleMaps
 
-class KPShopInfoView: UIView {
+class KPShopInfoView: UIView, GMSMapViewDelegate {
 
     var titleLabel: UILabel!
-    var informationDataModel: KPDataModel!
+    var informationDataModel: KPDataModel! {
+        didSet {
+            let position = CLLocationCoordinate2DMake(informationDataModel.latitude,
+                                                      informationDataModel.longitude)
+            let marker = GMSMarker(position: position)
+            marker.title = informationDataModel.name
+            if let rate = informationDataModel.averageRate?.doubleValue, rate >= 4.5 {
+                marker.icon = R.image.icon_mapMarkerSelected()
+            } else {
+                marker.icon = R.image.icon_mapMarker()
+            }
+            marker.map = self.mapView
+            marker.userData = informationDataModel
+            
+            let circle = GMSCircle(position: CLLocationCoordinate2DMake(informationDataModel.latitude+0.000073,
+                                                                        informationDataModel.longitude), radius: 25)
+            circle.strokeWidth = 2
+            circle.strokeColor = KPColorPalette.KPMainColor_v2.mainColor?.withAlphaComponent(0.5)
+            circle.fillColor = KPColorPalette.KPMainColor_v2.mainColor_light?.withAlphaComponent(0.3)
+            circle.map = mapView
+            
+            self.mapView.selectedMarker = marker
+            self.mapView.camera = GMSCameraPosition.camera(withTarget: position, zoom: self.mapView.camera.zoom)
+        }
+    }
+    
 //    var featureContainer: UIView!
 //    var featureContentViews: [UIView] = [UIView]()
 //    var featureContents: [String]! {
@@ -69,24 +95,14 @@ class KPShopInfoView: UIView {
     var shopFacebookInfoView: KPShopSubInfoView!
     var shopPriceInfoView: KPShopSubInfoView!
     var shopLocationInfoView: KPShopSubInfoView!
-    var locationImageView: UIImageView!
-    
-//    var openTimeIcon: UIImageView!
-//    var openHint: UIView!
-//    var openLabel: UILabel!
-//    var otherTimeButton: UIButton!
-//    var phoneIcon: UIImageView!
-//    var phoneLabel: UITextView!
-//    var locationIcon: UIImageView!
-//    var locationLabel: UILabel!
-//    var priceIcon: UIImageView!
-//    var priceLabel: UILabel!
-
     let priceContents = ["NT$1-100元 / 人",
                          "NT$101-200元 / 人",
                          "NT$201-300元 / 人",
                          "NT$301-400元 / 人",
                          "大於NT$400元 / 人"]
+    
+    var mapView: GMSMapView!
+    
     
     convenience init(_ informationDataModel: KPDataModel) {
         self.init(frame: .zero)
@@ -138,17 +154,23 @@ class KPShopInfoView: UIView {
                                                  nil)
         addSubview(shopLocationInfoView)
         shopLocationInfoView.showSeparator = false
-        shopLocationInfoView.addConstraints(fromStringArray: ["V:[$view0][$self]-8-|",
+        shopLocationInfoView.addConstraints(fromStringArray: ["V:[$view0][$self]",
                                                               "H:|-($metric0)-[$self]-($metric0)-|"],
                                             metrics:[KPLayoutConstant.information_horizontal_offset],
                                             views:[shopPriceInfoView])
         
-//        locationImageView = UIImageView(image: R.image.demo_map())
-//        addSubview(locationImageView)
-//        locationImageView.addConstraints(fromStringArray: ["V:[$view0]-24-[$self(140)]",
-//                                                           "H:[$self(140)]"],
-//                                            views:[shopPriceInfoView])
-//        locationImageView.leftAnchor.constraint(equalTo: shopPhoneInfoView.leftAnchor).isActive = true
+        let camera = GMSCameraPosition.camera(withLatitude: 25.018744,
+                                              longitude: 121.532785, zoom: 18.0)
+        mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
+        mapView.delegate = self
+        mapView.isUserInteractionEnabled = false
+        addSubview(mapView)
+        mapView.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]-($metric0)-|",
+                                                 "V:[$view0][$self(240)]-($metric0)-|"],
+                               metrics:[KPLayoutConstant.information_horizontal_offset],
+                               views:[shopLocationInfoView])
+        
+        
         
         
 //        if informationDataModel.featureContents.count > 0 {
@@ -174,115 +196,13 @@ class KPShopInfoView: UIView {
 //                                        views: [titleLabel])
 //        }
         
-//        openLabel = UILabel()
-//        openLabel.font = UIFont.systemFont(ofSize: 14)
-//        openLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_title
-//        addSubview(openLabel)
-//        openLabel.addConstraints(fromStringArray: ["H:[$view0]-5-[$self]"],
-//                                 views: [openTimeIcon, titleLabel])
-//        openLabel.addConstraintForCenterAligning(to: openTimeIcon, in: .vertical)
-//
-//        openHint = UIView()
-//        openHint.layer.cornerRadius = 3.0
-//        openHint.backgroundColor = KPColorPalette.KPShopStatusColor.opened
-//        addSubview(openHint)
-//        openHint.addConstraints(fromStringArray: ["V:[$self(6)]",
-//                                                  "H:[$view0]-8-[$self(6)]"],
-//                                views: [openLabel])
-//        openHint.addConstraintForCenterAligning(to: openTimeIcon,
-//                                                in: .vertical)
-//
-//        otherTimeButton = UIButton(type: .custom)
-//        otherTimeButton.tintColor = KPColorPalette.KPMainColor_v2.mainColor
-//        otherTimeButton.setTitle("其他營業時間", for: .normal)
-//        otherTimeButton.setTitleColor(UIColor.white, for: .normal)
-//        otherTimeButton.titleLabel?.font = UIFont.systemFont(ofSize: 12)
-//        otherTimeButton.backgroundColor = KPColorPalette.KPBackgroundColor.mainColor
-//        otherTimeButton.layer.cornerRadius = 4.0
-//        addSubview(otherTimeButton)
-//        otherTimeButton.addConstraints(fromStringArray: ["H:[$view0]-8-[$self(92)]-(>=16)-|",
-//                                                         "V:[$self(24)]"],
-//                                       views: [openLabel])
-//        otherTimeButton.addConstraintForCenterAligning(to: openLabel,
-//                                                       in: .vertical)
-//
-//        priceIcon = UIImageView(image: R.image.icon_money_l())
-//        priceIcon.tintColor = KPColorPalette.KPMainColor_v2.textColor_level1
-//        addSubview(priceIcon)
-//        priceIcon.addConstraints(fromStringArray: ["V:[$self(20)]",
-//                                                   "H:|-16-[$self(20)]"],
-//                                 views: [openTimeIcon])
-//
-//        priceLabel = UILabel()
-//        priceLabel.font = UIFont.systemFont(ofSize: 14)
-//        priceLabel.textColor = informationDataModel.address != nil ?
-//            KPColorPalette.KPTextColor_v2.mainColor_title :
-//            KPColorPalette.KPTextColor_v2.mainColor_subtitle
-//        addSubview(priceLabel)
-//        priceLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]",
-//                                                    "V:[$view1]-16-[$self]"],
-//                                  views: [priceIcon, openLabel])
-//        priceIcon.addConstraintForCenterAligning(to: priceLabel,
-//                                                 in: .vertical)
-//
-//
-//        phoneIcon = UIImageView(image: R.image.icon_phone())
-//        phoneIcon.tintColor = KPColorPalette.KPMainColor_v2.textColor_level1
-//        addSubview(phoneIcon)
-//        phoneIcon.addConstraints(fromStringArray: ["V:[$self(20)]",
-//                                                   "H:|-16-[$self(20)]"],
-//                                 views: [priceIcon])
-//
-//        phoneLabel = UITextView()
-//        phoneLabel.isEditable = false
-//        phoneLabel.font = UIFont.systemFont(ofSize: 14)
-//        phoneLabel.dataDetectorTypes = .phoneNumber
-//        phoneLabel.textContainerInset = UIEdgeInsetsMake(1, 0, 0, 0)
-//        phoneLabel.textContainer.lineFragmentPadding = 0
-//        phoneLabel.textColor = informationDataModel.phone != nil ?
-//            KPColorPalette.KPTextColor_v2.mainColor_title :
-//            KPColorPalette.KPTextColor_v2.mainColor_subtitle
-//        addSubview(phoneLabel)
-//        phoneLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]-16-|",
-//                                                    "V:[$view1]-12-[$self(20)]"],
-//                                  views: [phoneIcon, priceLabel])
-//        phoneIcon.addConstraintForCenterAligning(to: phoneLabel,
-//                                                 in: .vertical)
-//
-//        locationIcon = UIImageView(image: R.image.icon_pin())
-//        locationIcon.tintColor = KPColorPalette.KPMainColor_v2.textColor_level1
-//        addSubview(locationIcon)
-//        locationIcon.addConstraints(fromStringArray: ["V:[$self(20)]",
-//                                                      "H:|-16-[$self(20)]"],
-//                                    views: [phoneIcon])
-//
-//        locationLabel = UILabel()
-//        locationLabel.font = UIFont.systemFont(ofSize: 14)
-//        locationLabel.numberOfLines = 0
-//        locationLabel.textColor = informationDataModel.address != nil ?
-//            KPColorPalette.KPTextColor_v2.mainColor_title :
-//            KPColorPalette.KPTextColor_v2.mainColor_subtitle
-//        addSubview(locationLabel)
-//        locationLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]-20-|",
-//                                                       "V:[$view1]-12-[$self]-16-|"],
-//                                     views: [locationIcon,
-//                                             phoneLabel])
-//        locationIcon.addConstraintForCenterAligning(to: locationLabel,
-//                                                    in: .vertical)
-//
-//
-//        titleLabel.setText(text: informationDataModel.closed ?
-//            ("(已歇業) " + informationDataModel.name) :
-//            informationDataModel.name,
-//                           lineSpacing: 3.0)
-//        locationLabel.setText(text: informationDataModel.address ?? "暫無資料",
-//                              lineSpacing: 3.0)
-//        phoneLabel.text = informationDataModel.phone ?? "暫無資料"
-//        priceLabel.setText(text: priceContents[(informationDataModel.priceAverage?.intValue ?? 0) != -1 ? informationDataModel.priceAverage?.intValue ?? 0 : 0],
-//                           lineSpacing: 3.0)
-        
     }
     
+    
+    func mapView(_ mapView: GMSMapView, markerInfoWindow marker: GMSMarker) -> UIView? {
+        let infoWindow = KPMainMapMarkerInfoWindow(dataModel: marker.userData as! KPDataModel)
+        return infoWindow
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)

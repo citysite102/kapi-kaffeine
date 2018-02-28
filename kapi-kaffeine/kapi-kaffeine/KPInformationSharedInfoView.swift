@@ -116,7 +116,7 @@ class KPInformationSharedInfoView: UIView {
                                                 weight: UIFont.Weight.medium)
         infoTitleLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_title
         addSubview(infoTitleLabel)
-        infoTitleLabel.addConstraints(fromStringArray: ["V:|-24-[$self]",
+        infoTitleLabel.addConstraints(fromStringArray: ["V:|-($metric0)-[$self]",
                                                         "H:|-($metric0)-[$self]"],
                                       metrics:[KPLayoutConstant.information_horizontal_offset])
 
