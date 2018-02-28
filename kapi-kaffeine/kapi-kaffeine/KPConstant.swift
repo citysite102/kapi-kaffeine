@@ -99,6 +99,7 @@ struct KPNotification {
 
 
 struct KPFontSize {
+    static let storeHeader: CGFloat = 28.0
     static let header: CGFloat = 24.0
     static let sub_header: CGFloat = 18.0
     static let mainContent: CGFloat = 16.0

@@ -273,27 +273,27 @@ class KPInformationHeaderView: UIView {
         
         
         scoreContainer = UIView()
-        scoreContainer.backgroundColor = UIColor.white
-        scoreContainer.layer.cornerRadius = 2.0
-        scoreContainer.layer.masksToBounds = true
-        container.addSubview(scoreContainer)
-        scoreContainer.addConstraints(fromStringArray: ["H:|-12-[$self(56)]",
-                                                        "V:[$self(28)]-16-|"])
+//        scoreContainer.backgroundColor = UIColor.white
+//        scoreContainer.layer.cornerRadius = 2.0
+//        scoreContainer.layer.masksToBounds = true
+//        container.addSubview(scoreContainer)
+//        scoreContainer.addConstraints(fromStringArray: ["H:|-12-[$self(56)]",
+//                                                        "V:[$self(28)]-16-|"])
         
         scoreIcon = UIImageView(image: R.image.icon_star())
-        scoreIcon.tintColor = KPColorPalette.KPMainColor_v2.starColor
-        scoreContainer.addSubview(scoreIcon)
-        scoreIcon.addConstraints(fromStringArray: ["H:|-4-[$self(18)]",
-                                                   "V:|-5-[$self]-5-|"])
+//        scoreIcon.tintColor = KPColorPalette.KPMainColor_v2.starColor
+//        scoreContainer.addSubview(scoreIcon)
+//        scoreIcon.addConstraints(fromStringArray: ["H:|-4-[$self(18)]",
+//                                                   "V:|-5-[$self]-5-|"])
         
         scoreLabel = UILabel()
-        scoreLabel.font = UIFont.boldSystemFont(ofSize: 14.0)
-        scoreLabel.textColor = KPColorPalette.KPTextColor.mainColor
-        scoreLabel.text = "0.0"
-        scoreContainer.addSubview(scoreLabel)
-        scoreLabel.addConstraints(fromStringArray: ["H:[$view0]-2-[$self]-|"],
-                                  views:[scoreIcon])
-        scoreLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
+//        scoreLabel.font = UIFont.boldSystemFont(ofSize: 14.0)
+//        scoreLabel.textColor = KPColorPalette.KPTextColor.mainColor
+//        scoreLabel.text = "0.0"
+//        scoreContainer.addSubview(scoreLabel)
+//        scoreLabel.addConstraints(fromStringArray: ["H:[$view0]-2-[$self]-|"],
+//                                  views:[scoreIcon])
+//        scoreLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
         
         scoreTapGesture = UITapGestureRecognizer(target: self,
                                                  action: #selector(KPInformationHeaderView.handleScoreContainerOnTapped(_:)))
@@ -308,9 +308,8 @@ class KPInformationHeaderView: UIView {
         facebookButton.layer.masksToBounds = true
         facebookButton.imageView?.tintColor = KPColorPalette.KPMainColor_v2.mainColor
         container.addSubview(facebookButton)
-        facebookButton.addConstraints(fromStringArray: ["H:[$view0]-8-[$self(28)]",
-                                                        "V:[$self(28)]-16-|"],
-                                      views:[scoreContainer])
+        facebookButton.addConstraints(fromStringArray: ["H:|-12-[$self(28)]",
+                                                        "V:[$self(28)]-16-|"])
         
         
         morePhotoButton = UIButton(type: .custom)
