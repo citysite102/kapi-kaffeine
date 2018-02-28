@@ -109,7 +109,6 @@ class KPInformationViewController: KPViewController {
     
     var cardInformationContainer: KPInformationCardView!
     var shopInformationView: KPInformationSharedInfoView!
-    var locationInformationView: KPInformationSharedInfoView!
     var rateInformationView: KPInformationSharedInfoView!
     var commentInformationView: KPInformationSharedInfoView!
     var photoInformationView: KPInformationSharedInfoView!
@@ -161,13 +160,9 @@ class KPInformationViewController: KPViewController {
                 self.shopInformationView.isHidden = true
                 self.shopInformationView.alpha = 0.0
                 
-                self.locationInformationView.isHidden = true
-                self.locationInformationView.alpha = 0.0
                 
                 self.informationHeaderButtonBar.layer.transform = CATransform3DMakeTranslation(0, 55, 0)
                 self.shopInformationView.layer.transform = CATransform3DMakeTranslation(0, 75, 0)
-                self.locationInformationView.layer.transform = CATransform3DMakeTranslation(0, 95, 0)
-                
                 self.scrollContainer.isUserInteractionEnabled = false
             } else {
                 self.loadingIndicator.stopAnimating()
@@ -435,9 +430,6 @@ class KPInformationViewController: KPViewController {
 //        }
         
         
-        
-        
-
         let shopRateInfoView = KPShopRateInfoView()
         shopRateInfoView.dataModel = informationDataModel
         rateInformationView = KPInformationSharedInfoView()
@@ -593,21 +585,10 @@ class KPInformationViewController: KPViewController {
         updateToolBar()
 //        syncRemoteData()
         
-        
-        
-        UIView.animate(withDuration: 2,
-                       animations: {
-                        
-        }) { (_) in
-            // 動畫成功會做的事情
-        }
-    }
+}
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-//        let shopLocationInfoView = KPShopLocationInfoView()
-//        shopLocationInfoView.dataModel = informationDataModel
-//        locationInformationView.infoView = shopLocationInfoView
         navBarFixBound = navigationController!.navigationBar.bounds
         viewHasAppeared = true
         informationHeaderView.shopPhoto.isHidden = false
@@ -1036,13 +1017,11 @@ class KPInformationViewController: KPViewController {
         
         informationHeaderButtonBar.isHidden = false
         shopInformationView.isHidden = false
-        locationInformationView.isHidden = false
         
         CATransaction.begin()
         CATransaction.setCompletionBlock { 
             self.informationHeaderButtonBar.layer.transform = CATransform3DMakeTranslation(0, 0, 0)
             self.shopInformationView.layer.transform = CATransform3DMakeTranslation(0, 0, 0)
-            self.locationInformationView.layer.transform = CATransform3DMakeTranslation(0, 0, 0)
         }
         
         let timingFunction = CAMediaTimingFunction(controlPoints: 0.51, 0.98, 0.43, 1)
@@ -1055,7 +1034,6 @@ class KPInformationViewController: KPViewController {
         
         informationHeaderButtonBar.layer.add(translateAnimation, forKey: nil)
         shopInformationView.layer.add(translateAnimation, forKey: nil)
-        locationInformationView.layer.add(translateAnimation, forKey: nil)
         
         UIView.animate(withDuration: 0.5,
                        delay: 0,
@@ -1063,7 +1041,6 @@ class KPInformationViewController: KPViewController {
                        animations: {
                         self.informationHeaderButtonBar.alpha = 1.0
                         self.shopInformationView.alpha = 1.0
-                        self.locationInformationView.alpha = 1.0
         }) { (_) in
             self.scrollContainer.isUserInteractionEnabled = true
         }

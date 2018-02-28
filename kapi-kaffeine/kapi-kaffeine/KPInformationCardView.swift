@@ -21,6 +21,16 @@ class KPInformationCardView: UIView {
     var businessInfoIcon: UIImageView!
     var businessInfoLabel: UILabel!
     
+    var userContainer: UIView!
+    var userProfileImages: [UIImage]! = [R.image.demo_p1()!,
+                                         R.image.demo_p2()!,
+                                         R.image.demo_p3()!,
+                                         R.image.demo_p4()!,
+                                         R.image.demo_p5()!]
+    var userProfileImageViews: [UIView]!
+    var userVisitedLabel: UILabel!
+    
+    
     var separator: UIView!
     
     override init(frame: CGRect) {
@@ -101,10 +111,61 @@ class KPInformationCardView: UIView {
         businessInfoLabel.text = "營業時間：平日：12:00 - 19:30"
         container.addSubview(businessInfoLabel)
         businessInfoLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
-        businessInfoLabel.addConstraints(fromStringArray: ["V:[$view0]-8-[$self]-($metric0)-|"],
+        businessInfoLabel.addConstraints(fromStringArray: ["V:[$view0]-8-[$self]"],
                                          metrics:[KPLayoutConstant.information_horizontal_offset],
                                          views: [locationInfoLabel])
         
+        
+        userContainer = UIView()
+        container.addSubview(userContainer)
+        userContainer.addConstraintForCenterAligningToSuperview(in: .horizontal)
+        userContainer.addConstraints(fromStringArray: ["V:[$view0]-24-[$self]-($metric0)-|"],
+                                     metrics:[KPLayoutConstant.information_horizontal_offset],
+                                     views: [businessInfoLabel])
+        
+        userProfileImageViews = [UIView]()
+        
+        for index in 0...4 {
+            
+            let sampleContainer = UIView()
+            sampleContainer.backgroundColor = KPColorPalette.KPBackgroundColor.whiteColor
+            sampleContainer.layer.cornerRadius = 26
+            sampleContainer.layer.masksToBounds = true
+            userContainer.addSubview(sampleContainer)
+            userProfileImageViews.append(sampleContainer)
+            
+            if index == 0 {
+                sampleContainer.addConstraints(fromStringArray: ["V:|[$self(52)]",
+                                                                 "H:|[$self(52)]"])
+            } else if index == 4 {
+                sampleContainer.addConstraints(fromStringArray: ["V:|[$self(52)]",
+                                                                 "H:[$view0]-(-16)-[$self(52)]|"],
+                                               views:[userProfileImageViews[index-1]])
+            } else {
+                sampleContainer.addConstraints(fromStringArray: ["V:|[$self(52)]",
+                                                                 "H:[$view0]-(-16)-[$self(52)]"],
+                                               views:[userProfileImageViews[index-1]])
+            }
+            
+            
+            let sampleImageView = UIImageView(image: userProfileImages[index])
+            sampleContainer.addSubview(sampleImageView)
+            sampleImageView.layer.cornerRadius = 24.0
+            sampleImageView.contentMode = .scaleAspectFill
+            sampleImageView.clipsToBounds = true
+            sampleImageView.addConstraints(fromStringArray: ["V:|-2-[$self]-2-|",
+                                                             "H:|-2-[$self]-2-|"])
+        }
+        
+        userVisitedLabel = UILabel()
+        userVisitedLabel.font = UIFont.systemFont(ofSize: 12)
+        userVisitedLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_description
+        userVisitedLabel.text = "24 人已打卡"
+        userContainer.addSubview(userVisitedLabel)
+        userVisitedLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
+        userVisitedLabel.addConstraints(fromStringArray: ["V:[$view0]-8-[$self]|"],
+                                         metrics:[KPLayoutConstant.information_horizontal_offset],
+                                         views: [userProfileImageViews[0]])
         
         
 //        separator = UIView()
