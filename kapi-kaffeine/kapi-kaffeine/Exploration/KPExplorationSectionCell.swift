@@ -64,7 +64,7 @@ class KPExplorationSectionCell: UICollectionViewCell {
         nameLabel = UILabel()
         contentView.addSubview(nameLabel)
         nameLabel.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                   "V:[$view0]-(>=6)-[$self]"],
+                                                   "V:[$view0]-(>=8)-[$self]"],
                                  views: [imageView])
         nameLabel.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
         nameLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle

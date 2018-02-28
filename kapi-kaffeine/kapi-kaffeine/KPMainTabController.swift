@@ -127,7 +127,7 @@ class KPMainTabController: ESTabBarController, UITabBarControllerDelegate {
         
         UITabBar.appearance().barTintColor = KPColorPalette.KPMainColor_v2.mainColor_bg
         UITabBar.appearance().unselectedItemTintColor = KPColorPalette.KPMainColor_v2.mainColor_unselect
-        UITabBar.appearance().tintColor = KPColorPalette.KPMainColor_v2.mainColor_sub
+        UITabBar.appearance().tintColor = KPColorPalette.KPMainColor_v2.mainColor_light
         
         if #available(iOS 11.0, *) {
             UINavigationBar.appearance().largeTitleTextAttributes = [NSAttributedStringKey.foregroundColor: KPColorPalette.KPTextColor_v2.mainColor_title!,

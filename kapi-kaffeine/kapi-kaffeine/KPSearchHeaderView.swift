@@ -25,9 +25,6 @@ class KPSearchHeaderView: UIView {
     var styleButton: KPBounceButton!
     
     var searchTagView: KPSearchTagView!
-    var separator: UIView!
-
-    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -55,7 +52,7 @@ class KPSearchHeaderView: UIView {
         
         searchContainer = UIView()
         searchContainer.backgroundColor = KPColorPalette.KPBackgroundColor.whiteColor
-        searchContainer.layer.cornerRadius = 3.0
+        searchContainer.layer.cornerRadius = 2.0
         searchContainer.layer.masksToBounds = true
         searchContainer.layer.borderWidth = 1.0
         searchContainer.layer.borderColor = KPColorPalette.KPMainColor_v2.grayColor_level5?.cgColor
@@ -104,12 +101,6 @@ class KPSearchHeaderView: UIView {
         searchTagView.addConstraints(fromStringArray: ["V:[$view0][$self]|",
                                                        "H:|[$self]|"],
                                      views:[searchContainer])
-        
-        separator = UIView()
-        separator.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level5_5
-        searchTagView.addSubview(separator)
-        separator.addConstraints(fromStringArray: ["V:[$self(1)]|",
-                                                   "H:|[$self]|"])
         
         bringSubview(toFront: containerView)
         

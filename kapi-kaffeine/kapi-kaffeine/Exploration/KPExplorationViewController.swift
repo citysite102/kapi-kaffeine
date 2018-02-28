@@ -11,7 +11,6 @@ import ObjectMapper
 
 class KPExplorationViewController: KPViewController {
 
-    var headerContainer: UIView!
     var backgroundView: UIView!
     var sectionBgImageView: UIImageView!
     var locationSelectView: KPLocationSelect!
@@ -24,9 +23,15 @@ class KPExplorationViewController: KPViewController {
     
     var filterButton: KPBounceButton!
     var headerView: UIView!
+    var footerView: UIView!
+    var moreContentLabel: UILabel!
+    var moreContentIcon: UIImageView!
+    
+    var headerContainer: UIView!
     var currentArticleViewController: KPArticleViewController!
     var articleCollectionView: UICollectionView!
     var contentTableView: UITableView!
+    
     
     let demoImages = [R.image.demo_1(),
                       R.image.demo_2(),
@@ -173,110 +178,9 @@ class KPExplorationViewController: KPViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         testData = Mapper<KPExplorationSection>().mapArray(JSONString: testJSONString) ?? []
-        
         view.backgroundColor = KPColorPalette.KPBackgroundColor.whiteColor
-        
         layoutWithSecondVersion()
-        
-        
-//        let headerView = UIView(frame: CGRect(x: 0,
-//                                              y: 0,
-//                                              width: UIScreen.main.bounds.width,
-//                                              height: 260))
-//
-//        let longPressGesture = UILongPressGestureRecognizer(target: self,
-//                                                            action: #selector(handleSearchContainerLongPressed(_:)))
-//        longPressGesture.minimumPressDuration = 0
-//
-//        let articleLabel = UILabel()
-//        articleLabel.font = UIFont.boldSystemFont(ofSize: 20.0)
-//        articleLabel.textColor = KPColorPalette.KPTextColor_v2.whiteColor
-//        articleLabel.text = "編輯精選"
-//        headerView.addSubview(articleLabel)
-//        articleLabel.addConstraints(fromStringArray: ["H:|-24-[$self]",
-//                                                      "V:|[$self(30)]"])
-//
-//        let articleLayout = UICollectionViewFlowLayout()
-//        articleLayout.scrollDirection = .horizontal
-//
-//        articleCollectionView = UICollectionView(frame: CGRect.zero,
-//                                                 collectionViewLayout: articleLayout)
-//        articleCollectionView.showsHorizontalScrollIndicator = false
-//        articleCollectionView.decelerationRate = UIScrollViewDecelerationRateFast
-//        articleCollectionView.dataSource = self
-//        articleCollectionView.delegate = self
-//        articleCollectionView.register(KPArticleCell.self, forCellWithReuseIdentifier: "ArticleCell")
-//        articleCollectionView.backgroundColor = UIColor.clear
-//        headerView.addSubview(articleCollectionView)
-//        articleCollectionView.addConstraints(fromStringArray: ["H:|[$self]|",
-//                                                               "V:[$view0]-[$self]-24-|"],
-//                                             views: [articleLabel])
-//
-//        let tableView = UITableView(frame: CGRect.zero, style: .plain)
-//        tableView.contentInset = UIEdgeInsets(top: 110,
-//                                              left: 0,
-//                                              bottom: 30,
-//                                              right: 0)
-//        tableView.dataSource = self
-//        tableView.delegate = self
-//        tableView.separatorStyle = .none
-//        tableView.allowsSelection = false
-//        tableView.showsVerticalScrollIndicator = false
-//        tableView.register(KPExplorationSectionView.self, forCellReuseIdentifier: "cell")
-//        view.addSubview(tableView)
-//        tableView.addConstraints(fromStringArray: ["H:|[$self]|",
-//                                                   "V:|[$self]|"])
-//        tableView.tableHeaderView = headerView
-//
-//
-//
-//        headerContainer = UIView()
-//        headerContainer.backgroundColor = KPColorPalette.KPBackgroundColor.whiteColor
-//        view.addSubview(headerContainer)
-//        headerContainer.addConstraints(fromStringArray: ["V:|[$self(112)]",
-//                                                         "H:|[$self]|"])
-//
-//        locationSelectView = KPLocationSelect()
-//        headerContainer.addSubview(locationSelectView)
-//        locationSelectView.addConstraints(fromStringArray: ["H:|-24-[$self]",
-//                                                            "V:|-52-[$self(44)]"])
-//
-//        searchContainerShadowView = UIView()
-//        headerContainer.addSubview(searchContainerShadowView)
-//        searchContainerShadowView.addConstraints(fromStringArray: ["H:[$view0]-16-[$self]-16-|",
-//                                                                   "V:|-52-[$self(44)]"], views: [locationSelectView])
-//
-//        searchContainer = UIView()
-//        searchContainer.backgroundColor = KPColorPalette.KPBackgroundColor.whiteColor
-//        searchContainer.layer.cornerRadius = 4.0
-//        searchContainer.layer.masksToBounds = true
-//        searchContainer.layer.borderWidth = 1.0
-//        searchContainer.layer.borderColor = KPColorPalette.KPMainColor_v2.grayColor_level5?.cgColor
-//
-//        searchContainerShadowView.addSubview(searchContainer)
-//        searchContainer.addConstraints(fromStringArray: ["H:|[$self]|",
-//                                                         "V:|[$self]|"])
-//        searchContainer.addGestureRecognizer(longPressGesture)
-//        searchIcon = UIImageView(image: R.image.icon_search())
-//        searchIcon.tintColor = KPColorPalette.KPTextColor_v2.mainColor_hint
-//        searchContainer.addSubview(searchIcon)
-//        searchIcon.addConstraints(fromStringArray: ["V:[$self(18)]",
-//                                                    "H:|-12-[$self(18)]"])
-//        searchIcon.addConstraintForCenterAligning(to: searchContainer,
-//                                                  in: .vertical,
-//                                                  constant: 0)
-//
-//        searchLabel = UILabel()
-//        searchLabel.font = UIFont.systemFont(ofSize: 14.0)
-//        searchLabel.text = "搜尋店家名稱、標籤、地點"
-//        searchLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_hint
-//        searchContainer.addSubview(searchLabel)
-//        searchLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]"],
-//                                   views:[searchIcon])
-//        searchLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -339,6 +243,10 @@ class KPExplorationViewController: KPViewController {
                                           y: 0,
                                           width: UIScreen.main.bounds.width,
                                           height: 400))
+        footerView = UIView(frame: CGRect(x: 0,
+                                          y: 0,
+                                          width: UIScreen.main.bounds.width,
+                                          height: 40))
         headerView.alpha = 0
         let backgroundPath = UIBezierPath()
         backgroundPath.move(to: CGPoint(x: 0, y: 0))
@@ -386,9 +294,8 @@ class KPExplorationViewController: KPViewController {
         headerContainer.backgroundColor = UIColor.clear
         headerView.addSubview(headerContainer)
         headerContainer.addConstraintForHavingSameWidth(with: view)
-        headerContainer.addConstraints(fromStringArray: ["V:|[$self(112)]",
+        headerContainer.addConstraints(fromStringArray: ["V:|[$self(104)]",
                                                          "H:|[$self]|"])
-        
         
         locationSelectView = KPLocationSelect()
         locationSelectView.locationLabel.textColor = KPColorPalette.KPBackgroundColor.white_level1
@@ -396,17 +303,17 @@ class KPExplorationViewController: KPViewController {
         headerContainer.addSubview(locationSelectView)
         locationSelectView.addGestureRecognizer(longPressGesture_location)
         locationSelectView.addConstraints(fromStringArray: ["H:|-20-[$self]",
-                                                            "V:|-48-[$self(36)]"])
+                                                            "V:|-40-[$self(36)]"])
         
         
         searchContainerShadowView = UIView()
         headerContainer.addSubview(searchContainerShadowView)
         searchContainerShadowView.addConstraints(fromStringArray: ["H:[$view0]-16-[$self]-16-|",
-                                                                   "V:|-48-[$self(36)]"], views: [locationSelectView])
+                                                                   "V:|-40-[$self(36)]"], views: [locationSelectView])
 
         searchContainer = UIView()
         searchContainer.backgroundColor = KPColorPalette.KPBackgroundColor.white_level3
-        searchContainer.layer.cornerRadius = 3.0
+        searchContainer.layer.cornerRadius = 2.0
         searchContainer.layer.masksToBounds = true
         searchContainerShadowView.addSubview(searchContainer)
         searchContainer.addGestureRecognizer(longPressGesture)
@@ -438,7 +345,7 @@ class KPExplorationViewController: KPViewController {
         articleLabel.text = "編輯精選"
         headerView.addSubview(articleLabel)
         articleLabel.addConstraints(fromStringArray: ["H:|-20-[$self]",
-                                                      "V:[$view0][$self(30)]"], views:[headerContainer])
+                                                      "V:[$view0][$self(28)]"], views:[headerContainer])
         
         let articleLayout = GlidingLayout()
         articleLayout.scrollDirection = .horizontal
@@ -474,7 +381,31 @@ class KPExplorationViewController: KPViewController {
         view.addSubview(contentTableView)
         contentTableView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                    "V:|-(-20)-[$self]|"])
+        
+        
+        moreContentIcon = UIImageView(image: R.image.icon_facebook())
+        moreContentIcon.tintColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
+        footerView.addSubview(moreContentIcon)
+        moreContentIcon.addConstraints(fromStringArray: ["H:|-($metric0)-[$self(20)]",
+                                                         "V:[$self(20)]"],
+                                       metrics:[KPLayoutConstant.information_horizontal_offset])
+        moreContentIcon.addConstraintForCenterAligningToSuperview(in: .vertical)
+        
+        moreContentLabel = UILabel()
+        moreContentLabel.font = UIFont.systemFont(ofSize: KPFontSize.mainContent,
+                                                  weight: UIFont.Weight.light)
+        
+        moreContentLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
+        moreContentLabel.text = "想看更多內容嗎？"
+        footerView.addSubview(moreContentLabel)
+        moreContentLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]"],
+                                        metrics:[KPLayoutConstant.information_horizontal_offset], views:[moreContentIcon])
+        moreContentLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
+        
+        
+        
         contentTableView.tableHeaderView = headerView
+        contentTableView.tableFooterView = footerView
     }
     
     override open var preferredStatusBarStyle: UIStatusBarStyle {
@@ -551,24 +482,12 @@ extension KPExplorationViewController: UITableViewDataSource, UITableViewDelegat
         cell.sectionDescriptionLabel.setText(text: testData[indexPath.row].explorationDescription,
                                              lineSpacing: 4.0)
         cell.shops = testData[indexPath.row].shops
-        cell.shouldShowSeparatar = !(indexPath.row == testData.count-1)
+//        cell.shouldShowSeparatar = !(indexPath.row == testData.count-1)
         
         return cell
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        潔白版本
-//        if scrollView.isKind(of: UITableView.self) {
-//            if scrollView.contentOffset.y > -82 {
-//                headerContainer.layer.shadowColor = KPColorPalette.KPMainColor_v2.shadow_mainColor?.cgColor
-//                headerContainer.layer.shadowOpacity = 0.2
-//                headerContainer.layer.shadowOffset = CGSize(width: 0,
-//                                                                      height: 4)
-//                headerContainer.layer.shadowRadius = 4.0
-//            } else {
-//                headerContainer.layer.shadowOpacity = 0.0
-//            }
-//        }
         if scrollView.isKind(of: UITableView.self) && animationHasPerformed 
         {
             if scrollView.contentOffset.y < -20 {
@@ -638,8 +557,6 @@ extension KPExplorationViewController: UICollectionViewDataSource, UICollectionV
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        return CGSize(width: UIScreen.main.bounds.width/2 - 20*1.5,
-//                      height: 260)
         if let cell = collectionView.cellForItem(at: indexPath) {
             cell.setNeedsLayout()
             cell.layoutIfNeeded()

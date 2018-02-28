@@ -25,31 +25,31 @@ class KPMainListAddCell: UITableViewCell {
          = KPColorPalette.KPTextColor_v2.mainColor_hint_light
         contentView.addSubview(addImageView)
         
-        addImageView.addConstraints(fromStringArray: ["H:|-26-[$self(48)]",
-                                                       "V:|-16-[$self(48)]-16-|"])
+        addImageView.addConstraints(fromStringArray: ["H:|-30-[$self(48)]",
+                                                      "V:|-16-[$self(48)]-16-|"])
         
         addDescriptionLabel = KPLayerLabel()
-        addDescriptionLabel.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
+        addDescriptionLabel.font = UIFont.systemFont(ofSize: 11)
         addDescriptionLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_description
         addDescriptionLabel.text = "找不到喜歡的咖啡店嗎？"
         addDescriptionLabel.isOpaque = true
         addDescriptionLabel.layer.masksToBounds = true
         contentView.addSubview(addDescriptionLabel)
         
-        addDescriptionLabel.addConstraints(fromStringArray: ["H:[$view0]-26-[$self]|",
-                                                       "V:|-19-[$self]"],
+        addDescriptionLabel.addConstraints(fromStringArray: ["H:[$view0]-22-[$self]|",
+                                                             "V:|-19-[$self]"],
                                      views: [addImageView])
         
         addActionLabel = KPLayerLabel()
-        addActionLabel.font = UIFont.boldSystemFont(ofSize: KPFontSize.subContent)
-        addActionLabel.textColor = KPColorPalette.KPMainColor_v2.mainColor_light
+        addActionLabel.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
+        addActionLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_description
         addActionLabel.text = "新增咖啡店"
         addActionLabel.isOpaque = true
         addActionLabel.layer.masksToBounds = true
         contentView.addSubview(addActionLabel)
         
-        addActionLabel.addConstraints(fromStringArray: ["H:[$view0]-26-[$self]|",
-                                                        "V:[$self]-19-|"],
+        addActionLabel.addConstraints(fromStringArray: ["H:[$view0]-22-[$self]|",
+                                                        "V:[$self]-22-|"],
                                            views: [addImageView])
         
         

@@ -89,7 +89,7 @@ class KPInformationCardView: UIView {
         locationInfoLabel.text = "台北 大安區"
         container.addSubview(locationInfoLabel)
         locationInfoLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
-        locationInfoLabel.addConstraints(fromStringArray: ["V:[$view0]-12-[$self]"],
+        locationInfoLabel.addConstraints(fromStringArray: ["V:[$view0]-10-[$self]"],
                                          views: [rateLabel])
         
         
@@ -100,7 +100,7 @@ class KPInformationCardView: UIView {
         businessInfoLabel.text = "營業時間：平日：12:00 - 19:30"
         container.addSubview(businessInfoLabel)
         businessInfoLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
-        businessInfoLabel.addConstraints(fromStringArray: ["V:[$view0]-12-[$self]"],
+        businessInfoLabel.addConstraints(fromStringArray: ["V:[$view0]-10-[$self]"],
                                          views: [locationInfoLabel])
         
 //        separator = UIView()

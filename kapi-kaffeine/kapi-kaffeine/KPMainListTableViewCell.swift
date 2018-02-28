@@ -150,7 +150,7 @@ class KPMainListTableViewCell: UITableViewCell {
                                                   shopNameLabel])
         
         shopStatusLabel = KPLayerLabel()
-        shopStatusLabel.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
+        shopStatusLabel.font = UIFont.systemFont(ofSize: KPFontSize.infoContent)
         shopStatusLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
         shopStatusLabel.text = "營業時間 未知"
         shopStatusLabel.isOpaque = true
@@ -173,7 +173,7 @@ class KPMainListTableViewCell: UITableViewCell {
                                          views: [shopImageView])
         
         shopLocationLabel = KPLayerLabel()
-        shopLocationLabel.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
+        shopLocationLabel.font = UIFont.systemFont(ofSize: KPFontSize.infoContent)
         shopLocationLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
         shopLocationLabel.text = "台北市, 萬華區"
         shopLocationLabel.isOpaque = true
@@ -185,7 +185,7 @@ class KPMainListTableViewCell: UITableViewCell {
         
         
         shopDistanceLabel = KPLayerLabel()
-        shopDistanceLabel.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
+        shopDistanceLabel.font = UIFont.systemFont(ofSize: KPFontSize.infoContent)
         shopDistanceLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
         shopDistanceLabel.isOpaque = true
         shopDistanceLabel.layer.masksToBounds = true
