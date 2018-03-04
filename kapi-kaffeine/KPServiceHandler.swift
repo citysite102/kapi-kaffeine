@@ -953,4 +953,61 @@ class KPServiceHandler {
         }
         
     }
+    
+    
+    // MARK: - Exporation
+    
+    func fetchArticleList(_ completion: ((_ explorationList: [KPArticleItem]?, _ error: NetworkRequestError?) -> Void)?) {
+        DispatchQueue.global().async {
+            let articleListRequest = KPArticleRequest()
+            articleListRequest.perform(nil).then { result -> Void in
+                if let requestResult = result["result"].bool,
+                    requestResult == true,
+                    let listResult = result["data"]["article_list"].arrayObject {
+                    
+                    var articleList = [KPArticleItem]()
+                    for data in listResult {
+                        if let articleItem = KPArticleItem(JSON: (data as! [String: Any])) {
+                            articleList.append(articleItem)
+                        }
+                    }
+                    completion?(articleList, nil)
+                } else {
+                    // TODO: Error
+                    completion?(nil, nil)
+                }
+                }.catch { (error) in
+                    // TODO: Error
+                    completion?(nil, nil)
+            }
+        }
+    }
+
+    func fetchExplorationList(_ completion: ((_ explorationList: [KPExplorationSection]?, _ error: NetworkRequestError?) -> Void)?) {
+    
+        DispatchQueue.global().async {
+            let explorationRequest = KPExplorationRequest()
+            explorationRequest.perform().then { result -> Void in
+                if let requestResult = result["result"].bool,
+                    requestResult == true,
+                    let listResult = result["data"]["explorer_list"].arrayObject {
+                    
+                    var explorationList = [KPExplorationSection]()
+                    for data in listResult {
+                        if let explorationData = KPExplorationSection(JSON: (data as! [String: Any])) {
+                            explorationList.append(explorationData)
+                        }
+                    }
+                    completion?(explorationList, nil)
+                } else {
+                    // TODO: Error
+                    completion?(nil, nil)
+                }
+                }.catch { (error) in
+                    // TODO: Error
+                    completion?(nil, nil)
+            }
+        }
+    }
+    
 }
