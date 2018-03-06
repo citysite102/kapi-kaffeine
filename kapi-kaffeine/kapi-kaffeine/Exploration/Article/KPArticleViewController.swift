@@ -380,7 +380,7 @@ extension KPArticleViewController: UIScrollViewDelegate {
         
         // 處理上半部分 Hero Image 的狀態
         if (scrollView.contentOffset.y <= KPArticleViewController.scrollAnimationThreshold &&
-            scrollView.contentOffset.y >= 0) {
+            scrollView.contentOffset.y > 0) {
             
             if explorationViewController != nil {
                 explorationViewController?.shouldShowLightContent = true
@@ -427,7 +427,7 @@ extension KPArticleViewController: UIScrollViewDelegate {
             lastOffset = scrollView.contentOffset.y
         } else {
             
-            if self.scrollContainer.contentOffset.y < KPArticleViewController.scrollAnimationEnlargeOffset {
+            if self.scrollContainer.contentOffset.y <= KPArticleViewController.scrollAnimationEnlargeOffset {
                 if !viewIsDimissing {
                     hero.dismissViewController()
                     viewIsDimissing = true

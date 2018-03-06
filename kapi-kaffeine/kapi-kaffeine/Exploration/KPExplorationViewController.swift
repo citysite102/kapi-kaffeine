@@ -174,14 +174,18 @@ class KPExplorationViewController: KPViewController {
         ]
         """
     
-    var testData: [KPExplorationSection]!
+    var testData: [KPExplorationSection] = []
+    var articleList: [KPArticleItem] = []
+    
+    // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        testData = Mapper<KPExplorationSection>().mapArray(JSONString: testJSONString) ?? []
+//        testData = Mapper<KPExplorationSection>().mapArray(JSONString: testJSONString) ?? []
         view.backgroundColor = KPColorPalette.KPBackgroundColor.whiteColor
         hero.isEnabled = true
         layoutWithSecondVersion()
+        refreshData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -422,6 +426,43 @@ class KPExplorationViewController: KPViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    
+    func refreshData() {
+        KPServiceHandler.sharedHandler.fetchExplorationList { [weak self] (explorationList, error) in
+            
+            guard let this = self else {
+                return
+            }
+
+            guard explorationList != nil else {
+                return
+            }
+            
+            this.testData = explorationList!
+            DispatchQueue.main.async {
+                this.contentTableView.reloadData()
+            }
+        }
+        
+        KPServiceHandler.sharedHandler.fetchArticleList { [weak self] (articleList, error) in
+            guard let this = self else {
+                return
+            }
+            
+            guard articleList != nil else {
+                return
+            }
+            
+            this.articleList = articleList!
+            DispatchQueue.main.async {
+                this.articleCollectionView.reloadData()
+            }
+        }
+    }
+    
+    
+    // MARK: - Events
+    
     @objc func handleLocationContainerLongPressed(_ gesture: UILongPressGestureRecognizer) {
         if (gesture.state == .began) {
             UIView.animate(withDuration: 0.1,
@@ -515,13 +556,15 @@ extension KPExplorationViewController: UICollectionViewDataSource, UICollectionV
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return articleList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ArticleCell", for: indexPath) as! KPArticleCell
         cell.articleHeroImageView.image = demoImages[indexPath.row]
         cell.hero.id = "article-\(indexPath.row)"
+        cell.titleLabel.text = articleList[indexPath.row].title
+        cell.subLabel.text = "\(articleList[indexPath.row].peopleRead) 人已看過"
         return cell
     }
     
