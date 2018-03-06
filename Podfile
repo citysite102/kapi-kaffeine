@@ -20,6 +20,7 @@ target 'kapi-kaffeine' do
   pod 'M13ProgressSuite'
   pod 'SideMenu'
   pod 'pop', '~> 1.0'
+  pod 'Hero'
   pod "ESTabBarController-swift"
   pod 'Shimmer', :inhibit_warnings => true
   pod 'lottie-ios', :inhibit_warnings => true

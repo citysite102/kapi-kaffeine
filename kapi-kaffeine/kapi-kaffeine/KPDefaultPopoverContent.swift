@@ -18,7 +18,7 @@ class KPDefaultPopoverContent: UIView, PopoverProtocol {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 18.0)
         label.textAlignment = .center
-        label.textColor = KPColorPalette.KPTextColor.mainColor
+        label.textColor = KPColorPalette.KPTextColor_v2.mainColor_title
         return label
     }()
     
@@ -26,13 +26,13 @@ class KPDefaultPopoverContent: UIView, PopoverProtocol {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 15.0)
         label.textAlignment = .center
-        label.textColor = KPColorPalette.KPTextColor.grayColor_level3
+        label.textColor = KPColorPalette.KPMainColor_v2.grayColor_level3
         return label
     }()
     
     lazy private  var seperator: UIView = {
         let view = UIView()
-        view.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
+        view.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7
         return view
     }()
     
@@ -83,7 +83,7 @@ class KPDefaultPopoverContent: UIView, PopoverProtocol {
         cancelButton.layer.cornerRadius = 2.0
         cancelButton.layer.masksToBounds = true
         cancelButton.titleLabel?.font = UIFont.systemFont(ofSize: UIDevice().isSuperCompact ? 13.0 : 15.0)
-        cancelButton.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.grayColor_level4!),
+        cancelButton.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.grayColor_level5!),
                                         for: .normal)
         cancelButton.addTarget(self,
                                action: #selector(KPDefaultPopoverContent.handleCancelButtonOnTapped),
@@ -98,7 +98,7 @@ class KPDefaultPopoverContent: UIView, PopoverProtocol {
         confirmButton.layer.cornerRadius = 2.0
         confirmButton.layer.masksToBounds = true
         confirmButton.titleLabel?.font = UIFont.systemFont(ofSize: 15.0)
-        confirmButton.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.mainColor_light!),
+        confirmButton.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor_v2.mainColor_sub!),
                                         for: .normal)
         confirmButton.addTarget(self,
                                 action: #selector(KPDefaultPopoverContent.handleConfirmButtonOnTapped),

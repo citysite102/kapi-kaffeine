@@ -112,9 +112,7 @@ struct KPLayoutConstant {
     static let bottomBar_height = 56
     static let separator_height = 1
     
-    static let dismissButton_size = 24
-    
-    
+    static let dismissButton_size = 26
     static let information_horizontal_offset = 18
     
 }

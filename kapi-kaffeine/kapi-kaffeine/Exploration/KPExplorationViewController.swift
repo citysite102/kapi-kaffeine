@@ -18,7 +18,6 @@ class KPExplorationViewController: KPViewController {
     var searchContainer: UIView!
     var searchIcon: UIImageView!
     var searchLabel: UILabel!
-    var animationHasPerformed: Bool = false
     var shouldShowLightContent: Bool = true
     
     var filterButton: KPBounceButton!
@@ -29,6 +28,7 @@ class KPExplorationViewController: KPViewController {
     
     var headerContainer: UIView!
     var currentArticleViewController: KPArticleViewController!
+    weak var rootTabViewController: KPMainTabController!
     var articleCollectionView: UICollectionView!
     var contentTableView: UITableView!
     
@@ -180,6 +180,7 @@ class KPExplorationViewController: KPViewController {
         super.viewDidLoad()
         testData = Mapper<KPExplorationSection>().mapArray(JSONString: testJSONString) ?? []
         view.backgroundColor = KPColorPalette.KPBackgroundColor.whiteColor
+        hero.isEnabled = true
         layoutWithSecondVersion()
     }
     
@@ -190,12 +191,17 @@ class KPExplorationViewController: KPViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         articleCollectionView.collectionViewLayout.invalidateLayout()
-        if !animationHasPerformed {
+        if !rootTabViewController.exploreAnimationHasPerformed {
+            
+            headerView.alpha = 0
+            articleCollectionView.alpha = 0
+            sectionBgImageView.alpha = 0.2
+            
             for cell in self.contentTableView.visibleCells {
                 cell.alpha = 0
             }
             
-            if !animationHasPerformed {
+            if !rootTabViewController.exploreAnimationHasPerformed {
                 UIView.animate(withDuration: 0.6,
                                delay: 0.2,
                                options: UIViewAnimationOptions.curveEaseOut,
@@ -231,7 +237,7 @@ class KPExplorationViewController: KPViewController {
                                    animations: {
                                     cell.alpha = 1.0
                     }, completion: { (_) in
-                        self.animationHasPerformed = true
+                        self.rootTabViewController.exploreAnimationHasPerformed = true
                     })
                 }
             }
@@ -247,7 +253,6 @@ class KPExplorationViewController: KPViewController {
                                           y: 0,
                                           width: UIScreen.main.bounds.width,
                                           height: 40))
-        headerView.alpha = 0
         let backgroundPath = UIBezierPath()
         backgroundPath.move(to: CGPoint(x: 0, y: 0))
         backgroundPath.addLine(to: CGPoint(x: view.bounds.width,
@@ -275,7 +280,6 @@ class KPExplorationViewController: KPViewController {
         sectionBgImageView = UIImageView(image: R.image.demo_black()?.tint(KPColorPalette.KPMainColor_v2.mainColor_dark!, blendMode: .softLight))
         sectionBgImageView.contentMode = .scaleAspectFill
         sectionBgImageView.layer.mask = maskLayer_bg
-        sectionBgImageView.alpha = 0.2
         sectionBgImageView.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
         headerView.addSubview(sectionBgImageView)
         sectionBgImageView.addConstraints(fromStringArray: ["V:|-(-140)-[$self]|",
@@ -345,7 +349,8 @@ class KPExplorationViewController: KPViewController {
         articleLabel.text = "編輯精選"
         headerView.addSubview(articleLabel)
         articleLabel.addConstraints(fromStringArray: ["H:|-20-[$self]",
-                                                      "V:[$view0][$self(28)]"], views:[headerContainer])
+                                                      "V:[$view0][$self(28)]"],
+                                    views:[headerContainer])
         
         let articleLayout = GlidingLayout()
         articleLayout.scrollDirection = .horizontal
@@ -353,7 +358,6 @@ class KPExplorationViewController: KPViewController {
         articleCollectionView = UICollectionView(frame: CGRect.zero,
                                                  collectionViewLayout: articleLayout)
         articleCollectionView.showsHorizontalScrollIndicator = false
-        articleCollectionView.alpha = 0
         articleCollectionView.decelerationRate = UIScrollViewDecelerationRateFast
         articleCollectionView.dataSource = self
         articleCollectionView.delegate = self
@@ -377,10 +381,11 @@ class KPExplorationViewController: KPViewController {
         contentTableView.separatorStyle = .none
         contentTableView.allowsSelection = false
         contentTableView.showsVerticalScrollIndicator = false
-        contentTableView.register(KPExplorationSectionView.self, forCellReuseIdentifier: "cell")
+        contentTableView.register(KPExplorationSectionView.self,
+                                  forCellReuseIdentifier: "cell")
         view.addSubview(contentTableView)
         contentTableView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                   "V:|-(-20)-[$self]|"])
+                                                          "V:|-(-20)-[$self]|"])
         
         
         moreContentIcon = UIImageView(image: R.image.icon_facebook())
@@ -488,7 +493,7 @@ extension KPExplorationViewController: UITableViewDataSource, UITableViewDelegat
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView.isKind(of: UITableView.self) && animationHasPerformed 
+        if scrollView.isKind(of: UITableView.self) && rootTabViewController.exploreAnimationHasPerformed
         {
             if scrollView.contentOffset.y < -20 {
                 let scaleRatio = 1 + ((-20)-scrollView.contentOffset.y)/600
@@ -515,22 +520,22 @@ extension KPExplorationViewController: UICollectionViewDataSource, UICollectionV
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ArticleCell", for: indexPath) as! KPArticleCell
-        cell.articleHeroImageView.image = demoImages[Int(arc4random())%6]
+        cell.articleHeroImageView.image = demoImages[indexPath.row]
+        cell.hero.id = "article-\(indexPath.row)"
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        let controller = KPModalViewController()
-        controller.preferStatusBarStyle = .lightContent
-        controller.edgeInset = UIEdgeInsets(top: 0,
-                                            left: 0,
-                                            bottom: 0,
-                                            right: 0)
+        let cell = collectionView.cellForItem(at: indexPath) as! KPArticleCell
         currentArticleViewController = KPArticleViewController()
         currentArticleViewController.explorationViewController = self
-        controller.contentController = currentArticleViewController
-        controller.presentModalView()
+        currentArticleViewController.imageSource = cell.articleHeroImageView.image
+        currentArticleViewController.selectedIndex = indexPath as NSIndexPath
+        
+        present(currentArticleViewController,
+                animated: true,
+                completion: nil)
     }
     
     func collectionView(_ collectionView: UICollectionView,

@@ -11,6 +11,8 @@ import ESTabBarController_swift
 
 class KPMainTabController: ESTabBarController, UITabBarControllerDelegate {
 
+    var exploreAnimationHasPerformed: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -53,6 +55,7 @@ class KPMainTabController: ESTabBarController, UITabBarControllerDelegate {
         
         
         let exploreController = KPExplorationViewController()
+        exploreController.rootTabViewController = self
 //        let exploreItem = ESTabBarItem.init(KPBounceTabBarItem(),
 //                                            title: nil,
 //                                            image: R.image.icon_explore(),

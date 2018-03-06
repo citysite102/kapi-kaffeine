@@ -7,26 +7,30 @@
 //
 
 import UIKit
+import Hero
 
 class KPArticleViewController: KPViewController {
 
-    static let scrollAnimationStartOffset: CGFloat = -20
+    static let scrollAnimationStartOffset: CGFloat = 0
+    static let scrollAnimationEnlargeOffset: CGFloat = 0
     static let scrollAnimationThreshold: CGFloat = 200
     static let scrollCollapseOffset: CGFloat = 100
     static let hoverMinimumHeight: CGFloat = 200
     
     var dismissButton: KPBounceButton!
     var scrollContainer: UIScrollView!
+    var imageSource: UIImage?
     var heroCoverImageView: UIImageView!
     var gradientView: UIView!
     var imageMaskLayer: CAGradientLayer!
-    weak var explorationViewController: KPExplorationViewController!
+    weak var explorationViewController: KPExplorationViewController?
     
     var animationHasPerformed: Bool = false
     var viewIsDimissing: Bool = false
     var articleTitleLabel: UILabel!
     var articleSubTitleLabel: UILabel!
     var articleFirstParagraphTextView: UITextView!
+    var selectedIndex: NSIndexPath!
     
     var articleContainer: UIView!
     var articleYConstaint: NSLayoutConstraint!
@@ -43,7 +47,9 @@ class KPArticleViewController: KPViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = UIColor.white
+        
+        view.layoutIfNeeded()
+        hero.isEnabled = true
         
         scrollContainer = UIScrollView()
         scrollContainer.delegate = self
@@ -52,14 +58,14 @@ class KPArticleViewController: KPViewController {
         scrollContainer.addConstraints(fromStringArray: ["V:|[$self]|",
                                                          "H:|[$self]|"])
         
-        heroCoverImageView = UIImageView(image: R.image.demo_6())
+        heroCoverImageView = UIImageView(image: imageSource ?? R.image.demo_6())
         heroCoverImageView.contentMode = .scaleAspectFill
         heroCoverImageView.clipsToBounds = true
-        heroCoverImageView.layer.anchorPoint = CGPoint(x: 0.5, y: 0)
         heroCoverImageView.frame = CGRect(x: 0,
                                           y: 0,
                                           width: view.bounds.width,
                                           height: view.bounds.height)
+        heroCoverImageView.hero.id = "article-\(selectedIndex.row)"
         scrollContainer.addSubview(heroCoverImageView)
         
         gradientView = UIView()
@@ -72,7 +78,7 @@ class KPArticleViewController: KPViewController {
         imageMaskLayer.frame = view.bounds
         imageMaskLayer.colors = [UIColor.init(r: 0, g: 0, b: 0, a: 0.7).cgColor,
                                  UIColor.init(r: 0, g: 0, b: 0, a: 0.0).cgColor]
-        imageMaskLayer.startPoint = CGPoint(x: 0.5, y: 0.8)
+        imageMaskLayer.startPoint = CGPoint(x: 0.5, y: 0.6)
         imageMaskLayer.endPoint = CGPoint(x: 0.5, y: 0.0)
         gradientView.layer.addSublayer(imageMaskLayer)
 
@@ -153,17 +159,19 @@ class KPArticleViewController: KPViewController {
         topBarContainer.alpha = 0
         view.addSubview(topBarContainer)
         topBarContainer.addConstraints(fromStringArray: ["V:|[$self($metric0)]",
-                                                          "H:|[$self]|"], metrics:[KPLayoutConstant.topBar_height])
+                                                          "H:|[$self]|"],
+                                       metrics:[KPLayoutConstant.topBar_height])
         separator_top = UIView()
         separator_top.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
         topBarContainer.addSubview(separator_top)
         separator_top.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                       "V:[$self($metric0)]|"], metrics:[KPLayoutConstant.separator_height])
+                                                       "V:[$self($metric0)]|"],
+                                     metrics:[KPLayoutConstant.separator_height])
         
         dismissButton = KPBounceButton(frame: CGRect.zero,
                                        image: R.image.icon_close()!)
         dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor
-        dismissButton.alpha = 0.9
+        dismissButton.alpha = 0.0
         view.addSubview(dismissButton)
         dismissButton.addConstraints(fromStringArray: ["V:[$self($metric0)]",
                                                        "H:|-16-[$self($metric0)]"], metrics:[KPLayoutConstant.dismissButton_size])
@@ -206,15 +214,19 @@ class KPArticleViewController: KPViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        explorationViewController.shouldShowLightContent = true
-        setNeedsStatusBarAppearanceUpdate()
+        if explorationViewController != nil {
+            explorationViewController?.shouldShowLightContent = true
+            setNeedsStatusBarAppearanceUpdate()
+        }
         
         if !animationHasPerformed {
             UIView.animate(withDuration: 0.5,
                            delay: 0.2,
                            options: UIViewAnimationOptions.curveEaseOut,
                            animations: {
+                            self.view.backgroundColor = UIColor.white
                             self.articleTitleLabel.alpha = 1.0
+                            self.dismissButton.alpha = 1.0
                             self.articleSubTitleLabel.alpha = 1.0
                             self.articleFirstParagraphTextView.alpha = 1.0
                             self.scrollDownButton.alpha = 0.8
@@ -227,12 +239,15 @@ class KPArticleViewController: KPViewController {
                 self.animationHasPerformed = true
             })
         }
-        
     }
     
     @objc func handleDismissButtonOnTapped() {
-        explorationViewController.shouldShowLightContent = true
-        appModalController()?.dismissControllerWithDefaultDuration()
+        if explorationViewController != nil {
+            explorationViewController?.shouldShowLightContent = true
+            setNeedsStatusBarAppearanceUpdate()
+        }
+        dismiss(animated: true, completion: nil)
+//        appModalController()?.dismissControllerWithDefaultDuration()
     }
     
 
@@ -345,12 +360,12 @@ extension KPArticleViewController: UIScrollViewDelegate {
                                    withVelocity velocity: CGPoint,
                                    targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         if (targetContentOffset.pointee.y <= KPArticleViewController.scrollAnimationThreshold) {
+            checkDismissBehavior(scrollView.contentOffset.y)
             autoScaleHeroImage(offsetY: targetContentOffset.pointee.y)
         }
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
         
         // 處理 Tool Bar
         UIView.animate(withDuration: 0.2,
@@ -367,11 +382,14 @@ extension KPArticleViewController: UIScrollViewDelegate {
         if (scrollView.contentOffset.y <= KPArticleViewController.scrollAnimationThreshold &&
             scrollView.contentOffset.y >= 0) {
             
-            explorationViewController.shouldShowLightContent = true
-            UIView.animate(withDuration: 0.5,
-                           animations: {
-                self.setNeedsStatusBarAppearanceUpdate()
-            })
+            if explorationViewController != nil {
+                explorationViewController?.shouldShowLightContent = true
+                UIView.animate(withDuration: 0.5,
+                               animations: {
+                                self.setNeedsStatusBarAppearanceUpdate()
+                })
+            }
+            
             
             let moveOffsetY = scrollView.contentOffset.y >= 0 ?
                 -scrollView.contentOffset.y * 0.6 : 0
@@ -409,40 +427,36 @@ extension KPArticleViewController: UIScrollViewDelegate {
             lastOffset = scrollView.contentOffset.y
         } else {
             
-            if self.scrollContainer.contentOffset.y < -60 {
+            if self.scrollContainer.contentOffset.y < KPArticleViewController.scrollAnimationEnlargeOffset {
                 if !viewIsDimissing {
-                    self.appModalController()?.view.backgroundColor = UIColor.clear
-                    view.backgroundColor = UIColor.clear
-                    scrollContainer.backgroundColor = UIColor.clear
+                    hero.dismissViewController()
                     viewIsDimissing = true
-                    UIView.animate(withDuration: 0.3,
-                                   delay: 0,
-                                   options: .curveEaseIn,
-                                   animations: {
-                                    self.view.transform = CGAffineTransform(translationX: 0,
-                                                                            y: self.view.bounds.height)
-                    }, completion: { (_) in
-                        self.appModalController()?.dismissController(duration: 0)
-                    })
+                } else {
+                    if (self.scrollContainer.contentOffset.y > -150) {
+                        Hero.shared.update((self.scrollContainer.contentOffset.y +
+                            KPArticleViewController.scrollAnimationEnlargeOffset)/(-150))
+                    } else {
+                        Hero.shared.finish()
+                    }
                 }
                 
             } else {
-                explorationViewController.shouldShowLightContent = true
+                
+                if (viewIsDimissing) {
+                    return
+                }
+                
+                if explorationViewController != nil {
+                    explorationViewController?.shouldShowLightContent = true
+                }
+                
                 if self.scrollContainer.contentOffset.y >= 380 {
                     topBarContainer.alpha = (self.scrollContainer.contentOffset.y - 380) / 40
                     dismissButton.tintColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
-                    explorationViewController.shouldShowLightContent = false
-                } else if self.scrollContainer.contentOffset.y <= 0 &&
-                    self.scrollContainer.contentOffset.y > -60 {
+                    if explorationViewController != nil {
+                        explorationViewController?.shouldShowLightContent = false
+                    }
                     
-                    let updatedFrame = CGRect(x: self.scrollContainer.contentOffset.y,
-                                              y: self.scrollContainer.contentOffset.y,
-                                              width: view.bounds.width - 2*(self.scrollContainer.contentOffset.y),
-                                              height: view.bounds.height - self.scrollContainer.contentOffset.y)
-                    heroCoverImageView.frame = updatedFrame
-                    imageMaskLayer.frame = CGRect(x: 0, y: 0,
-                                                  width: updatedFrame.width*2,
-                                                  height: updatedFrame.height)
                 } else {
                     topBarContainer.alpha = 0
                     dismissButton.tintColor = UIColor.white
@@ -452,6 +466,18 @@ extension KPArticleViewController: UIScrollViewDelegate {
                                animations: {
                                 self.setNeedsStatusBarAppearanceUpdate()
                 })
+            }
+        }
+    }
+    
+    func checkDismissBehavior(_ offSetY: CGFloat) {
+        if viewIsDimissing {
+            if offSetY >= -85 &&
+                offSetY < KPArticleViewController.scrollAnimationStartOffset {
+                    Hero.shared.cancel()
+                    viewIsDimissing = false
+            } else {
+                Hero.shared.finish()
             }
         }
     }
@@ -495,7 +521,7 @@ extension KPArticleViewController: UIScrollViewDelegate {
                         self.gradientView.alpha = opacity
                         self.articleContainer.alpha = opacity < 0.3 ? 1 - opacity/0.3 : 0
                         self.heroCoverImageView.frame = CGRect(x: 0,
-                                                               y: -20,
+                                                               y: KPArticleViewController.scrollAnimationStartOffset,
                                                                width: self.view.bounds.size.width,
                                                                height: height)
                         

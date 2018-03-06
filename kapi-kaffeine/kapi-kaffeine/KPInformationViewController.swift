@@ -105,7 +105,6 @@ class KPInformationViewController: KPViewController {
     var mapActionController: UIAlertController!
     var scrollContainer: UIScrollView!
     var informationHeaderView: KPInformationHeaderView!
-    var informationHeaderButtonBar: KPInformationHeaderButtonBar!
     
     var cardInformationContainer: KPInformationCardView!
     var shopInformationView: KPInformationSharedInfoView!
@@ -154,14 +153,9 @@ class KPInformationViewController: KPViewController {
     var dataLoading: Bool = true {
         didSet {
             if dataLoading {
-                self.informationHeaderButtonBar.isHidden = true
-                self.informationHeaderButtonBar.alpha = 0.0
                 
                 self.shopInformationView.isHidden = true
                 self.shopInformationView.alpha = 0.0
-                
-                
-                self.informationHeaderButtonBar.layer.transform = CATransform3DMakeTranslation(0, 55, 0)
                 self.shopInformationView.layer.transform = CATransform3DMakeTranslation(0, 75, 0)
                 self.scrollContainer.isUserInteractionEnabled = false
             } else {
@@ -188,7 +182,6 @@ class KPInformationViewController: KPViewController {
         
         view.backgroundColor = UIColor.white
         navigationController?.navigationBar.isHidden = true
-        navigationItem.title = informationDataModel.name
         navigationController?.delegate = self
         
         actionController = UIAlertController(title: nil,
@@ -364,6 +357,7 @@ class KPInformationViewController: KPViewController {
                                                                constant:2)
         
         cardInformationContainer = KPInformationCardView()
+        cardInformationContainer.titleInfoLabel.text = informationDataModel.name
         scrollContainer.addSubview(cardInformationContainer)
         cardInformationContainer.addConstraints(fromStringArray: ["H:|[$self]|",
                                                                   "V:[$view0][$self]"],
@@ -635,6 +629,7 @@ class KPInformationViewController: KPViewController {
         titleLabel.font = UIFont.boldSystemFont(ofSize: KPFontSize.mainContent)
         titleLabel.textColor = KPColorPalette.KPTextColor_v2.whiteColor
         titleLabel.text = informationDataModel.name
+        titleLabel.alpha = 0.0
         view.addSubview(titleLabel)
         titleLabel.addConstraint(from: "H:[$self(<=280)]")
         titleLabel.addConstraintForCenterAligning(to: topBarContainer,
@@ -666,18 +661,11 @@ class KPInformationViewController: KPViewController {
                              for: .touchUpInside)
         view.addSubview(moreButton)
         moreButton.contentEdgeInsets = UIEdgeInsetsMake(3, 3, 3, 3)
-        moreButton.addConstraints(fromStringArray: ["V:[$self(24)]",
-                                                    "H:[$self(24)]-16-|"])
+        moreButton.addConstraints(fromStringArray: ["V:[$self($metric0)]",
+                                                    "H:[$self($metric0)]-16-|"], metrics:[KPLayoutConstant.dismissButton_size])
         moreButton.addConstraintForCenterAligning(to: topBarContainer,
                                                      in: .vertical,
                                                      constant: 8)
-        
-        
-        informationHeaderButtonBar = KPInformationHeaderButtonBar(frame: .zero)
-        informationHeaderButtonBar.informationController = self
-        toolBarContainer.addSubview(informationHeaderButtonBar)
-        informationHeaderButtonBar.addConstraints(fromStringArray: ["H:[$self]|",
-                                                                    "V:|-1-[$self]|"])
         
         
         view.addSubview(addButton)
@@ -700,7 +688,6 @@ class KPInformationViewController: KPViewController {
         KPServiceHandler.sharedHandler.fetchStoreInformation(informationDataModel.identifier) {
             [weak self] (result) in
             if let weSelf = self {
-                weSelf.informationHeaderButtonBar.informationDataModel = result
                 weSelf.informationHeaderView.scoreLabel.text = String(format: "%.1f",
                                                                     result?.averageRate?.doubleValue ?? 0.0)
                 weSelf.dataLoading = false
@@ -809,9 +796,6 @@ class KPInformationViewController: KPViewController {
                     // 加上 base 的數量
                     let rateCount = (rate?.base != nil) ? (rate?.rates?.count)!+1 : (rate?.rates?.count)!
                     
-                    weSelf.informationHeaderButtonBar.rateButton.numberValue = rateCount
-                    weSelf.informationHeaderButtonBar.rateButton.selected =
-                        (KPUserManager.sharedManager.currentUser?.hasRated(weSelf.informationDataModel.identifier)) ?? false
                     weSelf.rateInformationView.infoSupplementLabel.text = "\(rateCount) 人已評分"
                     weSelf.rateDataModel = rate
                     
@@ -825,13 +809,10 @@ class KPInformationViewController: KPViewController {
                     if weSelf.hasRatedDataModel != nil {
                         DispatchQueue.main.async {
                             weSelf.rateInformationView.actionButtons[0].setTitle("修改評分", for: .normal)
-                            weSelf.informationHeaderButtonBar.rateButton.titleLabel.text = "修改評分"
                         }
                     }
                     
                 } else {
-                    weSelf.informationHeaderButtonBar.rateButton.numberValue = 0
-                    weSelf.informationHeaderButtonBar.rateButton.selected = false
                     weSelf.rateInformationView.infoSupplementLabel.text = "尚無評分"
                 }
             }
@@ -984,15 +965,11 @@ class KPInformationViewController: KPViewController {
                         
                         if let oComment = oComments.first {
                             weSelf.hasCommentDataModel = oComment
-                            weSelf.informationHeaderButtonBar.commentButton.titleLabel.text = "修改評論"
                         }
                         
                         let commentCountValue = comments.count
                         weSelf.updateCommentsLayout(commentCountValue)
                         weSelf.commentInformationView.isEmpty = (commentCountValue == 0)
-                        weSelf.informationHeaderButtonBar.commentButton.numberValue = commentCountValue
-                        weSelf.informationHeaderButtonBar.commentButton.selected =
-                            (KPUserManager.sharedManager.currentUser?.hasReviewed(weSelf.informationDataModel.identifier)) ?? false
                         
                     } else {
                         weSelf.commentInfoView.tableViewHeightConstraint.constant = 64
@@ -1015,12 +992,10 @@ class KPInformationViewController: KPViewController {
     
     func showInformationContents(_ animated: Bool) {
         
-        informationHeaderButtonBar.isHidden = false
         shopInformationView.isHidden = false
         
         CATransaction.begin()
-        CATransaction.setCompletionBlock { 
-            self.informationHeaderButtonBar.layer.transform = CATransform3DMakeTranslation(0, 0, 0)
+        CATransaction.setCompletionBlock {
             self.shopInformationView.layer.transform = CATransform3DMakeTranslation(0, 0, 0)
         }
         
@@ -1032,14 +1007,12 @@ class KPInformationViewController: KPViewController {
         translateAnimation.fillMode = kCAFillModeBoth
         translateAnimation.timingFunction = timingFunction
         
-        informationHeaderButtonBar.layer.add(translateAnimation, forKey: nil)
         shopInformationView.layer.add(translateAnimation, forKey: nil)
         
         UIView.animate(withDuration: 0.5,
                        delay: 0,
                        options: .curveEaseOut,
                        animations: {
-                        self.informationHeaderButtonBar.alpha = 1.0
                         self.shopInformationView.alpha = 1.0
         }) { (_) in
             self.scrollContainer.isUserInteractionEnabled = true
@@ -1251,11 +1224,13 @@ extension KPInformationViewController: UIScrollViewDelegate {
             // 處理 Tool Bar
             if self.scrollContainer.contentOffset.y >= 120 {
                 topBarContainer.alpha = (self.scrollContainer.contentOffset.y - 120) / 40
+                titleLabel.alpha = (self.scrollContainer.contentOffset.y - 120) / 40
                 dismissButton.tintColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
                 moreButton.tintColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
                 titleLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
             } else {
                 topBarContainer.alpha = 0
+                titleLabel.alpha = 0
                 dismissButton.tintColor = KPColorPalette.KPTextColor_v2.whiteColor
                 moreButton.tintColor = KPColorPalette.KPTextColor_v2.whiteColor
                 titleLabel.textColor = KPColorPalette.KPTextColor_v2.whiteColor

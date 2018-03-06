@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Hero
 
 class KPArticleCell: UICollectionViewCell {
     
@@ -27,6 +28,7 @@ class KPArticleCell: UICollectionViewCell {
         layer.shadowOffset = CGSize(width: 0.0, height: 4.0)
         layer.shadowOpacity = 0.5
         layer.shadowRadius = 4
+        clipsToBounds = true
         
         articleHeroImageView = UIImageView()
         articleHeroImageView.tag = 99
@@ -36,6 +38,7 @@ class KPArticleCell: UICollectionViewCell {
                                                               "V:|[$self]|"])
         
         gradientView = UIView()
+        gradientView.alpha = 0.0
         contentView.addSubview(gradientView)
         gradientView.addConstraints(fromStringArray: ["V:|[$self]|",
                                                       "H:|[$self]|"])
@@ -60,13 +63,13 @@ class KPArticleCell: UICollectionViewCell {
         titleLabel.addConstraints(fromStringArray: ["H:|-10-[$self]-10-|",
                                                     "V:[$self]-6-[$view0]"],
                                   views: [subLabel])
+        
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         if imageMaskLayer == nil && articleHeroImageView.frameSize.width != 0 {
             imageMaskLayer = CAGradientLayer()
-            imageMaskLayer!.opacity = 0.3
             imageMaskLayer!.frame = CGRect(x: 0, y: 0,
                                            width: articleHeroImageView.frameSize.width,
                                            height: articleHeroImageView.frameSize.height)
@@ -75,6 +78,10 @@ class KPArticleCell: UICollectionViewCell {
             imageMaskLayer!.startPoint = CGPoint(x: 0.5, y: 0.2)
             imageMaskLayer!.endPoint = CGPoint(x: 0.5, y: 1.0)
             gradientView.layer.addSublayer(imageMaskLayer!)
+            UIView.animate(withDuration: 1.0,
+                           animations: {
+                            self.gradientView.alpha = 0.3
+            })
         }
     }
     
@@ -83,28 +90,13 @@ class KPArticleCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        print("Touch Began")
-        UIView.animate(withDuration: 0.1) {
-            self.transform = CGAffineTransform(scaleX: 0.96,
-                                               y: 0.96)
+    override var isHighlighted: Bool {
+        didSet {
+            UIView.animate(withDuration: 0.1) {
+                self.transform = self.isHighlighted ?
+                    CGAffineTransform(scaleX: 0.96, y: 0.96) :
+                    CGAffineTransform.identity
+            }
         }
-        super.touchesBegan(touches, with: event)
-    }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        print("Touch End")
-        UIView.animate(withDuration: 0.1) {
-            self.transform = CGAffineTransform.identity
-        }
-        super.touchesEnded(touches, with: event)
-    }
-    
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        print("Touch Cancel")
-        UIView.animate(withDuration: 0.1) {
-            self.transform = CGAffineTransform.identity
-        }
-        super.touchesCancelled(touches, with: event)
     }
 }

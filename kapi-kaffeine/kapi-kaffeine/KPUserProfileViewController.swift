@@ -180,6 +180,9 @@ KPTabViewDelegate {
         editButton.addConstraints(fromStringArray: ["V:[$view0]-16-[$self(32)]", "H:[$view1]-16-[$self(64)]"],
                                     views: [userBioLabel, logOutButton
             ])
+        editButton.addTarget(self,
+                             action: #selector(handleLoginButtonOnTapped(sender:)),
+                             for: UIControlEvents.touchUpInside)
         
         
         tabView = KPTabView(titles: tabTitles.map {$0.title})
@@ -330,6 +333,18 @@ KPTabViewDelegate {
     
     func handleDismissButtonOnTapped() {
         self.appModalController()?.dismissControllerWithDefaultDuration()
+    }
+    
+    @objc func handleLoginButtonOnTapped(sender: UIButton) {
+        let controller = KPModalViewController()
+        controller.edgeInset = UIEdgeInsets(top: 0,
+                                            left: 0,
+                                            bottom: 0,
+                                            right: 0);
+        let loginController = KPLoginViewController()
+        UIApplication.shared.KPTopViewController().present(loginController,
+                                                           animated: true,
+                                                           completion: nil)
     }
     
     @objc func handleEditButtonOnTapped() {
