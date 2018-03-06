@@ -16,7 +16,6 @@ class KPPhotoGalleryViewController: KPViewController {
     
     var transitionController: KPPhotoDisplayTransition = KPPhotoDisplayTransition()
     var hideSelectedCell: Bool = false
-    var dismissButton: KPBounceButton!
     var collectionView: UICollectionView!;
     var collectionLayout: UICollectionViewFlowLayout!;
     var selectedIndexPath: IndexPath!
@@ -49,24 +48,6 @@ class KPPhotoGalleryViewController: KPViewController {
         
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        navigationController?.navigationBar.isHidden = true
-        view.setNeedsLayout()
-        view.layoutIfNeeded()
-//        navigationController?.hidesBarsOnSwipe = true
-//        navigationController?.setNavigationBarHidden(false, animated: true)
-    }
-    
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        navigationController?.view.setNeedsLayout()
-        navigationController?.view.layoutIfNeeded()
-        navigationController?.navigationBar.isHidden = false
-    }
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -75,16 +56,12 @@ class KPPhotoGalleryViewController: KPViewController {
         navigationItem.hidesBackButton = true
         navigationController?.navigationBar.topItem?.title = "店家照片"
         
-        let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace,
-                                             target: nil,
-                                             action: nil)
-        negativeSpacer.width = -8
-        
-        navigationItem.leftBarButtonItems = [negativeSpacer, UIBarButtonItem(image: R.image.icon_back(),
-                                                                                  style: .plain,
-                                                                                  target: self,
-                                                                                  action: #selector(KPPhotoGalleryViewController.handleBackButtonOnTapped))]
-        
+        let barItem = UIBarButtonItem(image: R.image.icon_back(),
+                                      style: .plain,
+                                      target: self,
+                                      action: #selector(KPPhotoGalleryViewController.handleBackButtonOnTapped))
+        barItem.tintColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
+        navigationItem.leftBarButtonItems = [barItem]
         let itemSize = (UIScreen.main.bounds.size.width-(12*4))/3
         
         //Collection view

@@ -168,11 +168,20 @@ class KPInformationViewController: KPViewController {
     var animatedHeaderConstraint: NSLayoutConstraint!
     var navBarFixBound: CGRect!
     
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true,
+                                                     animated: animated)
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         if KPPopoverView.sharedPopoverView.contentView != nil {
             KPPopoverView.sharedPopoverView.dismiss()
         }
+        navigationController?.setNavigationBarHidden(false,
+                                                     animated: animated)
     }
     
     override func viewDidLoad() {
@@ -388,7 +397,6 @@ class KPInformationViewController: KPViewController {
         menuInfoView.isMenu = true
         menuInfoView.informationController = self
         menuInformationView = KPInformationSharedInfoView()
-        menuInformationView.emptyLabel.text = "成為第一個上傳的人吧:D"
         menuInformationView.infoView = menuInfoView
         scrollContainer.addSubview(menuInformationView)
         menuInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
@@ -577,6 +585,8 @@ class KPInformationViewController: KPViewController {
         SKPhotoBrowserOptions.displayStatusbar = true
         
         updateToolBar()
+        refreshPhoto()
+        refreshMenu()
 //        syncRemoteData()
         
 }
@@ -719,9 +729,12 @@ class KPInformationViewController: KPViewController {
                     
                     if weSelf.displayMenuInformations.count == 0 {
                         weSelf.menuInformationView.isEmpty = true
+                        weSelf.menuInformationView.showEmptyContent = false
+                        (weSelf.photoInformationView.infoView as! KPShopPhotoInfoView).smallerVerticlePadding = true
                     } else {
                         weSelf.menuInformationView.infoSupplementLabel.text = "\(weSelf.displayMenuInformations.count) 張照片"
                         weSelf.menuInformationView.isEmpty = false
+                        (weSelf.photoInformationView.infoView as! KPShopPhotoInfoView).smallerVerticlePadding = false
                     }
                 } else {
                     weSelf.menuInformationView.infoSupplementLabel.text = "尚無照片"

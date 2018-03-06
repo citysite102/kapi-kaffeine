@@ -27,6 +27,36 @@ class KPInformationSharedInfoView: UIView {
     var infoSupplementLabel: UILabel!
     var infoContainer: UIView!
     var separator: UIView!
+    var showEmptyContent: Bool = true {
+        didSet {
+            DispatchQueue.main.async {
+                if !self.showEmptyContent {
+                    self.infoTitleLabel.removeAllRelatedConstraintsInSuperView()
+                    self.infoSupplementLabel.removeAllRelatedConstraintsInSuperView()
+                    self.infoContainer.removeAllRelatedConstraintsInSuperView()
+                    self.infoContainer.addConstraints(fromStringArray: ["V:|[$self(0)]|",
+                                                                        "H:|[$self]|"])
+                    self.emptyLabel.isHidden = true
+                } else {
+                    self.infoTitleLabel.removeAllRelatedConstraintsInSuperView()
+                    self.infoSupplementLabel.removeAllRelatedConstraintsInSuperView()
+                    self.infoContainer.removeAllRelatedConstraintsInSuperView()
+                    
+                    self.infoTitleLabel.addConstraints(fromStringArray: ["V:|-($metric0)-[$self]",
+                                                                         "H:|-($metric0)-[$self]"],
+                                                  metrics:[KPLayoutConstant.information_horizontal_offset])
+                    self.infoSupplementLabel.addConstraints(fromStringArray: ["H:[$self]-($metric0)-|"],
+                                                            metrics:[KPLayoutConstant.information_horizontal_offset])
+                    self.infoSupplementLabel.addConstraintForCenterAligning(to: self.infoTitleLabel,
+                                                                            in: .vertical)
+                    self.infoContainer.addConstraints(fromStringArray: ["V:[$view0]-24-[$self(>=64)]|",
+                                                                   "H:|[$self]|"],
+                                                      views: [self.infoTitleLabel])
+                    
+                }
+            }
+        }
+    }
     var emptyLabel: UILabel!
     
     var buttonContainer: UIView!
@@ -45,7 +75,8 @@ class KPInformationSharedInfoView: UIView {
                 oldValue.removeFromSuperview()
             }
             self.infoContainer.addSubview(infoView)
-            infoView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"])
+            infoView.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                      "V:|[$self]|"])
         }
     }
     
