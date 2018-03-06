@@ -359,6 +359,7 @@ extension KPArticleViewController: UIScrollViewDelegate {
     func scrollViewWillEndDragging(_ scrollView: UIScrollView,
                                    withVelocity velocity: CGPoint,
                                    targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        print("Will End Offset:\(scrollView.contentOffset.y)")
         if (targetContentOffset.pointee.y <= KPArticleViewController.scrollAnimationThreshold) {
             checkDismissBehavior(scrollView.contentOffset.y)
             autoScaleHeroImage(offsetY: targetContentOffset.pointee.y)
@@ -366,6 +367,8 @@ extension KPArticleViewController: UIScrollViewDelegate {
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        print("Scroll Offset:\(scrollView.contentOffset.y)")
         
         // 處理 Tool Bar
         UIView.animate(withDuration: 0.2,
@@ -380,7 +383,7 @@ extension KPArticleViewController: UIScrollViewDelegate {
         
         // 處理上半部分 Hero Image 的狀態
         if (scrollView.contentOffset.y <= KPArticleViewController.scrollAnimationThreshold &&
-            scrollView.contentOffset.y > 0) {
+            scrollView.contentOffset.y >= KPArticleViewController.scrollAnimationEnlargeOffset) {
             
             if explorationViewController != nil {
                 explorationViewController?.shouldShowLightContent = true
@@ -427,10 +430,27 @@ extension KPArticleViewController: UIScrollViewDelegate {
             lastOffset = scrollView.contentOffset.y
         } else {
             
-            if self.scrollContainer.contentOffset.y <= KPArticleViewController.scrollAnimationEnlargeOffset {
+            if self.scrollContainer.contentOffset.y < KPArticleViewController.scrollAnimationEnlargeOffset {
                 if !viewIsDimissing {
+                    scrollView.setContentOffset(CGPoint(x: 0, y: 0),
+                                                animated: false)
                     hero.dismissViewController()
+//                    self.dismiss(animated: true, completion: nil)
                     viewIsDimissing = true
+//                    self.appModalController()?.view.backgroundColor = UIColor.clear
+//                    view.backgroundColor = UIColor.clear
+//                    scrollContainer.backgroundColor = UIColor.clear
+//                    viewIsDimissing = true
+//                    UIView.animate(withDuration: 0.3,
+//                                   delay: 0,
+//                                   options: .curveEaseIn,
+//                                   animations: {
+//                                    self.view.transform = CGAffineTransform(translationX: 0,
+//                                                                            y: self.view.bounds.height)
+//                    }, completion: { (_) in
+//                        self.dismiss(animated: true, completion: nil)
+////                        self.appModalController()?.dismissController(duration: 0)
+//                    })
                 } else {
                     if (self.scrollContainer.contentOffset.y > -150) {
                         Hero.shared.update((self.scrollContainer.contentOffset.y +
@@ -457,6 +477,17 @@ extension KPArticleViewController: UIScrollViewDelegate {
                         explorationViewController?.shouldShowLightContent = false
                     }
                     
+                } else if self.scrollContainer.contentOffset.y <= 0 {
+//                    && self.scrollContainer.contentOffset.y > -50 {
+                
+//                    let updatedFrame = CGRect(x: self.scrollContainer.contentOffset.y,
+//                                              y: self.scrollContainer.contentOffset.y,
+//                                              width: view.bounds.width - 2*(self.scrollContainer.contentOffset.y),
+//                                              height: view.bounds.height - self.scrollContainer.contentOffset.y)
+//                    heroCoverImageView.frame = updatedFrame
+//                    imageMaskLayer.frame = CGRect(x: 0, y: 0,
+//                                                  width: updatedFrame.width*2,
+//                                                  height: updatedFrame.height)
                 } else {
                     topBarContainer.alpha = 0
                     dismissButton.tintColor = UIColor.white

@@ -44,12 +44,36 @@ class KPPhotoGalleryViewController: KPViewController {
         }
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        navigationController?.navigationBar.isHidden = true
+        view.setNeedsLayout()
+        view.layoutIfNeeded()
+//        navigationController?.hidesBarsOnSwipe = true
+//        navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+    
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        navigationController?.view.setNeedsLayout()
+        navigationController?.view.layoutIfNeeded()
+        navigationController?.navigationBar.isHidden = false
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = KPColorPalette.KPTextColor.whiteColor
         navigationItem.title = "店家照片"
         navigationItem.hidesBackButton = true
+        navigationController?.navigationBar.topItem?.title = "店家照片"
         
         let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace,
                                              target: nil,
@@ -72,6 +96,11 @@ class KPPhotoGalleryViewController: KPViewController {
         
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionLayout)
         collectionView.backgroundColor = UIColor.clear
+        if #available(iOS 11.0, *) {
+            collectionView.contentInsetAdjustmentBehavior = .never
+        } else {
+            // Fallback on earlier versions
+        }
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.showsHorizontalScrollIndicator = false

@@ -42,42 +42,42 @@ final class GlidingLayout: UICollectionViewFlowLayout {
 //    return offset
 //  }
  
-  override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
-    delegate?.collectionViewDidScroll()
-    return true
-  }
-
-  override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-    guard let attributes = super.layoutAttributesForElements(in: rect) else { return nil }
-    let transformed = attributes.map { transformLayoutAttributes($0) }
-    return transformed
-  }
-  
-  private func transformLayoutAttributes(_ attributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
-    
-    guard let collectionView = self.collectionView else { return attributes }
-    
-    let startOffset = (attributes.frame.origin.x - collectionView.contentOffset.x - sectionInset.left) / attributes.frame.width
-    let maxScale: CGFloat = 1.03
-    let minScale: CGFloat = 1.0
-    let minLeftOffset: CGFloat = 0
-    let maxLeftOffset: CGFloat = 20
-    
-    let divided = abs(startOffset) / 10
-//    let scale = max(minScale, min(maxScale, 1.0 + divided))
-    let scale = max(minScale, maxScale - divided)
-    let offset = max(minLeftOffset, maxLeftOffset*startOffset)
-    
-    if let contentView = collectionView.cellForItem(at: attributes.indexPath)?.contentView, let parallaxView = contentView.viewWithTag(99) {
-        var transform = CGAffineTransform.identity
-        transform = transform.scaledBy(x: scale, y: scale)
-        transform = transform.translatedBy(x: offset,
-                                           y: 0)
-        parallaxView.transform = transform
-        
-    }
-  
-    return attributes
-  }
+//  override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
+//    delegate?.collectionViewDidScroll()
+//    return true
+//  }
+//
+//  override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+//    guard let attributes = super.layoutAttributesForElements(in: rect) else { return nil }
+//    let transformed = attributes.map { transformLayoutAttributes($0) }
+//    return transformed
+//  }
+//  
+//  private func transformLayoutAttributes(_ attributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
+//    
+//    guard let collectionView = self.collectionView else { return attributes }
+//    
+//    let startOffset = (attributes.frame.origin.x - collectionView.contentOffset.x - sectionInset.left) / attributes.frame.width
+//    let maxScale: CGFloat = 1.03
+//    let minScale: CGFloat = 1.0
+//    let minLeftOffset: CGFloat = 0
+//    let maxLeftOffset: CGFloat = 20
+//    
+//    let divided = abs(startOffset) / 10
+////    let scale = max(minScale, min(maxScale, 1.0 + divided))
+//    let scale = max(minScale, maxScale - divided)
+//    let offset = max(minLeftOffset, maxLeftOffset*startOffset)
+//    
+//    if let contentView = collectionView.cellForItem(at: attributes.indexPath)?.contentView, let parallaxView = contentView.viewWithTag(99) {
+//        var transform = CGAffineTransform.identity
+//        transform = transform.scaledBy(x: scale, y: scale)
+//        transform = transform.translatedBy(x: offset,
+//                                           y: 0)
+//        parallaxView.transform = transform
+//        
+//    }
+//  
+//    return attributes
+//  }
   
 }

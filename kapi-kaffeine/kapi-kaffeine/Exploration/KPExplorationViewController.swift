@@ -181,11 +181,11 @@ class KPExplorationViewController: KPViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        testData = Mapper<KPExplorationSection>().mapArray(JSONString: testJSONString) ?? []
+        testData = Mapper<KPExplorationSection>().mapArray(JSONString: testJSONString) ?? []
         view.backgroundColor = KPColorPalette.KPBackgroundColor.whiteColor
         hero.isEnabled = true
         layoutWithSecondVersion()
-        refreshData()
+//        refreshData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -556,15 +556,15 @@ extension KPExplorationViewController: UICollectionViewDataSource, UICollectionV
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return articleList.count
+        return 5
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ArticleCell", for: indexPath) as! KPArticleCell
         cell.articleHeroImageView.image = demoImages[indexPath.row]
         cell.hero.id = "article-\(indexPath.row)"
-        cell.titleLabel.text = articleList[indexPath.row].title
-        cell.subLabel.text = "\(articleList[indexPath.row].peopleRead) 人已看過"
+//        cell.titleLabel.text = articleList[indexPath.row].title
+//        cell.subLabel.text = "\(articleList[indexPath.row].peopleRead) 人已看過"
         return cell
     }
     

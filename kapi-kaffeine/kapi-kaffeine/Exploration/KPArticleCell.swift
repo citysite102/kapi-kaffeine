@@ -27,8 +27,7 @@ class KPArticleCell: UICollectionViewCell {
         layer.shadowColor = KPColorPalette.KPMainColor_v2.shadow_darkColor?.cgColor
         layer.shadowOffset = CGSize(width: 0.0, height: 4.0)
         layer.shadowOpacity = 0.5
-        layer.shadowRadius = 4
-        clipsToBounds = true
+        layer.shadowRadius = 3
         
         articleHeroImageView = UIImageView()
         articleHeroImageView.tag = 99
