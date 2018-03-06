@@ -173,7 +173,8 @@ class KPInformationSharedInfoView: UIView {
         emptyLabel.text = "目前尚無內容喔！"
         emptyLabel.isHidden = true
         infoContainer.addSubview(emptyLabel)
-        emptyLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
+        emptyLabel.addConstraintForCenterAligningToSuperview(in: .vertical,
+                                                             constant: -12)
         emptyLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
         
         buttonContainer = UIView()

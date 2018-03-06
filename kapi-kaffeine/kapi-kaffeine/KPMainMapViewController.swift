@@ -366,9 +366,6 @@ GMUClusterRendererDelegate {
         
         loadingView = KPLoadingView(("讀取中..", "讀取成功", "讀取失敗"))
         state = .loading
-//        DispatchQueue.main.asyncAfter(deadline: .now()+1.0) { 
-//            self.state = .loading
-//        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -376,7 +373,8 @@ GMUClusterRendererDelegate {
     }
     
     deinit {
-        KPLocationManager.sharedInstance().removeObserver(self, forKeyPath: "currentLocation")
+        KPLocationManager.sharedInstance().removeObserver(self, 
+                                                          forKeyPath: "currentLocation")
     }
 
     override func didReceiveMemoryWarning() {
@@ -644,7 +642,13 @@ GMUClusterRendererDelegate {
     }
     
     func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition) {
-        if draggingByUser == true {
+//        if (mainController.currentController == self &&
+//            draggingByUser == true) ||
+//            mainController.rootTabViewController.shouldMapRefetch {
+//            mainController.reFetchRemoteData(false)
+//            mainController.rootTabViewController.shouldMapRefetch = false
+//        } else {
+        if (draggingByUser == true) {
             mainController.reFetchRemoteData(false)
         } else {
             draggingByUser = true

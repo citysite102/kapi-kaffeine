@@ -12,6 +12,7 @@ import ESTabBarController_swift
 class KPMainTabController: ESTabBarController, UITabBarControllerDelegate {
 
     var exploreAnimationHasPerformed: Bool = false
+    var shouldMapRefetch: Bool = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -89,10 +90,10 @@ class KPMainTabController: ESTabBarController, UITabBarControllerDelegate {
                                     image: R.image.icon_listView(),
                                     selectedImage: R.image.icon_listView())
         listItem.imageInsets = UIEdgeInsetsMake(7, 0, -7, 0)
-        
         let listController = UIStoryboard.init(name: "Main",
                                                bundle: nil).instantiateViewController(withIdentifier: "mainViewController") as! KPMainViewController
         listController.tabBarItem = listItem
+        listController.rootTabViewController = self
         
         let profileItem = UITabBarItem(title: "",
                                        image: R.image.icon_profile(),

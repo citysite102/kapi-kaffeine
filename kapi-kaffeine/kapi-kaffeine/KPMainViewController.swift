@@ -36,6 +36,7 @@ class KPMainViewController: KPViewController {
     var percentDrivenTransition: UIPercentDrivenInteractiveTransition!
     var mainListViewController: KPMainListViewController?
     var mainMapViewController: KPMainMapViewController?
+    weak var rootTabViewController: KPMainTabController!
     
     var transitionController: KPPhotoDisplayTransition = KPPhotoDisplayTransition()
     var currentController: KPViewController!

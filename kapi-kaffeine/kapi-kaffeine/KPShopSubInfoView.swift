@@ -25,6 +25,7 @@ class KPShopSubInfoView: UIView {
     convenience init(_ title: String,
                      _ content: String,
                      _ buttonTitle: String?,
+                     _ emptyContent: Bool,
                      _ handler: ((KPShopSubInfoView) -> Void)?) {
         self.init(frame: .zero)
         
@@ -38,7 +39,9 @@ class KPShopSubInfoView: UIView {
         
         contentLabel = UILabel()
         contentLabel.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
-        contentLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_title
+        contentLabel.textColor = emptyContent ?
+        KPColorPalette.KPTextColor_v2.mainColor_description:
+        KPColorPalette.KPTextColor_v2.mainColor_title
         contentLabel.setText(text: content, lineSpacing: 4)
         contentLabel.textAlignment = .right
         contentLabel.numberOfLines = 0

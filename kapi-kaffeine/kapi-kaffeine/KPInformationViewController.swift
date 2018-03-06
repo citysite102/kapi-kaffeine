@@ -154,9 +154,12 @@ class KPInformationViewController: KPViewController {
         didSet {
             if dataLoading {
                 
-                self.shopInformationView.isHidden = true
-                self.shopInformationView.alpha = 0.0
-                self.shopInformationView.layer.transform = CATransform3DMakeTranslation(0, 75, 0)
+                self.cardInformationContainer.isHidden = true
+                self.cardInformationContainer.alpha = 0.0
+                self.cardInformationContainer.layer.transform = CATransform3DMakeTranslation(0, 75, 0)
+                self.photoInformationView.isHidden = true
+                self.photoInformationView.alpha = 0.0
+                self.photoInformationView.layer.transform = CATransform3DMakeTranslation(0, 75, 0)
                 self.scrollContainer.isUserInteractionEnabled = false
             } else {
                 self.loadingIndicator.stopAnimating()
@@ -295,24 +298,24 @@ class KPInformationViewController: KPViewController {
         informationHeaderView.informationController = self
         informationHeaderView.scoreLabel.text = String(format: "%.1f", informationDataModel.averageRate?.doubleValue ?? 0.0)
         informationHeaderView.facebookButton.isHidden = !(informationDataModel.facebookURL != nil)
-        informationHeaderView.shopPhoto.image = R.image.demo_4()
+//        informationHeaderView.shopPhoto.image = R.image.demo_4()
         
-//        if let photoURL = informationDataModel.covers?["kapi_l"] ?? informationDataModel.covers?["google_l"] {
-//            informationHeaderView.shopPhoto.af_setImage(withURL: URL(string: photoURL)!,
-//                                                        placeholderImage: nil,
-//                                                        filter: nil,
-//                                                        progress: nil,
-//                                                        progressQueue: DispatchQueue.global(),
-//                                                        imageTransition: UIImageView.ImageTransition.crossDissolve(0.2),
-//                                                        runImageTransitionIfCached: true,
-//                                                        completion: { response in
-//                                                            if let responseImage = response.result.value {
-//                                                                self.informationHeaderView.shopPhoto.image =  responseImage
-//                                                            }
-//                })
-//        } else {
-//
-//        }
+        if let photoURL = informationDataModel.covers?["kapi_l"] ?? informationDataModel.covers?["google_l"] {
+            informationHeaderView.shopPhoto.af_setImage(withURL: URL(string: photoURL)!,
+                                                        placeholderImage: nil,
+                                                        filter: nil,
+                                                        progress: nil,
+                                                        progressQueue: DispatchQueue.global(),
+                                                        imageTransition: UIImageView.ImageTransition.crossDissolve(0.2),
+                                                        runImageTransitionIfCached: true,
+                                                        completion: { response in
+                                                            if let responseImage = response.result.value {
+                                                                self.informationHeaderView.shopPhoto.image =  responseImage
+                                                            }
+                })
+        } else {
+
+        }
         
         //informationDataModel
         scrollContainer.addSubview(informationHeaderView)
@@ -377,7 +380,7 @@ class KPInformationViewController: KPViewController {
         photoInformationView = KPInformationSharedInfoView()
         photoInformationView.emptyLabel.text = "成為第一個上傳的人吧:D"
         photoInformationView.infoView = photoInfoView
-        photoInformationView.infoTitleLabel.text = "照片（30）"
+        photoInformationView.infoTitleLabel.text = "照片"
         photoInformationView.infoSupplementLabel.text = "查看所有照片"
         scrollContainer.addSubview(photoInformationView)
         photoInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
@@ -585,10 +588,7 @@ class KPInformationViewController: KPViewController {
         SKPhotoBrowserOptions.displayStatusbar = true
         
         updateToolBar()
-        refreshPhoto()
-        refreshMenu()
-//        syncRemoteData()
-        
+        syncRemoteData()
 }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -698,8 +698,8 @@ class KPInformationViewController: KPViewController {
         KPServiceHandler.sharedHandler.fetchStoreInformation(informationDataModel.identifier) {
             [weak self] (result) in
             if let weSelf = self {
-                weSelf.informationHeaderView.scoreLabel.text = String(format: "%.1f",
-                                                                    result?.averageRate?.doubleValue ?? 0.0)
+//                weSelf.informationHeaderView.scoreLabel.text = String(format: "%.1f",
+//                                                                    result?.averageRate?.doubleValue ?? 0.0)
                 weSelf.dataLoading = false
             }
         }
@@ -732,7 +732,8 @@ class KPInformationViewController: KPViewController {
                         weSelf.menuInformationView.showEmptyContent = false
                         (weSelf.photoInformationView.infoView as! KPShopPhotoInfoView).smallerVerticlePadding = true
                     } else {
-                        weSelf.menuInformationView.infoSupplementLabel.text = "\(weSelf.displayMenuInformations.count) 張照片"
+//                        weSelf.menuInformationView.infoSupplementLabel.text = "\(weSelf.displayMenuInformations.count) 張照片"
+                        weSelf.menuInformationView.infoSupplementLabel.text = ""
                         weSelf.menuInformationView.isEmpty = false
                         (weSelf.photoInformationView.infoView as! KPShopPhotoInfoView).smallerVerticlePadding = false
                     }
@@ -772,12 +773,14 @@ class KPInformationViewController: KPViewController {
                         weSelf.informationHeaderView.shopPhoto.isUserInteractionEnabled = false
                         weSelf.informationHeaderView.shopPhoto.layer.add(transition, forKey: nil)
                         weSelf.informationHeaderView.morePhotoButton.titleLabel?.text = "上傳\n照片"
+                        weSelf.photoInformationView.infoTitleLabel.text = "照片"
                         weSelf.photoInformationView.infoSupplementLabel.text = "尚無照片"
                         weSelf.photoInformationView.isEmpty = true
                         weSelf.informationHeaderView.morePhotoButton.setTitle("上傳\n照片", for: .normal)
                     } else {
                         weSelf.photoInformationView.infoSupplementLabel.text = "\(weSelf.displayPhotoInformations.count) 張照片"
                         weSelf.photoInformationView.isEmpty = false
+                        weSelf.photoInformationView.infoTitleLabel.text = "照片（\(weSelf.displayPhotoInformations.count)）"
                         weSelf.informationHeaderView.morePhotoButton.setTitle("\(weSelf.displayPhotoInformations.count) \n張照片",
                             for: .normal)
                         
@@ -826,7 +829,7 @@ class KPInformationViewController: KPViewController {
                     }
                     
                 } else {
-                    weSelf.rateInformationView.infoSupplementLabel.text = "尚無評分"
+                    weSelf.rateInformationView.infoSupplementLabel.text = ""
                 }
             }
         }
@@ -835,7 +838,7 @@ class KPInformationViewController: KPViewController {
     
     func updateCommentsLayout(_ commentCount: Int) {
         if commentCount == 0 {
-            self.commentInformationView.infoSupplementLabel.text = "尚無留言"
+            self.commentInformationView.infoSupplementLabel.text = ""
             self.commentInformationView.isEmpty = true
             self.commentInformationView.actions = [Action(title:"我要評論",
                                                           style:.normal,
@@ -990,7 +993,7 @@ class KPInformationViewController: KPViewController {
                     }
                 } else {
                     weSelf.commentInfoView.comments = [KPCommentModel]()
-                    weSelf.commentInformationView.infoSupplementLabel.text = "尚無留言"
+                    weSelf.commentInformationView.infoSupplementLabel.text = ""
                     weSelf.commentInfoView.tableView.layoutIfNeeded()
                     weSelf.commentInfoView.tableViewHeightConstraint.constant = 64
                     weSelf.commentInformationView.setNeedsLayout()
@@ -1005,11 +1008,13 @@ class KPInformationViewController: KPViewController {
     
     func showInformationContents(_ animated: Bool) {
         
-        shopInformationView.isHidden = false
+        cardInformationContainer.isHidden = false
+        photoInformationView.isHidden = false
         
         CATransaction.begin()
         CATransaction.setCompletionBlock {
-            self.shopInformationView.layer.transform = CATransform3DMakeTranslation(0, 0, 0)
+            self.cardInformationContainer.layer.transform = CATransform3DMakeTranslation(0, 0, 0)
+            self.photoInformationView.layer.transform = CATransform3DMakeTranslation(0, 0, 0)
         }
         
         let timingFunction = CAMediaTimingFunction(controlPoints: 0.51, 0.98, 0.43, 1)
@@ -1020,13 +1025,15 @@ class KPInformationViewController: KPViewController {
         translateAnimation.fillMode = kCAFillModeBoth
         translateAnimation.timingFunction = timingFunction
         
-        shopInformationView.layer.add(translateAnimation, forKey: nil)
+        cardInformationContainer.layer.add(translateAnimation, forKey: nil)
+        photoInformationView.layer.add(translateAnimation, forKey: nil)
         
         UIView.animate(withDuration: 0.5,
                        delay: 0,
                        options: .curveEaseOut,
                        animations: {
-                        self.shopInformationView.alpha = 1.0
+                        self.cardInformationContainer.alpha = 1.0
+                        self.photoInformationView.alpha = 1.0
         }) { (_) in
             self.scrollContainer.isUserInteractionEnabled = true
         }

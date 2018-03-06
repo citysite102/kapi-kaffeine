@@ -295,9 +295,9 @@ class KPInformationHeaderView: UIView {
 //                                  views:[scoreIcon])
 //        scoreLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
         
-        scoreTapGesture = UITapGestureRecognizer(target: self,
-                                                 action: #selector(KPInformationHeaderView.handleScoreContainerOnTapped(_:)))
-        scoreContainer.addGestureRecognizer(scoreTapGesture)
+//        scoreTapGesture = UITapGestureRecognizer(target: self,
+//                                                 action: #selector(KPInformationHeaderView.handleScoreContainerOnTapped(_:)))
+//        scoreContainer.addGestureRecognizer(scoreTapGesture)
         
         facebookButton = UIButton(type: .custom)
         facebookButton.setBackgroundImage(UIImage(color: UIColor.white),

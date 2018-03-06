@@ -278,7 +278,6 @@ class KPMainListViewController:
         satisficationView = KPSatisficationView()
         expNotificationView = KPExpNotificationView()
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        
     }
     
     

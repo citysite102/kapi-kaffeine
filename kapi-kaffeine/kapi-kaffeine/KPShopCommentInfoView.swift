@@ -61,29 +61,29 @@ extension KPShopCommentInfoView: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier:KPShopCommentInfoView.KPShopCommentInfoCellReuseIdentifier,
                                                  for: indexPath) as! KPShopCommentCell
         
-//        if let comment = comments[indexPath.row] {
-//            cell.userNameLabel.text = comment.displayName
-//            cell.timeHintLabel.text = comment.createdModifiedContent
-//            cell.userCommentLabel.setText(text: comment.content,
-//                                          lineSpacing: 2.4)
-//            cell.commentID = comment.commentID
-//            cell.selectionStyle = .none
-//
-//            if let photoURL = comment.photoURL {
-//                cell.userPicture.af_setImage(withURL: URL(string: photoURL)!,
-//                                             placeholderImage: UIImage(color: KPColorPalette.KPBackgroundColor.mainColor_light_10!),
-//                                             filter: nil,
-//                                             progress: nil,
-//                                             progressQueue: DispatchQueue.global(),
-//                                             imageTransition: UIImageView.ImageTransition.crossDissolve(0.2),
-//                                             runImageTransitionIfCached: true,
-//                                             completion: { response in
-//                                                if let responseImage = response.result.value {
-//                                                    cell.userPicture.image = responseImage
-//                                                }
-//                })
-//            }
-//            
+        if let comment = comments[indexPath.row] {
+            cell.userNameLabel.text = comment.displayName
+            cell.timeHintLabel.text = comment.createdModifiedContent
+            cell.userCommentLabel.setText(text: comment.content,
+                                          lineSpacing: 2.4)
+            cell.commentID = comment.commentID
+            cell.selectionStyle = .none
+
+            if let photoURL = comment.photoURL {
+                cell.userPicture.af_setImage(withURL: URL(string: photoURL)!,
+                                             placeholderImage: UIImage(color: KPColorPalette.KPBackgroundColor.mainColor_light_10!),
+                                             filter: nil,
+                                             progress: nil,
+                                             progressQueue: DispatchQueue.global(),
+                                             imageTransition: UIImageView.ImageTransition.crossDissolve(0.2),
+                                             runImageTransitionIfCached: true,
+                                             completion: { response in
+                                                if let responseImage = response.result.value {
+                                                    cell.userPicture.image = responseImage
+                                                }
+                })
+            }
+            
 //            if let likeUser = comment.likes?.first(where: { $0.memberID == KPUserManager.sharedManager.currentUser?.identifier}) {
 //                if likeUser.isLike == 0 {
 //                    cell.voteDownButton.buttonSelected = true
@@ -91,14 +91,14 @@ extension KPShopCommentInfoView: UITableViewDelegate, UITableViewDataSource {
 //                    cell.voteUpButton.buttonSelected = true
 //                }
 //            }
-//
+
 //            cell.voteUpCount = comment.likeCount ?? 0
 //            cell.voteDownCount = comment.dislikeCount ?? 0
-//            
-//            if indexPath.row == comments.count-1 || indexPath.row == 2 {
-//                cell.separator.isHidden = true
-//            }
-//        }
+            
+            if indexPath.row == comments.count-1 || indexPath.row == 2 {
+                cell.separator.isHidden = true
+            }
+        }
         
         return cell
     }
@@ -108,8 +108,7 @@ extension KPShopCommentInfoView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return comments.count > 3 ? 3 : comments.count
-        return 3
+        return comments.count > 3 ? 3 : comments.count
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {

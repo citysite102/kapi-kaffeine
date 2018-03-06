@@ -112,6 +112,7 @@ class KPShopInfoView: UIView, GMSMapViewDelegate {
         shopWebsiteInfoView = KPShopSubInfoView("網站",
                                                 "www.abc.com",
                                                 nil,
+                                                false,
                                                 nil)
         addSubview(shopWebsiteInfoView)
         shopWebsiteInfoView.addConstraints(fromStringArray: ["V:|-(-16)-[$self]",
@@ -119,8 +120,9 @@ class KPShopInfoView: UIView, GMSMapViewDelegate {
                                            metrics:[KPLayoutConstant.information_horizontal_offset])
         
         shopPhoneInfoView = KPShopSubInfoView("聯絡電話",
-                                              "02-2300-3000",
+                                              informationDataModel.phone ?? "尚無電話",
                                               nil,
+                                              informationDataModel.phone == nil,
                                               nil)
         addSubview(shopPhoneInfoView)
         shopPhoneInfoView.addConstraints(fromStringArray: ["V:[$view0][$self]",
@@ -129,8 +131,9 @@ class KPShopInfoView: UIView, GMSMapViewDelegate {
                                          views:[shopWebsiteInfoView])
         
         shopFacebookInfoView = KPShopSubInfoView("粉絲專頁",
-                                                 "西雅圖咖啡粉絲團",
+                                                 informationDataModel.facebookID ?? "尚無專頁",
                                                  nil,
+                                                 informationDataModel.facebookID == nil,
                                                  nil)
         addSubview(shopFacebookInfoView)
         shopFacebookInfoView.addConstraints(fromStringArray: ["V:[$view0][$self]",
@@ -139,8 +142,9 @@ class KPShopInfoView: UIView, GMSMapViewDelegate {
                                             views:[shopPhoneInfoView])
         
         shopPriceInfoView = KPShopSubInfoView("平均消費",
-                                              "NT$1-100元 / 人",
+                                              priceContents[(informationDataModel.priceAverage?.intValue) ?? 1],
                                               nil,
+                                              false,
                                               nil)
         addSubview(shopPriceInfoView)
         shopPriceInfoView.addConstraints(fromStringArray: ["V:[$view0][$self]",
@@ -149,8 +153,9 @@ class KPShopInfoView: UIView, GMSMapViewDelegate {
                                          views:[shopFacebookInfoView])
         
         shopLocationInfoView = KPShopSubInfoView("地址",
-                                                 "台北市大安區新生南路 100 段 21 號一樓",
+                                                 informationDataModel.address,
                                                  "開啟導航",
+                                                 false,
                                                  nil)
         addSubview(shopLocationInfoView)
         shopLocationInfoView.showSeparator = false

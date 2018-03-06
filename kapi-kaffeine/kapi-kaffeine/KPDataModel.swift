@@ -30,7 +30,7 @@ class KPDataModel: NSObject, Mappable, GMUClusterItem, Comparable {
     var identifier: String!
     var address: String!
     var name: String!
-    var phone: String!
+    var phone: String?
     var city: String!
     var latitude: Double!
     var longitude: Double!
