@@ -43,41 +43,42 @@ PODS:
     - FBSDKCoreKit
   - FBSDKShareKit (4.31.0):
     - FBSDKCoreKit (~> 4.31.0)
-  - Firebase/Auth (4.9.0):
+  - Firebase/Auth (4.10.0):
     - Firebase/Core
-    - FirebaseAuth (= 4.4.3)
-  - Firebase/Core (4.9.0):
-    - FirebaseAnalytics (= 4.0.9)
-    - FirebaseCore (= 4.0.15)
-  - Firebase/Database (4.9.0):
+    - FirebaseAuth (= 4.4.4)
+  - Firebase/Core (4.10.0):
+    - FirebaseAnalytics (= 4.1.0)
+    - FirebaseCore (= 4.0.16)
+  - Firebase/Database (4.10.0):
     - Firebase/Core
-    - FirebaseDatabase (= 4.1.4)
-  - Firebase/Messaging (4.9.0):
+    - FirebaseDatabase (= 4.1.5)
+  - Firebase/Messaging (4.10.0):
     - Firebase/Core
-    - FirebaseMessaging (= 2.1.0)
-  - FirebaseAnalytics (4.0.9):
+    - FirebaseMessaging (= 2.1.1)
+  - FirebaseAnalytics (4.1.0):
     - FirebaseCore (~> 4.0)
     - FirebaseInstanceID (~> 2.0)
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
     - nanopb (~> 0.3)
-  - FirebaseAuth (4.4.3):
-    - FirebaseAnalytics (~> 4.0)
+  - FirebaseAuth (4.4.4):
+    - FirebaseAnalytics (~> 4.1)
     - GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)
     - GTMSessionFetcher/Core (~> 1.1)
-  - FirebaseCore (4.0.15):
+  - FirebaseCore (4.0.16):
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
-  - FirebaseDatabase (4.1.4):
-    - FirebaseAnalytics (~> 4.0)
+  - FirebaseDatabase (4.1.5):
+    - FirebaseAnalytics (~> 4.1)
     - FirebaseCore (~> 4.0)
     - leveldb-library (~> 1.18)
   - FirebaseInstanceID (2.0.9):
     - FirebaseCore (~> 4.0)
-  - FirebaseMessaging (2.1.0):
-    - FirebaseAnalytics (~> 4.0)
+  - FirebaseMessaging (2.1.1):
+    - FirebaseAnalytics (~> 4.1)
     - FirebaseCore (~> 4.0)
     - FirebaseInstanceID (~> 2.0)
     - GoogleToolboxForMac/Logger (~> 2.1)
-    - Protobuf (~> 3.1)
+    - Protobuf (~> 3.5)
+  - Floaty (4.0.0)
   - Google-Mobile-Ads-SDK (7.29.0)
   - GoogleMaps (2.6.0):
     - GoogleMaps/Maps (= 2.6.0)
@@ -139,7 +140,6 @@ PODS:
     - libextobjc/RuntimeExtensions
   - libextobjc/RuntimeExtensions (0.4.1)
   - libextobjc/UmbrellaHeader (0.4.1)
-  - lottie-ios (2.5.0)
   - M13ProgressSuite (1.2.9)
   - nanopb (0.3.8):
     - nanopb/decode (= 0.3.8)
@@ -184,12 +184,12 @@ DEPENDENCIES:
   - Firebase/Core
   - Firebase/Database
   - Firebase/Messaging
+  - Floaty (from `git@github.com:citysite102/Floaty.git`)
   - Google-Mobile-Ads-SDK
   - GoogleMaps
   - GooglePlacePicker
   - GooglePlaces
   - Hero
-  - lottie-ios
   - M13ProgressSuite
   - ObjectMapper (~> 3.1)
   - pop (~> 1.0)
@@ -199,6 +199,15 @@ DEPENDENCIES:
   - SideMenu
   - SKPhotoBrowser (~> 5.0)
   - SwiftyJSON
+
+EXTERNAL SOURCES:
+  Floaty:
+    :git: git@github.com:citysite102/Floaty.git
+
+CHECKOUT OPTIONS:
+  Floaty:
+    :commit: 5cfda2399bec17676607decd1d10106fbda355a1
+    :git: git@github.com:citysite102/Floaty.git
 
 SPEC CHECKSUMS:
   Alamofire: 907e0a98eb68cdb7f9d1f541a563d6ac5dc77b25
@@ -216,13 +225,14 @@ SPEC CHECKSUMS:
   FBSDKCoreKit: 54db4c581123745d25a9f7c1608020b3aeabd118
   FBSDKLoginKit: 95a252ddffd6919c0f132a02292f0824616d8709
   FBSDKShareKit: 7c3a2e6bb5be15676aebe256444afb18c5d238b3
-  Firebase: 632216af3ed7f31e3be34776947fdc7546cfb572
-  FirebaseAnalytics: 388b630c15713f5dbf364071f5f3d6077fb52f4e
-  FirebaseAuth: aaaf68d5064a6c8fec435758f83a43b8db26ccaa
-  FirebaseCore: 3bd047463058fa6b5d312c97502c52e45401cdfb
-  FirebaseDatabase: de4446507ccd3257fca37d16f40e1540324571fd
+  Firebase: c98c8b1fbcbdccd82539a36c2b17a9b1bb0ee798
+  FirebaseAnalytics: 3dfae28d4a5e06f86c4fae830efc2ad3fadb19bc
+  FirebaseAuth: d040bb7a9db6dfc29d0e7ec82d48be51352b2581
+  FirebaseCore: eb9e1a56733ff1094ecf3e28af9069c344b25239
+  FirebaseDatabase: 5f0bc6134c5c237cf55f9e1249d406770a75eafd
   FirebaseInstanceID: d2058a35e9bebda1b6dd42486b84917bde552a9d
-  FirebaseMessaging: 2bafab2d0f3ab3dfd753101c2c32995c2051b5da
+  FirebaseMessaging: db0e01c52ef7e1f42846431273558107d084ede4
+  Floaty: 5a1a873fc0d2d0e78898b952286e7d9d2e479fb5
   Google-Mobile-Ads-SDK: 375bbb821b3df2106c37b74f6b0a97576ddc5f6b
   GoogleMaps: 42f91c68b7fa2f84d5c86597b18ceb99f5414c7f
   GooglePlacePicker: e4488625effb006f59de49e14b7a603e463e4261
@@ -232,7 +242,6 @@ SPEC CHECKSUMS:
   Hero: ce59e81c79390613d97b43da7179e2c5e1017e04
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   libextobjc: a650fc1bf489a3d3a9bc2e621efa3e1006fc5471
-  lottie-ios: d699fdee68d7b63e721d949388b015fef1aaa4ac
   M13ProgressSuite: ea9f7263e73e9215e6849dfa54e29ee0ad6a145c
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   ObjectMapper: 20505058f54e5c3ca69e1d6de9897d152a5369a6
@@ -246,6 +255,6 @@ SPEC CHECKSUMS:
   SKPhotoBrowser: 5969c3813727f11fe37bea74a40425cafcb32f61
   SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
 
-PODFILE CHECKSUM: 4203d92cb1fb01eca20db752fc19584ec07479ac
+PODFILE CHECKSUM: 42a4652045a67cc3009e41aabacd7fe78125f872
 
 COCOAPODS: 1.1.1

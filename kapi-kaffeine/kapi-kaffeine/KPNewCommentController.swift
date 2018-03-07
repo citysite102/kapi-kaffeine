@@ -35,6 +35,12 @@ class KPNewCommentController: KPViewController {
         }
     }
     
+    lazy var separator_one: UIView = {
+        let view = UIView()
+        view.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
+        return view
+    }()
+    
     let ratingTitles = ["Wifi穩定", "安靜程度",
                         "價格實惠", "座位數量",
                         "咖啡品質", "餐點美味", "環境舒適"]
@@ -46,16 +52,16 @@ class KPNewCommentController: KPViewController {
     
     lazy var textFieldHeaderLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12.0)
-        label.textColor = KPColorPalette.KPTextColor.mainColor
+        label.font = UIFont.systemFont(ofSize: KPFontSize.infoContent)
+        label.textColor = KPColorPalette.KPMainColor_v2.mainColor
         label.text = "請留下你的評論"
         return label
     }()
     
     lazy var remainingTextLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12.0)
-        label.textColor = KPColorPalette.KPTextColor.mainColor
+        label.font = UIFont.systemFont(ofSize: KPFontSize.infoContent)
+        label.textColor = KPColorPalette.KPMainColor_v2.mainColor
         label.text = "0/\(KPNewCommentController.commentMaximumTextLength)"
         return label
     }()
@@ -67,38 +73,32 @@ class KPNewCommentController: KPViewController {
         navigationItem.title = "新增評論"
         navigationItem.hidesBackButton = true
         
-        dismissButton = KPBounceButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30),
-                                       image: R.image.icon_back()!)
-        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(3, 3, 3, 3)
-        dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor;
-        dismissButton.addTarget(self,
-                             action: #selector(KPNewCommentController.handleDismissButtonOnTapped),
-                             for: .touchUpInside)
-        let barItem = UIBarButtonItem(customView: dismissButton);
+        let barItem = UIBarButtonItem(image: R.image.icon_back(),
+                                      style: .plain,
+                                      target: self,
+                                      action: #selector(KPNewCommentController.handleDismissButtonOnTapped))
+        barItem.tintColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
+        navigationItem.leftBarButtonItems = [barItem]
+        
         
         sendButton = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 24));
         sendButton.setTitle("發佈", for: .normal)
-        sendButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+        sendButton.titleLabel?.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
         sendButton.tintColor = KPColorPalette.KPTextColor.mainColor;
         sendButton.addTarget(self,
                              action: #selector(KPNewCommentController.handleSendButtonOnTapped),
                              for: .touchUpInside)
         
-        sendButtonItem = UIBarButtonItem(customView: sendButton);
-        let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace,
-                                             target: nil,
-                                             action: nil)
-
-        let rightNegativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace,
-                                                  target: nil,
-                                                  action: nil)
-
+        
+        sendButtonItem = UIBarButtonItem(title: "發佈",
+                                         style: .plain,
+                                         target: self,
+                                         action: #selector(KPNewCommentController.handleSendButtonOnTapped))
+        sendButtonItem.setTitleTextAttributes([NSAttributedStringKey.font:
+            UIFont.systemFont(ofSize: KPFontSize.mainContent)], for: .normal)
+        
         sendButtonItem.isEnabled = false
-        sendButtonItem.customView?.alpha = 0.5
-        negativeSpacer.width = -5
-        rightNegativeSpacer.width = -8
-        navigationItem.leftBarButtonItems = [negativeSpacer, barItem]
-        navigationItem.rightBarButtonItems = [rightNegativeSpacer, sendButtonItem]
+        navigationItem.rightBarButtonItems = [sendButtonItem]
         
         
         scrollContainer = UIScrollView()
@@ -133,7 +133,7 @@ class KPNewCommentController: KPViewController {
         inputTextView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
         inputTextView.textContainerInset = UIEdgeInsetsMake(0, 0, 0, 0)
         inputTextView.typingAttributes = [NSAttributedStringKey.paragraphStyle.rawValue: paragraphStyle,
-                                          NSAttributedStringKey.font.rawValue: UIFont.systemFont(ofSize: 17),
+                                          NSAttributedStringKey.font.rawValue: UIFont.systemFont(ofSize: KPFontSize.mainContent),
                                           NSAttributedStringKey.foregroundColor.rawValue: KPColorPalette.KPTextColor.grayColor_level2!]
         
         textFieldContainerView.addSubview(inputTextView)
@@ -143,7 +143,7 @@ class KPNewCommentController: KPViewController {
         
         
         placeholderLabel = UILabel()
-        placeholderLabel.font = UIFont.systemFont(ofSize: 17)
+        placeholderLabel.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
         placeholderLabel.textColor = KPColorPalette.KPTextColor.grayColor_level4
         placeholderLabel.text = "Ex:東西很好吃，環境也很舒適..."
         textFieldContainerView.addSubview(placeholderLabel)
@@ -155,52 +155,60 @@ class KPNewCommentController: KPViewController {
         remainingTextLabel.addConstraints(fromStringArray: ["V:[$self]-16-|",
                                                             "H:[$self]-16-|"])
         
-        ratingHeaderLabel = UILabel()
-        ratingHeaderLabel.isHidden = hideRatingViews
-        ratingHeaderLabel.font = UIFont.systemFont(ofSize: 13)
-        ratingHeaderLabel.textColor = KPColorPalette.KPTextColor.mainColor
-        ratingHeaderLabel.text = "為店家評分"
-        scrollContainer.addSubview(ratingHeaderLabel)
-        ratingHeaderLabel.addConstraints(fromStringArray: ["V:[$view0]-16-[$self]",
-                                                           "H:|-8-[$self]"],
-                                         views:[textFieldContainerView])
         
         ratingContainer = UIView()
         ratingContainer.isHidden = hideRatingViews
         ratingContainer.backgroundColor = UIColor.white
         scrollContainer.addSubview(ratingContainer)
-        ratingContainer.addConstraints(fromStringArray: ["V:[$view0]-8-[$self]-16-|",
+        ratingContainer.addConstraints(fromStringArray: ["V:[$view0]-16-[$self]-16-|",
                                                          "H:|[$self]|"],
-                                       views: [ratingHeaderLabel])
+                                       views: [textFieldContainerView])
+        
+        ratingHeaderLabel = UILabel()
+        ratingHeaderLabel.isHidden = hideRatingViews
+        ratingHeaderLabel.font = UIFont.systemFont(ofSize: KPFontSize.infoContent)
+        ratingHeaderLabel.textColor = KPColorPalette.KPMainColor_v2.mainColor
+        ratingHeaderLabel.text = "為店家評分"
+        ratingContainer.addSubview(ratingHeaderLabel)
+        ratingHeaderLabel.addConstraints(fromStringArray: ["V:|-16-[$self]",
+                                                           "H:|-16-[$self]"])
         
         
-        ratingCheckbox = KPCheckView(.checkmark, "評分")
-        ratingCheckbox.titleLabel.font = UIFont.systemFont(ofSize: 14.0)
-        ratingCheckbox.checkBox.boxType = .square
-        ratingContainer.addSubview(ratingCheckbox)
-        ratingCheckbox.addConstraints(fromStringArray: ["H:|-16-[$self]",
-                                                        "V:|-16-[$self]"])
         
-        ratingCheckbox.checkBox.addTarget(self,
-                                          action: #selector(KPNewCommentController.checkBoxValueChanged(_:)),
-                                          for: .valueChanged)
+//        ratingCheckbox = KPCheckView(.checkmark, "評分")
+//        ratingCheckbox.titleLabel.font = UIFont.systemFont(ofSize: 14.0)
+//        ratingCheckbox.checkBox.boxType = .square
+//        ratingContainer.addSubview(ratingCheckbox)
+//        ratingCheckbox.addConstraints(fromStringArray: ["H:|-16-[$self]",
+//                                                        "V:|-16-[$self]"])
+//
+//        ratingCheckbox.checkBox.addTarget(self,
+//                                          action: #selector(KPNewCommentController.checkBoxValueChanged(_:)),
+//                                          for: .valueChanged)
         
-        for (index, title) in ratingTitles.enumerated() {
-            let ratingView = KPRatingView()
-            ratingViews.append(ratingView)
-            ratingContainer.addSubview(ratingView)
-            ratingView.enable = false
-            if index == 0 {
-                ratingView.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
-                                                            "V:[$view0]-16-[$self]"],
-                                          views: [ratingCheckbox])
-            } else {
-                ratingView.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
-                                                            "V:[$view0]-12-[$self]"],
-                                          views: [self.ratingViews[index-1]])
-            }
-        }
-        ratingViews.last!.addConstraint(from: "V:[$self]-16-|")
+//        for (index, title) in ratingTitles.enumerated() {
+//            let ratingView = KPRatingView()
+//            ratingViews.append(ratingView)
+//            ratingContainer.addSubview(ratingView)
+//            ratingView.enable = false
+//            if index == 0 {
+//                ratingView.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
+//                                                            "V:[$view0]-16-[$self]"],
+//                                          views: [ratingCheckbox])
+//            } else {
+//                ratingView.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
+//                                                            "V:[$view0]-12-[$self]"],
+//                                          views: [self.ratingViews[index-1]])
+//            }
+//        }
+//        ratingViews.last!.addConstraint(from: "V:[$self]-16-|")
+
+        let ratingView = KPRatingView()
+        ratingContainer.addSubview(ratingView)
+        ratingView.addConstraints(fromStringArray: ["V:[$view0]-12-[$self]-16-|",
+                                                    "H:|-14-[$self]-16-|"],
+                                  views: [ratingHeaderLabel])
+        
         
         resignTapGesture = UITapGestureRecognizer(target: self,
                                             action: #selector(handleResignTapGesture(_:)))
@@ -210,7 +218,7 @@ class KPNewCommentController: KPViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        sendButtonItem.customView!.alpha = inputTextView.text.count > 0 ? 1.0 : 0.6
+//        sendButtonItem.customView!.alpha = inputTextView.text.count > 0 ? 1.0 : 0.6
     }
     
     override func didReceiveMemoryWarning() {
@@ -316,7 +324,7 @@ extension KPNewCommentController: UITextViewDelegate {
         let returnKey = (text as NSString).range(of: "\n").location == NSNotFound
         
         sendButtonItem.isEnabled = newLength > 0
-        sendButtonItem.customView!.alpha = newLength > 0 ? 1.0 : 0.6
+//        sendButtonItem.customView!.alpha = newLength > 0 ? 1.0 : 0.6
         
         if !returnKey {
             textView.resignFirstResponder()

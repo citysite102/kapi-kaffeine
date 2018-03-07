@@ -21,11 +21,10 @@ target 'kapi-kaffeine' do
   pod 'SideMenu'
   pod 'pop', '~> 1.0'
   pod 'Hero'
+  pod "Floaty", :git => 'git@github.com:citysite102/Floaty.git'
   pod "ESTabBarController-swift"
   pod 'Shimmer', :inhibit_warnings => true
-  pod 'lottie-ios', :inhibit_warnings => true
   pod 'SKPhotoBrowser', '~> 5.0', :inhibit_warnings => true #:git => 'git@github.com:citysite102/SKPhotoBrowser.git'
-
 
   # Model
   pod 'ObjectMapper', '~> 3.1'

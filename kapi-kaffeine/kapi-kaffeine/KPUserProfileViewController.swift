@@ -49,7 +49,7 @@ KPTabViewDelegate {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 24.0)
         label.textColor = KPColorPalette.KPTextColor_v2.mainColor_title
-        label.text = "Hello, 一隻蟲"
+        label.text = "Hi, 皮卡丘"
         return label
     }()
     

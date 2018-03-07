@@ -48,13 +48,13 @@ class KPExplorationSectionView: UITableViewCell {
         
         sectionDescriptionLabel = UILabel()
         sectionDescriptionLabel.numberOfLines = 0
-        sectionDescriptionLabel.font = UIFont.systemFont(ofSize: KPFontSize.mainContent,
+        sectionDescriptionLabel.font = UIFont.systemFont(ofSize: KPFontSize.subContent,
                                                          weight: UIFont.Weight.light)
 
         sectionDescriptionLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
         contentView.addSubview(sectionDescriptionLabel)
         sectionDescriptionLabel.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|",
-                                                                 "V:[$view0]-7-[$self]"],
+                                                                 "V:[$view0]-6-[$self]"],
                                                views: [sectionTitleLabel])
         sectionDescriptionLabel.text = "由知名部落客們聯手推薦的知名店家。"
         

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class KPRatingViewController: KPSharedSettingViewController {
+class KPRatingViewController: KPViewController {
     
     var ratingTitles = ["Wifi穩定", "安靜程度",
                         "價格實惠", "座位數量",
@@ -22,26 +22,56 @@ class KPRatingViewController: KPSharedSettingViewController {
     var scoreLabel: KPMainListCellScoreLabel!
     var averageRate: CGFloat = 0
     var isRemote: Bool = true
+    var sendButtonItem: UIBarButtonItem!
+    var scrollContainer: UIScrollView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        titleLabel.text = "店家各項評分"
-        scrollView.isScrollEnabled = true
+        view.backgroundColor = UIColor.white
+        navigationItem.title = "新增評分"
+        navigationItem.hidesBackButton = true
+        
+        let barItem = UIBarButtonItem(image: R.image.icon_back(),
+                                      style: .plain,
+                                      target: self,
+                                      action: #selector(KPRatingViewController.handleDismissButtonOnTapped))
+        barItem.tintColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
+        navigationItem.leftBarButtonItems = [barItem]
+        
+        
+        sendButtonItem = UIBarButtonItem(title: "發佈",
+                                         style: .plain,
+                                         target: self,
+                                         action: #selector(KPRatingViewController.handleDismissButtonOnTapped))
+        sendButtonItem.setTitleTextAttributes([NSAttributedStringKey.font:
+            UIFont.systemFont(ofSize: KPFontSize.mainContent)], for: .normal)
+        
+        sendButtonItem.isEnabled = false
+        navigationItem.rightBarButtonItems = [sendButtonItem]
+        
+        scrollContainer = UIScrollView()
+        scrollContainer.delaysContentTouches = true
+        scrollContainer.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7
+        scrollContainer.canCancelContentTouches = false
+        scrollContainer.backgroundColor = UIColor.white 
+        view.addSubview(scrollContainer)
+        scrollContainer.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                         "V:|[$self]|"])
         
         scoreLabel = KPMainListCellScoreLabel()
-        scoreLabel.score = "0.0"
-        view.addSubview(scoreLabel)
-        scoreLabel.addConstraints(fromStringArray: ["H:[$self(32)]-16-|",
-                                                    "V:[$self(24)]"])
-        scoreLabel.addConstraintForCenterAligning(to: titleLabel, in: .vertical)
+//        scoreLabel.score = "0.0"
+//        view.addSubview(scoreLabel)
+//        scoreLabel.addConstraints(fromStringArray: ["H:[$self(32)]-16-|",
+//                                                    "V:[$self(24)]"])
+//        scoreLabel.addConstraintForCenterAligning(to: titleLabel, in: .vertical)
         
         for (index, title) in ratingTitles.enumerated() {
             let ratingView = KPRatingView.init()
             ratingView.delegate = self
             ratingView.tag = index
             ratingViews.append(ratingView)
-            containerView.addSubview(ratingView)
+            scrollContainer.addSubview(ratingView)
             
             if index == 0 {
                 ratingView.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
@@ -65,10 +95,10 @@ class KPRatingViewController: KPSharedSettingViewController {
             ratingViews[6].currentRate = defaultRateModel?.music?.intValue ?? 0
         }
         
-        sendButton.setTitle("送出評分", for: .normal)
-        sendButton.addTarget(self,
-                             action: #selector(KPRatingViewController.handleSendButtonOnTapped),
-                             for: .touchUpInside)
+//        sendButton.setTitle("送出評分", for: .normal)
+//        sendButton.addTarget(self,
+//                             action: #selector(KPRatingViewController.handleSendButtonOnTapped),
+//                             for: .touchUpInside)
         
         
     }
@@ -98,53 +128,54 @@ class KPRatingViewController: KPSharedSettingViewController {
         }
     }
     
-    override func handleDismissButtonOnTapped() {
-        self.setRating(returnValue as? (Int, Int, Int, Int, Int, Int, Int, CGFloat))
-        super.handleDismissButtonOnTapped()
+    func handleDismissButtonOnTapped() {
+        navigationController?.popViewController(animated: true)
+//        self.setRating(returnValue as? (Int, Int, Int, Int, Int, Int, Int, CGFloat))
+//        super.handleDismissButtonOnTapped()
     }
-    
-    @objc func handleSendButtonOnTapped() {
-        returnValue = (ratingViews[0].currentRate,
-                       ratingViews[1].currentRate,
-                       ratingViews[2].currentRate,
-                       ratingViews[3].currentRate,
-                       ratingViews[4].currentRate,
-                       ratingViews[5].currentRate,
-                       ratingViews[6].currentRate,
-                       averageRate)
-        delegate?.returnValueSet(self)
-        if isRemote {
-            if defaultRateModel != nil {
-                KPServiceHandler.sharedHandler.updateRating(NSNumber(value: ratingViews[0].currentRate),
-                                                            NSNumber(value: ratingViews[3].currentRate),
-                                                            NSNumber(value: ratingViews[5].currentRate),
-                                                            NSNumber(value: ratingViews[1].currentRate),
-                                                            NSNumber(value: ratingViews[4].currentRate),
-                                                            NSNumber(value: ratingViews[2].currentRate),
-                                                            NSNumber(value: ratingViews[6].currentRate)) { (successed) in
-                                                                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
-                                                                                              execute: {
-                                                                                                self.appModalController()?.dismissControllerWithDefaultDuration()
-                                                                })
-                }
-            } else {
-                KPServiceHandler.sharedHandler.addRating(NSNumber(value: ratingViews[0].currentRate),
-                                                         NSNumber(value: ratingViews[3].currentRate),
-                                                         NSNumber(value: ratingViews[5].currentRate),
-                                                         NSNumber(value: ratingViews[1].currentRate),
-                                                         NSNumber(value: ratingViews[4].currentRate),
-                                                         NSNumber(value: ratingViews[2].currentRate),
-                                                         NSNumber(value: ratingViews[6].currentRate)) { (successed) in
-                                                            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
-                                                                                          execute: {
-                                                                                            self.appModalController()?.dismissControllerWithDefaultDuration()
-                                                            })
-                }
-            }
-        } else {
-            appModalController()?.dismissControllerWithDefaultDuration()
-        }
-    }
+
+//    @objc func handleSendButtonOnTapped() {
+//        returnValue = (ratingViews[0].currentRate,
+//                       ratingViews[1].currentRate,
+//                       ratingViews[2].currentRate,
+//                       ratingViews[3].currentRate,
+//                       ratingViews[4].currentRate,
+//                       ratingViews[5].currentRate,
+//                       ratingViews[6].currentRate,
+//                       averageRate)
+//        delegate?.returnValueSet(self)
+//        if isRemote {
+//            if defaultRateModel != nil {
+//                KPServiceHandler.sharedHandler.updateRating(NSNumber(value: ratingViews[0].currentRate),
+//                                                            NSNumber(value: ratingViews[3].currentRate),
+//                                                            NSNumber(value: ratingViews[5].currentRate),
+//                                                            NSNumber(value: ratingViews[1].currentRate),
+//                                                            NSNumber(value: ratingViews[4].currentRate),
+//                                                            NSNumber(value: ratingViews[2].currentRate),
+//                                                            NSNumber(value: ratingViews[6].currentRate)) { (successed) in
+//                                                                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
+//                                                                                              execute: {
+//                                                                                                self.appModalController()?.dismissControllerWithDefaultDuration()
+//                                                                })
+//                }
+//            } else {
+//                KPServiceHandler.sharedHandler.addRating(NSNumber(value: ratingViews[0].currentRate),
+//                                                         NSNumber(value: ratingViews[3].currentRate),
+//                                                         NSNumber(value: ratingViews[5].currentRate),
+//                                                         NSNumber(value: ratingViews[1].currentRate),
+//                                                         NSNumber(value: ratingViews[4].currentRate),
+//                                                         NSNumber(value: ratingViews[2].currentRate),
+//                                                         NSNumber(value: ratingViews[6].currentRate)) { (successed) in
+//                                                            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
+//                                                                                          execute: {
+//                                                                                            self.appModalController()?.dismissControllerWithDefaultDuration()
+//                                                            })
+//                }
+//            }
+//        } else {
+//            appModalController()?.dismissControllerWithDefaultDuration()
+//        }
+//    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

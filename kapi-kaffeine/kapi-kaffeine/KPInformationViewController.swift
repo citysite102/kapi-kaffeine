@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 import BenzeneFoundation
 import SKPhotoBrowser
-
+import Floaty
 
 class KPInformationViewController: KPViewController {
 
@@ -134,20 +134,16 @@ class KPInformationViewController: KPViewController {
         return label
     }()
     
-    lazy var addButton: KPShadowButton = {
-        let shadowButton = KPShadowButton()
-        shadowButton.button.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.whiteColor!), for: .normal)
-        shadowButton.button.setImage(R.image.icon_add(), for: .normal)
-        
-        shadowButton.button.tintColor = KPColorPalette.KPMainColor_v2.mainColor
-        shadowButton.button.imageView?.contentMode = .scaleAspectFit
-//        shadowButton.button.imageEdgeInsets = UIEdgeInsets(top: 6,
-//                                                           left: 6,
-//                                                           bottom: 6,
-//                                                           right: 6)
-        shadowButton.layer.cornerRadius = 30
-        return shadowButton
-    }()
+//    lazy var addButton: KPShadowButton = {
+//        let shadowButton = KPShadowButton()
+//        shadowButton.button.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.whiteColor!), for: .normal)
+//        shadowButton.button.setImage(R.image.icon_add(), for: .normal)
+//
+//        shadowButton.button.tintColor = KPColorPalette.KPMainColor_v2.mainColor
+//        shadowButton.button.imageView?.contentMode = .scaleAspectFit
+//        shadowButton.layer.cornerRadius = 30
+//        return shadowButton
+//    }()
     
     var allCommentHasShown: Bool = false
     var dataLoading: Bool = true {
@@ -678,10 +674,68 @@ class KPInformationViewController: KPViewController {
                                                      in: .vertical,
                                                      constant: 8)
         
-        
-        view.addSubview(addButton)
-        addButton.addConstraints(fromStringArray: ["H:[$self(60)]-16-|",
-                                                   "V:[$self(60)]-24-|"])
+        let addFloatyButton = Floaty()
+        Floaty.global.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
+        addFloatyButton.buttonImage = R.image.icon_add()
+        addFloatyButton.plusColor = KPColorPalette.KPMainColor_v2.mainColor!
+        addFloatyButton.openAnimationType = .slideLeft
+        addFloatyButton.buttonColor = KPColorPalette.KPBackgroundColor.whiteColor!
+        addFloatyButton.addItem("新增留言",
+                                icon: R.image.icon_comment_border(), handler: { [weak self] item in
+                                    if let weSelf = self {
+                                        if KPUserManager.sharedManager.currentUser == nil {
+                                            KPPopoverView.popoverLoginView()
+                                        } else {
+                                            if KPServiceHandler.sharedHandler.isCurrentShopClosed {
+                                                KPPopoverView.popoverClosedView()
+                                            } else {
+                                                let newCommentViewController = KPNewCommentController()
+                                                if weSelf.hasRatedDataModel != nil {
+                                                    DispatchQueue.main.async {
+                                                        newCommentViewController.hideRatingViews = true
+                                                    }
+                                                }
+                                                
+                                                weSelf.navigationController?.pushViewController(viewController: newCommentViewController,
+                                                                                                animated: true,
+                                                                                                completion: {})
+                                            }
+                                        }
+                                    }
+        })
+//        addFloatyButton.addItem("新增評分",
+//                                icon: R.image.icon_star_border(), handler: { [weak self] item in
+//                                    if let weSelf = self {
+//                                        if KPUserManager.sharedManager.currentUser == nil {
+//                                            KPPopoverView.popoverLoginView()
+//                                        } else {
+//                                            if KPServiceHandler.sharedHandler.isCurrentShopClosed {
+//                                                KPPopoverView.popoverClosedView()
+//                                            } else {
+//                                                let ratingViewController = KPRatingViewController()
+//                                                if weSelf.hasRatedDataModel != nil {
+//                                                    ratingViewController.defaultRateModel = weSelf.hasRatedDataModel
+//                                                }
+//                                                weSelf.navigationController?.pushViewController(viewController: ratingViewController,
+//                                                                                                animated: true,
+//                                                                                                completion: {})
+//                                            }
+//                                        }
+//                                    }
+//        })
+        addFloatyButton.addItem("上傳照片",
+                                icon: R.image.icon_photo(), handler: { [weak self] item in
+                                    if let weSelf = self {
+                                        weSelf.photoUpload()
+                                    }
+        })
+        addFloatyButton.addItem("收藏",
+                                icon: R.image.icon_collect_border())
+        addFloatyButton.size = 60
+        addFloatyButton.itemSpace = 16
+        view.addSubview(addFloatyButton)
+        addFloatyButton.addConstraints(fromStringArray: ["H:[$self(60)]-16-|",
+                                                         "V:[$self(60)]-24-|"])
         
         
     }
@@ -841,33 +895,33 @@ class KPInformationViewController: KPViewController {
         if commentCount == 0 {
             self.commentInformationView.infoSupplementLabel.text = ""
             self.commentInformationView.isEmpty = true
-            self.commentInformationView.actions = [Action(title:"我要評論",
-                                                          style:.normal,
-                                                          color:KPColorPalette.KPMainColor_v2.mainColor!,
-                                                          icon:(R.image.icon_comment()?.withRenderingMode(.alwaysTemplate))!,
-                                                          handler:{ [weak self] (infoView) -> () in
-                                                            if let weSelf = self {
-                                                                if KPUserManager.sharedManager.currentUser == nil {
-                                                                    KPPopoverView.popoverLoginView()
-                                                                } else {
-                                                                    if KPServiceHandler.sharedHandler.isCurrentShopClosed {
-                                                                        KPPopoverView.popoverClosedView()
-                                                                    } else {
-                                                                        let newCommentViewController = KPNewCommentController()
-                                                                        if weSelf.hasRatedDataModel != nil {
-                                                                            DispatchQueue.main.async {
-                                                                                newCommentViewController.hideRatingViews = true
-                                                                            }
-                                                                        }
-                                                                        
-                                                                        weSelf.navigationController?.pushViewController(viewController: newCommentViewController,
-                                                                                                                      animated: true,
-                                                                                                                      completion: {})
-                                                                    }
-                                                                }
-                                                            }
-            })
-            ]
+//            self.commentInformationView.actions = [Action(title:"我要評論",
+//                                                          style:.normal,
+//                                                          color:KPColorPalette.KPMainColor_v2.mainColor!,
+//                                                          icon:(R.image.icon_comment()?.withRenderingMode(.alwaysTemplate))!,
+//                                                          handler:{ [weak self] (infoView) -> () in
+//                                                            if let weSelf = self {
+//                                                                if KPUserManager.sharedManager.currentUser == nil {
+//                                                                    KPPopoverView.popoverLoginView()
+//                                                                } else {
+//                                                                    if KPServiceHandler.sharedHandler.isCurrentShopClosed {
+//                                                                        KPPopoverView.popoverClosedView()
+//                                                                    } else {
+//                                                                        let newCommentViewController = KPNewCommentController()
+//                                                                        if weSelf.hasRatedDataModel != nil {
+//                                                                            DispatchQueue.main.async {
+//                                                                                newCommentViewController.hideRatingViews = true
+//                                                                            }
+//                                                                        }
+//
+//                                                                        weSelf.navigationController?.pushViewController(viewController: newCommentViewController,
+//                                                                                                                      animated: true,
+//                                                                                                                      completion: {})
+//                                                                    }
+//                                                                }
+//                                                            }
+//            })
+//            ]
         } else {
             if self.hasCommentDataModel != nil {
                 self.commentInformationView.actions = [
