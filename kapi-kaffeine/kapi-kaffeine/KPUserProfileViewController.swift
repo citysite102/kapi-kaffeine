@@ -17,40 +17,49 @@ KPTabViewDelegate {
     var dismissButton: KPBounceButton!
     var logOutButton: KPBounceButton!
     var editButton: KPBounceButton!
+    
+    var backgroundImageView: UIImageView!
+    var facebookLoginButton: UIButton!
     var isLogin: Bool! {
         didSet {
-            if isLogin {
-                self.userContainer.isHidden = false
-                self.tabView.isHidden = false
-                self.scrollView.isHidden = false
-
-                UIView.animate(withDuration: 0.2,
-                               animations: {
-                                self.userContainer.alpha = 1.0
-                                self.tabView.alpha = 1.0
-                                self.scrollView.alpha = 1.0
-                                self.helloLabel.alpha = 0.0
-                                self.introLabel.alpha = 0.0
-                }, completion: { (success) in
-                    self.helloLabel.isHidden = true
-                    self.introLabel.isHidden = true
-                })
-                
-            } else {
-                self.helloLabel.isHidden = false
-                self.introLabel.isHidden = false
-                UIView.animate(withDuration: 0.2,
-                               animations: {
-                                self.userContainer.alpha = 0.0
-                                self.tabView.alpha = 0.0
-                                self.scrollView.alpha = 0.0
-                                self.helloLabel.alpha = 1.0
-                                self.introLabel.alpha = 1.0
-                }, completion: { (success) in
-                    self.userContainer.isHidden = true
-                    self.tabView.isHidden = true
-                    self.scrollView.isHidden = true
-                })
+            DispatchQueue.main.async {
+                if self.isLogin {
+                    self.userContainer.isHidden = false
+                    self.tabView.isHidden = false
+                    self.scrollView.isHidden = false
+                    
+                    UIView.animate(withDuration: 0.2,
+                                   animations: {
+                                    self.userContainer.alpha = 1.0
+                                    self.tabView.alpha = 1.0
+                                    self.scrollView.alpha = 1.0
+                                    self.helloLabel.alpha = 0.0
+                                    self.introLabel.alpha = 0.0
+                                    self.backgroundImageView.alpha = 0.0
+                    }, completion: { (success) in
+                        self.helloLabel.isHidden = true
+                        self.introLabel.isHidden = true
+                        self.backgroundImageView.isHidden = true
+                    })
+                    
+                } else {
+                    self.helloLabel.isHidden = false
+                    self.introLabel.isHidden = false
+                    self.backgroundImageView.isHidden = false
+                    UIView.animate(withDuration: 0.2,
+                                   animations: {
+                                    self.userContainer.alpha = 0.0
+                                    self.tabView.alpha = 0.0
+                                    self.scrollView.alpha = 0.0
+                                    self.helloLabel.alpha = 1.0
+                                    self.introLabel.alpha = 1.0
+                                    self.backgroundImageView.alpha = 1.0
+                    }, completion: { (success) in
+                        self.userContainer.isHidden = true
+                        self.tabView.isHidden = true
+                        self.scrollView.isHidden = true
+                    })
+                }
             }
         }
     }
@@ -74,7 +83,7 @@ KPTabViewDelegate {
     
     lazy var helloLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 64.0)
+        label.font = UIFont.boldSystemFont(ofSize: 64.0)
         label.textColor = KPColorPalette.KPTextColor_v2.mainColor_title
         label.text = "Hello"
         return label
@@ -83,14 +92,13 @@ KPTabViewDelegate {
     
     lazy var introLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 22.0)
+        label.font = UIFont.systemFont(ofSize: 18.0)
         label.numberOfLines = 0
         label.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
-        label.text = "歡迎加入找咖啡；找咖啡有著各種不一樣、新奇的功能。找咖啡有著各種不一樣、新奇的功能。找咖啡有著各種不一樣、新奇的功能。"
+        label.setText(text: "歡迎加入找咖啡；找咖啡有著各種不一樣、新奇的功能。找咖啡有著各種不一樣、新奇的功能。找咖啡有著各種不一樣、新奇的功能。",
+                      lineSpacing: 4.0)
         return label
     }()
-    
-    
     
     lazy var userPhoto: UIImageView = {
         let imageView = UIImageView()
@@ -107,7 +115,7 @@ KPTabViewDelegate {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 24.0)
         label.textColor = KPColorPalette.KPTextColor_v2.mainColor_title
-        label.text = "Hi, 皮卡 丘"
+        label.text = "Hi, 皮卡丘"
         return label
     }()
     
@@ -148,21 +156,46 @@ KPTabViewDelegate {
         super.viewDidLoad()
         
     KPAnalyticManager.sendPageViewEvent(KPAnalyticsEventValue.page.profile_page)
-        
         view.backgroundColor = UIColor.white
+        
+        backgroundImageView = UIImageView(image: R.image.login_background()!)
+        view.addSubview(backgroundImageView)
+        backgroundImageView.addConstraints(fromStringArray: ["V:|[$self]|",
+                                                             "H:|[$self]|"])
         
         
         view.addSubview(helloLabel)
-        helloLabel.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]-200-|"],
-                                  metrics: [KPLayoutConstant.information_horizontal_offset])
+        helloLabel.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]-120-|"],
+                                  metrics: [KPLayoutConstant.intro_horizontal_offset])
         helloLabel.addConstraintForCenterAligningToSuperview(in: .vertical,
-                                                             constant: -160)
+                                                             constant: -140)
         
         view.addSubview(introLabel)
-        introLabel.addConstraints(fromStringArray: ["V:[$view0]-16-[$self]",
+        introLabel.addConstraints(fromStringArray: ["V:[$view0]-8-[$self]",
                                                     "H:|-($metric0)-[$self]-120-|"],
-                                  metrics: [KPLayoutConstant.information_horizontal_offset],
+                                  metrics: [KPLayoutConstant.intro_horizontal_offset],
                                   views: [helloLabel])
+        
+        facebookLoginButton = UIButton(frame: CGRect.zero)
+        facebookLoginButton.setTitle("Facebook 登入", for: .normal)
+        facebookLoginButton.setTitleColor(KPColorPalette.KPTextColor_v2.whiteColor,
+                                 for: .normal)
+        facebookLoginButton.layer.cornerRadius = 21.0
+        facebookLoginButton.layer.masksToBounds = true
+        facebookLoginButton.setBackgroundImage(UIImage(color: UIColor(hexString: "#5066af")),
+                                               for: .normal)
+        facebookLoginButton.titleLabel?.font =
+            UIFont.systemFont(ofSize: 18)
+        view.addSubview(facebookLoginButton)
+        facebookLoginButton.addConstraints(fromStringArray: ["V:[$view0]-24-[$self(42)]",
+                                                             "H:|-($metric0)-[$self(180)]"],
+                                           metrics: [KPLayoutConstant.intro_horizontal_offset],
+                                           views: [introLabel])
+        
+        facebookLoginButton.addTarget(self,
+                             action: #selector(handleLoginButtonOnTapped(sender:)),
+                             for: UIControlEvents.touchUpInside)
+        
         
         
         view.addSubview(userContainer)
@@ -182,7 +215,7 @@ KPTabViewDelegate {
                                                       "V:[$view1]-8-[$self]"],
                                           views: [userPhoto,
                                                   userNameLabel])
-        userBioLabel.setText(text:  "被你看到這個隱藏的內容？！肯定有Bug，快回報給我們吧！肯定有Bug！",
+        userBioLabel.setText(text:"被你看到這個隱藏的內容？！肯定有Bug，快回報給我們吧！肯定有Bug！",
                              lineSpacing: 3.0)
         
         
@@ -200,6 +233,9 @@ KPTabViewDelegate {
         logOutButton.addConstraints(fromStringArray: ["V:[$view0]-16-[$self(32)]", "H:|-19-[$self(64)]"],
                                     views: [userBioLabel
             ])
+        logOutButton.addTarget(self,
+                             action: #selector(handleLogOutButtonOnTapped(sender:)),
+                             for: UIControlEvents.touchUpInside)
         
         editButton = KPBounceButton(frame: CGRect.zero)
         editButton.setTitle("編輯", for: .normal)
@@ -215,7 +251,7 @@ KPTabViewDelegate {
                                     views: [userBioLabel, logOutButton
             ])
         editButton.addTarget(self,
-                             action: #selector(handleLoginButtonOnTapped(sender:)),
+                             action: #selector(handleEditButtonOnTapped(sender:)),
                              for: UIControlEvents.touchUpInside)
         
         
@@ -283,9 +319,8 @@ KPTabViewDelegate {
             if let photoURL = URL(string: user.photoURL ?? "") {
                 userPhoto.af_setImage(withURL: photoURL)
             }
-//            userNameLabel.text = user.displayName ?? ""
-//            userCityLabel.text = user.defaultLocation ?? ""
-//            userBioLabel.text = user.intro ?? ""
+            userNameLabel.text = "Hi, \(user.displayName ?? "")"
+            userBioLabel.text = user.intro ?? "被你看到這個隱藏的內容？！肯定有Bug，快回報給我們吧！"
             
             for (index, tabTitle) in tabTitles.enumerated() {
                 
@@ -297,21 +332,23 @@ KPTabViewDelegate {
         
         view.bringSubview(toFront: tabView)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(userDidChanged(notification:)), name: .KPCurrentUserDidChange, object: nil)
         
-        isLogin = false
     }
+    
+    
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        
         if let user = KPUserManager.sharedManager.currentUser {
+            isLogin = true
             if let photoURL = URL(string: user.photoURL ?? "") {
                 userPhoto.af_setImage(withURL: photoURL)
             }
-//            userNameLabel.text = user.displayName ?? ""
-//            userCityLabel.text = user.defaultLocation ?? ""
-//            userBioLabel.text = user.intro ?? ""
+            userNameLabel.text = "Hi, \(user.displayName ?? "")"
+            userBioLabel.text = user.intro ?? "被你看到這個隱藏的內容？！肯定有Bug，快回報給我們吧！"
+        } else {
+            isLogin = false
         }
         
         if !dataloaded {
@@ -372,20 +409,24 @@ KPTabViewDelegate {
         self.appModalController()?.dismissControllerWithDefaultDuration()
     }
     
+    @objc func handleLogOutButtonOnTapped(sender: UIButton) {
+        KPUserManager.sharedManager.logOut()
+    }
+    
+    @objc func handleEditButtonOnTapped(sender: UIButton) {
+        
+    }
+    
     @objc func handleLoginButtonOnTapped(sender: UIButton) {
-        let controller = KPModalViewController()
-        controller.edgeInset = UIEdgeInsets(top: 0,
-                                            left: 0,
-                                            bottom: 0,
-                                            right: 0);
-        let loginController = KPLoginViewController()
-        UIApplication.shared.KPTopViewController().present(loginController,
-                                                           animated: true,
-                                                           completion: nil)
+        KPUserManager.sharedManager.logIn(self)
     }
     
     @objc func handleEditButtonOnTapped() {
         self.navigationController?.pushViewController(KPUserProfileEditorController(), animated: true)
+    }
+    
+    @objc func userDidChanged(notification: Notification) {
+        isLogin = (KPUserManager.sharedManager.currentUser != nil)
     }
 
     
