@@ -116,7 +116,11 @@ class KPMainListViewController:
                 })
             } else {
                 state = .normal
-                if let displayModel = displayDataModel.first as? KPDataModel, displayModel.identifier != "empty" {
+                if let displayModel = displayDataModel.first as? KPDataModel,
+                    displayModel.identifier != "empty" {
+                    let emptyModel = KPDataModel(JSON: ["cafe_id": "empty"])
+                    displayDataModel.insert(emptyModel!, at: 0)
+                } else if displayDataModel.count == 0 {
                     let emptyModel = KPDataModel(JSON: ["cafe_id": "empty"])
                     displayDataModel.insert(emptyModel!, at: 0)
                 }
@@ -524,7 +528,7 @@ extension KPMainListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80.0
+        return 100
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

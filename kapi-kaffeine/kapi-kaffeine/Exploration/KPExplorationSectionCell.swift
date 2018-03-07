@@ -140,7 +140,7 @@ class KPExplorationSectionCell: UICollectionViewCell {
         super.layoutSubviews()
         if imageMaskLayer == nil && gradientView.frameSize.width != 0 {
             imageMaskLayer = CAGradientLayer()
-            imageMaskLayer!.opacity = 0.5
+            imageMaskLayer!.opacity = 0.3
             imageMaskLayer!.frame = CGRect(x: 0, y: 0,
                                            width: imageView.frame.width,
                                            height: imageView.frame.height)

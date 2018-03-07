@@ -74,7 +74,7 @@ class KPMainListTableViewCell: UITableViewCell {
                 let url = URL(string: photoURL) {
                 self.shopImageView.af_setImage(withURL: url,
                                                placeholderImage: drawImage(image: R.image.icon_loading()!,
-                                                                           rectSize: CGSize(width: 56, height: 56),
+                                                                           rectSize: CGSize(width: 72, height: 72),
                                                                            roundedRadius: 3),
                                                filter: nil,
                                                progress: nil,
@@ -84,17 +84,17 @@ class KPMainListTableViewCell: UITableViewCell {
                                                completion: { response in
                                                 if let responseImage = response.result.value {
                                                     self.shopImageView.image =  drawImage(image: responseImage,
-                                                                                          rectSize: CGSize(width: 56, height: 56),
+                                                                                          rectSize: CGSize(width: 72, height: 72),
                                                                                           roundedRadius: 3)
                                                 } else {
                                                     self.shopImageView.image =  drawImage(image: R.image.icon_noImage()!,
-                                                                                          rectSize: CGSize(width: 56, height: 56),
+                                                                                          rectSize: CGSize(width: 72, height: 72),
                                                                                           roundedRadius: 3)
                                                 }
                 })
             } else {
                 self.shopImageView.image = drawImage(image: R.image.icon_noImage()!,
-                                                     rectSize: CGSize(width: 56, height: 56),
+                                                     rectSize: CGSize(width: 72, height: 72),
                                                      roundedRadius: 3)
             }
             

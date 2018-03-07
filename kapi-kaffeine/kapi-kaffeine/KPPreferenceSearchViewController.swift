@@ -278,9 +278,9 @@ class KPPreferenceSearchViewController: KPViewController {
         searchButton = UIButton()
         searchButton.setTitle("開始搜尋", for: .normal)
         searchButton.setTitleColor(UIColor.white, for: .normal)
-        searchButton.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor_v2.greenColor!),
+        searchButton.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor_v2.mainColor_sub!),
                                                 for: .normal)
-        searchButton.layer.cornerRadius = 3.0
+        searchButton.layer.cornerRadius = 4.0
         searchButton.layer.masksToBounds = true
         searchButton.titleLabel?.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
         searchButtonContainer.addSubview(searchButton)

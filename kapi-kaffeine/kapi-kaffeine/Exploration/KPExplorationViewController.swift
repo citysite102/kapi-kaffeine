@@ -60,6 +60,8 @@ class KPExplorationViewController: KPViewController {
         articleCollectionView.collectionViewLayout.invalidateLayout()
         if !rootTabViewController.exploreAnimationHasPerformed {
             
+            moreContentLabel.alpha = 0
+            moreContentIcon.alpha = 0
             headerView.alpha = 0
             articleCollectionView.alpha = 0
             sectionBgImageView.alpha = 0.2
@@ -79,7 +81,7 @@ class KPExplorationViewController: KPViewController {
                 })
                 
                 UIView.animate(withDuration: 1.5,
-                               delay: 0.4,
+                               delay: 0.8,
                                options: .curveEaseOut,
                                animations: {
                                 self.sectionBgImageView.alpha = 0.5
@@ -99,12 +101,14 @@ class KPExplorationViewController: KPViewController {
                 
                 for cell in self.contentTableView.visibleCells {
                     UIView.animate(withDuration: 0.6,
-                                   delay: 0.6,
+                                   delay: 0.8,
                                    options: UIViewAnimationOptions.curveEaseOut,
                                    animations: {
                                     cell.alpha = 1.0
                     }, completion: { (_) in
                         self.rootTabViewController.exploreAnimationHasPerformed = true
+                        self.moreContentLabel.alpha = 1.0
+                        self.moreContentIcon.alpha = 1.0
                     })
                 }
             }
@@ -358,12 +362,20 @@ class KPExplorationViewController: KPViewController {
             }) { (_) in
             }
         } else if (gesture.state == .ended) {
+            
+            self.shouldShowLightContent = false
+            UIView.animate(withDuration: 0.5,
+                           animations: {
+                            self.setNeedsStatusBarAppearanceUpdate()
+            })
+            
             let controller = KPModalViewController()
             controller.edgeInset = UIEdgeInsets(top: 0,
                                                 left: 0,
                                                 bottom: 0,
                                                 right: 0)
             let searchController = KPSearchViewController()
+            searchController.explorationController = self
             let navigationController = UINavigationController(rootViewController: searchController)
             controller.contentController = navigationController
             controller.presentModalView()

@@ -35,17 +35,20 @@ KPTabViewDelegate {
                                     self.scrollView.alpha = 1.0
                                     self.helloLabel.alpha = 0.0
                                     self.introLabel.alpha = 0.0
+                                    self.facebookLoginButton.alpha = 0.0
                                     self.backgroundImageView.alpha = 0.0
                     }, completion: { (success) in
                         self.helloLabel.isHidden = true
                         self.introLabel.isHidden = true
                         self.backgroundImageView.isHidden = true
+                        self.facebookLoginButton.isHidden = true
                     })
                     
                 } else {
                     self.helloLabel.isHidden = false
                     self.introLabel.isHidden = false
                     self.backgroundImageView.isHidden = false
+                    self.facebookLoginButton.isHidden = false
                     UIView.animate(withDuration: 0.2,
                                    animations: {
                                     self.userContainer.alpha = 0.0
@@ -54,6 +57,7 @@ KPTabViewDelegate {
                                     self.helloLabel.alpha = 1.0
                                     self.introLabel.alpha = 1.0
                                     self.backgroundImageView.alpha = 1.0
+                                    self.facebookLoginButton.alpha = 1.0
                     }, completion: { (success) in
                         self.userContainer.isHidden = true
                         self.tabView.isHidden = true
@@ -84,7 +88,7 @@ KPTabViewDelegate {
     lazy var helloLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 64.0)
-        label.textColor = KPColorPalette.KPTextColor_v2.mainColor_title
+        label.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
         label.text = "Hello"
         return label
     }()
@@ -94,8 +98,8 @@ KPTabViewDelegate {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18.0)
         label.numberOfLines = 0
-        label.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
-        label.setText(text: "歡迎加入找咖啡；找咖啡有著各種不一樣、新奇的功能。找咖啡有著各種不一樣、新奇的功能。找咖啡有著各種不一樣、新奇的功能。",
+        label.textColor = KPColorPalette.KPTextColor_v2.mainColor_description
+        label.setText(text: "歡迎加入找咖啡；找咖啡有著各種不一樣、新奇的功能。找咖啡有著各種不一樣、新奇的功能。找咖啡有著各種不一樣、新奇的功能喔。",
                       lineSpacing: 4.0)
         return label
     }()
@@ -168,7 +172,7 @@ KPTabViewDelegate {
         helloLabel.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]-120-|"],
                                   metrics: [KPLayoutConstant.intro_horizontal_offset])
         helloLabel.addConstraintForCenterAligningToSuperview(in: .vertical,
-                                                             constant: -140)
+                                                             constant: -160)
         
         view.addSubview(introLabel)
         introLabel.addConstraints(fromStringArray: ["V:[$view0]-8-[$self]",
@@ -189,7 +193,7 @@ KPTabViewDelegate {
         view.addSubview(facebookLoginButton)
         facebookLoginButton.addConstraints(fromStringArray: ["V:[$view0]-24-[$self(42)]",
                                                              "H:|-($metric0)-[$self(180)]"],
-                                           metrics: [KPLayoutConstant.intro_horizontal_offset],
+                                           metrics: [KPLayoutConstant.intro_horizontal_offset-2],
                                            views: [introLabel])
         
         facebookLoginButton.addTarget(self,

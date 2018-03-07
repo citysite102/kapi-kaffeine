@@ -15,6 +15,7 @@ class KPSearchViewController: KPViewController {
     static let KPSearchViewControllerRecentCellReuseIdentifier = "cell_recent"
     
     weak var mainListController: KPMainListViewController!
+    weak var explorationController: KPExplorationViewController!
     
     var ref: DatabaseReference!
 
@@ -48,10 +49,20 @@ class KPSearchViewController: KPViewController {
     var emptyContainer: UIView!
     var emptyImageView: UIImageView!
     
+    lazy var emptyTitleLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.boldSystemFont(ofSize: KPFontSize.header)
+        label.textColor = KPColorPalette.KPMainColor_v2.mainColor
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        label.setText(text: "Oops")
+        return label
+    }()
+    
     lazy var emptyLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
-        label.textColor = KPColorPalette.KPTextColor.mainColor
+        label.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
         label.numberOfLines = 0
         label.textAlignment = .center
         label.setText(text: "目前沒有找到符合的咖啡店")
@@ -88,7 +99,7 @@ class KPSearchViewController: KPViewController {
             dismissButton.contentEdgeInsets = UIEdgeInsetsMake(6, 2, 6, 10)
             dismissButton.tintColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
             dismissButton.addTarget(self,
-                                    action: #selector(KPInformationViewController.handleDismissButtonOnTapped),
+                                    action: #selector(KPSearchViewController.handleDismissButtonOnTapped),
                                     for: .touchUpInside)
             
             let barLeftItem = UIBarButtonItem(customView: dismissButton)
@@ -121,24 +132,32 @@ class KPSearchViewController: KPViewController {
         emptyContainer = UIView()
         emptyContainer.isHidden = true
         view.addSubview(emptyContainer)
-        emptyContainer.addConstraintForCenterAligningToSuperview(in: .vertical, constant: -48)
+//        emptyContainer.addConstraintForCenterAligningToSuperview(in: .vertical, constant: -48)
+        emptyContainer.addConstraintForCenterAligningToSuperview(in: .vertical, constant: -88)
         emptyContainer.addConstraintForCenterAligningToSuperview(in: .horizontal)
         
         emptyImageView = UIImageView(image: R.image.icon_house_l())
-        emptyImageView.contentMode = .scaleAspectFit
-        emptyContainer.addSubview(emptyImageView)
-        emptyImageView.addConstraintForCenterAligningToSuperview(in: .horizontal)
-        emptyImageView.addConstraint(from: "V:|[$self(90)]")
+//        emptyImageView.contentMode = .scaleAspectFit
+//        emptyContainer.addSubview(emptyImageView)
+//        emptyImageView.addConstraintForCenterAligningToSuperview(in: .horizontal)
+//        emptyImageView.addConstraint(from: "V:|[$self(90)]")
+        
+        
+        emptyContainer.addSubview(emptyTitleLabel)
+        emptyTitleLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
+        emptyTitleLabel.addConstraint(from: "V:|[$self]",
+                                 views: [emptyImageView])
+        emptyTitleLabel.addConstraint(from: "H:|[$self]|")
         
         emptyContainer.addSubview(emptyLabel)
         emptyLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
-        emptyLabel.addConstraint(from: "V:[$view0]-24-[$self]",
-                                 views: [emptyImageView])
+        emptyLabel.addConstraint(from: "V:[$view0]-8-[$self]",
+                                 views: [emptyTitleLabel])
         emptyLabel.addConstraint(from: "H:|[$self]|")
         
         newStoreButton = UIButton(type: .custom)
         newStoreButton.setTitle("我要新增店家", for: .normal)
-        newStoreButton.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.mainColor!),
+        newStoreButton.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor_v2.mainColor_sub!),
                                                  for: .normal)
         newStoreButton.titleLabel?.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
         newStoreButton.layer.cornerRadius = 4
@@ -148,7 +167,7 @@ class KPSearchViewController: KPViewController {
                                  for: .touchUpInside)
         emptyContainer.addSubview(newStoreButton)
         newStoreButton.addConstraintForCenterAligningToSuperview(in: .horizontal)
-        newStoreButton.addConstraint(from: "V:[$view0]-10-[$self(44)]|",
+        newStoreButton.addConstraint(from: "V:[$view0]-24-[$self(44)]|",
                                      views: [emptyLabel])
         newStoreButton.addConstraint(forWidth: 176)
         
@@ -211,6 +230,13 @@ class KPSearchViewController: KPViewController {
     
     // MARK: UI Event
     @objc func handleDismissButtonOnTapped() {
+        if explorationController != nil {
+            explorationController.shouldShowLightContent = true
+            UIView.animate(withDuration: 0.3,
+                           animations: {
+                            self.setNeedsStatusBarAppearanceUpdate()
+            })
+        }
         self.appModalController()?.dismissControllerWithDefaultDuration()
     }
     
