@@ -17,7 +17,7 @@ class KPExplorationShop: NSObject, Mappable {
     var place: String!
     var name: String!
     
-    var imageURL: String!
+    var imageURL: String?
     
     required init?(map: Map) {
         if map.JSON["cafe_id"] == nil {

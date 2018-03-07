@@ -102,7 +102,9 @@ extension KPExplorationSectionView: UICollectionViewDataSource, UICollectionView
         cell.imageView.image = demoImages[Int(arc4random())%6]
         cell.nameLabel.text = shops[indexPath.row].name
         cell.regionLabel.text = shops[indexPath.row].place
-        cell.imageView.af_setImage(withURL: URL(string: shops[indexPath.row].imageURL)!)
+        if let url = shops[indexPath.row].imageURL {
+            cell.imageView.af_setImage(withURL: URL(string: url)!)
+        }
         return cell
     }    
 }

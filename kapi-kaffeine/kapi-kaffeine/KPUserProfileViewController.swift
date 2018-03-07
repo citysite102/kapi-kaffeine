@@ -17,6 +17,43 @@ KPTabViewDelegate {
     var dismissButton: KPBounceButton!
     var logOutButton: KPBounceButton!
     var editButton: KPBounceButton!
+    var isLogin: Bool! {
+        didSet {
+            if isLogin {
+                self.userContainer.isHidden = false
+                self.tabView.isHidden = false
+                self.scrollView.isHidden = false
+
+                UIView.animate(withDuration: 0.2,
+                               animations: {
+                                self.userContainer.alpha = 1.0
+                                self.tabView.alpha = 1.0
+                                self.scrollView.alpha = 1.0
+                                self.helloLabel.alpha = 0.0
+                                self.introLabel.alpha = 0.0
+                }, completion: { (success) in
+                    self.helloLabel.isHidden = true
+                    self.introLabel.isHidden = true
+                })
+                
+            } else {
+                self.helloLabel.isHidden = false
+                self.introLabel.isHidden = false
+                UIView.animate(withDuration: 0.2,
+                               animations: {
+                                self.userContainer.alpha = 0.0
+                                self.tabView.alpha = 0.0
+                                self.scrollView.alpha = 0.0
+                                self.helloLabel.alpha = 1.0
+                                self.introLabel.alpha = 1.0
+                }, completion: { (success) in
+                    self.userContainer.isHidden = true
+                    self.tabView.isHidden = true
+                    self.scrollView.isHidden = true
+                })
+            }
+        }
+    }
     
     let tabTitles: [(title: String, key: String)] = [("已收藏", "favorites"),
                                                      ("我去過", "visits"),
@@ -34,6 +71,27 @@ KPTabViewDelegate {
         return containerView
     }()
     
+    
+    lazy var helloLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 64.0)
+        label.textColor = KPColorPalette.KPTextColor_v2.mainColor_title
+        label.text = "Hello"
+        return label
+    }()
+    
+    
+    lazy var introLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 22.0)
+        label.numberOfLines = 0
+        label.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
+        label.text = "歡迎加入找咖啡；找咖啡有著各種不一樣、新奇的功能。找咖啡有著各種不一樣、新奇的功能。找咖啡有著各種不一樣、新奇的功能。"
+        return label
+    }()
+    
+    
+    
     lazy var userPhoto: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.borderWidth = 1.0
@@ -49,7 +107,7 @@ KPTabViewDelegate {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 24.0)
         label.textColor = KPColorPalette.KPTextColor_v2.mainColor_title
-        label.text = "Hi, 皮卡丘"
+        label.text = "Hi, 皮卡 丘"
         return label
     }()
     
@@ -89,47 +147,23 @@ KPTabViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        KPAnalyticManager.sendPageViewEvent(KPAnalyticsEventValue.page.profile_page)
+    KPAnalyticManager.sendPageViewEvent(KPAnalyticsEventValue.page.profile_page)
         
         view.backgroundColor = UIColor.white
-//        navigationController?.navigationBar.topItem?.title = "個人資料"
-//        navigationController?.navigationBar.setBackgroundImage(UIImage(),
-//                                                                    for: .default)
-//        navigationController?.navigationBar.shadowImage = UIImage()
-//
-//        dismissButton = KPBounceButton(frame: CGRect.zero,
-//                                       image: R.image.icon_close()!)
-//        dismissButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
-//        dismissButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
-//        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(6, 0, 8, 14)
-//        dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor
-//        dismissButton.addTarget(self,
-//                                action: #selector(KPInformationViewController.handleDismissButtonOnTapped),
-//                                for: .touchUpInside)
-//
-//
-//        let barItem = UIBarButtonItem(customView: dismissButton)
-//        let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace,
-//                                             target: nil,
-//                                             action: nil)
-//        negativeSpacer.width = -7
-//        navigationItem.leftBarButtonItems = [negativeSpacer, barItem]
-//
-//
-//        editButton = KPBounceButton(frame: CGRect.zero,
-//                                    image: R.image.icon_edit()!)
-//        editButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
-//        editButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
-//        editButton.contentEdgeInsets = UIEdgeInsetsMake(5, 5, 5, 5)
-//        editButton.tintColor = KPColorPalette.KPTextColor.whiteColor
-//        editButton.addTarget(self,
-//                             action: #selector(KPUserProfileViewController.handleEditButtonOnTapped),
-//                             for: .touchUpInside)
-//
-//
-//        let rightBarItem = UIBarButtonItem(customView: editButton)
-//        navigationItem.leftBarButtonItems = [negativeSpacer, barItem]
-//        navigationItem.rightBarButtonItems = [negativeSpacer, rightBarItem]
+        
+        
+        view.addSubview(helloLabel)
+        helloLabel.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]-200-|"],
+                                  metrics: [KPLayoutConstant.information_horizontal_offset])
+        helloLabel.addConstraintForCenterAligningToSuperview(in: .vertical,
+                                                             constant: -160)
+        
+        view.addSubview(introLabel)
+        introLabel.addConstraints(fromStringArray: ["V:[$view0]-16-[$self]",
+                                                    "H:|-($metric0)-[$self]-120-|"],
+                                  metrics: [KPLayoutConstant.information_horizontal_offset],
+                                  views: [helloLabel])
+        
         
         view.addSubview(userContainer)
         userContainer.addConstraints(fromStringArray: ["V:|[$self(200)]",
@@ -262,6 +296,9 @@ KPTabViewDelegate {
         }
         
         view.bringSubview(toFront: tabView)
+        
+        
+        isLogin = false
     }
     
     override func viewDidAppear(_ animated: Bool) {
