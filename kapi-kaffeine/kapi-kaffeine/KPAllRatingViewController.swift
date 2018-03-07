@@ -82,8 +82,9 @@ extension KPAllRatingViewController: UITableViewDelegate, UITableViewDataSource 
         cell.userNameLabel.text = ratings[indexPath.row].displayName
         cell.timeHintLabel.text = ratings[indexPath.row].createdModifiedContent
         
-        if let photoURL = ratings[indexPath.row].photoURL {
-            cell.userPicture.af_setImage(withURL: URL(string: photoURL)!,
+        if let photoURL = ratings[indexPath.row].photoURL,
+            let url = URL(string: photoURL) {
+            cell.userPicture.af_setImage(withURL: url,
                                          placeholderImage: nil,
                                          filter: nil,
                                          progress: nil,

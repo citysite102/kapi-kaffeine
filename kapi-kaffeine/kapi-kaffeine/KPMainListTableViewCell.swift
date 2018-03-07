@@ -69,9 +69,10 @@ class KPMainListTableViewCell: UITableViewCell {
                 }
                 
             }
-//            self.shopImageView.image = R.image.demo_6()
-            if let photoURL = dataModel.covers?["kapi_s"] ?? dataModel.covers?["google_s"] {
-                self.shopImageView.af_setImage(withURL: URL(string: photoURL)!,
+            
+            if let photoURL = dataModel.covers?["kapi_s"] ?? dataModel.covers?["google_s"],
+                let url = URL(string: photoURL) {
+                self.shopImageView.af_setImage(withURL: url,
                                                placeholderImage: drawImage(image: R.image.icon_loading()!,
                                                                            rectSize: CGSize(width: 56, height: 56),
                                                                            roundedRadius: 3),

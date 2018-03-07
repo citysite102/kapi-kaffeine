@@ -69,8 +69,9 @@ extension KPShopCommentInfoView: UITableViewDelegate, UITableViewDataSource {
             cell.commentID = comment.commentID
             cell.selectionStyle = .none
 
-            if let photoURL = comment.photoURL {
-                cell.userPicture.af_setImage(withURL: URL(string: photoURL)!,
+            if let photoURL = comment.photoURL,
+                let url = URL(string: photoURL) {
+                cell.userPicture.af_setImage(withURL: url,
                                              placeholderImage: UIImage(color: KPColorPalette.KPBackgroundColor.mainColor_light_10!),
                                              filter: nil,
                                              progress: nil,

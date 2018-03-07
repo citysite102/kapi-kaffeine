@@ -117,8 +117,9 @@ extension KPAllCommentController: UITableViewDelegate, UITableViewDataSource {
             cell.userCommentLabel.setText(text: comment.content, lineSpacing: 2.4)
             cell.commentID = comment.commentID
             
-            if let photoURL = comment.photoURL {
-                cell.userPicture.af_setImage(withURL: URL(string: photoURL)!,
+            if let photoURL = comment.photoURL,
+                let url = URL(string: photoURL) {
+                cell.userPicture.af_setImage(withURL: url,
                                              placeholderImage: UIImage(color: KPColorPalette.KPBackgroundColor.mainColor_light_10!),
                                              filter: nil,
                                              progress: nil,

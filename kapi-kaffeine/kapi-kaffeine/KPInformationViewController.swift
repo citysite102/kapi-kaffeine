@@ -300,8 +300,9 @@ class KPInformationViewController: KPViewController {
         informationHeaderView.facebookButton.isHidden = !(informationDataModel.facebookURL != nil)
 //        informationHeaderView.shopPhoto.image = R.image.demo_4()
         
-        if let photoURL = informationDataModel.covers?["kapi_l"] ?? informationDataModel.covers?["google_l"] {
-            informationHeaderView.shopPhoto.af_setImage(withURL: URL(string: photoURL)!,
+        if let photoURL = informationDataModel.covers?["kapi_l"] ?? informationDataModel.covers?["google_l"],
+            let url = URL(string: photoURL) {
+            informationHeaderView.shopPhoto.af_setImage(withURL: url,
                                                         placeholderImage: nil,
                                                         filter: nil,
                                                         progress: nil,
