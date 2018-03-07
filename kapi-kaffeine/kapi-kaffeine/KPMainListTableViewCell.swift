@@ -12,14 +12,41 @@ import AlamofireImage
 
 class KPMainListTableViewCell: UITableViewCell {
 
+    var citiesMapping = ["taipei" :"台北",
+                         "keelung" :"基隆",
+                         "taoyuan" :"桃園",
+                         "hsinchu" :"新竹",
+                         "yilan" :"宜蘭",
+                         "hualien" :"花蓮",
+                         "taitung" :"台東",
+                         "penghu" :"澎湖",
+                         "miaoli" :"苗栗",
+                         "taichung" :"台中",
+                         "nantou" :"南投",
+                         "changhua" :"彰化",
+                         "yunlin" :"雲林",
+                         "chiayi" :"嘉義",
+                         "tainan" :"台南",
+                         "kaohsiung" :"高雄",
+                         "pingtung" :"屏東"]
+    
     var dataModel: KPDataModel! {
         didSet {
             
             DispatchQueue.main.async {
                 self.shopNameLabel.text = self.dataModel.name ?? "未命名"
                 self.featureContainer.featureContents = self.dataModel.featureContents
-                self.scoreLabel.score = String(format: "%.1f",
-                                               (self.dataModel.averageRate?.doubleValue) ?? 0)
+                self.rateLabel.text = String(format: "%.1f",
+                                             (self.dataModel.averageRate?.doubleValue) ?? 0)
+                
+                var distName: String = ""
+                
+                if let distIndex = self.dataModel.address.index(of: "區") {
+                    let startIndex = self.dataModel.address.index(distIndex, offsetBy:-2)
+                    distName = String(self.dataModel.address[startIndex...distIndex])
+                }
+                self.shopLocationLabel.text =  (self.citiesMapping[self.dataModel.city] ?? "") +
+                    (distName != "" ? ", \(distName)" : "")
                 
                 if self.dataModel.closed {
                     self.shopNameLabel.text = "(已歇業) " + (self.dataModel.name ?? "未命名")
@@ -127,7 +154,7 @@ class KPMainListTableViewCell: UITableViewCell {
         rateLabel = KPLayerLabel()
         rateLabel.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
         rateLabel.textColor = KPColorPalette.KPMainColor_v2.starColor
-        rateLabel.text = "4.8"
+        rateLabel.text = "0.0"
         rateLabel.isOpaque = true
         rateLabel.layer.masksToBounds = true
         contentView.addSubview(rateLabel)

@@ -307,6 +307,9 @@ GMUClusterRendererDelegate {
         searchNearButton.addConstraints(fromStringArray: ["V:|-160-[$self(36)]",
                                                           "H:[$self(104)]"])
         searchNearButton.addConstraintForCenterAligningToSuperview(in: .horizontal)
+        searchNearButton.button.addTarget(self,
+                                          action: #selector(handleSearchNearButtonOnTap(_:)),
+                                          for: .touchUpInside)
         
         view.addSubview(mapButton)
         mapButton.addConstraints(fromStringArray: ["V:[$self(40)]-24-[$view0]",
@@ -443,6 +446,10 @@ GMUClusterRendererDelegate {
 //        controller.contentController = navigationController
 //        controller.presentModalView()
 //    }
+    
+    @objc func handleSearchNearButtonOnTap(_ sender: UIButton) {
+        mainController.reFetchRemoteData(false)
+    }
     
     @objc func handleCurrentLocationButtonOnTap(_ sender: UIButton) {
         

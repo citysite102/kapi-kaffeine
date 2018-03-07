@@ -10,10 +10,7 @@ import UIKit
 
 class KPCountrySelectController: KPSharedSettingViewController {
 
-//    var countries = ["台北 Taipei", "基隆 Keelung", "台中 Taichung", "火星 Mars"]
-    
-    var regionContents = KPCityRegionModel.defaultRegionData
-    
+    var regionContents = KPCityRegionModel.defaultRegionData    
     var tableView: UITableView!
     
     override func viewDidLoad() {
