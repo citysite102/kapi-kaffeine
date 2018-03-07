@@ -39,140 +39,6 @@ class KPExplorationViewController: KPViewController {
                       R.image.demo_4(),
                       R.image.demo_5(),
                       R.image.demo_6()]
-
-    let testJSONString = """
-        [
-          {
-            "priority": 1,
-            "title": "工業風咖啡廳",
-            "description": "由知名部落客們聯手推薦的知名店家。",
-            "tag": "熱門",
-            "shops": [
-              {
-                "cafe_id": "00014645-38c8-4eb4-ad9b-faa871d7e511",
-                "address": "台北市中正區大安森林公園",
-                "latitude": 23.4838654,
-                "longitude": 120.4535834,
-                "name": "老木咖啡",
-                "place": "台北 大安區",
-                "rate_average": 4.7,
-                "covers": {
-                  "google_s": "https://maps.googleapis.com/maps/api/place/photo?xxxx",
-                  "google_l": "https://maps.googleapis.com/maps/api/place/photo?xxxx",
-                  "kapi_l": "https://api.kapi.tw/photos/acc73e436cd63f921fde961bac0c89f4fd056457.JPEG",
-                  "kapi_s": "https://farm4.staticflickr.com/3928/15425389946_e53b2dd92b_z.jpg"
-                }
-              },
-                {
-                    "cafe_id": "00014645-38c8-4eb4-ad9b-faa871d7e511",
-                    "address": "台北市中正區大安森林公園",
-                    "latitude": 23.4838654,
-                    "longitude": 120.4535834,
-                    "name": "Fika Fika Cafe",
-                    "place": "台北 大安區",
-                    "rate_average": 4.7,
-                    "covers": {
-                      "google_s": "https://maps.googleapis.com/maps/api/place/photo?xxxx",
-                      "google_l": "https://maps.googleapis.com/maps/api/place/photo?xxxx",
-                      "kapi_l": "https://api.kapi.tw/photos/acc73e436cd63f921fde961bac0c89f4fd056457.JPEG",
-                      "kapi_s": "https://pic.pimg.tw/cindylo326/1483925400-2421597698_n.jpg"
-                    }
-                },
-                {
-                    "cafe_id": "00014645-38c8-4eb4-ad9b-faa871d7e511",
-                    "address": "台北市中正區大安森林公園",
-                    "latitude": 23.4838654,
-                    "longitude": 120.4535834,
-                    "name": "極簡咖啡",
-                    "place": "台北 大安區",
-                    "rate_average": 4.7,
-                    "covers": {
-                      "google_s": "https://maps.googleapis.com/maps/api/place/photo?xxxx",
-                      "google_l": "https://maps.googleapis.com/maps/api/place/photo?xxxx",
-                      "kapi_l": "https://api.kapi.tw/photos/acc73e436cd63f921fde961bac0c89f4fd056457.JPEG",
-                      "kapi_s": "https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/2017/07/28/1/3808271.jpg&x=0&y=0&sw=0&sh=0&sl=W&fw=1050&exp=3600"
-                    }
-                },
-                {
-                    "cafe_id": "00014645-38c8-4eb4-ad9b-faa871d7e511",
-                    "address": "台北市中正區大安森林公園",
-                    "latitude": 23.4838654,
-                    "longitude": 120.4535834,
-                    "name": "樹樂集咖啡",
-                    "place": "台北 大安區",
-                    "rate_average": 4.7,
-                    "covers": {
-                      "google_s": "https://maps.googleapis.com/maps/api/place/photo?xxxx",
-                      "google_l": "https://maps.googleapis.com/maps/api/place/photo?xxxx",
-                      "kapi_l": "https://api.kapi.tw/photos/acc73e436cd63f921fde961bac0c89f4fd056457.JPEG",
-                      "kapi_s": "https://img.hiromishi.com/2014-04-24-041347-36.jpg"
-                    }
-                }
-            ]
-          },
-          {
-            "priority": 2,
-            "title": "熱門 Facebook 店家",
-            "description": "知名 Facebook 部落客們聯手推薦！",
-            "tag": "推薦",
-            "shops": [
-              {
-                "cafe_id": "00014645-38c8-4eb4-ad9b-faa871d7e511",
-                    "address": "台北市中正區大安森林公園",
-                    "latitude": 23.4838654,
-                    "longitude": 120.4535834,
-                    "name": "Fika Fika Cafe",
-                    "place": "台北 大安區",
-                    "rate_average": 4.7,
-                    "covers": {
-                      "google_s": "https://maps.googleapis.com/maps/api/place/photo?xxxx",
-                      "google_l": "https://maps.googleapis.com/maps/api/place/photo?xxxx",
-                      "kapi_l": "https://api.kapi.tw/photos/acc73e436cd63f921fde961bac0c89f4fd056457.JPEG",
-                      "kapi_s": "https://pic.pimg.tw/cindylo326/1483925400-2421597698_n.jpg"
-                    }
-              }
-            ]
-          },
-          {
-            "priority": 3,
-            "title": "東京文青十大咖啡廳",
-            "description": "東京設計美學推薦十大必訪咖啡廳。",
-            "tag": "推薦",
-            "shops": [
-              {
-                    "cafe_id": "00014645-38c8-4eb4-ad9b-faa871d7e511",
-                    "address": "台北市中正區大安森林公園",
-                    "latitude": 23.4838654,
-                    "longitude": 120.4535834,
-                    "name": "Fika Fika Cafe",
-                    "place": "台北 大安區",
-                    "rate_average": 4.7,
-                    "covers": {
-                      "google_s": "https://maps.googleapis.com/maps/api/place/photo?xxxx",
-                      "google_l": "https://maps.googleapis.com/maps/api/place/photo?xxxx",
-                      "kapi_l": "https://api.kapi.tw/photos/acc73e436cd63f921fde961bac0c89f4fd056457.JPEG",
-                      "kapi_s": "https://pic.pimg.tw/cindylo326/1483925400-2421597698_n.jpg"
-                    }
-                },
-                {
-                    "cafe_id": "00014645-38c8-4eb4-ad9b-faa871d7e511",
-                    "address": "台北市中正區大安森林公園",
-                    "latitude": 23.4838654,
-                    "longitude": 120.4535834,
-                    "name": "極簡咖啡",
-                    "place": "台北 大安區",
-                    "rate_average": 4.7,
-                    "covers": {
-                      "google_s": "https://maps.googleapis.com/maps/api/place/photo?xxxx",
-                      "google_l": "https://maps.googleapis.com/maps/api/place/photo?xxxx",
-                      "kapi_l": "https://api.kapi.tw/photos/acc73e436cd63f921fde961bac0c89f4fd056457.JPEG",
-                      "kapi_s": "https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/2017/07/28/1/3808271.jpg&x=0&y=0&sw=0&sh=0&sl=W&fw=1050&exp=3600"
-                    }
-                }
-            ]
-          }
-        ]
-        """
     
     var testData: [KPExplorationSection] = []
     var articleList: [KPArticleItem] = []
@@ -181,11 +47,12 @@ class KPExplorationViewController: KPViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        testData = Mapper<KPExplorationSection>().mapArray(JSONString: testJSONString) ?? []
         view.backgroundColor = KPColorPalette.KPBackgroundColor.whiteColor
         hero.isEnabled = true
         layoutWithSecondVersion()
-//        refreshData()
+        if articleList.isEmpty {
+            refreshData()
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -552,15 +419,15 @@ extension KPExplorationViewController: UICollectionViewDataSource, UICollectionV
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return articleList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ArticleCell", for: indexPath) as! KPArticleCell
         cell.articleHeroImageView.image = demoImages[indexPath.row]
         cell.hero.id = "article-\(indexPath.row)"
-//        cell.titleLabel.text = articleList[indexPath.row].title
-//        cell.subLabel.text = "\(articleList[indexPath.row].peopleRead) 人已看過"
+        cell.titleLabel.text = articleList[indexPath.row].title
+        cell.subLabel.text = "\(articleList[indexPath.row].peopleRead) 人已看過"
         return cell
     }
     

@@ -19,6 +19,38 @@ class KPMainTabController: ESTabBarController, UITabBarControllerDelegate {
 
         self.delegate = self
         self.setNeedsStatusBarAppearanceUpdate()
+        
+        let exploreController = KPExplorationViewController()
+        exploreController.rootTabViewController = self
+        
+        let exploreItem = UITabBarItem(title: "",
+                                       image: R.image.icon_explore(),
+                                       selectedImage: R.image.icon_explore())
+        exploreItem.imageInsets = UIEdgeInsetsMake(7, 0, -7, 0)
+        exploreItem.titlePositionAdjustment = UIOffset(horizontal: 40, vertical: 0)
+        exploreController.tabBarItem = exploreItem
+        
+        let listItem = UITabBarItem(title: "",
+                                    image: R.image.icon_listView(),
+                                    selectedImage: R.image.icon_listView())
+        listItem.imageInsets = UIEdgeInsetsMake(7, 0, -7, 0)
+        let listController = UIStoryboard.init(name: "Main",
+                                               bundle: nil).instantiateViewController(withIdentifier: "mainViewController") as! KPMainViewController
+        listController.tabBarItem = listItem
+        listController.rootTabViewController = self
+        
+        let profileItem = UITabBarItem(title: "",
+                                       image: R.image.icon_profile(),
+                                       selectedImage: R.image.icon_profile())
+        profileItem.imageInsets = UIEdgeInsetsMake(7, 0, -7, 0)
+        profileItem.titlePositionAdjustment = UIOffset(horizontal: -40, vertical: 0)
+        
+        let profileController = KPUserProfileViewController()
+        profileController.tabBarItem = profileItem
+        viewControllers = [exploreController,
+                           listController,
+                           profileController]
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -54,76 +86,6 @@ class KPMainTabController: ESTabBarController, UITabBarControllerDelegate {
             }
         }
         
-        
-        let exploreController = KPExplorationViewController()
-        exploreController.rootTabViewController = self
-//        let exploreItem = ESTabBarItem.init(KPBounceTabBarItem(),
-//                                            title: nil,
-//                                            image: R.image.icon_explore(),
-//                                            selectedImage: R.image.icon_explore())
-        let exploreItem = UITabBarItem(title: "",
-                                       image: R.image.icon_explore(),
-                                       selectedImage: R.image.icon_explore())
-        exploreItem.imageInsets = UIEdgeInsetsMake(7, 0, -7, 0)
-        exploreItem.titlePositionAdjustment = UIOffset(horizontal: 40, vertical: 0)
-        exploreController.tabBarItem = exploreItem
-        
-        
-//        let navSearchController = KPSearchViewController()
-//        let searchController = UINavigationController(rootViewController: navSearchController)
-//
-//        let searchItem = UITabBarItem(title: "搜尋",
-//                                      image: R.image.icon_search(),
-//                                      selectedImage: R.image.icon_search())
-//        searchItem.imageInsets = UIEdgeInsetsMake(2, 2, 2, 2)
-//        navSearchController.showDismissButton = false
-//        searchController.tabBarItem = searchItem
-        
-        
-//        let newStoreController = KPNewStoreController()
-//        newStoreController.tabBarItem = ESTabBarItem(KPTabBarAddButton(),
-//                                                     title: nil,
-//                                                     image: R.image.tab_button_add(),
-//                                                     selectedImage: R.image.tab_button_add(), tag: 2)
-        
-        let listItem = UITabBarItem(title: "",
-                                    image: R.image.icon_listView(),
-                                    selectedImage: R.image.icon_listView())
-        listItem.imageInsets = UIEdgeInsetsMake(7, 0, -7, 0)
-        let listController = UIStoryboard.init(name: "Main",
-                                               bundle: nil).instantiateViewController(withIdentifier: "mainViewController") as! KPMainViewController
-        listController.tabBarItem = listItem
-        listController.rootTabViewController = self
-        
-        let profileItem = UITabBarItem(title: "",
-                                       image: R.image.icon_profile(),
-                                       selectedImage: R.image.icon_profile())
-        profileItem.imageInsets = UIEdgeInsetsMake(7, 0, -7, 0)
-        profileItem.titlePositionAdjustment = UIOffset(horizontal: -40, vertical: 0)
-//        if (KPUserManager.sharedManager.currentUser != nil) {
-        
-            let profileController = KPUserProfileViewController()
-            profileController.tabBarItem = profileItem
-            viewControllers = [exploreController,
-                               listController,
-                               profileController]
-//            viewControllers = [exploreController,
-//                               searchController,
-//                               newStoreController,
-//                               listController,
-//                               profileController]
-//        } else {
-//            let loginController = KPLoginViewController()
-//            loginController.tabBarItem = profileItem
-//            viewControllers = [exploreController,
-//                               listController,
-//                               loginController]
-//            viewControllers = [exploreController,
-//                               searchController,
-//                               newStoreController,
-//                               listController,
-//                               loginController]
-//        }
         setupDefaultUI()
     }
     
