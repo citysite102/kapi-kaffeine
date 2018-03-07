@@ -85,7 +85,7 @@ class KPSearchViewController: KPViewController {
                                                image: R.image.icon_close()!)
             dismissButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
             dismissButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
-            dismissButton.contentEdgeInsets = UIEdgeInsetsMake(12, 2, 2, 12)
+            dismissButton.contentEdgeInsets = UIEdgeInsetsMake(6, 2, 6, 10)
             dismissButton.tintColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
             dismissButton.addTarget(self,
                                     action: #selector(KPInformationViewController.handleDismissButtonOnTapped),

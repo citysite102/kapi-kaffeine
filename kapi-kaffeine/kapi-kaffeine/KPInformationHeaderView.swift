@@ -226,6 +226,14 @@ class KPInformationHeaderView: UIView {
     var morePhotoButton: UIButton!
     var photoLongPressGesture: UILongPressGestureRecognizer!
     
+    var userContainer: UIView!
+    var userProfileImages: [UIImage]! = [R.image.demo_p1()!,
+                                         R.image.demo_p2()!,
+                                         R.image.demo_p3()!,
+                                         R.image.demo_p4()!,
+                                         R.image.demo_p5()!]
+    var userProfileImageViews: [UIView]!
+    
     var scoreContainer: UIView!
     var scoreIcon: UIImageView!
     var scoreLabel: UILabel!
@@ -299,17 +307,59 @@ class KPInformationHeaderView: UIView {
 //                                                 action: #selector(KPInformationHeaderView.handleScoreContainerOnTapped(_:)))
 //        scoreContainer.addGestureRecognizer(scoreTapGesture)
         
+        
+        userContainer = UIView()
+        container.addSubview(userContainer)
+        userContainer.addConstraints(fromStringArray: ["V:[$self]-($metric0)-|",
+                                                       "H:|-($metric0)-[$self]"],
+                                     metrics:[KPLayoutConstant.information_horizontal_offset])
+        
+        userProfileImageViews = [UIView]()
+        
+        for index in 0...4 {
+            
+            let sampleContainer = UIView()
+            sampleContainer.backgroundColor = KPColorPalette.KPBackgroundColor.whiteColor
+            sampleContainer.layer.cornerRadius = 24
+            sampleContainer.layer.masksToBounds = true
+            userContainer.addSubview(sampleContainer)
+            userProfileImageViews.append(sampleContainer)
+            
+            if index == 0 {
+                sampleContainer.addConstraints(fromStringArray: ["V:|[$self(48)]|",
+                                                                 "H:|[$self(48)]"])
+            } else if index == 4 {
+                sampleContainer.addConstraints(fromStringArray: ["V:|[$self(48)]|",
+                                                                 "H:[$view0]-(-16)-[$self(48)]|"],
+                                               views:[userProfileImageViews[index-1]])
+            } else {
+                sampleContainer.addConstraints(fromStringArray: ["V:|[$self(48)]|",
+                                                                 "H:[$view0]-(-16)-[$self(48)]"],
+                                               views:[userProfileImageViews[index-1]])
+            }
+            
+            
+            let sampleImageView = UIImageView(image: userProfileImages[index])
+            sampleContainer.addSubview(sampleImageView)
+            sampleImageView.layer.cornerRadius = 23.0
+            sampleImageView.contentMode = .scaleAspectFill
+            sampleImageView.clipsToBounds = true
+            sampleImageView.addConstraints(fromStringArray: ["V:|-1-[$self]-1-|",
+                                                             "H:|-1-[$self]-1-|"])
+        }
+            
+            
         facebookButton = UIButton(type: .custom)
-        facebookButton.setBackgroundImage(UIImage(color: UIColor.white),
-                                          for: .normal)
-        facebookButton.setImage(R.image.icon_fb(),
-                                for: .normal)
-        facebookButton.layer.cornerRadius = 2.0
-        facebookButton.layer.masksToBounds = true
-        facebookButton.imageView?.tintColor = KPColorPalette.KPMainColor_v2.mainColor
-        container.addSubview(facebookButton)
-        facebookButton.addConstraints(fromStringArray: ["H:|-12-[$self(28)]",
-                                                        "V:[$self(28)]-16-|"])
+//        facebookButton.setBackgroundImage(UIImage(color: UIColor.white),
+//                                          for: .normal)
+//        facebookButton.setImage(R.image.icon_fb(),
+//                                for: .normal)
+//        facebookButton.layer.cornerRadius = 2.0
+//        facebookButton.layer.masksToBounds = true
+//        facebookButton.imageView?.tintColor = KPColorPalette.KPMainColor_v2.mainColor
+//        container.addSubview(facebookButton)
+//        facebookButton.addConstraints(fromStringArray: ["H:|-12-[$self(28)]",
+//                                                        "V:[$self(28)]-16-|"])
         
         
         morePhotoButton = UIButton(type: .custom)
@@ -325,8 +375,9 @@ class KPInformationHeaderView: UIView {
         morePhotoButton.titleLabel?.textAlignment = NSTextAlignment.center
         morePhotoButton.setTitleColor(UIColor.white, for: .normal)
         container.addSubview(morePhotoButton)
-        morePhotoButton.addConstraints(fromStringArray: ["H:[$self(48)]-16-|",
-                                                         "V:[$self(48)]-16-|"])
+        morePhotoButton.addConstraints(fromStringArray: ["H:[$self(48)]-($metric0)-|",
+                                                         "V:[$self(48)]-($metric0)-|"],
+                                       metrics: [KPLayoutConstant.information_horizontal_offset])
     }
     
     required init?(coder aDecoder: NSCoder) {

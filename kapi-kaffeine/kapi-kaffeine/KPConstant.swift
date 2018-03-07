@@ -197,6 +197,7 @@ struct KPColorPalette {
         static let mainColor_ripple = UIColor(rgbaHexValue: 0xc8955eaa)
         
         static let whiteColor = UIColor(rgbaHexValue: 0xffffffff)
+        static let whiteColor_alpha = UIColor(rgbaHexValue: 0xffffffaa)
         static let white_level1 = UIColor(white: 1.0, alpha: 0.95)
         static let white_level2 = UIColor(white: 1.0, alpha: 0.15)
         static let white_level3 = UIColor(white: 1.0, alpha: 0.15)

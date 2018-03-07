@@ -367,6 +367,10 @@ class KPInformationViewController: KPViewController {
         
         cardInformationContainer = KPInformationCardView()
         cardInformationContainer.titleInfoLabel.text = informationDataModel.name
+        cardInformationContainer.locationInfoLabel.text = informationDataModel.address
+        cardInformationContainer.rateLabel.text = String(format: "%.1f",
+                                                         (self.informationDataModel.averageRate?.doubleValue) ?? 0)
+        
         scrollContainer.addSubview(cardInformationContainer)
         cardInformationContainer.addConstraints(fromStringArray: ["H:|[$self]|",
                                                                   "V:[$view0][$self]"],

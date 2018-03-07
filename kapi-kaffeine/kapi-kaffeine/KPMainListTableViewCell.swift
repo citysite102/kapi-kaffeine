@@ -273,10 +273,18 @@ class KPMainListTableViewCell: UITableViewCell {
                 unit = "km"
                 distance = distance/1000
             }
-            self.shopDistanceLabel.text = "步行 5 min"
-//            self.shopDistanceLabel.text = String(format: "%.1f%@", distance, unit)
-        } else {
-            self.shopDistanceLabel.text = "步行 5 min"
+            
+            if unit == "m" {
+                if distance < 600 && distance > 300 {
+                    self.shopDistanceLabel.text = "步行 5 min"
+                } else if distance <= 300 {
+                    self.shopDistanceLabel.text = "步行 3 min"
+                } else {
+                    self.shopDistanceLabel.text = String(format: "%.1f%@", distance, unit)
+                }
+            } else {
+                self.shopDistanceLabel.text = String(format: "%.1f%@", distance, unit)
+            }
         }
     }
 }

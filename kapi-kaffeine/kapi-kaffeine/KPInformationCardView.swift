@@ -11,15 +11,19 @@ import UIKit
 class KPInformationCardView: UIView {
 
     var container: UIView!
-    var locationIcon: UIImageView!
+    var shopLocationIcon: UIImageView!
     var locationInfoLabel: UILabel!
     var titleInfoLabel: UILabel!
     
     var rateContainer: UIView!
     var starIcons: [UIImageView]!
+    var starIcon: UIImageView!
     var rateLabel: KPLayerLabel!
     var businessInfoIcon: UIImageView!
     var businessInfoLabel: UILabel!
+    
+    private var shopStatusHint: UIView!
+    private var shopStatusLabel: UILabel!
     
     var userContainer: UIView!
     var userProfileImages: [UIImage]! = [R.image.demo_p1()!,
@@ -45,7 +49,7 @@ class KPInformationCardView: UIView {
                                                    "H:|[$self]|"])
         
         titleInfoLabel = UILabel()
-        titleInfoLabel.font = UIFont.systemFont(ofSize: KPFontSize.header,
+        titleInfoLabel.font = UIFont.systemFont(ofSize: KPFontSize.storeHeader,
                                                 weight: UIFont.Weight.medium)
         titleInfoLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_title
         titleInfoLabel.text = "西雅圖極品咖啡 台大店"
@@ -53,26 +57,46 @@ class KPInformationCardView: UIView {
         titleInfoLabel.numberOfLines = 0
         container.addSubview(titleInfoLabel)
         titleInfoLabel.addConstraints(fromStringArray: ["V:|-20-[$self]",
-                                                        "H:|-($metric0)-[$self]-16-|"],
+                                                        "H:|-($metric0)-[$self]-80-|"],
                                       metrics:[KPLayoutConstant.information_horizontal_offset])
         titleInfoLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
         
+        
+//        starIcon = UIImageView(image: R.image.icon_star_filled())
+//        starIcon.tintColor = KPColorPalette.KPMainColor_v2.starColor
+//        container.addSubview(starIcon)
+//        starIcon.addConstraints(fromStringArray: ["H:[$self(24)]-($metric0)-|",
+//                                                  "V:|-24-[$self(24)]"], metrics:[KPLayoutConstant.information_horizontal_offset])
+//
+//        rateLabel = KPLayerLabel()
+//        rateLabel.font = UIFont.boldSystemFont(ofSize: KPFontSize.mainContent)
+//        rateLabel.textColor = KPColorPalette.KPMainColor_v2.starColor
+//        rateLabel.text = "0.0"
+//        rateLabel.isOpaque = true
+//        rateLabel.layer.masksToBounds = true
+//        container.addSubview(rateLabel)
+        
+//        rateLabel.addConstraints(fromStringArray: ["H:[$self(28)]-1-[$view0]"],
+//                                 views: [starIcon])
+//        rateLabel.addConstraintForCenterAligning(to: starIcon,
+//                                                 in: .vertical,
+//                                                 constant: 0)
+        
         rateContainer = UIView()
         container.addSubview(rateContainer)
-//        rateContainer.addConstraintForCenterAligningToSuperview(in: .horizontal)
         rateContainer.addConstraints(fromStringArray: ["V:[$view0]-16-[$self]",
                                                        "H:|-($metric0)-[$self]"],
                                      metrics:[KPLayoutConstant.information_horizontal_offset],
                                      views: [titleInfoLabel])
-        
+
         starIcons = [UIImageView]()
-        
+
         for index in 0...4 {
             let starIcon = UIImageView(image: R.image.icon_star_filled())
             starIcon.tintColor = KPColorPalette.KPMainColor_v2.starColor
             starIcons.append(starIcon)
             rateContainer.addSubview(starIcon)
-            
+
             if index == 0 {
                 starIcon.addConstraints(fromStringArray: ["H:|[$self(18)]",
                                                           "V:|[$self(18)]|"])
@@ -82,7 +106,7 @@ class KPInformationCardView: UIView {
                                         views:[starIcons[index-1]])
             }
         }
-        
+
         rateLabel = KPLayerLabel()
         rateLabel.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
         rateLabel.textColor = KPColorPalette.KPMainColor_v2.starColor
@@ -98,34 +122,51 @@ class KPInformationCardView: UIView {
                                                  constant: 0)
         
         
+        shopLocationIcon = UIImageView(image: R.image.icon_pin())
+        shopLocationIcon.tintColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
+        container.addSubview(shopLocationIcon)
+        shopLocationIcon.addConstraints(fromStringArray: ["V:[$view0]-12-[$self(20)]",
+                                                          "H:|-($metric0)-[$self(20)]"],
+                                         metrics:[KPLayoutConstant.information_horizontal_offset],
+                                         views: [rateLabel])
+        
         locationInfoLabel = UILabel()
         locationInfoLabel.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
         locationInfoLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
         locationInfoLabel.text = "台北 大安區"
         container.addSubview(locationInfoLabel)
-//        locationInfoLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
-        locationInfoLabel.addConstraints(fromStringArray: ["V:[$view0]-10-[$self]",
-                                                           "H:|-($metric0)-[$self]"],
+        locationInfoLabel.addConstraintForCenterAligning(to: shopLocationIcon,
+                                                         in: .vertical)
+        locationInfoLabel.addConstraints(fromStringArray: ["H:[$view1]-8-[$self]-($metric0)-|"],
                                          metrics:[KPLayoutConstant.information_horizontal_offset],
-                                         views: [rateLabel])
+                                         views: [rateLabel,
+                                                 shopLocationIcon])
         
         
 
+        businessInfoIcon = UIImageView(image: R.image.icon_clock())
+        businessInfoIcon.tintColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
+        container.addSubview(businessInfoIcon)
+        businessInfoIcon.addConstraints(fromStringArray: ["V:[$view0]-12-[$self(20)]-22-|",
+                                                          "H:|-($metric0)-[$self(20)]"],
+                                        metrics:[KPLayoutConstant.information_horizontal_offset],
+                                        views: [locationInfoLabel])
+        
         businessInfoLabel = UILabel()
         businessInfoLabel.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
         businessInfoLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
         businessInfoLabel.text = "營業時間：平日：12:00 - 19:30"
         container.addSubview(businessInfoLabel)
 //        businessInfoLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
-        businessInfoLabel.addConstraints(fromStringArray: ["V:[$view0]-10-[$self]-22-|",
-                                                           "H:|-($metric0)-[$self]"],
+        businessInfoLabel.addConstraintForCenterAligning(to: businessInfoIcon,
+                                                         in: .vertical)
+        businessInfoLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]-($metric0)-|"],
                                          metrics:[KPLayoutConstant.information_horizontal_offset],
-                                         views: [locationInfoLabel])
+                                         views: [businessInfoIcon])
         
         
 //        userContainer = UIView()
 //        container.addSubview(userContainer)
-//        userContainer.addConstraintForCenterAligningToSuperview(in: .horizontal)
 //        userContainer.addConstraints(fromStringArray: ["V:[$view0]-24-[$self]-($metric0)-|",
 //                                                       "H:|-($metric0)-[$self]"],
 //                                     metrics:[KPLayoutConstant.information_horizontal_offset],
@@ -143,14 +184,14 @@ class KPInformationCardView: UIView {
 //            userProfileImageViews.append(sampleContainer)
 //
 //            if index == 0 {
-//                sampleContainer.addConstraints(fromStringArray: ["V:|[$self(52)]",
+//                sampleContainer.addConstraints(fromStringArray: ["V:|[$self(52)]|",
 //                                                                 "H:|[$self(52)]"])
 //            } else if index == 4 {
-//                sampleContainer.addConstraints(fromStringArray: ["V:|[$self(52)]",
+//                sampleContainer.addConstraints(fromStringArray: ["V:|[$self(52)]|",
 //                                                                 "H:[$view0]-(-16)-[$self(52)]|"],
 //                                               views:[userProfileImageViews[index-1]])
 //            } else {
-//                sampleContainer.addConstraints(fromStringArray: ["V:|[$self(52)]",
+//                sampleContainer.addConstraints(fromStringArray: ["V:|[$self(52)]|",
 //                                                                 "H:[$view0]-(-16)-[$self(52)]"],
 //                                               views:[userProfileImageViews[index-1]])
 //            }
@@ -170,10 +211,10 @@ class KPInformationCardView: UIView {
 //        userVisitedLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_description
 //        userVisitedLabel.text = "24 人已打卡"
 //        userContainer.addSubview(userVisitedLabel)
-//        userVisitedLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
-//        userVisitedLabel.addConstraints(fromStringArray: ["V:[$view0]-8-[$self]|"],
+//        userVisitedLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
+//        userVisitedLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]"],
 //                                         metrics:[KPLayoutConstant.information_horizontal_offset],
-//                                         views: [userProfileImageViews[0]])
+//                                         views: [userProfileImageViews[userProfileImageViews.count-1]])
         
         
 //        separator = UIView()
