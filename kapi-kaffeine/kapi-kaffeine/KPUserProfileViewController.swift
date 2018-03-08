@@ -96,7 +96,7 @@ KPTabViewDelegate {
     
     lazy var introLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 18.0)
+        label.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
         label.numberOfLines = 0
         label.textColor = KPColorPalette.KPTextColor_v2.mainColor_description
         label.setText(text: "歡迎加入找咖啡；找咖啡有著各種不一樣、新奇的功能。找咖啡有著各種不一樣、新奇的功能。找咖啡有著各種不一樣、新奇的功能喔。",

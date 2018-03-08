@@ -125,7 +125,7 @@ class KPInformationCardView: UIView {
         shopLocationIcon = UIImageView(image: R.image.icon_pin())
         shopLocationIcon.tintColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
         container.addSubview(shopLocationIcon)
-        shopLocationIcon.addConstraints(fromStringArray: ["V:[$view0]-12-[$self(20)]",
+        shopLocationIcon.addConstraints(fromStringArray: ["V:[$view0]-13-[$self(20)]",
                                                           "H:|-($metric0)-[$self(20)]"],
                                          metrics:[KPLayoutConstant.information_horizontal_offset],
                                          views: [rateLabel])

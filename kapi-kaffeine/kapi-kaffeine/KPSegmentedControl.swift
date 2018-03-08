@@ -76,7 +76,8 @@ class KPSegmentedControl: UIControl {
             if selectionBackgroundColors.count > index {
                 segment.setBackgroundImage(UIImage(color: selectionBackgroundColors[index]), for: .selected)
             } else {
-                segment.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor_v2.mainColor!), for: .selected)
+                segment.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor_v2.mainColor_light!),
+                                           for: .selected)
             }
             
             segment.titleLabel?.font = UIFont.systemFont(ofSize: 16.0)

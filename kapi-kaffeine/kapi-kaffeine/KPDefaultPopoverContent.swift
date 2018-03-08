@@ -98,7 +98,7 @@ class KPDefaultPopoverContent: UIView, PopoverProtocol {
         confirmButton.layer.cornerRadius = 2.0
         confirmButton.layer.masksToBounds = true
         confirmButton.titleLabel?.font = UIFont.systemFont(ofSize: 15.0)
-        confirmButton.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor_v2.mainColor_sub!),
+        confirmButton.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor_v2.mainColor_light!),
                                         for: .normal)
         confirmButton.addTarget(self,
                                 action: #selector(KPDefaultPopoverContent.handleConfirmButtonOnTapped),

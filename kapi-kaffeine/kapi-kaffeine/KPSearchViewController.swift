@@ -157,7 +157,7 @@ class KPSearchViewController: KPViewController {
         
         newStoreButton = UIButton(type: .custom)
         newStoreButton.setTitle("我要新增店家", for: .normal)
-        newStoreButton.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor_v2.mainColor_sub!),
+        newStoreButton.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor_v2.mainColor_light!),
                                                  for: .normal)
         newStoreButton.titleLabel?.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
         newStoreButton.layer.cornerRadius = 4

@@ -277,14 +277,15 @@ class KPPreferenceSearchViewController: KPViewController {
         
         searchButton = UIButton()
         searchButton.setTitle("開始搜尋", for: .normal)
-        searchButton.setTitleColor(UIColor.white, for: .normal)
-        searchButton.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor_v2.mainColor_sub!),
-                                                for: .normal)
+        searchButton.setTitleColor(KPColorPalette.KPMainColor_v2.mainColor_light, for: .normal)
+//        searchButton.setTitleColor(UIColor.white, for: .normal)
+//        searchButton.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor_v2.mainColor_light!),
+//                                                for: .normal)
         searchButton.layer.cornerRadius = 4.0
         searchButton.layer.masksToBounds = true
-        searchButton.titleLabel?.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
+        searchButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: KPFontSize.mainContent)
         searchButtonContainer.addSubview(searchButton)
-        searchButton.addConstraints(fromStringArray: ["V:[$view0]-16-[$self(40)]-16-|",
+        searchButton.addConstraints(fromStringArray: ["V:[$view0]-8-[$self(40)]-8-|",
                                                       "H:|-16-[$self]-16-|"],
                                          views: [separator_three])
         searchButton.addTarget(self, action: #selector(handleSearchButtonOnTap(_:)), for: .touchUpInside)

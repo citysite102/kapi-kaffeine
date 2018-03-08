@@ -387,15 +387,6 @@ class KPInformationViewController: KPViewController {
         photoInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                               "V:[$view0]-16-[$self]"],
                                             views: [cardInformationContainer])
-        //        photoInformationView.actions = [Action(title: "上傳照片",
-        //                                               style:.normal,
-        //                                               color:KPColorPalette.KPMainColor_v2.mainColor!,
-        //                                               icon:(R.image.icon_camera()?.withRenderingMode( .alwaysTemplate))!,
-        //                                               handler:{[unowned self] (infoView) -> () in
-        //                                                self.photoUpload()
-        //        })]
-        
-        
         
         let menuInfoView = KPShopPhotoInfoView()
         menuInfoView.isMenu = true
@@ -406,16 +397,6 @@ class KPInformationViewController: KPViewController {
         menuInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                              "V:[$view0][$self]"],
                                            views: [photoInformationView])
-        //        menuInformationView.actions = [Action(title: "上傳菜單",
-        //                                               style:.normal,
-        //                                               color:KPColorPalette.KPMainColor_v2.mainColor!,
-        //                                               icon:(R.image.icon_camera()?.withRenderingMode( .alwaysTemplate))!,
-        //                                               handler:{[unowned self] (infoView) -> () in
-        //                                                self.menuUpload()
-        //        })]
-        
-//        scrollContainer.bringSubview(toFront: photoInformationView)
-        
         
         commentInfoView = KPShopCommentInfoView()
         commentInfoView.informationController = self
@@ -681,8 +662,11 @@ class KPInformationViewController: KPViewController {
         let addFloatyButton = Floaty()
         Floaty.global.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
         addFloatyButton.buttonImage = R.image.icon_add()
+        addFloatyButton.animationSpeed = 0.06
         addFloatyButton.plusColor = KPColorPalette.KPMainColor_v2.mainColor!
-        addFloatyButton.openAnimationType = .slideLeft
+        addFloatyButton.itemImageColor = KPColorPalette.KPMainColor_v2.mainColor!
+        addFloatyButton.openAnimationType = .fade
+        addFloatyButton.itemSize = 44
         addFloatyButton.buttonColor = KPColorPalette.KPBackgroundColor.whiteColor!
         addFloatyButton.addItem("新增留言",
                                 icon: R.image.icon_comment_border(), handler: { [weak self] item in
@@ -707,34 +691,43 @@ class KPInformationViewController: KPViewController {
                                         }
                                     }
         })
-//        addFloatyButton.addItem("新增評分",
-//                                icon: R.image.icon_star_border(), handler: { [weak self] item in
-//                                    if let weSelf = self {
-//                                        if KPUserManager.sharedManager.currentUser == nil {
-//                                            KPPopoverView.popoverLoginView()
-//                                        } else {
-//                                            if KPServiceHandler.sharedHandler.isCurrentShopClosed {
-//                                                KPPopoverView.popoverClosedView()
-//                                            } else {
-//                                                let ratingViewController = KPRatingViewController()
-//                                                if weSelf.hasRatedDataModel != nil {
-//                                                    ratingViewController.defaultRateModel = weSelf.hasRatedDataModel
-//                                                }
-//                                                weSelf.navigationController?.pushViewController(viewController: ratingViewController,
-//                                                                                                animated: true,
-//                                                                                                completion: {})
-//                                            }
-//                                        }
-//                                    }
-//        })
         addFloatyButton.addItem("上傳照片",
-                                icon: R.image.icon_photo(), handler: { [weak self] item in
+                                icon: R.image.icon_photo(),
+                                handler: { [weak self] item in
                                     if let weSelf = self {
                                         weSelf.photoUpload()
                                     }
         })
-        addFloatyButton.addItem("收藏",
-                                icon: R.image.icon_collect_border())
+        
+        let hasCollected = KPUserManager.sharedManager.currentUser?.hasFavorited(informationDataModel.identifier) ?? false
+        
+        addFloatyButton.addItem(hasCollected ? "取消收藏" : "收藏",
+                                icon: hasCollected ?
+                                    R.image.icon_collect() :
+                                    R.image.icon_collect_border(),
+                                handler: { [weak self] item in
+                                    if let weSelf = self {
+                                         KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.store_favorite_button)
+                                        if hasCollected {
+                                            DispatchQueue.main.asyncAfter(deadline: .now()) {
+                                                KPPopoverView.popoverDefaultStyleContent (
+                                                    "移除收藏",
+                                                    "確定要改變心意移除收藏這間優秀到不行再優秀的咖啡廳嗎？",
+                                                    "我確定", { (content) in
+                                                        content.popoverView.dismiss()
+                                                        KPServiceHandler.sharedHandler.removeFavoriteCafe(weSelf.informationDataModel.identifier, { (successed) in
+                                                            item.titleLabel.text = "收藏"
+                                                            item.icon = R.image.icon_collect_border()
+                                                        })
+                                                })
+                                            }
+                                        } else {
+                                            KPServiceHandler.sharedHandler.addFavoriteCafe()
+                                            item.titleLabel.text = "取消收藏"
+                                            item.icon = R.image.icon_collect()
+                                        }
+                                    }
+        })
         addFloatyButton.size = 60
         addFloatyButton.itemSpace = 16
         view.addSubview(addFloatyButton)
