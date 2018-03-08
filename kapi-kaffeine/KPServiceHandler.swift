@@ -976,10 +976,36 @@ class KPServiceHandler {
                     // TODO: Error
                     completion?(nil, nil)
                 }
-                }.catch { (error) in
+            }.catch { (error) in
+                // TODO: Error
+                completion?(nil, nil)
+            }
+        }
+    }
+    
+    func fetchArticleCotent(_ articleID: String, completion: ((_ article: KPArticle?, _ error: NetworkRequestError?) -> Void)?) {
+        DispatchQueue.global().async {
+            let articleListRequest = KPArticleRequest()
+            articleListRequest.perform(articleID).then { result -> Void in
+                if let requestResult = result["result"].bool,
+                    requestResult == true {
+                    
+                    
+                    if let data = result["data"].dictionaryObject,
+                       let article = KPArticle(JSON: data) {
+                        completion?(article, nil)
+                    } else {
+                        completion?(nil, nil)
+                    }
+                    
+                } else {
                     // TODO: Error
                     completion?(nil, nil)
-            }
+                }
+            }.catch(execute: { (error) in
+                // TODO: Error
+                completion?(nil, nil)
+            })
         }
     }
 

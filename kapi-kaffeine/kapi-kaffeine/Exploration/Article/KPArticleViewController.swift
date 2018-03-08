@@ -44,6 +44,18 @@ class KPArticleViewController: KPViewController {
     var separator: UIView!
     var collectButton: UIButton!
     
+    fileprivate var articleID: String!
+    
+    init(_ articleID: String) {
+        super.init(nibName: nil, bundle: nil)
+        self.articleID = articleID
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        self.articleID = ""
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -208,7 +220,8 @@ class KPArticleViewController: KPViewController {
         collectButton.addConstraintForCenterAligningToSuperview(in: .vertical)
         collectButton.addConstraint(from: "H:|-16-[$self]")
         
-        addSampleContent()
+        loadArticleDataWithID(articleID)
+//        addSampleContent()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -217,27 +230,6 @@ class KPArticleViewController: KPViewController {
         if explorationViewController != nil {
             explorationViewController?.shouldShowLightContent = true
             setNeedsStatusBarAppearanceUpdate()
-        }
-        
-        if !animationHasPerformed {
-            UIView.animate(withDuration: 0.5,
-                           delay: 0.2,
-                           options: UIViewAnimationOptions.curveEaseOut,
-                           animations: {
-                            self.view.backgroundColor = UIColor.white
-                            self.articleTitleLabel.alpha = 1.0
-                            self.dismissButton.alpha = 1.0
-                            self.articleSubTitleLabel.alpha = 1.0
-                            self.articleFirstParagraphTextView.alpha = 1.0
-                            self.scrollDownButton.alpha = 0.8
-                            self.articleTitleLabel.transform = CGAffineTransform.identity
-                            self.articleSubTitleLabel.transform = CGAffineTransform.identity
-                            self.articleFirstParagraphTextView.transform = CGAffineTransform.identity
-                            self.scrollDownButton.transform = CGAffineTransform.identity
-                            
-            }, completion: { (_) in
-                self.animationHasPerformed = true
-            })
         }
     }
     
@@ -249,11 +241,116 @@ class KPArticleViewController: KPViewController {
         dismiss(animated: true, completion: nil)
 //        appModalController()?.dismissControllerWithDefaultDuration()
     }
-    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func loadArticleDataWithID(_ articleID: String) {
+        KPServiceHandler.sharedHandler.fetchArticleCotent(articleID) { [weak self] (article, error) in
+            
+            guard let `self` = self else { return }
+            
+            guard let article = article else {
+                if !self.animationHasPerformed {
+                    UIView.animate(withDuration: 0.5,
+                                   delay: 0.2,
+                                   options: UIViewAnimationOptions.curveEaseOut,
+                                   animations: {
+//                                    self.view.backgroundColor = UIColor.white
+//                                    self.articleTitleLabel.alpha = 1.0
+                                    self.dismissButton.alpha = 1.0
+//                                    self.articleSubTitleLabel.alpha = 1.0
+//                                    self.articleFirstParagraphTextView.alpha = 1.0
+//                                    self.scrollDownButton.alpha = 0.8
+//                                    self.articleTitleLabel.transform = CGAffineTransform.identity
+//                                    self.articleSubTitleLabel.transform = CGAffineTransform.identity
+//                                    self.articleFirstParagraphTextView.transform = CGAffineTransform.identity
+//                                    self.scrollDownButton.transform = CGAffineTransform.identity
+                                    
+                    }, completion: { (_) in
+                        self.animationHasPerformed = true
+                    })
+                }
+                return
+            }
+            
+            self.articleTitleLabel.text = article.title.value
+            if article.contents.count > 0 {
+                self.articleSubTitleLabel.text = article.contents[0].value
+            }
+            if article.contents.count > 1 {
+                self.articleFirstParagraphTextView.text = article.contents[1].value
+            }
+            
+            if !self.animationHasPerformed {
+                UIView.animate(withDuration: 0.5,
+                               delay: 0.2,
+                               options: UIViewAnimationOptions.curveEaseOut,
+                               animations: {
+                                self.view.backgroundColor = UIColor.white
+                                self.articleTitleLabel.alpha = 1.0
+                                self.dismissButton.alpha = 1.0
+                                self.articleSubTitleLabel.alpha = 1.0
+                                self.articleFirstParagraphTextView.alpha = 1.0
+                                self.scrollDownButton.alpha = 0.8
+                                self.articleTitleLabel.transform = CGAffineTransform.identity
+                                self.articleSubTitleLabel.transform = CGAffineTransform.identity
+                                self.articleFirstParagraphTextView.transform = CGAffineTransform.identity
+                                self.scrollDownButton.transform = CGAffineTransform.identity
+                                
+                }, completion: { (_) in
+                    self.animationHasPerformed = true
+                })
+            }
+            
+            let titleLabel = UILabel()
+            titleLabel.numberOfLines = 0
+            if article.title.bold {
+                titleLabel.font = UIFont.boldSystemFont(ofSize: article.title.fontSize)
+            } else {
+                titleLabel.font = UIFont.systemFont(ofSize: article.title.fontSize)
+            }
+            
+            titleLabel.text = article.title.value
+            
+            self.articleContainer.addSubview(titleLabel)
+            titleLabel.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                titleLabel.leftAnchor.constraint(equalTo: self.articleContainer.leftAnchor, constant: 16),
+                titleLabel.rightAnchor.constraint(equalTo: self.articleContainer.rightAnchor, constant: -16),
+                titleLabel.topAnchor.constraint(equalTo: self.articleContainer.topAnchor, constant: 24)
+            ])
+            
+            
+            var previousView: UIView = titleLabel
+            for element in article.contents {
+                
+                let contentLabel = UILabel()
+                contentLabel.numberOfLines = 0
+                if element.bold {
+                    contentLabel.font = UIFont.boldSystemFont(ofSize: element.fontSize)
+                } else {
+                    contentLabel.font = UIFont.systemFont(ofSize: element.fontSize)
+                }
+                
+                contentLabel.text = element.value
+                
+                self.articleContainer.addSubview(contentLabel)
+                contentLabel.translatesAutoresizingMaskIntoConstraints = false
+                NSLayoutConstraint.activate([
+                    contentLabel.leftAnchor.constraint(equalTo: self.articleContainer.leftAnchor, constant: 16),
+                    contentLabel.rightAnchor.constraint(equalTo: self.articleContainer.rightAnchor, constant: -16),
+                    contentLabel.topAnchor.constraint(equalTo: previousView.bottomAnchor, constant: previousView == titleLabel ? 24 : 16)
+                ])
+                
+                previousView = contentLabel
+            }
+            
+            previousView.bottomAnchor.constraint(equalTo: self.articleContainer.bottomAnchor, constant: -24)
+            
+        }
     }
     
     var sampleArticleTitleLabel: UILabel!
