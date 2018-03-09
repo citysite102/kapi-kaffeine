@@ -76,7 +76,7 @@ class KPSegmentedControl: UIControl {
             if selectionBackgroundColors.count > index {
                 segment.setBackgroundImage(UIImage(color: selectionBackgroundColors[index]), for: .selected)
             } else {
-                segment.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor_v2.mainColor_light!),
+                segment.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor_v2.mainColor!),
                                            for: .selected)
             }
             

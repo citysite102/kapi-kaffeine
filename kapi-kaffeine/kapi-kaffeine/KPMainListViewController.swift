@@ -177,7 +177,7 @@ class KPMainListViewController:
         statusErrorButton.setTitleColor(UIColor.white, for: .normal)
         statusErrorButton.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.mainColor!),
                                         for: .normal)
-        statusErrorButton.layer.cornerRadius = 3.0
+        statusErrorButton.layer.cornerRadius = 4.0
         statusErrorButton.layer.masksToBounds = true
         statusErrorButton.replaceText = true
         statusErrorButton.titleLabel?.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)

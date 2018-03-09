@@ -154,6 +154,7 @@ class KPInformationSharedInfoView: UIView {
         infoSupplementLabel = UILabel()
         infoSupplementLabel.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
         infoSupplementLabel.textColor = KPColorPalette.KPMainColor_v2.mainColor_light
+        infoSupplementLabel.alpha = 0
         addSubview(infoSupplementLabel)
         infoSupplementLabel.addConstraints(fromStringArray: ["H:[$self]-($metric0)-|"],
                                            metrics:[KPLayoutConstant.information_horizontal_offset])
@@ -163,13 +164,13 @@ class KPInformationSharedInfoView: UIView {
         infoContainer = UIView()
         infoContainer.backgroundColor = UIColor.white
         addSubview(infoContainer)
-        infoContainer.addConstraints(fromStringArray: ["V:[$view0]-24-[$self(>=64)]|",
+        infoContainer.addConstraints(fromStringArray: ["V:[$view0]-32-[$self(>=64)]-24-|",
                                                        "H:|[$self]|"],
                                      views: [infoTitleLabel])
     
         emptyLabel = UILabel()
-        emptyLabel.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
-        emptyLabel.textColor = KPColorPalette.KPTextColor.grayColor_level3
+        emptyLabel.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
+        emptyLabel.textColor = KPColorPalette.KPMainColor_v2.mainColor_light 
         emptyLabel.text = "目前尚無內容喔！"
         emptyLabel.isHidden = true
         infoContainer.addSubview(emptyLabel)
@@ -184,11 +185,11 @@ class KPInformationSharedInfoView: UIView {
 //                                                         "H:|[$self]|"],
 //                                       views: [infoContainer])
         
-//        separator = UIView()
-//        separator.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
-//        addSubview(separator)
-//        separator.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
-//                                                   "V:[$self(1)]|"])
+        separator = UIView()
+        separator.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7
+        addSubview(separator)
+        separator.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
+                                                   "V:[$self(1)]|"])
         
     }
 

@@ -102,7 +102,7 @@ class KPShopInfoView: UIView, GMSMapViewDelegate {
                          "大於NT$400元 / 人"]
     
     var mapView: GMSMapView!
-    
+    var navigateButton: UIButton!
     
     convenience init(_ informationDataModel: KPDataModel) {
         self.init(frame: .zero)
@@ -176,6 +176,21 @@ class KPShopInfoView: UIView, GMSMapViewDelegate {
                                views:[shopLocationInfoView])
         
         
+        navigateButton = UIButton(type: .custom)
+        navigateButton.setTitle("開始導航",
+                                for: .normal)
+        navigateButton.titleLabel?.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
+        navigateButton.setTitleColor(KPColorPalette.KPTextColor_v2.mainColor_title,
+                                     for: .normal)
+        navigateButton.contentEdgeInsets = UIEdgeInsetsMake(10, 16, 10, 16)
+        navigateButton.backgroundColor = UIColor(white: 1.0, alpha: 0.3)
+        navigateButton.layer.cornerRadius = 4.0
+        navigateButton.layer.borderColor = KPColorPalette.KPTextColor_v2.mainColor_title?.cgColor
+        navigateButton.layer.borderWidth = 1.5
+        navigateButton.layer.masksToBounds = true
+        mapView.addSubview(navigateButton)
+        navigateButton.addConstraintForCenterAligningToSuperview(in: .vertical)
+        navigateButton.addConstraintForCenterAligningToSuperview(in: .horizontal)
         
         
 //        if informationDataModel.featureContents.count > 0 {

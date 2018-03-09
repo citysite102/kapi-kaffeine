@@ -134,17 +134,6 @@ class KPInformationViewController: KPViewController {
         return label
     }()
     
-//    lazy var addButton: KPShadowButton = {
-//        let shadowButton = KPShadowButton()
-//        shadowButton.button.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.whiteColor!), for: .normal)
-//        shadowButton.button.setImage(R.image.icon_add(), for: .normal)
-//
-//        shadowButton.button.tintColor = KPColorPalette.KPMainColor_v2.mainColor
-//        shadowButton.button.imageView?.contentMode = .scaleAspectFit
-//        shadowButton.layer.cornerRadius = 30
-//        return shadowButton
-//    }()
-    
     var allCommentHasShown: Bool = false
     var dataLoading: Bool = true {
         didSet {
@@ -282,7 +271,8 @@ class KPInformationViewController: KPViewController {
         mapActionController.addAction(mapCancelAction)
 
         scrollContainer = UIScrollView()
-        scrollContainer.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7
+//        scrollContainer.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7
+        scrollContainer.backgroundColor = UIColor.white
         scrollContainer.delegate = self
         scrollContainer.canCancelContentTouches = false
         view.addSubview(scrollContainer)
@@ -294,7 +284,6 @@ class KPInformationViewController: KPViewController {
         informationHeaderView.informationController = self
         informationHeaderView.scoreLabel.text = String(format: "%.1f", informationDataModel.averageRate?.doubleValue ?? 0.0)
         informationHeaderView.facebookButton.isHidden = !(informationDataModel.facebookURL != nil)
-//        informationHeaderView.shopPhoto.image = R.image.demo_4()
         
         if let photoURL = informationDataModel.covers?["kapi_l"] ?? informationDataModel.covers?["google_l"],
             let url = URL(string: photoURL) {
@@ -421,7 +410,7 @@ class KPInformationViewController: KPViewController {
         shopRateInfoView.dataModel = informationDataModel
         rateInformationView = KPInformationSharedInfoView()
         rateInformationView.infoView = shopRateInfoView
-        rateInformationView.infoTitleLabel.text = "店家評分"
+        rateInformationView.infoTitleLabel.text = "店家評分(\(informationDataModel.rateCount ?? 0))"
         rateInformationView.infoSupplementLabel.text = "\(informationDataModel.rateCount ?? 0) 人已評分"
 //        rateInformationView.actions = [Action(title:"我要評分",
 //                                              style:.normal,
@@ -825,14 +814,14 @@ class KPInformationViewController: KPViewController {
                         weSelf.informationHeaderView.shopPhoto.isUserInteractionEnabled = false
                         weSelf.informationHeaderView.shopPhoto.layer.add(transition, forKey: nil)
                         weSelf.informationHeaderView.morePhotoButton.titleLabel?.text = "上傳\n照片"
-                        weSelf.photoInformationView.infoTitleLabel.text = "照片"
+                        weSelf.photoInformationView.infoTitleLabel.text = "照片（\(weSelf.displayPhotoInformations.count)）"
                         weSelf.photoInformationView.infoSupplementLabel.text = "尚無照片"
                         weSelf.photoInformationView.isEmpty = true
                         weSelf.informationHeaderView.morePhotoButton.setTitle("上傳\n照片", for: .normal)
                     } else {
                         weSelf.photoInformationView.infoSupplementLabel.text = "\(weSelf.displayPhotoInformations.count) 張照片"
                         weSelf.photoInformationView.isEmpty = false
-                        weSelf.photoInformationView.infoTitleLabel.text = "照片（\(weSelf.displayPhotoInformations.count)）"
+                        weSelf.photoInformationView.infoTitleLabel.text = "照片(\(weSelf.displayPhotoInformations.count))"
                         weSelf.informationHeaderView.morePhotoButton.setTitle("\(weSelf.displayPhotoInformations.count) \n張照片",
                             for: .normal)
                         
@@ -864,6 +853,7 @@ class KPInformationViewController: KPViewController {
                     // 加上 base 的數量
                     let rateCount = (rate?.base != nil) ? (rate?.rates?.count)!+1 : (rate?.rates?.count)!
                     
+                    weSelf.rateInformationView.infoTitleLabel.text = "店家評分(\(rateCount))"
                     weSelf.rateInformationView.infoSupplementLabel.text = "\(rateCount) 人已評分"
                     weSelf.rateDataModel = rate
                     

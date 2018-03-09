@@ -287,6 +287,8 @@ KPTabViewDelegate {
             tableView.separatorColor = UIColor.clear
             tableView.register(KPMainListTableViewCell.self,
                                 forCellReuseIdentifier: "cell")
+            tableView.register(KPListArticleCell.self,
+                               forCellReuseIdentifier: "cell_article")
             tableView.register(KPDefaultLoadingTableCell.self,
                                 forCellReuseIdentifier: "cell_loading")
             tableView.estimatedRowHeight = 80
@@ -456,12 +458,20 @@ KPTabViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if !dataLoading {
+            
+//            if tableView.tag == 3 {
+//                let cell = tableView.dequeueReusableCell(withIdentifier:"cell_article",
+//                                                         for: indexPath) as! KPListArticleCell
+//                cell.selectionStyle = .none
+//                return cell
+//            } else {
             let cell = tableView.dequeueReusableCell(withIdentifier:"cell",
                                                      for: indexPath) as! KPMainListTableViewCell
             
             cell.selectionStyle = .none
             cell.dataModel = self.displayDataModels[tableView.tag][indexPath.row]
             return cell
+//            }
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier:"cell_loading",
                                                      for: indexPath) as! KPDefaultLoadingTableCell
