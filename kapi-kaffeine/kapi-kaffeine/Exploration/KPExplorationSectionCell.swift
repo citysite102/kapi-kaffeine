@@ -37,6 +37,7 @@ class KPExplorationSectionCell: UICollectionViewCell {
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 2
         imageView.clipsToBounds = true
+        imageView.isUserInteractionEnabled = true
         contentView.addSubview(imageView)
         imageView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                    "V:|[$self]"])
@@ -56,11 +57,13 @@ class KPExplorationSectionCell: UICollectionViewCell {
         
         collectButton = KPBounceButton(frame: CGRect.zero,
                                        image: R.image.icon_collect_border()!)
+        collectButton.setImage(R.image.icon_collect(),
+                               for: UIControlState.selected)
         collectButton.tintColor = KPColorPalette.KPBackgroundColor.whiteColor
+        collectButton.selectedTintColor = KPColorPalette.KPMainColor_v2.collectedColor
         imageView.addSubview(collectButton)
-        collectButton.addConstraints(fromStringArray: ["V:|-4-[$self(24)]",
-                                                       "H:[$self(24)]-4-|"])
-
+        collectButton.addConstraints(fromStringArray: ["V:|-4-[$self(20)]",
+                                                       "H:[$self(20)]-4-|"])
         nameLabel = UILabel()
         contentView.addSubview(nameLabel)
         nameLabel.addConstraints(fromStringArray: ["H:|[$self]|",
@@ -140,7 +143,7 @@ class KPExplorationSectionCell: UICollectionViewCell {
         super.layoutSubviews()
         if imageMaskLayer == nil && gradientView.frameSize.width != 0 {
             imageMaskLayer = CAGradientLayer()
-            imageMaskLayer!.opacity = 0.3
+            imageMaskLayer!.opacity = 0.2
             imageMaskLayer!.frame = CGRect(x: 0, y: 0,
                                            width: imageView.frame.width,
                                            height: imageView.frame.height)

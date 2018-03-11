@@ -160,7 +160,7 @@ class KPSearchViewController: KPViewController {
         newStoreButton.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor_v2.mainColor_light!),
                                                  for: .normal)
         newStoreButton.titleLabel?.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
-        newStoreButton.layer.cornerRadius = 4
+        newStoreButton.layer.cornerRadius = 22
         newStoreButton.layer.masksToBounds = true
         newStoreButton.addTarget(self,
                                  action: #selector(handleNewStoreButtonOnTap(_:)),

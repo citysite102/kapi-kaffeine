@@ -65,6 +65,8 @@ class KPExplorationSectionView: UITableViewCell {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.showsHorizontalScrollIndicator = false
+        collectionView.delaysContentTouches = false
+        collectionView.canCancelContentTouches = true
         collectionView.register(KPExplorationSectionCell.self, forCellWithReuseIdentifier: "ExplorationSectionCell")
         contentView.addSubview(collectionView)
         collectionView.addConstraints(fromStringArray: ["H:|[$self]|",
@@ -102,9 +104,15 @@ extension KPExplorationSectionView: UICollectionViewDataSource, UICollectionView
         cell.imageView.image = demoImages[Int(arc4random())%6]
         cell.nameLabel.text = shops[indexPath.row].name
         cell.regionLabel.text = shops[indexPath.row].place
+        cell.collectButton.addTarget(self,
+                                     action: #selector(handleShopCollected(sender:)),
+                                     for: UIControlEvents.touchUpInside)
         if let url = shops[indexPath.row].imageURL {
             cell.imageView.af_setImage(withURL: URL(string: url)!)
         }
         return cell
-    }    
+    }
+    
+    @objc func handleShopCollected(sender: UIButton) {
+    }
 }

@@ -29,6 +29,27 @@ struct KPAnalyticsEventProperty {
     static let store_rate = "store_rate"
 }
 
+struct KPInfoMapping {
+    static let citiesMapping = [
+        "taipei" :"台北",
+        "keelung" :"基隆",
+        "taoyuan" :"桃園",
+        "hsinchu" :"新竹",
+        "yilan" :"宜蘭",
+        "hualien" :"花蓮",
+        "taitung" :"台東",
+        "penghu" :"澎湖",
+        "miaoli" :"苗栗",
+        "taichung" :"台中",
+        "nantou" :"南投",
+        "changhua" :"彰化",
+        "yunlin" :"雲林",
+        "chiayi" :"嘉義",
+        "tainan" :"台南",
+        "kaohsiung" :"高雄",
+        "pingtung" :"屏東"]
+}
+
 struct KPAnalyticsEventValue {
     
     static let unknown = "unknown"
@@ -99,7 +120,7 @@ struct KPNotification {
 
 
 struct KPFontSize {
-    static let storeHeader: CGFloat = 28.0
+    static let storeHeader: CGFloat = 30.0
     static let header: CGFloat = 24.0
     static let sub_header: CGFloat = 18.0
     static let mainContent: CGFloat = 16.0
@@ -135,6 +156,7 @@ struct KPColorPalette {
         static let mainColor_bg = UIColor(hexString: "#FCFCFC")
 
         static let starColor = UIColor(hexString: "#F4B635")
+        static let collectedColor = UIColor(hexString: "#F4D23F")
         static let greenColor = UIColor(hexString: "#25AF76")
         static let redColor = UIColor(hexString: "#F86666")
         

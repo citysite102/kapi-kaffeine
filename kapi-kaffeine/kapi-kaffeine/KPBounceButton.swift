@@ -27,6 +27,12 @@ class KPBounceButton: UIButton {
     
     var dampingRatio: CGFloat = 0.35
     var bounceDuration: Double = 0.8
+    var selectedTintColor: UIColor? {
+        didSet {
+            self.normalTintColor = self.tintColor
+        }
+    }
+    var normalTintColor: UIColor?
     var adjustHitOffset: CGSize = CGSize(width: 0, height: 0)
     var rippleView: UIView?
     
@@ -62,7 +68,7 @@ class KPBounceButton: UIButton {
         super.init(frame: frame)
     }
     
-    convenience init (frame: CGRect, image: UIImage) {
+    convenience init(frame: CGRect, image: UIImage) {
         self.init(frame: frame)
         setImage(image, for: .normal)
         adjustsImageWhenHighlighted = false
@@ -71,7 +77,6 @@ class KPBounceButton: UIButton {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
@@ -119,6 +124,14 @@ class KPBounceButton: UIButton {
         }
         
         self.isSelected = !isSelected
+        
+        
+        if self.isSelected && selectedTintColor != nil {
+            self.tintColor = selectedTintColor
+        } else {
+            self.tintColor = normalTintColor
+        }
+        
         if rippleView != nil && isSelected {
             self.rippleView?.alpha = 1.0
             rippleView?.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)

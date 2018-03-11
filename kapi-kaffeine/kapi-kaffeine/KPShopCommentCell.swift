@@ -53,7 +53,7 @@ class KPShopCommentCell: UITableViewCell {
         userPicture.layer.masksToBounds = true
         contentView.addSubview(userPicture)
         userPicture.addConstraints(fromStringArray: ["H:|-($metric0)-[$self(64)]",
-                                                     "V:|-20-[$self(64)]"],
+                                                     "V:|-20-[$self(64)]|"],
                                    metrics:[KPLayoutConstant.information_horizontal_offset])
         
 

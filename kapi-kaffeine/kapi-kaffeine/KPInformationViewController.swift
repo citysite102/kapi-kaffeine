@@ -355,8 +355,19 @@ class KPInformationViewController: KPViewController {
                                                                constant:2)
         
         cardInformationContainer = KPInformationCardView()
-        cardInformationContainer.titleInfoLabel.text = informationDataModel.name
-        cardInformationContainer.locationInfoLabel.text = informationDataModel.address
+        cardInformationContainer.titleInfoLabel.setText(text: informationDataModel.name,
+                                                        lineSpacing: 6.0)
+        
+        var distName: String = ""
+        
+        if let distIndex = informationDataModel.address.index(of: "區") {
+            let startIndex = informationDataModel.address.index(distIndex, offsetBy:-2)
+            distName = String(informationDataModel.address[startIndex...distIndex])
+        }
+        cardInformationContainer.locationInfoLabel.text =  (KPInfoMapping.citiesMapping[informationDataModel.city]
+            ?? "") +
+            (distName != "" ? ", \(distName)" : "")
+        
         cardInformationContainer.rateLabel.text = String(format: "%.1f",
                                                          (self.informationDataModel.averageRate?.doubleValue) ?? 0)
         
@@ -866,7 +877,7 @@ class KPInformationViewController: KPViewController {
                     
                     if weSelf.hasRatedDataModel != nil {
                         DispatchQueue.main.async {
-                            weSelf.rateInformationView.actionButtons[0].setTitle("修改評分", for: .normal)
+//                            weSelf.rateInformationView.actionButtons[0].setTitle("修改評分", for: .normal)
                         }
                     }
                     

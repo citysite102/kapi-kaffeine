@@ -49,6 +49,7 @@ class KPNewCommentController: KPViewController {
                         R.image.icon_cup(), R.image.icon_cutlery(),
                         R.image.icon_pic()]
     var ratingViews = [KPRatingView]()
+    var ratingView: KPRatingView!
     
     lazy var textFieldHeaderLabel: UILabel = {
         let label = UILabel()
@@ -203,7 +204,7 @@ class KPNewCommentController: KPViewController {
 //        }
 //        ratingViews.last!.addConstraint(from: "V:[$self]-16-|")
 
-        let ratingView = KPRatingView()
+        ratingView = KPRatingView()
         ratingContainer.addSubview(ratingView)
         ratingView.addConstraints(fromStringArray: ["V:[$view0]-12-[$self]-16-|",
                                                     "H:|-14-[$self]-16-|"],
@@ -253,32 +254,22 @@ class KPNewCommentController: KPViewController {
     
     @objc func handleSendButtonOnTapped() {
         inputTextView.resignFirstResponder()
+        KPServiceHandler.sharedHandler.addCommentAndRatings(inputTextView.text,
+                                                            NSNumber(value: self.ratingView.currentRate),
+                                                            NSNumber(value: self.ratingView.currentRate),
+                                                            NSNumber(value: self.ratingView.currentRate),
+                                                            NSNumber(value: self.ratingView.currentRate),
+                                                            NSNumber(value: self.ratingView.currentRate),
+                                                            NSNumber(value: self.ratingView.currentRate),
+                                                            NSNumber(value: self.ratingView.currentRate),
+                                                            { (successed) in
+                                                                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
+                                                                                              execute: {
+                                                                                                self.navigationController?.popViewController(animated: true)
+                                                                })
+                                                            }
         
-        if self.ratingCheckbox.checkBox.checkState == .checked {
-            KPServiceHandler.sharedHandler.addCommentAndRatings(inputTextView.text,
-                                                                NSNumber(value: self.ratingViews[0].currentRate),
-                                                                NSNumber(value: self.ratingViews[3].currentRate),
-                                                                NSNumber(value: self.ratingViews[5].currentRate),
-                                                                NSNumber(value: self.ratingViews[1].currentRate),
-                                                                NSNumber(value: self.ratingViews[4].currentRate),
-                                                                NSNumber(value: self.ratingViews[2].currentRate),
-                                                                NSNumber(value: self.ratingViews[6].currentRate), { (successed) in
-                                                                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
-                                                                                                  execute: {
-                                                                                                    self.navigationController?.popViewController(animated: true)
-                                                                    })
-            })
-        } else {
-            KPServiceHandler.sharedHandler.addComment(inputTextView.text, { (successed) in
-                if successed {
-                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
-                                                  execute: {
-                                                    self.navigationController?.popViewController(animated: true)
-                    })
-                }
-            })
-        }
-        
+        )
     }
     
     @objc func handleTapGesture(tapGesture: UITapGestureRecognizer) {
