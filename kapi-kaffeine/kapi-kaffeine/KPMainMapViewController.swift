@@ -183,7 +183,7 @@ GMUClusterRendererDelegate {
                             })
                         }
                     } else {
-                        self.collectionViewBottomConstraint.constant = 0
+                        self.collectionViewBottomConstraint.constant = -16
                         self.collectionView.reloadData()
                         if let dataModel = self.mapView.selectedMarker?.userData as? KPDataModel,
                             let selectedIndex =  self.displayDataModel.index(where: {($0.name == dataModel.name)}) {
@@ -203,7 +203,7 @@ GMUClusterRendererDelegate {
                     }
                     
                 } else {
-                    self.collectionViewBottomConstraint.constant = 200
+                    self.collectionViewBottomConstraint.constant = 100
                     UIView.animate(withDuration: 0.5,
                                    delay: 0,
                                    usingSpringWithDamping: 0.8,
@@ -280,16 +280,14 @@ GMUClusterRendererDelegate {
         mapView.isMyLocationEnabled = true
         
         let flowLayout = UICollectionViewFlowLayout()
-        flowLayout.itemSize = CGSize(width: UIScreen.main.bounds.size.width/2, height: 180)
-        flowLayout.minimumLineSpacing = 24
-        flowLayout.minimumInteritemSpacing = 24
+        flowLayout.itemSize = CGSize(width: UIScreen.main.bounds.size.width - 60, height: 116)
         flowLayout.scrollDirection = .horizontal
+        flowLayout.minimumLineSpacing = 15
         
-        collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 0,
-                                                        height: 0),
+        collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 0,height: 0),
                                                collectionViewLayout: flowLayout)
-        collectionView.contentInset = UIEdgeInsetsMake(0, 16, 0, 0)
-        collectionView.backgroundColor = KPColorPalette.KPBackgroundColor.whiteColor
+        collectionView.contentInset = UIEdgeInsetsMake(0, 30, 0, 30)
+        collectionView.backgroundColor = UIColor.clear
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.decelerationRate = UIScrollViewDecelerationRateFast
@@ -299,8 +297,8 @@ GMUClusterRendererDelegate {
         
         view.addSubview(self.collectionView)
         collectionView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                        "V:[$self(200)]"])
-        collectionViewBottomConstraint = collectionView.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant: 200)
+                                                        "V:[$self(112)]"])
+        collectionViewBottomConstraint = collectionView.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant: 100)
         collectionViewBottomConstraint.isActive = true
         
         view.addSubview(searchNearButton)
