@@ -183,7 +183,7 @@ GMUClusterRendererDelegate {
                             })
                         }
                     } else {
-                        self.collectionViewBottomConstraint.constant = -16
+                        self.collectionViewBottomConstraint.constant = -10
                         self.collectionView.reloadData()
                         if let dataModel = self.mapView.selectedMarker?.userData as? KPDataModel,
                             let selectedIndex =  self.displayDataModel.index(where: {($0.name == dataModel.name)}) {
@@ -203,7 +203,7 @@ GMUClusterRendererDelegate {
                     }
                     
                 } else {
-                    self.collectionViewBottomConstraint.constant = 100
+                    self.collectionViewBottomConstraint.constant = 130
                     UIView.animate(withDuration: 0.5,
                                    delay: 0,
                                    usingSpringWithDamping: 0.8,
@@ -297,8 +297,8 @@ GMUClusterRendererDelegate {
         
         view.addSubview(self.collectionView)
         collectionView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                        "V:[$self(112)]"])
-        collectionViewBottomConstraint = collectionView.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant: 100)
+                                                        "V:[$self(126)]"])
+        collectionViewBottomConstraint = collectionView.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant: 130)
         collectionViewBottomConstraint.isActive = true
         
         view.addSubview(searchNearButton)

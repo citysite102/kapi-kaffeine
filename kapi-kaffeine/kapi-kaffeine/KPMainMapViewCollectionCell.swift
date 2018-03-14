@@ -96,6 +96,11 @@ class KPMainMapViewCollectionCell: UICollectionViewCell {
 //        contentView.layer.shadowRadius = 3.0
 //        contentView.layer.shadowOffset = CGSize(width: 2.0, height: 4.0)
         
+        layer.shadowColor = KPColorPalette.KPMainColor_v2.shadow_darkColor?.cgColor
+        layer.shadowOffset = CGSize(width: 1.0, height: 3.0)
+        layer.shadowOpacity = 0.2
+        layer.shadowRadius = 3
+        
         shopImageView = UIImageView(image: UIImage(named: "demo_6"))
         shopImageView.contentMode = .scaleAspectFill
         shopImageView.clipsToBounds = true
