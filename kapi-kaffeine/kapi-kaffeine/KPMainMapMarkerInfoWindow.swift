@@ -14,48 +14,39 @@ class KPMainMapMarkerInfoWindow: UIView {
 
     init(dataModel: KPDataModel) {
         
-        let textRect = NSString(string: dataModel.name).boundingRect(with: CGSize(width: 300, height: 30),
+        let textRect = NSString(string: dataModel.name).boundingRect(with: CGSize(width: 300, height: 40),
                                                                      options: .usesFontLeading,
-                                                                     attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 12)],
+                                                                     attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14)],
                                                                      context: nil)
         
-        let scoreRect = NSString(string: "\(dataModel.averageRate ?? 0)").boundingRect(with: CGSize(width: 200, height: 30),
+        let scoreRect = NSString(string: "\(dataModel.averageRate ?? 0)").boundingRect(with: CGSize(width: 200, height: 40),
                                                                      options: .usesFontLeading,
-                                                                     attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 12)],
+                                                                     attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14)],
                                                                      context: nil)
         
-        super.init(frame: CGRect(x: 0, y: 0, width: textRect.width + scoreRect.width + 63 + 7 , height: 30))
+        super.init(frame: CGRect(x: 0, y: 0, width: textRect.width + scoreRect.width + 84 , height: 40))
         
-        self.contentView = UIView(frame: CGRect(x: 0, y: 0, width: self.frame.size.width, height: self.frame.size.height - 5))
-        self.contentView.backgroundColor = UIColor.white
+        contentView = UIView(frame: CGRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height))
+        contentView.backgroundColor = UIColor.white
         
-        self.layer.shadowColor = UIColor.black.cgColor;
-        self.layer.shadowOpacity = 0.1;
-        self.layer.shadowRadius = 2.0;
-        self.layer.shadowOffset = CGSize.init(width: 1.0, height: 2.0);
+        contentView.layer.borderWidth = 1
+        contentView.layer.cornerRadius = 3
+        contentView.layer.borderColor = KPColorPalette.KPBackgroundColor.grayColor_level5?.cgColor
         
-        self.addSubview(self.contentView)
+        layer.shadowColor = UIColor.black.cgColor;
+        layer.shadowOpacity = 0.1;
+        layer.shadowRadius = 2.0;
+        layer.shadowOffset = CGSize.init(width: 1.0, height: 2.0);
         
-        self.contentView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]"])
+        addSubview(contentView)
         
-        let path = UIBezierPath()
-        path.move(to: CGPoint(x: self.frame.size.width/2 - 5, y: self.frame.size.height - 5))
-        path.addLine(to: CGPoint(x: self.frame.size.width/2 + 5, y: self.frame.size.height - 5))
-        path.addLine(to: CGPoint(x: self.frame.size.width/2, y: self.frame.size.height))
-        path.addLine(to: CGPoint(x: self.frame.size.width/2 - 5, y: self.frame.size.height - 5))
-        path.close()
-        
-        let shapeLayer = CAShapeLayer()
-        shapeLayer.path = path.cgPath
-        shapeLayer.fillColor = UIColor.white.cgColor
-        
-        self.layer.addSublayer(shapeLayer)
+        contentView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"])
         
         let imageView = UIImageView(image: R.image.icon_house())
         imageView.contentMode = .scaleAspectFit
         
         let titleLabel = UILabel()
-        titleLabel.font = UIFont.systemFont(ofSize: 12)
+        titleLabel.font = UIFont.systemFont(ofSize: 14)
         titleLabel.text = dataModel.name
         
         let starImageView = UIImageView(image: R.image.icon_star())
@@ -63,7 +54,7 @@ class KPMainMapMarkerInfoWindow: UIView {
         starImageView.contentMode = .scaleAspectFit
 
         let scoreLabel = UILabel()
-        scoreLabel.font = UIFont.boldSystemFont(ofSize: 12)
+        scoreLabel.font = UIFont.boldSystemFont(ofSize: 14)
         scoreLabel.text = String(format: "%.1f", dataModel.averageRate?.doubleValue ?? 0.0)
         scoreLabel.textColor = KPColorPalette.KPTextColor.mainColor
         
@@ -72,12 +63,17 @@ class KPMainMapMarkerInfoWindow: UIView {
         self.contentView.addSubview(starImageView)
         self.contentView.addSubview(scoreLabel)
         
-        imageView.addConstraints(fromStringArray: ["H:|-8-[$self(19)]-4-[$view0]-4-[$view1(16)]-4-[$view2]-8-|",
-                                                   "V:|-3-[$self(19)]-3-|",
+        imageView.addConstraints(fromStringArray: ["H:|-16-[$self(20)]-4-[$view0]-4-[$view1(20)]-4-[$view2]-16-|",
+                                                   "V:[$self(20)]",
                                                    "V:|[$view0]|",
-                                                   "V:|-4-[$view1]-4-|",
+                                                   "V:[$view1(20)]",
                                                    "V:|[$view2]|"],
                                  views: [titleLabel, starImageView, scoreLabel])
+        
+        NSLayoutConstraint.activate([
+            imageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            starImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+        ])
         
         scoreLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .horizontal)
         titleLabel.setContentCompressionResistancePriority(UILayoutPriority.defaultLow, for: .horizontal)
