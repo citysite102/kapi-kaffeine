@@ -8,10 +8,16 @@
 
 import UIKit
 
+protocol KPPhotoUploadCollectionViewCellDelegate: class {
+    func photoUploadCellDeleteButtonOnTap(_ uploadCell: KPPhotoUploadCollectionViewCell)
+}
+
 class KPPhotoUploadCollectionViewCell: UICollectionViewCell {
     
-    private var photoImageView: UIImageView!
-    private var deleteButton: UIButton!
+    var photoImageView: UIImageView!
+    var deleteButton: UIButton!
+    
+    weak var delegate: KPPhotoUploadCollectionViewCellDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -33,11 +39,20 @@ class KPPhotoUploadCollectionViewCell: UICollectionViewCell {
         deleteButton.setTitleColor(KPColorPalette.KPMainColor_v2.whiteColor_level1, for: .highlighted)
         deleteButton.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$view0][$self]|"],
                                     views: [photoImageView])
-        
+        deleteButton.addTarget(self, action: #selector(handleDeleteButtonOnTap(_:)), for: .touchUpInside)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    @objc fileprivate func handleDeleteButtonOnTap(_ sender: UIButton) {
+        
+        guard let `delegate` = delegate else {
+            return
+        }
+        
+        delegate.photoUploadCellDeleteButtonOnTap(self)
     }
     
 }

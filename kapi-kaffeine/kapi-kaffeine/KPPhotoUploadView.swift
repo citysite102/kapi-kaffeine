@@ -13,6 +13,10 @@ class KPPhotoUploadView: UIView {
     fileprivate var takePhotoButton: UIButton!
     fileprivate var photoCollectionView: UICollectionView!
     
+    fileprivate var collectionViewHeightConstraint: NSLayoutConstraint!
+    
+    var photos: [UIImage] = []
+    
     init(_ title: String) {
         super.init(frame: CGRect.zero)
         
@@ -29,13 +33,13 @@ class KPPhotoUploadView: UIView {
         addSubview(titleLabel)
         titleLabel.addConstraints(fromStringArray: ["H:|-20-[$self]", "V:|-20-[$self]"])
         
-        
         takePhotoButton = UIButton()
         takePhotoButton.setImage(R.image.icon_camera(), for: .normal)
         takePhotoButton.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.grayColor_level6!),
                                            for: .normal)
         takePhotoButton.layer.cornerRadius = 5
         takePhotoButton.clipsToBounds = true
+        takePhotoButton.addTarget(self, action: #selector(handleTakePhotoButtonOnTap(_:)), for: .touchUpInside)
         addSubview(takePhotoButton)
         takePhotoButton.addConstraints(fromStringArray: ["H:|-20-[$self(80)]", "V:[$view0]-[$self(80)]"],
                                        views: [titleLabel])
@@ -56,17 +60,46 @@ class KPPhotoUploadView: UIView {
         photoCollectionView.delegate = self
         addSubview(photoCollectionView)
         
-        photoCollectionView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$view0]-20-[$self(120)]-20-|"],
+        photoCollectionView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$view0]-20-[$self]-20-|"],
                                            views:[takePhotoButton])
-
+        
+        collectionViewHeightConstraint = photoCollectionView.heightAnchor.constraint(equalToConstant: 0)
+        collectionViewHeightConstraint.isActive = true
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    @objc fileprivate func handleTakePhotoButtonOnTap(_ sender: UIButton) {
+        
+        let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        controller.addAction(UIAlertAction(title: "從相簿中選擇", style: .default) { (action) in
+            let imagePickerController = UIImagePickerController()
+            imagePickerController.allowsEditing = false
+            imagePickerController.sourceType = .photoLibrary
+            imagePickerController.delegate = self
+            UIApplication.shared.topViewController.present(imagePickerController, animated: true, completion: nil)
+        })
+        controller.addAction(UIAlertAction(title: "開啟相機", style: .default) { (action) in
+            let imagePickerController = UIImagePickerController()
+            imagePickerController.allowsEditing = false
+            imagePickerController.sourceType = .camera
+            imagePickerController.delegate = self
+            UIApplication.shared.topViewController.present(imagePickerController, animated: true, completion: nil)
+        })
+        
+        controller.addAction(UIAlertAction(title: "取消", style: .cancel) { (action) in
+            
+        })
+        
+        UIApplication.shared.topViewController.present(controller, animated: true) {
+            
+        }
+    }
+    
 }
-
 
 extension KPPhotoUploadView: UICollectionViewDataSource, UICollectionViewDelegate {
     
@@ -75,11 +108,57 @@ extension KPPhotoUploadView: UICollectionViewDataSource, UICollectionViewDelegat
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return photos.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return collectionView.dequeueReusableCell(withReuseIdentifier: "photoUploadCell", for: indexPath)
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "photoUploadCell", for: indexPath) as! KPPhotoUploadCollectionViewCell
+        cell.delegate = self
+        cell.photoImageView.image = photos[indexPath.row]
+        return cell
+    }
+}
+
+
+extension KPPhotoUploadView : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController,
+                               didFinishPickingMediaWithInfo info: [String : Any]) {
+        
+        picker.dismiss(animated: true) {
+            if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+                UIView.animate(withDuration: 0.25, animations: {
+                    if self.photos.count == 0 {
+                        self.collectionViewHeightConstraint.constant = 120
+                    }
+                    self.photos.append(image)
+                    self.layoutIfNeeded()
+                }, completion: { (finished) in
+                    self.photoCollectionView.insertItems(at: [IndexPath.init(row: self.photos.count - 1, section: 0)])
+                })
+            }
+        }
+    }
+    
+}
+
+extension KPPhotoUploadView: KPPhotoUploadCollectionViewCellDelegate {
+    
+    func photoUploadCellDeleteButtonOnTap(_ uploadCell: KPPhotoUploadCollectionViewCell) {
+        if let indexPath = photoCollectionView.indexPath(for: uploadCell) {
+            self.photos.remove(at: indexPath.row)
+            self.photoCollectionView.performBatchUpdates({
+                self.photoCollectionView.deleteItems(at: [indexPath])
+            }, completion: { (finished) in
+                if self.photos.count == 0 {
+                    UIView.animate(withDuration: 0.25, animations: {
+                        self.collectionViewHeightConstraint.constant = 0
+                        self.layoutIfNeeded()
+                    })
+                }
+            })
+        }
     }
     
 }
