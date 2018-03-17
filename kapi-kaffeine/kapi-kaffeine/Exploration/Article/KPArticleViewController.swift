@@ -69,6 +69,7 @@ class KPArticleViewController: KPViewController {
         view.addSubview(scrollContainer)
         scrollContainer.addConstraints(fromStringArray: ["V:|[$self]|",
                                                          "H:|[$self]|"])
+        scrollContainer.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
         
         heroCoverImageView = UIImageView(image: imageSource ?? R.image.demo_6())
         heroCoverImageView.contentMode = .scaleAspectFill
@@ -161,7 +162,7 @@ class KPArticleViewController: KPViewController {
         articleContainer.backgroundColor = UIColor.white
         scrollContainer.addSubview(articleContainer)
         articleContainer.addConstraintForHavingSameWidth(with: view)
-        articleContainer.addConstraints(fromStringArray: ["V:[$self(1200)]|",
+        articleContainer.addConstraints(fromStringArray: ["V:[$self]|",
                                                           "H:|[$self]|"])
         articleYConstaint = articleContainer.addConstraint(from: "V:|-667-[$self]").first as! NSLayoutConstraint
         lastOffset = KPArticleViewController.scrollAnimationStartOffset
@@ -240,6 +241,14 @@ class KPArticleViewController: KPViewController {
         }
         dismiss(animated: true, completion: nil)
 //        appModalController()?.dismissControllerWithDefaultDuration()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+//        if scrollContainer != nil {
+//            print(scrollContainer.contentSize)
+//        }
+//        print(articleContainer)
     }
 
     override func didReceiveMemoryWarning() {
@@ -326,7 +335,7 @@ class KPArticleViewController: KPViewController {
             
             var previousView: UIView = titleLabel
             for element in article.contents {
-                
+
                 let contentLabel = UILabel()
                 contentLabel.numberOfLines = 0
                 if element.bold {
@@ -334,9 +343,9 @@ class KPArticleViewController: KPViewController {
                 } else {
                     contentLabel.font = UIFont.systemFont(ofSize: element.fontSize)
                 }
-                
+
                 contentLabel.text = element.value
-                
+
                 self.articleContainer.addSubview(contentLabel)
                 contentLabel.translatesAutoresizingMaskIntoConstraints = false
                 NSLayoutConstraint.activate([
@@ -344,11 +353,16 @@ class KPArticleViewController: KPViewController {
                     contentLabel.rightAnchor.constraint(equalTo: self.articleContainer.rightAnchor, constant: -16),
                     contentLabel.topAnchor.constraint(equalTo: previousView.bottomAnchor, constant: previousView == titleLabel ? 24 : 16)
                 ])
-                
+
                 previousView = contentLabel
             }
+
+            NSLayoutConstraint.activate([
+                previousView.bottomAnchor.constraint(equalTo: self.articleContainer.bottomAnchor, constant: -24)
+            ])
             
-            previousView.bottomAnchor.constraint(equalTo: self.articleContainer.bottomAnchor, constant: -24)
+            print(self.articleContainer)
+            print(self.scrollContainer.contentSize)
             
         }
     }
