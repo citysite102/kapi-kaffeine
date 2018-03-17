@@ -185,6 +185,7 @@
 		C00A6E131ECB0B7F00A05C9A /* KPSharedSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00A6E121ECB0B7F00A05C9A /* KPSharedSettingViewController.swift */; };
 		C00CD5341E95234A00A3CB6F /* style.json in Resources */ = {isa = PBXBuildFile; fileRef = C00CD5331E95234A00A3CB6F /* style.json */; };
 		C016F3E41FE7D80F00F76AED /* KPEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C016F3E31FE7D80F00F76AED /* KPEditorView.swift */; };
+		C0175A5F205CD2390003B1A0 /* KPOtherOptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0175A5E205CD2390003B1A0 /* KPOtherOptionViewController.swift */; };
 		C01AC6291EAAEA0A000390F7 /* GMUGridBasedClusterAlgorithm.m in Sources */ = {isa = PBXBuildFile; fileRef = C01AC6111EAAEA0A000390F7 /* GMUGridBasedClusterAlgorithm.m */; };
 		C01AC62A1EAAEA0A000390F7 /* GMUNonHierarchicalDistanceBasedAlgorithm.m in Sources */ = {isa = PBXBuildFile; fileRef = C01AC6131EAAEA0A000390F7 /* GMUNonHierarchicalDistanceBasedAlgorithm.m */; };
 		C01AC62B1EAAEA0A000390F7 /* GMUSimpleClusterAlgorithm.m in Sources */ = {isa = PBXBuildFile; fileRef = C01AC6151EAAEA0A000390F7 /* GMUSimpleClusterAlgorithm.m */; };
@@ -438,6 +439,7 @@
 		C00A6E121ECB0B7F00A05C9A /* KPSharedSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = KPSharedSettingViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C00CD5331E95234A00A3CB6F /* style.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = style.json; sourceTree = "<group>"; };
 		C016F3E31FE7D80F00F76AED /* KPEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPEditorView.swift; sourceTree = "<group>"; };
+		C0175A5E205CD2390003B1A0 /* KPOtherOptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPOtherOptionViewController.swift; sourceTree = "<group>"; };
 		C01AC60C1EAAE86E000390F7 /* kapi-kaffeine-bridging-header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "kapi-kaffeine-bridging-header.h"; sourceTree = "<group>"; };
 		C01AC60F1EAAEA0A000390F7 /* GMUClusterAlgorithm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMUClusterAlgorithm.h; sourceTree = "<group>"; };
 		C01AC6101EAAEA0A000390F7 /* GMUGridBasedClusterAlgorithm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMUGridBasedClusterAlgorithm.h; sourceTree = "<group>"; };
@@ -1120,6 +1122,14 @@
 			name = TimePicker;
 			sourceTree = "<group>";
 		};
+		C0175A5D205CD20B0003B1A0 /* Other option */ = {
+			isa = PBXGroup;
+			children = (
+				C0175A5E205CD2390003B1A0 /* KPOtherOptionViewController.swift */,
+			);
+			name = "Other option";
+			sourceTree = "<group>";
+		};
 		C01AC6081EAAE683000390F7 /* Google-Maps-iOS-Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -1361,6 +1371,7 @@
 		C0EB988820206ED9003B26AD /* Detail Info */ = {
 			isa = PBXGroup;
 			children = (
+				C0175A5D205CD20B0003B1A0 /* Other option */,
 				C0ED09082030701400DC9A52 /* Business Time */,
 				C0EB988920206EF3003B26AD /* Consumption Info */,
 				C0B376092019F25C0095E4C5 /* KPNewStoreDetailInfoViewController.swift */,
@@ -1916,6 +1927,7 @@
 				77FB63961E9AA7BB00FFC3DC /* KPDataModel.swift in Sources */,
 				77FBE95D1ECCABD000EBBB9B /* KPFeatureTagLayout.swift in Sources */,
 				77A26B0D1F234A8D0045D46F /* KPCommentDetailedController.swift in Sources */,
+				C0175A5F205CD2390003B1A0 /* KPOtherOptionViewController.swift in Sources */,
 				7762E3431F1211770006E205 /* KPGetRatingRequest.swift in Sources */,
 				C01AC62F1EAAEA0A000390F7 /* GMUDefaultClusterIconGenerator.m in Sources */,
 				77BFC5581EB7586F00610F55 /* KPErrorResponseModel.swift in Sources */,

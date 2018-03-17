@@ -8,7 +8,11 @@
 
 import UIKit
 
-class KPBusinessHoursEditor: UIView {
+protocol KPBusinessHoursEditorDelegate: class {
+    func deleteHoursEditor(_ editor: KPBusinessHoursEditor)
+}
+
+class KPBusinessHoursEditor: UITableViewCell {
     
     enum Day: String {
         case Monday = "星期一"
@@ -29,11 +33,18 @@ class KPBusinessHoursEditor: UIView {
     }
     
     let titleLabel = UILabel()
+    let timeLabel = UILabel()
+    let time1Label = UILabel()
+    let time2Label = UILabel()
     
     let dayButtons = [UIButton]()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    let deleteButton = UIButton()
+    
+    var delegate: KPBusinessHoursEditorDelegate?
+    
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
     }
     
@@ -43,49 +54,51 @@ class KPBusinessHoursEditor: UIView {
     
     func setupUI() {
         
+        selectionStyle = .none
+        
         titleLabel.text = "營業時段"
         titleLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
         titleLabel.font = UIFont.systemFont(ofSize: 20,
                                             weight: UIFont.Weight.light)
-        addSubview(titleLabel)
+        contentView.addSubview(titleLabel)
         titleLabel.addConstraints(fromStringArray: ["H:|-20-[$self]", "V:|-20-[$self]"])
         
         let mondayButton = dayButtonWithTitle(Day.Monday.rawValue)
-        addSubview(mondayButton)
+        contentView.addSubview(mondayButton)
         mondayButton.addConstraints(fromStringArray: ["H:|-20-[$self]", "V:[$view0]-16-[$self]"],
                                     views: [titleLabel])
         
         let tuesdayButton = dayButtonWithTitle(Day.Tuesday.rawValue)
-        addSubview(tuesdayButton)
+        contentView.addSubview(tuesdayButton)
         tuesdayButton.addConstraints(fromStringArray: ["H:[$view0]-[$self]"],
                                      views: [mondayButton])
         tuesdayButton.addConstraintForCenterAligning(to: mondayButton, in: .vertical)
         
         let wednesdayButton = dayButtonWithTitle(Day.Wednesday.rawValue)
-        addSubview(wednesdayButton)
+        contentView.addSubview(wednesdayButton)
         wednesdayButton.addConstraints(fromStringArray: ["H:[$view0]-[$self]"],
                                        views: [tuesdayButton])
         wednesdayButton.addConstraintForCenterAligning(to: mondayButton, in: .vertical)
         
         let thursdayButton = dayButtonWithTitle(Day.Thursday.rawValue)
-        addSubview(thursdayButton)
+        contentView.addSubview(thursdayButton)
         thursdayButton.addConstraints(fromStringArray: ["H:[$view0]-[$self]-20-|"],
                                       views: [wednesdayButton])
         thursdayButton.addConstraintForCenterAligning(to: mondayButton, in: .vertical)
         
         let fridayButton = dayButtonWithTitle(Day.Friday.rawValue)
-        addSubview(fridayButton)
+        contentView.addSubview(fridayButton)
         fridayButton.addConstraints(fromStringArray: ["H:|-20-[$self]", "V:[$view0]-[$self]"],
                                     views: [mondayButton])
         
         let saturdayButton = dayButtonWithTitle(Day.Saturday.rawValue)
-        addSubview(saturdayButton)
+        contentView.addSubview(saturdayButton)
         saturdayButton.addConstraints(fromStringArray: ["H:[$view0]-[$self]"],
                                       views: [fridayButton])
         saturdayButton.addConstraintForCenterAligning(to: fridayButton, in: .vertical)
         
         let sundayButton = dayButtonWithTitle(Day.Sunday.rawValue)
-        addSubview(sundayButton)
+        contentView.addSubview(sundayButton)
         sundayButton.addConstraints(fromStringArray: ["H:[$view0]-[$self]"],
                                     views: [saturdayButton])
         sundayButton.addConstraintForCenterAligning(to: fridayButton, in: .vertical)
@@ -103,41 +116,60 @@ class KPBusinessHoursEditor: UIView {
         timeTitleLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
         timeTitleLabel.font = UIFont.systemFont(ofSize: 20,
                                                 weight: UIFont.Weight.light)
-        addSubview(timeTitleLabel)
+        contentView.addSubview(timeTitleLabel)
         timeTitleLabel.addConstraints(fromStringArray: ["H:|-20-[$self]", "V:[$view0]-30-[$self]"],
                                       views: [sundayButton])
         
         
-        let timeLabel = UILabel()
+        
         timeLabel.text = "從 8:00 營業至 19:00"
         timeLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
         timeLabel.font = UIFont.systemFont(ofSize: 16,
                                            weight: UIFont.Weight.light)
-        addSubview(timeLabel)
+        contentView.addSubview(timeLabel)
         timeLabel.addConstraints(fromStringArray: ["H:|-20-[$self]", "V:[$view0]-10-[$self]"],
                                  views: [timeTitleLabel])
         
-        let time1Label = UILabel()
         time1Label.text = "00:00"
         time1Label.textColor = KPColorPalette.KPTextColor_v2.mainColor_hint
-        addSubview(time1Label)
+        contentView.addSubview(time1Label)
         time1Label.addConstraints(fromStringArray: ["H:|-20-[$self]", "V:[$view0]-20-[$self]"],
                                   views: [timeLabel])
         
-        let time2Label = UILabel()
         time2Label.text = "24:00"
         time2Label.textColor = KPColorPalette.KPTextColor_v2.mainColor_hint
-        addSubview(time2Label)
+        contentView.addSubview(time2Label)
         time2Label.addConstraints(fromStringArray: ["H:[$self]-20-|"])
         time2Label.addConstraintForCenterAligning(to: time1Label, in: .vertical)
 
         
         let rangeSlider = RangeSlider()
-        addSubview(rangeSlider)
-        rangeSlider.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|", "V:[$view0]-4-[$self(40)]-20-|"],
+        rangeSlider.maximumValue = 144
+        rangeSlider.minimumValue = 0
+        rangeSlider.upperValue = 114
+        rangeSlider.lowerValue = 48
+        contentView.addSubview(rangeSlider)
+        rangeSlider.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|", "V:[$view0]-4-[$self(40)]"],
                                    views: [time1Label])
+        rangeSlider.addTarget(self, action: #selector(rangeSliderValueChanged(_:)),
+                              for: .valueChanged)
         
-
+        
+        contentView.addSubview(deleteButton)
+        deleteButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            deleteButton.topAnchor.constraint(equalTo: rangeSlider.bottomAnchor, constant: 10),
+            deleteButton.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
+            deleteButton.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -16),
+            deleteButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20),
+            deleteButton.heightAnchor.constraint(equalToConstant: 40)
+        ])
+        deleteButton.clipsToBounds = true
+        deleteButton.layer.cornerRadius = 3
+        deleteButton.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor_v2.redColor!), for: .normal)
+        deleteButton.setTitleColor(UIColor.white, for: .normal)
+        deleteButton.setTitle("刪除此營業時段", for: .normal)
+        deleteButton.addTarget(self, action: #selector(handleDeleteButtonOnTap(_:)), for: .touchUpInside)
     }
     
     func dayButtonWithTitle(_ title: String) -> UIButton {
@@ -158,8 +190,16 @@ class KPBusinessHoursEditor: UIView {
         return button
     }
     
+    @objc func rangeSliderValueChanged(_ sender: RangeSlider) {
+        timeLabel.text = "從 \(Int(floor(sender.lowerValue/6))):\(Int(sender.lowerValue) % 6)0 營業至 \(Int(floor(sender.upperValue/6))):\(Int(sender.upperValue) % 6)0"
+    }
+    
     @objc func dayButtonOnTap(_ sender: UIButton) {
         sender.isSelected = !sender.isSelected
+    }
+    
+    @objc func handleDeleteButtonOnTap(_ sender: UIButton) {
+        delegate?.deleteHoursEditor(self)
     }
     
 }
