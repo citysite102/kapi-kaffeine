@@ -280,7 +280,7 @@ GMUClusterRendererDelegate {
         mapView.isMyLocationEnabled = true
         
         let flowLayout = UICollectionViewFlowLayout()
-        flowLayout.itemSize = CGSize(width: UIScreen.main.bounds.size.width - 60, height: 116)
+        flowLayout.itemSize = CGSize(width: UIScreen.main.bounds.size.width - 60, height: 108)
         flowLayout.scrollDirection = .horizontal
         flowLayout.minimumLineSpacing = 15
         
