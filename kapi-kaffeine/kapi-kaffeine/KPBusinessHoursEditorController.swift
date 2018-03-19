@@ -11,11 +11,15 @@ import UIKit
 class KPBusinessHoursEditorController: KPViewController {
 
     
-    var scrollContainer: UIView!
-    var scrollView: UIScrollView!
+//    var scrollContainer: UIView!
+//    var scrollView: UIScrollView!
     var buttonContainer: UIView!
     
+    let tableView = UITableView()
+    
     let addButton = UIButton()
+    
+    fileprivate var businessHours: [String] = [""]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,18 +28,51 @@ class KPBusinessHoursEditorController: KPViewController {
 
         navigationItem.leftBarButtonItem = nil
 
-        scrollView = UIScrollView()
-        scrollView.backgroundColor = KPColorPalette.KPMainColor_v2.whiteColor_level1
-        view.addSubview(scrollView)
+//        scrollView = UIScrollView()
+//        scrollView.backgroundColor = KPColorPalette.KPMainColor_v2.whiteColor_level1
+//        view.addSubview(scrollView)
+//
+//        scrollView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor).isActive = true
+//        scrollView.addConstraint(from: "H:|[$self]|")
+//
+//        scrollContainer = UIView()
+//        scrollContainer.backgroundColor = KPColorPalette.KPMainColor_v2.whiteColor_level1
+//        scrollView.addSubview(scrollContainer)
+//        scrollContainer.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"])
+//        scrollContainer.addConstraintForHavingSameWidth(with: view)
         
-        scrollView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor).isActive = true
-        scrollView.addConstraint(from: "H:|[$self]|")
+        view.addSubview(tableView)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: view.topAnchor),
+            tableView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            tableView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
+        tableView.register(KPBusinessHoursEditor.self, forCellReuseIdentifier: "timeEditorCell")
+        tableView.dataSource = self
+        tableView.delegate = self
         
-        scrollContainer = UIView()
-        scrollContainer.backgroundColor = KPColorPalette.KPMainColor_v2.whiteColor_level1
-        scrollView.addSubview(scrollContainer)
-        scrollContainer.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"])
-        scrollContainer.addConstraintForHavingSameWidth(with: view)
+        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frameSize.width - 32, height: 60))
+        
+        footerView.addSubview(addButton)
+        addButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            addButton.leftAnchor.constraint(equalTo: footerView.leftAnchor, constant: 16),
+            addButton.rightAnchor.constraint(equalTo: footerView.rightAnchor, constant: -16),
+            addButton.topAnchor.constraint(equalTo: footerView.topAnchor, constant: 10),
+            addButton.bottomAnchor.constraint(equalTo: footerView.bottomAnchor, constant: -10),
+            addButton.heightAnchor.constraint(equalToConstant: 40)
+        ])
+        addButton.clipsToBounds = true
+        addButton.layer.cornerRadius = 3
+        addButton.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor_v2.greenColor!), for: .normal)
+        addButton.setTitleColor(UIColor.white, for: .normal)
+        addButton.setTitle("新增營業時段", for: .normal)
+        addButton.addTarget(self, action: #selector(handleAddButtonOnTap(_:)), for: .touchUpInside)
+
+        tableView.tableFooterView = footerView
         
         buttonContainer = UIView()
         buttonContainer.backgroundColor = KPColorPalette.KPMainColor_v2.whiteColor_level1
@@ -43,8 +80,7 @@ class KPBusinessHoursEditorController: KPViewController {
         buttonContainer.layer.borderColor = KPColorPalette.KPBackgroundColor.grayColor_level6?.cgColor
         buttonContainer.layer.borderWidth = 1
         
-        buttonContainer.addConstraints(fromStringArray: ["H:|-(-1)-[$self]-(-1)-|", "V:[$view0][$self(60)]"],
-                                       views: [scrollView])
+        buttonContainer.addConstraints(fromStringArray: ["H:|-(-1)-[$self]-(-1)-|", "V:[$self]|"])
         buttonContainer.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor).isActive = true
         
         
@@ -68,13 +104,6 @@ class KPBusinessHoursEditorController: KPViewController {
         backButton.addTarget(self, action: #selector(KPNewStoreDetailInfoViewController.handleBackButtonOnTap(_:)), for: .touchUpInside)
         
         
-        
-        let hoursEditor = KPBusinessHoursEditor()
-        scrollContainer.addSubview(hoursEditor)
-        hoursEditor.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"])
-        
-        
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -88,6 +117,36 @@ class KPBusinessHoursEditorController: KPViewController {
     
     @objc func handleSubmitButtonOnTap(_ sender: UIButton) {
         navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func handleAddButtonOnTap(_ sender: UIButton) {
+        businessHours.append("")
+        tableView.insertRows(at: [IndexPath(row: businessHours.count-1, section: 0)], with: UITableViewRowAnimation.automatic)
+    }
+    
+}
+
+extension KPBusinessHoursEditorController: UITableViewDataSource, UITableViewDelegate, KPBusinessHoursEditorDelegate {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return businessHours.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "timeEditorCell", for: indexPath) as! KPBusinessHoursEditor
+        cell.delegate = self
+        return cell
+    }
+    
+    func deleteHoursEditor(_ editor: KPBusinessHoursEditor) {
+        if let indexPath = tableView.indexPath(for: editor) {
+            businessHours.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
+        }
     }
     
 }

@@ -157,7 +157,9 @@ class KPNewStoreDetailInfoViewController: KPViewController {
             businessHours.title = title
             navigationController?.pushViewController(businessHours, animated: true)
         } else if sender == additionalInfoButton {
-            
+            let controller = KPOtherOptionViewController()
+            controller.title = title
+            navigationController?.pushViewController(controller, animated: true)
         }
     }
 
