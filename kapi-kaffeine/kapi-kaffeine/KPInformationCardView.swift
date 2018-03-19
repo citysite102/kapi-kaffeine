@@ -80,7 +80,7 @@ class KPInformationCardView: UIView {
         
         rateContainer = UIView()
         container.addSubview(rateContainer)
-        rateContainer.addConstraints(fromStringArray: ["V:[$view0]-10-[$self]",
+        rateContainer.addConstraints(fromStringArray: ["V:[$view0]-8-[$self]",
                                                        "H:|-($metric0)-[$self]"],
                                      metrics:[KPLayoutConstant.information_horizontal_offset+2],
                                      views: [titleInfoLabel])
@@ -228,13 +228,14 @@ class KPInformationCardView: UIView {
         distanceLabel.text = "再 300 公尺就到囉！"
         container.addSubview(distanceLabel)
     
-        distanceLabel.addConstraints(fromStringArray: ["H:[$self]-($metric0)-|",
-                                                       "V:[$view0]-64-[$self]-24-|"],
+        distanceLabel.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]-($metric0)-|",
+                                                       "V:[$view0]-72-[$self]-24-|"],
                                          metrics:[KPLayoutConstant.information_horizontal_offset],
                                          views: [rateContainer])
         
         
         distanceIcon = UIImageView(image: R.image.icon_locate())
+        distanceIcon.isHidden = true
         distanceIcon.tintColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
         container.addSubview(distanceIcon)
         distanceIcon.addConstraintForCenterAligning(to: distanceLabel,

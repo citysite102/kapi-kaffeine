@@ -356,7 +356,7 @@ class KPInformationViewController: KPViewController {
         
         cardInformationContainer = KPInformationCardView()
         cardInformationContainer.titleInfoLabel.setText(text: informationDataModel.name,
-                                                        lineSpacing: 6.0)
+                                                        lineSpacing: 7.0)
         
         var distName: String = ""
         

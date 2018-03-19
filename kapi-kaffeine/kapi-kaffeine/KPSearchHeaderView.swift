@@ -85,6 +85,7 @@ class KPSearchHeaderView: UIView {
         filterButton = KPBounceButton.init(frame: .zero,
                                            image: R.image.icon_filter()!)
         filterButton.tintColor = KPColorPalette.KPMainColor_v2.mainColor
+        filterButton.selectedTintColor = KPColorPalette.KPMainColor_v2.mainColor
         containerView.addSubview(filterButton)
         filterButton.addConstraints(fromStringArray: ["V:[$self(30)]",
                                                       "H:[$view0]-12-[$self(30)]-12-|"], views:[searchContainer])
