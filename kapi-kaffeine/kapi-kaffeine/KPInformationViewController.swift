@@ -662,10 +662,10 @@ class KPInformationViewController: KPViewController {
         let addFloatyButton = Floaty()
         Floaty.global.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
         addFloatyButton.buttonImage = R.image.icon_add()
-        addFloatyButton.animationSpeed = 0.06
+        addFloatyButton.animationSpeed = 0.02
         addFloatyButton.plusColor = KPColorPalette.KPMainColor_v2.mainColor!
         addFloatyButton.itemImageColor = KPColorPalette.KPMainColor_v2.mainColor!
-        addFloatyButton.openAnimationType = .fade
+        addFloatyButton.openAnimationType = .pop
         addFloatyButton.itemSize = 44
         addFloatyButton.buttonColor = KPColorPalette.KPBackgroundColor.whiteColor!
         addFloatyButton.addItem("新增留言",
