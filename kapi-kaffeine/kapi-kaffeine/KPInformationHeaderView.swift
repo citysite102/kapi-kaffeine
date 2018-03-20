@@ -308,46 +308,46 @@ class KPInformationHeaderView: UIView {
 //        scoreContainer.addGestureRecognizer(scoreTapGesture)
         
         
-        userContainer = UIView()
-        container.addSubview(userContainer)
-        userContainer.addConstraints(fromStringArray: ["V:[$self]-($metric0)-|",
-                                                       "H:|-($metric0)-[$self]"],
-                                     metrics:[KPLayoutConstant.information_horizontal_offset])
+//        userContainer = UIView()
+//        container.addSubview(userContainer)
+//        userContainer.addConstraints(fromStringArray: ["V:[$self]-($metric0)-|",
+//                                                       "H:|-($metric0)-[$self]"],
+//                                     metrics:[KPLayoutConstant.information_horizontal_offset])
+//
+//        userProfileImageViews = [UIView]()
+//
+//        for index in 0...4 {
+//
+//            let sampleContainer = UIView()
+//            sampleContainer.backgroundColor = KPColorPalette.KPBackgroundColor.whiteColor
+//            sampleContainer.layer.cornerRadius = 24
+//            sampleContainer.layer.masksToBounds = true
+//            userContainer.addSubview(sampleContainer)
+//            userProfileImageViews.append(sampleContainer)
+//
+//            if index == 0 {
+//                sampleContainer.addConstraints(fromStringArray: ["V:|[$self(48)]|",
+//                                                                 "H:|[$self(48)]"])
+//            } else if index == 4 {
+//                sampleContainer.addConstraints(fromStringArray: ["V:|[$self(48)]|",
+//                                                                 "H:[$view0]-(-16)-[$self(48)]|"],
+//                                               views:[userProfileImageViews[index-1]])
+//            } else {
+//                sampleContainer.addConstraints(fromStringArray: ["V:|[$self(48)]|",
+//                                                                 "H:[$view0]-(-16)-[$self(48)]"],
+//                                               views:[userProfileImageViews[index-1]])
+//            }
+//
+//
+//            let sampleImageView = UIImageView(image: userProfileImages[index])
+//            sampleContainer.addSubview(sampleImageView)
+//            sampleImageView.layer.cornerRadius = 23.0
+//            sampleImageView.contentMode = .scaleAspectFill
+//            sampleImageView.clipsToBounds = true
+//            sampleImageView.addConstraints(fromStringArray: ["V:|-1-[$self]-1-|",
+//                                                             "H:|-1-[$self]-1-|"])
+//        }
         
-        userProfileImageViews = [UIView]()
-        
-        for index in 0...4 {
-            
-            let sampleContainer = UIView()
-            sampleContainer.backgroundColor = KPColorPalette.KPBackgroundColor.whiteColor
-            sampleContainer.layer.cornerRadius = 24
-            sampleContainer.layer.masksToBounds = true
-            userContainer.addSubview(sampleContainer)
-            userProfileImageViews.append(sampleContainer)
-            
-            if index == 0 {
-                sampleContainer.addConstraints(fromStringArray: ["V:|[$self(48)]|",
-                                                                 "H:|[$self(48)]"])
-            } else if index == 4 {
-                sampleContainer.addConstraints(fromStringArray: ["V:|[$self(48)]|",
-                                                                 "H:[$view0]-(-16)-[$self(48)]|"],
-                                               views:[userProfileImageViews[index-1]])
-            } else {
-                sampleContainer.addConstraints(fromStringArray: ["V:|[$self(48)]|",
-                                                                 "H:[$view0]-(-16)-[$self(48)]"],
-                                               views:[userProfileImageViews[index-1]])
-            }
-            
-            
-            let sampleImageView = UIImageView(image: userProfileImages[index])
-            sampleContainer.addSubview(sampleImageView)
-            sampleImageView.layer.cornerRadius = 23.0
-            sampleImageView.contentMode = .scaleAspectFill
-            sampleImageView.clipsToBounds = true
-            sampleImageView.addConstraints(fromStringArray: ["V:|-1-[$self]-1-|",
-                                                             "H:|-1-[$self]-1-|"])
-        }
-            
             
         facebookButton = UIButton(type: .custom)
 //        facebookButton.setBackgroundImage(UIImage(color: UIColor.white),
@@ -370,13 +370,13 @@ class KPInformationHeaderView: UIView {
         morePhotoButton.layer.borderWidth = 1.0
         morePhotoButton.layer.borderColor = KPColorPalette.KPMainColor_v2.whiteColor_level1?.cgColor
         morePhotoButton.setTitle("上傳\n照片", for: .normal)
-        morePhotoButton.titleLabel?.font = UIFont.systemFont(ofSize: 13)
+        morePhotoButton.titleLabel?.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
         morePhotoButton.titleLabel?.numberOfLines = 0
         morePhotoButton.titleLabel?.textAlignment = NSTextAlignment.center
         morePhotoButton.setTitleColor(UIColor.white, for: .normal)
         container.addSubview(morePhotoButton)
-        morePhotoButton.addConstraints(fromStringArray: ["H:[$self(48)]-($metric0)-|",
-                                                         "V:[$self(48)]-($metric0)-|"],
+        morePhotoButton.addConstraints(fromStringArray: ["H:[$self(50)]-($metric0)-|",
+                                                         "V:[$self(50)]-($metric0)-|"],
                                        metrics: [KPLayoutConstant.information_horizontal_offset])
     }
     

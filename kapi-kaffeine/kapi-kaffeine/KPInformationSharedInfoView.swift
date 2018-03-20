@@ -164,13 +164,13 @@ class KPInformationSharedInfoView: UIView {
         infoContainer = UIView()
         infoContainer.backgroundColor = UIColor.white
         addSubview(infoContainer)
-        infoContainer.addConstraints(fromStringArray: ["V:[$view0]-32-[$self(>=64)]-24-|",
+        infoContainer.addConstraints(fromStringArray: ["V:[$view0]-30-[$self(>=64)]-24-|",
                                                        "H:|[$self]|"],
                                      views: [infoTitleLabel])
     
         emptyLabel = UILabel()
         emptyLabel.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
-        emptyLabel.textColor = KPColorPalette.KPMainColor_v2.mainColor_light 
+        emptyLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_hint
         emptyLabel.text = "目前尚無內容喔！"
         emptyLabel.isHidden = true
         infoContainer.addSubview(emptyLabel)
@@ -188,8 +188,9 @@ class KPInformationSharedInfoView: UIView {
         separator = UIView()
         separator.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7
         addSubview(separator)
-        separator.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
-                                                   "V:[$self(1)]|"])
+        separator.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]-($metric0)-|",
+                                                   "V:[$self(1)]|"],
+                                 metrics:[KPLayoutConstant.information_horizontal_offset])
         
     }
 

@@ -63,7 +63,7 @@ class KPShopPhotoInfoView: UIView {
                                                            views:[self.photoSubTitleLabel])
                         self.collectionView.addConstraint(forHeight: 100)
                     } else {
-                        self.photoSubTitleLabel.addConstraints(fromStringArray: ["V:|[$self]",
+                        self.photoSubTitleLabel.addConstraints(fromStringArray: ["V:|-(-8)-[$self]",
                                                                             "H:|-($metric0)-[$self]-($metric0)-|"],
                                                           metrics:[KPLayoutConstant.information_horizontal_offset])
                         self.verticleBottomConstraint = self.smallerVerticlePadding ?

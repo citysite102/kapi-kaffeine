@@ -53,14 +53,14 @@ class KPInformationCardView: UIView {
         
         
         locationInfoLabel = UILabel()
-        locationInfoLabel.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
-        locationInfoLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_description
-        locationInfoLabel.text = "台北, 大安區"
-        container.addSubview(locationInfoLabel)
-        locationInfoLabel.addConstraints(fromStringArray: ["V:|-32-[$self]",
-                                                           "H:|-($metric0)-[$self]-($metric0)-|"],
-                                         metrics:[KPLayoutConstant.information_horizontal_offset+2])
-        locationInfoLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
+//        locationInfoLabel.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
+//        locationInfoLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_description
+//        locationInfoLabel.text = "台北, 大安區"
+//        container.addSubview(locationInfoLabel)
+//        locationInfoLabel.addConstraints(fromStringArray: ["V:|-32-[$self]",
+//                                                           "H:|-($metric0)-[$self]-($metric0)-|"],
+//                                         metrics:[KPLayoutConstant.information_horizontal_offset+2])
+//        locationInfoLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
         
         
         titleInfoLabel = UILabel()
@@ -71,7 +71,7 @@ class KPInformationCardView: UIView {
         titleInfoLabel.textAlignment = .left
         titleInfoLabel.numberOfLines = 0
         container.addSubview(titleInfoLabel)
-        titleInfoLabel.addConstraints(fromStringArray: ["V:[$view0]-12-[$self]",
+        titleInfoLabel.addConstraints(fromStringArray: ["V:|-24-[$self]",
                                                         "H:|-($metric0)-[$self]-($metric0)-|"],
                                       metrics:[KPLayoutConstant.information_horizontal_offset],
                                       views:[locationInfoLabel])
@@ -80,7 +80,7 @@ class KPInformationCardView: UIView {
         
         rateContainer = UIView()
         container.addSubview(rateContainer)
-        rateContainer.addConstraints(fromStringArray: ["V:[$view0]-8-[$self]",
+        rateContainer.addConstraints(fromStringArray: ["V:[$view0]-10-[$self]",
                                                        "H:|-($metric0)-[$self]"],
                                      metrics:[KPLayoutConstant.information_horizontal_offset+2],
                                      views: [titleInfoLabel])
@@ -110,7 +110,7 @@ class KPInformationCardView: UIView {
         }
 
         rateLabel = KPLayerLabel()
-        rateLabel.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
+        rateLabel.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
         rateLabel.textColor = KPColorPalette.KPMainColor_v2.starColor
         rateLabel.text = "4.8"
         rateLabel.isOpaque = true
@@ -124,7 +124,7 @@ class KPInformationCardView: UIView {
                                                  constant: 0)
         
         commentCountLabel = KPLayerLabel()
-        commentCountLabel.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
+        commentCountLabel.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
         commentCountLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_description
         commentCountLabel.text = "(查看 24 則評論)"
         commentCountLabel.isOpaque = true
@@ -210,7 +210,7 @@ class KPInformationCardView: UIView {
                                       views: [rateContainer])
         
         shopStatusLabel = KPLayerLabel()
-        shopStatusLabel.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
+        shopStatusLabel.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
         shopStatusLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_description
         shopStatusLabel.text = "營業中"
         shopStatusLabel.isOpaque = true
@@ -224,19 +224,22 @@ class KPInformationCardView: UIView {
         
         distanceLabel = UILabel()
         distanceLabel.font = UIFont.systemFont(ofSize: KPFontSize.header)
+//        distanceLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_description
         distanceLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
-        distanceLabel.text = "再 300 公尺就到囉！"
+        distanceLabel.text = "距離 500m"
         container.addSubview(distanceLabel)
     
-        distanceLabel.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]-($metric0)-|",
-                                                       "V:[$view0]-72-[$self]-24-|"],
-                                         metrics:[KPLayoutConstant.information_horizontal_offset],
+//        distanceLabel.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]-($metric0)-|",
+//                                                       "V:[$view0]-72-[$self]-24-|"],
+        distanceLabel.addConstraints(fromStringArray: ["H:[$self]-($metric0)-|",
+                                                       "V:[$view0]-88-[$self]-24-|"],
+                                     metrics:[KPLayoutConstant.information_horizontal_offset],
                                          views: [rateContainer])
         
         
         distanceIcon = UIImageView(image: R.image.icon_locate())
-        distanceIcon.isHidden = true
         distanceIcon.tintColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
+        distanceIcon.isHidden = true
         container.addSubview(distanceIcon)
         distanceIcon.addConstraintForCenterAligning(to: distanceLabel,
                                                         in: .vertical)
@@ -245,6 +248,15 @@ class KPInformationCardView: UIView {
                                         views: [distanceLabel])
 
         
+        locationInfoLabel = UILabel()
+        locationInfoLabel.font = UIFont.systemFont(ofSize: KPFontSize.infoContent)
+        locationInfoLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_description
+        locationInfoLabel.text = "台北, 大安區"
+        container.addSubview(locationInfoLabel)
+        locationInfoLabel.addConstraints(fromStringArray: ["V:[$self]-10-[$view0]"],
+                                         metrics:[KPLayoutConstant.information_horizontal_offset+2],
+                                         views:[distanceLabel])
+        locationInfoLabel.rightAnchor.constraint(equalTo: distanceLabel.rightAnchor).isActive = true
         
         separator = UIView()
         separator.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7

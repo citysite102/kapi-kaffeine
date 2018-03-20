@@ -36,12 +36,12 @@ static NSArray<UIColor *> *kGMUBucketBackgroundColors;
 
 + (void)initialize {
   kGMUBucketBackgroundColors = @[
-    UIColorFromHEX(0xc1ab94),
-    UIColorFromHEX(0xc8955e),
-    UIColorFromHEX(0xa56f34),
-    UIColorFromHEX(0x9f9426),
-    UIColorFromHEX(0x72781f),
-    UIColorFromHEX(0x784d1f),
+    UIColorFromHEX(0x8197B6),
+    UIColorFromHEX(0x5582C3),
+    UIColorFromHEX(0x315384),
+    UIColorFromHEX(0x5AD3C4),
+    UIColorFromHEX(0x12A492),
+    UIColorFromHEX(0x3C4556),
   ];
 }
 

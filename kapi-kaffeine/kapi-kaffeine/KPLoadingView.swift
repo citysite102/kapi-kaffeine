@@ -15,6 +15,9 @@ class KPLoadingView: UIView {
         case successed = "successed"
         case failed = "failed"
         case exp = "exp"
+        
+        case collect = "collect"
+        case deCollect = "deCollect"
     }
     
     private var container: UIView!
@@ -63,6 +66,22 @@ class KPLoadingView: UIView {
                 iconView.image = R.image.notification_exp()
                 DispatchQueue.main.asyncAfter(deadline: .now()+0.2) {
                     self.performStateAnimation(.exp)
+                }
+                DispatchQueue.main.asyncAfter(deadline: .now()+1.0) {
+                    self.dismiss()
+                }
+            case .collect:
+                iconView.image = R.image.notification_exp()
+                DispatchQueue.main.asyncAfter(deadline: .now()+0.2) {
+                    self.performStateAnimation(.collect)
+                }
+                DispatchQueue.main.asyncAfter(deadline: .now()+1.0) {
+                    self.dismiss()
+                }
+            case .deCollect:
+                iconView.image = R.image.notification_exp()
+                DispatchQueue.main.asyncAfter(deadline: .now()+0.2) {
+                    self.performStateAnimation(.deCollect)
                 }
                 DispatchQueue.main.asyncAfter(deadline: .now()+1.0) {
                     self.dismiss()
@@ -175,6 +194,28 @@ class KPLoadingView: UIView {
             displayLabel.layer.add(fadeTransition, forKey: nil)
             CATransaction.commit()
             
+        } else if state == .collect || state == .deCollect {
+            fadeTransition.duration = 0.2
+            indicator.isHidden = true
+            iconView.transform = CGAffineTransform(translationX: 0, y: 12)
+            
+            UIView.animate(withDuration: 0.3,
+                           delay: 0.0,
+                           options: .curveEaseOut,
+                           animations: {
+                            self.iconView.alpha = 1.0
+                            self.iconView.transform = CGAffineTransform.identity
+            }) { (_) in
+                
+            }
+            CATransaction.begin()
+            CATransaction.setCompletionBlock({
+                self.displayLabel.text = String(format: state == .collect ? "收藏咖啡店" : "取消收藏咖啡店")
+                self.displayLabel.layer.add(fadeTransition, forKey: nil)
+            })
+            displayLabel.text = ""
+            displayLabel.layer.add(fadeTransition, forKey: nil)
+            CATransaction.commit()
         } else {
             
             fadeTransition.duration = 0.2

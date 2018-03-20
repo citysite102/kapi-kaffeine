@@ -35,6 +35,22 @@ class KPBounceButton: UIButton {
     var normalTintColor: UIColor?
     var adjustHitOffset: CGSize = CGSize(width: 0, height: 0)
     var rippleView: UIView?
+    var backgroundSelectView: UIView?
+    var backgroundSelectColor: UIColor? {
+        didSet {
+            if backgroundSelectView == nil {
+                backgroundSelectView = UIView()
+                backgroundSelectView?.layer.cornerRadius = 2.0
+                backgroundSelectView?.layer.masksToBounds = true
+                backgroundSelectView?.backgroundColor = backgroundSelectColor
+                insertSubview(backgroundSelectView!, belowSubview: imageView!)
+                backgroundSelectView?.isHidden = true
+                backgroundSelectView?.addConstraints(fromStringArray: ["V:|-(-9)-[$self]-(-2)-|",
+                                                                       "H:|-(-3)-[$self]-(-7)-|"])
+                
+            }
+        }
+    }
     
     var rippleInfo: BounceRippleInfo? {
         didSet {
@@ -130,6 +146,10 @@ class KPBounceButton: UIButton {
             self.tintColor = selectedTintColor
         } else {
             self.tintColor = normalTintColor
+        }
+        
+        if self.backgroundSelectView != nil {
+            self.backgroundSelectView?.isHidden = !self.isSelected
         }
         
         if rippleView != nil && isSelected {

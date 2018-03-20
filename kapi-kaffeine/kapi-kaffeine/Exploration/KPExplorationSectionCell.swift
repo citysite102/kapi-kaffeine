@@ -57,12 +57,12 @@ class KPExplorationSectionCell: UICollectionViewCell {
         
         collectButton = KPBounceButton(frame: CGRect.zero,
                                        image: R.image.icon_collect_border()!)
-        collectButton.setImage(R.image.icon_collect(),
-                               for: UIControlState.selected)
+        collectButton.backgroundSelectColor = KPColorPalette.KPMainColor_v2.starColor
         collectButton.tintColor = KPColorPalette.KPBackgroundColor.whiteColor
-        collectButton.selectedTintColor = KPColorPalette.KPMainColor_v2.collectedColor
-        imageView.addSubview(collectButton)
-        collectButton.addConstraints(fromStringArray: ["V:|-4-[$self(20)]",
+        collectButton.selectedTintColor = KPColorPalette.KPBackgroundColor.whiteColor
+        collectButton.imageEdgeInsets = UIEdgeInsetsMake(-2, 2, 2, -2)
+        addSubview(collectButton)
+        collectButton.addConstraints(fromStringArray: ["V:|-6-[$self(20)]",
                                                        "H:[$self(20)]-4-|"])
         nameLabel = UILabel()
         contentView.addSubview(nameLabel)

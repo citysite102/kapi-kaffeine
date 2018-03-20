@@ -112,7 +112,7 @@ class KPMainMapViewCollectionCell: UICollectionViewCell {
         
         shopNameLabel.addConstraints(fromStringArray: ["H:[$view0]-12-[$self($metric0)]",
                                                        "V:|-17-[$self]"],
-                                     metrics: [UIScreen.main.bounds.size.width/2 - 30],
+                                     metrics: [UIScreen.main.bounds.size.width/2 - 40],
                                      views: [shopImageView])
         
         shopStatusHint = UIView()
@@ -188,7 +188,10 @@ class KPMainMapViewCollectionCell: UICollectionViewCell {
         contentView.addSubview(starIcon)
         starIcon.addConstraints(fromStringArray: ["H:[$self(18)]-12-|",
                                                   "V:[$self(18)]"])
-        starIcon.addConstraintForCenterAligning(to: shopNameLabel, in: .vertical)
+        starIcon.addConstraintForCenterAligning(to: shopNameLabel,
+                                                in: .vertical,
+                                                constant: 1)
+        
         
         rateLabel = KPLayerLabel()
         rateLabel.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
