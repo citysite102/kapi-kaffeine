@@ -120,10 +120,10 @@ struct KPNotification {
 
 
 struct KPFontSize {
-    static let storeHeader: CGFloat = 30.0
+    static let storeHeader: CGFloat = 32.0
     static let header: CGFloat = 24.0
     static let sub_header: CGFloat = 18.0
-    static let mainContent: CGFloat = 15.0
+    static let mainContent: CGFloat = 16.0
     static let subContent: CGFloat = 14.0
     static let infoContent: CGFloat = 13.0
 }
@@ -134,7 +134,7 @@ struct KPLayoutConstant {
     static let separator_height = 1
     
     static let dismissButton_size = 26
-    static let information_horizontal_offset = 20
+    static let information_horizontal_offset = 18
     static let intro_horizontal_offset = 32
     
 }

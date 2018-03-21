@@ -36,6 +36,13 @@ class KPBounceButton: UIButton {
     var adjustHitOffset: CGSize = CGSize(width: 0, height: 0)
     var rippleView: UIView?
     var backgroundSelectView: UIView?
+    
+    
+    override var tintColor: UIColor! {
+        didSet {
+            self.normalTintColor = self.tintColor
+        }
+    }
     var backgroundSelectColor: UIColor? {
         didSet {
             if backgroundSelectView == nil {

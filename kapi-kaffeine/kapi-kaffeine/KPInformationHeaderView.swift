@@ -350,16 +350,17 @@ class KPInformationHeaderView: UIView {
         
             
         facebookButton = UIButton(type: .custom)
-//        facebookButton.setBackgroundImage(UIImage(color: UIColor.white),
-//                                          for: .normal)
-//        facebookButton.setImage(R.image.icon_fb(),
-//                                for: .normal)
-//        facebookButton.layer.cornerRadius = 2.0
-//        facebookButton.layer.masksToBounds = true
-//        facebookButton.imageView?.tintColor = KPColorPalette.KPMainColor_v2.mainColor
-//        container.addSubview(facebookButton)
-//        facebookButton.addConstraints(fromStringArray: ["H:|-12-[$self(28)]",
-//                                                        "V:[$self(28)]-16-|"])
+        facebookButton.setBackgroundImage(UIImage(color: UIColor.white),
+                                          for: .normal)
+        facebookButton.setImage(R.image.icon_fb(),
+                                for: .normal)
+        facebookButton.layer.cornerRadius = 2.0
+        facebookButton.layer.masksToBounds = true
+        facebookButton.imageView?.tintColor = KPColorPalette.KPMainColor_v2.mainColor
+        container.addSubview(facebookButton)
+        facebookButton.addConstraints(fromStringArray: ["H:|-($metric0)-[$self(28)]",
+                                                        "V:[$self(28)]-($metric0)-|"],
+                                      metrics:[KPLayoutConstant.information_horizontal_offset])
         
         
         morePhotoButton = UIButton(type: .custom)

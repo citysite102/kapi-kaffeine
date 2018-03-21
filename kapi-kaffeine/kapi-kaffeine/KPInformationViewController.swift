@@ -271,7 +271,6 @@ class KPInformationViewController: KPViewController {
         mapActionController.addAction(mapCancelAction)
 
         scrollContainer = UIScrollView()
-//        scrollContainer.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7
         scrollContainer.backgroundColor = UIColor.white
         scrollContainer.delegate = self
         scrollContainer.canCancelContentTouches = false
@@ -395,7 +394,7 @@ class KPInformationViewController: KPViewController {
         menuInformationView.infoView = menuInfoView
         scrollContainer.addSubview(menuInformationView)
         menuInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                             "V:[$view0][$self]"],
+                                                             "V:[$view0]-(-24)-[$self]"],
                                            views: [photoInformationView])
         
         commentInfoView = KPShopCommentInfoView()
@@ -786,7 +785,7 @@ class KPInformationViewController: KPViewController {
                     if weSelf.displayMenuInformations.count == 0 {
                         weSelf.menuInformationView.isEmpty = true
                         weSelf.menuInformationView.showEmptyContent = false
-                        (weSelf.photoInformationView.infoView as! KPShopPhotoInfoView).smallerVerticlePadding = true
+                        (weSelf.photoInformationView.infoView as! KPShopPhotoInfoView).smallerVerticlePadding = false
                     } else {
 //                        weSelf.menuInformationView.infoSupplementLabel.text = "\(weSelf.displayMenuInformations.count) 張照片"
                         weSelf.menuInformationView.infoSupplementLabel.text = ""
@@ -1375,7 +1374,8 @@ extension KPInformationViewController: KPInformationHeaderViewDelegate {
             }
         }
         
-        let browser = SKPhotoBrowser(originImage: headerView.shopPhoto.image!,
+        
+        let browser = KPPhotoBrowser(originImage: headerView.shopPhoto.image!,
                                      photos: photoSource,
                                      animatedFromView: headerView.shopPhoto)
         browser.initializePageIndex(currentPhotoIndex)
@@ -1390,11 +1390,21 @@ extension KPInformationViewController: SKPhotoBrowserDelegate {
     }
     
     func didShowPhotoAtIndex(_ index: Int) {
-        self.informationHeaderView.shopPhoto.isHidden = true
+        UIView.animate(withDuration: 0.2,
+                       animations: {
+                        self.informationHeaderView.shopPhoto.alpha = 0
+        }) { (_) in
+            self.informationHeaderView.shopPhoto.isHidden = true
+        }
     }
     
     func didDismissAtPageIndex(_ index: Int) {
         self.informationHeaderView.shopPhoto.isHidden = false
+        UIView.animate(withDuration: 0.2,
+                       animations: {
+                        self.informationHeaderView.shopPhoto.alpha = 1.0
+        }) { (_) in
+        }
     }
     
     func willDismissAtPageIndex(_ index: Int) {
