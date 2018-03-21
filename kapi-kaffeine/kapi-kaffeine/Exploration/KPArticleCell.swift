@@ -79,7 +79,7 @@ class KPArticleCell: UICollectionViewCell {
             gradientView.layer.addSublayer(imageMaskLayer!)
             UIView.animate(withDuration: 1.0,
                            animations: {
-                            self.gradientView.alpha = 0.3
+                            self.gradientView.alpha = 0.4
             })
         }
     }

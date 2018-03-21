@@ -322,6 +322,7 @@ class KPExplorationViewController: KPViewController {
             
             this.articleList = articleList!
             DispatchQueue.main.async {
+                this.articleCollectionView.collectionViewLayout.invalidateLayout()
                 this.articleCollectionView.reloadData()
             }
         }

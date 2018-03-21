@@ -70,16 +70,21 @@ class KPMainMapMarkerInfoWindow: UIView {
         
         self.contentView.addSubview(imageView)
         self.contentView.addSubview(titleLabel)
-        self.contentView.addSubview(starImageView)
-        self.contentView.addSubview(scoreLabel)
+//        self.contentView.addSubview(starImageView)
+//        self.contentView.addSubview(scoreLabel)
         self.contentView.addSubview(mapArrow)
         
-        imageView.addConstraints(fromStringArray: ["H:|-6-[$self(32)][$view0]-12-[$view1]-4-[$view2(20)]-12-|",
+        imageView.addConstraints(fromStringArray: ["H:|-6-[$self(32)][$view0]-8-|",
                                                    "V:[$self(20)]",
-                                                   "V:|[$view0]|",
-                                                   "V:|[$view1]|",
-                                                   "V:[$view2(32)]"],
-                                 views: [titleLabel, scoreLabel, starImageView])
+                                                   "V:|[$view0]|"],
+                                 views: [titleLabel])
+        
+//        imageView.addConstraints(fromStringArray: ["H:|-6-[$self(32)][$view0]-12-[$view1]-4-[$view2(20)]-12-|",
+//                                                   "V:[$self(20)]",
+//                                                   "V:|[$view0]|",
+//                                                   "V:|[$view1]|",
+//                                                   "V:[$view2(32)]"],
+//                                 views: [titleLabel, scoreLabel, starImageView])
         mapArrow.addConstraints(fromStringArray: ["V:[$self(8)]-(-8)-|",
                                                   "H:[$self(14)]"])
         mapArrow.addConstraintForCenterAligningToSuperview(in: .horizontal)
@@ -88,11 +93,11 @@ class KPMainMapMarkerInfoWindow: UIView {
         
         NSLayoutConstraint.activate([
             imageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            starImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+//            starImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         ])
         
-        scoreLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .horizontal)
-        titleLabel.setContentCompressionResistancePriority(UILayoutPriority.defaultLow, for: .horizontal)
+//        scoreLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .horizontal)
+//        titleLabel.setContentCompressionResistancePriority(UILayoutPriority.defaultLow, for: .horizontal)
         
     }
     
