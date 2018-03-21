@@ -21,7 +21,7 @@ class KPNewStoreDetailInfoViewController: KPViewController {
         super.viewDidLoad()
 
         view.backgroundColor = UIColor.white
-        //        navigationController?.navigationBar.shadowImage = UIImage()
+//        navigationController?.navigationBar.shadowImage = UIImage()
         
         let barLeftItem = UIBarButtonItem(title: "取消",
                                           style: .plain,

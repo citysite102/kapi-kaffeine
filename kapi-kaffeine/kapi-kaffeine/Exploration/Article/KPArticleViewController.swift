@@ -314,16 +314,8 @@ class KPArticleViewController: KPViewController {
                 })
             }
             
-            let titleLabel = UILabel()
-            titleLabel.numberOfLines = 0
-            if article.title.bold {
-                titleLabel.font = UIFont.boldSystemFont(ofSize: article.title.fontSize)
-            } else {
-                titleLabel.font = UIFont.systemFont(ofSize: article.title.fontSize)
-            }
-            
-            titleLabel.text = article.title.value
-            
+            let titleLabel = self.articleLabel(withElement: article.title)
+
             self.articleContainer.addSubview(titleLabel)
             titleLabel.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
@@ -334,37 +326,176 @@ class KPArticleViewController: KPViewController {
             
             
             var previousView: UIView = titleLabel
+            var spacing: CGFloat = 5
             for element in article.contents {
-
-                let contentLabel = UILabel()
-                contentLabel.numberOfLines = 0
-                if element.bold {
-                    contentLabel.font = UIFont.boldSystemFont(ofSize: element.fontSize)
-                } else {
-                    contentLabel.font = UIFont.systemFont(ofSize: element.fontSize)
+                
+                if element.type == .Br {
+                    spacing = 32
+                    continue
                 }
+                
+                var currentView: UIView?
+                
+                if element.type == .Image {
+                    
+                    let imageView = UIImageView()
+                    imageView.contentMode = .center
+                    if let url = URL(string: element.value) {
+                        imageView.af_setImage(withURL: url)
+                    }
+                    
+                    currentView = imageView
+                    
+                } else if element.type == .Quote {
+                    
+                    let quoteView = KPArticleQuoteView()
+                    quoteView.quoteContent = element.values[0].value
+                    
+                    if element.bold {
+                        quoteView.font = UIFont.boldSystemFont(ofSize: element.fontSize)
+                    } else {
+                        quoteView.font = UIFont.systemFont(ofSize: element.fontSize)
+                    }
+                    
+                    currentView = quoteView
+                    
+                } else if element.type == .Cafe {
+                    for subContent in element.content {
+                        
+                        if subContent.type == .Br {
+                            spacing = 32
+                            continue
+                        }
+                        
+                        var currentSubView: UIView!
+                        
+                        if subContent.type == .Image {
+                            
+                            let imageView = UIImageView()
+                            imageView.contentMode = .center
+                            if let url = URL(string: subContent.value) {
+                                imageView.af_setImage(withURL: url)
+                            }
+                            
+                            currentSubView = imageView
+                            
+                        } else if subContent.type == .Quote {
+                            
+                            let quoteView = KPArticleQuoteView()
+                            quoteView.quoteContent = subContent.values[0].value
+                            
+                            currentSubView = quoteView
+                            
+                        } else {
+                        
+                            let contentLabel = self.articleLabel(withElement: subContent)
+                            currentSubView = contentLabel
+                        }
+                        
+                        self.articleContainer.addSubview(currentSubView)
+                        currentSubView.translatesAutoresizingMaskIntoConstraints = false
+                        NSLayoutConstraint.activate([
+                            currentSubView.leftAnchor.constraint(equalTo: self.articleContainer.leftAnchor, constant: 16),
+                            currentSubView.rightAnchor.constraint(equalTo: self.articleContainer.rightAnchor, constant: -16),
+                            currentSubView.topAnchor.constraint(equalTo: previousView.bottomAnchor, constant: spacing)
+                        ])
+                        
+                        previousView = currentSubView
+                        spacing = 5
+                        
+                    }
+                    
+                    if let buttonElement = element.button {
+                        
+                        let button = UIButton()
 
-                contentLabel.text = element.value
-
-                self.articleContainer.addSubview(contentLabel)
-                contentLabel.translatesAutoresizingMaskIntoConstraints = false
-                NSLayoutConstraint.activate([
-                    contentLabel.leftAnchor.constraint(equalTo: self.articleContainer.leftAnchor, constant: 16),
-                    contentLabel.rightAnchor.constraint(equalTo: self.articleContainer.rightAnchor, constant: -16),
-                    contentLabel.topAnchor.constraint(equalTo: previousView.bottomAnchor, constant: previousView == titleLabel ? 24 : 16)
-                ])
-
-                previousView = contentLabel
+                        if element.bold {
+                            button.titleLabel?.font = UIFont.boldSystemFont(ofSize: buttonElement.fontSize)
+                        } else {
+                            button.titleLabel?.font = UIFont.systemFont(ofSize: buttonElement.fontSize)
+                        }
+                        
+                        button.setTitle(buttonElement.value, for: .normal)
+                        button.setTitleColor(buttonElement.color, for: .normal)
+                        
+                        button.layer.borderColor = buttonElement.color.cgColor
+                        button.layer.borderWidth = 1
+                        
+                        currentView = button
+                    }
+                    
+                } else {
+                    let contentLabel = self.articleLabel(withElement: element)
+                    currentView = contentLabel
+                }
+                
+                
+                
+                if let currentView = currentView {
+                
+                    self.articleContainer.addSubview(currentView)
+                    currentView.translatesAutoresizingMaskIntoConstraints = false
+                    NSLayoutConstraint.activate([
+                        currentView.leftAnchor.constraint(equalTo: self.articleContainer.leftAnchor, constant: 16),
+                        currentView.rightAnchor.constraint(equalTo: self.articleContainer.rightAnchor, constant: -16),
+                        currentView.topAnchor.constraint(equalTo: previousView.bottomAnchor, constant: spacing)
+                    ])
+                    
+                    previousView = currentView
+                    spacing = 5
+                }
+                
             }
 
             NSLayoutConstraint.activate([
                 previousView.bottomAnchor.constraint(equalTo: self.articleContainer.bottomAnchor, constant: -24)
             ])
             
-            print(self.articleContainer)
-            print(self.scrollContainer.contentSize)
-            
         }
+    }
+    
+    
+    func articleLabel(withElement element: KPArticleElement) -> UILabel {
+        
+        let contentLabel = UILabel()
+        contentLabel.numberOfLines = 0
+        if element.bold {
+            contentLabel.font = UIFont.boldSystemFont(ofSize: element.fontSize)
+        } else {
+            contentLabel.font = UIFont.systemFont(ofSize: element.fontSize)
+        }
+        
+        if element.type == .MultipleStyleText {
+            var string = ""
+            for subElement in element.values {
+                string = "\(string)\(subElement.value)"
+            }
+            let attributedString = NSMutableAttributedString(string: string)
+            
+            var index = 0
+            for subElement in element.values {
+                let length = subElement.value.count
+                attributedString.addAttribute(NSAttributedStringKey.foregroundColor,
+                                              value: subElement.color ,
+                                              range: NSRange.init(location: index, length: length))
+                index = index + length
+            }
+            
+            let descriptionStyle = NSMutableParagraphStyle()
+            
+            descriptionStyle.lineBreakMode = contentLabel.lineBreakMode
+            descriptionStyle.alignment = contentLabel.textAlignment
+            descriptionStyle.lineSpacing = 5.0
+            
+            attributedString.addAttributes([NSAttributedStringKey.paragraphStyle: descriptionStyle],
+                                           range: NSRange(location: 0, length: attributedString.length))
+            
+            contentLabel.attributedText = attributedString
+        } else {
+            contentLabel.setText(text: element.value, lineSpacing: 5.0)
+        }
+        
+        return contentLabel
     }
     
     var sampleArticleTitleLabel: UILabel!
@@ -478,8 +609,6 @@ extension KPArticleViewController: UIScrollViewDelegate {
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
-        print("Scroll Offset:\(scrollView.contentOffset.y)")
         
         // 處理 Tool Bar
         UIView.animate(withDuration: 0.2,
