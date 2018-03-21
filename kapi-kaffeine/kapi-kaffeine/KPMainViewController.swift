@@ -177,7 +177,7 @@ class KPMainViewController: KPViewController {
                 self.mainMapViewController?.state =
                     self.mainMapViewController?.state == .normal ? .normal : .loading
                 UIView.animate(withDuration: 0.15,
-                               animations: { 
+                               animations: {
                                 self.statusContainer.alpha = 0.0
                 }, completion: { (_) in
                     self.statusContainer.isHidden = true
@@ -398,6 +398,7 @@ class KPMainViewController: KPViewController {
                             self.mainListViewController?.view.alpha = 0
             }, completion: { (_) in
                 self.mainListViewController?.view.alpha = 0.0
+                self.searchHeaderView.layer.shadowOpacity = 0.2
                 UIView.animate(withDuration: 0.5,
                                delay: 0,
                                options: .curveEaseOut,
@@ -422,6 +423,7 @@ class KPMainViewController: KPViewController {
                                options: .curveEaseOut,
                                animations: {
                                 self.mainListViewController?.view.alpha = 1.0
+                                self.searchHeaderView.layer.shadowOpacity = 0.0
                 }, completion: { (_) in
                     self.mainListViewController?.snapShotShowing = false
                     self.currentController = self.mainListViewController

@@ -29,6 +29,13 @@ class KPSearchHeaderView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        
+        layer.masksToBounds = false
+        layer.shadowOffset = CGSize(width: 0, height: 2)
+        layer.shadowRadius = 4
+        layer.shadowOpacity = 0.0
+        layer.shadowColor = KPColorPalette.KPMainColor_v2.shadow_darkColor?.cgColor
+        
         containerView = UIView()
         containerView.backgroundColor = KPColorPalette.KPBackgroundColor.whiteColor
         addSubview(containerView)

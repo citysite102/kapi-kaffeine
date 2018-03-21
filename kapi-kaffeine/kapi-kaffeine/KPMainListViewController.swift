@@ -52,15 +52,22 @@ class KPMainListViewController:
             if state == .noInternet {
                 statusContainerView.isHidden = false
                 tableView.isHidden = true
+                mapButton.isHidden = true
             } else if state == .normal {
                 statusContainerView.isHidden = true
                 tableView.isHidden = false
+                mapButton.isHidden = false
+                mapButton.isUserInteractionEnabled = true
             } else if state == .loading {
                 statusContainerView.isHidden = true
                 tableView.isHidden = false
+                mapButton.isHidden = false
+                mapButton.isUserInteractionEnabled = false
             } else if state == .barLoading {
                 statusContainerView.isHidden = true
                 tableView.isHidden = false
+                mapButton.isHidden = false
+                mapButton.isUserInteractionEnabled = false
                 UIApplication.shared.isNetworkActivityIndicatorVisible = true
             }
         }
@@ -154,41 +161,42 @@ class KPMainListViewController:
         
         statusErrorImageView = UIImageView(image: R.image.image_sorry())
         statusContainerView.addSubview(statusErrorImageView)
-        statusErrorImageView.addConstraint(forHeight: 130)
+        statusErrorImageView.addConstraint(forHeight: 140)
         statusErrorImageView.contentMode = .scaleAspectFit
         statusErrorImageView.addConstraintForCenterAligningToSuperview(in: .horizontal, constant: 4)
         statusErrorImageView.addConstraintForCenterAligningToSuperview(in: .vertical, constant: -88)
         
         
         statusErrorDescriptionLabel = UILabel()
-        statusErrorDescriptionLabel.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
+        statusErrorDescriptionLabel.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
         statusErrorDescriptionLabel.numberOfLines = 0
-        statusErrorDescriptionLabel.textColor = KPColorPalette.KPTextColor.mainColor
+        statusErrorDescriptionLabel.textColor = KPColorPalette.KPMainColor_v2.mainColor
         statusErrorDescriptionLabel.textAlignment = .center
         statusContainerView.addSubview(statusErrorDescriptionLabel)
         statusErrorDescriptionLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
-        statusErrorDescriptionLabel.addConstraints(fromStringArray: ["V:[$view0]-20-[$self]",
+        statusErrorDescriptionLabel.addConstraints(fromStringArray: ["V:[$view0]-8-[$self]",
                                                                      "H:[$self(200)]"],
                                                    views: [statusErrorImageView])
         statusErrorDescriptionLabel.setText(text: "被你發現了！網路好像有點問題耶...",
                                             lineSpacing: 3.0)
         
         statusErrorButton = KPLoadingButton(image: nil, title: "再試試")
-        statusErrorButton.setTitleColor(UIColor.white, for: .normal)
-        statusErrorButton.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.mainColor!),
-                                        for: .normal)
-        statusErrorButton.layer.cornerRadius = 4.0
+        statusErrorButton.layer.borderWidth = 1.0
+        statusErrorButton.layer.borderColor = KPColorPalette.KPMainColor_v2.mainColor?.cgColor
+        statusErrorButton.layer.cornerRadius = 18.0
         statusErrorButton.layer.masksToBounds = true
         statusErrorButton.replaceText = true
-        statusErrorButton.titleLabel?.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
+        statusErrorButton.titleLabel?.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
+        statusErrorButton.setTitleColor(KPColorPalette.KPMainColor_v2.mainColor,
+                                        for: .normal)
         statusErrorButton.addTarget(self,
                                     action: #selector(KPMainListViewController.handleStatusErrorButtonOnTapped),
                                     for: .touchUpInside)
         statusContainerView.addSubview(statusErrorButton)
         statusErrorButton.addConstraintForCenterAligningToSuperview(in: .horizontal)
-        statusErrorButton.addConstraints(fromStringArray: ["V:[$view0]-72-[$self(36)]",
+        statusErrorButton.addConstraints(fromStringArray: ["V:[$view0]-24-[$self(36)]",
                                                            "H:[$self(160)]"],
-                                         views: [statusErrorImageView])
+                                         views: [statusErrorDescriptionLabel])
         
         sortContainerView = UIView()
         sortContainerView.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7

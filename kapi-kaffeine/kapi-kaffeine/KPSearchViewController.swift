@@ -61,7 +61,7 @@ class KPSearchViewController: KPViewController {
     
     lazy var emptyLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
+        label.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
         label.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
         label.numberOfLines = 0
         label.textAlignment = .center
@@ -157,17 +157,19 @@ class KPSearchViewController: KPViewController {
         
         newStoreButton = UIButton(type: .custom)
         newStoreButton.setTitle("我要新增店家", for: .normal)
-        newStoreButton.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor_v2.mainColor_light!),
-                                                 for: .normal)
-        newStoreButton.titleLabel?.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
-        newStoreButton.layer.cornerRadius = 22
+        newStoreButton.titleLabel?.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
+        newStoreButton.layer.cornerRadius = 18
         newStoreButton.layer.masksToBounds = true
+        newStoreButton.layer.borderWidth = 1.0
+        newStoreButton.layer.borderColor = KPColorPalette.KPMainColor_v2.mainColor?.cgColor
+        newStoreButton.setTitleColor(KPColorPalette.KPMainColor_v2.mainColor,
+                                        for: .normal)
         newStoreButton.addTarget(self,
                                  action: #selector(handleNewStoreButtonOnTap(_:)),
                                  for: .touchUpInside)
         emptyContainer.addSubview(newStoreButton)
         newStoreButton.addConstraintForCenterAligningToSuperview(in: .horizontal)
-        newStoreButton.addConstraint(from: "V:[$view0]-24-[$self(44)]|",
+        newStoreButton.addConstraint(from: "V:[$view0]-24-[$self(36)]|",
                                      views: [emptyLabel])
         newStoreButton.addConstraint(forWidth: 176)
         

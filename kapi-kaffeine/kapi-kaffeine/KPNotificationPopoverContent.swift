@@ -17,17 +17,17 @@ class KPNotificationPopoverContent: UIView, PopoverProtocol {
     
     lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 18.0)
+        label.font = UIFont.boldSystemFont(ofSize: KPFontSize.header)
         label.textAlignment = .center
-        label.textColor = KPColorPalette.KPTextColor.mainColor
+        label.textColor = KPColorPalette.KPMainColor_v2.mainColor
         return label
     }()
     
     lazy var descriptionLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 15.0)
+        label.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
         label.textAlignment = .center
-        label.textColor = KPColorPalette.KPTextColor.grayColor_level3
+        label.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
         return label
     }()
     
