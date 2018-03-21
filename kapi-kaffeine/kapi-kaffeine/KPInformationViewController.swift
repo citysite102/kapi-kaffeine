@@ -394,7 +394,7 @@ class KPInformationViewController: KPViewController {
         menuInformationView.infoView = menuInfoView
         scrollContainer.addSubview(menuInformationView)
         menuInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                             "V:[$view0]-(-24)-[$self]"],
+                                                             "V:[$view0][$self]"],
                                            views: [photoInformationView])
         
         commentInfoView = KPShopCommentInfoView()
@@ -409,11 +409,11 @@ class KPInformationViewController: KPViewController {
                                                                 "V:[$view0]-16-[$self]"],
                                               views: [menuInformationView])
         
-//        if let commentCount = informationDataModel.commentCount {
-//            commentInformationView.infoSupplementLabel.text = "\(commentCount) 人已留言"
-//            commentInformationView.isEmpty = (commentCount == 0)
-//            updateCommentsLayout(Int(truncating: commentCount))
-//        }
+        if let commentCount = informationDataModel.commentCount {
+            commentInformationView.infoSupplementLabel.text = "\(commentCount) 人已留言"
+            commentInformationView.isEmpty = (commentCount == 0)
+            updateCommentsLayout(Int(truncating: commentCount))
+        }
         
         
         let shopRateInfoView = KPShopRateInfoView()
@@ -422,36 +422,36 @@ class KPInformationViewController: KPViewController {
         rateInformationView.infoView = shopRateInfoView
         rateInformationView.infoTitleLabel.text = "店家評分(\(informationDataModel.rateCount ?? 0))"
         rateInformationView.infoSupplementLabel.text = "\(informationDataModel.rateCount ?? 0) 人已評分"
-//        rateInformationView.actions = [Action(title:"我要評分",
-//                                              style:.normal,
-//                                              color:KPColorPalette.KPMainColor_v2.mainColor!,
-//                                              icon:(R.image.icon_star()?.withRenderingMode(.alwaysTemplate))!,
-//                                              handler:{
-//                                                [weak self] (infoView) -> () in
-//                                                if let weSelf = self {
-//                                                    if KPUserManager.sharedManager.currentUser == nil {
-//                                                        KPPopoverView.popoverLoginView()
-//                                                    } else {
-//                                                        if KPServiceHandler.sharedHandler.isCurrentShopClosed {
-//                                                            KPPopoverView.popoverClosedView()
-//                                                        } else {
-//                                                            let controller = KPModalViewController()
-//                                                            controller.edgeInset = UIEdgeInsets(top: UIDevice().isSuperCompact ? 32 : 72,
-//                                                                                                    left: 0,
-//                                                                                                    bottom: 0,
-//                                                                                                    right: 0)
-//                                                            controller.cornerRadius = [.topRight, .topLeft]
-//                                                            let ratingViewController = KPRatingViewController()
-//
-//                                                            if weSelf.hasRatedDataModel != nil {
-//                                                                ratingViewController.defaultRateModel = weSelf.hasRatedDataModel
-//                                                            }
-//                                                            controller.contentController = ratingViewController
-//                                                            controller.presentModalView()
-//                                                        }
-//                                                    }
-//                                                }
-//        })]
+        rateInformationView.actions = [Action(title:"我要評分",
+                                              style:.normal,
+                                              color:KPColorPalette.KPMainColor_v2.mainColor!,
+                                              icon:(R.image.icon_star()?.withRenderingMode(.alwaysTemplate))!,
+                                              handler:{
+                                                [weak self] (infoView) -> () in
+                                                if let weSelf = self {
+                                                    if KPUserManager.sharedManager.currentUser == nil {
+                                                        KPPopoverView.popoverLoginView()
+                                                    } else {
+                                                        if KPServiceHandler.sharedHandler.isCurrentShopClosed {
+                                                            KPPopoverView.popoverClosedView()
+                                                        } else {
+                                                            let controller = KPModalViewController()
+                                                            controller.edgeInset = UIEdgeInsets(top: UIDevice().isSuperCompact ? 32 : 72,
+                                                                                                    left: 0,
+                                                                                                    bottom: 0,
+                                                                                                    right: 0)
+                                                            controller.cornerRadius = [.topRight, .topLeft]
+                                                            let ratingViewController = KPRatingViewController()
+
+                                                            if weSelf.hasRatedDataModel != nil {
+                                                                ratingViewController.defaultRateModel = weSelf.hasRatedDataModel
+                                                            }
+                                                            controller.contentController = ratingViewController
+                                                            controller.presentModalView()
+                                                        }
+                                                    }
+                                                }
+        })]
         scrollContainer.addSubview(rateInformationView)
         rateInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                              "V:[$view0]-16-[$self]"],
@@ -485,6 +485,41 @@ class KPInformationViewController: KPViewController {
                                                              "V:[$view0]-16-[$self]"],
                                            views: [rateInformationView])
         
+        shopInformationView.actions = [
+            Action(title:"街景模式",
+                   style:.normal,
+                   color:KPColorPalette.KPMainColor_v2.mainColor_sub!,
+                   icon:R.image.icon_street(),
+                   handler:{
+                    [weak self] (infoView) -> () in
+                    if let weSelf = self {
+                        if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
+                            UIApplication.shared.open(URL(string:
+                                "comgooglemaps://?center=\(weSelf.informationDataModel.latitude!),\(weSelf.informationDataModel.longitude!)&mapmode=streetview")!,
+                                                      options: [:],
+                                                      completionHandler: nil)
+                        } else {
+                            print("Can't use comgooglemaps://")
+                        }
+                    }
+            }),
+            Action(title:"開啟導航",
+                   style:.normal,
+                   color:KPColorPalette.KPMainColor_v2.mainColor!,
+                   icon:(R.image.icon_navi()?.withRenderingMode(.alwaysTemplate))!,
+                   handler:{ [weak self] (infoView) -> () in
+                    KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.store_navigation_button)
+                    if let weSelf = self {
+                        weSelf.present(weSelf.mapActionController,
+                                       animated: true,
+                                       completion: nil)
+                    }
+                    
+            })
+        ]
+
+        
+        
         
 //        locationInformationView = KPInformationSharedInfoView()
 //        locationInformationView.infoTitleLabel.text = "位置訊息"
@@ -499,38 +534,6 @@ class KPInformationViewController: KPViewController {
 //        } else {
 //            locationInformationView.infoSupplementLabel.text = "開啟導航"
 //        }
-        //        locationInformationView.actions = [
-        //            Action(title:"街景模式",
-        //                   style:.normal,
-        //                   color:KPColorPalette.KPMainColor_v2.mainColor_sub!,
-        //                   icon:R.image.icon_street(),
-        //                   handler:{
-        //                    [weak self] (infoView) -> () in
-        //                    if let weSelf = self {
-        //                        if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
-        //                            UIApplication.shared.open(URL(string:
-        //                                "comgooglemaps://?center=\(weSelf.informationDataModel.latitude!),\(weSelf.informationDataModel.longitude!)&mapmode=streetview")!,
-        //                                                      options: [:],
-        //                                                      completionHandler: nil)
-        //                        } else {
-        //                            print("Can't use comgooglemaps://")
-        //                        }
-        //                    }
-        //            }),
-        //            Action(title:"開啟導航",
-        //                   style:.normal,
-        //                   color:KPColorPalette.KPMainColor_v2.mainColor!,
-        //                   icon:(R.image.icon_navi()?.withRenderingMode(.alwaysTemplate))!,
-        //                   handler:{ [weak self] (infoView) -> () in
-        //                    KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.store_navigation_button)
-        //                    if let weSelf = self {
-        //                        weSelf.present(weSelf.mapActionController,
-        //                                       animated: true,
-        //                                       completion: nil)
-        //                    }
-        //
-        //            })
-        //        ]
 //        scrollContainer.addSubview(locationInformationView)
 //        locationInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
 //                                                                 "V:[$view0]-16-[$self(292)]"],
@@ -658,85 +661,81 @@ class KPInformationViewController: KPViewController {
                                                      in: .vertical,
                                                      constant: 8)
         
-        let addFloatyButton = Floaty()
-        Floaty.global.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
-        addFloatyButton.buttonImage = R.image.icon_add()
-        addFloatyButton.animationSpeed = 0.03
-        addFloatyButton.plusColor = KPColorPalette.KPMainColor_v2.mainColor!
-        addFloatyButton.itemImageColor = KPColorPalette.KPMainColor_v2.mainColor!
-//        addFloatyButton.itemImageColor = KPColorPalette.KPBackgroundColor.whiteColor!
-//        addFloatyButton.itemButtonColor = KPColorPalette.KPMainColor_v2.mainColor_sub!
-        addFloatyButton.openAnimationType = .pop
-        addFloatyButton.itemSize = 40
-        addFloatyButton.itemSpace = 16
-        addFloatyButton.buttonColor = KPColorPalette.KPBackgroundColor.whiteColor!
-//        addFloatyButton.buttonColor = KPColorPalette.KPMainColor_v2.mainColor!
-        addFloatyButton.addItem("新增留言",
-                                icon: R.image.icon_comment_border(), handler: { [weak self] item in
-                                    if let weSelf = self {
-                                        if KPUserManager.sharedManager.currentUser == nil {
-                                            KPPopoverView.popoverLoginView()
-                                        } else {
-                                            if KPServiceHandler.sharedHandler.isCurrentShopClosed {
-                                                KPPopoverView.popoverClosedView()
-                                            } else {
-                                                let newCommentViewController = KPNewCommentController()
-                                                if weSelf.hasRatedDataModel != nil {
-                                                    DispatchQueue.main.async {
-                                                        newCommentViewController.hideRatingViews = true
-                                                    }
-                                                }
-                                                
-                                                weSelf.navigationController?.pushViewController(viewController: newCommentViewController,
-                                                                                                animated: true,
-                                                                                                completion: {})
-                                            }
-                                        }
-                                    }
-        })
-        addFloatyButton.addItem("上傳照片",
-                                icon: R.image.icon_photo(),
-                                handler: { [weak self] item in
-                                    if let weSelf = self {
-                                        weSelf.photoUpload()
-                                    }
-        })
-        
-        let hasCollected = KPUserManager.sharedManager.currentUser?.hasFavorited(informationDataModel.identifier) ?? false
-        
-        addFloatyButton.addItem(hasCollected ? "取消收藏" : "收藏",
-                                icon: hasCollected ?
-                                    R.image.icon_collect() :
-                                    R.image.icon_collect_border(),
-                                handler: { [weak self] item in
-                                    if let weSelf = self {
-                                         KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.store_favorite_button)
-                                        if hasCollected {
-                                            DispatchQueue.main.asyncAfter(deadline: .now()) {
-                                                KPPopoverView.popoverDefaultStyleContent (
-                                                    "移除收藏",
-                                                    "確定要改變心意移除收藏這間優秀到不行再優秀的咖啡廳嗎？",
-                                                    "我確定", { (content) in
-                                                        content.popoverView.dismiss()
-                                                        KPServiceHandler.sharedHandler.removeFavoriteCafe(weSelf.informationDataModel.identifier, { (successed) in
-                                                            item.titleLabel.text = "收藏"
-                                                            item.icon = R.image.icon_collect_border()
-                                                        })
-                                                })
-                                            }
-                                        } else {
-                                            KPServiceHandler.sharedHandler.addFavoriteCafe()
-                                            item.titleLabel.text = "取消收藏"
-                                            item.icon = R.image.icon_collect()
-                                        }
-                                    }
-        })
-        addFloatyButton.size = 60
-        addFloatyButton.itemSpace = 16
-        view.addSubview(addFloatyButton)
-        addFloatyButton.addConstraints(fromStringArray: ["H:[$self(60)]-16-|",
-                                                         "V:[$self(60)]-24-|"])
-        
+//        let addFloatyButton = Floaty()
+//        Floaty.global.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
+//        addFloatyButton.buttonImage = R.image.icon_add()
+//        addFloatyButton.animationSpeed = 0.03
+//        addFloatyButton.plusColor = KPColorPalette.KPMainColor_v2.mainColor!
+//        addFloatyButton.itemImageColor = KPColorPalette.KPMainColor_v2.mainColor!
+//        addFloatyButton.openAnimationType = .pop
+//        addFloatyButton.itemSize = 40
+//        addFloatyButton.itemSpace = 16
+//        addFloatyButton.buttonColor = KPColorPalette.KPBackgroundColor.whiteColor!
+//        addFloatyButton.addItem("新增留言",
+//                                icon: R.image.icon_comment_border(), handler: { [weak self] item in
+//                                    if let weSelf = self {
+//                                        if KPUserManager.sharedManager.currentUser == nil {
+//                                            KPPopoverView.popoverLoginView()
+//                                        } else {
+//                                            if KPServiceHandler.sharedHandler.isCurrentShopClosed {
+//                                                KPPopoverView.popoverClosedView()
+//                                            } else {
+//                                                let newCommentViewController = KPNewCommentController()
+//                                                if weSelf.hasRatedDataModel != nil {
+//                                                    DispatchQueue.main.async {
+//                                                        newCommentViewController.hideRatingViews = true
+//                                                    }
+//                                                }
+//
+//                                                weSelf.navigationController?.pushViewController(viewController: newCommentViewController,
+//                                                                                                animated: true,
+//                                                                                                completion: {})
+//                                            }
+//                                        }
+//                                    }
+//        })
+//        addFloatyButton.addItem("上傳照片",
+//                                icon: R.image.icon_photo(),
+//                                handler: { [weak self] item in
+//                                    if let weSelf = self {
+//                                        weSelf.photoUpload()
+//                                    }
+//        })
+//
+//        let hasCollected = KPUserManager.sharedManager.currentUser?.hasFavorited(informationDataModel.identifier) ?? false
+//
+//        addFloatyButton.addItem(hasCollected ? "取消收藏" : "收藏",
+//                                icon: hasCollected ?
+//                                    R.image.icon_collect() :
+//                                    R.image.icon_collect_border(),
+//                                handler: { [weak self] item in
+//                                    if let weSelf = self {
+//                                         KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.store_favorite_button)
+//                                        if hasCollected {
+//                                            DispatchQueue.main.asyncAfter(deadline: .now()) {
+//                                                KPPopoverView.popoverDefaultStyleContent (
+//                                                    "移除收藏",
+//                                                    "確定要改變心意移除收藏這間優秀到不行再優秀的咖啡廳嗎？",
+//                                                    "我確定", { (content) in
+//                                                        content.popoverView.dismiss()
+//                                                        KPServiceHandler.sharedHandler.removeFavoriteCafe(weSelf.informationDataModel.identifier, { (successed) in
+//                                                            item.titleLabel.text = "收藏"
+//                                                            item.icon = R.image.icon_collect_border()
+//                                                        })
+//                                                })
+//                                            }
+//                                        } else {
+//                                            KPServiceHandler.sharedHandler.addFavoriteCafe()
+//                                            item.titleLabel.text = "取消收藏"
+//                                            item.icon = R.image.icon_collect()
+//                                        }
+//                                    }
+//        })
+//        addFloatyButton.size = 60
+//        addFloatyButton.itemSpace = 16
+//        view.addSubview(addFloatyButton)
+//        addFloatyButton.addConstraints(fromStringArray: ["H:[$self(60)]-16-|",
+//                                                         "V:[$self(60)]-24-|"])
         
     }
     // MARK: UI Update
@@ -765,36 +764,69 @@ class KPInformationViewController: KPViewController {
         KPServiceHandler.sharedHandler.getMenus {
             [weak self] (successed, photos) in
             if let weSelf = self {
-                if successed == true && photos != nil {
-                    var index: Int = 0
-                    var photoInformations: [PhotoInformation] = []
-                    for urlInfo in photos! {
-                        let urlString = urlInfo["url"] as? String ?? ""
-                        let thumbnailString = urlInfo["thumbnail"] as? String ?? ""
-                        if let url = URL(string: urlString),
-                           let thumbnailurl = URL(string: thumbnailString) {
-                            photoInformations.append(PhotoInformation(title: "",
-                                                                      imageURL: url,
-                                                                      thumbnailURL: thumbnailurl,
-                                                                      index: index))
-                            index += 1
+                
+                DispatchQueue.main.async {
+                    if successed == true && photos != nil {
+                        var index: Int = 0
+                        var photoInformations: [PhotoInformation] = []
+                        for urlInfo in photos! {
+                            let urlString = urlInfo["url"] as? String ?? ""
+                            let thumbnailString = urlInfo["thumbnail"] as? String ?? ""
+                            if let url = URL(string: urlString),
+                                let thumbnailurl = URL(string: thumbnailString) {
+                                photoInformations.append(PhotoInformation(title: "",
+                                                                          imageURL: url,
+                                                                          thumbnailURL: thumbnailurl,
+                                                                          index: index))
+                                index += 1
+                            }
                         }
-                    }
-                    weSelf.displayMenuInformations = photoInformations
-                    
-                    if weSelf.displayMenuInformations.count == 0 {
-                        weSelf.menuInformationView.isEmpty = true
-                        weSelf.menuInformationView.showEmptyContent = false
-                        (weSelf.photoInformationView.infoView as! KPShopPhotoInfoView).smallerVerticlePadding = false
+                        weSelf.displayMenuInformations = photoInformations
+                        
+                        if weSelf.displayMenuInformations.count == 0 {
+                            weSelf.menuInformationView.isEmpty = true
+                            weSelf.menuInformationView.showEmptyContent = false
+                            weSelf.menuInformationView.separator.isHidden = true
+//                            (weSelf.photoInformationView.infoView as! KPShopPhotoInfoView).smallerVerticlePadding = false
+                            weSelf.photoInformationView.actions = [Action(title:"上傳照片",
+                                                                          style:.normal,
+                                                                          color:KPColorPalette.KPMainColor_v2.mainColor!,
+                                                                          icon:(R.image.icon_star()?.withRenderingMode(.alwaysTemplate))!,
+                                                                          handler:{
+                                                                            [weak self] (infoView) -> () in
+                                                                            if let weSelf = self {
+                                                                                if KPUserManager.sharedManager.currentUser == nil {
+                                                                                    KPPopoverView.popoverLoginView()
+                                                                                } else {
+                                                                                    
+                                                                                }
+                                                                            }
+                            })]
+                            
+                        } else {
+                            weSelf.menuInformationView.infoSupplementLabel.text = ""
+                            weSelf.menuInformationView.isEmpty = false
+//                            (weSelf.photoInformationView.infoView as! KPShopPhotoInfoView).smallerVerticlePadding = false
+                            weSelf.photoInformationView.separator.isHidden = true
+                            weSelf.menuInformationView.actions = [Action(title:"上傳照片",
+                                                                         style:.normal,
+                                                                         color:KPColorPalette.KPMainColor_v2.mainColor!,
+                                                                         icon:(R.image.icon_star()?.withRenderingMode(.alwaysTemplate))!,
+                                                                         handler:{
+                                                                            [weak self] (infoView) -> () in
+                                                                            if let weSelf = self {
+                                                                                if KPUserManager.sharedManager.currentUser == nil {
+                                                                                    KPPopoverView.popoverLoginView()
+                                                                                } else {
+                                                                                    
+                                                                                }
+                                                                            }
+                            })]
+                        }
                     } else {
-//                        weSelf.menuInformationView.infoSupplementLabel.text = "\(weSelf.displayMenuInformations.count) 張照片"
-                        weSelf.menuInformationView.infoSupplementLabel.text = ""
-                        weSelf.menuInformationView.isEmpty = false
-                        (weSelf.photoInformationView.infoView as! KPShopPhotoInfoView).smallerVerticlePadding = false
+                        weSelf.menuInformationView.infoSupplementLabel.text = "尚無照片"
+                        weSelf.menuInformationView.isEmpty = true
                     }
-                } else {
-                    weSelf.menuInformationView.infoSupplementLabel.text = "尚無照片"
-                    weSelf.menuInformationView.isEmpty = true
                 }
             }
         }
@@ -896,33 +928,33 @@ class KPInformationViewController: KPViewController {
         if commentCount == 0 {
             self.commentInformationView.infoSupplementLabel.text = ""
             self.commentInformationView.isEmpty = true
-//            self.commentInformationView.actions = [Action(title:"我要評論",
-//                                                          style:.normal,
-//                                                          color:KPColorPalette.KPMainColor_v2.mainColor!,
-//                                                          icon:(R.image.icon_comment()?.withRenderingMode(.alwaysTemplate))!,
-//                                                          handler:{ [weak self] (infoView) -> () in
-//                                                            if let weSelf = self {
-//                                                                if KPUserManager.sharedManager.currentUser == nil {
-//                                                                    KPPopoverView.popoverLoginView()
-//                                                                } else {
-//                                                                    if KPServiceHandler.sharedHandler.isCurrentShopClosed {
-//                                                                        KPPopoverView.popoverClosedView()
-//                                                                    } else {
-//                                                                        let newCommentViewController = KPNewCommentController()
-//                                                                        if weSelf.hasRatedDataModel != nil {
-//                                                                            DispatchQueue.main.async {
-//                                                                                newCommentViewController.hideRatingViews = true
-//                                                                            }
-//                                                                        }
-//
-//                                                                        weSelf.navigationController?.pushViewController(viewController: newCommentViewController,
-//                                                                                                                      animated: true,
-//                                                                                                                      completion: {})
-//                                                                    }
-//                                                                }
-//                                                            }
-//            })
-//            ]
+            self.commentInformationView.actions = [Action(title:"我要評論",
+                                                          style:.normal,
+                                                          color:KPColorPalette.KPMainColor_v2.mainColor!,
+                                                          icon:(R.image.icon_comment()?.withRenderingMode(.alwaysTemplate))!,
+                                                          handler:{ [weak self] (infoView) -> () in
+                                                            if let weSelf = self {
+                                                                if KPUserManager.sharedManager.currentUser == nil {
+                                                                    KPPopoverView.popoverLoginView()
+                                                                } else {
+                                                                    if KPServiceHandler.sharedHandler.isCurrentShopClosed {
+                                                                        KPPopoverView.popoverClosedView()
+                                                                    } else {
+                                                                        let newCommentViewController = KPNewCommentController()
+                                                                        if weSelf.hasRatedDataModel != nil {
+                                                                            DispatchQueue.main.async {
+                                                                                newCommentViewController.hideRatingViews = true
+                                                                            }
+                                                                        }
+
+                                                                        weSelf.navigationController?.pushViewController(viewController: newCommentViewController,
+                                                                                                                      animated: true,
+                                                                                                                      completion: {})
+                                                                    }
+                                                                }
+                                                            }
+            })
+            ]
         } else {
             if self.hasCommentDataModel != nil {
                 self.commentInformationView.actions = [

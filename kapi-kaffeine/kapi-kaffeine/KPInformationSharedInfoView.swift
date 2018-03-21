@@ -50,7 +50,7 @@ class KPInformationSharedInfoView: UIView {
                     self.infoSupplementLabel.addConstraintForCenterAligning(to: self.infoTitleLabel,
                                                                             in: .vertical)
                     self.infoContainer.addConstraints(fromStringArray: ["V:[$view0]-24-[$self(>=64)]|",
-                                                                   "H:|[$self]|"],
+                                                                        "H:|[$self]|"],
                                                       views: [self.infoTitleLabel])
                     
                 }
@@ -83,7 +83,7 @@ class KPInformationSharedInfoView: UIView {
     var actions: [Action]! {
         didSet {
             
-            let totalWidth = (Int(UIScreen.main.bounds.size.width)-((actions?.count)!-1)*8 - 16)
+            let totalWidth = (Int(UIScreen.main.bounds.size.width)-((actions?.count)!-1)*12 - 2*KPLayoutConstant.information_horizontal_offset)
             let buttonWidth = Double(totalWidth)/Double((actions?.count)!)
             
             for actionButton in actionButtons {
@@ -92,43 +92,47 @@ class KPInformationSharedInfoView: UIView {
             
             actionButtons.removeAll()
             
-            let separator = UIView()
-            separator.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
-            buttonContainer.addSubview(separator)
-            separator.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                       "V:|[$self(1)]"])
+//            let separator = UIView()
+//            separator.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
+//            buttonContainer.addSubview(separator)
+//            separator.addConstraints(fromStringArray: ["H:|[$self]|",
+//                                                       "V:|[$self(1)]"])
             
             for (index, action) in (actions?.enumerated())! {
                 let actionButton = UIButton(type: .custom)
                 actionButton.setTitle(action.title, for: .normal)
                 actionButton.titleLabel?.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
-                actionButton.setBackgroundImage(UIImage(color: action.color),
-                                                for: .normal)
-                
-                if action.icon != nil {
-                    actionButton.setImage(action.icon, for: .normal)
-                }
-                actionButton.layer.cornerRadius = 2.0
+//                actionButton.setBackgroundImage(UIImage(color: action.color),
+//                                                for: .normal)
+//                if action.icon != nil {
+//                    actionButton.setImage(action.icon, for: .normal)
+//                }
+                actionButton.layer.borderColor = KPColorPalette.KPMainColor_v2.mainColor?.cgColor
+                actionButton.layer.borderWidth = 1.0
+                actionButton.layer.cornerRadius = 4.0
                 actionButton.layer.masksToBounds = true
                 actionButton.tag = index
-                actionButton.tintColor = UIColor.white
                 actionButton.addTarget(self, action: #selector(handleButtonOnTapped(button:)), for: .touchUpInside)
-                actionButton.imageView?.contentMode = .scaleAspectFit
-                actionButton.imageEdgeInsets = UIEdgeInsets(top: 7, left: 7, bottom: 7, right: 8)
+                actionButton.setTitleColor(KPColorPalette.KPMainColor_v2.mainColor,
+                                           for: .normal)
+//                actionButton.imageView?.contentMode = .scaleAspectFit
+//                actionButton.imageEdgeInsets = UIEdgeInsets(top: 7, left: 7, bottom: 7, right: 8)
                 actionButtons.append(actionButton)
                 buttonContainer.addSubview(actionButton)
                 
                 if index == 0 {
-                    actionButton.addConstraints(fromStringArray: ["V:|-8-[$self(36)]-8-|",
-                                                                  "H:|-8-[$self($metric0)]"],
-                                                metrics: [buttonWidth])
+                    actionButton.addConstraints(fromStringArray: ["V:|-8-[$self(40)]-8-|",
+                                                                  "H:|-($metric1)-[$self($metric0)]"],
+                                                metrics: [buttonWidth,
+                                                          KPLayoutConstant.information_horizontal_offset])
                 } else if index == actions.count-1 {
-                    actionButton.addConstraints(fromStringArray: ["V:|-8-[$self(36)]-8-|",
-                                                                  "H:[$self($metric0)]-8-|"],
-                                                metrics: [buttonWidth])
+                    actionButton.addConstraints(fromStringArray: ["V:|-8-[$self(40)]-8-|",
+                                                                  "H:[$self($metric0)]-($metric1)-|"],
+                                                metrics: [buttonWidth,
+                                                          KPLayoutConstant.information_horizontal_offset])
                 } else {
-                    actionButton.addConstraints(fromStringArray: ["V:|-8-[$self(36)]-8-|",
-                                                                  "H:[$view0]-8-[$self($metric0)]"],
+                    actionButton.addConstraints(fromStringArray: ["V:|-8-[$self(40)]-8-|",
+                                                                  "H:[$view0]-12-[$self($metric0)]"],
                                                 metrics: [buttonWidth],
                                                 views: [self.actionButtons[index-1]])
                 }
@@ -164,7 +168,7 @@ class KPInformationSharedInfoView: UIView {
         infoContainer = UIView()
         infoContainer.backgroundColor = UIColor.white
         addSubview(infoContainer)
-        infoContainer.addConstraints(fromStringArray: ["V:[$view0]-30-[$self(>=64)]-24-|",
+        infoContainer.addConstraints(fromStringArray: ["V:[$view0]-30-[$self(>=64)]",
                                                        "H:|[$self]|"],
                                      views: [infoTitleLabel])
     
@@ -180,10 +184,10 @@ class KPInformationSharedInfoView: UIView {
         
         buttonContainer = UIView()
         buttonContainer.backgroundColor = UIColor.white
-//        addSubview(self.buttonContainer)
-//        buttonContainer.addConstraints(fromStringArray: ["V:[$view0][$self]|",
-//                                                         "H:|[$self]|"],
-//                                       views: [infoContainer])
+        addSubview(self.buttonContainer)
+        buttonContainer.addConstraints(fromStringArray: ["V:[$view0][$self]-24-|",
+                                                         "H:|[$self]|"],
+                                       views: [infoContainer])
         
         separator = UIView()
         separator.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7

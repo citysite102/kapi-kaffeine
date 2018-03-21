@@ -176,22 +176,22 @@ class KPShopInfoView: UIView, GMSMapViewDelegate {
                                views:[shopLocationInfoView])
         
         
-        navigateButton = UIButton(type: .custom)
-        navigateButton.setTitle("開始導航",
-                                for: .normal)
-        navigateButton.titleLabel?.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
-        navigateButton.setTitleColor(KPColorPalette.KPTextColor_v2.mainColor_subtitle,
-                                     for: .normal)
-        navigateButton.backgroundColor = UIColor(white: 1.0, alpha: 0.3)
-        navigateButton.layer.cornerRadius = 21.0
-        navigateButton.layer.borderColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle?.cgColor
-        navigateButton.layer.borderWidth = 1.5
-        navigateButton.layer.masksToBounds = true
-        mapView.addSubview(navigateButton)
-        navigateButton.addConstraintForCenterAligningToSuperview(in: .vertical)
-        navigateButton.addConstraintForCenterAligningToSuperview(in: .horizontal)
-        navigateButton.addConstraint(forHeight: 42)
-        navigateButton.addConstraint(forWidth: 104)
+//        navigateButton = UIButton(type: .custom)
+//        navigateButton.setTitle("開始導航",
+//                                for: .normal)
+//        navigateButton.titleLabel?.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
+//        navigateButton.setTitleColor(KPColorPalette.KPTextColor_v2.mainColor_subtitle,
+//                                     for: .normal)
+//        navigateButton.backgroundColor = UIColor(white: 1.0, alpha: 0.3)
+//        navigateButton.layer.cornerRadius = 21.0
+//        navigateButton.layer.borderColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle?.cgColor
+//        navigateButton.layer.borderWidth = 1.5
+//        navigateButton.layer.masksToBounds = true
+//        mapView.addSubview(navigateButton)
+//        navigateButton.addConstraintForCenterAligningToSuperview(in: .vertical)
+//        navigateButton.addConstraintForCenterAligningToSuperview(in: .horizontal)
+//        navigateButton.addConstraint(forHeight: 42)
+//        navigateButton.addConstraint(forWidth: 104)
         
         
 //        if informationDataModel.featureContents.count > 0 {

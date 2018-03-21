@@ -25,22 +25,20 @@ class KPShopPhotoInfoView: UIView {
         }
     }
     
-    var smallerVerticlePadding: Bool = false {
-        didSet {
-            
-            if let verticleConstraint = self.verticleBottomConstraint {
-            
-                if verticleConstraint.constant != 32 && !smallerVerticlePadding  {
-                    self.removeConstraint(verticleConstraint)
-                    self.verticleBottomConstraint = self.collectionView.addConstraint(from: "V:[$self]-32-|").first as! NSLayoutConstraint
-                } else if verticleConstraint.constant != 24 && smallerVerticlePadding {
-                    self.removeConstraint(verticleConstraint)
-                    self.verticleBottomConstraint = self.collectionView.addConstraint(from: "V:[$self]-24-|").first as! NSLayoutConstraint
-                }
-                self.layoutIfNeeded()
-            }
-        }
-    }
+//    var smallerVerticlePadding: Bool = false {
+//        didSet {
+//            if let verticleConstraint = self.verticleBottomConstraint {
+//                if verticleConstraint.constant != 32 && !smallerVerticlePadding  {
+//                    self.removeConstraint(verticleConstraint)
+//                    self.verticleBottomConstraint = self.collectionView.addConstraint(from: "V:[$self]-32-|").first as! NSLayoutConstraint
+//                } else if verticleConstraint.constant != 24 && smallerVerticlePadding {
+//                    self.removeConstraint(verticleConstraint)
+//                    self.verticleBottomConstraint = self.collectionView.addConstraint(from: "V:[$self]-24-|").first as! NSLayoutConstraint
+//                }
+//                self.layoutIfNeeded()
+//            }
+//        }
+//    }
     
     var displayPhotoInformations: [PhotoInformation] = [] {
         didSet {
@@ -54,7 +52,7 @@ class KPShopPhotoInfoView: UIView {
                     self.photoSubTitleLabel.removeAllRelatedConstraintsInSuperView()
                     self.collectionView.removeAllRelatedConstraintsInSuperView()
                     if self.isMenu {
-                        self.photoSubTitleLabel.addConstraints(fromStringArray: ["V:|-(-56)-[$self]",
+                        self.photoSubTitleLabel.addConstraints(fromStringArray: ["V:|-(-80)-[$self]",
                                                                                  "H:|-($metric0)-[$self]-($metric0)-|"],
                                                                metrics:[KPLayoutConstant.information_horizontal_offset])
                         self.verticleBottomConstraint = self.collectionView.addConstraint(from: "V:[$self]-24-|").first as! NSLayoutConstraint
@@ -66,9 +64,10 @@ class KPShopPhotoInfoView: UIView {
                         self.photoSubTitleLabel.addConstraints(fromStringArray: ["V:|-(-8)-[$self]",
                                                                             "H:|-($metric0)-[$self]-($metric0)-|"],
                                                           metrics:[KPLayoutConstant.information_horizontal_offset])
-                        self.verticleBottomConstraint = self.smallerVerticlePadding ?
-                        self.collectionView.addConstraint(from: "V:[$self]-24-|").first as! NSLayoutConstraint
-                            : self.collectionView.addConstraint(from: "V:[$self]-32-|").first as! NSLayoutConstraint
+                        self.verticleBottomConstraint = self.collectionView.addConstraint(from: "V:[$self]-24-|").first as! NSLayoutConstraint
+//                        self.verticleBottomConstraint = self.smallerVerticlePadding ?
+//                        self.collectionView.addConstraint(from: "V:[$self]-24-|").first as! NSLayoutConstraint
+//                            : self.collectionView.addConstraint(from: "V:[$self]-32-|").first as! NSLayoutConstraint
                         self.collectionView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                                              "V:[$view0]-12-[$self]"],
                                                            views:[self.photoSubTitleLabel])

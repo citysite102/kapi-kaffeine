@@ -35,8 +35,9 @@ class KPShopCommentInfoView: UIView {
                                                          height: 1))
         tableView.rowHeight = UITableViewAutomaticDimension
         addSubview(tableView)
-        tableView.addConstraints(fromStringArray: ["V:|-(-16)-[$self]|",
-                                                   "H:|[$self]|"])
+        tableView.addConstraints(fromStringArray: ["V:|-(-16)-[$self]-($metric0)-|",
+                                                   "H:|[$self]|"],
+                                 metrics:[KPLayoutConstant.information_horizontal_offset])
         tableViewHeightConstraint = tableView.addConstraint(forHeight: 0)
         tableView.register(KPShopCommentCell.self,
                            forCellReuseIdentifier: KPShopCommentInfoView.KPShopCommentInfoCellReuseIdentifier)

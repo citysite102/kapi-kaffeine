@@ -158,7 +158,7 @@ class KPSearchViewController: KPViewController {
         newStoreButton = UIButton(type: .custom)
         newStoreButton.setTitle("我要新增店家", for: .normal)
         newStoreButton.titleLabel?.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
-        newStoreButton.layer.cornerRadius = 18
+        newStoreButton.layer.cornerRadius = 4.0
         newStoreButton.layer.masksToBounds = true
         newStoreButton.layer.borderWidth = 1.0
         newStoreButton.layer.borderColor = KPColorPalette.KPMainColor_v2.mainColor?.cgColor
@@ -169,7 +169,7 @@ class KPSearchViewController: KPViewController {
                                  for: .touchUpInside)
         emptyContainer.addSubview(newStoreButton)
         newStoreButton.addConstraintForCenterAligningToSuperview(in: .horizontal)
-        newStoreButton.addConstraint(from: "V:[$view0]-24-[$self(36)]|",
+        newStoreButton.addConstraint(from: "V:[$view0]-24-[$self(40)]|",
                                      views: [emptyLabel])
         newStoreButton.addConstraint(forWidth: 176)
         

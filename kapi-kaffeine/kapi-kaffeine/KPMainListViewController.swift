@@ -183,7 +183,7 @@ class KPMainListViewController:
         statusErrorButton = KPLoadingButton(image: nil, title: "再試試")
         statusErrorButton.layer.borderWidth = 1.0
         statusErrorButton.layer.borderColor = KPColorPalette.KPMainColor_v2.mainColor?.cgColor
-        statusErrorButton.layer.cornerRadius = 18.0
+        statusErrorButton.layer.cornerRadius = 4.0
         statusErrorButton.layer.masksToBounds = true
         statusErrorButton.replaceText = true
         statusErrorButton.titleLabel?.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
@@ -194,7 +194,7 @@ class KPMainListViewController:
                                     for: .touchUpInside)
         statusContainerView.addSubview(statusErrorButton)
         statusErrorButton.addConstraintForCenterAligningToSuperview(in: .horizontal)
-        statusErrorButton.addConstraints(fromStringArray: ["V:[$view0]-24-[$self(36)]",
+        statusErrorButton.addConstraints(fromStringArray: ["V:[$view0]-24-[$self(40)]",
                                                            "H:[$self(160)]"],
                                          views: [statusErrorDescriptionLabel])
         

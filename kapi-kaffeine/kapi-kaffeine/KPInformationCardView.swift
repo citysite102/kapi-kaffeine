@@ -81,7 +81,7 @@ class KPInformationCardView: UIView {
         
         rateContainer = UIView()
         container.addSubview(rateContainer)
-        rateContainer.addConstraints(fromStringArray: ["V:[$view0]-48-[$self]",
+        rateContainer.addConstraints(fromStringArray: ["V:[$view0]-40-[$self]",
                                                        "H:|-($metric0)-[$self]"],
                                      metrics:[KPLayoutConstant.information_horizontal_offset],
                                      views: [titleInfoLabel])
@@ -111,9 +111,9 @@ class KPInformationCardView: UIView {
         }
 
         rateLabel = KPLayerLabel()
-        rateLabel.font = UIFont.systemFont(ofSize: KPFontSize.subContent+1,
-                                           weight: UIFont.Weight.medium)
-        rateLabel.textColor = KPColorPalette.KPMainColor_v2.starColor
+        rateLabel.font = UIFont.systemFont(ofSize: KPFontSize.mainContent,
+                                           weight: UIFont.Weight.regular)
+        rateLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_title
         rateLabel.text = "4.8"
         rateLabel.isOpaque = true
         rateLabel.layer.masksToBounds = true
@@ -126,9 +126,9 @@ class KPInformationCardView: UIView {
                                                  constant: 0)
         
         commentCountLabel = KPLayerLabel()
-        commentCountLabel.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
+        commentCountLabel.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
         commentCountLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_title
-        commentCountLabel.text = "(查看 24 則評論)"
+        commentCountLabel.text = "(24則)"
         commentCountLabel.isOpaque = true
         commentCountLabel.layer.masksToBounds = true
         rateContainer.addSubview(commentCountLabel)
@@ -136,7 +136,7 @@ class KPInformationCardView: UIView {
                                  views: [rateLabel])
         commentCountLabel.addConstraintForCenterAligning(to: starIcons[starIcons.count-1],
                                                          in: .vertical,
-                                                         constant: -2)
+                                                         constant: -1)
         
 //        locationInfoLabel = UILabel()
 //        locationInfoLabel.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
@@ -196,12 +196,12 @@ class KPInformationCardView: UIView {
         shopStatusHint.isOpaque = true
         container.addSubview(shopStatusHint)
         shopStatusHint.addConstraints(fromStringArray: ["H:|-($metric0)-[$self(8)]",
-                                                        "V:[$view0]-18-[$self(8)]"],
+                                                        "V:[$view0]-22-[$self(8)]"],
                                       metrics:[KPLayoutConstant.information_horizontal_offset+4],
                                       views: [rateContainer])
         
         shopStatusLabel = KPLayerLabel()
-        shopStatusLabel.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
+        shopStatusLabel.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
         shopStatusLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_title
         shopStatusLabel.text = "營業時間 12:00-20:00"
         shopStatusLabel.isOpaque = true
@@ -217,7 +217,7 @@ class KPInformationCardView: UIView {
         shopLocationIcon = UIImageView(image: R.image.icon_pin_fill())
         shopLocationIcon.tintColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
         container.addSubview(shopLocationIcon)
-        shopLocationIcon.addConstraints(fromStringArray: ["V:[$view0]-16-[$self(16)]",
+        shopLocationIcon.addConstraints(fromStringArray: ["V:[$view0]-20-[$self(16)]",
                                                           "H:|-($metric0)-[$self(16)]"],
                                         metrics:[KPLayoutConstant.information_horizontal_offset],
                                         views: [shopStatusHint])
@@ -225,7 +225,7 @@ class KPInformationCardView: UIView {
         
         
         distanceLabel = UILabel()
-        distanceLabel.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
+        distanceLabel.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
         distanceLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_title
         distanceLabel.text = "距離 500m"
         container.addSubview(distanceLabel)

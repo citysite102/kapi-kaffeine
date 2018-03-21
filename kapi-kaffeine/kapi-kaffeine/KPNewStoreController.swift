@@ -113,15 +113,21 @@ class KPNewStoreController: KPViewController, KPSubtitleInputDelegate {
         
         
         nextButton = UIButton(type: .custom)
-        nextButton.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor_v2.greenColor!), for: .normal)
-        nextButton.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor_v2.grayColor_level4!), for: .disabled)
-        nextButton.setTitleColor(UIColor.white, for: .normal)
+//        nextButton.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor_v2.greenColor!), for: .normal)
+//        nextButton.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor_v2.grayColor_level4!), for: .disabled)
+        nextButton.setTitleColor(KPColorPalette.KPMainColor_v2.grayColor_level4,
+                                 for: .disabled)
+        nextButton.setTitleColor(KPColorPalette.KPMainColor_v2.mainColor,
+                                 for: .normal)
         nextButton.setTitle("下一步", for: .normal)
         nextButton.clipsToBounds = true
         nextButton.layer.cornerRadius = 4.0
+        nextButton.layer.borderWidth = 1.0
+        nextButton.layer.borderColor = KPColorPalette.KPMainColor_v2.grayColor_level4?.cgColor
         nextButton.titleLabel?.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
         buttonContainer.addSubview(nextButton)
-        nextButton.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|", "V:|-10-[$self(40)]-10-|"])
+        nextButton.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
+                                                    "V:|-12-[$self(40)]-12-|"])
         nextButton.addTarget(self, action: #selector(KPNewStoreController.handleNextButtonOnTap(_:)), for: .touchUpInside)
         
         nextButton.isEnabled = false
