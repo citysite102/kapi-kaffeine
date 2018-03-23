@@ -81,7 +81,7 @@ class KPInformationCardView: UIView {
         
         rateContainer = UIView()
         container.addSubview(rateContainer)
-        rateContainer.addConstraints(fromStringArray: ["V:[$view0]-40-[$self]",
+        rateContainer.addConstraints(fromStringArray: ["V:[$view0]-16-[$self]",
                                                        "H:|-($metric0)-[$self]"],
                                      metrics:[KPLayoutConstant.information_horizontal_offset],
                                      views: [titleInfoLabel])
@@ -113,7 +113,7 @@ class KPInformationCardView: UIView {
         rateLabel = KPLayerLabel()
         rateLabel.font = UIFont.systemFont(ofSize: KPFontSize.mainContent,
                                            weight: UIFont.Weight.regular)
-        rateLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_title
+        rateLabel.textColor = KPColorPalette.KPMainColor_v2.starColor
         rateLabel.text = "4.8"
         rateLabel.isOpaque = true
         rateLabel.layer.masksToBounds = true
@@ -196,7 +196,7 @@ class KPInformationCardView: UIView {
         shopStatusHint.isOpaque = true
         container.addSubview(shopStatusHint)
         shopStatusHint.addConstraints(fromStringArray: ["H:|-($metric0)-[$self(8)]",
-                                                        "V:[$view0]-22-[$self(8)]"],
+                                                        "V:[$view0]-22-[$self(8)]-40-|"],
                                       metrics:[KPLayoutConstant.information_horizontal_offset+4],
                                       views: [rateContainer])
         
@@ -214,29 +214,29 @@ class KPInformationCardView: UIView {
                                                        constant: -2)
         
         
-        shopLocationIcon = UIImageView(image: R.image.icon_pin_fill())
-        shopLocationIcon.tintColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
-        container.addSubview(shopLocationIcon)
-        shopLocationIcon.addConstraints(fromStringArray: ["V:[$view0]-20-[$self(16)]",
-                                                          "H:|-($metric0)-[$self(16)]"],
-                                        metrics:[KPLayoutConstant.information_horizontal_offset],
-                                        views: [shopStatusHint])
-        
-        
-        
-        distanceLabel = UILabel()
-        distanceLabel.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
-        distanceLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_title
-        distanceLabel.text = "距離 500m"
-        container.addSubview(distanceLabel)
-    
-        distanceLabel.addConstraints(fromStringArray: ["H:[$view0]-10-[$self]-($metric0)-|",
-                                                       "V:[$self]-32-|"],
-                                     metrics:[KPLayoutConstant.information_horizontal_offset],
-                                     views: [shopLocationIcon])
-        distanceLabel.addConstraintForCenterAligning(to: shopLocationIcon,
-                                                     in: .vertical,
-                                                     constant: 0)
+//        shopLocationIcon = UIImageView(image: R.image.icon_pin_fill())
+//        shopLocationIcon.tintColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
+//        container.addSubview(shopLocationIcon)
+//        shopLocationIcon.addConstraints(fromStringArray: ["V:[$view0]-20-[$self(16)]",
+//                                                          "H:|-($metric0)-[$self(16)]"],
+//                                        metrics:[KPLayoutConstant.information_horizontal_offset],
+//                                        views: [shopStatusHint])
+//
+//
+//
+//        distanceLabel = UILabel()
+//        distanceLabel.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
+//        distanceLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_title
+//        distanceLabel.text = "距離 500m"
+//        container.addSubview(distanceLabel)
+//
+//        distanceLabel.addConstraints(fromStringArray: ["H:[$view0]-10-[$self]-($metric0)-|",
+//                                                       "V:[$self]-32-|"],
+//                                     metrics:[KPLayoutConstant.information_horizontal_offset],
+//                                     views: [shopLocationIcon])
+//        distanceLabel.addConstraintForCenterAligning(to: shopLocationIcon,
+//                                                     in: .vertical,
+//                                                     constant: 0)
 //
 //        distanceLabel = UILabel()
 //        distanceLabel.font = UIFont.systemFont(ofSize: KPFontSize.header)

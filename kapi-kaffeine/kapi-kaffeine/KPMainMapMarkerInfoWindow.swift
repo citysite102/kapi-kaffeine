@@ -11,63 +11,63 @@ import UIKit
 class KPMainMapMarkerInfoWindow: UIView {
     
     var contentView: UIView!
+    var containerView: UIView!
 
     init(dataModel: KPDataModel) {
         
         let textRect = NSString(string: dataModel.name).boundingRect(with: CGSize(width: 300, height: 38),
                                                                      options: .usesFontLeading,
-                                                                     attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: KPFontSize.mainContent)],
+                                                                     attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: KPFontSize.sub_header)],
                                                                      context: nil)
         
         let commentRect = NSString(string: "3 則評論").boundingRect(with: CGSize(width: 300,
                                                                                      height: 38),
                                                                         options: .usesFontLeading,
-                                                                        attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: KPFontSize.subContent)],
+                                                                        attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: KPFontSize.infoContent)],
                                                                         context: nil)
         
         let priceRect = NSString(string: "$$$ 100-200").boundingRect(with: CGSize(width: 300,
                                                                                    height: 38),
                                                                       options: .usesFontLeading,
-                                                                      attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: KPFontSize.subContent)],
+                                                                      attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: KPFontSize.infoContent)],
                                                                       context: nil)
-        
-//        let scoreRect = NSString(string: "\(dataModel.averageRate ?? 0)").boundingRect(with: CGSize(width: 200, height: 38),
-//                                                                     options: .usesFontLeading,
-//                                                                     attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14)],
-//                                                                     context: nil)
-        
-//        super.init(frame: CGRect(x: 0, y: 0,
-//                                 width: textRect.width + scoreRect.width + 84 ,
-//                                 height: 48))
-
-        super.init(frame: CGRect(x: 0, y: 0,
+ 
+        super.init(frame: CGRect(x: 0,
+                                 y: 0,
                                  width: commentRect.width + priceRect.width + 12 > textRect.width ?
-                                    commentRect.width + priceRect.width + 36 :
-                                    textRect.width + 24,
-                                 height: 76))
+                                    commentRect.width + priceRect.width + 48 :
+                                    textRect.width + 36,
+                                 height: 84))
         
-        contentView = UIView(frame: CGRect(x: 0,
-                                           y: 0,
-                                           width: frame.size.width,
-                                           height: frame.size.height-10))
-        contentView.backgroundColor = UIColor.white
-        
-//        contentView.layer.borderWidth = 1
-//        contentView.layer.cornerRadius = 3
-        contentView.layer.borderColor = KPColorPalette.KPBackgroundColor.grayColor_level5?.cgColor
-        
-        layer.shadowColor = UIColor.black.cgColor;
-        layer.shadowOpacity = 0.4;
-        layer.shadowRadius = 4.0;
-        layer.shadowOffset = CGSize.init(width: 0, height: 2.0);
+        contentView = UIView(frame: CGRect(x: 6,
+                                           y: 6,
+                                           width: frame.size.width-12,
+                                           height: frame.size.height-20))
+
+        contentView.layer.shadowColor = UIColor.black.cgColor;
+        contentView.layer.shadowOpacity = 0.4;
+        contentView.layer.shadowRadius = 3.0;
+        contentView.layer.shadowOffset = CGSize.init(width: 0, height: 2.0);
         
         addSubview(contentView)
 
 //        let imageView = UIImageView(image: R.image.icon_coffee_cup())
 //        imageView.contentMode = .scaleAspectFit
         
+        
+        containerView = UIView(frame: CGRect(x: 0,
+                                             y: 0,
+                                             width: frame.size.width-12,
+                                             height: frame.size.height-20))
+        containerView.backgroundColor = UIColor.white
+        containerView.layer.cornerRadius = 3
+        containerView.layer.masksToBounds = true
+        
+        contentView.addSubview(containerView)
+        
+        
         let titleLabel = UILabel()
-        titleLabel.font = UIFont.boldSystemFont(ofSize: KPFontSize.mainContent)
+        titleLabel.font = UIFont.systemFont(ofSize: KPFontSize.sub_header)
         titleLabel.text = dataModel.name
         
         let starImageView = UIImageView(image: R.image.icon_star_filled())
@@ -80,12 +80,12 @@ class KPMainMapMarkerInfoWindow: UIView {
         scoreLabel.textColor = KPColorPalette.KPMainColor_v2.starColor
         
         let commentLabel = UILabel()
-        commentLabel.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
+        commentLabel.font = UIFont.systemFont(ofSize: KPFontSize.infoContent)
         commentLabel.text = "3 則評論"
         commentLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_description
         
         let priceLabel = UILabel()
-        priceLabel.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
+        priceLabel.font = UIFont.systemFont(ofSize: KPFontSize.infoContent)
         priceLabel.text = "$$$ 100-200"
         priceLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_description
         
@@ -93,11 +93,11 @@ class KPMainMapMarkerInfoWindow: UIView {
         mapArrow.contentMode = .scaleAspectFit
         
 //        self.contentView.addSubview(imageView)
-        self.contentView.addSubview(titleLabel)
+        self.containerView.addSubview(titleLabel)
 //        self.contentView.addSubview(starImageView)
 //        self.contentView.addSubview(scoreLabel)
-        self.contentView.addSubview(commentLabel)
-        self.contentView.addSubview(priceLabel)
+        self.containerView.addSubview(commentLabel)
+        self.containerView.addSubview(priceLabel)
         self.contentView.addSubview(mapArrow)
     
         
@@ -106,7 +106,7 @@ class KPMainMapMarkerInfoWindow: UIView {
 //                                 views: [titleLabel])
 //        titleLabel.addConstraintForCenterAligning(to: imageView,
 //                                                  in: .vertical)
-        titleLabel.addConstraints(fromStringArray: ["V:|-12-[$self]",
+        titleLabel.addConstraints(fromStringArray: ["V:|-10-[$self]",
                                                     "H:|-12-[$self]-12-|"])
         commentLabel.addConstraints(fromStringArray: ["V:[$self]-10-|",
                                                       "H:|-12-[$self]"])

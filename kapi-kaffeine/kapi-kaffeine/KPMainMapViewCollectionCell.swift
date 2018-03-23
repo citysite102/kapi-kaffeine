@@ -86,13 +86,17 @@ class KPMainMapViewCollectionCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        backgroundColor = UIColor.white
+//        backgroundColor = UIColor.white
         
         contentView.backgroundColor = UIColor.white
+        contentView.layer.cornerRadius = 4.0
+        contentView.layer.masksToBounds = true
+        
         layer.shadowColor = KPColorPalette.KPMainColor_v2.shadow_darkColor?.cgColor
         layer.shadowOffset = CGSize(width: 1.0, height: 3.0)
         layer.shadowOpacity = 0.2
         layer.shadowRadius = 3
+        
         
         shopImageView = UIImageView(image: UIImage(named: "demo_6"))
         shopImageView.contentMode = .scaleAspectFill
@@ -111,7 +115,7 @@ class KPMainMapViewCollectionCell: UICollectionViewCell {
         contentView.addSubview(self.shopNameLabel)
         
         shopNameLabel.addConstraints(fromStringArray: ["H:[$view0]-12-[$self($metric0)]",
-                                                       "V:|-17-[$self]"],
+                                                       "V:|-15-[$self]"],
                                      metrics: [UIScreen.main.bounds.size.width/2 - 40],
                                      views: [shopImageView])
         
@@ -121,7 +125,7 @@ class KPMainMapViewCollectionCell: UICollectionViewCell {
         shopStatusHint.isOpaque = true
         contentView.addSubview(shopStatusHint)
         shopStatusHint.addConstraints(fromStringArray: ["H:[$view0]-12-[$self(8)]",
-                                                        "V:[$view1]-15-[$self(8)]"],
+                                                        "V:[$view1]-16-[$self(8)]"],
                                       views: [shopImageView,
                                               shopNameLabel])
         
@@ -138,14 +142,14 @@ class KPMainMapViewCollectionCell: UICollectionViewCell {
                                                shopNameLabel])
         shopStatusLabel.addConstraintForCenterAligning(to: shopStatusHint,
                                                        in: .vertical,
-                                                       constant: -2)
+                                                       constant: -1)
         
         
         shopLocationIcon = UIImageView(image: R.image.icon_pin_fill())
         shopLocationIcon.tintColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
         contentView.addSubview(shopLocationIcon)
         shopLocationIcon.addConstraints(fromStringArray: ["H:[$view0]-9-[$self(14)]",
-                                                          "V:[$self(14)]-20-|"],
+                                                          "V:[$self(14)]-19-|"],
                                         views: [shopImageView])
         
         shopLocationLabel = KPLayerLabel()
