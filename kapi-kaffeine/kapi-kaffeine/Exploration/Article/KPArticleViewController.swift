@@ -222,7 +222,6 @@ class KPArticleViewController: KPViewController {
         collectButton.addConstraint(from: "H:|-16-[$self]")
         
         loadArticleDataWithID(articleID)
-//        addSampleContent()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -245,10 +244,6 @@ class KPArticleViewController: KPViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-//        if scrollContainer != nil {
-//            print(scrollContainer.contentSize)
-//        }
-//        print(articleContainer)
     }
 
     override func didReceiveMemoryWarning() {
@@ -267,17 +262,7 @@ class KPArticleViewController: KPViewController {
                                    delay: 0.2,
                                    options: UIViewAnimationOptions.curveEaseOut,
                                    animations: {
-//                                    self.view.backgroundColor = UIColor.white
-//                                    self.articleTitleLabel.alpha = 1.0
                                     self.dismissButton.alpha = 1.0
-//                                    self.articleSubTitleLabel.alpha = 1.0
-//                                    self.articleFirstParagraphTextView.alpha = 1.0
-//                                    self.scrollDownButton.alpha = 0.8
-//                                    self.articleTitleLabel.transform = CGAffineTransform.identity
-//                                    self.articleSubTitleLabel.transform = CGAffineTransform.identity
-//                                    self.articleFirstParagraphTextView.transform = CGAffineTransform.identity
-//                                    self.scrollDownButton.transform = CGAffineTransform.identity
-                                    
                     }, completion: { (_) in
                         self.animationHasPerformed = true
                     })
@@ -498,89 +483,6 @@ class KPArticleViewController: KPViewController {
         return contentLabel
     }
     
-    var sampleArticleTitleLabel: UILabel!
-    var sampleArticleSubTitleLabel: UILabel!
-    var sampleFirstParagraphTextView: UITextView!
-    var sampleQuoteView: KPArticleQuoteView!
-    var sampleSecondParagraphTextView: UITextView!
-    var sampleImageView: UIImageView!
-    var sampleThirdParagraphTextView: UITextView!
-    
-    func addSampleContent() {
-        
-        sampleArticleTitleLabel = UILabel()
-        sampleArticleTitleLabel.font = UIFont.boldSystemFont(ofSize: 32)
-        sampleArticleTitleLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_title
-        sampleArticleTitleLabel.numberOfLines = 0
-        sampleArticleTitleLabel.setText(text: "一窺東倫敦新興咖啡社群 - Hello Hackney",
-                                        lineSpacing: 3.6)
-        articleContainer.addSubview(sampleArticleTitleLabel)
-        sampleArticleTitleLabel.addConstraints(fromStringArray: ["V:|-24-[$self]",
-                                                                 "H:|-16-[$self]-16-|"])
-        
-        sampleArticleSubTitleLabel = UILabel()
-        sampleArticleSubTitleLabel.font = UIFont.boldSystemFont(ofSize: 18)
-        sampleArticleSubTitleLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_title
-        sampleArticleSubTitleLabel.setText(text: "這絕對是今年喝過最好喝的咖啡！",
-                                     lineSpacing: 3.6)
-        sampleArticleSubTitleLabel.numberOfLines = 0
-        articleContainer.addSubview(sampleArticleSubTitleLabel)
-        sampleArticleSubTitleLabel.addConstraints(fromStringArray: ["V:[$view0]-24-[$self]",
-                                                              "H:|-16-[$self]-16-|"],
-                                            views: [sampleArticleTitleLabel])
-        
-        sampleFirstParagraphTextView = UITextView()
-        sampleFirstParagraphTextView.font = UIFont.systemFont(ofSize: 16)
-        sampleFirstParagraphTextView.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
-        sampleFirstParagraphTextView.backgroundColor = UIColor.clear
-        sampleFirstParagraphTextView.isScrollEnabled = false
-        sampleFirstParagraphTextView.setText(text: "歐洲的咖啡店風格總是強烈的讓人移不開目光，即使身處在倫敦這樣的忙碌城市裡，竄入鼻腔內的咖啡香，不經意地就能停住路人的快速步伐。",
-                                              lineSpacing: 4.0)
-        articleContainer.addSubview(sampleFirstParagraphTextView)
-        sampleFirstParagraphTextView.addConstraints(fromStringArray: ["V:[$view0]-16-[$self]",
-                                                                      "H:|-16-[$self]-16-|"],
-                                                    views: [sampleArticleSubTitleLabel])
-        
-        sampleQuoteView = KPArticleQuoteView()
-        sampleQuoteView.quoteContent = "倫敦處處是咖啡廳，這句話真是一點都不過份。"
-        articleContainer.addSubview(sampleQuoteView)
-        sampleQuoteView.addConstraints(fromStringArray: ["V:[$view0]-16-[$self]",
-                                                          "H:|-20-[$self]-20-|"],
-                                        views: [sampleFirstParagraphTextView])
-        
-        sampleSecondParagraphTextView = UITextView()
-        sampleSecondParagraphTextView.font = UIFont.systemFont(ofSize: 16)
-        sampleSecondParagraphTextView.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
-        sampleSecondParagraphTextView.backgroundColor = UIColor.clear
-        sampleSecondParagraphTextView.isScrollEnabled = false
-        sampleSecondParagraphTextView.setText(text: "Kapi想介紹你一個沒有攝政街喧鬧、沒有牛津街擁擠的咖啡社群。讓你隨著找尋好咖啡的路途，愜意探索倫敦當地社區。",
-                                             lineSpacing: 4.0)
-        articleContainer.addSubview(sampleSecondParagraphTextView)
-        sampleSecondParagraphTextView.addConstraints(fromStringArray: ["V:[$view0]-16-[$self]",
-                                                                      "H:|-16-[$self]-16-|"],
-                                                    views: [sampleQuoteView])
-        
-        sampleImageView = UIImageView(image: R.image.demo_3())
-        sampleImageView.contentMode = .scaleAspectFill
-        sampleImageView.clipsToBounds = true
-        articleContainer.addSubview(sampleImageView)
-        sampleImageView.addConstraints(fromStringArray: ["V:[$view0]-16-[$self(<=300)]",
-                                                                       "H:|-16-[$self]-16-|"],
-                                                     views: [sampleSecondParagraphTextView])
-        
-        sampleThirdParagraphTextView = UITextView()
-        sampleThirdParagraphTextView.font = UIFont.systemFont(ofSize: 16)
-        sampleThirdParagraphTextView.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
-        sampleThirdParagraphTextView.backgroundColor = UIColor.clear
-        sampleThirdParagraphTextView.isScrollEnabled = false
-        sampleThirdParagraphTextView.setText(text: "Hackney是倫敦近期發展重點行政區之一，它有著倫敦東區的藝術氣息，聚集了想要翻舊創新的年輕人，在這老老的社區裡，用他們對生活的美學，創造大大的新改變。",
-                                              lineSpacing: 4.0)
-        articleContainer.addSubview(sampleThirdParagraphTextView)
-        sampleThirdParagraphTextView.addConstraints(fromStringArray: ["V:[$view0]-16-[$self]",
-                                                                       "H:|-16-[$self]-16-|"],
-                                                     views: [sampleImageView])
-        
-    }
 }
 
 extension KPArticleViewController: UIScrollViewDelegate {
