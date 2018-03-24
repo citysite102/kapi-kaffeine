@@ -21,7 +21,6 @@ class KPNewStoreDetailInfoViewController: KPNewStoreBasicController {
         super.viewDidLoad()
 
         view.backgroundColor = UIColor.white
-//        navigationController?.navigationBar.shadowImage = UIImage()
         
         let barLeftItem = UIBarButtonItem(title: "取消",
                                           style: .plain,
@@ -31,37 +30,6 @@ class KPNewStoreDetailInfoViewController: KPNewStoreBasicController {
                                            for: .normal)
         
         navigationItem.leftBarButtonItem = barLeftItem
-        
-//        let buttonContainer = UIView()
-//        buttonContainer.backgroundColor = UIColor.white
-//        view.addSubview(buttonContainer)
-//
-//        buttonContainer.addConstraints(fromStringArray: ["H:|-(-1)-[$self]-(-1)-|", "V:[$self(60)]"])
-//        buttonContainer.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor).isActive = true
-//
-//        buttonContainer.layer.borderColor = KPColorPalette.KPBackgroundColor.grayColor_level6?.cgColor
-//        buttonContainer.layer.borderWidth = 1
-        
-        
-        
-//        scrollView = UIScrollView()
-//        view.addSubview(scrollView)
-//        scrollView.translatesAutoresizingMaskIntoConstraints = false
-//        scrollView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor).isActive = true
-//        scrollView.addConstraint(from: "V:[$self][$view0]", views:[buttonContainer])
-//        if #available(iOS 11.0, *) {
-//            scrollView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
-//            scrollView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
-//        } else {
-//            scrollView.addConstraint(from: "H:|[$self]|")
-//        }
-//
-//
-//
-//        scrollContainerView = UIView()
-//        scrollView.addSubview(scrollContainerView)
-//        scrollContainerView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"])
-//        scrollContainerView.addConstraintForHavingSameWidth(with: scrollView)
         
         
         let detailTitleLabel = UILabel()
@@ -97,14 +65,14 @@ class KPNewStoreDetailInfoViewController: KPNewStoreBasicController {
         
         
         
-        let photoUploadView = KPPhotoUploadView("上傳照片")
+        let photoUploadView = KPTitleEditorView<KPPhotoUploadView>("上傳照片")
         scrollContainer.addSubview(photoUploadView)
-        photoUploadView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$view0][$self]"],
+        photoUploadView.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|", "V:[$view0]-20-[$self]"],
                                        views: [additionalInfoButton])
         
-        let menuUploadView = KPPhotoUploadView("上傳菜單")
+        let menuUploadView = KPTitleEditorView<KPPhotoUploadView>("上傳菜單")
         scrollContainer.addSubview(menuUploadView)
-        menuUploadView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$view0][$self]|"],
+        menuUploadView.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|", "V:[$view0]-20-[$self]|"],
                                       views: [photoUploadView])
         
         
