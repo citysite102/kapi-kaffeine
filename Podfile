@@ -25,6 +25,7 @@ target 'kapi-kaffeine' do
   pod "ESTabBarController-swift"
   pod 'Shimmer', :inhibit_warnings => true
   pod 'SKPhotoBrowser', '~> 5.0', :inhibit_warnings => true #:git => 'git@github.com:citysite102/SKPhotoBrowser.git'
+  pod 'ImagePicker'
 
   # Model
   pod 'ObjectMapper', '~> 3.1'

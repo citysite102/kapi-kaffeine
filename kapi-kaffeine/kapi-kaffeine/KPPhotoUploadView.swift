@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ImagePicker
 
 class KPPhotoUploadView: UIView {
 
@@ -59,30 +60,10 @@ class KPPhotoUploadView: UIView {
     
     @objc fileprivate func handleTakePhotoButtonOnTap(_ sender: UIButton) {
         
-        let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let imagePickerController = ImagePickerController()
+        imagePickerController.delegate = self
+        UIApplication.shared.topViewController.present(imagePickerController, animated: true, completion: nil)
         
-        controller.addAction(UIAlertAction(title: "從相簿中選擇", style: .default) { (action) in
-            let imagePickerController = UIImagePickerController()
-            imagePickerController.allowsEditing = false
-            imagePickerController.sourceType = .photoLibrary
-            imagePickerController.delegate = self
-            UIApplication.shared.topViewController.present(imagePickerController, animated: true, completion: nil)
-        })
-        controller.addAction(UIAlertAction(title: "開啟相機", style: .default) { (action) in
-            let imagePickerController = UIImagePickerController()
-            imagePickerController.allowsEditing = false
-            imagePickerController.sourceType = .camera
-            imagePickerController.delegate = self
-            UIApplication.shared.topViewController.present(imagePickerController, animated: true, completion: nil)
-        })
-        
-        controller.addAction(UIAlertAction(title: "取消", style: .cancel) { (action) in
-            
-        })
-        
-        UIApplication.shared.topViewController.present(controller, animated: true) {
-            
-        }
     }
     
 }
@@ -107,24 +88,32 @@ extension KPPhotoUploadView: UICollectionViewDataSource, UICollectionViewDelegat
 }
 
 
-extension KPPhotoUploadView : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension KPPhotoUploadView: ImagePickerDelegate {
     
-    func imagePickerController(_ picker: UIImagePickerController,
-                               didFinishPickingMediaWithInfo info: [String : Any]) {
+    func wrapperDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
         
-        picker.dismiss(animated: true) {
-            if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
-                UIView.animate(withDuration: 0.25, animations: {
-                    if self.photos.count == 0 {
-                        self.collectionViewHeightConstraint.constant = 120
-                    }
-                    self.photos.append(image)
-                    self.layoutIfNeeded()
-                }, completion: { (finished) in
-                    self.photoCollectionView.insertItems(at: [IndexPath.init(row: self.photos.count - 1, section: 0)])
-                })
-            }
+    }
+    
+    func doneButtonDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
+        imagePicker.dismiss(animated: true) {
+            UIView.animate(withDuration: 0.25, animations: {
+                if self.photos.count == 0 {
+                    self.collectionViewHeightConstraint.constant = 120
+                }
+                self.photos.append(contentsOf: images)
+                self.layoutIfNeeded()
+            }, completion: { (finished) in
+                var indexPathList: [IndexPath] = []
+                for i in  self.photos.count - images.count ... self.photos.count - 1 {
+                    indexPathList.append(IndexPath.init(row: i, section: 0))
+                }
+                self.photoCollectionView.insertItems(at: indexPathList)
+            })
         }
+    }
+    
+    func cancelButtonDidPress(_ imagePicker: ImagePickerController) {
+        imagePicker.dismiss(animated: true, completion: nil)
     }
     
 }

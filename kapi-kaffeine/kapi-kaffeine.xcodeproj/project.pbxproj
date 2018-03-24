@@ -185,7 +185,6 @@
 		C00A6E111ECADE3700A05C9A /* KPTimePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00A6E101ECADE3700A05C9A /* KPTimePickerViewController.swift */; };
 		C00A6E131ECB0B7F00A05C9A /* KPSharedSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00A6E121ECB0B7F00A05C9A /* KPSharedSettingViewController.swift */; };
 		C00CD5341E95234A00A3CB6F /* style.json in Resources */ = {isa = PBXBuildFile; fileRef = C00CD5331E95234A00A3CB6F /* style.json */; };
-		C016F3E41FE7D80F00F76AED /* KPEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C016F3E31FE7D80F00F76AED /* KPEditorView.swift */; };
 		C0175A5F205CD2390003B1A0 /* KPOtherOptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0175A5E205CD2390003B1A0 /* KPOtherOptionViewController.swift */; };
 		C01AC6291EAAEA0A000390F7 /* GMUGridBasedClusterAlgorithm.m in Sources */ = {isa = PBXBuildFile; fileRef = C01AC6111EAAEA0A000390F7 /* GMUGridBasedClusterAlgorithm.m */; };
 		C01AC62A1EAAEA0A000390F7 /* GMUNonHierarchicalDistanceBasedAlgorithm.m in Sources */ = {isa = PBXBuildFile; fileRef = C01AC6131EAAEA0A000390F7 /* GMUNonHierarchicalDistanceBasedAlgorithm.m */; };
@@ -442,7 +441,6 @@
 		C00A6E101ECADE3700A05C9A /* KPTimePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPTimePickerViewController.swift; sourceTree = "<group>"; };
 		C00A6E121ECB0B7F00A05C9A /* KPSharedSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = KPSharedSettingViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C00CD5331E95234A00A3CB6F /* style.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = style.json; sourceTree = "<group>"; };
-		C016F3E31FE7D80F00F76AED /* KPEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPEditorView.swift; sourceTree = "<group>"; };
 		C0175A5E205CD2390003B1A0 /* KPOtherOptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPOtherOptionViewController.swift; sourceTree = "<group>"; };
 		C01AC60C1EAAE86E000390F7 /* kapi-kaffeine-bridging-header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "kapi-kaffeine-bridging-header.h"; sourceTree = "<group>"; };
 		C01AC60F1EAAEA0A000390F7 /* GMUClusterAlgorithm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMUClusterAlgorithm.h; sourceTree = "<group>"; };
@@ -1369,7 +1367,6 @@
 			isa = PBXGroup;
 			children = (
 				C05A23192066230900942395 /* KPTitleEditorView.swift */,
-				C016F3E31FE7D80F00F76AED /* KPEditorView.swift */,
 				C0EB987E20202D88003B26AD /* KPNewStoreDetailCheckButton.swift */,
 				C0EB988120203C17003B26AD /* KPPhotoUploadView.swift */,
 				C0EB988320205372003B26AD /* KPPhotoUploadCollectionViewCell.swift */,
@@ -1625,6 +1622,7 @@
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/Hero/Hero.framework",
+				"${BUILT_PRODUCTS_DIR}/ImagePicker/ImagePicker.framework",
 				"${BUILT_PRODUCTS_DIR}/M13ProgressSuite/M13ProgressSuite.framework",
 				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
 				"${BUILT_PRODUCTS_DIR}/PromiseKit/PromiseKit.framework",
@@ -1658,6 +1656,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hero.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ImagePicker.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/M13ProgressSuite.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PromiseKit.framework",
@@ -1766,7 +1765,6 @@
 				7720D0311F01479100E00F0B /* KPMainListNativeExpressCell.swift in Sources */,
 				77F718271ED1A5C800755AA2 /* KPDefaultLoadingTableCell.swift in Sources */,
 				7762E3481F1220A60006E205 /* KPGetPhotoRequest.swift in Sources */,
-				C016F3E41FE7D80F00F76AED /* KPEditorView.swift in Sources */,
 				7743342C1F265871000CCDFA /* KPCommentVoteRequest.swift in Sources */,
 				77C594AB1ECB170000118947 /* KPNewCommentController.swift in Sources */,
 				7720D02D1F01402700E00F0B /* KPMainListNativeAppInstallAdCell.swift in Sources */,
