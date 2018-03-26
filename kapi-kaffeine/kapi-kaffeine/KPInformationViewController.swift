@@ -11,6 +11,7 @@ import MapKit
 import BenzeneFoundation
 import SKPhotoBrowser
 import Floaty
+import ImagePicker
 
 class KPInformationViewController: KPViewController {
 
@@ -1138,32 +1139,10 @@ class KPInformationViewController: KPViewController {
             if KPServiceHandler.sharedHandler.isCurrentShopClosed {
                 KPPopoverView.popoverClosedView()
             } else {
-                let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-                
-                controller.addAction(UIAlertAction(title: "從相簿中選擇", style: .default) { (action) in
-                    self.pickerType = .photo
-                    let imagePickerController = UIImagePickerController()
-                    imagePickerController.allowsEditing = false
-                    imagePickerController.sourceType = .photoLibrary
-                    imagePickerController.delegate = self
-                    self.present(imagePickerController, animated: true, completion: nil)
-                })
-                controller.addAction(UIAlertAction(title: "開啟相機", style: .default) { (action) in
-                    self.pickerType = .photo
-                    let imagePickerController = UIImagePickerController()
-                    imagePickerController.allowsEditing = false
-                    imagePickerController.sourceType = .camera
-                    imagePickerController.delegate = self
-                    self.present(imagePickerController, animated: true, completion: nil)
-                })
-                
-                controller.addAction(UIAlertAction(title: "取消", style: .cancel) { (action) in
-                    
-                })
-                
-                self.present(controller, animated: true) {
-                    
-                }
+                self.pickerType = .photo
+                let imagePickerController = ImagePickerController()
+                imagePickerController.delegate = self
+                self.present(imagePickerController, animated: true, completion: nil)
             }
         }
     }
@@ -1175,31 +1154,10 @@ class KPInformationViewController: KPViewController {
             if KPServiceHandler.sharedHandler.isCurrentShopClosed {
                 KPPopoverView.popoverClosedView()
             } else {
-                let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-                controller.addAction(UIAlertAction(title: "從相簿中選擇", style: .default) { (action) in
-                    self.pickerType = .menu
-                    let imagePickerController = UIImagePickerController()
-                    imagePickerController.allowsEditing = false
-                    imagePickerController.sourceType = .photoLibrary
-                    imagePickerController.delegate = self
-                    self.present(imagePickerController, animated: true, completion: nil)
-                })
-                controller.addAction(UIAlertAction(title: "開啟相機", style: .default) { (action) in
-                    self.pickerType = .menu
-                    let imagePickerController = UIImagePickerController()
-                    imagePickerController.allowsEditing = false
-                    imagePickerController.sourceType = .camera
-                    imagePickerController.delegate = self
-                    self.present(imagePickerController, animated: true, completion: nil)
-                })
-                
-                controller.addAction(UIAlertAction(title: "取消", style: .cancel) { (action) in
-                    
-                })
-                
-                self.present(controller, animated: true) {
-                    
-                }
+                self.pickerType = .menu
+                let imagePickerController = ImagePickerController()
+                imagePickerController.delegate = self
+                self.present(imagePickerController, animated: true, completion: nil)
             }
         }
     }
@@ -1297,6 +1255,8 @@ extension KPInformationViewController: UIViewControllerTransitioningDelegate {
     }
 }
 
+// MARK: - ImageTransitionProtocol
+
 extension KPInformationViewController: ImageTransitionProtocol {
     
     func tranisitionSetup(){
@@ -1312,6 +1272,8 @@ extension KPInformationViewController: ImageTransitionProtocol {
     }
 }
 
+// MARK: - UINavigationControllerDelegate
+
 extension KPInformationViewController: UINavigationControllerDelegate {
     func navigationController(_ navigationController: UINavigationController,
                               willShow viewController: UIViewController,
@@ -1323,6 +1285,8 @@ extension KPInformationViewController: UINavigationControllerDelegate {
         }
     }
 }
+
+// MARK: - UIScrollViewDelegate
 
 extension KPInformationViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -1382,6 +1346,8 @@ extension KPInformationViewController: UIScrollViewDelegate {
     }
 }
 
+// MARK: - KPInformationHeaderViewDelegate
+
 extension KPInformationViewController: KPInformationHeaderViewDelegate {
     func headerPhotoTapped(_ headerView: KPInformationHeaderView) {
         
@@ -1415,6 +1381,8 @@ extension KPInformationViewController: KPInformationHeaderViewDelegate {
         present(browser, animated: true, completion: {})
     }
 }
+
+// MARK: - SKPhotoBrowserDelegate
 
 extension KPInformationViewController: SKPhotoBrowserDelegate {
     func viewForPhoto(_ browser: SKPhotoBrowser, index: Int) -> UIView? {
@@ -1453,40 +1421,43 @@ extension KPInformationViewController: SKPhotoBrowserDelegate {
 }
 
 
-extension KPInformationViewController : UIImagePickerControllerDelegate {
+extension KPInformationViewController : UIImagePickerControllerDelegate, ImagePickerDelegate {
     
-    func imagePickerController(_ picker: UIImagePickerController,
-                               didFinishPickingMediaWithInfo info: [String : Any]) {
+    func wrapperDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
         
-        picker.dismiss(animated: true) {
-            if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
-                
-                if self.pickerType == .menu {
-                    KPServiceHandler.sharedHandler.uploadMenus([image],
-                                                               self.informationDataModel.identifier,
-                                                               true,
-                                                               { (success) in
+    }
+    
+    func doneButtonDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
+        imagePicker.dismiss(animated: true) {
+            if self.pickerType == .menu {
+                KPServiceHandler.sharedHandler.uploadMenus(images,
+                                                           self.informationDataModel.identifier,
+                                                           true,
+                                                           { (success) in
+                                                            if success {
+                                                                print("upload successed")
+                                                            } else {
+                                                                print("upload failed")
+                                                            }
+                })
+            } else if self.pickerType == .photo {
+                KPServiceHandler.sharedHandler.uploadPhotos(images,
+                                                            self.informationDataModel.identifier,
+                                                            true,
+                                                            { (success) in
                                                                 if success {
                                                                     print("upload successed")
                                                                 } else {
                                                                     print("upload failed")
                                                                 }
-                    })
-                } else if self.pickerType == .photo {
-                    KPServiceHandler.sharedHandler.uploadPhotos([image],
-                                                                self.informationDataModel.identifier,
-                                                                true,
-                                                                { (success) in
-                        if success {
-                            print("upload successed")
-                        } else {
-                            print("upload failed")
-                        }
-                    })
-                }
-                self.pickerType = .none
+                })
             }
+            self.pickerType = .none
         }
+    }
+    
+    func cancelButtonDidPress(_ imagePicker: ImagePickerController) {
+        imagePicker.dismiss(animated: true, completion: nil)
     }
     
 }

@@ -8,6 +8,7 @@
 
 import UIKit
 import SKPhotoBrowser
+import ImagePicker
 
 class KPPhotoGalleryViewController: KPViewController {
 
@@ -145,31 +146,9 @@ class KPPhotoGalleryViewController: KPViewController {
             if KPServiceHandler.sharedHandler.isCurrentShopClosed {
                 KPPopoverView.popoverClosedView()
             } else {
-                let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-                controller.addAction(UIAlertAction(title: "從相簿中選擇", style: .default) { (action) in
-                    let imagePickerController = UIImagePickerController()
-                    imagePickerController.allowsEditing = false
-                    imagePickerController.sourceType = .photoLibrary
-                    imagePickerController.delegate = self
-                    //                                                        imagePickerController.mediaTypes = [kUTTypeImage as String]
-                    self.present(imagePickerController, animated: true, completion: nil)
-                })
-                controller.addAction(UIAlertAction(title: "開啟相機", style: .default) { (action) in
-                    let imagePickerController = UIImagePickerController()
-                    imagePickerController.allowsEditing = false
-                    imagePickerController.sourceType = .camera
-                    imagePickerController.delegate = self
-                    //                                                        imagePickerController.mediaTypes = [kUTTypeImage as String]
-                    self.present(imagePickerController, animated: true, completion: nil)
-                })
-                
-                controller.addAction(UIAlertAction(title: "取消", style: .cancel) { (action) in
-                    
-                })
-                
-                self.present(controller, animated: true) {
-                    
-                }
+                let imagePickerController = ImagePickerController()
+                imagePickerController.delegate = self
+                self.present(imagePickerController, animated: true, completion: nil)
             }
         }
     }
@@ -179,6 +158,8 @@ class KPPhotoGalleryViewController: KPViewController {
     }
     
 }
+
+// MARK: - Collection View
 
 extension KPPhotoGalleryViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
@@ -278,28 +259,32 @@ extension KPPhotoGalleryViewController: SKPhotoBrowserDelegate {
     
 }
 
-// MARK: Image Picker
+// MARK: - Image Picker
 
-extension KPPhotoGalleryViewController: UIImagePickerControllerDelegate,
-UINavigationControllerDelegate {
+extension KPPhotoGalleryViewController: ImagePickerDelegate {
     
-    func imagePickerController(_ picker: UIImagePickerController,
-                               didFinishPickingMediaWithInfo info: [String : Any]) {
+    func wrapperDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
         
-        picker.dismiss(animated: true) {
-            if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
-                KPServiceHandler.sharedHandler.uploadPhotos([image],
-                                                            nil,
-                                                            true,
-                                                            { (success) in
-                                                                if success {
-                                                                    print("upload successed")
-                                                                } else {
-                                                                    print("upload failed")
-                                                                }
-                })
-            }
+    }
+    
+    func doneButtonDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
+        imagePicker.dismiss(animated: true) {
+            // TODO: check parameters
+            KPServiceHandler.sharedHandler.uploadPhotos(images,
+                                                        nil,
+                                                        true,
+                                                        { (success) in
+                                                            if success {
+                                                                print("upload successed")
+                                                            } else {
+                                                                print("upload failed")
+                                                            }
+            })
         }
+    }
+    
+    func cancelButtonDidPress(_ imagePicker: ImagePickerController) {
+        imagePicker.dismiss(animated: true, completion: nil)
     }
     
 }

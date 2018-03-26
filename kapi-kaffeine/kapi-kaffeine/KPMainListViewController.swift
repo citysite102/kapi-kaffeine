@@ -414,6 +414,8 @@ class KPMainListViewController:
     }
 }
 
+// MARK: - GADNativeExpressAdViewDelegate
+
 extension KPMainListViewController: GADNativeExpressAdViewDelegate {
     
     func nativeExpressAdViewDidReceiveAd(_ nativeExpressAdView: GADNativeExpressAdView) {
@@ -427,6 +429,8 @@ extension KPMainListViewController: GADNativeExpressAdViewDelegate {
         preloadNextAd()
     }
 }
+
+// MARK: - UITableView DataSourc & Delegate
 
 extension KPMainListViewController: UITableViewDelegate, UITableViewDataSource {
     
