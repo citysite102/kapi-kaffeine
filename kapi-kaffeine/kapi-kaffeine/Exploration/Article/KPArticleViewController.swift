@@ -42,8 +42,9 @@ class KPArticleViewController: KPViewController {
     var toolBarContainer: UIView!
     var separator_top: UIView!
     var separator: UIView!
-    var collectButton: UIButton!
+    var collectButton: KPBounceButton!
     
+    var currentArticleItem: KPArticleItem!
     fileprivate var articleID: String!
     
     init(_ articleID: String) {
@@ -193,7 +194,8 @@ class KPArticleViewController: KPViewController {
                                                      constant: 6)
         dismissButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4)
         dismissButton.addTarget(self,
-                                action: #selector(handleDismissButtonOnTapped), for: .touchUpInside)
+                                action: #selector(handleDismissButtonOnTapped),
+                                for: .touchUpInside)
         
         
         separator = UIView()
@@ -209,14 +211,22 @@ class KPArticleViewController: KPViewController {
         separator.addConstraints(fromStringArray: ["H:|[$self]|",
                                                    "V:|[$self($metric0)]"], metrics:[KPLayoutConstant.separator_height])
         
-        collectButton = UIButton(type: .roundedRect)
+        collectButton = KPBounceButton(type: .custom)
         collectButton.setTitle("收藏文章", for: .normal)
-        collectButton.setTitleColor(KPColorPalette.KPTextColor_v2.mainColor_subtitle, for: .normal)
+        collectButton.setTitleColor(KPColorPalette.KPTextColor_v2.mainColor_subtitle,
+                                    for: .normal)
         collectButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         collectButton.imageEdgeInsets = UIEdgeInsetsMake(2, -2, 2, 2)
         collectButton.setImage(R.image.icon_collect_border()!,
                                for: .normal)
-        collectButton.tintColor = KPColorPalette.KPMainColor_v2.redColor
+        collectButton.setImage(R.image.icon_collect()!,
+                               for: .selected)
+        collectButton.tintColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
+        collectButton.selectedTintColor = KPColorPalette.KPMainColor_v2.redColor
+        collectButton.addTarget(self,
+                                action: #selector(handleCollectButtonOnTapped(_:)),
+                                for: .touchUpInside)
+        collectButton.isSelected = (KPUserManager.sharedManager.currentUser?.hasCollected(currentArticleItem.articleID))!
         toolBarContainer.addSubview(collectButton)
         collectButton.addConstraintForCenterAligningToSuperview(in: .vertical)
         collectButton.addConstraint(from: "H:|-16-[$self]")
@@ -240,6 +250,14 @@ class KPArticleViewController: KPViewController {
         }
         dismiss(animated: true, completion: nil)
 //        appModalController()?.dismissControllerWithDefaultDuration()
+    }
+    
+    @objc func handleCollectButtonOnTapped(_ sender: UIButton) {
+        if sender.isSelected {
+            KPServiceHandler.sharedHandler.removeCollectedArticle(currentArticleItem)
+        } else {
+            KPServiceHandler.sharedHandler.addCollectedArticle(currentArticleItem)
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -503,7 +521,6 @@ extension KPArticleViewController: UIScrollViewDelegate {
     func scrollViewWillEndDragging(_ scrollView: UIScrollView,
                                    withVelocity velocity: CGPoint,
                                    targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        print("Will End Offset:\(scrollView.contentOffset.y)")
         if (targetContentOffset.pointee.y <= KPArticleViewController.scrollAnimationThreshold) {
             checkDismissBehavior(scrollView.contentOffset.y)
             autoScaleHeroImage(offsetY: targetContentOffset.pointee.y)
@@ -573,6 +590,10 @@ extension KPArticleViewController: UIScrollViewDelegate {
         } else {
             
             if self.scrollContainer.contentOffset.y < KPArticleViewController.scrollAnimationEnlargeOffset {
+                
+                topBarContainer.alpha = 0
+                dismissButton.tintColor = UIColor.white
+                
                 if !viewIsDimissing {
                     scrollView.setContentOffset(CGPoint(x: 0, y: 0),
                                                 animated: false)
@@ -620,6 +641,8 @@ extension KPArticleViewController: UIScrollViewDelegate {
                     }
                     
                 } else if self.scrollContainer.contentOffset.y <= 0 {
+                    topBarContainer.alpha = 0
+                    dismissButton.tintColor = UIColor.white
 //                    && self.scrollContainer.contentOffset.y > -50 {
                 
 //                    let updatedFrame = CGRect(x: self.scrollContainer.contentOffset.y,

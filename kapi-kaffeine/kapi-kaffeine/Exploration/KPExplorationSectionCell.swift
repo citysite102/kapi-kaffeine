@@ -109,34 +109,6 @@ class KPExplorationSectionCell: UICollectionViewCell {
         rateCountLabel.text = "(24)"
         rateCountLabel.addConstraintForCenterAligning(to: starIcon,
                                                       in: .vertical)
-        
-//        rateLabel = UILabel()
-//        contentView.addSubview(rateLabel)
-//        rateLabel.addConstraints(fromStringArray: ["H:|[$self]",
-//                                                   "V:[$view0]-6-[$self]|"],
-//                                   views: [regionLabel])
-//        rateLabel.font = UIFont.boldSystemFont(ofSize: 11)
-//        rateLabel.textColor = KPColorPalette.KPMainColor_v2.starColor
-//        rateLabel.text = "4.8(24)"
-//
-//        starIcon = UIImageView(image: R.image.icon_star_filled())
-//        starIcon.tintColor = KPColorPalette.KPMainColor_v2.starColor
-//        contentView.addSubview(starIcon)
-//        starIcon.addConstraints(fromStringArray: ["H:[$view0]-2-[$self(13)]",
-//                                                  "V:[$self(13)]"],
-//                                views:[rateLabel])
-//        starIcon.addConstraintForCenterAligning(to: rateLabel,
-//                                                in: .vertical)
-        
-//        visitedLabel = UILabel()
-//        contentView.addSubview(visitedLabel)
-//        visitedLabel.addConstraints(fromStringArray: ["H:[$self]|"])
-//        visitedLabel.addConstraintForCenterAligning(to: rateLabel,
-//                                                    in: .vertical)
-//        visitedLabel.font = UIFont.systemFont(ofSize: 12)
-//        visitedLabel.textColor = KPColorPalette.KPMainColor_v2.mainColor
-//        visitedLabel.text = "132人已去過"
-
     }
     
     override func layoutSubviews() {

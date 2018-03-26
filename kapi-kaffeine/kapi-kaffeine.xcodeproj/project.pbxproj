@@ -143,6 +143,7 @@
 		77C0E10A1E9D493400398852 /* KPShopCommentInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0E1091E9D493400398852 /* KPShopCommentInfoView.swift */; };
 		77C0E10C1E9D494400398852 /* KPShopPhotoInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0E10B1E9D494400398852 /* KPShopPhotoInfoView.swift */; };
 		77C107841F063B4F00EE97DB /* KPSatisficationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C107831F063B4F00EE97DB /* KPSatisficationView.swift */; };
+		77C4F3F220691AC600F5EA8F /* KPCollectRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C4F3F120691AC600F5EA8F /* KPCollectRequest.swift */; };
 		77C524A4206280DB00647745 /* KPPhotoBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C524A3206280DB00647745 /* KPPhotoBrowser.swift */; };
 		77C594AB1ECB170000118947 /* KPNewCommentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C594AA1ECB170000118947 /* KPNewCommentController.swift */; };
 		77C594AD1ECB171A00118947 /* KPAllCommentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C594AC1ECB171A00118947 /* KPAllCommentController.swift */; };
@@ -399,6 +400,7 @@
 		77C0E1091E9D493400398852 /* KPShopCommentInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPShopCommentInfoView.swift; sourceTree = "<group>"; };
 		77C0E10B1E9D494400398852 /* KPShopPhotoInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPShopPhotoInfoView.swift; sourceTree = "<group>"; };
 		77C107831F063B4F00EE97DB /* KPSatisficationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSatisficationView.swift; sourceTree = "<group>"; };
+		77C4F3F120691AC600F5EA8F /* KPCollectRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPCollectRequest.swift; sourceTree = "<group>"; };
 		77C524A3206280DB00647745 /* KPPhotoBrowser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPPhotoBrowser.swift; sourceTree = "<group>"; };
 		77C594AA1ECB170000118947 /* KPNewCommentController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPNewCommentController.swift; sourceTree = "<group>"; };
 		77C594AC1ECB171A00118947 /* KPAllCommentController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPAllCommentController.swift; sourceTree = "<group>"; };
@@ -622,6 +624,7 @@
 			children = (
 				771F90B01EF1976B00D66C14 /* KPFavoriteRequest.swift */,
 				7762E3441F12185C0006E205 /* KPVisitedRequest.swift */,
+				77C4F3F120691AC600F5EA8F /* KPCollectRequest.swift */,
 			);
 			name = UserAction;
 			sourceTree = "<group>";
@@ -1728,6 +1731,7 @@
 				C047CD611F1CDBB8007352D1 /* KPMapInputViewController.swift in Sources */,
 				C00A5C991EC9F34400ECEFE3 /* KPPhotoDisplayTransition.swift in Sources */,
 				77427BDF1EF6EF2F005D7AE4 /* KPGetCommentRequest.swift in Sources */,
+				77C4F3F220691AC600F5EA8F /* KPCollectRequest.swift in Sources */,
 				C01AC62B1EAAEA0A000390F7 /* GMUSimpleClusterAlgorithm.m in Sources */,
 				772D68261ECC78840013F802 /* KPNewStoreController.swift in Sources */,
 				77409A481F337829005488F8 /* KPSearchTagButtonCell.swift in Sources */,

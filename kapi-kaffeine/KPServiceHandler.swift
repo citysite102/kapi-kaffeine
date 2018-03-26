@@ -631,53 +631,110 @@ class KPServiceHandler {
     }
     
     
-    // MARK: Favorite / Visit
+    // MARK: BookMark / Collect
+    func addCollectedArticle(_ articleItem: KPArticleItem,
+                             _ completion: ((Bool) -> Swift.Void)? = nil) {
     
-    func addFavoriteCafe(_ completion: ((Bool) -> Swift.Void)? = nil) {
-        
-        let loadingView = KPLoadingView(("收藏中...", "收藏咖啡店", "收藏失敗"))
-        UIApplication.shared.KPTopViewController().view.addSubview(loadingView)
-        loadingView.addConstraints(fromStringArray: ["V:|[$self]|",
-                                                     "H:|[$self]|"])
-        
-        let addRequest = KPFavoriteRequest()
-        addRequest.perform((currentDisplayModel?.identifier)!,
-                           KPFavoriteRequest.requestType.add).then { result -> Void in
-                            loadingView.state = result["result"].boolValue ? .collect : .failed
-                            guard let _ = KPUserManager.sharedManager.currentUser?.favorites?.first(where: {$0.identifier == self.currentDisplayModel?.identifier}) else {
-                                KPUserManager.sharedManager.currentUser?.favorites?.append(self.currentDisplayModel!)
-                                KPUserManager.sharedManager.storeUserInformation()
-                                return
-                            }
-                            completion?(true)
-            }.catch { error in
-                print("Add Favorite Cafe error\(error)")
-                completion?(false)
+        if KPUserManager.sharedManager.currentUser == nil {
+            KPPopoverView.popoverLoginView()
+        } else {
+            let addRequest = KPCollectRequest()
+            addRequest.perform(articleItem.articleID,
+                               KPCollectRequest.requestType.add).then { result -> Void in
+                                guard let _ = KPUserManager.sharedManager.currentUser?.articles?.first(where: {$0.articleID == articleItem.articleID}) else {
+                                    KPUserManager.sharedManager.currentUser?.articles?.append(articleItem)
+                                    KPUserManager.sharedManager.storeUserInformation()
+                                    return
+                                }
+                                completion?(true)
+                }.catch { error in
+                    print("Add Collect Article error\(error)")
+                    completion?(false)
+            }
         }
     }
     
-    func removeFavoriteCafe(_ cafeID: String,
+    func removeCollectedArticle(_ articleItem: KPArticleItem,
+                                _ completion: ((Bool) -> Swift.Void)? = nil) {
+        
+        if KPUserManager.sharedManager.currentUser == nil {
+            KPPopoverView.popoverLoginView()
+        } else {
+            let removeRequest = KPCollectRequest()
+            removeRequest.perform(articleItem.articleID,
+                                  KPCollectRequest.requestType.delete).then { result -> Void in
+                                    if let foundOffset = KPUserManager.sharedManager.currentUser?.articles?.index(where: {$0.articleID == articleItem.articleID}) {
+                                        KPUserManager.sharedManager.currentUser?.articles?.remove(at: foundOffset)
+                                    }
+                                    KPUserManager.sharedManager.storeUserInformation()
+                                    completion?(true)
+                                    print("Result\(result)")
+                }.catch { (error) in
+                    print("Remove Collect Article\(error)")
+                    completion?(false)
+            }
+        }
+    }
+    
+    // MARK: Favorite / Visit
+    
+    func addFavoriteCafe(_ cafe: KPDataModel?,
+                         _ completion: ((Bool) -> Swift.Void)? = nil) {
+        
+        if KPUserManager.sharedManager.currentUser == nil {
+            KPPopoverView.popoverLoginView()
+        } else {
+            let loadingView = KPLoadingView(("收藏中...", "收藏咖啡店", "收藏失敗"))
+            UIApplication.shared.KPTopViewController().view.addSubview(loadingView)
+            loadingView.addConstraints(fromStringArray: ["V:|[$self]|",
+                                                         "H:|[$self]|"])
+            
+            let addRequest = KPFavoriteRequest()
+            addRequest.perform(cafe?.identifier ?? (currentDisplayModel?.identifier)!,
+                               KPFavoriteRequest.requestType.add).then { result -> Void in
+                                loadingView.state = result["result"].boolValue ? .successed : .failed
+                                guard let _ = KPUserManager.sharedManager.currentUser?.favorites?.first(where: {$0.identifier == (cafe?.identifier ?? self.currentDisplayModel?.identifier)}) else {
+                                    KPUserManager.sharedManager.currentUser?.favorites?.append(cafe ?? self.currentDisplayModel!)
+                                    KPUserManager.sharedManager.storeUserInformation()
+                                    return
+                                }
+                                completion?(true)
+                }.catch { error in
+                    print("Add Favorite Cafe error\(error)")
+                    loadingView.state = .failed
+                    completion?(false)
+            }
+        }
+    }
+    
+    func removeFavoriteCafe(_ cafe: KPDataModel,
                             _ completion: ((Bool) -> Swift.Void)? = nil) {
         
-        let loadingView = KPLoadingView(("取消收藏...", "取消收藏咖啡店", "取消失敗"))
-        UIApplication.shared.KPTopViewController().view.addSubview(loadingView)
-        loadingView.addConstraints(fromStringArray: ["V:|[$self]|",
-                                                     "H:|[$self]|"])
         
-        let removeRequest = KPFavoriteRequest()
-        removeRequest.perform(cafeID,
-                              KPFavoriteRequest.requestType.delete).then { result -> Void in
-                                loadingView.state = result["result"].boolValue ? .collect : .failed
-                                //                                if let found = self.currentUser?.favorites?.first(where: {$0.identifier == cafeID}) {
-                                if let foundOffset = KPUserManager.sharedManager.currentUser?.favorites?.index(where: {$0.identifier == cafeID}) {
-                                    KPUserManager.sharedManager.currentUser?.favorites?.remove(at: foundOffset)
-                                }
-                                KPUserManager.sharedManager.storeUserInformation()
-                                completion?(true)
-                                print("Result\(result)")
-            }.catch { (error) in
-                print("error\(error)")
-                completion?(false)
+        if KPUserManager.sharedManager.currentUser == nil {
+            KPPopoverView.popoverLoginView()
+        } else {
+            let loadingView = KPLoadingView(("取消中...", "取消收藏", "取消失敗"))
+            UIApplication.shared.KPTopViewController().view.addSubview(loadingView)
+            loadingView.addConstraints(fromStringArray: ["V:|[$self]|",
+                                                         "H:|[$self]|"])
+            
+            let removeRequest = KPFavoriteRequest()
+            removeRequest.perform(cafe.identifier,
+                                  KPFavoriteRequest.requestType.delete).then { result -> Void in
+                                    loadingView.state = result["result"].boolValue ? .successed : .failed
+                                    //                                if let found = self.currentUser?.favorites?.first(where: {$0.identifier == cafeID}) {
+                                    if let foundOffset = KPUserManager.sharedManager.currentUser?.favorites?.index(where: {$0.identifier == cafe.identifier}) {
+                                        KPUserManager.sharedManager.currentUser?.favorites?.remove(at: foundOffset)
+                                    }
+                                    KPUserManager.sharedManager.storeUserInformation()
+                                    completion?(true)
+                                    print("Result\(result)")
+                }.catch { (error) in
+                    print("error\(error)")
+                    loadingView.state = .failed
+                    completion?(false)
+            }
         }
     }
     
@@ -1021,7 +1078,8 @@ class KPServiceHandler {
         }
     }
 
-    func fetchExplorationList(_ completion: ((_ explorationList: [KPExplorationSection]?, _ error: NetworkRequestError?) -> Void)?) {
+    func fetchExplorationList(_ completion: ((_ explorationList: [KPExplorationSection]?, 
+        _ error: NetworkRequestError?) -> Void)?) {
     
         DispatchQueue.global().async {
             let explorationRequest = KPExplorationRequest()

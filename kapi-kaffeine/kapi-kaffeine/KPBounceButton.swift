@@ -41,8 +41,26 @@ class KPBounceButton: UIButton {
     override var tintColor: UIColor! {
         didSet {
             self.normalTintColor = self.tintColor
+            if self.selectedTintColor == nil {
+                self.selectedTintColor = self.tintColor
+            }
         }
     }
+    
+    override var isSelected: Bool {
+        didSet {
+            if isSelected {
+                self.tintColor = self.selectedTintColor
+            } else {
+                self.tintColor = normalTintColor
+            }
+            
+            if self.backgroundSelectView != nil {
+                self.backgroundSelectView?.isHidden = !self.isSelected
+            }
+        }
+    }
+    
     var backgroundSelectColor: UIColor? {
         didSet {
             if backgroundSelectView == nil {
@@ -112,7 +130,8 @@ class KPBounceButton: UIButton {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesEnded(touches, with: event)
+//        super.touchesEnded(touches, with: event)
+        self.sendActions(for: UIControlEvents.touchUpInside)
         self.performTouchEndAnimation()
     }
     

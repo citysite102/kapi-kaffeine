@@ -73,140 +73,140 @@ class KPInformationHeaderButtonBar: UIView {
                                                        "V:|[$self]|"],
                                      views: [rateButton])
         
-        collectButton.buttonInfo = HeaderButtonInfo(title: "收藏",
-                                                    info: "%d人已收藏",
-                                                    defaultInfo: "無人收藏",
-                                                    icon: R.image.icon_collect_border()!,
-                                                    handler: { [unowned self] (headerButton) -> () in
-                                                        if headerButton.selected == false {
-                                                            headerButton.selected = true
-                                                            headerButton.numberValue = headerButton.numberValue + 1
-                                                            KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.store_favorite_button)
-                                                            KPServiceHandler.sharedHandler.addFavoriteCafe()
-                                                        } else {
-                                                            DispatchQueue.main.asyncAfter(deadline: .now()) {
-                                                                KPPopoverView.popoverDefaultStyleContent (
-                                                                    "移除收藏",
-                                                                    "確定要改變心意移除收藏這間優秀到不行再優秀的咖啡廳嗎？",
-                                                                    "我確定", { (content) in
-                                                                        content.popoverView.dismiss()
-                                                                        headerButton.selected = false
-                                                                        headerButton.numberValue = headerButton.numberValue - 1
-                                                                        KPServiceHandler.sharedHandler.removeFavoriteCafe(self.informationDataModel.identifier, { (successed) in
-                                                                        })
-                                                                })
-                                                            }
-                                                            
-                                                        }
-        })
-        
-        visitButton.buttonInfo = HeaderButtonInfo(title: "有誰來過",
-                                                  info: "%d人來過",
-                                                  defaultInfo: "無人打卡",
-                                                  icon: R.image.icon_pin()!,
-                                                  handler: { [unowned self] (headerButton) -> () in
-                                                    
-                                                    if headerButton.selected == false {
-                                                        KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.store_visit_button)
-                                                        if let visitedMembers = self.informationDataModel.visitedMembers {
-                                                            var photoArray: [String] = [String]()
-                                                            for member in visitedMembers {
-                                                                photoArray.append(member.photoURL!)
-                                                            }
-                                                            
-                                                            if photoArray.count > 0 {
-                                                                KPPopoverView.popoverVisitedView(photoArray, { (content) in
-                                                                    content.popoverView.dismiss()
-                                                                    headerButton.selected = true
-                                                                    headerButton.numberValue = headerButton.numberValue + 1
-                                                                    KPServiceHandler.sharedHandler.addVisitedCafe()
-                                                                })
-                                                            } else {
-                                                                headerButton.selected = true
-                                                                headerButton.numberValue = headerButton.numberValue + 1
-                                                                KPServiceHandler.sharedHandler.addVisitedCafe()
-                                                            }
-                                                        }
-                                                        
-                                                    } else {
-                                                        DispatchQueue.main.asyncAfter(deadline: .now()) {
-                                                            KPPopoverView.popoverDefaultStyleContent(
-                                                                "移除打卡",
-                                                                "確定要改變心意說你沒有去過這間超棒的咖啡廳嗎？",
-                                                                "我確定", { (content) in
-                                                                    content.popoverView.dismiss()
-                                                                    headerButton.selected = false
-                                                                    headerButton.numberValue = headerButton.numberValue - 1
-                                                                    KPServiceHandler.sharedHandler.removeVisitedCafe(self.informationDataModel.identifier, { (successed) in
-                                                                    })
-                                                                    
-                                                                    if let visitedMembers = self.informationDataModel.visitedMembers {
-                                                                        let memberIndex = visitedMembers.index(where: { (memberModel) -> Bool in
-                                                                            return memberModel.memberID == KPUserManager.sharedManager.currentUser?.identifier
-                                                                        })
-                                                                        
-                                                                        if memberIndex != nil {
-                                                                            self.informationDataModel.visitedMembers?.remove(at: memberIndex!)
-                                                                        }
-                                                                    }
-                                                            })
-                                                        }
-                                                        
-                                                    }
-        })
-        
-        rateButton.buttonInfo = HeaderButtonInfo(title: "我要評分",
-                                                 info: "%d人已評分",
-                                                 defaultInfo: "尚無評分",
-                                                 icon: R.image.icon_star_border()!,
-                                                 handler: { [unowned self] (headerButton) -> () in
-                                                    
-                                                    KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.store_rate_button)
-                                                    let controller = KPModalViewController()
-                                                    controller.edgeInset = UIEdgeInsets(top: UIDevice().isSuperCompact ? 32 : 72,
-                                                                                        left: 0,
-                                                                                        bottom: 0,
-                                                                                        right: 0)
-                                                    controller.cornerRadius = [.topRight, .topLeft]
-                                                    let ratingViewController = KPRatingViewController()
-                                                    if self.informationController?.hasRatedDataModel != nil {
-                                                        ratingViewController.defaultRateModel = self.informationController?.hasRatedDataModel
-                                                    }
-                                                    
-                                                    controller.contentController = ratingViewController
-                                                    controller.presentModalView()
-        })
-        
-        commentButton.buttonInfo = HeaderButtonInfo(title: "我要評論",
-                                                    info: "%d人已評論",
-                                                    defaultInfo: "尚無評論",
-                                                    icon: R.image.icon_comment_border()!,
-                                                    handler: { [unowned self] (headerButton) -> () in
-                                                        KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.store_comment_button)
-                                                        let newCommentViewController = KPNewCommentController()
-                                                        if self.informationController != nil {
-                                                            
-                                                            if self.informationController?.hasRatedDataModel != nil {
-                                                                DispatchQueue.main.async {
-                                                                    newCommentViewController.hideRatingViews = true
-                                                                }
-                                                            }
-
-                                                            if let comment = self.informationController?.hasCommentDataModel {
-                                                                let editCommentViewController = KPEditCommentController()
-                                                                editCommentViewController.defaultCommentModel =  comment
-                                                                self.informationController?.navigationController?.pushViewController(viewController: editCommentViewController,
-                                                                                                                                     animated: true,
-                                                                                                                                     completion: {})
-                                                            } else {
-                                                                self.informationController?.navigationController?.pushViewController(viewController:
-                                                                    newCommentViewController,
-                                                                                                                                     animated: true,
-                                                                                                                                     completion: {})
-
-                                                            }
-                                                        }
-        })
+//        collectButton.buttonInfo = HeaderButtonInfo(title: "收藏",
+//                                                    info: "%d人已收藏",
+//                                                    defaultInfo: "無人收藏",
+//                                                    icon: R.image.icon_collect_border()!,
+//                                                    handler: { [unowned self] (headerButton) -> () in
+//                                                        if headerButton.selected == false {
+//                                                            headerButton.selected = true
+//                                                            headerButton.numberValue = headerButton.numberValue + 1
+//                                                            KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.store_favorite_button)
+//                                                            KPServiceHandler.sharedHandler.addFavoriteCafe(nil)
+//                                                        } else {
+//                                                            DispatchQueue.main.asyncAfter(deadline: .now()) {
+//                                                                KPPopoverView.popoverDefaultStyleContent (
+//                                                                    "移除收藏",
+//                                                                    "確定要改變心意移除收藏這間優秀到不行再優秀的咖啡廳嗎？",
+//                                                                    "我確定", { (content) in
+//                                                                        content.popoverView.dismiss()
+//                                                                        headerButton.selected = false
+//                                                                        headerButton.numberValue = headerButton.numberValue - 1
+//                                                                        KPServiceHandler.sharedHandler.removeFavoriteCafe(self.informationDataModel, { (successed) in
+//                                                                        })
+//                                                                })
+//                                                            }
+//
+//                                                        }
+//        })
+//
+//        visitButton.buttonInfo = HeaderButtonInfo(title: "有誰來過",
+//                                                  info: "%d人來過",
+//                                                  defaultInfo: "無人打卡",
+//                                                  icon: R.image.icon_pin()!,
+//                                                  handler: { [unowned self] (headerButton) -> () in
+//
+//                                                    if headerButton.selected == false {
+//                                                        KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.store_visit_button)
+//                                                        if let visitedMembers = self.informationDataModel.visitedMembers {
+//                                                            var photoArray: [String] = [String]()
+//                                                            for member in visitedMembers {
+//                                                                photoArray.append(member.photoURL!)
+//                                                            }
+//
+//                                                            if photoArray.count > 0 {
+//                                                                KPPopoverView.popoverVisitedView(photoArray, { (content) in
+//                                                                    content.popoverView.dismiss()
+//                                                                    headerButton.selected = true
+//                                                                    headerButton.numberValue = headerButton.numberValue + 1
+//                                                                    KPServiceHandler.sharedHandler.addVisitedCafe()
+//                                                                })
+//                                                            } else {
+//                                                                headerButton.selected = true
+//                                                                headerButton.numberValue = headerButton.numberValue + 1
+//                                                                KPServiceHandler.sharedHandler.addVisitedCafe()
+//                                                            }
+//                                                        }
+//
+//                                                    } else {
+//                                                        DispatchQueue.main.asyncAfter(deadline: .now()) {
+//                                                            KPPopoverView.popoverDefaultStyleContent(
+//                                                                "移除打卡",
+//                                                                "確定要改變心意說你沒有去過這間超棒的咖啡廳嗎？",
+//                                                                "我確定", { (content) in
+//                                                                    content.popoverView.dismiss()
+//                                                                    headerButton.selected = false
+//                                                                    headerButton.numberValue = headerButton.numberValue - 1
+//                                                                    KPServiceHandler.sharedHandler.removeVisitedCafe(self.informationDataModel.identifier, { (successed) in
+//                                                                    })
+//
+//                                                                    if let visitedMembers = self.informationDataModel.visitedMembers {
+//                                                                        let memberIndex = visitedMembers.index(where: { (memberModel) -> Bool in
+//                                                                            return memberModel.memberID == KPUserManager.sharedManager.currentUser?.identifier
+//                                                                        })
+//
+//                                                                        if memberIndex != nil {
+//                                                                            self.informationDataModel.visitedMembers?.remove(at: memberIndex!)
+//                                                                        }
+//                                                                    }
+//                                                            })
+//                                                        }
+//
+//                                                    }
+//        })
+//
+//        rateButton.buttonInfo = HeaderButtonInfo(title: "我要評分",
+//                                                 info: "%d人已評分",
+//                                                 defaultInfo: "尚無評分",
+//                                                 icon: R.image.icon_star_border()!,
+//                                                 handler: { [unowned self] (headerButton) -> () in
+//
+//                                                    KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.store_rate_button)
+//                                                    let controller = KPModalViewController()
+//                                                    controller.edgeInset = UIEdgeInsets(top: UIDevice().isSuperCompact ? 32 : 72,
+//                                                                                        left: 0,
+//                                                                                        bottom: 0,
+//                                                                                        right: 0)
+//                                                    controller.cornerRadius = [.topRight, .topLeft]
+//                                                    let ratingViewController = KPRatingViewController()
+//                                                    if self.informationController?.hasRatedDataModel != nil {
+//                                                        ratingViewController.defaultRateModel = self.informationController?.hasRatedDataModel
+//                                                    }
+//
+//                                                    controller.contentController = ratingViewController
+//                                                    controller.presentModalView()
+//        })
+//
+//        commentButton.buttonInfo = HeaderButtonInfo(title: "我要評論",
+//                                                    info: "%d人已評論",
+//                                                    defaultInfo: "尚無評論",
+//                                                    icon: R.image.icon_comment_border()!,
+//                                                    handler: { [unowned self] (headerButton) -> () in
+//                                                        KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.store_comment_button)
+//                                                        let newCommentViewController = KPNewCommentController()
+//                                                        if self.informationController != nil {
+//
+//                                                            if self.informationController?.hasRatedDataModel != nil {
+//                                                                DispatchQueue.main.async {
+//                                                                    newCommentViewController.hideRatingViews = true
+//                                                                }
+//                                                            }
+//
+//                                                            if let comment = self.informationController?.hasCommentDataModel {
+//                                                                let editCommentViewController = KPEditCommentController()
+//                                                                editCommentViewController.defaultCommentModel =  comment
+//                                                                self.informationController?.navigationController?.pushViewController(viewController: editCommentViewController,
+//                                                                                                                                     animated: true,
+//                                                                                                                                     completion: {})
+//                                                            } else {
+//                                                                self.informationController?.navigationController?.pushViewController(viewController:
+//                                                                    newCommentViewController,
+//                                                                                                                                     animated: true,
+//                                                                                                                                     completion: {})
+//
+//                                                            }
+//                                                        }
+//        })
         
     }
     

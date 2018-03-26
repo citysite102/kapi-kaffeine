@@ -100,23 +100,30 @@ extension KPExplorationSectionView: UICollectionViewDataSource, UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ExplorationSectionCell", for: indexPath) as! KPExplorationSectionCell
-//        cell.imageView.image = demoImages[Int(arc4random())%6]
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ExplorationSectionCell",
+                                                      for: indexPath) as! KPExplorationSectionCell
         cell.nameLabel.text = shops[indexPath.row].name
         cell.regionLabel.text = shops[indexPath.row].place
+        cell.collectButton.tag = indexPath.row
+        cell.collectButton.isSelected = KPUserManager.sharedManager.currentUser?.hasFavorited(shops[indexPath.row].identifier) ?? false
         cell.collectButton.addTarget(self,
-                                     action: #selector(handleShopCollected(sender:)),
-                                     for: UIControlEvents.touchUpInside)
+                                     action: #selector(handleShopFavorited(sender:)),
+                                     for: UIControlEvents.primaryActionTriggered)
         if let url = shops[indexPath.row].imageURL_s ?? shops[indexPath.row].imageURL_l {
             cell.imageView.af_setImage(withURL: url)
         } else if let url = shops[indexPath.row].googleURL_s ?? shops[indexPath.row].googleURL_l {
             cell.imageView.af_setImage(withURL: url)
         } else {
-            cell.imageView.image = #imageLiteral(resourceName: "demo_p1")
+            cell.imageView.image = #imageLiteral(resourceName: "demo_3")
         }
         return cell
     }
     
-    @objc func handleShopCollected(sender: UIButton) {
+    @objc func handleShopFavorited(sender: KPBounceButton) {
+        if sender.isSelected {
+            KPServiceHandler.sharedHandler.removeFavoriteCafe(shops[sender.tag])
+        } else {
+            KPServiceHandler.sharedHandler.addFavoriteCafe(shops[sender.tag])
+        }
     }
 }

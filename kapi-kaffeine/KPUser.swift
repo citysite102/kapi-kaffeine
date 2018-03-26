@@ -29,6 +29,8 @@ final class KPUser: NSObject, Mappable {
     var rates: [KPDataModel]?
     var favoritesCount: NSNumber?
     var favorites: [KPDataModel]?
+    var articlesCount: NSNumber?
+    var articles: [KPArticleItem]?
     var visitsCount: NSNumber?
     var visits: [KPDataModel]?
     
@@ -56,6 +58,20 @@ final class KPUser: NSObject, Mappable {
         if reviews != nil {
             for cafeData in reviews! {
                 if cafeData.identifier == cafeID {
+                    return true
+                }
+            }
+        } else {
+            return false
+        }
+        
+        return false
+    }
+    
+    func hasCollected(_ articleID: String) -> Bool {
+        if articles != nil {
+            for articleData in articles! {
+                if articleData.articleID == articleID {
                     return true
                 }
             }

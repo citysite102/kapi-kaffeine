@@ -437,7 +437,6 @@ extension KPExplorationViewController: UICollectionViewDataSource, UICollectionV
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ArticleCell", for: indexPath) as! KPArticleCell
-//        cell.articleHeroImageView.image = demoImages[indexPath.row]
         
         if let url = articleList[indexPath.row].imageURL_s ?? articleList[indexPath.row].imageURL_l  {
             cell.articleHeroImageView.af_setImage(withURL: url)
@@ -458,6 +457,7 @@ extension KPExplorationViewController: UICollectionViewDataSource, UICollectionV
         currentArticleViewController.explorationViewController = self
         currentArticleViewController.imageSource = cell.articleHeroImageView.image
         currentArticleViewController.selectedIndex = indexPath as NSIndexPath
+        currentArticleViewController.currentArticleItem = articleList[indexPath.row]
         
         present(currentArticleViewController,
                 animated: true,
