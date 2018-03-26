@@ -149,7 +149,7 @@ struct KPColorPalette {
         static let mainColor_dark = UIColor(hexString: "#202735")
         
         static let shadow_mainColor = UIColor(hexString: "#2F3746")
-        static let shadow_darkColor = UIColor(hexString: "#111111")
+        static let shadow_darkColor = UIColor(hexString: "#000000")
         static let shadow_mainColor_black = UIColor(hexString: "#2F3746")
         
         static let mainColor_unselect = UIColor(hexString: "#CED8E6")

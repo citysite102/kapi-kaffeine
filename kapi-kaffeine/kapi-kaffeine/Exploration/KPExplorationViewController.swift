@@ -425,7 +425,9 @@ extension KPExplorationViewController: UITableViewDataSource, UITableViewDelegat
     
 }
 
-extension KPExplorationViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+extension KPExplorationViewController: UICollectionViewDataSource,
+UICollectionViewDelegate,
+UICollectionViewDelegateFlowLayout {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -441,11 +443,12 @@ extension KPExplorationViewController: UICollectionViewDataSource, UICollectionV
         if let url = articleList[indexPath.row].imageURL_s ?? articleList[indexPath.row].imageURL_l  {
             cell.articleHeroImageView.af_setImage(withURL: url)
         } else {
-            cell.articleHeroImageView.image = #imageLiteral(resourceName: "demo_p1")
+            cell.articleHeroImageView.image = #imageLiteral(resourceName: "demo_7")
         }
         
         cell.hero.id = "article-\(indexPath.row)"
-        cell.titleLabel.text = articleList[indexPath.row].title
+        cell.titleLabel.setText(text: articleList[indexPath.row].title!,
+                                lineSpacing: 4.0)
         cell.subLabel.text = "\(articleList[indexPath.row].peopleRead) 人已看過"
         return cell
     }
@@ -467,13 +470,13 @@ extension KPExplorationViewController: UICollectionViewDataSource, UICollectionV
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 10
+        return 16
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 10
+        return 16
     }
     
     func collectionView(_ collectionView: UICollectionView,
@@ -493,8 +496,8 @@ extension KPExplorationViewController: UICollectionViewDataSource, UICollectionV
             cell.layoutIfNeeded()
         }
         
-        return CGSize(width: 140,
-                      height: 200)
+        return CGSize(width: 240,
+                      height: 210)
     }
     
     func collectionView(_ collectionView: UICollectionView, targetContentOffsetForProposedContentOffset proposedContentOffset: CGPoint) -> CGPoint {

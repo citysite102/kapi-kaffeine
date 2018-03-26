@@ -26,7 +26,7 @@ class KPArticleCell: UICollectionViewCell {
         
         layer.shadowColor = KPColorPalette.KPMainColor_v2.shadow_darkColor?.cgColor
         layer.shadowOffset = CGSize(width: 0.0, height: 3.0)
-        layer.shadowOpacity = 0.4
+        layer.shadowOpacity = 0.2
         layer.shadowRadius = 8
         
         articleHeroImageView = UIImageView()
@@ -34,34 +34,42 @@ class KPArticleCell: UICollectionViewCell {
         articleHeroImageView.contentMode = .scaleAspectFill
         contentView.addSubview(articleHeroImageView)
         articleHeroImageView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                              "V:|[$self]|"])
+                                                              "V:|[$self]-76-|"])
         
         gradientView = UIView()
         gradientView.alpha = 0.0
-        contentView.addSubview(gradientView)
-        gradientView.addConstraints(fromStringArray: ["V:|[$self]|",
-                                                      "H:|[$self]|"])
+//        contentView.addSubview(gradientView)
+//        gradientView.addConstraints(fromStringArray: ["V:|[$self]|",
+//                                                      "H:|[$self]|"])
+
+        let textContainer = UIView()
+        textContainer.backgroundColor = UIColor.white
+        contentView.addSubview(textContainer)
+        textContainer.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                       "V:[$self(76)]|"])
         
-        
-        subLabel = UILabel()
-        subLabel.font = UIFont.boldSystemFont(ofSize: 10)
-        subLabel.textColor = UIColor.white
-        subLabel.numberOfLines = 0
-        subLabel.text = "1024 人已看過"
-        contentView.addSubview(subLabel)
-        subLabel.addConstraints(fromStringArray: ["H:|-10-[$self]-10-|",
-                                                  "V:[$self]-10-|"])
         
         titleLabel = UILabel()
-        titleLabel.font = UIFont.boldSystemFont(ofSize: 16)
-        titleLabel.textColor = UIColor.white
+        titleLabel.font = UIFont.systemFont(ofSize: KPFontSize.subContent,
+                                            weight: UIFont.Weight.medium)
+        titleLabel.textColor = KPColorPalette.KPMainColor_v2.mainColor
         titleLabel.numberOfLines = 0
         titleLabel.setText(text: "倫敦，一座咖啡香四溢的城市",
                            lineSpacing: 3.0)
-        contentView.addSubview(titleLabel)
-        titleLabel.addConstraints(fromStringArray: ["H:|-10-[$self]-10-|",
-                                                    "V:[$self]-6-[$view0]"],
-                                  views: [subLabel])
+        textContainer.addSubview(titleLabel)
+        titleLabel.addConstraints(fromStringArray: ["H:|-12-[$self]-12-|",
+                                                    "V:|-8-[$self]"])
+        
+        subLabel = UILabel()
+        subLabel.font = UIFont.systemFont(ofSize: 12)
+        subLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_description
+        subLabel.numberOfLines = 0
+        subLabel.text = "1024 人已看過"
+        textContainer.addSubview(subLabel)
+        subLabel.addConstraints(fromStringArray: ["H:|-12-[$self]-12-|",
+                                                  "V:[$view0]-6-[$self]"],
+                                views: [titleLabel])
+        
         
     }
     
