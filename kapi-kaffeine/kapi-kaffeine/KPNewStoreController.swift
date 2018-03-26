@@ -11,13 +11,31 @@ import GooglePlaces
 
 class KPNewStoreController: KPNewStoreBasicController, KPSubtitleInputDelegate {
     
-    func outputValueSet<GMSPlace>(_ controller: KPViewController, value: GMSPlace) {
-        if controller.isKind(of: KPNewStoreSearchViewController.self) {
+    func outputValueSet(_ controller: KPViewController, value: Any) {
+        if controller.isKind(of: KPNewStoreSearchViewController.self),
+            let place = value as? GMSPlace {
             
+            nextButton.isEnabled = true
+            
+            storeNameEditor.contentView.setTitle(place.name, for: .normal)
+            
+            if let addressComponents = place.addressComponents {
+                for component in addressComponents {
+                    if component.type == "administrative_area_level_1" {
+                        locationEditor.contentView.text = component.name
+                    }
+                }
+            }
+
+            addressEditor.contentView.text = place.formattedAddress
+            phoneEditor.contentView.text = place.phoneNumber
+            urlEditor.contentView.text = place.website?.absoluteString
         }
     }
     
-    var storeNameEditor,
+    var storeNameEditor: KPTitleEditorView<UIButton>!
+    
+    var
         locationEditor,
         addressEditor,
         phoneEditor,
@@ -43,13 +61,21 @@ class KPNewStoreController: KPNewStoreBasicController, KPSubtitleInputDelegate {
         navigationItem.leftBarButtonItem = barLeftItem
     
         
-        storeNameEditor = KPTitleEditorView<UITextField>("店家名稱")
-        storeNameEditor.contentView.placeholder = "請輸入店家名稱"
+        storeNameEditor = KPTitleEditorView<UIButton>("店家名稱")
+        storeNameEditor.contentView.addTarget(self,
+                                              action: #selector(handleStoreNameEditButtonOnTap(_:)),
+                                              for: .touchUpInside)
+        storeNameEditor.contentView.setTitleColor(UIColor.black, for: .normal)
+        storeNameEditor.contentView.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7
+        storeNameEditor.contentView.layer.cornerRadius = 5
+        storeNameEditor.contentView.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+        storeNameEditor.contentView.contentHorizontalAlignment = .left
+        storeNameEditor.contentView.titleEdgeInsets.left = 10
+//        storeNameEditor.contentView.contentEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
+//        storeNameEditor.contentView.placeholder = "請輸入店家名稱"
         scrollContainer.addSubview(storeNameEditor)
         storeNameEditor.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|",
                                                          "V:|-20-[$self]"])
-        
-        storeNameEditor.contentView.addTarget(self, action: #selector(KPNewStoreController.handleStoreNameDidChanged(_:)), for: .editingChanged)
         
         
         locationEditor = KPTitleEditorView<UITextField>("所在位置")
@@ -103,18 +129,21 @@ class KPNewStoreController: KPNewStoreBasicController, KPSubtitleInputDelegate {
         
     }
     
+    @objc func handleStoreNameEditButtonOnTap(_ sender: UIButton) {
+        let storeNameSearchController = KPNewStoreSearchViewController()
+        let navController = UINavigationController(rootViewController: storeNameSearchController)
+        storeNameSearchController.delegate = self
+        present(navController, animated: true, completion: nil)
+    }
+    
     @objc func handleNextButtonOnTap(_ sender: UIButton) {
         let detailInfoViewController = KPNewStoreDetailInfoViewController()
-        detailInfoViewController.title = storeNameEditor.contentView.text
+        detailInfoViewController.title = storeNameEditor.contentView.titleLabel?.text
         navigationController?.pushViewController(detailInfoViewController, animated: true)
     }
 
     @objc func handleCancelButtonOnTap(_ sender: UIBarButtonItem) {
         appModalController()?.dismissControllerWithDefaultDuration()
-    }
-    
-    @objc func handleStoreNameDidChanged(_ sender: UITextField) {
-        nextButton.isEnabled = !sender.text!.isEmpty
     }
 
 }

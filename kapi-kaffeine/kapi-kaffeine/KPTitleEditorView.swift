@@ -27,7 +27,6 @@ class KPTitleEditorView<T: UIView>: UIView, UITextFieldDelegate {
             contentView = T()
         }
         
-        
         setupUI()
     }
     

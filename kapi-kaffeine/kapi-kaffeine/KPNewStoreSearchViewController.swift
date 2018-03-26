@@ -10,7 +10,7 @@ import UIKit
 import GooglePlaces
 
 protocol KPSubtitleInputDelegate: class {
-    func outputValueSet<T>(_ controller: KPViewController,  value: T)
+    func outputValueSet(_ controller: KPViewController,  value: Any)
 }
 
 class KPNewStoreSearchViewController: KPViewController {
@@ -20,7 +20,7 @@ class KPNewStoreSearchViewController: KPViewController {
     weak open var delegate: KPSubtitleInputDelegate?
     var dismissButton: UIButton!
     var sendButton: UIButton!
-    var tableView: UITableView!
+    let tableView = UITableView()
     lazy var separator: UIView = {
         let view = UIView()
         view.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
@@ -53,10 +53,8 @@ class KPNewStoreSearchViewController: KPViewController {
         
         configureSearchController()
         
-        tableView = UITableView()
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.separatorColor = UIColor.clear
         view.addSubview(self.tableView)
         tableView.addConstraints(fromStringArray: ["V:|[$self]|",
                                                    "H:|[$self]|"])
@@ -83,13 +81,25 @@ class KPNewStoreSearchViewController: KPViewController {
         definesPresentationContext = true
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        searchController.searchBar.becomeFirstResponder()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if #available(iOS 11.0, *) {
+            navigationItem.hidesSearchBarWhenScrolling = false
+        }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if #available(iOS 11.0, *) {
+            navigationItem.hidesSearchBarWhenScrolling = true
+        }
+        searchController.searchBar.becomeFirstResponder()
+    }
+
+    
     @objc func handleCancelButtonOnTap() {
-        appModalController()?.dismissControllerWithDefaultDuration()
+        dismiss(animated: true, completion: nil)
+//        appModalController()?.dismissControllerWithDefaultDuration()
     }
     
 //    @objc func handleSendButtonOnTapped() {
@@ -121,6 +131,7 @@ extension KPNewStoreSearchViewController: UITextFieldDelegate, UISearchBarDelega
 //        }
 //        return true
 //    }
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.count > 0 {
             placeAutoComplete(searchText)
@@ -192,8 +203,12 @@ extension KPNewStoreSearchViewController: UITableViewDelegate, UITableViewDataSo
 //        tableView.deselectRow(at: tableView.indexPathForSelectedRow!,
 //                              animated: false)
 //        delegate?.outputValueSet(self)
-        delegate?.outputValueSet(self, value: apiContents)
-        appModalController()?.dismissControllerWithDefaultDuration()
+        searchController.isActive = false
+        delegate?.outputValueSet(self, value: apiContents[indexPath.row])
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
+            self.dismiss(animated: true, completion: nil)
+        }
+//        appModalController()?.dismissControllerWithDefaultDuration()
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {

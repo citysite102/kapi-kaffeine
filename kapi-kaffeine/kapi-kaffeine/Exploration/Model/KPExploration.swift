@@ -18,7 +18,7 @@ class KPExplorationSection: NSObject, Mappable {
     
     var shops: [KPDataModel] = []
     
-    
+
     
     required init?(map: Map) {
         
