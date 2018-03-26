@@ -437,7 +437,14 @@ extension KPExplorationViewController: UICollectionViewDataSource, UICollectionV
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ArticleCell", for: indexPath) as! KPArticleCell
-        cell.articleHeroImageView.image = demoImages[indexPath.row]
+//        cell.articleHeroImageView.image = demoImages[indexPath.row]
+        
+        if let url = articleList[indexPath.row].imageURL_s ?? articleList[indexPath.row].imageURL_l  {
+            cell.articleHeroImageView.af_setImage(withURL: url)
+        } else {
+            cell.articleHeroImageView.image = #imageLiteral(resourceName: "demo_p1")
+        }
+        
         cell.hero.id = "article-\(indexPath.row)"
         cell.titleLabel.text = articleList[indexPath.row].title
         cell.subLabel.text = "\(articleList[indexPath.row].peopleRead) 人已看過"

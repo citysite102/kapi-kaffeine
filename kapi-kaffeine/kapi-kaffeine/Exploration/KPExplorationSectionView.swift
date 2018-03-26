@@ -20,12 +20,12 @@ class KPExplorationSectionView: UITableViewCell {
         }
     }
     
-    let demoImages = [R.image.demo_1(),
-                      R.image.demo_2(),
-                      R.image.demo_3(),
-                      R.image.demo_4(),
-                      R.image.demo_5(),
-                      R.image.demo_6()]
+//    let demoImages = [R.image.demo_1(),
+//                      R.image.demo_2(),
+//                      R.image.demo_3(),
+//                      R.image.demo_4(),
+//                      R.image.demo_5(),
+//                      R.image.demo_6()]
     var shops: [KPExplorationShop] = [] {
         didSet {
             collectionView.reloadData()
@@ -101,14 +101,18 @@ extension KPExplorationSectionView: UICollectionViewDataSource, UICollectionView
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ExplorationSectionCell", for: indexPath) as! KPExplorationSectionCell
-        cell.imageView.image = demoImages[Int(arc4random())%6]
+//        cell.imageView.image = demoImages[Int(arc4random())%6]
         cell.nameLabel.text = shops[indexPath.row].name
         cell.regionLabel.text = shops[indexPath.row].place
         cell.collectButton.addTarget(self,
                                      action: #selector(handleShopCollected(sender:)),
                                      for: UIControlEvents.touchUpInside)
-        if let url = shops[indexPath.row].imageURL {
-            cell.imageView.af_setImage(withURL: URL(string: url)!)
+        if let url = shops[indexPath.row].imageURL_s ?? shops[indexPath.row].imageURL_l {
+            cell.imageView.af_setImage(withURL: url)
+        } else if let url = shops[indexPath.row].googleURL_s ?? shops[indexPath.row].googleURL_l {
+            cell.imageView.af_setImage(withURL: url)
+        } else {
+            cell.imageView.image = #imageLiteral(resourceName: "demo_p1")
         }
         return cell
     }

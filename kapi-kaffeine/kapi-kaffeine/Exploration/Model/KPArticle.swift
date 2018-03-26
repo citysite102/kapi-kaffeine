@@ -14,6 +14,10 @@ class KPArticleItem: NSObject, Mappable {
     var articleID: String!
     var title: String?
     var peopleRead: Int = 0
+    var articleDescription: String = ""
+    var place: String = ""
+    var imageURL_s: URL?
+    var imageURL_l: URL?
 
     required init?(map: Map) {
         if map.JSON["article_id"] == nil {
@@ -22,9 +26,13 @@ class KPArticleItem: NSObject, Mappable {
     }
     
     func mapping(map: Map) {
-        articleID       <-  map["article_id"]
-        title           <-  map["title"]
-        peopleRead      <-  map["people_read"]
+        articleID           <-  map["article_id"]
+        title               <-  map["title"]
+        peopleRead          <-  map["people_read"]
+        articleDescription  <-  map["description"]
+        place               <-  map["place"]
+        imageURL_s          <-  (map["covers.kapi_s"], URLTransform())
+        imageURL_l          <-  (map["covers.kapi_l"], URLTransform())
     }
     
 }
