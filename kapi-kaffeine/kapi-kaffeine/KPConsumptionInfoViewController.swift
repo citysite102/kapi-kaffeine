@@ -8,44 +8,13 @@
 
 import UIKit
 
-class KPConsumptionInfoViewController: KPViewController {
+class KPConsumptionInfoViewController: KPNewStoreBasicController {
 
-    
-    var scrollContainer: UIView!
-    var scrollView: UIScrollView!
-    var buttonContainer: UIView!
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = UIColor.white
-        
         navigationItem.leftBarButtonItem = nil
-        
-        
-        scrollView = UIScrollView()
-        scrollView.backgroundColor = KPColorPalette.KPMainColor_v2.whiteColor_level1
-        view.addSubview(scrollView)
-        
-        scrollView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor).isActive = true
-        scrollView.addConstraint(from: "H:|[$self]|")
-        
-        scrollContainer = UIView()
-        scrollContainer.backgroundColor = KPColorPalette.KPMainColor_v2.whiteColor_level1
-        scrollView.addSubview(scrollContainer)
-        scrollContainer.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"])
-        scrollContainer.addConstraintForHavingSameWidth(with: view)
-        
-        buttonContainer = UIView()
-        buttonContainer.backgroundColor = KPColorPalette.KPMainColor_v2.whiteColor_level1
-        view.addSubview(buttonContainer)
-        buttonContainer.layer.borderColor = KPColorPalette.KPBackgroundColor.grayColor_level6?.cgColor
-        buttonContainer.layer.borderWidth = 1
-        
-        buttonContainer.addConstraints(fromStringArray: ["H:|-(-1)-[$self]-(-1)-|", "V:[$view0][$self(60)]"],
-                                       views: [scrollView])
-        buttonContainer.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor).isActive = true
         
         
         let submitButton = UIButton(type: .custom)
@@ -66,50 +35,54 @@ class KPConsumptionInfoViewController: KPViewController {
                                   views: [submitButton])
         backButton.addConstraintForHavingSameWidth(with: submitButton)
         backButton.addTarget(self, action: #selector(KPNewStoreDetailInfoViewController.handleBackButtonOnTap(_:)), for: .touchUpInside)
-        
-        
-        let ratingTitleLabel = UILabel()
-        ratingTitleLabel.text = "整體消費體驗"
-        ratingTitleLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
-        ratingTitleLabel.font = UIFont.systemFont(ofSize: 20,
-                                                  weight: UIFont.Weight.light)
-        scrollContainer.addSubview(ratingTitleLabel)
-        ratingTitleLabel.addConstraints(fromStringArray: ["H:|-20-[$self]", "V:|-20-[$self]"])
 
         
-        let ratingView = KPRatingView()
-        scrollContainer.addSubview(ratingView)
-        ratingView.addConstraints(fromStringArray: ["H:|-20-[$self]", "V:[$view0]-10-[$self]"],
-                                  views: [ratingTitleLabel])
-        
-        let commentTitleLabel = UILabel()
-        commentTitleLabel.text = "留下評論"
-        commentTitleLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
-        commentTitleLabel.font = UIFont.systemFont(ofSize: 20,
-                                                   weight: UIFont.Weight.light)
-        scrollContainer.addSubview(commentTitleLabel)
-        commentTitleLabel.addConstraints(fromStringArray: ["H:|-20-[$self]", "V:[$view0]-20-[$self]"],
-                                         views: [ratingView])
+        let ratingTitleEditor = KPTitleEditorView<KPRatingView>("整體消費體驗")
+        scrollContainer.addSubview(ratingTitleEditor)
+        ratingTitleEditor.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            ratingTitleEditor.leftAnchor.constraint(equalTo: scrollContainer.leftAnchor, constant: 20),
+            ratingTitleEditor.rightAnchor.constraint(equalTo: scrollContainer.rightAnchor, constant: -20),
+            ratingTitleEditor.topAnchor.constraint(equalTo: scrollContainer.topAnchor, constant: 20)
+        ])
         
         
-        let commentTextView = UITextView()
-        commentTextView.font = UIFont.systemFont(ofSize: 16)
-        scrollContainer.addSubview(commentTextView)
-        commentTextView.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|", "V:[$view0]-4-[$self(140)]"],
-                                       views: [commentTitleLabel])
-        commentTextView.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7
-        commentTextView.layer.cornerRadius = 5
+        let commentTitleEditor = KPTitleEditorView<UITextView>("留下評論")
+        scrollContainer.addSubview(commentTitleEditor)
+        commentTitleEditor.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            commentTitleEditor.leftAnchor.constraint(equalTo: scrollContainer.leftAnchor, constant: 20),
+            commentTitleEditor.rightAnchor.constraint(equalTo: scrollContainer.rightAnchor, constant: -20),
+            commentTitleEditor.topAnchor.constraint(equalTo: ratingTitleEditor.bottomAnchor, constant: 20),
+            commentTitleEditor.contentView.heightAnchor.constraint(equalToConstant: 140)
+        ])
         
-        let drinkPriceEditor = KPEditorView(type: .Text,
-                                            title: "飲品價位",
-                                            placeHolder: "請選擇")
+        
+//        let commentTitleLabel = UILabel()
+//        commentTitleLabel.text = "留下評論"
+//        commentTitleLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
+//        commentTitleLabel.font = UIFont.systemFont(ofSize: 20,
+//                                                   weight: UIFont.Weight.light)
+//        scrollContainer.addSubview(commentTitleLabel)
+//        commentTitleLabel.addConstraints(fromStringArray: ["H:|-20-[$self]", "V:[$view0]-20-[$self]"],
+//                                         views: [ratingTitleEditor])
+//
+//
+//        let commentTextView = UITextView()
+//        commentTextView.font = UIFont.systemFont(ofSize: 16)
+//        scrollContainer.addSubview(commentTextView)
+//        commentTextView.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|", "V:[$view0]-4-[$self(140)]"],
+//                                       views: [commentTitleLabel])
+//        commentTextView.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7
+//        commentTextView.layer.cornerRadius = 5
+        
+        
+        let drinkPriceEditor = KPTitleEditorView<UITextField>("飲品價位")
         scrollContainer.addSubview(drinkPriceEditor)
         drinkPriceEditor.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|", "V:[$view0]-20-[$self]"],
-                                        views: [commentTextView])
+                                        views: [commentTitleEditor])
         
-        let foodPriceEditor = KPEditorView(type: .Text,
-                                           title: "餐點價位",
-                                           placeHolder: "請選擇")
+        let foodPriceEditor = KPTitleEditorView<UITextField>("餐點價位")
         scrollContainer.addSubview(foodPriceEditor)
         foodPriceEditor.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|", "V:[$view0]-20-[$self]-20-|"],
                                        views: [drinkPriceEditor])

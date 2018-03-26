@@ -14,15 +14,26 @@ class KPArticleQuoteView: UIView {
     
     var quoteContent: String! {
         didSet {
-            quoteTextView.setText(text: quoteContent,
-                                  lineSpacing: 5.0)
+            quoteTextView.text = quoteContent
             setNeedsLayout()
+//            quoteTextView.setText(text: quoteContent,
+//                                  lineSpacing: 5.0)
+//            setNeedsLayout()
         }
     }
     
     var sideHintColor: UIColor = KPColorPalette.KPMainColor_v2.redColor! {
         didSet {
             sideHintView.backgroundColor = sideHintColor
+        }
+    }
+    
+    var font: UIFont? {
+        set {
+            quoteTextView.font = newValue
+        }
+        get {
+            return quoteTextView.font
         }
     }
     

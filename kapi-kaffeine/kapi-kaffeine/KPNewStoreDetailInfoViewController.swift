@@ -8,10 +8,10 @@
 
 import UIKit
 
-class KPNewStoreDetailInfoViewController: KPViewController {
+class KPNewStoreDetailInfoViewController: KPNewStoreBasicController {
     
-    fileprivate var scrollView: UIScrollView!
-    fileprivate var scrollContainerView: UIView!
+//    fileprivate var scrollView: UIScrollView!
+//    fileprivate var scrollContainer: UIView!
     
     fileprivate var comsumptionInfoButton: KPNewStoreDetailCheckButton!
     fileprivate var businessTimeButton: KPNewStoreDetailCheckButton!
@@ -21,7 +21,6 @@ class KPNewStoreDetailInfoViewController: KPViewController {
         super.viewDidLoad()
 
         view.backgroundColor = UIColor.white
-        //        navigationController?.navigationBar.shadowImage = UIImage()
         
         let barLeftItem = UIBarButtonItem(title: "取消",
                                           style: .plain,
@@ -32,42 +31,11 @@ class KPNewStoreDetailInfoViewController: KPViewController {
         
         navigationItem.leftBarButtonItem = barLeftItem
         
-        let buttonContainer = UIView()
-        buttonContainer.backgroundColor = UIColor.white
-        view.addSubview(buttonContainer)
-        
-        buttonContainer.addConstraints(fromStringArray: ["H:|-(-1)-[$self]-(-1)-|", "V:[$self(60)]"])
-        buttonContainer.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor).isActive = true
-        
-        buttonContainer.layer.borderColor = KPColorPalette.KPBackgroundColor.grayColor_level6?.cgColor
-        buttonContainer.layer.borderWidth = 1
-        
-        
-        
-        scrollView = UIScrollView()
-        view.addSubview(scrollView)
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor).isActive = true
-        scrollView.addConstraint(from: "V:[$self][$view0]", views:[buttonContainer])
-        if #available(iOS 11.0, *) {
-            scrollView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
-            scrollView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
-        } else {
-            scrollView.addConstraint(from: "H:|[$self]|")
-        }
-
-        
-        
-        scrollContainerView = UIView()
-        scrollView.addSubview(scrollContainerView)
-        scrollContainerView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"])
-        scrollContainerView.addConstraintForHavingSameWidth(with: scrollView)
-        
         
         let detailTitleLabel = UILabel()
         detailTitleLabel.text = "提供店家相關資訊"
         detailTitleLabel.font = UIFont.boldSystemFont(ofSize: 20)
-        scrollContainerView.addSubview(detailTitleLabel)
+        scrollContainer.addSubview(detailTitleLabel)
         detailTitleLabel.addConstraints(fromStringArray: ["H:|-20-[$self]|", "V:|-20-[$self]"])
         
         
@@ -75,7 +43,7 @@ class KPNewStoreDetailInfoViewController: KPViewController {
         comsumptionInfoButton.addTarget(self,
                                         action: #selector(KPNewStoreDetailInfoViewController.handleInfoButtonOnTap(_:)),
                                         for: .touchUpInside)
-        scrollContainerView.addSubview(comsumptionInfoButton)
+        scrollContainer.addSubview(comsumptionInfoButton)
         comsumptionInfoButton.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$view0]-20-[$self(70)]"],
                                            views: [detailTitleLabel])
         
@@ -83,7 +51,7 @@ class KPNewStoreDetailInfoViewController: KPViewController {
         businessTimeButton.addTarget(self,
                                     action: #selector(KPNewStoreDetailInfoViewController.handleInfoButtonOnTap(_:)),
                                     for: .touchUpInside)
-        scrollContainerView.addSubview(businessTimeButton)
+        scrollContainer.addSubview(businessTimeButton)
         businessTimeButton.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$view0][$self(70)]"],
                                           views: [comsumptionInfoButton])
         
@@ -91,20 +59,20 @@ class KPNewStoreDetailInfoViewController: KPViewController {
         additionalInfoButton.addTarget(self,
                                        action: #selector(KPNewStoreDetailInfoViewController.handleInfoButtonOnTap(_:)),
                                        for: .touchUpInside)
-        scrollContainerView.addSubview(additionalInfoButton)
+        scrollContainer.addSubview(additionalInfoButton)
         additionalInfoButton.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$view0][$self(70)]"],
                                         views: [businessTimeButton])
         
         
         
-        let photoUploadView = KPPhotoUploadView("上傳照片")
-        scrollContainerView.addSubview(photoUploadView)
-        photoUploadView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$view0][$self]"],
+        let photoUploadView = KPTitleEditorView<KPPhotoUploadView>("上傳照片")
+        scrollContainer.addSubview(photoUploadView)
+        photoUploadView.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|", "V:[$view0]-20-[$self]"],
                                        views: [additionalInfoButton])
         
-        let menuUploadView = KPPhotoUploadView("上傳菜單")
-        scrollContainerView.addSubview(menuUploadView)
-        menuUploadView.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$view0][$self]|"],
+        let menuUploadView = KPTitleEditorView<KPPhotoUploadView>("上傳菜單")
+        scrollContainer.addSubview(menuUploadView)
+        menuUploadView.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|", "V:[$view0]-20-[$self]|"],
                                       views: [photoUploadView])
         
         

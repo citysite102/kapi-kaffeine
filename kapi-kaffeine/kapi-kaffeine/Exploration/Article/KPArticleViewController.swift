@@ -222,7 +222,6 @@ class KPArticleViewController: KPViewController {
         collectButton.addConstraint(from: "H:|-16-[$self]")
         
         loadArticleDataWithID(articleID)
-//        addSampleContent()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -245,10 +244,6 @@ class KPArticleViewController: KPViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-//        if scrollContainer != nil {
-//            print(scrollContainer.contentSize)
-//        }
-//        print(articleContainer)
     }
 
     override func didReceiveMemoryWarning() {
@@ -267,17 +262,7 @@ class KPArticleViewController: KPViewController {
                                    delay: 0.2,
                                    options: UIViewAnimationOptions.curveEaseOut,
                                    animations: {
-//                                    self.view.backgroundColor = UIColor.white
-//                                    self.articleTitleLabel.alpha = 1.0
                                     self.dismissButton.alpha = 1.0
-//                                    self.articleSubTitleLabel.alpha = 1.0
-//                                    self.articleFirstParagraphTextView.alpha = 1.0
-//                                    self.scrollDownButton.alpha = 0.8
-//                                    self.articleTitleLabel.transform = CGAffineTransform.identity
-//                                    self.articleSubTitleLabel.transform = CGAffineTransform.identity
-//                                    self.articleFirstParagraphTextView.transform = CGAffineTransform.identity
-//                                    self.scrollDownButton.transform = CGAffineTransform.identity
-                                    
                     }, completion: { (_) in
                         self.animationHasPerformed = true
                     })
@@ -314,16 +299,8 @@ class KPArticleViewController: KPViewController {
                 })
             }
             
-            let titleLabel = UILabel()
-            titleLabel.numberOfLines = 0
-            if article.title.bold {
-                titleLabel.font = UIFont.boldSystemFont(ofSize: article.title.fontSize)
-            } else {
-                titleLabel.font = UIFont.systemFont(ofSize: article.title.fontSize)
-            }
-            
-            titleLabel.text = article.title.value
-            
+            let titleLabel = self.articleLabel(withElement: article.title)
+
             self.articleContainer.addSubview(titleLabel)
             titleLabel.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
@@ -334,122 +311,178 @@ class KPArticleViewController: KPViewController {
             
             
             var previousView: UIView = titleLabel
+            var spacing: CGFloat = 5
             for element in article.contents {
-
-                let contentLabel = UILabel()
-                contentLabel.numberOfLines = 0
-                if element.bold {
-                    contentLabel.font = UIFont.boldSystemFont(ofSize: element.fontSize)
-                } else {
-                    contentLabel.font = UIFont.systemFont(ofSize: element.fontSize)
+                
+                if element.type == .Br {
+                    spacing = 32
+                    continue
                 }
+                
+                var currentView: UIView?
+                
+                if element.type == .Image {
+                    
+                    let imageView = UIImageView()
+                    imageView.contentMode = .center
+                    if let url = URL(string: element.value) {
+                        imageView.af_setImage(withURL: url)
+                    }
+                    
+                    currentView = imageView
+                    
+                } else if element.type == .Quote {
+                    
+                    let quoteView = KPArticleQuoteView()
+                    quoteView.quoteContent = element.values[0].value
+                    
+                    if element.bold {
+                        quoteView.font = UIFont.boldSystemFont(ofSize: element.fontSize)
+                    } else {
+                        quoteView.font = UIFont.systemFont(ofSize: element.fontSize)
+                    }
+                    
+                    currentView = quoteView
+                    
+                } else if element.type == .Cafe {
+                    for subContent in element.content {
+                        
+                        if subContent.type == .Br {
+                            spacing = 32
+                            continue
+                        }
+                        
+                        var currentSubView: UIView!
+                        
+                        if subContent.type == .Image {
+                            
+                            let imageView = UIImageView()
+                            imageView.contentMode = .center
+                            if let url = URL(string: subContent.value) {
+                                imageView.af_setImage(withURL: url)
+                            }
+                            
+                            currentSubView = imageView
+                            
+                        } else if subContent.type == .Quote {
+                            
+                            let quoteView = KPArticleQuoteView()
+                            quoteView.quoteContent = subContent.values[0].value
+                            
+                            currentSubView = quoteView
+                            
+                        } else {
+                        
+                            let contentLabel = self.articleLabel(withElement: subContent)
+                            currentSubView = contentLabel
+                        }
+                        
+                        self.articleContainer.addSubview(currentSubView)
+                        currentSubView.translatesAutoresizingMaskIntoConstraints = false
+                        NSLayoutConstraint.activate([
+                            currentSubView.leftAnchor.constraint(equalTo: self.articleContainer.leftAnchor, constant: 16),
+                            currentSubView.rightAnchor.constraint(equalTo: self.articleContainer.rightAnchor, constant: -16),
+                            currentSubView.topAnchor.constraint(equalTo: previousView.bottomAnchor, constant: spacing)
+                        ])
+                        
+                        previousView = currentSubView
+                        spacing = 5
+                        
+                    }
+                    
+                    if let buttonElement = element.button {
+                        
+                        let button = UIButton()
 
-                contentLabel.text = element.value
-
-                self.articleContainer.addSubview(contentLabel)
-                contentLabel.translatesAutoresizingMaskIntoConstraints = false
-                NSLayoutConstraint.activate([
-                    contentLabel.leftAnchor.constraint(equalTo: self.articleContainer.leftAnchor, constant: 16),
-                    contentLabel.rightAnchor.constraint(equalTo: self.articleContainer.rightAnchor, constant: -16),
-                    contentLabel.topAnchor.constraint(equalTo: previousView.bottomAnchor, constant: previousView == titleLabel ? 24 : 16)
-                ])
-
-                previousView = contentLabel
+                        if element.bold {
+                            button.titleLabel?.font = UIFont.boldSystemFont(ofSize: buttonElement.fontSize)
+                        } else {
+                            button.titleLabel?.font = UIFont.systemFont(ofSize: buttonElement.fontSize)
+                        }
+                        
+                        button.setTitle(buttonElement.value, for: .normal)
+                        button.setTitleColor(buttonElement.color, for: .normal)
+                        
+                        button.layer.borderColor = buttonElement.color.cgColor
+                        button.layer.borderWidth = 1
+                        
+                        currentView = button
+                    }
+                    
+                } else {
+                    let contentLabel = self.articleLabel(withElement: element)
+                    currentView = contentLabel
+                }
+                
+                
+                
+                if let currentView = currentView {
+                
+                    self.articleContainer.addSubview(currentView)
+                    currentView.translatesAutoresizingMaskIntoConstraints = false
+                    NSLayoutConstraint.activate([
+                        currentView.leftAnchor.constraint(equalTo: self.articleContainer.leftAnchor, constant: 16),
+                        currentView.rightAnchor.constraint(equalTo: self.articleContainer.rightAnchor, constant: -16),
+                        currentView.topAnchor.constraint(equalTo: previousView.bottomAnchor, constant: spacing)
+                    ])
+                    
+                    previousView = currentView
+                    spacing = 5
+                }
+                
             }
 
             NSLayoutConstraint.activate([
                 previousView.bottomAnchor.constraint(equalTo: self.articleContainer.bottomAnchor, constant: -24)
             ])
             
-            print(self.articleContainer)
-            print(self.scrollContainer.contentSize)
-            
         }
     }
     
-    var sampleArticleTitleLabel: UILabel!
-    var sampleArticleSubTitleLabel: UILabel!
-    var sampleFirstParagraphTextView: UITextView!
-    var sampleQuoteView: KPArticleQuoteView!
-    var sampleSecondParagraphTextView: UITextView!
-    var sampleImageView: UIImageView!
-    var sampleThirdParagraphTextView: UITextView!
     
-    func addSampleContent() {
+    func articleLabel(withElement element: KPArticleElement) -> UILabel {
         
-        sampleArticleTitleLabel = UILabel()
-        sampleArticleTitleLabel.font = UIFont.boldSystemFont(ofSize: 32)
-        sampleArticleTitleLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_title
-        sampleArticleTitleLabel.numberOfLines = 0
-        sampleArticleTitleLabel.setText(text: "一窺東倫敦新興咖啡社群 - Hello Hackney",
-                                        lineSpacing: 3.6)
-        articleContainer.addSubview(sampleArticleTitleLabel)
-        sampleArticleTitleLabel.addConstraints(fromStringArray: ["V:|-24-[$self]",
-                                                                 "H:|-16-[$self]-16-|"])
+        let contentLabel = UILabel()
+        contentLabel.numberOfLines = 0
+        if element.bold {
+            contentLabel.font = UIFont.boldSystemFont(ofSize: element.fontSize)
+        } else {
+            contentLabel.font = UIFont.systemFont(ofSize: element.fontSize)
+        }
         
-        sampleArticleSubTitleLabel = UILabel()
-        sampleArticleSubTitleLabel.font = UIFont.boldSystemFont(ofSize: 18)
-        sampleArticleSubTitleLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_title
-        sampleArticleSubTitleLabel.setText(text: "這絕對是今年喝過最好喝的咖啡！",
-                                     lineSpacing: 3.6)
-        sampleArticleSubTitleLabel.numberOfLines = 0
-        articleContainer.addSubview(sampleArticleSubTitleLabel)
-        sampleArticleSubTitleLabel.addConstraints(fromStringArray: ["V:[$view0]-24-[$self]",
-                                                              "H:|-16-[$self]-16-|"],
-                                            views: [sampleArticleTitleLabel])
+        if element.type == .MultipleStyleText {
+            var string = ""
+            for subElement in element.values {
+                string = "\(string)\(subElement.value)"
+            }
+            let attributedString = NSMutableAttributedString(string: string)
+            
+            var index = 0
+            for subElement in element.values {
+                let length = subElement.value.count
+                attributedString.addAttribute(NSAttributedStringKey.foregroundColor,
+                                              value: subElement.color ,
+                                              range: NSRange.init(location: index, length: length))
+                index = index + length
+            }
+            
+            let descriptionStyle = NSMutableParagraphStyle()
+            
+            descriptionStyle.lineBreakMode = contentLabel.lineBreakMode
+            descriptionStyle.alignment = contentLabel.textAlignment
+            descriptionStyle.lineSpacing = 5.0
+            
+            attributedString.addAttributes([NSAttributedStringKey.paragraphStyle: descriptionStyle],
+                                           range: NSRange(location: 0, length: attributedString.length))
+            
+            contentLabel.attributedText = attributedString
+        } else {
+            contentLabel.setText(text: element.value, lineSpacing: 5.0)
+        }
         
-        sampleFirstParagraphTextView = UITextView()
-        sampleFirstParagraphTextView.font = UIFont.systemFont(ofSize: 16)
-        sampleFirstParagraphTextView.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
-        sampleFirstParagraphTextView.backgroundColor = UIColor.clear
-        sampleFirstParagraphTextView.isScrollEnabled = false
-        sampleFirstParagraphTextView.setText(text: "歐洲的咖啡店風格總是強烈的讓人移不開目光，即使身處在倫敦這樣的忙碌城市裡，竄入鼻腔內的咖啡香，不經意地就能停住路人的快速步伐。",
-                                              lineSpacing: 4.0)
-        articleContainer.addSubview(sampleFirstParagraphTextView)
-        sampleFirstParagraphTextView.addConstraints(fromStringArray: ["V:[$view0]-16-[$self]",
-                                                                      "H:|-16-[$self]-16-|"],
-                                                    views: [sampleArticleSubTitleLabel])
-        
-        sampleQuoteView = KPArticleQuoteView()
-        sampleQuoteView.quoteContent = "倫敦處處是咖啡廳，這句話真是一點都不過份。"
-        articleContainer.addSubview(sampleQuoteView)
-        sampleQuoteView.addConstraints(fromStringArray: ["V:[$view0]-16-[$self]",
-                                                          "H:|-20-[$self]-20-|"],
-                                        views: [sampleFirstParagraphTextView])
-        
-        sampleSecondParagraphTextView = UITextView()
-        sampleSecondParagraphTextView.font = UIFont.systemFont(ofSize: 16)
-        sampleSecondParagraphTextView.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
-        sampleSecondParagraphTextView.backgroundColor = UIColor.clear
-        sampleSecondParagraphTextView.isScrollEnabled = false
-        sampleSecondParagraphTextView.setText(text: "Kapi想介紹你一個沒有攝政街喧鬧、沒有牛津街擁擠的咖啡社群。讓你隨著找尋好咖啡的路途，愜意探索倫敦當地社區。",
-                                             lineSpacing: 4.0)
-        articleContainer.addSubview(sampleSecondParagraphTextView)
-        sampleSecondParagraphTextView.addConstraints(fromStringArray: ["V:[$view0]-16-[$self]",
-                                                                      "H:|-16-[$self]-16-|"],
-                                                    views: [sampleQuoteView])
-        
-        sampleImageView = UIImageView(image: R.image.demo_3())
-        sampleImageView.contentMode = .scaleAspectFill
-        sampleImageView.clipsToBounds = true
-        articleContainer.addSubview(sampleImageView)
-        sampleImageView.addConstraints(fromStringArray: ["V:[$view0]-16-[$self(<=300)]",
-                                                                       "H:|-16-[$self]-16-|"],
-                                                     views: [sampleSecondParagraphTextView])
-        
-        sampleThirdParagraphTextView = UITextView()
-        sampleThirdParagraphTextView.font = UIFont.systemFont(ofSize: 16)
-        sampleThirdParagraphTextView.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
-        sampleThirdParagraphTextView.backgroundColor = UIColor.clear
-        sampleThirdParagraphTextView.isScrollEnabled = false
-        sampleThirdParagraphTextView.setText(text: "Hackney是倫敦近期發展重點行政區之一，它有著倫敦東區的藝術氣息，聚集了想要翻舊創新的年輕人，在這老老的社區裡，用他們對生活的美學，創造大大的新改變。",
-                                              lineSpacing: 4.0)
-        articleContainer.addSubview(sampleThirdParagraphTextView)
-        sampleThirdParagraphTextView.addConstraints(fromStringArray: ["V:[$view0]-16-[$self]",
-                                                                       "H:|-16-[$self]-16-|"],
-                                                     views: [sampleImageView])
-        
+        return contentLabel
     }
+    
 }
 
 extension KPArticleViewController: UIScrollViewDelegate {
@@ -478,8 +511,6 @@ extension KPArticleViewController: UIScrollViewDelegate {
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
-        print("Scroll Offset:\(scrollView.contentOffset.y)")
         
         // 處理 Tool Bar
         UIView.animate(withDuration: 0.2,

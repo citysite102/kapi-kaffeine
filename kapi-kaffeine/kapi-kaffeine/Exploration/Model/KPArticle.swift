@@ -14,6 +14,10 @@ class KPArticleItem: NSObject, Mappable {
     var articleID: String!
     var title: String?
     var peopleRead: Int = 0
+    var articleDescription: String = ""
+    var place: String = ""
+    var imageURL_s: URL?
+    var imageURL_l: URL?
 
     required init?(map: Map) {
         if map.JSON["article_id"] == nil {
@@ -22,9 +26,13 @@ class KPArticleItem: NSObject, Mappable {
     }
     
     func mapping(map: Map) {
-        articleID       <-  map["article_id"]
-        title           <-  map["title"]
-        peopleRead      <-  map["people_read"]
+        articleID           <-  map["article_id"]
+        title               <-  map["title"]
+        peopleRead          <-  map["people_read"]
+        articleDescription  <-  map["description"]
+        place               <-  map["place"]
+        imageURL_s          <-  (map["covers.kapi_s"], URLTransform())
+        imageURL_l          <-  (map["covers.kapi_l"], URLTransform())
     }
     
 }
@@ -64,8 +72,12 @@ class KPArticleElement: NSObject, Mappable {
     var fontSize: CGFloat = 16
     var bold: Bool = false
     var value: String = ""
+    var values: [KPArticleElement] = []
+    var content: [KPArticleElement] = []
     var underline: Bool = false
     var color: UIColor = UIColor.black
+    
+    var button: KPArticleElement?
     
     required init?(map: Map) {
         
@@ -76,7 +88,18 @@ class KPArticleElement: NSObject, Mappable {
         bold        <-  map["bold"]
         fontSize    <-  (map["style"], elementStyleTransform)
         type        <-  (map["format"], elementTypeTransform)
+        color       <-  (map["color"], colorTransform)
+        values      <-  map["values"]
+        content     <-  map["content"]
+        button      <-  map["button"]
     }
+    
+    let colorTransform = TransformOf<UIColor, String>(fromJSON: { (value: String?) -> UIColor in
+        guard let colorHex = value else { return UIColor.black }
+        return UIColor(hexString: colorHex)
+    }, toJSON: { (value: UIColor?) -> String? in
+        return nil
+    })
     
     
     let elementStyleTransform = TransformOf<CGFloat, String>(fromJSON: { (value: String?) -> CGFloat in
@@ -86,11 +109,11 @@ class KPArticleElement: NSObject, Mappable {
         }
         
         switch value {
-        case "p":    return 16
-        case "h1":   return 32
-        case "h2":   return 24
-        case "h3":   return 18
-        default:     return 16
+        case "p":    return 20
+        case "h1":   return 40
+        case "h2":   return 32
+        case "h3":   return 28
+        default:     return 20
             
         }
         

@@ -185,7 +185,6 @@
 		C00A6E111ECADE3700A05C9A /* KPTimePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00A6E101ECADE3700A05C9A /* KPTimePickerViewController.swift */; };
 		C00A6E131ECB0B7F00A05C9A /* KPSharedSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00A6E121ECB0B7F00A05C9A /* KPSharedSettingViewController.swift */; };
 		C00CD5341E95234A00A3CB6F /* style.json in Resources */ = {isa = PBXBuildFile; fileRef = C00CD5331E95234A00A3CB6F /* style.json */; };
-		C016F3E41FE7D80F00F76AED /* KPEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C016F3E31FE7D80F00F76AED /* KPEditorView.swift */; };
 		C0175A5F205CD2390003B1A0 /* KPOtherOptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0175A5E205CD2390003B1A0 /* KPOtherOptionViewController.swift */; };
 		C01AC6291EAAEA0A000390F7 /* GMUGridBasedClusterAlgorithm.m in Sources */ = {isa = PBXBuildFile; fileRef = C01AC6111EAAEA0A000390F7 /* GMUGridBasedClusterAlgorithm.m */; };
 		C01AC62A1EAAEA0A000390F7 /* GMUNonHierarchicalDistanceBasedAlgorithm.m in Sources */ = {isa = PBXBuildFile; fileRef = C01AC6131EAAEA0A000390F7 /* GMUNonHierarchicalDistanceBasedAlgorithm.m */; };
@@ -209,6 +208,8 @@
 		C0409E1F1E954F1A00C302FF /* cafes.json in Resources */ = {isa = PBXBuildFile; fileRef = C0409E1E1E954F1A00C302FF /* cafes.json */; };
 		C047CD611F1CDBB8007352D1 /* KPMapInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C047CD601F1CDBB8007352D1 /* KPMapInputViewController.swift */; };
 		C055B0051EF0CAEF00C651CC /* KPTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C055B0041EF0CAEF00C651CC /* KPTabView.swift */; };
+		C05A231A2066230900942395 /* KPTitleEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05A23192066230900942395 /* KPTitleEditorView.swift */; };
+		C05A231C20663A6E00942395 /* KPNewStoreBasicController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05A231B20663A6E00942395 /* KPNewStoreBasicController.swift */; };
 		C05CF8781EF8019800F3DF2A /* KPDataBusinessHourModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05CF8771EF8019800F3DF2A /* KPDataBusinessHourModel.swift */; };
 		C05D10191F3B691C000731D9 /* KPSubTitlePhotoUploadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05D10181F3B691C000731D9 /* KPSubTitlePhotoUploadView.swift */; };
 		C0686B671F95DBE000007FAA /* KPMenuUploadRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0686B661F95DBE000007FAA /* KPMenuUploadRequest.swift */; };
@@ -440,7 +441,6 @@
 		C00A6E101ECADE3700A05C9A /* KPTimePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPTimePickerViewController.swift; sourceTree = "<group>"; };
 		C00A6E121ECB0B7F00A05C9A /* KPSharedSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = KPSharedSettingViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C00CD5331E95234A00A3CB6F /* style.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = style.json; sourceTree = "<group>"; };
-		C016F3E31FE7D80F00F76AED /* KPEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPEditorView.swift; sourceTree = "<group>"; };
 		C0175A5E205CD2390003B1A0 /* KPOtherOptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPOtherOptionViewController.swift; sourceTree = "<group>"; };
 		C01AC60C1EAAE86E000390F7 /* kapi-kaffeine-bridging-header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "kapi-kaffeine-bridging-header.h"; sourceTree = "<group>"; };
 		C01AC60F1EAAEA0A000390F7 /* GMUClusterAlgorithm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMUClusterAlgorithm.h; sourceTree = "<group>"; };
@@ -493,6 +493,8 @@
 		C0409E1E1E954F1A00C302FF /* cafes.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cafes.json; sourceTree = "<group>"; };
 		C047CD601F1CDBB8007352D1 /* KPMapInputViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPMapInputViewController.swift; sourceTree = "<group>"; };
 		C055B0041EF0CAEF00C651CC /* KPTabView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPTabView.swift; sourceTree = "<group>"; };
+		C05A23192066230900942395 /* KPTitleEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPTitleEditorView.swift; sourceTree = "<group>"; };
+		C05A231B20663A6E00942395 /* KPNewStoreBasicController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPNewStoreBasicController.swift; sourceTree = "<group>"; };
 		C05CF8771EF8019800F3DF2A /* KPDataBusinessHourModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPDataBusinessHourModel.swift; sourceTree = "<group>"; };
 		C05D10181F3B691C000731D9 /* KPSubTitlePhotoUploadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSubTitlePhotoUploadView.swift; sourceTree = "<group>"; };
 		C0686B661F95DBE000007FAA /* KPMenuUploadRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPMenuUploadRequest.swift; sourceTree = "<group>"; };
@@ -637,6 +639,7 @@
 		772D68241ECC78410013F802 /* NewStoreController */ = {
 			isa = PBXGroup;
 			children = (
+				C05A231B20663A6E00942395 /* KPNewStoreBasicController.swift */,
 				772D68251ECC78840013F802 /* KPNewStoreController.swift */,
 				C0EB988820206ED9003B26AD /* Detail Info */,
 				77F718211ED189E900755AA2 /* Sub Group */,
@@ -1363,7 +1366,7 @@
 		C0EB988520206CF9003B26AD /* view */ = {
 			isa = PBXGroup;
 			children = (
-				C016F3E31FE7D80F00F76AED /* KPEditorView.swift */,
+				C05A23192066230900942395 /* KPTitleEditorView.swift */,
 				C0EB987E20202D88003B26AD /* KPNewStoreDetailCheckButton.swift */,
 				C0EB988120203C17003B26AD /* KPPhotoUploadView.swift */,
 				C0EB988320205372003B26AD /* KPPhotoUploadCollectionViewCell.swift */,
@@ -1592,7 +1595,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		5C7BF539A61DEDBAA160731E /* [CP] Embed Pods Frameworks */ = {
@@ -1619,6 +1622,7 @@
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/Hero/Hero.framework",
+				"${BUILT_PRODUCTS_DIR}/ImagePicker/ImagePicker.framework",
 				"${BUILT_PRODUCTS_DIR}/M13ProgressSuite/M13ProgressSuite.framework",
 				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
 				"${BUILT_PRODUCTS_DIR}/PromiseKit/PromiseKit.framework",
@@ -1652,6 +1656,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hero.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ImagePicker.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/M13ProgressSuite.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PromiseKit.framework",
@@ -1741,6 +1746,7 @@
 				776ACAFA1E9BB01B00B629A2 /* KPMainListViewController.swift in Sources */,
 				776ACB0B1E9C783E00B629A2 /* KPInformationViewController.swift in Sources */,
 				7762E33A1F0FA44F0006E205 /* KPBusinessTimeViewController.swift in Sources */,
+				C05A231A2066230900942395 /* KPTitleEditorView.swift in Sources */,
 				77C0E0FA1E9D3D7500398852 /* KPSearchFooterCell.swift in Sources */,
 				77BB39261ED350AD00958AFE /* KPFirstIntroView.swift in Sources */,
 				77D6BDF01F0E9A42005598B3 /* demoView.swift in Sources */,
@@ -1759,7 +1765,6 @@
 				7720D0311F01479100E00F0B /* KPMainListNativeExpressCell.swift in Sources */,
 				77F718271ED1A5C800755AA2 /* KPDefaultLoadingTableCell.swift in Sources */,
 				7762E3481F1220A60006E205 /* KPGetPhotoRequest.swift in Sources */,
-				C016F3E41FE7D80F00F76AED /* KPEditorView.swift in Sources */,
 				7743342C1F265871000CCDFA /* KPCommentVoteRequest.swift in Sources */,
 				77C594AB1ECB170000118947 /* KPNewCommentController.swift in Sources */,
 				7720D02D1F01402700E00F0B /* KPMainListNativeAppInstallAdCell.swift in Sources */,
@@ -1839,6 +1844,7 @@
 				771EECAA1EBC3106004A34B8 /* KPCheckBoxController.swift in Sources */,
 				7734634F1ED74FE000EA78F0 /* KPServiceHandler.swift in Sources */,
 				775989911EA5171A0029989C /* KPHelper+UI.swift in Sources */,
+				C05A231C20663A6E00942395 /* KPNewStoreBasicController.swift in Sources */,
 				77594B491EC8AEB40013BB56 /* KPBounceView.swift in Sources */,
 				77DD7E3D1F0B7647007B0E17 /* KPDefaultPopoverContent.swift in Sources */,
 				C09C69C41F1F56A70051C42F /* KPFeatureTagRequest.swift in Sources */,

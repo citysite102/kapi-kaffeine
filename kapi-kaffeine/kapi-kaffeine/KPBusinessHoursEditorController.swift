@@ -58,9 +58,11 @@ class KPBusinessHoursEditorController: KPViewController {
         
         footerView.addSubview(addButton)
         addButton.translatesAutoresizingMaskIntoConstraints = false
+        let constraint = addButton.rightAnchor.constraint(equalTo: footerView.rightAnchor, constant: -16)
+        constraint.priority = .defaultHigh
         NSLayoutConstraint.activate([
             addButton.leftAnchor.constraint(equalTo: footerView.leftAnchor, constant: 16),
-            addButton.rightAnchor.constraint(equalTo: footerView.rightAnchor, constant: -16),
+            constraint,
             addButton.topAnchor.constraint(equalTo: footerView.topAnchor, constant: 10),
             addButton.bottomAnchor.constraint(equalTo: footerView.bottomAnchor, constant: -10),
             addButton.heightAnchor.constraint(equalToConstant: 40)

@@ -9,7 +9,7 @@
 import UIKit
 import GooglePlaces
 
-class KPNewStoreController: KPViewController, KPSubtitleInputDelegate {
+class KPNewStoreController: KPNewStoreBasicController, KPSubtitleInputDelegate {
     
     func outputValueSet<GMSPlace>(_ controller: KPViewController, value: GMSPlace) {
         if controller.isKind(of: KPNewStoreSearchViewController.self) {
@@ -21,11 +21,7 @@ class KPNewStoreController: KPViewController, KPSubtitleInputDelegate {
         locationEditor,
         addressEditor,
         phoneEditor,
-        urlEditor: KPEditorView!
-    
-    var scrollContainer: UIView!
-    var scrollView: UIScrollView!
-    var buttonContainer: UIView!
+        urlEditor: KPTitleEditorView<UITextField>!
     
     var nextButton: UIButton!
     
@@ -45,67 +41,39 @@ class KPNewStoreController: KPViewController, KPSubtitleInputDelegate {
                                            for: .normal)
         
         navigationItem.leftBarButtonItem = barLeftItem
-        
-        scrollView = UIScrollView()
-        scrollView.backgroundColor = KPColorPalette.KPMainColor_v2.whiteColor_level1
-        view.addSubview(scrollView)
-        
-        scrollView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor).isActive = true
-        scrollView.addConstraint(from: "H:|[$self]|")
-        
-        scrollContainer = UIView()
-        scrollContainer.backgroundColor = KPColorPalette.KPMainColor_v2.whiteColor_level1
-        scrollView.addSubview(scrollContainer)
-        scrollContainer.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"])
-        scrollContainer.addConstraintForHavingSameWidth(with: view)
-        
-        buttonContainer = UIView()
-        buttonContainer.backgroundColor = KPColorPalette.KPMainColor_v2.whiteColor_level1
-        view.addSubview(buttonContainer)
-        buttonContainer.layer.borderColor = KPColorPalette.KPBackgroundColor.grayColor_level6?.cgColor
-        buttonContainer.layer.borderWidth = 1
-        
-        buttonContainer.addConstraints(fromStringArray: ["H:|-(-1)-[$self]-(-1)-|", "V:[$view0][$self(60)]"],
-                                       views: [scrollView])
-        buttonContainer.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor).isActive = true
     
         
-        storeNameEditor = KPEditorView(type: .Text,
-                                       title: "店家名稱" ,
-                                       placeHolder: "請輸入店家名稱")
+        storeNameEditor = KPTitleEditorView<UITextField>("店家名稱")
+        storeNameEditor.contentView.placeholder = "請輸入店家名稱"
         scrollContainer.addSubview(storeNameEditor)
         storeNameEditor.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|",
                                                          "V:|-20-[$self]"])
         
-        storeNameEditor.textField.addTarget(self, action: #selector(KPNewStoreController.handleStoreNameDidChanged(_:)), for: .editingChanged)
+        storeNameEditor.contentView.addTarget(self, action: #selector(KPNewStoreController.handleStoreNameDidChanged(_:)), for: .editingChanged)
         
-        locationEditor = KPEditorView(type: .Text,
-                                          title: "所在位置",
-                                          placeHolder: "請選擇所在位置")
+        
+        locationEditor = KPTitleEditorView<UITextField>("所在位置")
+        locationEditor.contentView.placeholder = "請選擇所在位置"
         scrollContainer.addSubview(locationEditor)
         locationEditor.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|",
                                                         "V:[$view0]-20-[$self]"],
                                       views: [storeNameEditor])
         
-        addressEditor = KPEditorView(type: .Text,
-                                     title: "地址",
-                                     placeHolder: "請輸入地址")
+        addressEditor = KPTitleEditorView<UITextField>("地址")
+        addressEditor.contentView.placeholder = "請輸入地址"
         scrollContainer.addSubview(addressEditor)
         addressEditor.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|",
                                                        "V:[$view0]-20-[$self]"],
                                       views: [locationEditor])
         
-        phoneEditor = KPEditorView(type: .Text,
-                                   title: "聯絡電話",
-                                   placeHolder: "請輸入聯絡電話")
+        phoneEditor = KPTitleEditorView<UITextField>("聯絡電話")
+        phoneEditor.contentView.placeholder = "請輸入聯絡電話"
         scrollContainer.addSubview(phoneEditor)
         phoneEditor.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|",
                                                      "V:[$view0]-20-[$self]"],
                                       views: [addressEditor])
         
-        urlEditor = KPEditorView(type: .Text,
-                                 title: "網址或Facebook",
-                                 placeHolder: "")
+        urlEditor = KPTitleEditorView<UITextField>("網址或Facebook")
         scrollContainer.addSubview(urlEditor)
         urlEditor.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|",
                                                    "V:[$view0]-20-[$self]-20-|"],
@@ -132,36 +100,12 @@ class KPNewStoreController: KPViewController, KPSubtitleInputDelegate {
         
         nextButton.isEnabled = false
         
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(KPNewStoreController.keyboardShow(_:)),
-                                               name: Notification.Name.UIKeyboardWillShow,
-                                               object: nil)
         
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(KPNewStoreController.keyboardHide(_:)),
-                                               name: Notification.Name.UIKeyboardWillHide,
-                                               object: nil)
-        
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
-    
-    @objc func keyboardShow(_ notification: Notification) {
-        if let keyboardFrame = (notification.userInfo![UIKeyboardFrameEndUserInfoKey] as AnyObject).cgRectValue {
-            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardFrame.size.height, right: 0)
-        }
-    }
-    
-    @objc func keyboardHide(_ notification: Notification) {
-        scrollView.contentInset = UIEdgeInsets.zero
     }
     
     @objc func handleNextButtonOnTap(_ sender: UIButton) {
         let detailInfoViewController = KPNewStoreDetailInfoViewController()
-        detailInfoViewController.title = storeNameEditor.textField.text
+        detailInfoViewController.title = storeNameEditor.contentView.text
         navigationController?.pushViewController(detailInfoViewController, animated: true)
     }
 
