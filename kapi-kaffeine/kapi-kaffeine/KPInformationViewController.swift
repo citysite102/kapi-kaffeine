@@ -169,7 +169,7 @@ class KPInformationViewController: KPViewController {
             KPPopoverView.sharedPopoverView.dismiss()
         }
         navigationController?.setNavigationBarHidden(false,
-                                                     animated: animated)
+                                                     animated: false)
     }
     
     override func viewDidLoad() {

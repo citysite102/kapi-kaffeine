@@ -24,7 +24,7 @@ class KPInformationDismissTransition: NSObject, UIViewControllerAnimatedTransiti
         let container = transitionContext.containerView;
         let finalFrameForVC = transitionContext.finalFrame(for: toVC);
         
-        
+        fromVC.navigationBar.isHidden = true
         fromVC.view.layer.shouldRasterize = true
         fromVC.view.layer.rasterizationScale = UIScreen.main.scale
         toVC.view.layer.shouldRasterize = true
@@ -66,6 +66,7 @@ class KPInformationDismissTransition: NSObject, UIViewControllerAnimatedTransiti
         } else {
             toVC.view.transform = CGAffineTransform(scaleX: 0.94, y: 0.94)
             container.insertSubview(toVC.view, at: 0);
+            
             
             let opacityView = UIView();
             opacityView.backgroundColor = UIColor.black;

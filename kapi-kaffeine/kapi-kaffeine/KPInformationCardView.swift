@@ -81,7 +81,7 @@ class KPInformationCardView: UIView {
         
         rateContainer = UIView()
         container.addSubview(rateContainer)
-        rateContainer.addConstraints(fromStringArray: ["V:[$view0]-16-[$self]",
+        rateContainer.addConstraints(fromStringArray: ["V:[$view0]-24-[$self]-40-|",
                                                        "H:|-($metric0)-[$self]"],
                                      metrics:[KPLayoutConstant.information_horizontal_offset],
                                      views: [titleInfoLabel])
@@ -118,7 +118,7 @@ class KPInformationCardView: UIView {
         rateLabel.isOpaque = true
         rateLabel.layer.masksToBounds = true
         rateContainer.addSubview(rateLabel)
-        rateLabel.addConstraints(fromStringArray: ["H:[$view0]-10-[$self]"],
+        rateLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]"],
                                  metrics:[KPLayoutConstant.information_horizontal_offset],
                                  views: [starIcons[starIcons.count-1]])
         rateLabel.addConstraintForCenterAligning(to: starIcons[starIcons.count-1],
@@ -127,7 +127,7 @@ class KPInformationCardView: UIView {
         
         commentCountLabel = KPLayerLabel()
         commentCountLabel.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
-        commentCountLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_title
+        commentCountLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
         commentCountLabel.text = "(24則)"
         commentCountLabel.isOpaque = true
         commentCountLabel.layer.masksToBounds = true
@@ -195,19 +195,24 @@ class KPInformationCardView: UIView {
         shopStatusHint.layer.cornerRadius = 4.0
         shopStatusHint.isOpaque = true
         container.addSubview(shopStatusHint)
-        shopStatusHint.addConstraints(fromStringArray: ["H:|-($metric0)-[$self(8)]",
-                                                        "V:[$view0]-22-[$self(8)]-40-|"],
+//        shopStatusHint.addConstraints(fromStringArray: ["H:|-($metric0)-[$self(8)]",
+//                                                        "V:[$view0]-22-[$self(8)]-40-|"],
+
+        shopStatusHint.addConstraints(fromStringArray: ["H:[$view0]-($metric0)-[$self(8)]",
+                                                        "V:[$self(8)]"],
                                       metrics:[KPLayoutConstant.information_horizontal_offset+4],
                                       views: [rateContainer])
+        shopStatusHint.addConstraintForCenterAligning(to: rateContainer,
+                                                      in: .vertical)
         
         shopStatusLabel = KPLayerLabel()
         shopStatusLabel.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
-        shopStatusLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_title
-        shopStatusLabel.text = "營業時間 12:00-20:00"
+        shopStatusLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
+        shopStatusLabel.text = "營業中"
         shopStatusLabel.isOpaque = true
         shopStatusLabel.layer.masksToBounds = true
         container.addSubview(shopStatusLabel)
-        shopStatusLabel.addConstraints(fromStringArray: ["H:[$view0]-14-[$self]"],
+        shopStatusLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]"],
                                        views: [shopStatusHint])
         shopStatusLabel.addConstraintForCenterAligning(to: shopStatusHint,
                                                        in: .vertical,

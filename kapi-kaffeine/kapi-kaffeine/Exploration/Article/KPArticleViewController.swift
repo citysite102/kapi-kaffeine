@@ -116,7 +116,7 @@ class KPArticleViewController: KPViewController {
         articleFirstParagraphTextView.backgroundColor = UIColor.clear
         articleFirstParagraphTextView.isScrollEnabled = false
         articleFirstParagraphTextView.setText(text: "歐洲的咖啡店風格總是強烈的讓人移不開目光，即使身處在倫敦這樣的忙碌城市裡，竄入鼻腔內的咖啡香，不經意地就能停住路人的快速步伐。",
-                                              lineSpacing: 3.0)
+                                              lineSpacing: 4.0)
         heroCoverImageView.addSubview(articleFirstParagraphTextView)
         articleFirstParagraphTextView.addConstraints(fromStringArray: ["V:[$self]-64-|",
                                                                        "H:[$self($metric0)]"],
@@ -130,7 +130,7 @@ class KPArticleViewController: KPViewController {
         articleSubTitleLabel.font = UIFont.boldSystemFont(ofSize: 18)
         articleSubTitleLabel.textColor = KPColorPalette.KPTextColor_v2.yellow_color
         articleSubTitleLabel.setText(text: "這絕對是今年喝過最好喝的咖啡！",
-                                     lineSpacing: 3.0)
+                                     lineSpacing: 4.0)
         articleSubTitleLabel.numberOfLines = 0
         heroCoverImageView.addSubview(articleSubTitleLabel)
         articleSubTitleLabel.addConstraints(fromStringArray: ["V:[$self]-8-[$view0]",
@@ -148,7 +148,7 @@ class KPArticleViewController: KPViewController {
         articleTitleLabel.textColor = UIColor.white
         articleTitleLabel.numberOfLines = 0
         articleTitleLabel.setText(text: "一窺東倫敦新興咖啡社群 - Hello Hackney",
-                                  lineSpacing: 3.0)
+                                  lineSpacing: 4.0)
         heroCoverImageView.addSubview(articleTitleLabel)
         
         articleTitleLabel.addConstraints(fromStringArray: ["V:[$self]-16-[$view0]",
@@ -311,7 +311,7 @@ class KPArticleViewController: KPViewController {
             
             
             var previousView: UIView = titleLabel
-            var spacing: CGFloat = 5
+            var spacing: CGFloat = 8
             for element in article.contents {
                 
                 if element.type == .Br {
@@ -386,7 +386,7 @@ class KPArticleViewController: KPViewController {
                         ])
                         
                         previousView = currentSubView
-                        spacing = 5
+                        spacing = 8
                         
                     }
                     
@@ -427,7 +427,7 @@ class KPArticleViewController: KPViewController {
                     ])
                     
                     previousView = currentView
-                    spacing = 5
+                    spacing = 8
                 }
                 
             }
@@ -470,14 +470,14 @@ class KPArticleViewController: KPViewController {
             
             descriptionStyle.lineBreakMode = contentLabel.lineBreakMode
             descriptionStyle.alignment = contentLabel.textAlignment
-            descriptionStyle.lineSpacing = 5.0
+            descriptionStyle.lineSpacing = 8.0
             
             attributedString.addAttributes([NSAttributedStringKey.paragraphStyle: descriptionStyle],
                                            range: NSRange(location: 0, length: attributedString.length))
             
             contentLabel.attributedText = attributedString
         } else {
-            contentLabel.setText(text: element.value, lineSpacing: 5.0)
+            contentLabel.setText(text: element.value, lineSpacing: 8.0)
         }
         
         return contentLabel

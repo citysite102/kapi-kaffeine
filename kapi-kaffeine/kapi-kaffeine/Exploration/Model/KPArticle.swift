@@ -95,7 +95,9 @@ class KPArticleElement: NSObject, Mappable {
     }
     
     let colorTransform = TransformOf<UIColor, String>(fromJSON: { (value: String?) -> UIColor in
-        guard let colorHex = value else { return UIColor.black }
+        guard let colorHex = value else {
+            return KPColorPalette.KPTextColor_v2.mainColor_subtitle!
+        }
         return UIColor(hexString: colorHex)
     }, toJSON: { (value: UIColor?) -> String? in
         return nil
@@ -109,11 +111,11 @@ class KPArticleElement: NSObject, Mappable {
         }
         
         switch value {
-        case "p":    return 20
+        case "p":    return 18
         case "h1":   return 40
         case "h2":   return 32
         case "h3":   return 28
-        default:     return 20
+        default:     return 18
             
         }
         

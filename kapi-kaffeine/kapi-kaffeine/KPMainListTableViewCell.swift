@@ -12,6 +12,9 @@ import AlamofireImage
 
 class KPMainListTableViewCell: UITableViewCell {
     
+    let cellImageWidth: CGFloat = 76
+    let cellCornerRadius: CGFloat = 3
+    
     var dataModel: KPDataModel! {
         didSet {
             
@@ -57,8 +60,8 @@ class KPMainListTableViewCell: UITableViewCell {
                 let url = URL(string: photoURL) {
                 self.shopImageView.af_setImage(withURL: url,
                                                placeholderImage: drawImage(image: R.image.icon_loading()!,
-                                                                           rectSize: CGSize(width: 72, height: 72),
-                                                                           roundedRadius: 3),
+                                                                           rectSize: CGSize(width: self.cellImageWidth, height: self.cellImageWidth),
+                                                                           roundedRadius: self.cellCornerRadius),
                                                filter: nil,
                                                progress: nil,
                                                progressQueue: DispatchQueue.global(),
@@ -67,18 +70,19 @@ class KPMainListTableViewCell: UITableViewCell {
                                                completion: { response in
                                                 if let responseImage = response.result.value {
                                                     self.shopImageView.image =  drawImage(image: responseImage,
-                                                                                          rectSize: CGSize(width: 72, height: 72),
-                                                                                          roundedRadius: 3)
+                                                                                          rectSize: CGSize(width: self.cellImageWidth, height: self.cellImageWidth),
+                                                                                          roundedRadius: self.cellCornerRadius)
                                                 } else {
                                                     self.shopImageView.image =  drawImage(image: R.image.icon_noImage()!,
-                                                                                          rectSize: CGSize(width: 72, height: 72),
-                                                                                          roundedRadius: 3)
+                                                                                          rectSize: CGSize(width: self.cellImageWidth, height: self.cellImageWidth),
+                                                                                          roundedRadius: self.cellCornerRadius)
                                                 }
                 })
             } else {
                 self.shopImageView.image = drawImage(image: R.image.icon_noImage()!,
-                                                     rectSize: CGSize(width: 72, height: 72),
-                                                     roundedRadius: 3)
+                                                     rectSize: CGSize(width: self.cellImageWidth,
+                                                                      height: self.cellImageWidth),
+                                                     roundedRadius: self.cellCornerRadius)
             }
             
             locationDidUpdate()
@@ -107,9 +111,9 @@ class KPMainListTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         shopImageView = UIImageView(image: drawImage(image: R.image.demo_6()!,
-                                                     rectSize: CGSize(width: 72,
-                                                                      height: 72),
-                                                     roundedRadius: 3))
+                                                     rectSize: CGSize(width: self.cellImageWidth,
+                                                                      height: self.cellImageWidth),
+                                                     roundedRadius: self.cellCornerRadius))
         shopImageView.contentMode = .scaleAspectFill
         shopImageView.clipsToBounds = true
         contentView.addSubview(shopImageView)

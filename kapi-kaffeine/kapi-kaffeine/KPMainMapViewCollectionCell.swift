@@ -11,6 +11,8 @@ import CoreLocation
 
 class KPMainMapViewCollectionCell: UICollectionViewCell {
     
+    let cellImageWidth: CGFloat = 76
+    let cellCornerRadius: CGFloat = 3
     
     var dataModel: KPDataModel! {
         didSet {
@@ -26,8 +28,8 @@ class KPMainMapViewCollectionCell: UICollectionViewCell {
                 let url = URL(string: photoURL) {
                 self.shopImageView.af_setImage(withURL: url,
                                                placeholderImage: drawImage(image: R.image.icon_loading()!,
-                                                                           rectSize: CGSize(width: 56, height: 56),
-                                                                           roundedRadius: 2),
+                                                                           rectSize: CGSize(width: self.cellImageWidth, height: self.cellImageWidth),
+                                                                           roundedRadius: self.cellCornerRadius),
                                                filter: nil,
                                                progress: nil,
                                                progressQueue: DispatchQueue.global(),
@@ -36,18 +38,18 @@ class KPMainMapViewCollectionCell: UICollectionViewCell {
                                                completion: { response in
                                                 if let responseImage = response.result.value {
                                                     self.shopImageView.image =  drawImage(image: responseImage,
-                                                                                          rectSize: CGSize(width: 56, height: 56),
-                                                                                          roundedRadius: 2)
+                                                                                          rectSize: CGSize(width: self.cellImageWidth, height: self.cellImageWidth),
+                                                                                          roundedRadius: self.cellCornerRadius)
                                                 } else {
                                                     self.shopImageView.image =  drawImage(image: R.image.icon_noImage()!,
-                                                                                          rectSize: CGSize(width: 56, height: 56),
-                                                                                          roundedRadius: 2)
+                                                                                          rectSize: CGSize(width: self.cellImageWidth, height: self.cellImageWidth),
+                                                                                          roundedRadius: self.cellCornerRadius)
                                                 }
                 })
             } else {
                 self.shopImageView.image = drawImage(image: R.image.icon_noImage()!,
-                                                     rectSize: CGSize(width: 56, height: 56),
-                                                     roundedRadius: 2)
+                                                     rectSize: CGSize(width: self.cellImageWidth, height: self.cellImageWidth),
+                                                     roundedRadius: self.cellCornerRadius)
             }
             
             locationDidUpdate()
