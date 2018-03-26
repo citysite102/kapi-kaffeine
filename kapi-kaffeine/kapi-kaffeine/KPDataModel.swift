@@ -32,6 +32,7 @@ class KPDataModel: NSObject, Mappable, GMUClusterItem, Comparable {
     var name: String!
     var phone: String?
     var city: String!
+    var place: String?
     var latitude: Double!
     var longitude: Double!
     var standingDesk: NSNumber? = 0
@@ -61,7 +62,13 @@ class KPDataModel: NSObject, Mappable, GMUClusterItem, Comparable {
     var wifiAverage: NSNumber? = 0
     var priceAverage: NSNumber? = 0
     
-    var covers: [String: String]?
+//    var covers: [String: String]?
+    var imageURL_s: URL?
+    var imageURL_l: URL?
+    
+    var googleURL_s: URL?
+    var googleURL_l: URL?
+    
     var isKapi: Bool!
     
     var createdTime: NSNumber?
@@ -103,42 +110,46 @@ class KPDataModel: NSObject, Mappable, GMUClusterItem, Comparable {
     }
     
     func mapping(map: Map) {
-        identifier          <-    map["cafe_id"]
-        address             <-    map["address"]
-        name                <-    map["name"]
-        phone               <-    map["phone"]
-        city                <-    map["city"]
-        latitude            <-    map["latitude"]
-        longitude           <-    map["longitude"]
-        standingDesk        <-    map["standing_desk"]
-        socket              <-    map["socket"]
-        limitedTime         <-    map["limited_time"]
-        facebookURL         <-    map["fb_url"]
-        facebookID          <-    map["fb_id"]
-        mrt                 <-    map["mrt"]
-        businessHour        <-    (map["business_hours"], businessHourTransform)
-        tags                <-    (map["tags"], tagsTransform)
-        averageRate         <-    map["rate_average"]
-        rateCount           <-    map["rate_count"]
-        commentCount        <-    map["comment_count"]
-        favoriteCount       <-    map["favorite_count"]
-        visitCount          <-    map["visit_count"]
-        photoCount          <-    map["photo_count"]
-        covers              <-    map["covers"]
-        isKapi              <-    map["is_kapi"]
-        createdTime         <-    map["created_time"]
-        modifiedTime        <-    map["modified_time"]
-        cheapAverage        <-    map["cheap_avg"]
-        foodAverage         <-    map["food_avg"]
-        quietAverage        <-    map["quiet_avg"]
-        seatAverage         <-    map["seat_avg"]
-        tastyAverage        <-    map["tasty_avg"]
-        musicAverage        <-    map["music_avg"]
-        wifiAverage         <-    map["wifi_avg"]
-        priceAverage        <-    map["price_average"]
-        closed              <-    map["is_close"]
-        verified            <-    map["is_verify"]
-        
+        identifier      <-  map["cafe_id"]
+        address         <-  map["address"]
+        name            <-  map["name"]
+        phone           <-  map["phone"]
+        place           <-  map["place"]
+        city            <-  map["city"]
+        latitude        <-  map["latitude"]
+        longitude       <-  map["longitude"]
+        standingDesk    <-  map["standing_desk"]
+        socket          <-  map["socket"]
+        limitedTime     <-  map["limited_time"]
+        facebookURL     <-  map["fb_url"]
+        facebookID      <-  map["fb_id"]
+        mrt             <-  map["mrt"]
+        businessHour    <-  (map["business_hours"], businessHourTransform)
+        tags            <-  (map["tags"], tagsTransform)
+        averageRate     <-  map["rate_average"]
+        rateCount       <-  map["rate_count"]
+        commentCount    <-  map["comment_count"]
+        favoriteCount   <-  map["favorite_count"]
+        visitCount      <-  map["visit_count"]
+        photoCount      <-  map["photo_count"]
+        isKapi          <-  map["is_kapi"]
+        createdTime     <-  map["created_time"]
+        modifiedTime    <-  map["modified_time"]
+        cheapAverage    <-  map["cheap_avg"]
+        foodAverage     <-  map["food_avg"]
+        quietAverage    <-  map["quiet_avg"]
+        seatAverage     <-  map["seat_avg"]
+        tastyAverage    <-  map["tasty_avg"]
+        musicAverage    <-  map["music_avg"]
+        wifiAverage     <-  map["wifi_avg"]
+        priceAverage    <-  map["price_average"]
+        closed          <-  map["is_close"]
+        verified        <-  map["is_verify"]
+        imageURL_s      <-  (map["covers.kapi_s"], URLTransform())
+        imageURL_l      <-  (map["covers.kapi_l"], URLTransform())
+        googleURL_s     <-  (map["covers.google_s"], URLTransform())
+        googleURL_l     <-  (map["covers.google_l"], URLTransform())
+
     }
     
 //    let tagsModelTransform = TransformOf(fromJSON: { (value: [String]?) -> [KPDataTagModel]? in

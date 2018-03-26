@@ -26,7 +26,7 @@ class KPExplorationSectionView: UITableViewCell {
 //                      R.image.demo_4(),
 //                      R.image.demo_5(),
 //                      R.image.demo_6()]
-    var shops: [KPExplorationShop] = [] {
+    var shops: [KPDataModel] = [] {
         didSet {
             collectionView.reloadData()
         }

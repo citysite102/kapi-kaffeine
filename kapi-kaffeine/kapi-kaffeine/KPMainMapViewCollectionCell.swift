@@ -24,9 +24,8 @@ class KPMainMapViewCollectionCell: UICollectionViewCell {
                                                (self.dataModel.averageRate?.doubleValue) ?? 0)
             }
             
-            if let photoURL = dataModel.covers?["kapi_s"] ?? dataModel.covers?["google_s"],
-                let url = URL(string: photoURL) {
-                self.shopImageView.af_setImage(withURL: url,
+            if let photoURL = dataModel.imageURL_s ?? dataModel.googleURL_s {
+                self.shopImageView.af_setImage(withURL: photoURL,
                                                placeholderImage: drawImage(image: R.image.icon_loading()!,
                                                                            rectSize: CGSize(width: self.cellImageWidth, height: self.cellImageWidth),
                                                                            roundedRadius: self.cellCornerRadius),
