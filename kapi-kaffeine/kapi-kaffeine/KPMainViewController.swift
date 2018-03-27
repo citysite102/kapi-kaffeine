@@ -731,7 +731,8 @@ extension KPMainViewController: UIViewControllerTransitioningDelegate {
     }
 }
 
-extension KPMainViewController: KPSearchTagViewDelegate, KPSearchConditionViewControllerDelegate {
+extension KPMainViewController: KPSearchTagViewDelegate,
+KPSearchConditionViewControllerDelegate {
     
     func searchTagDidSelect(_ searchTag: searchTagType) {
         

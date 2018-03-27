@@ -14,7 +14,7 @@ class KPShopRecommendView: UIView {
     weak open var informationController: KPInformationViewController?
     
     var tableView: UITableView!
-    var displayDataModels: [KPDataModel]! {
+    var displayDataModels: [KPDataModel]? {
         didSet {
             self.tableView.reloadData()
         }
@@ -50,7 +50,7 @@ extension KPShopRecommendView: UITableViewDelegate, UITableViewDataSource {
                                                  for: indexPath) as! KPMainListTableViewCell
         
         cell.selectionStyle = .none
-        cell.dataModel = self.displayDataModels[indexPath.row]
+        cell.dataModel = self.displayDataModels![indexPath.row]
         return cell
     }
     
@@ -59,15 +59,15 @@ extension KPShopRecommendView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.displayDataModels.count
+        return self.displayDataModels?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        KPAnalyticManager.sendCellClickEvent(self.displayDataModels[indexPath.row].name,
-                                             self.displayDataModels[indexPath.row].rateCount?.stringValue,
+        KPAnalyticManager.sendCellClickEvent(self.displayDataModels![indexPath.row].name,
+                                             self.displayDataModels![indexPath.row].rateCount?.stringValue,
                                              KPAnalyticsEventValue.source.source_recommend)
         let controller = KPInformationViewController()
-        controller.informationDataModel = self.displayDataModels[indexPath.row]
+        controller.informationDataModel = self.displayDataModels![indexPath.row]
         informationController?.navigationController?.pushViewController(controller, animated: true)
     }
     

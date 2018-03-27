@@ -38,7 +38,12 @@ class KPDetailedDataModel: NSObject, Mappable, GMUClusterItem {
     var visitCount: NSNumber?
     var photoCount: NSNumber?
     
-    var covers: [String: String]?
+    var imageURL_s: URL?
+    var imageURL_l: URL?
+    
+    var googleURL_s: URL?
+    var googleURL_l: URL?
+    
     var isKapi: Bool!
     
     var createdTime: NSNumber?
@@ -108,7 +113,6 @@ class KPDetailedDataModel: NSObject, Mappable, GMUClusterItem {
         favoriteCount       <-    map["favorite_count"]
         visitCount          <-    map["visit_count"]
         photoCount          <-    map["photo_count"]
-        covers              <-    map["covers"]
         isKapi              <-    map["is_kapi"]
         createdTime         <-    map["created_time"]
         modifiedTime        <-    map["modified_time"]
@@ -119,6 +123,11 @@ class KPDetailedDataModel: NSObject, Mappable, GMUClusterItem {
         rates               <-    map["rates"]
         visitedMembers      <-    map["visit_members"]
         favoritedMembers    <-    map["favorite_members"]
+        imageURL_s      <-  (map["covers.kapi_s"], URLTransform())
+        imageURL_l      <-  (map["covers.kapi_l"], URLTransform())
+        googleURL_s     <-  (map["covers.google_s"], URLTransform())
+        googleURL_l     <-  (map["covers.google_l"], URLTransform())
+
     }
     
     let businessHourTransform = TransformOf<KPDataBusinessHourModel,

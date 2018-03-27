@@ -557,7 +557,8 @@ extension KPMainListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let dataModel = self.displayDataModel[indexPath.row] as? KPDataModel {
+        if let dataModel = self.displayDataModel[indexPath.row] as? KPDataModel,
+            state != .loading {
             
             if dataModel.identifier == "empty" {
                 KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.map_add_store_button)

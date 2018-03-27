@@ -15,14 +15,125 @@ import ImagePicker
 
 class KPInformationViewController: KPViewController {
 
-    var informationDataModel: KPDataModel! {
-        didSet {
-            KPServiceHandler.sharedHandler.currentDisplayModel = informationDataModel
-        }
-    }
+    var informationDataModel: KPDataModel!
+//        didSet {
+//            KPServiceHandler.sharedHandler.currentDisplayModel = informationDataModel
+//        }
+//    }
     
     var detailedInformationDataModel: KPDetailedDataModel! {
         didSet {
+         
+            KPServiceHandler.sharedHandler.currentDisplayModel = KPDataModel(JSON: detailedInformationDataModel.toJSON())
+            DispatchQueue.main.async {
+                
+                self.titleLabel.text = self.detailedInformationDataModel.name
+                self.shopRecommendView.displayDataModels = KPServiceHandler.sharedHandler.relatedDisplayModel
+                
+                // 實作地圖 Action
+                let googleAction = UIAlertAction(title: "使用Google地圖開啟",
+                                                 style: .default) {
+                                                    [weak self] (_) in
+                                                    if let weSelf = self {
+                                                        if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
+                                                            UIApplication.shared.open(URL(string:
+                                                                "comgooglemaps://?daddr=\(weSelf.detailedInformationDataModel.latitude!),\(weSelf.detailedInformationDataModel.longitude!)&mapmode=standard")!,
+                                                                                      options: [:],
+                                                                                      completionHandler: nil)
+                                                        } else {
+                                                            print("Can't use comgooglemaps://")
+                                                        }
+                                                    }
+                                                    
+                }
+                
+                let appleAction = UIAlertAction(title: "使用地圖開啟",
+                                                style: .default) {
+                                                    [weak self] (_) in
+                                                    if let weSelf = self {
+                                                        let coordinates = CLLocationCoordinate2DMake(weSelf.detailedInformationDataModel.latitude!,
+                                                                                                     weSelf.detailedInformationDataModel.longitude!)
+                                                        let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: nil)
+                                                        let mapItem = MKMapItem(placemark: placemark)
+                                                        mapItem.openInMaps(launchOptions: nil)
+                                                    }
+                }
+                
+                let mapCancelAction = UIAlertAction(title: "取消",
+                                                    style: .destructive) { (_) in
+                                                        print("取消 Map")
+                }
+                
+                self.mapActionController.addAction(googleAction)
+                self.mapActionController.addAction(appleAction)
+                self.mapActionController.addAction(mapCancelAction)
+                
+                
+                // Header
+                self.informationHeaderView.scoreLabel.text = String(format: "%.1f", self.detailedInformationDataModel.averageRate?.doubleValue ?? 0.0)
+                self.informationHeaderView.facebookButton.isHidden = !(self.detailedInformationDataModel.facebookURL != nil)
+                
+                if let photoURL = self.detailedInformationDataModel.imageURL_l ?? self.detailedInformationDataModel.googleURL_l {
+                    self.informationHeaderView.shopPhoto.af_setImage(withURL: photoURL,
+                                                                     placeholderImage: nil,
+                                                                     filter: nil,
+                                                                     progress: nil,
+                                                                     progressQueue:  DispatchQueue.global(),
+                                                                         imageTransition: UIImageView.ImageTransition.crossDissolve(0.2),
+                                                                    runImageTransitionIfCached: true,
+                                                                    completion: { response in
+                                                                        if let responseImage = response.result.value {
+                                                                            self.informationHeaderView.shopPhoto.image =  responseImage
+                                                                    }
+                    })
+                } else {
+                    
+                }
+                
+                
+                // Card Info
+                
+                self.cardInformationContainer.titleInfoLabel.setText(text: self.detailedInformationDataModel.name,
+                                                                lineSpacing: 7.0)
+                
+                var distName: String = ""
+                
+                if let distIndex = self.detailedInformationDataModel.address.index(of: "區") {
+                    let startIndex = self.detailedInformationDataModel.address.index(distIndex, offsetBy:-2)
+                    distName = String(self.detailedInformationDataModel.address[startIndex...distIndex])
+                }
+                
+                self.cardInformationContainer.locationInfoLabel.text =  (KPInfoMapping.citiesMapping[self.detailedInformationDataModel.city]
+                    ?? "") +
+                    (distName != "" ? ", \(distName)" : "")
+                
+                self.cardInformationContainer.rateLabel.text = String(format: "%.1f",
+                                                                 (self.detailedInformationDataModel.averageRate?.doubleValue) ?? 0)
+                
+                
+                // Comment
+                
+                if let commentCount = self.detailedInformationDataModel.commentCount {
+                    self.commentInformationView.infoSupplementLabel.text = "\(commentCount) 人已留言"
+                    self.commentInformationView.isEmpty = (commentCount == 0)
+                    self.updateCommentsLayout(Int(truncating: commentCount))
+                }
+                
+                // Rate
+                
+                self.shopRateInfoView.dataModel = self.detailedInformationDataModel
+                self.rateInformationView.infoTitleLabel.text = "店家評分(\(self.detailedInformationDataModel.rateCount ?? 0))"
+                self.rateInformationView.infoSupplementLabel.text = "\(self.detailedInformationDataModel.rateCount ?? 0) 人已評分"
+                
+                
+                // Shop Information
+                
+                self.informationView.informationDataModel = self.detailedInformationDataModel
+                
+            }
+            
+            
+            
             
         }
     }
@@ -110,6 +221,7 @@ class KPInformationViewController: KPViewController {
     var cardInformationContainer: KPInformationCardView!
     var shopInformationView: KPInformationSharedInfoView!
     var rateInformationView: KPInformationSharedInfoView!
+    var shopRateInfoView: KPShopRateInfoView!
     var commentInformationView: KPInformationSharedInfoView!
     var photoInformationView: KPInformationSharedInfoView!
     var menuInformationView: KPInformationSharedInfoView!
@@ -123,6 +235,7 @@ class KPInformationViewController: KPViewController {
     var pickerType: ImagePickerType = .none
     
     var recommendInformationView: KPInformationSharedInfoView!
+    var shopRecommendView: KPShopRecommendView!
     var commentInfoView: KPShopCommentInfoView!
     var informationView: KPShopInfoView!
     var loadingIndicator: UIActivityIndicatorView!
@@ -234,42 +347,7 @@ class KPInformationViewController: KPViewController {
                                                 message: nil,
                                                 preferredStyle: .actionSheet)
         mapActionController.view.tintColor = KPColorPalette.KPTextColor.grayColor_level2
-        let googleAction = UIAlertAction(title: "使用Google地圖開啟",
-                                       style: .default) {
-                                        [weak self] (_) in
-                                        if let weSelf = self {
-                                            if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
-                                                UIApplication.shared.open(URL(string:
-                                                    "comgooglemaps://?daddr=\(weSelf.informationDataModel.latitude!),\(weSelf.informationDataModel.longitude!)&mapmode=standard")!,
-                                                                          options: [:],
-                                                                          completionHandler: nil)
-                                            } else {
-                                                print("Can't use comgooglemaps://")
-                                            }
-                                        }
-
-        }
         
-        let appleAction = UIAlertAction(title: "使用地圖開啟",
-                                         style: .default) {
-                                            [weak self] (_) in
-                                            if let weSelf = self {
-                                                let coordinates = CLLocationCoordinate2DMake(weSelf.informationDataModel.latitude!,
-                                                                                             weSelf.informationDataModel.longitude!)
-                                                let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: nil)
-                                                let mapItem = MKMapItem(placemark: placemark)
-                                                mapItem.openInMaps(launchOptions: nil)
-                                            }
-        }
-        
-        let mapCancelAction = UIAlertAction(title: "取消",
-                                            style: .destructive) { (_) in
-                                                print("取消 Map")
-        }
-        
-        mapActionController.addAction(googleAction)
-        mapActionController.addAction(appleAction)
-        mapActionController.addAction(mapCancelAction)
 
         scrollContainer = UIScrollView()
         scrollContainer.backgroundColor = UIColor.white
@@ -282,27 +360,7 @@ class KPInformationViewController: KPViewController {
         informationHeaderView = KPInformationHeaderView(frame: CGRect.zero)
         informationHeaderView.delegate = self
         informationHeaderView.informationController = self
-        informationHeaderView.scoreLabel.text = String(format: "%.1f", informationDataModel.averageRate?.doubleValue ?? 0.0)
-        informationHeaderView.facebookButton.isHidden = !(informationDataModel.facebookURL != nil)
         
-        if let photoURL = informationDataModel.imageURL_l ?? informationDataModel.googleURL_l {
-            informationHeaderView.shopPhoto.af_setImage(withURL: photoURL,
-                                                        placeholderImage: nil,
-                                                        filter: nil,
-                                                        progress: nil,
-                                                        progressQueue: DispatchQueue.global(),
-                                                        imageTransition: UIImageView.ImageTransition.crossDissolve(0.2),
-                                                        runImageTransitionIfCached: true,
-                                                        completion: { response in
-                                                            if let responseImage = response.result.value {
-                                                                self.informationHeaderView.shopPhoto.image =  responseImage
-                                                            }
-                })
-        } else {
-
-        }
-        
-        //informationDataModel
         scrollContainer.addSubview(informationHeaderView)
         informationHeaderView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                                "V:|-(-20)-[$self]"])
@@ -354,22 +412,6 @@ class KPInformationViewController: KPViewController {
                                                                constant:2)
         
         cardInformationContainer = KPInformationCardView()
-        cardInformationContainer.titleInfoLabel.setText(text: informationDataModel.name,
-                                                        lineSpacing: 7.0)
-        
-        var distName: String = ""
-        
-        if let distIndex = informationDataModel.address.index(of: "區") {
-            let startIndex = informationDataModel.address.index(distIndex, offsetBy:-2)
-            distName = String(informationDataModel.address[startIndex...distIndex])
-        }
-        cardInformationContainer.locationInfoLabel.text =  (KPInfoMapping.citiesMapping[informationDataModel.city]
-            ?? "") +
-            (distName != "" ? ", \(distName)" : "")
-        
-        cardInformationContainer.rateLabel.text = String(format: "%.1f",
-                                                         (self.informationDataModel.averageRate?.doubleValue) ?? 0)
-        
         scrollContainer.addSubview(cardInformationContainer)
         cardInformationContainer.addConstraints(fromStringArray: ["H:|[$self]|",
                                                                   "V:[$view0][$self]"],
@@ -408,20 +450,11 @@ class KPInformationViewController: KPViewController {
         commentInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                                 "V:[$view0]-16-[$self]"],
                                               views: [menuInformationView])
+    
         
-        if let commentCount = informationDataModel.commentCount {
-            commentInformationView.infoSupplementLabel.text = "\(commentCount) 人已留言"
-            commentInformationView.isEmpty = (commentCount == 0)
-            updateCommentsLayout(Int(truncating: commentCount))
-        }
-        
-        
-        let shopRateInfoView = KPShopRateInfoView()
-        shopRateInfoView.dataModel = informationDataModel
+        shopRateInfoView = KPShopRateInfoView()
         rateInformationView = KPInformationSharedInfoView()
         rateInformationView.infoView = shopRateInfoView
-        rateInformationView.infoTitleLabel.text = "店家評分(\(informationDataModel.rateCount ?? 0))"
-        rateInformationView.infoSupplementLabel.text = "\(informationDataModel.rateCount ?? 0) 人已評分"
         rateInformationView.actions = [Action(title:"我要評分",
                                               style:.normal,
                                               color:KPColorPalette.KPMainColor_v2.mainColor!,
@@ -458,25 +491,7 @@ class KPInformationViewController: KPViewController {
                                                 views: [commentInformationView])
         
         
-        informationView = KPShopInfoView(informationDataModel)
-        //        informationView.otherTimeButton.addTarget(self,
-        //                                                  action: #selector(KPInformationViewController.handleOtherTimeButtonOnTapped),
-        //                                                  for: .touchUpInside)
-        //
-        //        if informationDataModel.businessHour != nil {
-        //            let shopStatus = informationDataModel.businessHour!.shopStatus
-        //            informationView.openLabel.textColor = KPColorPalette.KPTextColor.grayColor_level1
-        //            informationView.openLabel.text = shopStatus.status
-        //            informationView.openHint.backgroundColor = shopStatus.isOpening ?
-        //                KPColorPalette.KPShopStatusColor.opened :
-        //                KPColorPalette.KPShopStatusColor.closed
-        //        } else {
-        //            informationView.openLabel.textColor = KPColorPalette.KPTextColor.grayColor_level5
-        //            informationView.openHint.backgroundColor = KPColorPalette.KPTextColor.grayColor_level5
-        //            informationView.openLabel.text = "暫無資料"
-        //            informationView.otherTimeButton.isHidden = true
-        //        }
-        
+        informationView = KPShopInfoView()
         shopInformationView = KPInformationSharedInfoView()
         shopInformationView.infoView = informationView
         shopInformationView.infoTitleLabel.text = "店家資訊"
@@ -540,9 +555,8 @@ class KPInformationViewController: KPViewController {
 //                                               views: [shopInformationView])
         
 
-        let shopRecommendView = KPShopRecommendView()
+        shopRecommendView = KPShopRecommendView()
         shopRecommendView.informationController = self
-        shopRecommendView.displayDataModels = KPServiceHandler.sharedHandler.relatedDisplayModel
         recommendInformationView = KPInformationSharedInfoView()
         recommendInformationView.infoView = shopRecommendView
         recommendInformationView.infoTitleLabel.text = "你可能也會喜歡"
@@ -622,7 +636,6 @@ class KPInformationViewController: KPViewController {
         titleLabel = UILabel()
         titleLabel.font = UIFont.boldSystemFont(ofSize: KPFontSize.mainContent)
         titleLabel.textColor = KPColorPalette.KPTextColor_v2.whiteColor
-        titleLabel.text = informationDataModel.name
         titleLabel.alpha = 0.0
         view.addSubview(titleLabel)
         titleLabel.addConstraint(from: "H:[$self(<=280)]")
@@ -661,82 +674,6 @@ class KPInformationViewController: KPViewController {
                                                      in: .vertical,
                                                      constant: 8)
         
-//        let addFloatyButton = Floaty()
-//        Floaty.global.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
-//        addFloatyButton.buttonImage = R.image.icon_add()
-//        addFloatyButton.animationSpeed = 0.03
-//        addFloatyButton.plusColor = KPColorPalette.KPMainColor_v2.mainColor!
-//        addFloatyButton.itemImageColor = KPColorPalette.KPMainColor_v2.mainColor!
-//        addFloatyButton.openAnimationType = .pop
-//        addFloatyButton.itemSize = 40
-//        addFloatyButton.itemSpace = 16
-//        addFloatyButton.buttonColor = KPColorPalette.KPBackgroundColor.whiteColor!
-//        addFloatyButton.addItem("新增留言",
-//                                icon: R.image.icon_comment_border(), handler: { [weak self] item in
-//                                    if let weSelf = self {
-//                                        if KPUserManager.sharedManager.currentUser == nil {
-//                                            KPPopoverView.popoverLoginView()
-//                                        } else {
-//                                            if KPServiceHandler.sharedHandler.isCurrentShopClosed {
-//                                                KPPopoverView.popoverClosedView()
-//                                            } else {
-//                                                let newCommentViewController = KPNewCommentController()
-//                                                if weSelf.hasRatedDataModel != nil {
-//                                                    DispatchQueue.main.async {
-//                                                        newCommentViewController.hideRatingViews = true
-//                                                    }
-//                                                }
-//
-//                                                weSelf.navigationController?.pushViewController(viewController: newCommentViewController,
-//                                                                                                animated: true,
-//                                                                                                completion: {})
-//                                            }
-//                                        }
-//                                    }
-//        })
-//        addFloatyButton.addItem("上傳照片",
-//                                icon: R.image.icon_photo(),
-//                                handler: { [weak self] item in
-//                                    if let weSelf = self {
-//                                        weSelf.photoUpload()
-//                                    }
-//        })
-//
-//        let hasCollected = KPUserManager.sharedManager.currentUser?.hasFavorited(informationDataModel.identifier) ?? false
-//
-//        addFloatyButton.addItem(hasCollected ? "取消收藏" : "收藏",
-//                                icon: hasCollected ?
-//                                    R.image.icon_collect() :
-//                                    R.image.icon_collect_border(),
-//                                handler: { [weak self] item in
-//                                    if let weSelf = self {
-//                                         KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.store_favorite_button)
-//                                        if hasCollected {
-//                                            DispatchQueue.main.asyncAfter(deadline: .now()) {
-//                                                KPPopoverView.popoverDefaultStyleContent (
-//                                                    "移除收藏",
-//                                                    "確定要改變心意移除收藏這間優秀到不行再優秀的咖啡廳嗎？",
-//                                                    "我確定", { (content) in
-//                                                        content.popoverView.dismiss()
-//                                                        KPServiceHandler.sharedHandler.removeFavoriteCafe(weSelf.informationDataModel.identifier, { (successed) in
-//                                                            item.titleLabel.text = "收藏"
-//                                                            item.icon = R.image.icon_collect_border()
-//                                                        })
-//                                                })
-//                                            }
-//                                        } else {
-//                                            KPServiceHandler.sharedHandler.addFavoriteCafe()
-//                                            item.titleLabel.text = "取消收藏"
-//                                            item.icon = R.image.icon_collect()
-//                                        }
-//                                    }
-//        })
-//        addFloatyButton.size = 60
-//        addFloatyButton.itemSpace = 16
-//        view.addSubview(addFloatyButton)
-//        addFloatyButton.addConstraints(fromStringArray: ["H:[$self(60)]-16-|",
-//                                                         "V:[$self(60)]-24-|"])
-        
     }
     // MARK: UI Update
     
@@ -744,17 +681,19 @@ class KPInformationViewController: KPViewController {
         
         dataLoading = true
         
-        refreshComments()
-        refreshRatings()
-        refreshPhoto()
-        refreshMenu()
-        
         KPServiceHandler.sharedHandler.fetchStoreInformation(informationDataModel.identifier) {
             [weak self] (result) in
             if let weSelf = self {
-//                weSelf.informationHeaderView.scoreLabel.text = String(format: "%.1f",
-//                                                                    result?.averageRate?.doubleValue ?? 0.0)
-                weSelf.dataLoading = false
+                weSelf.detailedInformationDataModel = result
+                weSelf.refreshRatings()
+                weSelf.refreshComments()
+                weSelf.refreshPhoto()
+                weSelf.refreshMenu()
+                
+                DispatchQueue.main.asyncAfter(deadline: .now()+0.5,
+                                              execute: {
+                                                weSelf.dataLoading = false
+                })
             }
         }
     }
@@ -1176,7 +1115,7 @@ class KPInformationViewController: KPViewController {
     }
     
     @objc func handleFacebookButtonOnTapped() {
-        UIApplication.shared.open(URL(string: informationDataModel.facebookURL!)!,
+        UIApplication.shared.open(URL(string: detailedInformationDataModel.facebookURL!)!,
                                   options: [:]) { (_) in
                                     
         }
@@ -1188,13 +1127,11 @@ class KPInformationViewController: KPViewController {
         let controller = KPModalViewController()
         let businessTimeViewController = KPBusinessTimeViewController()
         
-//        controller.contentSize = CGSize(width: 276, height: 416)
-//        controller.cornerRadius = [.topRight, .topLeft, .bottomLeft, .bottomRight]
         controller.edgeInset = UIEdgeInsetsMake(0, 0, 0, 0)
         controller.dismissWhenTouchingOnBackground = true
         controller.presentationStyle = .popout
-        businessTimeViewController.businessTime = informationDataModel.businessHour
-        businessTimeViewController.titleLabel.setText(text: informationDataModel.name,
+        businessTimeViewController.businessTime = detailedInformationDataModel.businessHour
+        businessTimeViewController.titleLabel.setText(text: detailedInformationDataModel.name,
                                                       lineSpacing: 3.0)
         controller.contentController = businessTimeViewController
         controller.presentModalView()
@@ -1430,7 +1367,7 @@ extension KPInformationViewController : UIImagePickerControllerDelegate, ImagePi
         imagePicker.dismiss(animated: true) {
             if self.pickerType == .menu {
                 KPServiceHandler.sharedHandler.uploadMenus(images,
-                                                           self.informationDataModel.identifier,
+                                                           self.detailedInformationDataModel.identifier,
                                                            true,
                                                            { (success) in
                                                             if success {
@@ -1441,7 +1378,7 @@ extension KPInformationViewController : UIImagePickerControllerDelegate, ImagePi
                 })
             } else if self.pickerType == .photo {
                 KPServiceHandler.sharedHandler.uploadPhotos(images,
-                                                            self.informationDataModel.identifier,
+                                                            self.detailedInformationDataModel.identifier,
                                                             true,
                                                             { (success) in
                                                                 if success {

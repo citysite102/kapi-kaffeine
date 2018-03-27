@@ -62,7 +62,6 @@ class KPDataModel: NSObject, Mappable, GMUClusterItem, Comparable {
     var wifiAverage: NSNumber? = 0
     var priceAverage: NSNumber? = 0
     
-//    var covers: [String: String]?
     var imageURL_s: URL?
     var imageURL_l: URL?
     

@@ -22,44 +22,51 @@ class KPShopRateInfoView: UIView {
     var rateViews: [rateStatusView] = [rateStatusView]()
     var rateContents = [String]()
     
-    weak var dataModel: KPDataModel! {
+    weak var dataModel: KPDetailedDataModel! {
         didSet {
             rateContents = []
-            rateContents.append(dataModel.wifiAverage != nil ?
-                (dataModel.wifiAverage?.stringValue.count == 1 ?
-                    "\((dataModel.wifiAverage?.stringValue)!).0" :
-                    "\((dataModel.wifiAverage?.stringValue)!)") :
-                "0.0")
-            rateContents.append(dataModel.quietAverage != nil ?
-                (dataModel.quietAverage?.stringValue.count == 1 ?
-                    "\((dataModel.quietAverage?.stringValue)!).0" :
-                    "\((dataModel.quietAverage?.stringValue)!)") :
-                "0.0")
-            rateContents.append(dataModel.cheapAverage != nil ?
-                (dataModel.cheapAverage?.stringValue.count == 1 ?
-                    "\((dataModel.cheapAverage?.stringValue)!).0" :
-                    "\((dataModel.cheapAverage?.stringValue)!)") :
-                "0.0")
-            rateContents.append(dataModel.seatAverage != nil ?
-                (dataModel.seatAverage?.stringValue.count == 1 ?
-                    "\((dataModel.seatAverage?.stringValue)!).0" :
-                    "\((dataModel.seatAverage?.stringValue)!)") :
-                "0.0")
-            rateContents.append(dataModel.tastyAverage != nil ?
-                (dataModel.tastyAverage?.stringValue.count == 1 ?
-                    "\((dataModel.tastyAverage?.stringValue)!).0" :
-                    "\((dataModel.tastyAverage?.stringValue)!)") :
-                "0.0")
-            rateContents.append(dataModel.foodAverage != nil ?
-                (dataModel.foodAverage?.stringValue.count == 1 ?
-                    "\((dataModel.foodAverage?.stringValue)!).0" :
-                    "\((dataModel.foodAverage?.stringValue)!)") :
-                "0.0")
-            rateContents.append(dataModel.musicAverage != nil ?
-                (dataModel.musicAverage?.stringValue.count == 1 ?
-                    "\((dataModel.musicAverage?.stringValue)!).0" :
-                    "\((dataModel.musicAverage?.stringValue)!)") :
-                "0.0")
+            rateContents.append("0.0")
+            rateContents.append("0.0")
+            rateContents.append("0.0")
+            rateContents.append("0.0")
+            rateContents.append("0.0")
+            rateContents.append("0.0")
+            rateContents.append("0.0")
+//            rateContents.append(dataModel.wifiAverage != nil ?
+//                (dataModel.wifiAverage?.stringValue.count == 1 ?
+//                    "\((dataModel.wifiAverage?.stringValue)!).0" :
+//                    "\((dataModel.wifiAverage?.stringValue)!)") :
+//                "0.0")
+//            rateContents.append(dataModel.quietAverage != nil ?
+//                (dataModel.quietAverage?.stringValue.count == 1 ?
+//                    "\((dataModel.quietAverage?.stringValue)!).0" :
+//                    "\((dataModel.quietAverage?.stringValue)!)") :
+//                "0.0")
+//            rateContents.append(dataModel.cheapAverage != nil ?
+//                (dataModel.cheapAverage?.stringValue.count == 1 ?
+//                    "\((dataModel.cheapAverage?.stringValue)!).0" :
+//                    "\((dataModel.cheapAverage?.stringValue)!)") :
+//                "0.0")
+//            rateContents.append(dataModel.seatAverage != nil ?
+//                (dataModel.seatAverage?.stringValue.count == 1 ?
+//                    "\((dataModel.seatAverage?.stringValue)!).0" :
+//                    "\((dataModel.seatAverage?.stringValue)!)") :
+//                "0.0")
+//            rateContents.append(dataModel.tastyAverage != nil ?
+//                (dataModel.tastyAverage?.stringValue.count == 1 ?
+//                    "\((dataModel.tastyAverage?.stringValue)!).0" :
+//                    "\((dataModel.tastyAverage?.stringValue)!)") :
+//                "0.0")
+//            rateContents.append(dataModel.foodAverage != nil ?
+//                (dataModel.foodAverage?.stringValue.count == 1 ?
+//                    "\((dataModel.foodAverage?.stringValue)!).0" :
+//                    "\((dataModel.foodAverage?.stringValue)!)") :
+//                "0.0")
+//            rateContents.append(dataModel.musicAverage != nil ?
+//                (dataModel.musicAverage?.stringValue.count == 1 ?
+//                    "\((dataModel.musicAverage?.stringValue)!).0" :
+//                    "\((dataModel.musicAverage?.stringValue)!)") :
+//                "0.0")
             
             
             if let limitedTime = dataModel.limitedTime {
@@ -156,6 +163,8 @@ class KPShopRateInfoView: UIView {
                 } else if limitedTime == 3 {
                     rateContents.append("人多")
                 } else if limitedTime == 4 {
+                    rateContents.append("未知")
+                } else {
                     rateContents.append("未知")
                 }
             } else {

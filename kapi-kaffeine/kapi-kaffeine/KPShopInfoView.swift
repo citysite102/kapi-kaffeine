@@ -12,29 +12,101 @@ import GoogleMaps
 class KPShopInfoView: UIView, GMSMapViewDelegate {
 
     var titleLabel: UILabel!
-    var informationDataModel: KPDataModel! {
+    var informationDataModel: KPDetailedDataModel! {
         didSet {
-            let position = CLLocationCoordinate2DMake(informationDataModel.latitude,
-                                                      informationDataModel.longitude)
-            let marker = GMSMarker(position: position)
-            marker.title = informationDataModel.name
-            if let rate = informationDataModel.averageRate?.doubleValue, rate >= 4.5 {
-                marker.icon = R.image.icon_mapMarkerSelected()
-            } else {
-                marker.icon = R.image.icon_mapMarker()
+            
+            DispatchQueue.main.async {
+                if self.shopWebsiteInfoView == nil {
+                    
+                    self.shopWebsiteInfoView = KPShopSubInfoView("網站",
+                                                                 "www.abc.com",
+                                                                 nil,
+                                                                 false,
+                                                                 nil)
+                    self.addSubview(self.shopWebsiteInfoView)
+                    self.shopWebsiteInfoView.addConstraints(fromStringArray: ["V:|-(-16)-[$self]",
+                                                                              "H:|-($metric0)-[$self]-($metric0)-|"],
+                                                            metrics:[KPLayoutConstant.information_horizontal_offset])
+                    
+                    self.shopPhoneInfoView = KPShopSubInfoView("聯絡電話",
+                                                               self.informationDataModel.phone ?? "尚無電話",
+                                                               nil,
+                                                               self.informationDataModel.phone == nil,
+                                                               nil)
+                    self.addSubview(self.shopPhoneInfoView)
+                    self.shopPhoneInfoView.addConstraints(fromStringArray: ["V:[$view0][$self]",
+                                                                            "H:|-($metric0)-[$self]-($metric0)-|"],
+                                                          metrics:[KPLayoutConstant.information_horizontal_offset],
+                                                          views:[self.shopWebsiteInfoView])
+                    
+                    self.shopFacebookInfoView = KPShopSubInfoView("粉絲專頁",
+                                                             self.informationDataModel.facebookID ?? "尚無專頁",
+                                                             nil,
+                                                             self.informationDataModel.facebookID == nil,
+                                                             nil)
+                    self.addSubview(self.shopFacebookInfoView)
+                    self.shopFacebookInfoView.addConstraints(fromStringArray: ["V:[$view0][$self]",
+                                                                               "H:|-($metric0)-[$self]-($metric0)-|"],
+                                                        metrics:[KPLayoutConstant.information_horizontal_offset],
+                                                        views:[self.shopPhoneInfoView])
+                    
+                    self.shopPriceInfoView = KPShopSubInfoView("平均消費",
+                                                          self.priceContents[(self.informationDataModel.priceAverage?.intValue) ?? 1],
+                                                          nil,
+                                                          false,
+                                                          nil)
+                    self.addSubview(self.shopPriceInfoView)
+                    self.shopPriceInfoView.addConstraints(fromStringArray: ["V:[$view0][$self]",
+                                                                            "H:|-($metric0)-[$self]-($metric0)-|"],
+                                                     metrics:[KPLayoutConstant.information_horizontal_offset],
+                                                     views:[self.shopFacebookInfoView])
+                    
+                    self.shopLocationInfoView = KPShopSubInfoView("地址",
+                                                             self.informationDataModel.address,
+                                                             "開啟導航",
+                                                             false,
+                                                             nil)
+                    self.addSubview(self.shopLocationInfoView)
+                    self.shopLocationInfoView.showSeparator = false
+                    self.shopLocationInfoView.addConstraints(fromStringArray: ["V:[$view0][$self]",
+                                                                               "H:|-($metric0)-[$self]-($metric0)-|"],
+                                                        metrics:[KPLayoutConstant.information_horizontal_offset],
+                                                        views:[self.shopPriceInfoView])
+                    
+                    let camera = GMSCameraPosition.camera(withLatitude: 25.018744,
+                                                          longitude: 121.532785, zoom: 18.0)
+                    self.mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
+                    self.mapView.delegate = self
+                    self.mapView.isUserInteractionEnabled = false
+                    self.addSubview(self.mapView)
+                    self.mapView.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]-($metric0)-|",
+                                                                  "V:[$view0][$self(240)]-($metric0)-|"],
+                                           metrics:[KPLayoutConstant.information_horizontal_offset],
+                                           views:[self.shopLocationInfoView])
+                    
+                    let position = CLLocationCoordinate2DMake(self.informationDataModel.latitude,
+                                                              self.informationDataModel.longitude)
+                    let marker = GMSMarker(position: position)
+                    marker.title = self.informationDataModel.name
+                    if let rate = self.informationDataModel.averageRate?.doubleValue, rate >= 4.5 {
+                        marker.icon = R.image.icon_mapMarkerSelected()
+                    } else {
+                        marker.icon = R.image.icon_mapMarker()
+                    }
+                    marker.map = self.mapView
+                    marker.userData = self.informationDataModel
+                    
+//                    let circle = GMSCircle(position: CLLocationCoordinate2DMake(self.informationDataModel.latitude+0.000073,
+//                                                                                self.informationDataModel.longitude), radius: 25)
+//                    circle.strokeWidth = 2
+//                    circle.strokeColor = KPColorPalette.KPMainColor_v2.mainColor?.withAlphaComponent(0.5)
+//                    circle.fillColor = KPColorPalette.KPMainColor_v2.mainColor_light?.withAlphaComponent(0.3)
+//                    circle.map = self.mapView
+                    
+                    self.mapView.selectedMarker = marker
+                    self.mapView.camera = GMSCameraPosition.camera(withTarget: position, zoom: self.mapView.camera.zoom)
+                }
             }
-            marker.map = self.mapView
-            marker.userData = informationDataModel
-            
-            let circle = GMSCircle(position: CLLocationCoordinate2DMake(informationDataModel.latitude+0.000073,
-                                                                        informationDataModel.longitude), radius: 25)
-            circle.strokeWidth = 2
-            circle.strokeColor = KPColorPalette.KPMainColor_v2.mainColor?.withAlphaComponent(0.5)
-            circle.fillColor = KPColorPalette.KPMainColor_v2.mainColor_light?.withAlphaComponent(0.3)
-            circle.map = mapView
-            
-            self.mapView.selectedMarker = marker
-            self.mapView.camera = GMSCameraPosition.camera(withTarget: position, zoom: self.mapView.camera.zoom)
         }
     }
     
@@ -104,10 +176,8 @@ class KPShopInfoView: UIView, GMSMapViewDelegate {
     var mapView: GMSMapView!
     var navigateButton: UIButton!
     
-    convenience init(_ informationDataModel: KPDataModel) {
+    convenience init(_ informationDataModel: KPDetailedDataModel) {
         self.init(frame: .zero)
-        
-        self.informationDataModel = informationDataModel
         
         shopWebsiteInfoView = KPShopSubInfoView("網站",
                                                 "www.abc.com",
@@ -176,23 +246,7 @@ class KPShopInfoView: UIView, GMSMapViewDelegate {
                                views:[shopLocationInfoView])
         
         
-//        navigateButton = UIButton(type: .custom)
-//        navigateButton.setTitle("開始導航",
-//                                for: .normal)
-//        navigateButton.titleLabel?.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
-//        navigateButton.setTitleColor(KPColorPalette.KPTextColor_v2.mainColor_subtitle,
-//                                     for: .normal)
-//        navigateButton.backgroundColor = UIColor(white: 1.0, alpha: 0.3)
-//        navigateButton.layer.cornerRadius = 21.0
-//        navigateButton.layer.borderColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle?.cgColor
-//        navigateButton.layer.borderWidth = 1.5
-//        navigateButton.layer.masksToBounds = true
-//        mapView.addSubview(navigateButton)
-//        navigateButton.addConstraintForCenterAligningToSuperview(in: .vertical)
-//        navigateButton.addConstraintForCenterAligningToSuperview(in: .horizontal)
-//        navigateButton.addConstraint(forHeight: 42)
-//        navigateButton.addConstraint(forWidth: 104)
-        
+        self.informationDataModel = informationDataModel
         
 //        if informationDataModel.featureContents.count > 0 {
 //            featureContainer = UIView()
@@ -221,7 +275,7 @@ class KPShopInfoView: UIView, GMSMapViewDelegate {
     
     
     func mapView(_ mapView: GMSMapView, markerInfoWindow marker: GMSMarker) -> UIView? {
-        let infoWindow = KPMainMapMarkerInfoWindow(dataModel: marker.userData as! KPDataModel)
+        let infoWindow = KPMainMapMarkerInfoWindow(detailDataModel: marker.userData as! KPDetailedDataModel)
         return infoWindow
     }
     
