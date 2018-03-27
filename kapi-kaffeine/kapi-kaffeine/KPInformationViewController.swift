@@ -496,9 +496,17 @@ class KPInformationViewController: KPViewController {
         shopInformationView.infoView = informationView
         shopInformationView.infoTitleLabel.text = "店家資訊"
         scrollContainer.addSubview(shopInformationView)
-        shopInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                             "V:[$view0]-16-[$self]"],
-                                           views: [rateInformationView])
+        
+        if self.navigationController != nil {
+            shopInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                                 "V:[$view0]-16-[$self]"],
+                                               views: [rateInformationView])
+        } else {
+            shopInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                                 "V:[$view0]-16-[$self]-16-|"],
+                                               views: [rateInformationView])
+        }
+        
         
         shopInformationView.actions = [
             Action(title:"街景模式",
@@ -560,10 +568,12 @@ class KPInformationViewController: KPViewController {
         recommendInformationView = KPInformationSharedInfoView()
         recommendInformationView.infoView = shopRecommendView
         recommendInformationView.infoTitleLabel.text = "你可能也會喜歡"
-        scrollContainer.addSubview(recommendInformationView)
-        recommendInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                                  "V:[$view0]-16-[$self]-16-|"],
-                                                     views: [shopInformationView])
+        if self.navigationController != nil {
+            scrollContainer.addSubview(recommendInformationView)
+            recommendInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                                      "V:[$view0]-16-[$self]-16-|"],
+                                                         views: [shopInformationView])
+        }
 
         
         NotificationCenter.default.addObserver(self,
@@ -591,7 +601,9 @@ class KPInformationViewController: KPViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        navBarFixBound = navigationController!.navigationBar.bounds
+        if self.navigationController != nil {
+            navBarFixBound = navigationController!.navigationBar.bounds
+        }
         viewHasAppeared = true
         informationHeaderView.shopPhoto.isHidden = false
     }

@@ -190,7 +190,7 @@ class KPLoadingView: UIView {
             }
             
             UIView.animate(withDuration: 0.3,
-                           delay: 0.1,
+                           delay: 0.05,
                            options: .curveEaseOut,
                            animations: {
                             self.iconView.alpha = 1.0

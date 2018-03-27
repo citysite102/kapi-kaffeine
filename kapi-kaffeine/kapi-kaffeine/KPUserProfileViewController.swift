@@ -490,7 +490,9 @@ KPTabViewDelegate {
         let controller = KPInformationViewController()
         controller.informationDataModel = self.displayDataModels[tableView.tag][indexPath.row]
         controller.showBackButton = true
-        self.navigationController?.pushViewController(controller, animated: true)
+        self.present(controller,
+                     animated: true,
+                     completion: nil)
         
         for tableView in self.tableViews {
             if let indexPath = tableView.indexPathForSelectedRow {
