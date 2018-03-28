@@ -43,7 +43,7 @@ class KPExplorationSectionView: UITableViewCell {
         sectionTitleLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_title
         contentView.addSubview(sectionTitleLabel)
         sectionTitleLabel.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|",
-                                                           "V:|-8-[$self]"])
+                                                           "V:|-16-[$self]"])
         sectionTitleLabel.text = "IG 人氣打卡店家"
         
         sectionDescriptionLabel = UILabel()
