@@ -14,6 +14,7 @@ class KPEditCommentController: KPViewController {
     var containerView: UIView!
     var dismissButton: KPBounceButton!
     var sendButton: UIButton!
+    var sendButtonItem: UIBarButtonItem!
     var textFieldContainerView: UIView!
     var defaultCommentModel: KPCommentModel!
     var inputTextView: UITextView!
@@ -23,17 +24,17 @@ class KPEditCommentController: KPViewController {
     
     lazy var textFieldHeaderLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12.0)
-        label.textColor = KPColorPalette.KPTextColor.mainColor
+        label.font = UIFont.systemFont(ofSize: KPFontSize.infoContent)
+        label.textColor = KPColorPalette.KPMainColor_v2.mainColor
         label.text = "請留下你的評論"
         return label
     }()
     
     lazy var remainingTextLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12.0)
-        label.textColor = KPColorPalette.KPTextColor.mainColor
-        label.text = "0/\(KPEditCommentController.commentMaximumTextLength)"
+        label.font = UIFont.systemFont(ofSize: KPFontSize.infoContent)
+        label.textColor = KPColorPalette.KPMainColor_v2.mainColor
+        label.text = "0/\(KPNewCommentController.commentMaximumTextLength)"
         return label
     }()
     
@@ -45,38 +46,35 @@ class KPEditCommentController: KPViewController {
         navigationItem.hidesBackButton = true
         
         
-        dismissButton = KPBounceButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30),
-                                       image: R.image.icon_back()!)
-        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(3, 3, 3, 3)
-        dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor;
-        dismissButton.addTarget(self,
-                                action: #selector(KPNewCommentController.handleDismissButtonOnTapped),
-                                for: .touchUpInside)
-        let barItem = UIBarButtonItem(customView: dismissButton);
         
-        sendButton = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 24));
-        sendButton.setTitle("修改", for: .normal)
-        sendButton.isEnabled = false
-        sendButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+        let barItem = UIBarButtonItem(image: R.image.icon_back(),
+                                      style: .plain,
+                                      target: self,
+                                      action: #selector(KPEditCommentController.handleDismissButtonOnTapped))
+        barItem.tintColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
+        navigationItem.leftBarButtonItems = [barItem]
+        
+        
+        sendButton = UIButton(frame: CGRect(x: 0, y: 0,
+                                            width: 40,
+                                            height: 24));
+        sendButton.setTitle("發佈", for: .normal)
+        sendButton.titleLabel?.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
         sendButton.tintColor = KPColorPalette.KPTextColor.mainColor;
         sendButton.addTarget(self,
                              action: #selector(KPNewCommentController.handleSendButtonOnTapped),
                              for: .touchUpInside)
         
-        let rightbarItem = UIBarButtonItem(customView: sendButton);
-        let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace,
-                                             target: nil,
-                                             action: nil)
         
-        let rightNegativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace,
-                                                  target: nil,
-                                                  action: nil)
+        sendButtonItem = UIBarButtonItem(title: "發佈",
+                                         style: .plain,
+                                         target: self,
+                                         action: #selector(KPNewCommentController.handleSendButtonOnTapped))
+        sendButtonItem.setTitleTextAttributes([NSAttributedStringKey.font:
+            UIFont.systemFont(ofSize: KPFontSize.mainContent)], for: .normal)
         
-        rightbarItem.isEnabled = false
-        negativeSpacer.width = -5
-        rightNegativeSpacer.width = -8
-        navigationItem.leftBarButtonItems = [negativeSpacer, barItem]
-        navigationItem.rightBarButtonItems = [rightNegativeSpacer, rightbarItem]
+        sendButtonItem.isEnabled = false
+        navigationItem.rightBarButtonItems = [sendButtonItem]
         
         containerView = UIView()
         containerView.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7

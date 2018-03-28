@@ -150,7 +150,7 @@ public class KPUserManager {
         currentUser = nil
     }
     
-    func updateUserInformation() {
+    func updateUserInformation(_ completion: ((Bool) -> Swift.Void)? = nil) {
         let userRequest = KPUserInformationRequest()
         userRequest.perform(nil, nil, nil, nil, nil, .get).then {
             result -> Void in
@@ -162,6 +162,10 @@ public class KPUserManager {
             self.currentUser?.accessToken = result["token"].string ?? token
             KPUserDefaults.accessToken = token
             self.storeUserInformation()
+            
+            if completion != nil {
+                completion!(true)
+            }
             
         }.catch { error in
             

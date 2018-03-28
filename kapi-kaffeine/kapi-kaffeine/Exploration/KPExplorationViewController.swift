@@ -419,6 +419,16 @@ extension KPExplorationViewController: UITableViewDataSource, UITableViewDelegat
             } else {
                 sectionBgImageView.transform = CGAffineTransform.identity
                 backgroundView.transform = CGAffineTransform.identity
+                
+                if scrollView.contentOffset.y > 200 {
+                    self.shouldShowLightContent = false
+                } else {
+                    self.shouldShowLightContent = true
+                }
+                UIView.animate(withDuration: 0.5,
+                               animations: {
+                                self.setNeedsStatusBarAppearanceUpdate()
+                })
             }
         }
     }

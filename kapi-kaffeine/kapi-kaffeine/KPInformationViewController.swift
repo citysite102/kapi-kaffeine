@@ -399,7 +399,7 @@ class KPInformationViewController: KPViewController {
         loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
         loadingIndicator.tintColor = KPColorPalette.KPMainColor_v2.mainColor
         scrollContainer.addSubview(loadingIndicator)
-        loadingIndicator.addConstraints(fromStringArray: ["V:[$view0]-16-[$self]"],
+        loadingIndicator.addConstraints(fromStringArray: ["V:[$view0]-32-[$self]"],
                                         views:[informationHeaderView])
         loadingIndicator.addConstraintForCenterAligningToSuperview(in: .horizontal)
         loadingIndicator.startAnimating()
@@ -455,36 +455,36 @@ class KPInformationViewController: KPViewController {
         shopRateInfoView = KPShopRateInfoView()
         rateInformationView = KPInformationSharedInfoView()
         rateInformationView.infoView = shopRateInfoView
-        rateInformationView.actions = [Action(title:"我要評分",
-                                              style:.normal,
-                                              color:KPColorPalette.KPMainColor_v2.mainColor!,
-                                              icon:(R.image.icon_star()?.withRenderingMode(.alwaysTemplate))!,
-                                              handler:{
-                                                [weak self] (infoView) -> () in
-                                                if let weSelf = self {
-                                                    if KPUserManager.sharedManager.currentUser == nil {
-                                                        KPPopoverView.popoverLoginView()
-                                                    } else {
-                                                        if KPServiceHandler.sharedHandler.isCurrentShopClosed {
-                                                            KPPopoverView.popoverClosedView()
-                                                        } else {
-                                                            let controller = KPModalViewController()
-                                                            controller.edgeInset = UIEdgeInsets(top: UIDevice().isSuperCompact ? 32 : 72,
-                                                                                                    left: 0,
-                                                                                                    bottom: 0,
-                                                                                                    right: 0)
-                                                            controller.cornerRadius = [.topRight, .topLeft]
-                                                            let ratingViewController = KPRatingViewController()
-
-                                                            if weSelf.hasRatedDataModel != nil {
-                                                                ratingViewController.defaultRateModel = weSelf.hasRatedDataModel
-                                                            }
-                                                            controller.contentController = ratingViewController
-                                                            controller.presentModalView()
-                                                        }
-                                                    }
-                                                }
-        })]
+//        rateInformationView.actions = [Action(title:"我要評分",
+//                                              style:.normal,
+//                                              color:KPColorPalette.KPMainColor_v2.mainColor!,
+//                                              icon:(R.image.icon_star()?.withRenderingMode(.alwaysTemplate))!,
+//                                              handler:{
+//                                                [weak self] (infoView) -> () in
+//                                                if let weSelf = self {
+//                                                    if KPUserManager.sharedManager.currentUser == nil {
+//                                                        KPPopoverView.popoverLoginView()
+//                                                    } else {
+//                                                        if KPServiceHandler.sharedHandler.isCurrentShopClosed {
+//                                                            KPPopoverView.popoverClosedView()
+//                                                        } else {
+//                                                            let controller = KPModalViewController()
+//                                                            controller.edgeInset = UIEdgeInsets(top: UIDevice().isSuperCompact ? 32 : 72,
+//                                                                                                    left: 0,
+//                                                                                                    bottom: 0,
+//                                                                                                    right: 0)
+//                                                            controller.cornerRadius = [.topRight, .topLeft]
+//                                                            let ratingViewController = KPRatingViewController()
+//
+//                                                            if weSelf.hasRatedDataModel != nil {
+//                                                                ratingViewController.defaultRateModel = weSelf.hasRatedDataModel
+//                                                            }
+//                                                            controller.contentController = ratingViewController
+//                                                            controller.presentModalView()
+//                                                        }
+//                                                    }
+//                                                }
+//        })]
         scrollContainer.addSubview(rateInformationView)
         rateInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                              "V:[$view0]-16-[$self]"],
@@ -1247,12 +1247,14 @@ extension KPInformationViewController: UIScrollViewDelegate {
                 titleLabel.alpha = (self.scrollContainer.contentOffset.y - 120) / 40
                 dismissButton.tintColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
                 moreButton.tintColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
+                moreButton.selectedTintColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
                 titleLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
             } else {
                 topBarContainer.alpha = 0
                 titleLabel.alpha = 0
                 dismissButton.tintColor = KPColorPalette.KPTextColor_v2.whiteColor
                 moreButton.tintColor = KPColorPalette.KPTextColor_v2.whiteColor
+                moreButton.selectedTintColor = KPColorPalette.KPTextColor_v2.whiteColor
                 titleLabel.textColor = KPColorPalette.KPTextColor_v2.whiteColor
             }
             

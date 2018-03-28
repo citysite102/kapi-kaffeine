@@ -342,36 +342,22 @@ KPTabViewDelegate {
         
     }
     
-    
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        if let user = KPUserManager.sharedManager.currentUser {
-            isLogin = true
-            if let photoURL = URL(string: user.photoURL ?? "") {
-                userPhoto.af_setImage(withURL: photoURL)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if (KPUserManager.sharedManager.currentUser != nil) {
+            if !self.dataloaded {
+                self.dataLoading = true
+                for tableView in self.tableViews {
+                    tableView.reloadData()
+                }
             }
-            userNameLabel.text = "Hi, \(user.displayName ?? "")"
-            userBioLabel.text = user.intro ?? "被你看到這個隱藏的內容？！肯定有Bug，快回報給我們吧！"
-        } else {
-            isLogin = false
-        }
-        
-        if !dataloaded {
-        
-            dataLoading = true
-            for tableView in self.tableViews {
-                tableView.reloadData()
-            }
-            
-            DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + 0.5) {
-
+            KPUserManager.sharedManager.updateUserInformation({ (_) in
                 for (index, tabTitle) in self.tabTitles.enumerated() {
                     if let displayModel = KPUserManager.sharedManager.currentUser?.value(forKey: tabTitle.key) as? [KPDataModel] {
                         self.displayDataModels[index] = displayModel
                         DispatchQueue.main.async {
                             UIView.animate(withDuration: 0.1,
-                                           animations: { 
+                                           animations: {
                                             self.tableViews[index].alpha = (displayModel.count == 0) ? 0.0 : 1.0
                                             self.statusViews[index].alpha = (displayModel.count != 0) ? 0.0 : 1.0
                             }, completion: { (_) in
@@ -383,7 +369,7 @@ KPTabViewDelegate {
                         self.displayDataModels[index] = []
                         DispatchQueue.main.async {
                             UIView.animate(withDuration: 0.1,
-                                           animations: { 
+                                           animations: {
                                             self.tableViews[index].alpha = 0.0
                                             self.statusViews[index].alpha = 1.0
                             }, completion: { (_) in
@@ -399,11 +385,24 @@ KPTabViewDelegate {
                         tableView.reloadData()
                     }
                 }
-                
-            }
-            dataloaded = true
+                self.dataloaded = true
+            })
         }
-        
+    }
+    
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if let user = KPUserManager.sharedManager.currentUser {
+            isLogin = true
+            if let photoURL = URL(string: user.photoURL ?? "") {
+                userPhoto.af_setImage(withURL: photoURL)
+            }
+            userNameLabel.text = "Hi, \(user.displayName ?? "")"
+            userBioLabel.text = user.intro ?? "被你看到這個隱藏的內容？！肯定有Bug，快回報給我們吧！"
+        } else {
+            isLogin = false
+        }
     }
 
     override func didReceiveMemoryWarning() {

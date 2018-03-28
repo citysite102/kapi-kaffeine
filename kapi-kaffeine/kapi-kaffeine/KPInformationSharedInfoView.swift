@@ -108,13 +108,13 @@ class KPInformationSharedInfoView: UIView {
 //                    actionButton.setImage(action.icon, for: .normal)
 //                }
                 
-                actionButton.layer.borderColor = KPColorPalette.KPMainColor_v2.grayColor_level3?.cgColor
+                actionButton.layer.borderColor = KPColorPalette.KPMainColor_v2.grayColor_level2?.cgColor
                 actionButton.layer.borderWidth = 1.0
                 actionButton.layer.cornerRadius = 4.0
                 actionButton.layer.masksToBounds = true
                 actionButton.tag = index
                 actionButton.addTarget(self, action: #selector(handleButtonOnTapped(button:)), for: .touchUpInside)
-                actionButton.setTitleColor(KPColorPalette.KPMainColor_v2.grayColor_level3,
+                actionButton.setTitleColor(KPColorPalette.KPMainColor_v2.grayColor_level2,
                                            for: .normal)
 //                actionButton.imageView?.contentMode = .scaleAspectFit
 //                actionButton.imageEdgeInsets = UIEdgeInsets(top: 7, left: 7, bottom: 7, right: 8)

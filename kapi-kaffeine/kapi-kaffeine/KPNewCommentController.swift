@@ -82,7 +82,9 @@ class KPNewCommentController: KPViewController {
         navigationItem.leftBarButtonItems = [barItem]
         
         
-        sendButton = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 24));
+        sendButton = UIButton(frame: CGRect(x: 0, y: 0,
+                                            width: 40,
+                                            height: 24));
         sendButton.setTitle("發佈", for: .normal)
         sendButton.titleLabel?.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
         sendButton.tintColor = KPColorPalette.KPTextColor.mainColor;

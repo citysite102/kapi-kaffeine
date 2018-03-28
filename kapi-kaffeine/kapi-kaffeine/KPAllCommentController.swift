@@ -27,13 +27,7 @@ class KPAllCommentController: KPViewController {
         navigationItem.title = "所有評論"
         navigationItem.hidesBackButton = true
         
-        backButton = KPBounceButton(frame: CGRect(x: 0, y: 0, width: 24, height: 24),
-                                    image: R.image.icon_back()!)
-        backButton.tintColor = KPColorPalette.KPTextColor.whiteColor
-        backButton.addTarget(self,
-                             action: #selector(KPAllCommentController.handleBackButtonOnTapped),
-                             for: .touchUpInside)
-        let barItem = UIBarButtonItem(customView: backButton)
+        
         
         editButton = KPBounceButton(frame: CGRect(x: 0, y: 0, width: 24, height: 24),
                                     image: R.image.icon_edit()!)
@@ -42,17 +36,14 @@ class KPAllCommentController: KPViewController {
                              action: #selector(KPAllCommentController.handleEditButtonOnTapped),
                              for: .touchUpInside)
         
-        let rightbarItem = UIBarButtonItem(customView: editButton)
-        let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace,
-                                             target: nil,
-                                             action: nil)
-        negativeSpacer.width = -8
-        
-        navigationItem.leftBarButtonItems = [negativeSpacer, barItem]
-        navigationItem.rightBarButtonItems = [negativeSpacer, rightbarItem]
+        let barItem = UIBarButtonItem(image: R.image.icon_back(),
+                                      style: .plain,
+                                      target: self,
+                                      action: #selector(KPAllCommentController.handleBackButtonOnTapped))
+        barItem.tintColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
+        navigationItem.leftBarButtonItems = [barItem]
         
         tableView = UITableView()
-//        tableView.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -90,17 +81,6 @@ class KPAllCommentController: KPViewController {
                                                           completion: {})
         }
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
 extension KPAllCommentController: UITableViewDelegate, UITableViewDataSource {
@@ -133,20 +113,20 @@ extension KPAllCommentController: UITableViewDelegate, UITableViewDataSource {
                 })
             }
             
-            if let likeUser = comment.likes?.first(where: { $0.memberID == KPUserManager.sharedManager.currentUser?.identifier}) {
-                if likeUser.isLike == 0 {
-                    cell.voteDownButton.buttonSelected = true
-                } else {
-                    cell.voteUpButton.buttonSelected = true
-                }
-            }
+//            if let likeUser = comment.likes?.first(where: { $0.memberID == KPUserManager.sharedManager.currentUser?.identifier}) {
+//                if likeUser.isLike == 0 {
+//                    cell.voteDownButton.buttonSelected = true
+//                } else {
+//                    cell.voteUpButton.buttonSelected = true
+//                }
+//            }
             
-            cell.voteUpCount = comment.likeCount ?? 0
-            cell.voteDownCount = comment.dislikeCount ?? 0
+//            cell.voteUpCount = comment.likeCount ?? 0
+//            cell.voteDownCount = comment.dislikeCount ?? 0
             
-            if indexPath.row == comments.count-1 {
-                cell.separator.isHidden = true
-            }
+//            if indexPath.row == comments.count-1 {
+//                cell.separator.isHidden = true
+//            }
         }
         
         return cell
