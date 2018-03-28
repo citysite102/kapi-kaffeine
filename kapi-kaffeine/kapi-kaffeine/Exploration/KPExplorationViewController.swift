@@ -239,7 +239,7 @@ class KPExplorationViewController: KPViewController {
         articleCollectionView.delaysContentTouches = true
         articleCollectionView.clipsToBounds = false
         articleCollectionView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                               "V:[$view0][$self]-24-|"],
+                                                               "V:[$view0][$self]|"],
                                              views: [articleLabel])
         
         contentTableView = UITableView(frame: CGRect.zero, style: .plain)

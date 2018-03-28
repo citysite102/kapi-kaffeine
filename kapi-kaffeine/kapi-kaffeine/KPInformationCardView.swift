@@ -54,7 +54,7 @@ class KPInformationCardView: UIView {
         
         locationInfoLabel = UILabel()
         locationInfoLabel.font = UIFont.systemFont(ofSize: KPFontSize.subContent,
-                                                   weight: UIFont.Weight.medium)
+                                                   weight: UIFont.Weight.regular)
         locationInfoLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_hint
         locationInfoLabel.text = "台北, 大安區"
         container.addSubview(locationInfoLabel)
