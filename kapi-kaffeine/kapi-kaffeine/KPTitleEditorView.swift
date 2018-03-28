@@ -14,6 +14,9 @@ class KPTitleEditorView<T: UIView>: UIView, UITextFieldDelegate {
     
     var contentView: T!
     
+    var isTextFieldEditable: Bool = true
+    var textFieldTapAction: (() -> Void)?
+    
     var accessoryView: UIView? {
         didSet {
             oldValue?.removeFromSuperview()
@@ -109,6 +112,16 @@ class KPTitleEditorView<T: UIView>: UIView, UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+    
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        
+        if isTextFieldEditable {
+            return true
+        } else {
+            textFieldTapAction?()
+            return false
+        }
     }
     
 }

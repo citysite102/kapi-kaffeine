@@ -59,6 +59,7 @@ class KPMapInputViewController: KPSharedSettingViewController, GMSMapViewDelegat
         marker.map = mapView
         
         sendButton.setTitle("完成", for: .normal)
+        sendButton.addTarget(self, action: #selector(handleSendButtonOnTapped), for: .touchUpInside)
         
         let container = UIView()
         scrollView.addSubview(container)
@@ -96,6 +97,11 @@ class KPMapInputViewController: KPSharedSettingViewController, GMSMapViewDelegat
         // Dispose of any resources that can be recreated.
     }
     
+    @objc func handleSendButtonOnTapped() {
+        returnValue = (address, coordinate)
+        delegate?.returnValueSet(self)
+        dismiss(animated: true, completion: nil)
+    }
     
     func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
         marker.position = coordinate

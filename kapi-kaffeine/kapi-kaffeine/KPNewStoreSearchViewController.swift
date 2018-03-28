@@ -9,18 +9,34 @@
 import UIKit
 import GooglePlaces
 
-protocol KPSubtitleInputDelegate: class {
-    func outputValueSet(_ controller: KPViewController,  value: Any)
+protocol KPSubtitleInputDelegate: NSObjectProtocol {
+    func outputValueSet(_ controller: KPSubtitleInputController)
 }
 
-class KPNewStoreSearchViewController: KPViewController {
+class KPSubtitleInputController: KPViewController {
     
-    var searchController: UISearchController!
+    lazy var subTitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "店家名稱"
+        label.font = UIFont.systemFont(ofSize: 12.0)
+        label.textColor = KPColorPalette.KPTextColor.mainColor
+        return label
+    }()
+    
+    lazy var editTextField: UITextField = {
+        let textField = UITextField()
+        textField.textColor = KPColorPalette.KPTextColor.grayColor_level2
+        textField.placeholder = "請輸入店家名稱"
+        textField.delegate = self
+        textField.returnKeyType = .done
+        textField.font = UIFont.systemFont(ofSize: 20)
+        return textField
+    }()
     
     weak open var delegate: KPSubtitleInputDelegate?
-//    var dismissButton: UIButton!
-//    var sendButton: UIButton!
-    let tableView = UITableView()
+    var dismissButton: KPBounceButton!
+    var sendButton: UIButton!
+    var tableView: UITableView!
     lazy var separator: UIView = {
         let view = UIView()
         view.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
@@ -38,94 +54,91 @@ class KPNewStoreSearchViewController: KPViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         view.backgroundColor = UIColor.white
-        title = "輸入店家名稱"
+        view.addSubview(subTitleLabel)
         
-        // Cancel button
-        let barLeftItem = UIBarButtonItem(title: "取消",
-                                          style: .plain,
-                                          target: self,
-                                          action: #selector(KPNewStoreSearchViewController.handleCancelButtonOnTap))
-        barLeftItem.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 16), NSAttributedStringKey.foregroundColor: UIColor.gray],
-                                           for: .normal)
-        navigationItem.leftBarButtonItem = barLeftItem
+        dismissButton = KPBounceButton()
+        dismissButton.setImage(R.image.icon_close()?.withRenderingMode(.alwaysTemplate),
+                               for: .normal)
+        dismissButton.tintColor = KPColorPalette.KPMainColor_v2.mainColor_light
+        dismissButton.addTarget(self,
+                                action: #selector(KPSubtitleInputController.handleDismissButtonOnTapped),
+                                for: .touchUpInside)
         
-        // Done button
-        let barRightItem = UIBarButtonItem(title: "完成",
-                                           style: .plain,
-                                           target: self,
-                                           action: #selector(KPNewStoreSearchViewController.handleSendButtonOnTapped))
-        barLeftItem.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 16), NSAttributedStringKey.foregroundColor: KPColorPalette.KPMainColor_v2.mainColor!],
-                                           for: .normal)
-        navigationItem.rightBarButtonItem = barRightItem
+        view.addSubview(dismissButton)
+        dismissButton.addConstraints(fromStringArray: ["H:|-12-[$self(30)]",
+                                                       "V:|-24-[$self(30)]"])
+        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(6, 6, 6, 6)
         
-        configureSearchController()
         
+        subTitleLabel.addConstraints(fromStringArray: ["V:[$view0]-24-[$self]",
+                                                       "H:|-16-[$self]-16-|"],
+                                     views: [dismissButton])
+        
+        view.addSubview(editTextField)
+        editTextField.addConstraints(fromStringArray: ["V:[$view0]-12-[$self]",
+                                                       "H:|-16-[$self]-16-|"],
+                                     views: [subTitleLabel])
+        
+        let bottomBorderView = UIView()
+        bottomBorderView.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
+        view.addSubview(bottomBorderView)
+        bottomBorderView.addConstraints(fromStringArray: ["H:|-16-[$self]|",
+                                                          "V:[$view0]-12-[$self(1)]"],
+                                        views:[editTextField])
+        
+        
+        tableView = UITableView()
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.estimatedRowHeight = 80
+        tableView.separatorColor = UIColor.clear
         view.addSubview(self.tableView)
-        tableView.addConstraints(fromStringArray: ["V:|[$self]|",
-                                                   "H:|[$self]|"])
+        tableView.addConstraints(fromStringArray: ["V:[$view0]-12-[$self]|",
+                                                   "H:|[$self]|"],
+                                 views: [bottomBorderView])
         tableView.register(KPInputRecommendCell.self,
                            forCellReuseIdentifier: "cell")
         tableView.allowsSelection = true
         
-    }
-    
-    func configureSearchController() {
-        searchController = UISearchController(searchResultsController: nil)
-//        searchController.searchResultsUpdater = self
-        searchController.dimsBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "搜尋店家名稱、標籤..."
-        searchController.searchBar.delegate = self
-        searchController.hidesNavigationBarDuringPresentation = false
-        if #available(iOS 11.0, *) {
-            navigationController?.navigationBar.prefersLargeTitles = true
-            navigationItem.searchController = searchController
-        } else {
-            // Fallback on earlier versions
-            navigationItem.titleView = searchController.searchBar
-        }
-        definesPresentationContext = true
         
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        if #available(iOS 11.0, *) {
-            navigationItem.hidesSearchBarWhenScrolling = false
-        }
+        sendButton = UIButton.init(type: .custom)
+        sendButton.setTitle("確認名稱", for: .normal)
+        sendButton.setTitleColor(KPColorPalette.KPTextColor.mainColor,
+                                 for: .normal)
+        sendButton.addTarget(self,
+                             action: #selector(KPSubtitleInputController.handleSendButtonOnTapped),
+                             for: .touchUpInside)
+        sendButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+        view.addSubview(sendButton)
+        view.addSubview(separator)
+        
+        sendButton.addConstraints(fromStringArray: ["V:[$view0]-16-[$self(30)]-16-|"],
+                                  views: [separator])
+        sendButton.addConstraintForCenterAligningToSuperview(in: .horizontal)
+        
+        separator.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
+                                                   "V:[$self(1)]-16-[$view0]"],
+                                 views: [sendButton])
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if #available(iOS 11.0, *) {
-            navigationItem.hidesSearchBarWhenScrolling = true
-        }
-        searchController.searchBar.becomeFirstResponder()
+        editTextField.becomeFirstResponder()
     }
-
     
-    @objc func handleCancelButtonOnTap() {
-        dismiss(animated: true, completion: nil)
-//        appModalController()?.dismissControllerWithDefaultDuration()
+    @objc func handleDismissButtonOnTapped() {
+        dismiss(animated: true, completion: nil);
     }
     
     @objc func handleSendButtonOnTapped() {
-        
-        guard let name = searchController.searchBar.text else {
-            return
-        }
-        
-        searchController.isActive = false
-        delegate?.outputValueSet(self, value: name)
-        
+        outputValue = editTextField.text
+        delegate?.outputValueSet(self)
         dismiss(animated: true, completion: nil)
 //        appModalController()?.dismissControllerWithDefaultDuration()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -133,31 +146,23 @@ class KPNewStoreSearchViewController: KPViewController {
     
 }
 
-extension KPNewStoreSearchViewController: UITextFieldDelegate, UISearchBarDelegate {
+extension KPSubtitleInputController: UITextFieldDelegate {
     
-//    func textField(_ textField: UITextField,
-//                   shouldChangeCharactersIn range: NSRange,
-//                   replacementString string: String) -> Bool {
-//        let returnKey = (string as NSString).range(of: "\n").location == NSNotFound
-//
-//        if !returnKey {
-//            textField.resignFirstResponder()
-//            return false
-//        }
-//        if !(textField.text?.isEmpty)! {
-//            let oString = textField.text! as NSString
-//            let nString = oString.replacingCharacters(in: range, with: string)
-//            placeAutoComplete(nString)
-//        }
-//        return true
-//    }
-    
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if searchText.count > 0 {
-            placeAutoComplete(searchText)
-        } else {
-            apiContents = []
+    func textField(_ textField: UITextField,
+                   shouldChangeCharactersIn range: NSRange,
+                   replacementString string: String) -> Bool {
+        let returnKey = (string as NSString).range(of: "\n").location == NSNotFound
+        
+        if !returnKey {
+            textField.resignFirstResponder()
+            return false
         }
+        if !(textField.text?.isEmpty)! {
+            let oString = textField.text! as NSString
+            let nString = oString.replacingCharacters(in: range, with: string)
+            placeAutoComplete(nString)
+        }
+        return true
     }
     
     func placeAutoComplete(_ placeName: String) {
@@ -169,43 +174,43 @@ extension KPNewStoreSearchViewController: UITextFieldDelegate, UISearchBarDelega
                                             bounds: nil,
                                             filter: filter,
                                             callback: {(results, error) -> Void in
-            if let error = error {
-                print("Autocomplete error \(error)")
-                return
-            }
+                                                if let error = error {
+                                                    print("Autocomplete error \(error)")
+                                                    return
+                                                }
                                                 
-            if let results = results {
-                
-                var places = [GMSPlace]()
-                for result in results {
-                    if let placeID = result.placeID {
-                        GMSPlacesClient().lookUpPlaceID(placeID,
-                                                        callback: { (place, error) in
-                                                            if let error = error {
-                                                                print("lookup place id query error: \(error.localizedDescription)")
-                                                                return
-                                                            }
-                                                            
-                                                            guard let place = place else {
-                                                                print("No place details for \(placeID)")
-                                                                return
-                                                            }
-                                                            
-                                                            if place.types.contains("cafe") {
-                                                                places.append(place)
-                                                                self.apiContents = places
-                                                            }
-                                                            
-                                                            print("Name:\(place.name)")
-                        })
-                    }
-                }
-            }
+                                                if let results = results {
+                                                    
+                                                    var places = [GMSPlace]()
+                                                    for result in results {
+                                                        if let placeID = result.placeID {
+                                                            GMSPlacesClient().lookUpPlaceID(placeID,
+                                                                                            callback: { (place, error) in
+                                                                                                if let error = error {
+                                                                                                    print("lookup place id query error: \(error.localizedDescription)")
+                                                                                                    return
+                                                                                                }
+                                                                                                
+                                                                                                guard let place = place else {
+                                                                                                    print("No place details for \(placeID)")
+                                                                                                    return
+                                                                                                }
+                                                                                                
+                                                                                                if place.types.contains("cafe") {
+                                                                                                    places.append(place)
+                                                                                                    self.apiContents = places
+                                                                                                }
+                                                                                                
+                                                                                                print("Name:\(place.name)")
+                                                            })
+                                                        }
+                                                    }
+                                                }
         })
     }
 }
 
-extension KPNewStoreSearchViewController: UITableViewDelegate, UITableViewDataSource {
+extension KPSubtitleInputController: UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -218,23 +223,19 @@ extension KPNewStoreSearchViewController: UITableViewDelegate, UITableViewDataSo
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        outputValue = apiContents[indexPath.row]
-//        editTextField.text = apiContents[indexPath.row].name
-//        tableView.deselectRow(at: tableView.indexPathForSelectedRow!,
-//                              animated: false)
-//        delegate?.outputValueSet(self)
-        searchController.isActive = false
-        delegate?.outputValueSet(self, value: apiContents[indexPath.row])
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
-            self.dismiss(animated: true, completion: nil)
-        }
+        outputValue = apiContents[indexPath.row]
+        editTextField.text = apiContents[indexPath.row].name
+        tableView.deselectRow(at: tableView.indexPathForSelectedRow!,
+                              animated: false)
+        delegate?.outputValueSet(self)
+        dismiss(animated: true, completion: nil)
 //        appModalController()?.dismissControllerWithDefaultDuration()
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
-
+    
 //    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 //        return 56
 //    }

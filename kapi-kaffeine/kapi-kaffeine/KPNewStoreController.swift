@@ -9,7 +9,7 @@
 import UIKit
 import GooglePlaces
 
-class KPNewStoreController: KPNewStoreBasicController, KPSubtitleInputDelegate {
+class KPNewStoreController: KPNewStoreBasicController, KPSubtitleInputDelegate, KPSharedSettingDelegate {
     
     var storeNameEditor: KPTitleEditorView<UIButton>!
     
@@ -60,6 +60,10 @@ class KPNewStoreController: KPNewStoreBasicController, KPSubtitleInputDelegate {
         
         
         locationEditor = KPTitleEditorView<UITextField>("所在位置")
+        locationEditor.isTextFieldEditable = false
+        locationEditor.textFieldTapAction = {
+            
+        }
         locationEditor.contentView.placeholder = "請選擇所在位置"
         scrollContainer.addSubview(locationEditor)
         locationEditor.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|",
@@ -126,10 +130,9 @@ class KPNewStoreController: KPNewStoreBasicController, KPSubtitleInputDelegate {
         
     }
     
-    
-    func outputValueSet(_ controller: KPViewController, value: Any) {
-        if controller.isKind(of: KPNewStoreSearchViewController.self) {
-            if let place = value as? GMSPlace {
+    func outputValueSet(_ controller: KPSubtitleInputController) {
+        if controller.isKind(of: KPSubtitleInputController.self) {
+            if let place = controller.outputValue as? GMSPlace {
                 
                 storeNameEditor.contentView.setTitle(place.name, for: .normal)
                 
@@ -147,7 +150,7 @@ class KPNewStoreController: KPNewStoreBasicController, KPSubtitleInputDelegate {
                 
                 coordinate = place.coordinate
                 
-            } else if let placeName = value as? String {
+            } else if let placeName = controller.outputValue as? String {
                 storeNameEditor.contentView.setTitle(placeName, for: .normal)
                 
             }
@@ -157,19 +160,70 @@ class KPNewStoreController: KPNewStoreBasicController, KPSubtitleInputDelegate {
             addressEditor.isHidden = false
             phoneEditor.isHidden = false
             urlEditor.isHidden = false
-
+            
         }
     }
     
+    @objc func handleLocationEditorTap() {
+        print("12343334334343434fdsafdskfhuasldkfhaskdj")
+    }
+    
+    func returnValueSet(_ controller: KPSharedSettingViewController) {
+        
+        if controller.isKind(of: KPMapInputViewController.self) {
+            if let address = controller.returnValue as? (String, CLLocationCoordinate2D) {
+                coordinate = address.1
+                addressEditor.contentView.text = address.0
+            }
+        }
+        
+    }
+    
+//    func outputValueSet(_ controller: KPViewController, value: Any) {
+//        if controller.isKind(of: KPNewStoreSearchViewController.self) {
+//            if let place = value as? GMSPlace {
+//
+//                storeNameEditor.contentView.setTitle(place.name, for: .normal)
+//
+//                if let addressComponents = place.addressComponents {
+//                    for component in addressComponents {
+//                        if component.type == "administrative_area_level_1" {
+//                            locationEditor.contentView.text = component.name
+//                        }
+//                    }
+//                }
+//
+//                addressEditor.contentView.text = place.formattedAddress
+//                phoneEditor.contentView.text = place.phoneNumber
+//                urlEditor.contentView.text = place.website?.absoluteString
+//
+//                coordinate = place.coordinate
+//
+//            } else if let placeName = value as? String {
+//                storeNameEditor.contentView.setTitle(placeName, for: .normal)
+//
+//            }
+//
+//            nextButton.isEnabled = true
+//            locationEditor.isHidden = false
+//            addressEditor.isHidden = false
+//            phoneEditor.isHidden = false
+//            urlEditor.isHidden = false
+//
+//        }
+//    }
+    
     @objc func handleStoreNameEditButtonOnTap(_ sender: UIButton) {
-        let storeNameSearchController = KPNewStoreSearchViewController()
-        let navController = UINavigationController(rootViewController: storeNameSearchController)
+        let storeNameSearchController = KPSubtitleInputController()
         storeNameSearchController.delegate = self
-        present(navController, animated: true, completion: nil)
+//        let navController = UINavigationController(rootViewController: storeNameSearchController)
+//        storeNameSearchController.delegate = self
+        present(storeNameSearchController, animated: true, completion: nil)
     }
     
     @objc func handleMapEditButtonOnTap(_ sender: UIButton) {
         let mapEditController = KPMapInputViewController()
+        mapEditController.delegate = self
         if let coordinate = coordinate ?? KPLocationManager.sharedInstance().currentLocation?.coordinate {
             mapEditController.coordinate = coordinate
         } else  {
