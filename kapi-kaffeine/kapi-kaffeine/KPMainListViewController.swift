@@ -201,7 +201,7 @@ class KPMainListViewController:
         sortContainerView = UIView()
         sortContainerView.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7
         view.addSubview(sortContainerView)
-        sortContainerView.addConstraints(fromStringArray: ["V:|-140-[$self(32)]",
+        sortContainerView.addConstraints(fromStringArray: ["V:|-136-[$self(32)]",
                                                            "H:|[$self]|"])
         
         let sortTapGesture = UITapGestureRecognizer(target: self,
@@ -461,22 +461,19 @@ extension KPMainListViewController: UITableViewDelegate, UITableViewDataSource {
           
             var translate: CGFloat
             var opacity: CGFloat
-            var buttonTranslate: CGFloat
             
             if scrollView.contentOffset.y > oldScrollOffsetY {
                 // 往下
-                translate = -108
-                buttonTranslate = 120
+                translate = -96
                 opacity = 0
             } else {
                 // 往上
                 translate = 0.0
-                buttonTranslate = 0
                 opacity = 1.0
             }
             
             self.currentSearchTagTranslateY = translate
-            UIView.animate(withDuration: 0.2,
+            UIView.animate(withDuration: 0.3,
                            delay: 0,
                            options: .curveEaseIn,
                            animations: {

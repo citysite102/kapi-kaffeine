@@ -188,7 +188,7 @@ class KPExplorationViewController: KPViewController {
 
         searchContainer = UIView()
         searchContainer.backgroundColor = KPColorPalette.KPBackgroundColor.white_level3
-        searchContainer.layer.cornerRadius = 2.0
+        searchContainer.layer.cornerRadius = 4.0
         searchContainer.layer.masksToBounds = true
         searchContainerShadowView.addSubview(searchContainer)
         searchContainer.addGestureRecognizer(longPressGesture)

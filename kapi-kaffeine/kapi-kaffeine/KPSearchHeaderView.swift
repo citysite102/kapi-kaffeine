@@ -55,14 +55,14 @@ class KPSearchHeaderView: UIView {
         containerView.addSubview(locationSelectView)
         locationSelectView.addGestureRecognizer(longPressGesture_location)
         locationSelectView.addConstraints(fromStringArray: ["H:|-20-[$self]",
-                                                            "V:|-40-[$self(36)]|"])
+                                                            "V:|-40-[$self(36)]-12-|"])
         
         searchContainer = UIView()
         searchContainer.backgroundColor = KPColorPalette.KPBackgroundColor.whiteColor
-        searchContainer.layer.cornerRadius = 2.0
+        searchContainer.layer.cornerRadius = 4.0
         searchContainer.layer.masksToBounds = true
         searchContainer.layer.borderWidth = 1.0
-        searchContainer.layer.borderColor = KPColorPalette.KPMainColor_v2.grayColor_level5?.cgColor
+        searchContainer.layer.borderColor = KPColorPalette.KPMainColor_v2.grayColor_level3?.cgColor
         containerView.addSubview(searchContainer)
         searchContainer.addGestureRecognizer(longPressGesture)
         searchContainer.addConstraints(fromStringArray: ["H:[$view0]-16-[$self]",
@@ -70,7 +70,7 @@ class KPSearchHeaderView: UIView {
                                        views:[locationSelectView])
         
         searchIcon = UIImageView(image: R.image.icon_search())
-        searchIcon.tintColor = KPColorPalette.KPTextColor_v2.mainColor_hint
+        searchIcon.tintColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
         searchContainer.addSubview(searchIcon)
         searchIcon.addConstraints(fromStringArray: ["V:[$self(18)]",
                                                     "H:|-10-[$self(18)]"])
@@ -81,7 +81,7 @@ class KPSearchHeaderView: UIView {
         searchLabel = UILabel()
         searchLabel.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
         searchLabel.text = "搜尋店家名稱、標籤..."
-        searchLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_hint
+        searchLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
         searchContainer.addSubview(searchLabel)
         searchLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]"],
                                    views:[searchIcon])
@@ -108,7 +108,7 @@ class KPSearchHeaderView: UIView {
         addSubview(searchTagView)
         searchTagView.addConstraints(fromStringArray: ["V:[$view0][$self]|",
                                                        "H:|[$self]|"],
-                                     views:[searchContainer])
+                                     views:[containerView])
         
         bringSubview(toFront: containerView)
         

@@ -262,7 +262,7 @@ GMUClusterRendererDelegate {
         view.addSubview(self.mapView)
         
         mapView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                 "V:|-140-[$self]|"])
+                                                 "V:|-136-[$self]|"])
         
         // Set up the cluster manager with the supplied icon generator and renderer.
         let iconGenerator = GMUDefaultClusterIconGenerator()

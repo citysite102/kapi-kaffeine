@@ -97,7 +97,7 @@ class KPSearchTagView: UIView {
         
         addSubview(collectionView)
         collectionView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                        "V:|-12-[$self(40)]-12-|"])
+                                                        "V:|-2-[$self(40)]-8-|"])
         
     }
     
