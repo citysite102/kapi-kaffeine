@@ -40,6 +40,7 @@ class KPInputRecommendCell: UITableViewCell {
         contentView.addSubview(iconImageView)
         iconImageView.addConstraints(fromStringArray: ["|-20-[$self]"])
         iconImageView.addConstraintForCenterAligningToSuperview(in: .vertical)
+        iconImageView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         
         contentView.addSubview(titleLabel)
         titleLabel.addConstraints(fromStringArray: ["H:[$view0]-[$self]-|", "V:|-20-[$self]"],

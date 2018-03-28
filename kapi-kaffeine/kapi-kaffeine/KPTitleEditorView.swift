@@ -14,6 +14,23 @@ class KPTitleEditorView<T: UIView>: UIView, UITextFieldDelegate {
     
     var contentView: T!
     
+    var accessoryView: UIView? {
+        didSet {
+            oldValue?.removeFromSuperview()
+            
+            guard let newView = accessoryView else {
+                return
+            }
+            
+            addSubview(newView)
+            newView.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                newView.rightAnchor.constraint(equalTo: rightAnchor),
+                newView.bottomAnchor.constraint(equalTo: titleLabel.bottomAnchor)
+            ])
+        }
+    }
+    
     fileprivate let titleLabel: UILabel = UILabel()
     
     init(_ title: String, contentViewSetupFunction setup: (() -> T)?) {

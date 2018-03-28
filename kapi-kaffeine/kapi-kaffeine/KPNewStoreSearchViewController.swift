@@ -18,8 +18,8 @@ class KPNewStoreSearchViewController: KPViewController {
     var searchController: UISearchController!
     
     weak open var delegate: KPSubtitleInputDelegate?
-    var dismissButton: UIButton!
-    var sendButton: UIButton!
+//    var dismissButton: UIButton!
+//    var sendButton: UIButton!
     let tableView = UITableView()
     lazy var separator: UIView = {
         let view = UIView()
@@ -51,10 +51,20 @@ class KPNewStoreSearchViewController: KPViewController {
                                            for: .normal)
         navigationItem.leftBarButtonItem = barLeftItem
         
+        // Done button
+        let barRightItem = UIBarButtonItem(title: "完成",
+                                           style: .plain,
+                                           target: self,
+                                           action: #selector(KPNewStoreSearchViewController.handleSendButtonOnTapped))
+        barLeftItem.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 16), NSAttributedStringKey.foregroundColor: KPColorPalette.KPMainColor_v2.mainColor!],
+                                           for: .normal)
+        navigationItem.rightBarButtonItem = barRightItem
+        
         configureSearchController()
         
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.estimatedRowHeight = 80
         view.addSubview(self.tableView)
         tableView.addConstraints(fromStringArray: ["V:|[$self]|",
                                                    "H:|[$self]|"])
@@ -79,6 +89,7 @@ class KPNewStoreSearchViewController: KPViewController {
             navigationItem.titleView = searchController.searchBar
         }
         definesPresentationContext = true
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -102,9 +113,18 @@ class KPNewStoreSearchViewController: KPViewController {
 //        appModalController()?.dismissControllerWithDefaultDuration()
     }
     
-//    @objc func handleSendButtonOnTapped() {
+    @objc func handleSendButtonOnTapped() {
+        
+        guard let name = searchController.searchBar.text else {
+            return
+        }
+        
+        searchController.isActive = false
+        delegate?.outputValueSet(self, value: name)
+        
+        dismiss(animated: true, completion: nil)
 //        appModalController()?.dismissControllerWithDefaultDuration()
-//    }
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

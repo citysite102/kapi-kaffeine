@@ -11,28 +11,6 @@ import GooglePlaces
 
 class KPNewStoreController: KPNewStoreBasicController, KPSubtitleInputDelegate {
     
-    func outputValueSet(_ controller: KPViewController, value: Any) {
-        if controller.isKind(of: KPNewStoreSearchViewController.self),
-            let place = value as? GMSPlace {
-            
-            nextButton.isEnabled = true
-            
-            storeNameEditor.contentView.setTitle(place.name, for: .normal)
-            
-            if let addressComponents = place.addressComponents {
-                for component in addressComponents {
-                    if component.type == "administrative_area_level_1" {
-                        locationEditor.contentView.text = component.name
-                    }
-                }
-            }
-
-            addressEditor.contentView.text = place.formattedAddress
-            phoneEditor.contentView.text = place.phoneNumber
-            urlEditor.contentView.text = place.website?.absoluteString
-        }
-    }
-    
     var storeNameEditor: KPTitleEditorView<UIButton>!
     
     var
@@ -42,6 +20,9 @@ class KPNewStoreController: KPNewStoreBasicController, KPSubtitleInputDelegate {
         urlEditor: KPTitleEditorView<UITextField>!
     
     var nextButton: UIButton!
+    
+    // MARK: - Data
+    var coordinate: CLLocationCoordinate2D?
     
     override func viewDidLoad() {
         
@@ -87,6 +68,18 @@ class KPNewStoreController: KPNewStoreBasicController, KPSubtitleInputDelegate {
         
         addressEditor = KPTitleEditorView<UITextField>("地址")
         addressEditor.contentView.placeholder = "請輸入地址"
+        let mapEditButton = UIButton()
+        mapEditButton.setImage(#imageLiteral(resourceName: "icon_map"), for: .normal)
+        mapEditButton.setTitle("使用地圖搜尋", for: .normal)
+        mapEditButton.setTitleColor(KPColorPalette.KPMainColor_v2.mainColor_light!, for: .normal)
+//        mapEditButton.setTitleColor(KPColorPalette.KPMainColor_v2.mainColor_light!.withAlphaComponent(0.1), for: .highlighted)
+        mapEditButton.adjustsImageWhenHighlighted = false
+        mapEditButton.titleLabel?.font = UIFont.systemFont(ofSize: 13)
+        mapEditButton.imageView?.tintColor = KPColorPalette.KPMainColor_v2.mainColor_light!
+        mapEditButton.imageView?.contentMode = .scaleAspectFit
+        mapEditButton.imageEdgeInsets = UIEdgeInsets(top: 5, left: 0, bottom: 5, right: 0)
+        mapEditButton.addTarget(self, action: #selector(handleMapEditButtonOnTap(_:)), for: .touchUpInside)
+        addressEditor.accessoryView = mapEditButton
         scrollContainer.addSubview(addressEditor)
         addressEditor.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|",
                                                        "V:[$view0]-20-[$self]"],
@@ -126,7 +119,46 @@ class KPNewStoreController: KPNewStoreBasicController, KPSubtitleInputDelegate {
         
         nextButton.isEnabled = false
         
+        locationEditor.isHidden = true
+        addressEditor.isHidden = true
+        phoneEditor.isHidden = true
+        urlEditor.isHidden = true
         
+    }
+    
+    
+    func outputValueSet(_ controller: KPViewController, value: Any) {
+        if controller.isKind(of: KPNewStoreSearchViewController.self) {
+            if let place = value as? GMSPlace {
+                
+                storeNameEditor.contentView.setTitle(place.name, for: .normal)
+                
+                if let addressComponents = place.addressComponents {
+                    for component in addressComponents {
+                        if component.type == "administrative_area_level_1" {
+                            locationEditor.contentView.text = component.name
+                        }
+                    }
+                }
+                
+                addressEditor.contentView.text = place.formattedAddress
+                phoneEditor.contentView.text = place.phoneNumber
+                urlEditor.contentView.text = place.website?.absoluteString
+                
+                coordinate = place.coordinate
+                
+            } else if let placeName = value as? String {
+                storeNameEditor.contentView.setTitle(placeName, for: .normal)
+                
+            }
+            
+            nextButton.isEnabled = true
+            locationEditor.isHidden = false
+            addressEditor.isHidden = false
+            phoneEditor.isHidden = false
+            urlEditor.isHidden = false
+
+        }
     }
     
     @objc func handleStoreNameEditButtonOnTap(_ sender: UIButton) {
@@ -134,6 +166,17 @@ class KPNewStoreController: KPNewStoreBasicController, KPSubtitleInputDelegate {
         let navController = UINavigationController(rootViewController: storeNameSearchController)
         storeNameSearchController.delegate = self
         present(navController, animated: true, completion: nil)
+    }
+    
+    @objc func handleMapEditButtonOnTap(_ sender: UIButton) {
+        let mapEditController = KPMapInputViewController()
+        if let coordinate = coordinate ?? KPLocationManager.sharedInstance().currentLocation?.coordinate {
+            mapEditController.coordinate = coordinate
+        } else  {
+            mapEditController.coordinate = CLLocationCoordinate2D(latitude: 25.0470462,
+                                                                  longitude: 121.5156119)
+        }
+        present(mapEditController, animated: true, completion: nil)
     }
     
     @objc func handleNextButtonOnTap(_ sender: UIButton) {
