@@ -26,7 +26,7 @@ class KPAllCommentController: KPViewController {
         view.backgroundColor = KPColorPalette.KPTextColor.whiteColor
         navigationItem.title = "所有評論"
         navigationItem.hidesBackButton = true
-        
+        navigationController?.navigationBar.shadowImage = UIImage()
         
         
         editButton = KPBounceButton(frame: CGRect(x: 0, y: 0, width: 24, height: 24),
@@ -49,7 +49,7 @@ class KPAllCommentController: KPViewController {
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.separatorColor = UIColor.clear
         view.addSubview(tableView)
-        tableView.addConstraints(fromStringArray: ["V:|[$self]|",
+        tableView.addConstraints(fromStringArray: ["V:|-8-[$self]|",
                                                    "H:|[$self]|"])
         tableView.register(KPShopCommentCell.self,
                            forCellReuseIdentifier: KPAllCommentController.KPAllCommentControllerCellReuseIdentifier)

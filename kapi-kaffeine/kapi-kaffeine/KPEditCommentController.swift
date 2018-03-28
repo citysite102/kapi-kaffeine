@@ -24,8 +24,9 @@ class KPEditCommentController: KPViewController {
     
     lazy var textFieldHeaderLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: KPFontSize.infoContent)
-        label.textColor = KPColorPalette.KPMainColor_v2.mainColor
+        label.font = UIFont.systemFont(ofSize: KPFontSize.header,
+                                       weight: UIFont.Weight.regular)
+        label.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
         label.text = "請留下你的評論"
         return label
     }()
@@ -44,7 +45,7 @@ class KPEditCommentController: KPViewController {
         view.backgroundColor = UIColor.white
         navigationItem.title = "修改評論"
         navigationItem.hidesBackButton = true
-        
+        navigationController?.navigationBar.shadowImage = UIImage()
         
         
         let barItem = UIBarButtonItem(image: R.image.icon_back(),
@@ -72,8 +73,6 @@ class KPEditCommentController: KPViewController {
                                          action: #selector(KPNewCommentController.handleSendButtonOnTapped))
         sendButtonItem.setTitleTextAttributes([NSAttributedStringKey.font:
             UIFont.systemFont(ofSize: KPFontSize.mainContent)], for: .normal)
-        
-        sendButtonItem.isEnabled = false
         navigationItem.rightBarButtonItems = [sendButtonItem]
         
         containerView = UIView()
@@ -94,24 +93,26 @@ class KPEditCommentController: KPViewController {
         textFieldContainerView.addGestureRecognizer(tapGesture)
         
         textFieldContainerView.addSubview(textFieldHeaderLabel)
-        textFieldHeaderLabel.addConstraints(fromStringArray: ["V:|-16-[$self]",
+        textFieldHeaderLabel.addConstraints(fromStringArray: ["V:|-24-[$self]",
                                                               "H:|-16-[$self]"])
         
         paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 4.0
         
         inputTextView = UITextView()
-        inputTextView.delegate = self
+        inputTextView.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7
         inputTextView.returnKeyType = .done
+        inputTextView.layer.cornerRadius = 2.0
+        inputTextView.layer.masksToBounds = true
         inputTextView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
-        inputTextView.textContainerInset = UIEdgeInsetsMake(0, 0, 0, 0)
+        inputTextView.textContainerInset = UIEdgeInsetsMake(8, 4, 40, 4)
         inputTextView.typingAttributes = [NSAttributedStringKey.paragraphStyle.rawValue: paragraphStyle,
                                           NSAttributedStringKey.font.rawValue: UIFont.systemFont(ofSize: 17),
                                           NSAttributedStringKey.foregroundColor.rawValue: KPColorPalette.KPTextColor.grayColor_level2!]
         inputTextView.text = defaultCommentModel?.content ?? ""
         textFieldContainerView.addSubview(inputTextView)
-        inputTextView.addConstraints(fromStringArray: ["V:[$view0]-8-[$self]-40-|",
-                                                       "H:|-12-[$self]-16-|"],
+        inputTextView.addConstraints(fromStringArray: ["V:[$view0]-14-[$self]-24-|",
+                                                       "H:|-12-[$self]-12-|"],
                                      views: [textFieldHeaderLabel])
         
         
@@ -121,13 +122,13 @@ class KPEditCommentController: KPViewController {
         placeholderLabel.textColor = KPColorPalette.KPTextColor.grayColor_level4
         placeholderLabel.text = "Ex:東西很好吃，環境也很舒適..."
         textFieldContainerView.addSubview(placeholderLabel)
-        placeholderLabel.addConstraints(fromStringArray: ["V:[$view0]-8-[$self]",
-                                                          "H:|-16-[$self]-16-|"],
+        placeholderLabel.addConstraints(fromStringArray: ["V:[$view0]-22-[$self]",
+                                                          "H:|-20-[$self]-16-|"],
                                         views: [textFieldHeaderLabel])
         
         textFieldContainerView.addSubview(remainingTextLabel)
-        remainingTextLabel.addConstraints(fromStringArray: ["V:[$self]-16-|",
-                                                            "H:[$self]-16-|"])
+        remainingTextLabel.addConstraints(fromStringArray: ["V:[$self]-32-|",
+                                                            "H:[$self]-24-|"])
         remainingTextLabel.setText(text: "\(defaultCommentModel?.content?.count ?? 0)/\(KPEditCommentController.commentMaximumTextLength)")
     }
     

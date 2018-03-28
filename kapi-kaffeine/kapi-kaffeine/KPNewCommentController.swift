@@ -53,8 +53,9 @@ class KPNewCommentController: KPViewController {
     
     lazy var textFieldHeaderLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: KPFontSize.infoContent)
-        label.textColor = KPColorPalette.KPMainColor_v2.mainColor
+        label.font = UIFont.systemFont(ofSize: KPFontSize.header,
+                                       weight: UIFont.Weight.regular)
+        label.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
         label.text = "請留下你的評論"
         return label
     }()
@@ -73,6 +74,7 @@ class KPNewCommentController: KPViewController {
         view.backgroundColor = UIColor.white
         navigationItem.title = "新增評論"
         navigationItem.hidesBackButton = true
+        navigationController?.navigationBar.shadowImage = UIImage()
         
         let barItem = UIBarButtonItem(image: R.image.icon_back(),
                                       style: .plain,
@@ -115,7 +117,7 @@ class KPNewCommentController: KPViewController {
         textFieldContainerView = UIView()
         textFieldContainerView.backgroundColor = UIColor.white
         scrollContainer.addSubview(textFieldContainerView)
-        textFieldContainerView.addConstraints(fromStringArray: ["V:|[$self(240)]",
+        textFieldContainerView.addConstraints(fromStringArray: ["V:|[$self(280)]",
                                                                 "H:|[$self]|"])
         textFieldContainerView.addConstraintForHavingSameWidth(with: view)
         
@@ -124,7 +126,7 @@ class KPNewCommentController: KPViewController {
         textFieldContainerView.addGestureRecognizer(tapGesture)
         
         textFieldContainerView.addSubview(textFieldHeaderLabel)
-        textFieldHeaderLabel.addConstraints(fromStringArray: ["V:|-16-[$self]",
+        textFieldHeaderLabel.addConstraints(fromStringArray: ["V:|-24-[$self]",
                                                               "H:|-16-[$self]"])
         
         paragraphStyle = NSMutableParagraphStyle()
@@ -132,16 +134,19 @@ class KPNewCommentController: KPViewController {
         
         inputTextView = UITextView()
         inputTextView.delegate = self
+        inputTextView.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7
         inputTextView.returnKeyType = .done
+        inputTextView.layer.cornerRadius = 2.0
+        inputTextView.layer.masksToBounds = true
         inputTextView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
-        inputTextView.textContainerInset = UIEdgeInsetsMake(0, 0, 0, 0)
+        inputTextView.textContainerInset = UIEdgeInsetsMake(8, 4, 40, 4)
         inputTextView.typingAttributes = [NSAttributedStringKey.paragraphStyle.rawValue: paragraphStyle,
                                           NSAttributedStringKey.font.rawValue: UIFont.systemFont(ofSize: KPFontSize.mainContent),
                                           NSAttributedStringKey.foregroundColor.rawValue: KPColorPalette.KPTextColor.grayColor_level2!]
         
         textFieldContainerView.addSubview(inputTextView)
-        inputTextView.addConstraints(fromStringArray: ["V:[$view0]-8-[$self]-40-|",
-                                                       "H:|-12-[$self]-16-|"],
+        inputTextView.addConstraints(fromStringArray: ["V:[$view0]-14-[$self]-24-|",
+                                                       "H:|-12-[$self]-12-|"],
                                      views: [textFieldHeaderLabel])
         
         
@@ -150,33 +155,43 @@ class KPNewCommentController: KPViewController {
         placeholderLabel.textColor = KPColorPalette.KPTextColor.grayColor_level4
         placeholderLabel.text = "Ex:東西很好吃，環境也很舒適..."
         textFieldContainerView.addSubview(placeholderLabel)
-        placeholderLabel.addConstraints(fromStringArray: ["V:[$view0]-8-[$self]",
-                                                          "H:|-16-[$self]-16-|"],
+        placeholderLabel.addConstraints(fromStringArray: ["V:[$view0]-22-[$self]",
+                                                          "H:|-20-[$self]-16-|"],
                                         views: [textFieldHeaderLabel])
         
         textFieldContainerView.addSubview(remainingTextLabel)
-        remainingTextLabel.addConstraints(fromStringArray: ["V:[$self]-16-|",
-                                                            "H:[$self]-16-|"])
+        remainingTextLabel.addConstraints(fromStringArray: ["V:[$self]-32-|",
+                                                            "H:[$self]-24-|"])
         
         
         ratingContainer = UIView()
         ratingContainer.isHidden = hideRatingViews
         ratingContainer.backgroundColor = UIColor.white
         scrollContainer.addSubview(ratingContainer)
-        ratingContainer.addConstraints(fromStringArray: ["V:[$view0]-16-[$self]-16-|",
+        ratingContainer.addConstraints(fromStringArray: ["V:[$view0][$self]-16-|",
                                                          "H:|[$self]|"],
                                        views: [textFieldContainerView])
         
         ratingHeaderLabel = UILabel()
         ratingHeaderLabel.isHidden = hideRatingViews
-        ratingHeaderLabel.font = UIFont.systemFont(ofSize: KPFontSize.infoContent)
-        ratingHeaderLabel.textColor = KPColorPalette.KPMainColor_v2.mainColor
+        ratingHeaderLabel.font = UIFont.systemFont(ofSize: KPFontSize.header,
+                                                   weight: UIFont.Weight.regular)
+        ratingHeaderLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
         ratingHeaderLabel.text = "為店家評分"
         ratingContainer.addSubview(ratingHeaderLabel)
-        ratingHeaderLabel.addConstraints(fromStringArray: ["V:|-16-[$self]",
+        ratingHeaderLabel.addConstraints(fromStringArray: ["V:|-8-[$self]",
                                                            "H:|-16-[$self]"])
         
+        ratingView = KPRatingView()
+        ratingContainer.addSubview(ratingView)
+        ratingView.addConstraints(fromStringArray: ["V:[$view0]-12-[$self]-16-|",
+                                                    "H:|-14-[$self]-16-|"],
+                                  views: [ratingHeaderLabel])
         
+        
+        resignTapGesture = UITapGestureRecognizer(target: self,
+                                                  action: #selector(handleResignTapGesture(_:)))
+        view.addGestureRecognizer(tapGesture)
         
 //        ratingCheckbox = KPCheckView(.checkmark, "評分")
 //        ratingCheckbox.titleLabel.font = UIFont.systemFont(ofSize: 14.0)
@@ -205,17 +220,6 @@ class KPNewCommentController: KPViewController {
 //            }
 //        }
 //        ratingViews.last!.addConstraint(from: "V:[$self]-16-|")
-
-        ratingView = KPRatingView()
-        ratingContainer.addSubview(ratingView)
-        ratingView.addConstraints(fromStringArray: ["V:[$view0]-12-[$self]-16-|",
-                                                    "H:|-14-[$self]-16-|"],
-                                  views: [ratingHeaderLabel])
-        
-        
-        resignTapGesture = UITapGestureRecognizer(target: self,
-                                            action: #selector(handleResignTapGesture(_:)))
-        view.addGestureRecognizer(tapGesture)
         
     }
     
