@@ -104,6 +104,26 @@ class KPMainTabController: ESTabBarController, UITabBarControllerDelegate {
         }
         
     }
+    
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+        
+        if let fromView = tabBarController.selectedViewController?.view,
+            let toView: UIView = viewController.view {
+            
+            if fromView == toView {
+                return false
+            }
+            
+            UIView.transition(from: fromView,
+                              to: toView,
+                              duration: 0.3,
+                              options: .transitionCrossDissolve) { (_) in
+                                
+            }
+        }
+        
+        return true
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
