@@ -10,6 +10,7 @@ import UIKit
 
 class KPConsumptionInfoViewController: KPNewStoreBasicController {
 
+    weak var uploadData: KPUploadDataModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -100,6 +101,12 @@ class KPConsumptionInfoViewController: KPNewStoreBasicController {
     }
     
     @objc func handleSubmitButtonOnTap(_ sender: UIButton) {
+        
+        guard let `uploadData` = uploadData else {
+            return
+        }
+        
+        
         navigationController?.popViewController(animated: true)
     }
     

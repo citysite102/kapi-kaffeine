@@ -16,6 +16,17 @@ class KPOtherOptionViewController: KPNewStoreBasicController {
 //    let socketSegment = KPSegmentedControl(["無", "很多", "部份座位有"])
 //    let standingDeskSegment = KPSegmentedControl(["有", "無"])
     
+    let wifiEditor = KPTitleEditorView<KPSegmentedControl>("是否提供WIFI",
+                                                           contentViewSetupFunction: { return KPSegmentedControl(["有", "無"]) })
+    
+    let timeLimitEditor = KPTitleEditorView<KPSegmentedControl>("有無限時",
+                                                                contentViewSetupFunction: { return KPSegmentedControl(["限時", "不限時", "看狀況"]) })
+    
+    let socketEditor = KPTitleEditorView<KPSegmentedControl>("插座數量",
+                                                             contentViewSetupFunction: { return KPSegmentedControl(["無", "很多", "部份座位有"]) })
+    
+    weak var uploadData: KPUploadDataModel?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -41,8 +52,6 @@ class KPOtherOptionViewController: KPNewStoreBasicController {
         backButton.addTarget(self, action: #selector(KPNewStoreDetailInfoViewController.handleBackButtonOnTap(_:)), for: .touchUpInside)
         
         
-        let wifiEditor = KPTitleEditorView<KPSegmentedControl>("是否提供WIFI",
-                                                               contentViewSetupFunction: { return KPSegmentedControl(["有", "無"]) })
         scrollContainer.addSubview(wifiEditor)
         wifiEditor.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -54,8 +63,7 @@ class KPOtherOptionViewController: KPNewStoreBasicController {
         ])
         
         
-        let timeLimitEditor = KPTitleEditorView<KPSegmentedControl>("有無限時",
-                                                                    contentViewSetupFunction: { return KPSegmentedControl(["限時", "不限時", "看狀況"]) })
+        
         scrollContainer.addSubview(timeLimitEditor)
         timeLimitEditor.translatesAutoresizingMaskIntoConstraints = false
         
@@ -67,8 +75,7 @@ class KPOtherOptionViewController: KPNewStoreBasicController {
             timeLimitEditor.contentView.heightAnchor.constraint(equalToConstant: 40)
         ])
         
-        let socketEditor = KPTitleEditorView<KPSegmentedControl>("插座數量",
-                                                                 contentViewSetupFunction: { return KPSegmentedControl(["無", "很多", "部份座位有"]) })
+        
         scrollContainer.addSubview(socketEditor)
         socketEditor.translatesAutoresizingMaskIntoConstraints = false
         
@@ -119,6 +126,14 @@ class KPOtherOptionViewController: KPNewStoreBasicController {
     }
     
     @objc func handleSubmitButtonOnTap(_ sender: UIButton) {
+        
+        guard let `uploadData` = uploadData else {
+            return
+        }
+        
+        // TODO: Set data
+        
+        
         navigationController?.popViewController(animated: true)
     }
 

@@ -10,6 +10,7 @@ import UIKit
 
 class KPBusinessHoursEditorController: KPViewController {
 
+    weak var uploadData: KPUploadDataModel?
     
 //    var scrollContainer: UIView!
 //    var scrollView: UIScrollView!
@@ -118,6 +119,13 @@ class KPBusinessHoursEditorController: KPViewController {
     }
     
     @objc func handleSubmitButtonOnTap(_ sender: UIButton) {
+        
+        guard let `uploadData` = uploadData else {
+            return
+        }
+        
+        
+        
         navigationController?.popViewController(animated: true)
     }
     

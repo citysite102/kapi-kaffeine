@@ -17,6 +17,32 @@ class KPNewStoreDetailInfoViewController: KPNewStoreBasicController {
     fileprivate var businessTimeButton: KPNewStoreDetailCheckButton!
     fileprivate var additionalInfoButton: KPNewStoreDetailCheckButton!
     
+    fileprivate let photoUploadView = KPTitleEditorView<KPPhotoUploadView>("上傳照片")
+    fileprivate let menuUploadView = KPTitleEditorView<KPPhotoUploadView>("上傳菜單")
+    
+    lazy var consumptionController: KPConsumptionInfoViewController = {
+        return KPConsumptionInfoViewController()
+    }()
+    
+    lazy var businessHoursController: KPBusinessHoursEditorController = {
+        return KPBusinessHoursEditorController()
+    }()
+    
+    lazy var otherOptionController: KPOtherOptionViewController = {
+        return KPOtherOptionViewController()
+    }()
+    
+    var uploadData: KPUploadDataModel
+    
+    init(_ data: KPUploadDataModel) {
+        uploadData = data
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -64,13 +90,10 @@ class KPNewStoreDetailInfoViewController: KPNewStoreBasicController {
                                         views: [businessTimeButton])
         
         
-        
-        let photoUploadView = KPTitleEditorView<KPPhotoUploadView>("上傳照片")
         scrollContainer.addSubview(photoUploadView)
         photoUploadView.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|", "V:[$view0]-20-[$self]"],
                                        views: [additionalInfoButton])
         
-        let menuUploadView = KPTitleEditorView<KPPhotoUploadView>("上傳菜單")
         scrollContainer.addSubview(menuUploadView)
         menuUploadView.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|", "V:[$view0]-20-[$self]|"],
                                       views: [photoUploadView])
@@ -108,6 +131,10 @@ class KPNewStoreDetailInfoViewController: KPNewStoreBasicController {
     }
 
     @objc func handleSubmitButtonOnTap(_ sender: UIButton) {
+        
+        uploadData.photos = photoUploadView.contentView.photos
+        uploadData.menuPhotos = menuUploadView.contentView.photos
+        
         appModalController()?.dismissControllerWithDefaultDuration()
     }
     
@@ -117,17 +144,14 @@ class KPNewStoreDetailInfoViewController: KPNewStoreBasicController {
     
     @objc func handleInfoButtonOnTap(_ sender: KPNewStoreDetailCheckButton) {
         if sender == comsumptionInfoButton {
-            let consumption = KPConsumptionInfoViewController()
-            consumption.title = title
-            navigationController?.pushViewController(consumption, animated: true)
+            consumptionController.uploadData = uploadData
+            navigationController?.pushViewController(consumptionController, animated: true)
         } else if sender == businessTimeButton {
-            let businessHours = KPBusinessHoursEditorController()
-            businessHours.title = title
-            navigationController?.pushViewController(businessHours, animated: true)
+            businessHoursController.uploadData = uploadData
+            navigationController?.pushViewController(businessHoursController, animated: true)
         } else if sender == additionalInfoButton {
-            let controller = KPOtherOptionViewController()
-            controller.title = title
-            navigationController?.pushViewController(controller, animated: true)
+            otherOptionController.uploadData = uploadData
+            navigationController?.pushViewController(otherOptionController, animated: true)
         }
     }
 

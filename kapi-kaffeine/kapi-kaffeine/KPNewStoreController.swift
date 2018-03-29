@@ -11,9 +11,7 @@ import GooglePlaces
 
 class KPNewStoreController: KPNewStoreBasicController, KPSubtitleInputDelegate, KPSharedSettingDelegate {
     
-    var storeNameEditor: KPTitleEditorView<UIButton>!
-    
-    var
+    var storeNameEditor,
         locationEditor,
         addressEditor,
         phoneEditor,
@@ -42,18 +40,15 @@ class KPNewStoreController: KPNewStoreBasicController, KPSubtitleInputDelegate, 
         navigationItem.leftBarButtonItem = barLeftItem
     
         
-        storeNameEditor = KPTitleEditorView<UIButton>("店家名稱")
-        storeNameEditor.contentView.addTarget(self,
-                                              action: #selector(handleStoreNameEditButtonOnTap(_:)),
-                                              for: .touchUpInside)
-        storeNameEditor.contentView.setTitleColor(UIColor.black, for: .normal)
-        storeNameEditor.contentView.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7
-        storeNameEditor.contentView.layer.cornerRadius = 5
-        storeNameEditor.contentView.titleLabel?.font = UIFont.systemFont(ofSize: 16)
-        storeNameEditor.contentView.contentHorizontalAlignment = .left
-        storeNameEditor.contentView.titleEdgeInsets.left = 10
-//        storeNameEditor.contentView.contentEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
-//        storeNameEditor.contentView.placeholder = "請輸入店家名稱"
+        storeNameEditor = KPTitleEditorView<UITextField>("店家名稱")
+        storeNameEditor.contentView.placeholder = "請輸入店家名稱"
+        storeNameEditor.isTextFieldEditable = false
+        storeNameEditor.textFieldTapAction = { [weak self] in
+            guard let `self` = self else { return }
+            let storeNameSearchController = KPSubtitleInputController()
+            storeNameSearchController.delegate = self
+            self.present(storeNameSearchController, animated: true, completion: nil)
+        }
         scrollContainer.addSubview(storeNameEditor)
         storeNameEditor.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|",
                                                          "V:|-20-[$self]"])
@@ -61,8 +56,11 @@ class KPNewStoreController: KPNewStoreBasicController, KPSubtitleInputDelegate, 
         
         locationEditor = KPTitleEditorView<UITextField>("所在位置")
         locationEditor.isTextFieldEditable = false
-        locationEditor.textFieldTapAction = {
-            
+        locationEditor.textFieldTapAction = { [weak self] in
+            guard let `self` = self else { return }
+            let locationController = KPCountrySelectController()
+            locationController.delegate = self
+            self.present(locationController, animated: true, completion: nil)
         }
         locationEditor.contentView.placeholder = "請選擇所在位置"
         scrollContainer.addSubview(locationEditor)
@@ -134,7 +132,7 @@ class KPNewStoreController: KPNewStoreBasicController, KPSubtitleInputDelegate, 
         if controller.isKind(of: KPSubtitleInputController.self) {
             if let place = controller.outputValue as? GMSPlace {
                 
-                storeNameEditor.contentView.setTitle(place.name, for: .normal)
+                storeNameEditor.contentView.text = place.name
                 
                 if let addressComponents = place.addressComponents {
                     for component in addressComponents {
@@ -151,7 +149,7 @@ class KPNewStoreController: KPNewStoreBasicController, KPSubtitleInputDelegate, 
                 coordinate = place.coordinate
                 
             } else if let placeName = controller.outputValue as? String {
-                storeNameEditor.contentView.setTitle(placeName, for: .normal)
+                storeNameEditor.contentView.text = placeName
                 
             }
             
@@ -164,10 +162,6 @@ class KPNewStoreController: KPNewStoreBasicController, KPSubtitleInputDelegate, 
         }
     }
     
-    @objc func handleLocationEditorTap() {
-        print("12343334334343434fdsafdskfhuasldkfhaskdj")
-    }
-    
     func returnValueSet(_ controller: KPSharedSettingViewController) {
         
         if controller.isKind(of: KPMapInputViewController.self) {
@@ -175,43 +169,13 @@ class KPNewStoreController: KPNewStoreBasicController, KPSubtitleInputDelegate, 
                 coordinate = address.1
                 addressEditor.contentView.text = address.0
             }
+        } else if controller.isKind(of: KPCountrySelectController.self) {
+            if let region = controller.returnValue as? String {
+                locationEditor.contentView.text = region
+            }
         }
         
     }
-    
-//    func outputValueSet(_ controller: KPViewController, value: Any) {
-//        if controller.isKind(of: KPNewStoreSearchViewController.self) {
-//            if let place = value as? GMSPlace {
-//
-//                storeNameEditor.contentView.setTitle(place.name, for: .normal)
-//
-//                if let addressComponents = place.addressComponents {
-//                    for component in addressComponents {
-//                        if component.type == "administrative_area_level_1" {
-//                            locationEditor.contentView.text = component.name
-//                        }
-//                    }
-//                }
-//
-//                addressEditor.contentView.text = place.formattedAddress
-//                phoneEditor.contentView.text = place.phoneNumber
-//                urlEditor.contentView.text = place.website?.absoluteString
-//
-//                coordinate = place.coordinate
-//
-//            } else if let placeName = value as? String {
-//                storeNameEditor.contentView.setTitle(placeName, for: .normal)
-//
-//            }
-//
-//            nextButton.isEnabled = true
-//            locationEditor.isHidden = false
-//            addressEditor.isHidden = false
-//            phoneEditor.isHidden = false
-//            urlEditor.isHidden = false
-//
-//        }
-//    }
     
     @objc func handleStoreNameEditButtonOnTap(_ sender: UIButton) {
         let storeNameSearchController = KPSubtitleInputController()
@@ -234,8 +198,25 @@ class KPNewStoreController: KPNewStoreBasicController, KPSubtitleInputDelegate, 
     }
     
     @objc func handleNextButtonOnTap(_ sender: UIButton) {
-        let detailInfoViewController = KPNewStoreDetailInfoViewController()
-        detailInfoViewController.title = storeNameEditor.contentView.titleLabel?.text
+        
+        guard let storeName = storeNameEditor.contentView.text, !storeName.isEmpty else {
+            return
+        }
+        
+        guard let address = addressEditor.contentView.text, !address.isEmpty else {
+            return
+        }
+        
+        guard let coordinate = coordinate else {
+            return
+        }
+        
+        let dataModel = KPUploadDataModel(storeName,
+                                          coordinate,
+                                          address)
+        
+        let detailInfoViewController = KPNewStoreDetailInfoViewController(dataModel)
+        detailInfoViewController.title = storeNameEditor.contentView.text
         navigationController?.pushViewController(detailInfoViewController, animated: true)
     }
 

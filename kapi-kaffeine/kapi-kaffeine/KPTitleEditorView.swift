@@ -86,7 +86,9 @@ class KPTitleEditorView<T: UIView>: UIView, UITextFieldDelegate {
         setupForTextField()
         
     }
-
+    
+    // MARK: - for UITextField
+    
     func setupForTextField() {
         
         guard let textField = contentView as? UITextField else {

@@ -41,6 +41,8 @@ class KPBusinessHoursEditor: UITableViewCell {
     
     let deleteButton = UIButton()
     
+    var outputValue = KPDataBusinessHourModel(value: ["mon_1_open": "11:30"])
+    
     var delegate: KPBusinessHoursEditorDelegate?
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {

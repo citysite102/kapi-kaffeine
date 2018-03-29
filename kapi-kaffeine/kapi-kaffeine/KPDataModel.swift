@@ -188,3 +188,26 @@ class KPDataModel: NSObject, Mappable, GMUClusterItem, Comparable {
         return nil
     })
 }
+
+
+class KPUploadDataModel {
+    
+    var name: String
+    var coordinate: CLLocationCoordinate2D
+    var address: String
+    
+    var photos: [UIImage] = []
+    var menuPhotos: [UIImage] = []
+    
+    init(_ name: String, _ coordinate: CLLocationCoordinate2D,_ address: String) {
+        self.name = name
+        self.coordinate = coordinate
+        self.address = address
+    }
+    
+}
+
+
+
+
+
