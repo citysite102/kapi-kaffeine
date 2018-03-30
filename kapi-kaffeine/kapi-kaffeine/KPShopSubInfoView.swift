@@ -15,12 +15,13 @@ class KPShopSubInfoView: UIView {
     var contentLabel: UILabel!
     var actionButton: UIButton!
     var separator: UIView!
+    var emptyContent: Bool!
     var showSeparator: Bool = true {
         didSet {
             separator.isHidden = !showSeparator
         }
     }
-    var handler: ((_ subInfoView: KPShopSubInfoView) -> ())!
+    var handler: ((_ subInfoView: KPShopSubInfoView) -> ())?
     
     convenience init(_ title: String,
                      _ content: String,
@@ -28,6 +29,7 @@ class KPShopSubInfoView: UIView {
                      _ emptyContent: Bool,
                      _ handler: ((KPShopSubInfoView) -> Void)?) {
         self.init(frame: .zero)
+        self.emptyContent = emptyContent
         
         titleLabel = UILabel()
         titleLabel.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
@@ -56,6 +58,13 @@ class KPShopSubInfoView: UIView {
                                                    "H:|[$self]|"],
                                  metrics:[KPLayoutConstant.information_horizontal_offset])
         
+        if let actionHandler = handler, !emptyContent {
+            self.handler = actionHandler
+            self.contentLabel.textColor = tintColor
+            let tapGesture = UITapGestureRecognizer(target: self,
+                                                    action: #selector(handleSelfOnTapped(_:)))
+            self.addGestureRecognizer(tapGesture)
+        }
         
 //        if let buttonContent = buttonTitle {
 //
@@ -84,6 +93,11 @@ class KPShopSubInfoView: UIView {
         
     }
     
+    @objc func handleSelfOnTapped(_ sender: UITapGestureRecognizer) {
+        if let actionHandler = handler {
+            actionHandler(self)
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)

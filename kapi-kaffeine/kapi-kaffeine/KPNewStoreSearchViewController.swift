@@ -18,8 +18,9 @@ class KPSubtitleInputController: KPViewController {
     lazy var subTitleLabel: UILabel = {
         let label = UILabel()
         label.text = "店家名稱"
-        label.font = UIFont.systemFont(ofSize: 12.0)
-        label.textColor = KPColorPalette.KPTextColor.mainColor
+        label.font = UIFont.systemFont(ofSize: KPFontSize.header,
+                                       weight: UIFont.Weight.regular)
+        label.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
         return label
     }()
     
@@ -59,17 +60,16 @@ class KPSubtitleInputController: KPViewController {
         view.addSubview(subTitleLabel)
         
         dismissButton = KPBounceButton()
-        dismissButton.setImage(R.image.icon_close()?.withRenderingMode(.alwaysTemplate),
+        dismissButton.setImage(R.image.icon_close(),
                                for: .normal)
-        dismissButton.tintColor = KPColorPalette.KPMainColor_v2.mainColor_light
+        dismissButton.tintColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
         dismissButton.addTarget(self,
                                 action: #selector(KPSubtitleInputController.handleDismissButtonOnTapped),
                                 for: .touchUpInside)
-        
+        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4)
         view.addSubview(dismissButton)
-        dismissButton.addConstraints(fromStringArray: ["H:|-12-[$self(30)]",
-                                                       "V:|-24-[$self(30)]"])
-        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(6, 6, 6, 6)
+        dismissButton.addConstraints(fromStringArray: ["H:|-12-[$self($metric0)]",
+                                                       "V:|-36-[$self($metric0)]"], metrics:[KPLayoutConstant.dismissButton_size])
         
         
         subTitleLabel.addConstraints(fromStringArray: ["V:[$view0]-24-[$self]",
@@ -77,7 +77,7 @@ class KPSubtitleInputController: KPViewController {
                                      views: [dismissButton])
         
         view.addSubview(editTextField)
-        editTextField.addConstraints(fromStringArray: ["V:[$view0]-12-[$self]",
+        editTextField.addConstraints(fromStringArray: ["V:[$view0]-16-[$self]",
                                                        "H:|-16-[$self]-16-|"],
                                      views: [subTitleLabel])
         
@@ -104,22 +104,23 @@ class KPSubtitleInputController: KPViewController {
         
         sendButton = UIButton.init(type: .custom)
         sendButton.setTitle("確認名稱", for: .normal)
-        sendButton.setTitleColor(KPColorPalette.KPTextColor.mainColor,
+        
+        sendButton.setTitleColor(KPColorPalette.KPMainColor_v2.grayColor_level4,
+                                 for: .disabled)
+        sendButton.setTitleColor(KPColorPalette.KPMainColor_v2.mainColor,
                                  for: .normal)
+        sendButton.clipsToBounds = true
+        sendButton.layer.cornerRadius = 4.0
+        sendButton.layer.borderWidth = 1.0
+        sendButton.layer.borderColor = KPColorPalette.KPMainColor_v2.grayColor_level3?.cgColor
+        sendButton.titleLabel?.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
+        
         sendButton.addTarget(self,
                              action: #selector(KPSubtitleInputController.handleSendButtonOnTapped),
                              for: .touchUpInside)
-        sendButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         view.addSubview(sendButton)
-        view.addSubview(separator)
-        
-        sendButton.addConstraints(fromStringArray: ["V:[$view0]-16-[$self(30)]-16-|"],
-                                  views: [separator])
-        sendButton.addConstraintForCenterAligningToSuperview(in: .horizontal)
-        
-        separator.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
-                                                   "V:[$self(1)]-16-[$view0]"],
-                                 views: [sendButton])
+        sendButton.addConstraints(fromStringArray: ["V:[$self(40)]-16-|",
+                                                    "H:|-12-[$self]-12-|"])
         
     }
     

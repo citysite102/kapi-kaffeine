@@ -646,7 +646,7 @@ class KPInformationViewController: KPViewController {
                                                    "V:|[$self($metric0)]"], metrics:[KPLayoutConstant.separator_height])
         
         titleLabel = UILabel()
-        titleLabel.font = UIFont.boldSystemFont(ofSize: KPFontSize.mainContent)
+        titleLabel.font = UIFont.boldSystemFont(ofSize: KPFontSize.sub_header)
         titleLabel.textColor = KPColorPalette.KPTextColor_v2.whiteColor
         titleLabel.alpha = 0.0
         view.addSubview(titleLabel)
@@ -659,9 +659,9 @@ class KPInformationViewController: KPViewController {
                                                   constant: 0)
         
         dismissButton = KPBounceButton(frame: CGRect.zero,
-                                       image: R.image.icon_close()!)
+                                       image: showBackButton ? R.image.icon_back()! : R.image.icon_close()!)
         dismissButton.tintColor = KPColorPalette.KPTextColor_v2.whiteColor
-        dismissButton.alpha = 0.9
+        dismissButton.alpha = 1.0
         view.addSubview(dismissButton)
         dismissButton.addConstraints(fromStringArray: ["V:[$self($metric0)]",
                                                        "H:|-16-[$self($metric0)]"], metrics:[KPLayoutConstant.dismissButton_size])
@@ -1150,7 +1150,7 @@ class KPInformationViewController: KPViewController {
     }
     
     @objc func handleDismissButtonOnTapped() {
-        if self.navigationController?.viewControllers.first is KPUserProfileViewController {
+        if self.navigationController?.viewControllers.first is KPInformationViewController && self.navigationController?.viewControllers.first != self {
             self.navigationController?.popViewController(animated: true)
         } else {
             self.dismissWithDefaultType = true

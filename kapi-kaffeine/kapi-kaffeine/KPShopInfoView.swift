@@ -17,11 +17,11 @@ class KPShopInfoView: UIView, GMSMapViewDelegate {
             
             DispatchQueue.main.async {
                 if self.shopWebsiteInfoView == nil {
-                    
+         
                     self.shopWebsiteInfoView = KPShopSubInfoView("網站",
-                                                                 "www.abc.com",
+                                                                 "尚未開放",
                                                                  nil,
-                                                                 false,
+                                                                 true,
                                                                  nil)
                     self.addSubview(self.shopWebsiteInfoView)
                     self.shopWebsiteInfoView.addConstraints(fromStringArray: ["V:|-(-16)-[$self]",
@@ -32,7 +32,14 @@ class KPShopInfoView: UIView, GMSMapViewDelegate {
                                                                self.informationDataModel.phone ?? "尚無電話",
                                                                nil,
                                                                self.informationDataModel.phone == nil,
-                                                               nil)
+                                                               { (infoView) in
+                                                                if !infoView.emptyContent {
+                                                                    guard let number = URL(string: "tel://" + self.informationDataModel.phone) else { return }
+                                                                    UIApplication.shared.open(number)
+
+                                                                }
+                                                                
+                    })
                     self.addSubview(self.shopPhoneInfoView)
                     self.shopPhoneInfoView.addConstraints(fromStringArray: ["V:[$view0][$self]",
                                                                             "H:|-($metric0)-[$self]-($metric0)-|"],

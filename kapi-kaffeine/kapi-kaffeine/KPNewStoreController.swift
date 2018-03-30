@@ -112,7 +112,7 @@ class KPNewStoreController: KPNewStoreBasicController, KPSubtitleInputDelegate, 
         nextButton.clipsToBounds = true
         nextButton.layer.cornerRadius = 4.0
         nextButton.layer.borderWidth = 1.0
-        nextButton.layer.borderColor = KPColorPalette.KPMainColor_v2.grayColor_level4?.cgColor
+        nextButton.layer.borderColor = KPColorPalette.KPMainColor_v2.grayColor_level3?.cgColor
         nextButton.titleLabel?.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
         buttonContainer.addSubview(nextButton)
         nextButton.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",

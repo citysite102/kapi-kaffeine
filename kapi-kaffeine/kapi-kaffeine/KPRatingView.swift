@@ -70,19 +70,19 @@ class KPRatingView: UIView {
         
         for index in 0..<5 {
             let starView = KPBounceView(R.image.icon_star_filled()!)
-            starView.iconSize = CGSize(width: 48, height: 48)
+            starView.iconSize = CGSize(width: 44, height: 44)
             starViews.append(starView)
             addSubview(starView)
             if index == 0 {
-                starView.addConstraints(fromStringArray: ["H:[$self(48)]-(>=0)-|",
-                                                          "V:|[$self(48)]|"])
+                starView.addConstraints(fromStringArray: ["H:[$self(44)]-(>=0)-|",
+                                                          "V:|[$self(44)]|"])
             } else if index == 4 {
-                starView.addConstraints(fromStringArray: ["H:|[$self(48)]-4-[$view0]",
-                                                          "V:|[$self(48)]|"],
+                starView.addConstraints(fromStringArray: ["H:|[$self(44)]-8-[$view0]",
+                                                          "V:|[$self(44)]|"],
                                         views:[starViews[index-1]])
             } else {
-                starView.addConstraints(fromStringArray: ["H:[$self(48)]-4-[$view0]",
-                                                          "V:|[$self(48)]|"],
+                starView.addConstraints(fromStringArray: ["H:[$self(44)]-8-[$view0]",
+                                                          "V:|[$self(44)]|"],
                                         views:[starViews[index-1]])
             }
         }

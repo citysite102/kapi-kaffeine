@@ -68,6 +68,7 @@ extension KPShopRecommendView: UITableViewDelegate, UITableViewDataSource {
                                              KPAnalyticsEventValue.source.source_recommend)
         let controller = KPInformationViewController()
         controller.informationDataModel = self.displayDataModels![indexPath.row]
+        controller.showBackButton = true
         informationController?.navigationController?.pushViewController(controller, animated: true)
     }
     
