@@ -32,6 +32,7 @@ class KPArticleCell: UICollectionViewCell {
         articleHeroImageView = UIImageView()
         articleHeroImageView.tag = 99
         articleHeroImageView.contentMode = .scaleAspectFill
+        articleHeroImageView.backgroundColor = KPColorPalette.KPMainColor_v2.bg_light
         contentView.addSubview(articleHeroImageView)
         articleHeroImageView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                               "V:|[$self]-76-|"])
@@ -64,7 +65,7 @@ class KPArticleCell: UICollectionViewCell {
         subLabel.font = UIFont.systemFont(ofSize: 12)
         subLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_description
         subLabel.numberOfLines = 0
-        subLabel.text = "1024 人已看過"
+        subLabel.text = "1024 人已收藏"
         textContainer.addSubview(subLabel)
         subLabel.addConstraints(fromStringArray: ["H:|-12-[$self]-12-|",
                                                   "V:[$view0]-6-[$self]"],

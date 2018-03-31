@@ -451,7 +451,14 @@ UICollectionViewDelegateFlowLayout {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ArticleCell", for: indexPath) as! KPArticleCell
         
         if let url = articleList[indexPath.row].imageURL_s ?? articleList[indexPath.row].imageURL_l  {
-            cell.articleHeroImageView.af_setImage(withURL: url)
+            cell.articleHeroImageView.af_setImage(withURL: url,
+                                                  placeholderImage: nil,
+                                                  filter: nil,
+                                                  progress: nil,
+                                                  progressQueue: DispatchQueue.global(),
+                                                  imageTransition: UIImageView.ImageTransition.crossDissolve(0.2),
+                                                  runImageTransitionIfCached: true,
+                                                  completion: nil)
         } else {
             cell.articleHeroImageView.image = #imageLiteral(resourceName: "demo_7")
         }
@@ -459,7 +466,7 @@ UICollectionViewDelegateFlowLayout {
         cell.hero.id = "article-\(indexPath.row)"
         cell.titleLabel.setText(text: articleList[indexPath.row].title!,
                                 lineSpacing: 4.0)
-        cell.subLabel.text = "\(articleList[indexPath.row].peopleRead) 人已看過"
+        cell.subLabel.text = "\(articleList[indexPath.row].peopleRead) 人已收藏"
         return cell
     }
     

@@ -18,8 +18,8 @@ class RangeSliderTrackLayer: CALayer {
         }
         
         // Clip
-        let cornerRadius = bounds.height * slider.curvaceousness / 2.0
-        let path = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius)
+        let cornerRadius = 4.0
+        let path = UIBezierPath(roundedRect: bounds, cornerRadius: CGFloat(cornerRadius))
         ctx.addPath(path.cgPath)
         
         // Fill the track

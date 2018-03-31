@@ -43,6 +43,8 @@ class KPPreferenceSearchViewController: KPViewController {
     var sortSegmentedControl: KPSegmentedControl!
     var priceSegmentedControl: KPSegmentedControl!
     
+    var slider: RangeSlider!
+    
     
     lazy var separator_one: UIView = {
         let view = UIView()
@@ -62,6 +64,7 @@ class KPPreferenceSearchViewController: KPViewController {
     var endSearchTime: String?
     
     var businessCheckBox: KPCheckView!
+    var businessCheckBox_two: KPCheckView!
     var timeSupplementView: KPSpecificTimeSupplementView!
     
     lazy var separator_three: UIView = {
@@ -147,8 +150,6 @@ class KPPreferenceSearchViewController: KPViewController {
         view.addSubview(scrollView)
         scrollView.addConstraints(fromStringArray: ["V:|[$self]|",
                                                     "H:|[$self]|"])
-        scrollView.addConstraintForCenterAligningToSuperview(in: .horizontal)
-        
         
         containerView = UIView()
         scrollView.addSubview(containerView)
@@ -250,21 +251,53 @@ class KPPreferenceSearchViewController: KPViewController {
                                                                 "V:[$view0]-24-[$self]"],
                                                 views: [separator_two])
         
+        
+        
+        businessCheckBox = KPCheckView(.checkmark, "目前營業中")
+        containerView.addSubview(businessCheckBox)
+        businessCheckBox.addConstraints(fromStringArray: ["H:|-16-[$self]",
+                                                          "V:[$view0]-24-[$self(24)]"],
+                                        views: [businessHourTitleLabel])
+        
+        businessCheckBox_two = KPCheckView(.checkmark, "特定時間")
+        containerView.addSubview(businessCheckBox_two)
+        businessCheckBox_two.addConstraints(fromStringArray: ["H:|-16-[$self]",
+                                                              "V:[$view0]-16-[$self(24)]"],
+                                            views: [businessCheckBox])
+        
+        businessCheckBox.deselectCheckViews = [businessCheckBox_two]
+        businessCheckBox_two.deselectCheckViews = [businessCheckBox]
+        businessCheckBox_two.checkBox.addTarget(self,
+                                                action: #selector(handleSpecificCheckBoxOnChanged(_:)),
+                                                for: .valueChanged)
+        
+        
         businessHourResultLabel = UILabel()
         businessHourResultLabel.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
         businessHourResultLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
         businessHourResultLabel.text = "從 8:00 營業至 19:00"
         containerView.addSubview(businessHourResultLabel)
         businessHourResultLabel.addConstraints(fromStringArray: ["H:|-16-[$self]",
-                                                                "V:[$view0]-16-[$self]-136-|"],
-                                              views: [businessHourTitleLabel])
+                                                                "V:[$view0]-32-[$self]"],
+                                              views: [businessCheckBox_two])
         
-
-        businessCheckBox = KPCheckView(.checkmark, "目前營業中")
-        containerView.addSubview(businessCheckBox)
-        businessCheckBox.addConstraints(fromStringArray: ["H:|-16-[$self]",
-                                                          "V:[$view0]-16-[$self]"],
-                                        views: [businessHourResultLabel])
+        slider = RangeSlider()
+        slider.maximumValue = 144
+        slider.minimumValue = 0
+        slider.upperValue = 114
+        slider.lowerValue = 48
+        slider.trackHighlightTintColor = KPColorPalette.KPMainColor_v2.mainColor_light!
+        containerView.addSubview(slider)
+        slider.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
+                                                "V:[$view0]-12-[$self(32)]-100-|"],
+                                   views: [businessHourResultLabel])
+        slider.addTarget(self,
+                         action: #selector(rangeSliderValueChanged(_:)),
+                         for: .valueChanged)
+        
+        businessHourResultLabel.alpha = 0.5
+        slider.alpha = 0.5
+        slider.isUserInteractionEnabled = false
 
         searchButtonContainer = UIView()
         searchButtonContainer.backgroundColor = UIColor.white
@@ -303,6 +336,18 @@ class KPPreferenceSearchViewController: KPViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @objc func handleSpecificCheckBoxOnChanged(_ sender: KPCheckBox) {
+        if sender.checkState == .checked {
+            businessHourResultLabel.alpha = 1.0
+            slider.alpha = 1.0
+            slider.isUserInteractionEnabled = true
+        } else {
+            businessHourResultLabel.alpha = 0.5
+            slider.alpha = 0.5
+            slider.isUserInteractionEnabled = false
+        }
+    }
+    
     @objc func handleDismissButtonOnTapped() {
         appModalController()?.dismissControllerWithDefaultDuration()
     }
@@ -320,6 +365,10 @@ class KPPreferenceSearchViewController: KPViewController {
             condition.checkBox.checkState = .unchecked
         }
         businessCheckBox.checkBox.checkState = .unchecked
+    }
+    
+    @objc func rangeSliderValueChanged(_ sender: RangeSlider) {
+        businessHourResultLabel.text = "從 \(Int(floor(sender.lowerValue/6))):\(Int(sender.lowerValue) % 6)0 營業至 \(Int(floor(sender.upperValue/6))):\(Int(sender.upperValue) % 6)0"
     }
     
 //    @objc func handleQuickSettingButtonOnTap(_ sender: UIButton) {

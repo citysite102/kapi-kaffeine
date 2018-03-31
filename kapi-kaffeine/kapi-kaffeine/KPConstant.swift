@@ -160,6 +160,8 @@ struct KPColorPalette {
         static let greenColor = UIColor(hexString: "#25AF76")
         static let redColor = UIColor(hexString: "#F86666")
         
+        static let bg_light = UIColor(hexString: "#DDDDDD")
+        
         static let grayColor_level1 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.9)
         static let grayColor_level2 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.7)
         static let grayColor_level3 = UIColor(r: 0.2, g: 0.2, b: 0.2, a: 0.5)

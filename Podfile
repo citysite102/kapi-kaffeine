@@ -55,7 +55,6 @@ target 'kapi-kaffeine' do
   
   # Ad
   pod 'Google-Mobile-Ads-SDK'
-
   pod "PromiseKit", "~> 4.0"
 
   # post_install do |installer|

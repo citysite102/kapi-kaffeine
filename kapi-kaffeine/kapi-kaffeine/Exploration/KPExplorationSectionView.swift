@@ -20,12 +20,6 @@ class KPExplorationSectionView: UITableViewCell {
         }
     }
     
-//    let demoImages = [R.image.demo_1(),
-//                      R.image.demo_2(),
-//                      R.image.demo_3(),
-//                      R.image.demo_4(),
-//                      R.image.demo_5(),
-//                      R.image.demo_6()]
     var shops: [KPDataModel] = [] {
         didSet {
             collectionView.reloadData()
@@ -110,9 +104,23 @@ extension KPExplorationSectionView: UICollectionViewDataSource, UICollectionView
                                      action: #selector(handleShopFavorited(sender:)),
                                      for: UIControlEvents.primaryActionTriggered)
         if let url = shops[indexPath.row].imageURL_s ?? shops[indexPath.row].imageURL_l {
-            cell.imageView.af_setImage(withURL: url)
+            cell.imageView.af_setImage(withURL: url,
+                                       placeholderImage: nil,
+                                       filter: nil,
+                                       progress: nil,
+                                       progressQueue: DispatchQueue.global(),
+                                       imageTransition: UIImageView.ImageTransition.crossDissolve(0.2),
+                                       runImageTransitionIfCached: true,
+                                       completion: nil)
         } else if let url = shops[indexPath.row].googleURL_s ?? shops[indexPath.row].googleURL_l {
-            cell.imageView.af_setImage(withURL: url)
+            cell.imageView.af_setImage(withURL: url,
+                                       placeholderImage: nil,
+                                       filter: nil,
+                                       progress: nil,
+                                       progressQueue: DispatchQueue.global(),
+                                       imageTransition: UIImageView.ImageTransition.crossDissolve(0.2),
+                                       runImageTransitionIfCached: true,
+                                       completion: nil)
         } else {
             cell.imageView.image = #imageLiteral(resourceName: "demo_3")
         }

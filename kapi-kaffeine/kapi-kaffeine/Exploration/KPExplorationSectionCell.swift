@@ -37,6 +37,7 @@ class KPExplorationSectionCell: UICollectionViewCell {
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 2
         imageView.clipsToBounds = true
+        imageView.backgroundColor = KPColorPalette.KPMainColor_v2.bg_light
         imageView.isUserInteractionEnabled = true
         contentView.addSubview(imageView)
         imageView.addConstraints(fromStringArray: ["H:|[$self]|",

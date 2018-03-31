@@ -231,7 +231,9 @@ class KPCheckBox: UIControl {
             
             if newState == .checked && deselectCheckBoxs != nil {
                 for checkBox in deselectCheckBoxs! {
-                    checkBox.checkState = .unchecked
+                    if checkBox.checkState != .unchecked {
+                        checkBox.toggleCheckState()
+                    }
                 }
             }
         }
