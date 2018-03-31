@@ -21,10 +21,25 @@ class KPSharedSettingViewController: KPViewController {
     var containerView: UIView!
     lazy var sendButton: UIButton! = {
         let sendButton = UIButton.init(type: .custom)
-        sendButton.setTitle("送出評分", for: .normal)
-        sendButton.setTitleColor(KPColorPalette.KPTextColor.mainColor,
+//        sendButton.setTitle("送出評分", for: .normal)
+//        sendButton.setTitleColor(KPColorPalette.KPTextColor.mainColor,
+//                                 for: .normal)
+//        sendButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+        
+        
+//        sendButton = UIButton.init(type: .custom)
+        sendButton.setTitle("完成", for: .normal)
+        
+        sendButton.setTitleColor(KPColorPalette.KPMainColor_v2.grayColor_level4,
+                                 for: .disabled)
+        sendButton.setTitleColor(KPColorPalette.KPMainColor_v2.mainColor,
                                  for: .normal)
-        sendButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+        sendButton.clipsToBounds = true
+        sendButton.layer.cornerRadius = 4.0
+        sendButton.layer.borderWidth = 1.0
+        sendButton.layer.borderColor = KPColorPalette.KPMainColor_v2.grayColor_level3?.cgColor
+        sendButton.titleLabel?.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
+        
         return sendButton
     }()
     
@@ -33,8 +48,9 @@ class KPSharedSettingViewController: KPViewController {
     
     lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 24.0)
-        label.textColor = KPColorPalette.KPTextColor.mainColor
+        label.font = UIFont.systemFont(ofSize: KPFontSize.header,
+                                       weight: UIFont.Weight.regular)
+        label.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
         return label
     }()
     
@@ -56,17 +72,16 @@ class KPSharedSettingViewController: KPViewController {
         self.view.backgroundColor = UIColor.white
         
         dismissButton = KPBounceButton()
-        dismissButton.setImage(R.image.icon_close()?.withRenderingMode(.alwaysTemplate),
+        dismissButton.setImage(R.image.icon_close(),
                                for: .normal)
-        dismissButton.tintColor = KPColorPalette.KPMainColor_v2.mainColor
+        dismissButton.tintColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
         dismissButton.addTarget(self,
-                                action: #selector(KPSharedSettingViewController.handleDismissButtonOnTapped),
+                                action: #selector(KPSubtitleInputController.handleDismissButtonOnTapped),
                                 for: .touchUpInside)
-        
+        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4)
         view.addSubview(dismissButton)
-        dismissButton.addConstraints(fromStringArray: ["H:|-12-[$self(30)]",
-                                                       "V:|-16-[$self(30)]"])
-        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(6, 6, 6, 6)
+        dismissButton.addConstraints(fromStringArray: ["H:|-12-[$self($metric0)]",
+                                                       "V:|-36-[$self($metric0)]"], metrics:[KPLayoutConstant.dismissButton_size])
         
         
         view.addSubview(titleLabel)
@@ -102,8 +117,12 @@ class KPSharedSettingViewController: KPViewController {
         view.addSubview(sendButton)
         view.addSubview(seperator_two)
 
-        sendButton.addConstraints(fromStringArray: ["V:[$view0]-16-[$self(30)]-16-|"],
+        sendButton.addConstraints(fromStringArray: ["V:[$view0]-16-[$self(40)]-16-|",
+                                                    "H:|-12-[$self]-12-|"],
                                   views: [seperator_two])
+        
+//        sendButton.addConstraints(fromStringArray: ["V:[$view0]-16-[$self(30)]-16-|"],
+//                                  views: [seperator_two])
         sendButton.addConstraintForCenterAligningToSuperview(in: .horizontal)
         
         seperator_two.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",

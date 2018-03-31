@@ -17,8 +17,6 @@ class KPCountrySelectController: KPSharedSettingViewController {
         super.viewDidLoad()
 
         titleLabel.text = "店家所在城市"
-        
-        
         tableView = UITableView()
         tableView.delegate = self
         tableView.dataSource = self

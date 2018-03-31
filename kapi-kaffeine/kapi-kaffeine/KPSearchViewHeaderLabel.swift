@@ -12,7 +12,7 @@ class KPSearchViewHeaderLabel: UIView {
 
     lazy var headerLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: KPFontSize.header)
+        label.font = UIFont.boldSystemFont(ofSize: KPFontSize.sub_header)
         label.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
         label.text = "搜尋結果"
         return label

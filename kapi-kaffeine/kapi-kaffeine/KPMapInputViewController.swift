@@ -26,6 +26,7 @@ class KPMapInputViewController: KPSharedSettingViewController, GMSMapViewDelegat
         // Do any additional setup after loading the view.
         
         titleLabel.text = "請選擇店家位置"
+        seperator_one.isHidden = true
         
         geocoder = GMSGeocoder()
         
@@ -52,7 +53,8 @@ class KPMapInputViewController: KPSharedSettingViewController, GMSMapViewDelegat
         
     
         containerView.addSubview(self.mapView)
-        mapView.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"])
+        mapView.addConstraints(fromStringArray: ["H:|[$self]|",
+                                                 "V:|[$self]|"])
         
         mapView.addConstraintForHavingSameHeight(with: scrollView)
         
@@ -64,23 +66,20 @@ class KPMapInputViewController: KPSharedSettingViewController, GMSMapViewDelegat
         let container = UIView()
         scrollView.addSubview(container)
         container.backgroundColor = UIColor.white
-        container.addConstraints(fromStringArray: ["H:|-24-[$self]-24-|", "V:[$self]-16-|"])
+        container.addConstraints(fromStringArray: ["H:|[$self]|", "V:[$self]|"])
         
         addressLabel = UILabel()
         addressLabel.numberOfLines = 0
         addressLabel.textAlignment = .center
         addressLabel.textColor = KPColorPalette.KPTextColor.grayColor
         container.addSubview(addressLabel)
-        addressLabel.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|", "V:|-16-[$self]-16-|"])
+        addressLabel.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|", "V:|-32-[$self]-32-|"])
         addressLabel.setText(text: address ?? "點選地圖以選擇店家地址", lineSpacing: 3.0)
         
-        container.layer.cornerRadius = 4
-        container.layer.borderWidth = 0.5
-        container.layer.borderColor = KPColorPalette.KPBackgroundColor.grayColor_level6?.cgColor
-        container.layer.shadowColor = UIColor.black.cgColor
+        container.layer.shadowColor = KPColorPalette.KPMainColor_v2.shadow_darkColor?.cgColor
         container.layer.shadowOpacity = 0.2
-        container.layer.shadowRadius = 3.0
-        container.layer.shadowOffset = CGSize(width: 2.0, height: 4.0)
+        container.layer.shadowRadius = 4.0
+        container.layer.shadowOffset = CGSize(width: 0.0, height: -2.0)
         
     }
     
