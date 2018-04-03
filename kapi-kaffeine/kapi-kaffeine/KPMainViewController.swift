@@ -391,7 +391,7 @@ class KPMainViewController: KPViewController {
         if self.currentController == self.mainListViewController {
             mainListViewController?.view.alpha = 1.0
             mainMapViewController?.view.alpha = 0.0
-            UIView.animate(withDuration: 0.5,
+            UIView.animate(withDuration: 0.4,
                            delay: 0,
                            options: .curveEaseIn,
                            animations: {
@@ -399,7 +399,7 @@ class KPMainViewController: KPViewController {
             }, completion: { (_) in
                 self.mainListViewController?.view.alpha = 0.0
                 self.searchHeaderView.layer.shadowOpacity = 0.2
-                UIView.animate(withDuration: 0.5,
+                UIView.animate(withDuration: 0.4,
                                delay: 0,
                                options: .curveEaseOut,
                                animations: {
@@ -412,13 +412,13 @@ class KPMainViewController: KPViewController {
         } else {
             mainListViewController?.view.alpha = 0.0
             mainMapViewController?.view.alpha = 1.0
-            UIView.animate(withDuration: 0.5,
+            UIView.animate(withDuration: 0.4,
                            delay: 0,
                            options: .curveEaseIn,
                            animations: {
                             self.mainMapViewController?.view.alpha = 0
             }, completion: { (_) in
-                UIView.animate(withDuration: 0.5,
+                UIView.animate(withDuration: 0.4,
                                delay: 0,
                                options: .curveEaseOut,
                                animations: {

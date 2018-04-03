@@ -73,7 +73,7 @@ class KPMapInputViewController: KPSharedSettingViewController, GMSMapViewDelegat
         addressLabel.textAlignment = .center
         addressLabel.textColor = KPColorPalette.KPTextColor.grayColor
         container.addSubview(addressLabel)
-        addressLabel.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|", "V:|-32-[$self]-32-|"])
+        addressLabel.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|", "V:|-24-[$self]-24-|"])
         addressLabel.setText(text: address ?? "點選地圖以選擇店家地址", lineSpacing: 3.0)
         
         container.layer.shadowColor = KPColorPalette.KPMainColor_v2.shadow_darkColor?.cgColor

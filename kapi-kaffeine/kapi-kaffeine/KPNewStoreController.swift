@@ -71,15 +71,15 @@ class KPNewStoreController: KPNewStoreBasicController, KPSubtitleInputDelegate, 
         addressEditor = KPTitleEditorView<UITextField>("地址")
         addressEditor.contentView.placeholder = "請輸入地址"
         let mapEditButton = UIButton()
-        mapEditButton.setImage(#imageLiteral(resourceName: "icon_map"), for: .normal)
+        mapEditButton.setImage(R.image.icon_pin_fill(), for: .normal)
         mapEditButton.setTitle("使用地圖搜尋", for: .normal)
         mapEditButton.setTitleColor(KPColorPalette.KPMainColor_v2.mainColor_light!, for: .normal)
 //        mapEditButton.setTitleColor(KPColorPalette.KPMainColor_v2.mainColor_light!.withAlphaComponent(0.1), for: .highlighted)
         mapEditButton.adjustsImageWhenHighlighted = false
-        mapEditButton.titleLabel?.font = UIFont.systemFont(ofSize: 13)
+        mapEditButton.titleLabel?.font = UIFont.systemFont(ofSize: KPFontSize.infoContent)
         mapEditButton.imageView?.tintColor = KPColorPalette.KPMainColor_v2.mainColor_light!
         mapEditButton.imageView?.contentMode = .scaleAspectFit
-        mapEditButton.imageEdgeInsets = UIEdgeInsets(top: 5, left: 0, bottom: 5, right: 0)
+        mapEditButton.imageEdgeInsets = UIEdgeInsets(top: 6, left: 0, bottom: 6, right: 0)
         mapEditButton.addTarget(self, action: #selector(handleMapEditButtonOnTap(_:)), for: .touchUpInside)
         addressEditor.accessoryView = mapEditButton
         scrollContainer.addSubview(addressEditor)

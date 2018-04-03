@@ -23,13 +23,14 @@ class KPPhotoUploadView: UIView {
         
         takePhotoButton = UIButton()
         takePhotoButton.setImage(R.image.icon_camera(), for: .normal)
+        takePhotoButton.tintColor = KPColorPalette.KPMainColor_v2.mainColor
         takePhotoButton.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.grayColor_level6!),
                                            for: .normal)
         takePhotoButton.layer.cornerRadius = 5
         takePhotoButton.clipsToBounds = true
         takePhotoButton.addTarget(self, action: #selector(handleTakePhotoButtonOnTap(_:)), for: .touchUpInside)
         addSubview(takePhotoButton)
-        takePhotoButton.addConstraints(fromStringArray: ["H:|[$self(80)]", "V:|[$self(80)]"])
+        takePhotoButton.addConstraints(fromStringArray: ["H:|[$self(80)]", "V:|-2-[$self(80)]"])
         
         let collectionViewFlowLayout = UICollectionViewFlowLayout()
         collectionViewFlowLayout.itemSize = CGSize(width: 80, height: 120)

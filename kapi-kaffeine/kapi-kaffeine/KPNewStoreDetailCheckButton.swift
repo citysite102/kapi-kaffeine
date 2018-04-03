@@ -24,7 +24,7 @@ class KPNewStoreDetailCheckButton: UIButton {
         
         setTitle(title, for: .normal)
         setTitleColor(KPColorPalette.KPTextColor_v2.mainColor_subtitle, for: .normal)
-        titleLabel!.font = UIFont.systemFont(ofSize: 18)
+        titleLabel!.font = UIFont.systemFont(ofSize: KPFontSize.sub_header)
         
         
 //        titleLabel = UILabel()

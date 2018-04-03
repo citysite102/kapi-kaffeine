@@ -73,6 +73,7 @@ class KPExplorationViewController: KPViewController {
             
             for cell in self.contentTableView.visibleCells {
                 cell.alpha = 0
+//                cell.transform = CGAffineTransform(translationX: 0, y: 24)
             }
             
             UIView.animate(withDuration: 0.4,
@@ -97,8 +98,16 @@ class KPExplorationViewController: KPViewController {
             })
             
             for (index, cell) in self.articleCollectionView.visibleCells.enumerated() {
-                UIView.animate(withDuration: 0.3,
-                               delay: 0.6+(Double(self.articleCollectionView.visibleCells.count-1)*0.3-Double(index)*0.3),
+//                UIView.animate(withDuration: 0.2,
+//                               delay: 0.6+(Double(self.articleCollectionView.visibleCells.count-1)*0.2-Double(index)*0.2),
+//                               options: UIViewAnimationOptions.curveEaseOut,
+//                               animations: {
+//                                cell.alpha = 1.0
+//                }, completion: { (_) in
+//
+//                })
+                UIView.animate(withDuration: 0.2,
+                               delay: 0.5,
                                options: UIViewAnimationOptions.curveEaseOut,
                                animations: {
                                 cell.alpha = 1.0
@@ -108,11 +117,12 @@ class KPExplorationViewController: KPViewController {
             }
             
             for (index, cell) in self.contentTableView.visibleCells.enumerated() {
-                UIView.animate(withDuration: 0.3,
-                               delay: 0.8+(Double(self.contentTableView.visibleCells.count-1)*0.2-Double(index)*0.2),
+                UIView.animate(withDuration: 0.4,
+                               delay: 0.7+(Double(self.contentTableView.visibleCells.count-1)*0.2-Double(index)*0.2),
                                options: UIViewAnimationOptions.curveEaseOut,
                                animations: {
                                 cell.alpha = 1.0
+                                cell.transform = CGAffineTransform.identity
                 }, completion: { (_) in
                 })
             }

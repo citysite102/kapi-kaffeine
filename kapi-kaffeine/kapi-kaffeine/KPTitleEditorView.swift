@@ -63,7 +63,7 @@ class KPTitleEditorView<T: UIView>: UIView, UITextFieldDelegate {
     func setupUI() {
         
         titleLabel.text = title
-        titleLabel.font = UIFont.systemFont(ofSize: 20,
+        titleLabel.font = UIFont.systemFont(ofSize: KPFontSize.sub_header,
                                             weight: UIFont.Weight.regular)
         titleLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
         

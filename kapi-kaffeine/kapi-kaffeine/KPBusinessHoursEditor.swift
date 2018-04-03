@@ -59,9 +59,11 @@ class KPBusinessHoursEditor: UITableViewCell {
         selectionStyle = .none
         
         titleLabel.text = "營業時段"
+        
+        titleLabel.font = UIFont.systemFont(ofSize: KPFontSize.sub_header,
+                                            weight: UIFont.Weight.regular)
         titleLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
-        titleLabel.font = UIFont.systemFont(ofSize: 20,
-                                            weight: UIFont.Weight.light)
+        
         contentView.addSubview(titleLabel)
         titleLabel.addConstraints(fromStringArray: ["H:|-20-[$self]", "V:|-20-[$self]"])
         
@@ -115,9 +117,11 @@ class KPBusinessHoursEditor: UITableViewCell {
         
         let timeTitleLabel = UILabel()
         timeTitleLabel.text = "選擇營業時段"
+        
+        timeTitleLabel.font = UIFont.systemFont(ofSize: KPFontSize.sub_header,
+                                            weight: UIFont.Weight.regular)
         timeTitleLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
-        timeTitleLabel.font = UIFont.systemFont(ofSize: 20,
-                                                weight: UIFont.Weight.light)
+        
         contentView.addSubview(timeTitleLabel)
         timeTitleLabel.addConstraints(fromStringArray: ["H:|-20-[$self]", "V:[$view0]-30-[$self]"],
                                       views: [sundayButton])

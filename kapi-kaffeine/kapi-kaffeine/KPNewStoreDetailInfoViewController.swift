@@ -48,7 +48,7 @@ class KPNewStoreDetailInfoViewController: KPNewStoreBasicController {
 
         view.backgroundColor = UIColor.white
         
-        let barLeftItem = UIBarButtonItem(title: "取消",
+        let barLeftItem = UIBarButtonItem(title: "上一步",
                                           style: .plain,
                                           target: self,
                                           action: #selector(handleCancelButtonOnTap(_:)))
@@ -60,7 +60,8 @@ class KPNewStoreDetailInfoViewController: KPNewStoreBasicController {
         
         let detailTitleLabel = UILabel()
         detailTitleLabel.text = "提供店家相關資訊"
-        detailTitleLabel.font = UIFont.boldSystemFont(ofSize: 20)
+        detailTitleLabel.font = UIFont.boldSystemFont(ofSize: KPFontSize.sub_header)
+        detailTitleLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_title
         scrollContainer.addSubview(detailTitleLabel)
         detailTitleLabel.addConstraints(fromStringArray: ["H:|-20-[$self]|", "V:|-20-[$self]"])
         
@@ -105,19 +106,21 @@ class KPNewStoreDetailInfoViewController: KPNewStoreBasicController {
         submitButton.setTitleColor(UIColor.white, for: .normal)
         submitButton.setTitle("確認新增", for: .normal)
         submitButton.clipsToBounds = true
-        submitButton.layer.cornerRadius = 3
+        submitButton.layer.cornerRadius = 4
         buttonContainer.addSubview(submitButton)
-        submitButton.addConstraints(fromStringArray: ["H:[$self]-16-|", "V:|-10-[$self]-10-|"])
+//        submitButton.addConstraints(fromStringArray: ["H:[$self]-16-|", "V:|-10-[$self]-10-|"])
+        submitButton.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
+                                                    "V:|-12-[$self(40)]-12-|"])
         submitButton.addTarget(self, action: #selector(KPNewStoreDetailInfoViewController.handleSubmitButtonOnTap(_:)), for: .touchUpInside)
         
-        let backButton = UIButton(type: .custom)
-        backButton.setTitleColor(KPColorPalette.KPTextColor_v2.mainColor_description!, for: .normal)
-        backButton.setTitle("上一步", for: .normal)
-        buttonContainer.addSubview(backButton)
-        backButton.addConstraints(fromStringArray: ["H:|-16-[$self]-[$view0]", "V:|-10-[$self]-10-|"],
-                                  views: [submitButton])
-        backButton.addConstraintForHavingSameWidth(with: submitButton)
-        backButton.addTarget(self, action: #selector(KPNewStoreDetailInfoViewController.handleBackButtonOnTap(_:)), for: .touchUpInside)
+//        let backButton = UIButton(type: .custom)
+//        backButton.setTitleColor(KPColorPalette.KPTextColor_v2.mainColor_description!, for: .normal)
+//        backButton.setTitle("上一步", for: .normal)
+//        buttonContainer.addSubview(backButton)
+//        backButton.addConstraints(fromStringArray: ["H:|-16-[$self]-[$view0]", "V:|-10-[$self]-10-|"],
+//                                  views: [submitButton])
+//        backButton.addConstraintForHavingSameWidth(with: submitButton)
+//        backButton.addTarget(self, action: #selector(KPNewStoreDetailInfoViewController.handleBackButtonOnTap(_:)), for: .touchUpInside)
         
     }
 
@@ -139,7 +142,8 @@ class KPNewStoreDetailInfoViewController: KPNewStoreBasicController {
     }
     
     @objc func handleCancelButtonOnTap(_ sender: UIBarButtonItem) {
-        appModalController()?.dismissControllerWithDefaultDuration()
+//        appModalController()?.dismissControllerWithDefaultDuration()
+        navigationController?.popViewController(animated: true)
     }
     
     @objc func handleInfoButtonOnTap(_ sender: KPNewStoreDetailCheckButton) {

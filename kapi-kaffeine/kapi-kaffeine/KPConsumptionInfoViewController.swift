@@ -16,26 +16,34 @@ class KPConsumptionInfoViewController: KPNewStoreBasicController {
         super.viewDidLoad()
         
         navigationItem.leftBarButtonItem = nil
-        
+        navigationItem.title = "消費體驗資訊"
         
         let submitButton = UIButton(type: .custom)
-        submitButton.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor_v2.greenColor!), for: .normal)
         submitButton.setTitleColor(UIColor.white, for: .normal)
-        submitButton.setTitle("確認新增", for: .normal)
+        submitButton.setTitle("設定完成", for: .normal)
         submitButton.clipsToBounds = true
-        submitButton.layer.cornerRadius = 3
+        submitButton.setTitleColor(KPColorPalette.KPMainColor_v2.grayColor_level4,
+                                   for: .disabled)
+        submitButton.setTitleColor(KPColorPalette.KPMainColor_v2.mainColor,
+                                   for: .normal)
+        submitButton.layer.cornerRadius = 4.0
+        submitButton.layer.cornerRadius = 4.0
+        submitButton.layer.borderWidth = 1.0
+        submitButton.layer.borderColor = KPColorPalette.KPMainColor_v2.grayColor_level3?.cgColor
         buttonContainer.addSubview(submitButton)
-        submitButton.addConstraints(fromStringArray: ["H:[$self]-16-|", "V:|-10-[$self]-10-|"])
+//        submitButton.addConstraints(fromStringArray: ["H:[$self]-16-|", "V:|-10-[$self]-10-|"])
+        submitButton.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
+                                                      "V:|-12-[$self(40)]-12-|"])
         submitButton.addTarget(self, action: #selector(KPNewStoreDetailInfoViewController.handleSubmitButtonOnTap(_:)), for: .touchUpInside)
         
-        let backButton = UIButton(type: .custom)
-        backButton.setTitleColor(KPColorPalette.KPTextColor_v2.mainColor_description!, for: .normal)
-        backButton.setTitle("上一步", for: .normal)
-        buttonContainer.addSubview(backButton)
-        backButton.addConstraints(fromStringArray: ["H:|-16-[$self]-[$view0]", "V:|-10-[$self]-10-|"],
-                                  views: [submitButton])
-        backButton.addConstraintForHavingSameWidth(with: submitButton)
-        backButton.addTarget(self, action: #selector(KPNewStoreDetailInfoViewController.handleBackButtonOnTap(_:)), for: .touchUpInside)
+//        let backButton = UIButton(type: .custom)
+//        backButton.setTitleColor(KPColorPalette.KPTextColor_v2.mainColor_description!, for: .normal)
+//        backButton.setTitle("上一步", for: .normal)
+//        buttonContainer.addSubview(backButton)
+//        backButton.addConstraints(fromStringArray: ["H:|-16-[$self]-[$view0]", "V:|-10-[$self]-10-|"],
+//                                  views: [submitButton])
+//        backButton.addConstraintForHavingSameWidth(with: submitButton)
+//        backButton.addTarget(self, action: #selector(KPNewStoreDetailInfoViewController.handleBackButtonOnTap(_:)), for: .touchUpInside)
 
         
         let ratingTitleEditor = KPTitleEditorView<KPRatingView>("整體消費體驗")
