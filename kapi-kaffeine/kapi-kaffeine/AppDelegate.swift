@@ -30,7 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         GMSServices.provideAPIKey("AIzaSyCZiprr4NXdrs4ChdmQ8nNVrAPZJWoy3TQ")
         GMSPlacesClient.provideAPIKey("AIzaSyCZiprr4NXdrs4ChdmQ8nNVrAPZJWoy3TQ")
         
-        KPLocationManager.sharedInstance().hello()
+        KPLocationManager.sharedInstance()
         
         
         // Facebook

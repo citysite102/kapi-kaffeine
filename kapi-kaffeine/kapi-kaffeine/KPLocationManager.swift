@@ -27,15 +27,15 @@ class KPLocationManager: NSObject, CLLocationManagerDelegate {
         }
     }
     
+    var isLocationUpdateAvailable: Bool {
+        return CLLocationManager.locationServicesEnabled()
+    }
+    
     static func sharedInstance() -> KPLocationManager {
         if mInstance == nil {
             mInstance = KPLocationManager()
         }
         return mInstance!
-    }
-    
-    func hello() {
-        
     }
     
     override init() {

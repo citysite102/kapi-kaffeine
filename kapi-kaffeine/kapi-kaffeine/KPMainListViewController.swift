@@ -290,6 +290,10 @@ class KPMainListViewController:
         satisficationView = KPSatisficationView()
         expNotificationView = KPExpNotificationView()
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        
+        if !KPLocationManager.sharedInstance().isLocationUpdateAvailable {
+            mainController.reFetchRemoteData()
+        }
     }
     
     

@@ -57,60 +57,64 @@ class KPExplorationViewController: KPViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+    }
+    
+    func performAnimation(completion: (() -> Swift.Void)? = nil) {
         articleCollectionView.collectionViewLayout.invalidateLayout()
         if !rootTabViewController.exploreAnimationHasPerformed {
             
-            moreContentLabel.alpha = 0
-            moreContentIcon.alpha = 0
+            footerView.alpha = 0
             headerView.alpha = 0
-            articleCollectionView.alpha = 0
             sectionBgImageView.alpha = 0.2
+            
+            for cell in self.articleCollectionView.visibleCells {
+                cell.alpha = 0
+            }
             
             for cell in self.contentTableView.visibleCells {
                 cell.alpha = 0
             }
             
-            if !rootTabViewController.exploreAnimationHasPerformed {
-                UIView.animate(withDuration: 0.6,
-                               delay: 0.2,
+            UIView.animate(withDuration: 0.4,
+                           delay: 0.2,
+                           options: UIViewAnimationOptions.curveEaseOut,
+                           animations: {
+                            self.headerView.alpha = 1.0
+                            self.footerView.alpha = 1.0
+            }, completion: { (_) in
+                
+            })
+            
+            UIView.animate(withDuration: 1.4,
+                           delay: 0.8,
+                           options: .curveEaseOut,
+                           animations: {
+                            self.sectionBgImageView.alpha = 0.5
+                            self.sectionBgImageView.transform = CGAffineTransform.identity
+                            self.rootTabViewController.exploreAnimationHasPerformed = true
+            }, completion: { (_) in
+                
+            })
+            
+            for (index, cell) in self.articleCollectionView.visibleCells.enumerated() {
+                UIView.animate(withDuration: 0.3,
+                               delay: 0.6+(Double(self.articleCollectionView.visibleCells.count-1)*0.3-Double(index)*0.3),
                                options: UIViewAnimationOptions.curveEaseOut,
                                animations: {
-                                self.headerView.alpha = 1.0
+                                cell.alpha = 1.0
                 }, completion: { (_) in
                     
                 })
-                
-                UIView.animate(withDuration: 1.5,
-                               delay: 0.8,
-                               options: .curveEaseOut,
-                               animations: {
-                                self.sectionBgImageView.alpha = 0.5
-                                self.sectionBgImageView.transform = CGAffineTransform.identity
-                }, completion: { (_) in
-                    
-                })
-                
-                UIView.animate(withDuration: 0.6,
-                               delay: 0.4,
+            }
+            
+            for (index, cell) in self.contentTableView.visibleCells.enumerated() {
+                UIView.animate(withDuration: 0.3,
+                               delay: 0.8+(Double(self.contentTableView.visibleCells.count-1)*0.2-Double(index)*0.2),
                                options: UIViewAnimationOptions.curveEaseOut,
                                animations: {
-                                self.articleCollectionView.alpha = 1.0
+                                cell.alpha = 1.0
                 }, completion: { (_) in
-                    
                 })
-                
-                for cell in self.contentTableView.visibleCells {
-                    UIView.animate(withDuration: 0.6,
-                                   delay: 0.8,
-                                   options: UIViewAnimationOptions.curveEaseOut,
-                                   animations: {
-                                    cell.alpha = 1.0
-                    }, completion: { (_) in
-                        self.rootTabViewController.exploreAnimationHasPerformed = true
-                        self.moreContentLabel.alpha = 1.0
-                        self.moreContentIcon.alpha = 1.0
-                    })
-                }
             }
         }
     }
@@ -282,6 +286,11 @@ class KPExplorationViewController: KPViewController {
         
         contentTableView.tableHeaderView = headerView
         contentTableView.tableFooterView = footerView
+        
+        footerView.alpha = 0
+        headerView.alpha = 0
+        sectionBgImageView.alpha = 0.2
+        
     }
     
     override open var preferredStatusBarStyle: UIStatusBarStyle {
@@ -308,6 +317,9 @@ class KPExplorationViewController: KPViewController {
             this.testData = explorationList!
             DispatchQueue.main.async {
                 this.contentTableView.reloadData()
+                self?.performAnimation(completion: {
+                    
+                })
             }
         }
         

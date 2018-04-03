@@ -131,7 +131,7 @@ GMUClusterRendererDelegate {
     }
     
     var reloadNeeded: Bool = true
-    var draggingByUser: Bool = true
+    var draggingByUser: Bool = false
     
     
     var snapShotShowing: Bool = false {
