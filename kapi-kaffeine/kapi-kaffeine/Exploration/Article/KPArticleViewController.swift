@@ -226,7 +226,7 @@ class KPArticleViewController: KPViewController {
         collectButton.addTarget(self,
                                 action: #selector(handleCollectButtonOnTapped(_:)),
                                 for: .touchUpInside)
-        collectButton.isSelected = (KPUserManager.sharedManager.currentUser?.hasCollected(currentArticleItem.articleID))!
+        collectButton.isSelected = KPUserManager.sharedManager.currentUser?.hasCollected(currentArticleItem.articleID) ?? false
         toolBarContainer.addSubview(collectButton)
         collectButton.addConstraintForCenterAligningToSuperview(in: .vertical)
         collectButton.addConstraint(from: "H:|-16-[$self]")
