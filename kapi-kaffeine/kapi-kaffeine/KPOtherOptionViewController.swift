@@ -10,12 +10,6 @@ import UIKit
 
 class KPOtherOptionViewController: KPNewStoreBasicController {
     
-    
-//    let wifiSegment = KPSegmentedControl(["有", "無"])
-//    let timeLimitSegment = KPSegmentedControl(["限時", "不限時", "看狀況"])
-//    let socketSegment = KPSegmentedControl(["無", "很多", "部份座位有"])
-//    let standingDeskSegment = KPSegmentedControl(["有", "無"])
-    
     let wifiEditor = KPTitleEditorView<KPSegmentedControl>("是否提供WIFI",
                                                            contentViewSetupFunction: { return KPSegmentedControl(["有", "無"]) })
     
@@ -25,7 +19,20 @@ class KPOtherOptionViewController: KPNewStoreBasicController {
     let socketEditor = KPTitleEditorView<KPSegmentedControl>("插座數量",
                                                              contentViewSetupFunction: { return KPSegmentedControl(["無", "很多", "部份座位有"]) })
     
+    let standingDeskEditor = KPTitleEditorView<KPSegmentedControl>("是否有站立桌",
+                                                                   contentViewSetupFunction: { return KPSegmentedControl(["有", "無"]) })
+    
     weak var uploadData: KPUploadDataModel?
+    
+    init(_ data: KPUploadDataModel) {
+        uploadData = data
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,19 +53,9 @@ class KPOtherOptionViewController: KPNewStoreBasicController {
         submitButton.layer.borderWidth = 1.0
         submitButton.layer.borderColor = KPColorPalette.KPMainColor_v2.grayColor_level3?.cgColor
         buttonContainer.addSubview(submitButton)
-//        submitButton.addConstraints(fromStringArray: ["H:[$self]-16-|", "V:|-10-[$self]-10-|"])
         submitButton.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
                                                       "V:|-12-[$self(40)]-12-|"])
         submitButton.addTarget(self, action: #selector(KPNewStoreDetailInfoViewController.handleSubmitButtonOnTap(_:)), for: .touchUpInside)
-        
-//        let backButton = UIButton(type: .custom)
-//        backButton.setTitleColor(KPColorPalette.KPTextColor_v2.mainColor_description!, for: .normal)
-//        backButton.setTitle("上一步", for: .normal)
-//        buttonContainer.addSubview(backButton)
-//        backButton.addConstraints(fromStringArray: ["H:|-16-[$self]-[$view0]", "V:|-10-[$self]-10-|"],
-//                                  views: [submitButton])
-//        backButton.addConstraintForHavingSameWidth(with: submitButton)
-//        backButton.addTarget(self, action: #selector(KPNewStoreDetailInfoViewController.handleBackButtonOnTap(_:)), for: .touchUpInside)
         
         
         scrollContainer.addSubview(wifiEditor)
@@ -96,10 +93,6 @@ class KPOtherOptionViewController: KPNewStoreBasicController {
             socketEditor.contentView.heightAnchor.constraint(equalToConstant: 40)
         ])
         
-        
-        let standingDeskEditor = KPTitleEditorView<KPSegmentedControl>("是否有站立桌",
-                                                                       contentViewSetupFunction: { return KPSegmentedControl(["有", "無"]) })
-        
         scrollContainer.addSubview(standingDeskEditor)
         standingDeskEditor.translatesAutoresizingMaskIntoConstraints = false
         
@@ -111,6 +104,12 @@ class KPOtherOptionViewController: KPNewStoreBasicController {
             standingDeskEditor.contentView.heightAnchor.constraint(equalToConstant: 40)
         ])
         
+        
+        // Setup default value
+        wifiEditor.contentView.selectedSegmentIndex = uploadData?.wifi ?? true ? 0 : 1
+        timeLimitEditor.contentView.selectedSegmentIndex = uploadData?.limitedTime ?? 0
+        socketEditor.contentView.selectedSegmentIndex = uploadData?.socket ?? 0
+        standingDeskEditor.contentView.selectedSegmentIndex = uploadData?.standingDesk ?? true ? 0 : 1
     }
     
     func titleLabel(withTitle title: String) -> UILabel {
@@ -141,7 +140,10 @@ class KPOtherOptionViewController: KPNewStoreBasicController {
         }
         
         // TODO: Set data
-        
+        uploadData.wifi = wifiEditor.contentView.selectedSegmentIndex == 0
+        uploadData.limitedTime = timeLimitEditor.contentView.selectedSegmentIndex
+        uploadData.socket = socketEditor.contentView.selectedSegmentIndex
+        uploadData.standingDesk = standingDeskEditor.contentView.selectedSegmentIndex == 0
         
         navigationController?.popViewController(animated: true)
     }

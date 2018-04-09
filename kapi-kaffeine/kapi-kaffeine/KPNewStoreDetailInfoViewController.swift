@@ -10,27 +10,12 @@ import UIKit
 
 class KPNewStoreDetailInfoViewController: KPNewStoreBasicController {
     
-//    fileprivate var scrollView: UIScrollView!
-//    fileprivate var scrollContainer: UIView!
-    
     fileprivate var comsumptionInfoButton: KPNewStoreDetailCheckButton!
     fileprivate var businessTimeButton: KPNewStoreDetailCheckButton!
     fileprivate var additionalInfoButton: KPNewStoreDetailCheckButton!
     
     fileprivate let photoUploadView = KPTitleEditorView<KPPhotoUploadView>("上傳照片")
     fileprivate let menuUploadView = KPTitleEditorView<KPPhotoUploadView>("上傳菜單")
-    
-    lazy var consumptionController: KPConsumptionInfoViewController = {
-        return KPConsumptionInfoViewController()
-    }()
-    
-    lazy var businessHoursController: KPBusinessHoursEditorController = {
-        return KPBusinessHoursEditorController()
-    }()
-    
-    lazy var otherOptionController: KPOtherOptionViewController = {
-        return KPOtherOptionViewController()
-    }()
     
     var uploadData: KPUploadDataModel
     
@@ -102,25 +87,20 @@ class KPNewStoreDetailInfoViewController: KPNewStoreBasicController {
         
         
         let submitButton = UIButton(type: .custom)
-        submitButton.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor_v2.greenColor!), for: .normal)
-        submitButton.setTitleColor(UIColor.white, for: .normal)
+        submitButton.setTitleColor(KPColorPalette.KPMainColor_v2.grayColor_level4,
+                                   for: .disabled)
+        submitButton.setTitleColor(KPColorPalette.KPMainColor_v2.mainColor,
+                                   for: .normal)
         submitButton.setTitle("確認新增", for: .normal)
         submitButton.clipsToBounds = true
-        submitButton.layer.cornerRadius = 4
+        submitButton.layer.cornerRadius = 4.0
+        submitButton.layer.borderWidth = 1.0
+        submitButton.layer.borderColor = KPColorPalette.KPMainColor_v2.grayColor_level4?.cgColor
+        submitButton.titleLabel?.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
         buttonContainer.addSubview(submitButton)
-//        submitButton.addConstraints(fromStringArray: ["H:[$self]-16-|", "V:|-10-[$self]-10-|"])
         submitButton.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
                                                     "V:|-12-[$self(40)]-12-|"])
         submitButton.addTarget(self, action: #selector(KPNewStoreDetailInfoViewController.handleSubmitButtonOnTap(_:)), for: .touchUpInside)
-        
-//        let backButton = UIButton(type: .custom)
-//        backButton.setTitleColor(KPColorPalette.KPTextColor_v2.mainColor_description!, for: .normal)
-//        backButton.setTitle("上一步", for: .normal)
-//        buttonContainer.addSubview(backButton)
-//        backButton.addConstraints(fromStringArray: ["H:|-16-[$self]-[$view0]", "V:|-10-[$self]-10-|"],
-//                                  views: [submitButton])
-//        backButton.addConstraintForHavingSameWidth(with: submitButton)
-//        backButton.addTarget(self, action: #selector(KPNewStoreDetailInfoViewController.handleBackButtonOnTap(_:)), for: .touchUpInside)
         
     }
 
@@ -142,19 +122,18 @@ class KPNewStoreDetailInfoViewController: KPNewStoreBasicController {
     }
     
     @objc func handleCancelButtonOnTap(_ sender: UIBarButtonItem) {
-//        appModalController()?.dismissControllerWithDefaultDuration()
         navigationController?.popViewController(animated: true)
     }
     
     @objc func handleInfoButtonOnTap(_ sender: KPNewStoreDetailCheckButton) {
         if sender == comsumptionInfoButton {
-            consumptionController.uploadData = uploadData
+            let consumptionController = KPConsumptionInfoViewController(uploadData)
             navigationController?.pushViewController(consumptionController, animated: true)
         } else if sender == businessTimeButton {
-            businessHoursController.uploadData = uploadData
+            let businessHoursController = KPBusinessHoursEditorController(uploadData)
             navigationController?.pushViewController(businessHoursController, animated: true)
         } else if sender == additionalInfoButton {
-            otherOptionController.uploadData = uploadData
+            let otherOptionController = KPOtherOptionViewController(uploadData)
             navigationController?.pushViewController(otherOptionController, animated: true)
         }
     }

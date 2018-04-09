@@ -28,7 +28,6 @@ class KPNewStoreController: KPNewStoreBasicController, KPSubtitleInputDelegate, 
         
         view.backgroundColor = UIColor.white
         title = "新增店家"
-//        navigationController?.navigationBar.shadowImage = UIImage()
         
         let barLeftItem = UIBarButtonItem(title: "取消",
                                           style: .plain,

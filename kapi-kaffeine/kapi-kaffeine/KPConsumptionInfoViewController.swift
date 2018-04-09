@@ -12,6 +12,21 @@ class KPConsumptionInfoViewController: KPNewStoreBasicController {
 
     weak var uploadData: KPUploadDataModel?
     
+    let ratingTitleEditor = KPTitleEditorView<KPRatingView>("整體消費體驗")
+    let commentTitleEditor = KPTitleEditorView<UITextView>("留下評論")
+    let drinkPriceEditor = KPTitleEditorView<UITextField>("飲品價位")
+    let foodPriceEditor = KPTitleEditorView<UITextField>("餐點價位")
+    
+    
+    init(_ data: KPUploadDataModel) {
+        uploadData = data
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -31,22 +46,10 @@ class KPConsumptionInfoViewController: KPNewStoreBasicController {
         submitButton.layer.borderWidth = 1.0
         submitButton.layer.borderColor = KPColorPalette.KPMainColor_v2.grayColor_level3?.cgColor
         buttonContainer.addSubview(submitButton)
-//        submitButton.addConstraints(fromStringArray: ["H:[$self]-16-|", "V:|-10-[$self]-10-|"])
         submitButton.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
                                                       "V:|-12-[$self(40)]-12-|"])
         submitButton.addTarget(self, action: #selector(KPNewStoreDetailInfoViewController.handleSubmitButtonOnTap(_:)), for: .touchUpInside)
         
-//        let backButton = UIButton(type: .custom)
-//        backButton.setTitleColor(KPColorPalette.KPTextColor_v2.mainColor_description!, for: .normal)
-//        backButton.setTitle("上一步", for: .normal)
-//        buttonContainer.addSubview(backButton)
-//        backButton.addConstraints(fromStringArray: ["H:|-16-[$self]-[$view0]", "V:|-10-[$self]-10-|"],
-//                                  views: [submitButton])
-//        backButton.addConstraintForHavingSameWidth(with: submitButton)
-//        backButton.addTarget(self, action: #selector(KPNewStoreDetailInfoViewController.handleBackButtonOnTap(_:)), for: .touchUpInside)
-
-        
-        let ratingTitleEditor = KPTitleEditorView<KPRatingView>("整體消費體驗")
         scrollContainer.addSubview(ratingTitleEditor)
         ratingTitleEditor.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -56,7 +59,6 @@ class KPConsumptionInfoViewController: KPNewStoreBasicController {
         ])
         
         
-        let commentTitleEditor = KPTitleEditorView<UITextView>("留下評論")
         scrollContainer.addSubview(commentTitleEditor)
         commentTitleEditor.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -66,36 +68,19 @@ class KPConsumptionInfoViewController: KPNewStoreBasicController {
             commentTitleEditor.contentView.heightAnchor.constraint(equalToConstant: 140)
         ])
         
-        
-//        let commentTitleLabel = UILabel()
-//        commentTitleLabel.text = "留下評論"
-//        commentTitleLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
-//        commentTitleLabel.font = UIFont.systemFont(ofSize: 20,
-//                                                   weight: UIFont.Weight.light)
-//        scrollContainer.addSubview(commentTitleLabel)
-//        commentTitleLabel.addConstraints(fromStringArray: ["H:|-20-[$self]", "V:[$view0]-20-[$self]"],
-//                                         views: [ratingTitleEditor])
-//
-//
-//        let commentTextView = UITextView()
-//        commentTextView.font = UIFont.systemFont(ofSize: 16)
-//        scrollContainer.addSubview(commentTextView)
-//        commentTextView.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|", "V:[$view0]-4-[$self(140)]"],
-//                                       views: [commentTitleLabel])
-//        commentTextView.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7
-//        commentTextView.layer.cornerRadius = 5
-        
-        
-        let drinkPriceEditor = KPTitleEditorView<UITextField>("飲品價位")
         scrollContainer.addSubview(drinkPriceEditor)
         drinkPriceEditor.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|", "V:[$view0]-20-[$self]"],
                                         views: [commentTitleEditor])
         
-        let foodPriceEditor = KPTitleEditorView<UITextField>("餐點價位")
         scrollContainer.addSubview(foodPriceEditor)
         foodPriceEditor.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|", "V:[$view0]-20-[$self]-20-|"],
                                        views: [drinkPriceEditor])
         
+        
+        ratingTitleEditor.contentView.currentRate = uploadData?.rating ?? 0
+        commentTitleEditor.contentView.text = uploadData?.comment ?? ""
+        drinkPriceEditor.contentView.text = uploadData?.drinkPrice != nil ? "\((uploadData?.drinkPrice)!)" : ""
+        foodPriceEditor.contentView.text = uploadData?.foodPrice != nil ? "\((uploadData?.foodPrice)!)" : ""
         
     }
 
@@ -113,6 +98,12 @@ class KPConsumptionInfoViewController: KPNewStoreBasicController {
         guard let `uploadData` = uploadData else {
             return
         }
+        
+        // TODO: Check Data
+        uploadData.rating = ratingTitleEditor.contentView.currentRate
+        uploadData.comment = commentTitleEditor.contentView.text
+        uploadData.drinkPrice = Int(drinkPriceEditor.contentView.text!)
+        uploadData.foodPrice = Int(foodPriceEditor.contentView.text!)
         
         
         navigationController?.popViewController(animated: true)

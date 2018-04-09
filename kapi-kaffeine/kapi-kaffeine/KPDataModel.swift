@@ -196,8 +196,23 @@ class KPUploadDataModel {
     var coordinate: CLLocationCoordinate2D
     var address: String
     
+    // Photos & Menu
     var photos: [UIImage] = []
     var menuPhotos: [UIImage] = []
+    
+    
+    // Other Options
+    var wifi: Bool?
+    var limitedTime: Int?
+    var socket: Int?
+    var standingDesk: Bool?
+    
+    // Comsumption
+    var rating: Int?
+    var comment: String?
+    var drinkPrice: Int?
+    var foodPrice: Int?
+    
     
     init(_ name: String, _ coordinate: CLLocationCoordinate2D,_ address: String) {
         self.name = name

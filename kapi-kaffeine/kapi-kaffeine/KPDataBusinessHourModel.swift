@@ -19,8 +19,12 @@ enum KPDay: String {
     case Sunday    = "sun"
 }
 
+enum WeekDay {
+    case Monday
+}
+
 class KPDataBusinessHourModel: NSObject {
-    
+        
     var businessTime: [KPDay: [(startHour: String,
                                 endHour: String,
                                 startTimeInterval: TimeInterval,
