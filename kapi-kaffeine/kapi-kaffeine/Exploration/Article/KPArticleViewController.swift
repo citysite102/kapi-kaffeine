@@ -329,11 +329,11 @@ class KPArticleViewController: KPViewController {
             
             
             var previousView: UIView = titleLabel
-            var spacing: CGFloat = 8
+            var spacing: CGFloat = 24
             for element in article.contents {
                 
                 if element.type == .Br {
-                    spacing = 32
+                    spacing = 40
                     continue
                 }
                 
@@ -366,7 +366,7 @@ class KPArticleViewController: KPViewController {
                     for subContent in element.content {
                         
                         if subContent.type == .Br {
-                            spacing = 32
+                            spacing = 48
                             continue
                         }
                         
@@ -404,7 +404,7 @@ class KPArticleViewController: KPViewController {
                         ])
                         
                         previousView = currentSubView
-                        spacing = 8
+                        spacing = 24
                         
                     }
                     
@@ -488,14 +488,14 @@ class KPArticleViewController: KPViewController {
             
             descriptionStyle.lineBreakMode = contentLabel.lineBreakMode
             descriptionStyle.alignment = contentLabel.textAlignment
-            descriptionStyle.lineSpacing = 8.0
+            descriptionStyle.lineSpacing = 6.0
             
             attributedString.addAttributes([NSAttributedStringKey.paragraphStyle: descriptionStyle],
                                            range: NSRange(location: 0, length: attributedString.length))
             
             contentLabel.attributedText = attributedString
         } else {
-            contentLabel.setText(text: element.value, lineSpacing: 8.0)
+            contentLabel.setText(text: element.value, lineSpacing: 6.0)
         }
         
         return contentLabel

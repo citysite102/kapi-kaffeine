@@ -70,7 +70,7 @@ class KPBounceButton: UIButton {
                 backgroundSelectView?.backgroundColor = backgroundSelectColor
                 insertSubview(backgroundSelectView!, belowSubview: imageView!)
                 backgroundSelectView?.isHidden = true
-                backgroundSelectView?.addConstraints(fromStringArray: ["V:|-(-9)-[$self]-(-2)-|",
+                let _ = backgroundSelectView?.addConstraints(fromStringArray: ["V:|-(-9)-[$self]-(-3)-|",
                                                                        "H:|-(-3)-[$self]-(-7)-|"])
                 
             }

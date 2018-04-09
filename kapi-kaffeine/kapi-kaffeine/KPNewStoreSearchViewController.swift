@@ -51,6 +51,7 @@ class KPSubtitleInputController: KPViewController {
     }
     
     var identifiedKey: String?
+    var oldContent: String?
     var outputValue: Any!
     
     override func viewDidLoad() {
@@ -77,6 +78,7 @@ class KPSubtitleInputController: KPViewController {
                                      views: [dismissButton])
         
         view.addSubview(editTextField)
+        editTextField.text = oldContent ?? ""
         editTextField.addConstraints(fromStringArray: ["V:[$view0]-16-[$self]",
                                                        "H:|-16-[$self]-16-|"],
                                      views: [subTitleLabel])
@@ -137,7 +139,6 @@ class KPSubtitleInputController: KPViewController {
         outputValue = editTextField.text
         delegate?.outputValueSet(self)
         dismiss(animated: true, completion: nil)
-//        appModalController()?.dismissControllerWithDefaultDuration()
     }
     
     override func didReceiveMemoryWarning() {

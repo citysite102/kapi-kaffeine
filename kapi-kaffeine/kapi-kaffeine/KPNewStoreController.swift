@@ -46,6 +46,9 @@ class KPNewStoreController: KPNewStoreBasicController, KPSubtitleInputDelegate, 
         storeNameEditor.textFieldTapAction = { [weak self] in
             guard let `self` = self else { return }
             let storeNameSearchController = KPSubtitleInputController()
+            if let oldContent = self.storeNameEditor.contentView.text {
+                storeNameSearchController.oldContent = oldContent
+            }
             storeNameSearchController.delegate = self
             self.present(storeNameSearchController, animated: true, completion: nil)
         }
@@ -54,7 +57,7 @@ class KPNewStoreController: KPNewStoreBasicController, KPSubtitleInputDelegate, 
                                                          "V:|-20-[$self]"])
         
         
-        locationEditor = KPTitleEditorView<UITextField>("所在位置")
+        locationEditor = KPTitleEditorView<UITextField>("所在城市")
         locationEditor.isTextFieldEditable = false
         locationEditor.textFieldTapAction = { [weak self] in
             guard let `self` = self else { return }
@@ -62,7 +65,7 @@ class KPNewStoreController: KPNewStoreBasicController, KPSubtitleInputDelegate, 
             locationController.delegate = self
             self.present(locationController, animated: true, completion: nil)
         }
-        locationEditor.contentView.placeholder = "請選擇所在位置"
+        locationEditor.contentView.placeholder = "請選擇所在城市"
         scrollContainer.addSubview(locationEditor)
         locationEditor.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|",
                                                         "V:[$view0]-20-[$self]"],
@@ -74,7 +77,6 @@ class KPNewStoreController: KPNewStoreBasicController, KPSubtitleInputDelegate, 
         mapEditButton.setImage(R.image.icon_pin_fill(), for: .normal)
         mapEditButton.setTitle("使用地圖搜尋", for: .normal)
         mapEditButton.setTitleColor(KPColorPalette.KPMainColor_v2.mainColor_light!, for: .normal)
-//        mapEditButton.setTitleColor(KPColorPalette.KPMainColor_v2.mainColor_light!.withAlphaComponent(0.1), for: .highlighted)
         mapEditButton.adjustsImageWhenHighlighted = false
         mapEditButton.titleLabel?.font = UIFont.systemFont(ofSize: KPFontSize.infoContent)
         mapEditButton.imageView?.tintColor = KPColorPalette.KPMainColor_v2.mainColor_light!
@@ -102,8 +104,6 @@ class KPNewStoreController: KPNewStoreBasicController, KPSubtitleInputDelegate, 
         
         
         nextButton = UIButton(type: .custom)
-//        nextButton.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor_v2.greenColor!), for: .normal)
-//        nextButton.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor_v2.grayColor_level4!), for: .disabled)
         nextButton.setTitleColor(KPColorPalette.KPMainColor_v2.grayColor_level4,
                                  for: .disabled)
         nextButton.setTitleColor(KPColorPalette.KPMainColor_v2.mainColor,
@@ -112,7 +112,7 @@ class KPNewStoreController: KPNewStoreBasicController, KPSubtitleInputDelegate, 
         nextButton.clipsToBounds = true
         nextButton.layer.cornerRadius = 4.0
         nextButton.layer.borderWidth = 1.0
-        nextButton.layer.borderColor = KPColorPalette.KPMainColor_v2.grayColor_level3?.cgColor
+        nextButton.layer.borderColor = KPColorPalette.KPMainColor_v2.grayColor_level4?.cgColor
         nextButton.titleLabel?.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
         buttonContainer.addSubview(nextButton)
         nextButton.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
@@ -120,7 +120,6 @@ class KPNewStoreController: KPNewStoreBasicController, KPSubtitleInputDelegate, 
         nextButton.addTarget(self, action: #selector(KPNewStoreController.handleNextButtonOnTap(_:)), for: .touchUpInside)
         
         nextButton.isEnabled = false
-        
         locationEditor.isHidden = true
         addressEditor.isHidden = true
         phoneEditor.isHidden = true
@@ -131,7 +130,7 @@ class KPNewStoreController: KPNewStoreBasicController, KPSubtitleInputDelegate, 
     func outputValueSet(_ controller: KPSubtitleInputController) {
         if controller.isKind(of: KPSubtitleInputController.self) {
             if let place = controller.outputValue as? GMSPlace {
-                
+
                 storeNameEditor.contentView.text = place.name
                 
                 if let addressComponents = place.addressComponents {
@@ -147,18 +146,34 @@ class KPNewStoreController: KPNewStoreBasicController, KPSubtitleInputDelegate, 
                 urlEditor.contentView.text = place.website?.absoluteString
                 
                 coordinate = place.coordinate
+                nextButton.isEnabled = true
+                nextButton.layer.borderColor = KPColorPalette.KPMainColor_v2.mainColor?.cgColor
+                
+                locationEditor.isHidden = false
+                addressEditor.isHidden = false
+                phoneEditor.isHidden = false
+                urlEditor.isHidden = false
                 
             } else if let placeName = controller.outputValue as? String {
                 storeNameEditor.contentView.text = placeName
                 
+                nextButton.isEnabled = placeName.count > 0
+                nextButton.layer.borderColor = placeName.count > 0 ?
+                    KPColorPalette.KPMainColor_v2.mainColor?.cgColor :
+                    KPColorPalette.KPMainColor_v2.grayColor_level4?.cgColor
+                locationEditor.isHidden = !(placeName.count > 0)
+                addressEditor.isHidden = !(placeName.count > 0)
+                phoneEditor.isHidden = !(placeName.count > 0)
+                urlEditor.isHidden = !(placeName.count > 0)
+            } else {
+                nextButton.isEnabled = false
+                nextButton.layer.borderColor = KPColorPalette.KPMainColor_v2.grayColor_level4?.cgColor
+                
+                locationEditor.isHidden = true
+                addressEditor.isHidden = true
+                phoneEditor.isHidden = true
+                urlEditor.isHidden = true
             }
-            
-            nextButton.isEnabled = true
-            locationEditor.isHidden = false
-            addressEditor.isHidden = false
-            phoneEditor.isHidden = false
-            urlEditor.isHidden = false
-            
         }
     }
     
@@ -175,14 +190,6 @@ class KPNewStoreController: KPNewStoreBasicController, KPSubtitleInputDelegate, 
             }
         }
         
-    }
-    
-    @objc func handleStoreNameEditButtonOnTap(_ sender: UIButton) {
-        let storeNameSearchController = KPSubtitleInputController()
-        storeNameSearchController.delegate = self
-//        let navController = UINavigationController(rootViewController: storeNameSearchController)
-//        storeNameSearchController.delegate = self
-        present(storeNameSearchController, animated: true, completion: nil)
     }
     
     @objc func handleMapEditButtonOnTap(_ sender: UIButton) {

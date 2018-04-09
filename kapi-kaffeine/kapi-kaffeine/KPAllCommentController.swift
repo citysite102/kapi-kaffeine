@@ -36,11 +36,17 @@ class KPAllCommentController: KPViewController {
                              action: #selector(KPAllCommentController.handleEditButtonOnTapped),
                              for: .touchUpInside)
         
-        let barItem = UIBarButtonItem(image: R.image.icon_back(),
-                                      style: .plain,
-                                      target: self,
-                                      action: #selector(KPAllCommentController.handleBackButtonOnTapped))
-        barItem.tintColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
+        let backButton = KPBounceButton(frame: CGRect.zero,
+                                        image: R.image.icon_back()!)
+        backButton.widthAnchor.constraint(equalToConstant: CGFloat(KPLayoutConstant.dismissButton_size)).isActive = true
+        backButton.heightAnchor.constraint(equalToConstant: CGFloat(KPLayoutConstant.dismissButton_size)).isActive = true
+        backButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4)
+        backButton.tintColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
+        backButton.addTarget(self,
+                             action: #selector(KPAllCommentController.handleBackButtonOnTapped),
+                             for: UIControlEvents.touchUpInside)
+        
+        let barItem = UIBarButtonItem(customView: backButton)
         navigationItem.leftBarButtonItems = [barItem]
         
         tableView = UITableView()

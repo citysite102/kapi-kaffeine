@@ -111,11 +111,11 @@ class KPArticleElement: NSObject, Mappable {
         }
         
         switch value {
-        case "p":    return 18
+        case "p":    return 17
         case "h1":   return 40
         case "h2":   return 32
         case "h3":   return 28
-        default:     return 18
+        default:     return 17
             
         }
         

@@ -48,11 +48,17 @@ class KPEditCommentController: KPViewController {
         navigationController?.navigationBar.shadowImage = UIImage()
         
         
-        let barItem = UIBarButtonItem(image: R.image.icon_back(),
-                                      style: .plain,
-                                      target: self,
-                                      action: #selector(KPEditCommentController.handleDismissButtonOnTapped))
-        barItem.tintColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
+        let backButton = KPBounceButton(frame: CGRect.zero,
+                                        image: R.image.icon_back()!)
+        backButton.widthAnchor.constraint(equalToConstant: CGFloat(KPLayoutConstant.dismissButton_size)).isActive = true
+        backButton.heightAnchor.constraint(equalToConstant: CGFloat(KPLayoutConstant.dismissButton_size)).isActive = true
+        backButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4)
+        backButton.tintColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
+        backButton.addTarget(self,
+                             action: #selector(KPEditCommentController.handleDismissButtonOnTapped),
+                             for: UIControlEvents.touchUpInside)
+        
+        let barItem = UIBarButtonItem(customView: backButton)
         navigationItem.leftBarButtonItems = [barItem]
         
         

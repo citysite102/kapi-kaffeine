@@ -57,11 +57,18 @@ class KPPhotoGalleryViewController: KPViewController {
         navigationItem.hidesBackButton = true
         navigationController?.navigationBar.topItem?.title = "店家照片"
         
-        let barItem = UIBarButtonItem(image: R.image.icon_back(),
-                                      style: .plain,
-                                      target: self,
-                                      action: #selector(KPPhotoGalleryViewController.handleBackButtonOnTapped))
-        barItem.tintColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
+        
+        let backButton = KPBounceButton(frame: CGRect.zero,
+                                        image: R.image.icon_back()!)
+        backButton.widthAnchor.constraint(equalToConstant: CGFloat(KPLayoutConstant.dismissButton_size)).isActive = true
+        backButton.heightAnchor.constraint(equalToConstant: CGFloat(KPLayoutConstant.dismissButton_size)).isActive = true
+        backButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4)
+        backButton.tintColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
+        backButton.addTarget(self,
+                             action: #selector(KPPhotoGalleryViewController.handleBackButtonOnTapped),
+                             for: UIControlEvents.touchUpInside)
+        
+        let barItem = UIBarButtonItem(customView: backButton)
         navigationItem.leftBarButtonItems = [barItem]
         let itemSize = (UIScreen.main.bounds.size.width-(12*4))/3
         

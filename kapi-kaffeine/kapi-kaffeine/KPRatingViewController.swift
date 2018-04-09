@@ -32,11 +32,17 @@ class KPRatingViewController: KPViewController {
         navigationItem.title = "新增評分"
         navigationItem.hidesBackButton = true
         
-        let barItem = UIBarButtonItem(image: R.image.icon_back(),
-                                      style: .plain,
-                                      target: self,
-                                      action: #selector(KPRatingViewController.handleDismissButtonOnTapped))
-        barItem.tintColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
+        let backButton = KPBounceButton(frame: CGRect.zero,
+                                        image: R.image.icon_back()!)
+        backButton.widthAnchor.constraint(equalToConstant: CGFloat(KPLayoutConstant.dismissButton_size)).isActive = true
+        backButton.heightAnchor.constraint(equalToConstant: CGFloat(KPLayoutConstant.dismissButton_size)).isActive = true
+        backButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4)
+        backButton.tintColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
+        backButton.addTarget(self,
+                             action: #selector(KPRatingViewController.handleDismissButtonOnTapped),
+                             for: UIControlEvents.touchUpInside)
+        
+        let barItem = UIBarButtonItem(customView: backButton)
         navigationItem.leftBarButtonItems = [barItem]
         
         
@@ -128,7 +134,7 @@ class KPRatingViewController: KPViewController {
         }
     }
     
-    func handleDismissButtonOnTapped() {
+    @objc func handleDismissButtonOnTapped() {
         navigationController?.popViewController(animated: true)
 //        self.setRating(returnValue as? (Int, Int, Int, Int, Int, Int, Int, CGFloat))
 //        super.handleDismissButtonOnTapped()
