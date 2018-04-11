@@ -26,9 +26,17 @@ class KPInformationViewController: KPViewController {
          
             KPServiceHandler.sharedHandler.currentDisplayModel = KPDataModel(JSON: detailedInformationDataModel.toJSON())
             DispatchQueue.main.async {
-                
                 self.titleLabel.text = self.detailedInformationDataModel.name
-                self.shopRecommendView.displayDataModels = KPServiceHandler.sharedHandler.relatedDisplayModel
+                if let relatedCount = KPServiceHandler.sharedHandler.relatedDisplayModel?.count  {
+                    self.recommendInformationView.isHidden = relatedCount == 0 ? true : false
+                    self.shopRecommendView.displayDataModels = KPServiceHandler.sharedHandler.relatedDisplayModel
+                } else {
+                    self.shopRecommendView.displayDataModels = KPServiceHandler.sharedHandler.relatedDisplayModel
+                    self.recommendInformationView.isHidden = true
+                    self.recommendInformationView.removeAllRelatedConstraintsInSuperView()
+                    self.shopInformationView.addConstraints(fromStringArray: ["V:[$self]-16-|"],
+                                                       views: [self.rateInformationView])
+                }
                 
                 // 實作地圖 Action
                 let googleAction = UIAlertAction(title: "使用Google地圖開啟",

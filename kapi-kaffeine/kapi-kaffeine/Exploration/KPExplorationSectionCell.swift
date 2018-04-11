@@ -20,8 +20,6 @@ class KPExplorationSectionCell: UICollectionViewCell {
     var rateLabel: UILabel!
     var rateCountLabel: UILabel!
     var starIcon: UIImageView!
-    var scoreLabel: UILabel!
-    var visitedLabel: UILabel!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -108,6 +106,7 @@ class KPExplorationSectionCell: UICollectionViewCell {
         rateCountLabel.font = UIFont.systemFont(ofSize: 11)
         rateCountLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_hint
         rateCountLabel.text = "(24)"
+        rateCountLabel.isHidden = true
         rateCountLabel.addConstraintForCenterAligning(to: starIcon,
                                                       in: .vertical)
     }

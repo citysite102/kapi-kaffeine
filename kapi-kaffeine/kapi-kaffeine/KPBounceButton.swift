@@ -40,23 +40,29 @@ class KPBounceButton: UIButton {
     
     override var tintColor: UIColor! {
         didSet {
-            self.normalTintColor = self.tintColor
             if self.selectedTintColor == nil {
                 self.selectedTintColor = self.tintColor
+                self.normalTintColor = self.tintColor
+            } else if self.normalTintColor == nil {
+                self.normalTintColor = self.tintColor
             }
         }
     }
     
     override var isSelected: Bool {
         didSet {
-            if isSelected {
-                self.tintColor = self.selectedTintColor
-            } else {
-                self.tintColor = normalTintColor
-            }
-            
-            if self.backgroundSelectView != nil {
-                self.backgroundSelectView?.isHidden = !self.isSelected
+            DispatchQueue.main.async {
+                if self.isSelected {
+                    self.tintColor = self.selectedTintColor
+                    self.imageView?.image = self.image(for: .selected)
+                } else {
+                    self.tintColor = self.normalTintColor
+                    self.imageView?.image = self.image(for: .normal)
+                }
+                
+                if self.backgroundSelectView != nil {
+                    self.backgroundSelectView?.isHidden = !self.isSelected
+                }
             }
         }
     }
@@ -132,7 +138,7 @@ class KPBounceButton: UIButton {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
 //        super.touchesEnded(touches, with: event)
         self.sendActions(for: UIControlEvents.touchUpInside)
-        self.performTouchEndAnimation()
+        self.performTouchEndAnimation(true)
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -153,7 +159,7 @@ class KPBounceButton: UIButton {
         }
     }
     
-    func performTouchEndAnimation() {
+    func performTouchEndAnimation(_ selectedChanged: Bool = false) {
         UIView.animate(withDuration: bounceDuration,
                        delay: 0,
                        usingSpringWithDamping: dampingRatio,
@@ -164,36 +170,35 @@ class KPBounceButton: UIButton {
         }) { _ in
             
         }
-        
-        self.isSelected = !isSelected
-        
-        
-        if self.isSelected && selectedTintColor != nil {
-            self.tintColor = selectedTintColor
-        } else {
-            self.tintColor = normalTintColor
-        }
-        
-        if self.backgroundSelectView != nil {
-            self.backgroundSelectView?.isHidden = !self.isSelected
-        }
-        
-        if rippleView != nil && isSelected {
-            self.rippleView?.alpha = 1.0
-            rippleView?.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
-            UIView.animate(withDuration: bounceDuration-0.5,
-                           delay: 0,
-                           usingSpringWithDamping: 1.0,
-                           initialSpringVelocity: 0.9,
-                           options: .curveEaseInOut,
-                           animations: { 
-                            self.rippleView?.transform = .identity
-            }, completion: { (_) in
-                UIView.animate(withDuration: 0.3,
-                               animations: { 
-                                self.rippleView?.alpha = 0
+        if selectedChanged {
+            self.isSelected = !isSelected
+            if self.isSelected && selectedTintColor != nil {
+                self.tintColor = selectedTintColor
+            } else {
+                self.tintColor = normalTintColor
+            }
+            
+            if self.backgroundSelectView != nil {
+                self.backgroundSelectView?.isHidden = !self.isSelected
+            }
+            
+            if rippleView != nil && isSelected {
+                self.rippleView?.alpha = 1.0
+                rippleView?.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+                UIView.animate(withDuration: bounceDuration-0.5,
+                               delay: 0,
+                               usingSpringWithDamping: 1.0,
+                               initialSpringVelocity: 0.9,
+                               options: .curveEaseInOut,
+                               animations: {
+                                self.rippleView?.transform = .identity
+                }, completion: { (_) in
+                    UIView.animate(withDuration: 0.3,
+                                   animations: {
+                                    self.rippleView?.alpha = 0
+                    })
                 })
-            })
+            }
         }
     }
 

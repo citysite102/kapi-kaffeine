@@ -13,10 +13,18 @@ class KPShopRecommendView: UIView {
     static let KPShopRecommendViewCellReuseIdentifier = "cell"
     weak open var informationController: KPInformationViewController?
     
+    var heightLayoutConstraint: NSLayoutConstraint!
     var tableView: UITableView!
     var displayDataModels: [KPDataModel]? {
         didSet {
-            self.tableView.reloadData()
+            if let dataCount = displayDataModels?.count {
+                self.heightLayoutConstraint.constant = CGFloat(dataCount*112)
+                self.layoutIfNeeded()
+                self.tableView.reloadData()
+            } else {
+                self.heightLayoutConstraint.constant = 0
+                self.layoutIfNeeded()
+            }
         }
     }
     
@@ -29,7 +37,8 @@ class KPShopRecommendView: UIView {
         self.tableView.isScrollEnabled = false
         tableView.separatorColor = UIColor.clear
         self.addSubview(self.tableView)
-        self.tableView.addConstraints(fromStringArray: ["V:|-(-16)-[$self(560)]|",
+        self.heightLayoutConstraint = self.tableView.addConstraint(forHeight: 560)
+        self.tableView.addConstraints(fromStringArray: ["V:|-(-16)-[$self]|",
                                                         "H:|[$self]|"])
         self.tableView.register(KPMainListTableViewCell.self,
                                 forCellReuseIdentifier: KPShopRecommendView.KPShopRecommendViewCellReuseIdentifier)

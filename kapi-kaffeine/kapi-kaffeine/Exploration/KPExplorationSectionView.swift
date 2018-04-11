@@ -93,11 +93,28 @@ extension KPExplorationSectionView: UICollectionViewDataSource, UICollectionView
         return shops.count
     }
     
+    func collectionView(_ collectionView: UICollectionView,
+                        didSelectItemAt indexPath: IndexPath) {
+     
+        let controller = KPModalViewController()
+        controller.edgeInset = UIEdgeInsets(top: 0,
+                                            left: 0,
+                                            bottom: 0,
+                                            right: 0)
+        let informationController = KPInformationViewController()
+        informationController.informationDataModel = shops[indexPath.row]
+        let navigationController = UINavigationController(rootViewController: informationController)
+        controller.contentController = navigationController
+        controller.presentModalView()
+    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ExplorationSectionCell",
                                                       for: indexPath) as! KPExplorationSectionCell
         cell.nameLabel.text = shops[indexPath.row].name
         cell.regionLabel.text = shops[indexPath.row].place
+        cell.rateLabel.text = String(format: "%.1f",
+                                      (shops[indexPath.row].averageRate?.doubleValue) ?? 0)
         cell.collectButton.tag = indexPath.row
         cell.collectButton.isSelected = KPUserManager.sharedManager.currentUser?.hasFavorited(shops[indexPath.row].identifier) ?? false
         cell.collectButton.addTarget(self,

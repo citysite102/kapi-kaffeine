@@ -21,7 +21,7 @@ class KPServiceHandler {
     private var kapiDetailedInfoRequest: KPCafeDetailedInfoRequest!
     
     // 目前儲存所有的咖啡店
-    var currentCafeDatas: [KPDataModel]!
+    var currentCafeDatas: [KPDataModel]?
     var currentDisplayModel: KPDataModel? {
         didSet {
             CLSLogv("Information Controller with cafe id: %@", getVaList([currentDisplayModel?.identifier ?? ""]))
@@ -33,8 +33,9 @@ class KPServiceHandler {
     
     var currentCity: String?
     var relatedDisplayModel: [KPDataModel]? {
-        if currentDisplayModel != nil {
-            let filteredLocationModel = KPFilter.filterData(source: self.currentCafeDatas,
+        if currentDisplayModel != nil &&
+            currentCafeDatas != nil {
+            let filteredLocationModel = KPFilter.filterData(source: self.currentCafeDatas!,
                                                             withCity: self.currentDisplayModel?.city ?? "taipei")
             var relativeArray: [(cafeModel: KPDataModel, weight: CGFloat)] =
                 [(cafeModel: KPDataModel, weight: CGFloat)]()

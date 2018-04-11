@@ -70,8 +70,8 @@ KPTabViewDelegate {
     
     let tabTitles: [(title: String, key: String)] = [("已收藏", "favorites"),
                                                      ("我去過", "visits"),
-                                                     ("已評分", "rates"),
-                                                     ("已評論", "reviews")]
+                                                     ("已評論", "reviews"),
+                                                     ("收藏文章", "favorite_articles")]
     
     let statusContents:[(icon: UIImage, content: String)] = [(R.image.status_collect()!, "快來收藏你喜愛的店家吧!"),
                                                              (R.image.status_location()!, "你有去過哪些店家呢?"),
@@ -365,6 +365,8 @@ KPTabViewDelegate {
                                 self.statusViews[index].isHidden = (displayModel.count != 0)
                             })
                         }
+                    } else if let articleModels = KPUserManager.sharedManager.currentUser?.value(forKey: tabTitle.key) as? [KPArticleItem] {
+                        
                     } else {
                         self.displayDataModels[index] = []
                         DispatchQueue.main.async {

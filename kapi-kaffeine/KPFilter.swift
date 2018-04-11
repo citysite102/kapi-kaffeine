@@ -49,7 +49,7 @@ class KPFilter {
     public func currentFilterCafeDatas() -> [KPDataModel] {
         var currentCafeDatas: [KPDataModel]!
         if city != nil {
-            currentCafeDatas = KPFilter.filterData(source: KPServiceHandler.sharedHandler.currentCafeDatas, withCity: city!)
+            currentCafeDatas = KPFilter.filterData(source: KPServiceHandler.sharedHandler.currentCafeDatas!, withCity: city!)
         } else {
             currentCafeDatas = KPServiceHandler.sharedHandler.currentCafeDatas
         }
