@@ -27,12 +27,9 @@ class KPBounceButton: UIButton {
     
     var dampingRatio: CGFloat = 0.35
     var bounceDuration: Double = 0.8
-    var selectedTintColor: UIColor? {
-        didSet {
-            self.normalTintColor = self.tintColor
-        }
-    }
+    
     var normalTintColor: UIColor?
+    var selectedTintColor: UIColor?
     var adjustHitOffset: CGSize = CGSize(width: 0, height: 0)
     var rippleView: UIView?
     var backgroundSelectView: UIView?
@@ -54,10 +51,10 @@ class KPBounceButton: UIButton {
             DispatchQueue.main.async {
                 if self.isSelected {
                     self.tintColor = self.selectedTintColor
-                    self.imageView?.image = self.image(for: .selected)
+                    self.imageView?.image = self.image(for: .selected)?.withRenderingMode(.alwaysTemplate)
                 } else {
                     self.tintColor = self.normalTintColor
-                    self.imageView?.image = self.image(for: .normal)
+                    self.imageView?.image = self.image(for: .normal)?.withRenderingMode(.alwaysTemplate)
                 }
                 
                 if self.backgroundSelectView != nil {
@@ -113,12 +110,12 @@ class KPBounceButton: UIButton {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        adjustsImageWhenHighlighted = false
     }
     
     convenience init(frame: CGRect, image: UIImage) {
         self.init(frame: frame)
         setImage(image, for: .normal)
-        adjustsImageWhenHighlighted = false
     }
     
     required init?(coder aDecoder: NSCoder) {

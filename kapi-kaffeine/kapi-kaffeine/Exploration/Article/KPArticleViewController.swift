@@ -672,7 +672,8 @@ extension KPArticleViewController: UIScrollViewDelegate {
                 DispatchQueue.main.async {
                     self.topBarContainer.alpha = 0
                     self.dismissButton.tintColor = UIColor.white
-                    self.collectButton.tintColor = self.collectButton.isSelected ? self.collectButton.selectedTintColor : UIColor.white
+                    self.collectButton.normalTintColor = UIColor.white
+                    self.collectButton.tintColor =  self.collectButton.isSelected ? self.collectButton.selectedTintColor : self.collectButton.normalTintColor
                 }
                 
                 if !viewIsDimissing {
@@ -701,8 +702,11 @@ extension KPArticleViewController: UIScrollViewDelegate {
                 
                 if self.scrollContainer.contentOffset.y >= 400 {
                     topBarContainer.alpha = (self.scrollContainer.contentOffset.y - 400) / 40
-                    dismissButton.tintColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle                    
-                    collectButton.tintColor = collectButton.isSelected ? collectButton.selectedTintColor : KPColorPalette.KPTextColor_v2.mainColor_subtitle
+                    dismissButton.tintColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
+                    
+                    self.collectButton.normalTintColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
+                    self.collectButton.tintColor =  self.collectButton.isSelected ? self.collectButton.selectedTintColor : self.collectButton.normalTintColor
+
 
                     if explorationViewController != nil {
                         explorationViewController?.shouldShowLightContent = false
@@ -711,11 +715,14 @@ extension KPArticleViewController: UIScrollViewDelegate {
                 } else if self.scrollContainer.contentOffset.y <= 0 {
                     topBarContainer.alpha = 0
                     dismissButton.tintColor = UIColor.white
-                    collectButton.tintColor = collectButton.isSelected ? collectButton.selectedTintColor : UIColor.white
+                    self.collectButton.normalTintColor = UIColor.white
+                    self.collectButton.tintColor =  self.collectButton.isSelected ? self.collectButton.selectedTintColor : self.collectButton.normalTintColor
+
                 } else {
                     topBarContainer.alpha = 0
                     dismissButton.tintColor = UIColor.white
-                    collectButton.tintColor = collectButton.isSelected ? collectButton.selectedTintColor : UIColor.white
+                    self.collectButton.normalTintColor = UIColor.white
+                    self.collectButton.tintColor =  self.collectButton.isSelected ? self.collectButton.selectedTintColor : self.collectButton.normalTintColor
                 }
                 
                 UIView.animate(withDuration: 0.5,
