@@ -25,6 +25,7 @@ class KPShopSubInfoView: UIView {
     
     convenience init(_ title: String,
                      _ content: String,
+                     _ customContent: UIView?,
                      _ buttonTitle: String?,
                      _ emptyContent: Bool,
                      _ handler: ((KPShopSubInfoView) -> Void)?) {
@@ -39,18 +40,24 @@ class KPShopSubInfoView: UIView {
         titleLabel.addConstraints(fromStringArray: ["H:|[$self]"])
         titleLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
         
-        contentLabel = UILabel()
-        contentLabel.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
-        contentLabel.textColor = emptyContent ?
-        KPColorPalette.KPTextColor_v2.mainColor_description:
-        KPColorPalette.KPTextColor_v2.mainColor_title
-        contentLabel.setText(text: content, lineSpacing: 4)
-        contentLabel.textAlignment = .right
-        contentLabel.numberOfLines = 0
-        addSubview(contentLabel)
-        contentLabel.addConstraints(fromStringArray: ["V:|-20-[$self]-20-|",
-                                                      "H:[$self(<=240)]|"])
-        
+        if customContent != nil {
+            addSubview(customContent!)
+            let _ = customContent?.addConstraintForCenterAligningToSuperview(in: .vertical)
+            customContent!.addConstraints(fromStringArray: ["V:|-20-[$self]-20-|",
+                                                          "H:[$self]|"])
+        } else {
+            contentLabel = UILabel()
+            contentLabel.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
+            contentLabel.textColor = emptyContent ?
+            KPColorPalette.KPTextColor_v2.mainColor_description:
+            KPColorPalette.KPTextColor_v2.mainColor_title
+            contentLabel.setText(text: content, lineSpacing: 4)
+            contentLabel.textAlignment = .right
+            contentLabel.numberOfLines = 0
+            addSubview(contentLabel)
+            contentLabel.addConstraints(fromStringArray: ["V:|-20-[$self]-20-|",
+                                                          "H:[$self(<=240)]|"])
+        }
         separator = UIView()
         separator.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7
         addSubview(separator)

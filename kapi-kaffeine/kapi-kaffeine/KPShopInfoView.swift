@@ -17,19 +17,69 @@ class KPShopInfoView: UIView, GMSMapViewDelegate {
             
             DispatchQueue.main.async {
                 if self.shopWebsiteInfoView == nil {
-         
+                    
+                    let infraContainer = UIView()
+                    let wifiImageView = UIImageView(image: R.image.icon_wifi())
+                    let limitTime = UIImageView(image: R.image.icon_time())
+                    let stand = UIImageView(image: R.image.icon_stand_mac())
+                    let socket = UIImageView(image: R.image.icon_socket())
+                    wifiImageView.tintColor = KPColorPalette.KPTextColor_v2.mainColor_title
+                    limitTime.tintColor = KPColorPalette.KPTextColor_v2.mainColor_hint_light
+                    stand.tintColor = KPColorPalette.KPTextColor_v2.mainColor_title
+                    socket.tintColor = KPColorPalette.KPTextColor_v2.mainColor_title
+                    infraContainer.addSubview(wifiImageView)
+                    infraContainer.addSubview(limitTime)
+                    infraContainer.addSubview(stand)
+                    infraContainer.addSubview(socket)
+                    stand.addConstraints(fromStringArray: ["V:|[$self(22)]|",
+                                                                   "H:|[$self(22)]"])
+                    wifiImageView.addConstraints(fromStringArray: ["V:[$self(22)]",
+                                                           "H:[$view0]-8-[$self(22)]"],
+                                         views: [stand])
+                    wifiImageView.addConstraintForCenterAligning(to: stand,
+                                                                 in: .vertical,
+                                                                 constant: -1)
+                    limitTime.addConstraints(fromStringArray: ["V:[$self(22)]",
+                                             "H:[$view0]-8-[$self(22)]"],
+                                             views: [wifiImageView])
+                    limitTime.addConstraintForCenterAligning(to: stand,
+                                                                 in: .vertical,
+                                                                 constant: 0)
+                    socket.addConstraints(fromStringArray: ["V:[$self(22)]",
+                                             "H:[$view0]-8-[$self(22)]|"],
+                                             views: [limitTime])
+                    socket.addConstraintForCenterAligning(to: stand,
+                                                                 in: .vertical,
+                                                                 constant: 0)
+                    
+                    
+                    
+                    self.shopInfrasInfoView = KPShopSubInfoView("設施",
+                                                                "內容",
+                                                                infraContainer,
+                                                                nil,
+                                                                false,
+                                                                nil)
+                    self.addSubview(self.shopInfrasInfoView)
+                    self.shopInfrasInfoView.addConstraints(fromStringArray: ["V:|-(-16)-[$self]",
+                                                                              "H:|-($metric0)-[$self]-($metric0)-|"],
+                                                            metrics:[KPLayoutConstant.information_horizontal_offset])
+                    
                     self.shopWebsiteInfoView = KPShopSubInfoView("網站",
                                                                  "尚未開放",
+                                                                 nil,
                                                                  nil,
                                                                  true,
                                                                  nil)
                     self.addSubview(self.shopWebsiteInfoView)
-                    self.shopWebsiteInfoView.addConstraints(fromStringArray: ["V:|-(-16)-[$self]",
+                    self.shopWebsiteInfoView.addConstraints(fromStringArray: ["V:[$view0][$self]",
                                                                               "H:|-($metric0)-[$self]-($metric0)-|"],
-                                                            metrics:[KPLayoutConstant.information_horizontal_offset])
+                                                            metrics:[KPLayoutConstant.information_horizontal_offset],
+                                                            views:[self.shopInfrasInfoView])
                     
                     self.shopPhoneInfoView = KPShopSubInfoView("聯絡電話",
                                                                self.informationDataModel.phone ?? "尚無電話",
+                                                               nil,
                                                                nil,
                                                                self.informationDataModel.phone == nil,
                                                                { (infoView) in
@@ -49,6 +99,7 @@ class KPShopInfoView: UIView, GMSMapViewDelegate {
                     self.shopFacebookInfoView = KPShopSubInfoView("粉絲專頁",
                                                              self.informationDataModel.facebookID ?? "尚無專頁",
                                                              nil,
+                                                             nil,
                                                              self.informationDataModel.facebookID == nil,
                                                              nil)
                     self.addSubview(self.shopFacebookInfoView)
@@ -60,6 +111,7 @@ class KPShopInfoView: UIView, GMSMapViewDelegate {
                     self.shopPriceInfoView = KPShopSubInfoView("平均消費",
                                                           self.priceContents[(self.informationDataModel.priceAverage?.intValue) ?? 1],
                                                           nil,
+                                                          nil,
                                                           false,
                                                           nil)
                     self.addSubview(self.shopPriceInfoView)
@@ -70,6 +122,7 @@ class KPShopInfoView: UIView, GMSMapViewDelegate {
                     
                     self.shopLocationInfoView = KPShopSubInfoView("地址",
                                                              self.informationDataModel.address,
+                                                             nil,
                                                              "開啟導航",
                                                              false,
                                                              nil)
@@ -169,6 +222,7 @@ class KPShopInfoView: UIView, GMSMapViewDelegate {
 //    }
     
     
+    var shopInfrasInfoView: KPShopSubInfoView!
     var shopWebsiteInfoView: KPShopSubInfoView!
     var shopPhoneInfoView: KPShopSubInfoView!
     var shopFacebookInfoView: KPShopSubInfoView!
@@ -186,18 +240,32 @@ class KPShopInfoView: UIView, GMSMapViewDelegate {
     convenience init(_ informationDataModel: KPDetailedDataModel) {
         self.init(frame: .zero)
         
+        shopInfrasInfoView = KPShopSubInfoView("設施",
+                                               "www.abc.com",
+                                               nil,
+                                               nil,
+                                               false,
+                                               nil)
+        addSubview(shopInfrasInfoView)
+        shopInfrasInfoView.addConstraints(fromStringArray: ["V:|-(-16)-[$self]",
+                                                            "H:|-($metric0)-[$self]-($metric0)-|"],
+                                           metrics:[KPLayoutConstant.information_horizontal_offset])
+        
         shopWebsiteInfoView = KPShopSubInfoView("網站",
                                                 "www.abc.com",
+                                                nil,
                                                 nil,
                                                 false,
                                                 nil)
         addSubview(shopWebsiteInfoView)
-        shopWebsiteInfoView.addConstraints(fromStringArray: ["V:|-(-16)-[$self]",
+        shopWebsiteInfoView.addConstraints(fromStringArray: ["V:[$view0][$self]",
                                                              "H:|-($metric0)-[$self]-($metric0)-|"],
-                                           metrics:[KPLayoutConstant.information_horizontal_offset])
+                                           metrics:[KPLayoutConstant.information_horizontal_offset],
+                                           views:[shopInfrasInfoView])
         
         shopPhoneInfoView = KPShopSubInfoView("聯絡電話",
                                               informationDataModel.phone ?? "尚無電話",
+                                              nil,
                                               nil,
                                               informationDataModel.phone == nil,
                                               nil)
@@ -210,6 +278,7 @@ class KPShopInfoView: UIView, GMSMapViewDelegate {
         shopFacebookInfoView = KPShopSubInfoView("粉絲專頁",
                                                  informationDataModel.facebookID ?? "尚無專頁",
                                                  nil,
+                                                 nil,
                                                  informationDataModel.facebookID == nil,
                                                  nil)
         addSubview(shopFacebookInfoView)
@@ -221,6 +290,7 @@ class KPShopInfoView: UIView, GMSMapViewDelegate {
         shopPriceInfoView = KPShopSubInfoView("平均消費",
                                               priceContents[(informationDataModel.priceAverage?.intValue) ?? 1],
                                               nil,
+                                              nil,
                                               false,
                                               nil)
         addSubview(shopPriceInfoView)
@@ -231,6 +301,7 @@ class KPShopInfoView: UIView, GMSMapViewDelegate {
         
         shopLocationInfoView = KPShopSubInfoView("地址",
                                                  informationDataModel.address,
+                                                 nil,
                                                  "開啟導航",
                                                  false,
                                                  nil)

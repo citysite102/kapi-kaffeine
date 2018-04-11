@@ -35,7 +35,7 @@ class KPInformationViewController: KPViewController {
                     self.recommendInformationView.isHidden = true
                     self.recommendInformationView.removeAllRelatedConstraintsInSuperView()
                     self.shopInformationView.addConstraints(fromStringArray: ["V:[$self]-16-|"],
-                                                       views: [self.rateInformationView])
+                                                       views: [self.commentInformationView])
                 }
                 
                 // 實作地圖 Action
@@ -129,9 +129,9 @@ class KPInformationViewController: KPViewController {
                 
                 // Rate
                 
-                self.shopRateInfoView.dataModel = self.detailedInformationDataModel
-                self.rateInformationView.infoTitleLabel.text = "店家評分(\(self.detailedInformationDataModel.rateCount ?? 0))"
-                self.rateInformationView.infoSupplementLabel.text = "\(self.detailedInformationDataModel.rateCount ?? 0) 人已評分"
+//                self.shopRateInfoView.dataModel = self.detailedInformationDataModel
+//                self.rateInformationView.infoTitleLabel.text = "店家評分(\(self.detailedInformationDataModel.rateCount ?? 0))"
+//                self.rateInformationView.infoSupplementLabel.text = "\(self.detailedInformationDataModel.rateCount ?? 0) 人已評分"
                 
                 
                 // Shop Information
@@ -460,43 +460,13 @@ class KPInformationViewController: KPViewController {
                                               views: [menuInformationView])
     
         
-        shopRateInfoView = KPShopRateInfoView()
-        rateInformationView = KPInformationSharedInfoView()
-        rateInformationView.infoView = shopRateInfoView
-//        rateInformationView.actions = [Action(title:"我要評分",
-//                                              style:.normal,
-//                                              color:KPColorPalette.KPMainColor_v2.mainColor!,
-//                                              icon:(R.image.icon_star()?.withRenderingMode(.alwaysTemplate))!,
-//                                              handler:{
-//                                                [weak self] (infoView) -> () in
-//                                                if let weSelf = self {
-//                                                    if KPUserManager.sharedManager.currentUser == nil {
-//                                                        KPPopoverView.popoverLoginView()
-//                                                    } else {
-//                                                        if KPServiceHandler.sharedHandler.isCurrentShopClosed {
-//                                                            KPPopoverView.popoverClosedView()
-//                                                        } else {
-//                                                            let controller = KPModalViewController()
-//                                                            controller.edgeInset = UIEdgeInsets(top: UIDevice().isSuperCompact ? 32 : 72,
-//                                                                                                    left: 0,
-//                                                                                                    bottom: 0,
-//                                                                                                    right: 0)
-//                                                            controller.cornerRadius = [.topRight, .topLeft]
-//                                                            let ratingViewController = KPRatingViewController()
-//
-//                                                            if weSelf.hasRatedDataModel != nil {
-//                                                                ratingViewController.defaultRateModel = weSelf.hasRatedDataModel
-//                                                            }
-//                                                            controller.contentController = ratingViewController
-//                                                            controller.presentModalView()
-//                                                        }
-//                                                    }
-//                                                }
-//        })]
-        scrollContainer.addSubview(rateInformationView)
-        rateInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                             "V:[$view0]-16-[$self]"],
-                                                views: [commentInformationView])
+//        shopRateInfoView = KPShopRateInfoView()
+//        rateInformationView = KPInformationSharedInfoView()
+//        rateInformationView.infoView = shopRateInfoView
+//        scrollContainer.addSubview(rateInformationView)
+//        rateInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
+//                                                             "V:[$view0]-16-[$self]"],
+//                                                views: [commentInformationView])
         
         
         informationView = KPShopInfoView()
@@ -508,11 +478,11 @@ class KPInformationViewController: KPViewController {
         if self.navigationController != nil {
             shopInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                                  "V:[$view0]-16-[$self]"],
-                                               views: [rateInformationView])
+                                               views: [commentInformationView])
         } else {
             shopInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                                  "V:[$view0]-16-[$self]-16-|"],
-                                               views: [rateInformationView])
+                                               views: [commentInformationView])
         }
         
         
@@ -854,13 +824,13 @@ class KPInformationViewController: KPViewController {
             [weak self] (successed, rate) in
             if let weSelf = self {
                 if successed && rate != nil {
-                    (weSelf.rateInformationView.infoView as! KPShopRateInfoView).rateData = rate
-                    // 加上 base 的數量
-                    let rateCount = (rate?.base != nil) ? (rate?.rates?.count)!+1 : (rate?.rates?.count)!
-                    
-                    weSelf.rateInformationView.infoTitleLabel.text = "店家評分(\(rateCount))"
-                    weSelf.rateInformationView.infoSupplementLabel.text = "\(rateCount) 人已評分"
-                    weSelf.rateDataModel = rate
+//                    (weSelf.rateInformationView.infoView as! KPShopRateInfoView).rateData = rate
+//                    // 加上 base 的數量
+//                    let rateCount = (rate?.base != nil) ? (rate?.rates?.count)!+1 : (rate?.rates?.count)!
+//
+//                    weSelf.rateInformationView.infoTitleLabel.text = "店家評分(\(rateCount))"
+//                    weSelf.rateInformationView.infoSupplementLabel.text = "\(rateCount) 人已評分"
+//                    weSelf.rateDataModel = rate
                     
                     if ((KPUserManager.sharedManager.currentUser?.hasRated) != nil) {
                         if let rate = weSelf.rateDataModel?.rates?.first(where:
@@ -876,7 +846,7 @@ class KPInformationViewController: KPViewController {
                     }
                     
                 } else {
-                    weSelf.rateInformationView.infoSupplementLabel.text = ""
+//                    weSelf.rateInformationView.infoSupplementLabel.text = ""
                 }
             }
         }
