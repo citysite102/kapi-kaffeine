@@ -17,6 +17,7 @@ class KPArticleViewController: KPViewController {
     static let scrollCollapseOffset: CGFloat = 100
     static let hoverMinimumHeight: CGFloat = 200
     
+    var swipeGesture: UISwipeGestureRecognizer!
     var dismissButton: KPBounceButton!
     var scrollContainer: UIScrollView!
     var imageSource: UIImage?
@@ -168,6 +169,18 @@ class KPArticleViewController: KPViewController {
         articleYConstaint = articleContainer.addConstraint(from: "V:|-667-[$self]").first as! NSLayoutConstraint
         lastOffset = KPArticleViewController.scrollAnimationStartOffset
         
+        let swipeLeftGesture = UISwipeGestureRecognizer(target: self,
+                                                        action: #selector(handleScrollContainerOnSwipe(_:)))
+        swipeLeftGesture.direction = .left
+        scrollContainer.addGestureRecognizer(swipeLeftGesture)
+        
+        let swipeRightGesture = UISwipeGestureRecognizer(target: self,
+                                                        action: #selector(handleScrollContainerOnSwipe(_:)))
+        swipeRightGesture.direction = .right
+        scrollContainer.addGestureRecognizer(swipeRightGesture)
+        
+        
+        
         topBarContainer = UIView()
         topBarContainer.backgroundColor = UIColor.white
         topBarContainer.alpha = 0
@@ -239,8 +252,52 @@ class KPArticleViewController: KPViewController {
         
         if explorationViewController != nil {
             explorationViewController?.shouldShowLightContent = true
-            setNeedsStatusBarAppearanceUpdate()
+            hero.modalAnimationType = .auto
+            self.setNeedsStatusBarAppearanceUpdate()
         }
+    }
+    
+    override open var preferredStatusBarStyle: UIStatusBarStyle {
+        return (explorationViewController?.shouldShowLightContent ?? false) ?
+            .lightContent :
+            .default
+    }
+    
+    @objc func handleScrollContainerOnSwipe(_ sender: UISwipeGestureRecognizer) {
+        
+        
+        if sender.direction == .left  {
+            if selectedIndex.row+1 < (explorationViewController?.articleList.count)! {
+                explorationViewController?.currentArticleViewController =
+                    KPArticleViewController((explorationViewController?.articleList[selectedIndex.row+1].articleID)!)
+                explorationViewController?.currentArticleViewController.explorationViewController = explorationViewController
+                explorationViewController?.currentArticleViewController.selectedIndex = IndexPath(row: selectedIndex.row+1, section: 0) as NSIndexPath
+                explorationViewController?.currentArticleViewController.currentArticleItem = explorationViewController?.articleList[selectedIndex.row+1]
+                explorationViewController?.currentArticleViewController.hero.modalAnimationType = .zoomSlide(direction: .left)
+                explorationViewController?.articleCollectionView.scrollToItem(at: IndexPath(row: selectedIndex.row+1, section: 0),
+                                                                              at: UICollectionViewScrollPosition.right,
+                                                                              animated: true)
+                hero.replaceViewController(with: (explorationViewController?.currentArticleViewController)!)
+            } else {
+                KPPopoverView.popoverArticleEndView()
+            }
+        } else if sender.direction == .right {
+            if selectedIndex.row-1 >= 0 {
+                explorationViewController?.currentArticleViewController =
+                    KPArticleViewController((explorationViewController?.articleList[selectedIndex.row-1].articleID)!)
+                explorationViewController?.currentArticleViewController.explorationViewController = explorationViewController
+                explorationViewController?.currentArticleViewController.selectedIndex = IndexPath(row: selectedIndex.row-1, section: 0) as NSIndexPath
+                explorationViewController?.currentArticleViewController.currentArticleItem = explorationViewController?.articleList[selectedIndex.row-1]
+                explorationViewController?.currentArticleViewController.hero.modalAnimationType = .zoomSlide(direction: .right)
+                explorationViewController?.articleCollectionView.scrollToItem(at: IndexPath(row: selectedIndex.row-1, section: 0),
+                                                                              at: UICollectionViewScrollPosition.left,
+                                                                              animated: true)
+                hero.replaceViewController(with: (explorationViewController?.currentArticleViewController)!)
+            } else {
+                handleDismissButtonOnTapped()
+            }
+        }
+        
     }
     
     @objc func handleDismissButtonOnTapped() {
@@ -249,7 +306,6 @@ class KPArticleViewController: KPViewController {
             setNeedsStatusBarAppearanceUpdate()
         }
         dismiss(animated: true, completion: nil)
-//        appModalController()?.dismissControllerWithDefaultDuration()
     }
     
     @objc func handleCollectButtonOnTapped(_ sender: UIButton) {
@@ -598,22 +654,7 @@ extension KPArticleViewController: UIScrollViewDelegate {
                     scrollView.setContentOffset(CGPoint(x: 0, y: 0),
                                                 animated: false)
                     hero.dismissViewController()
-//                    self.dismiss(animated: true, completion: nil)
                     viewIsDimissing = true
-//                    self.appModalController()?.view.backgroundColor = UIColor.clear
-//                    view.backgroundColor = UIColor.clear
-//                    scrollContainer.backgroundColor = UIColor.clear
-//                    viewIsDimissing = true
-//                    UIView.animate(withDuration: 0.3,
-//                                   delay: 0,
-//                                   options: .curveEaseIn,
-//                                   animations: {
-//                                    self.view.transform = CGAffineTransform(translationX: 0,
-//                                                                            y: self.view.bounds.height)
-//                    }, completion: { (_) in
-//                        self.dismiss(animated: true, completion: nil)
-////                        self.appModalController()?.dismissController(duration: 0)
-//                    })
                 } else {
                     if (self.scrollContainer.contentOffset.y > -150) {
                         Hero.shared.update((self.scrollContainer.contentOffset.y +
@@ -643,16 +684,6 @@ extension KPArticleViewController: UIScrollViewDelegate {
                 } else if self.scrollContainer.contentOffset.y <= 0 {
                     topBarContainer.alpha = 0
                     dismissButton.tintColor = UIColor.white
-//                    && self.scrollContainer.contentOffset.y > -50 {
-                
-//                    let updatedFrame = CGRect(x: self.scrollContainer.contentOffset.y,
-//                                              y: self.scrollContainer.contentOffset.y,
-//                                              width: view.bounds.width - 2*(self.scrollContainer.contentOffset.y),
-//                                              height: view.bounds.height - self.scrollContainer.contentOffset.y)
-//                    heroCoverImageView.frame = updatedFrame
-//                    imageMaskLayer.frame = CGRect(x: 0, y: 0,
-//                                                  width: updatedFrame.width*2,
-//                                                  height: updatedFrame.height)
                 } else {
                     topBarContainer.alpha = 0
                     dismissButton.tintColor = UIColor.white

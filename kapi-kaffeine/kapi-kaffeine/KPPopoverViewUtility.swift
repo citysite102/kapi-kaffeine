@@ -34,6 +34,16 @@ extension KPPopoverView {
         KPPopoverView.sharedPopoverView.popoverContent()
     }
     
+    class func popoverArticleEndView() {
+        let content = KPNotificationPopoverContent()
+        content.titleLabel.text = "沒有文章囉！"
+        content.descriptionLabel.setText(text: "啊啊啊啊啊，還想要看見閱讀更多優質的文章嗎？到我們的Facebook粉絲團看看吧！",
+                                         lineSpacing: 3.6)
+        content.confirmButton.setTitle("前往粉絲團", for: .normal)
+        KPPopoverView.sharedPopoverView.contentView = content
+        KPPopoverView.sharedPopoverView.popoverContent()
+    }
+    
     class func popoverUnsupportedView() {
         let content = KPNotificationPopoverContent()
         content.titleLabel.text = "尚未開放"
