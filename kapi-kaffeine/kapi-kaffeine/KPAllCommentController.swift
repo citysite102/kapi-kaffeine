@@ -27,9 +27,11 @@ class KPAllCommentController: KPViewController {
         navigationItem.title = "所有評論"
         navigationItem.hidesBackButton = true
         navigationController?.navigationBar.shadowImage = UIImage()
-        
-        
-        editButton = KPBounceButton(frame: CGRect(x: 0, y: 0, width: 24, height: 24),
+
+        editButton = KPBounceButton(frame: CGRect(x: 0,
+                                                  y: 0,
+                                                  width: 24,
+                                                  height: 24),
                                     image: R.image.icon_edit()!)
         editButton.tintColor = KPColorPalette.KPTextColor.whiteColor
         editButton.addTarget(self,
