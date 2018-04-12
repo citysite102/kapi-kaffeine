@@ -219,7 +219,7 @@ class KPArticleViewController: KPViewController {
         collectButton.setImage(R.image.icon_collect()!,
                                for: .selected)
         collectButton.tintColor = UIColor.white
-        collectButton.selectedTintColor = UIColor.clear
+        collectButton.selectedTintColor = KPColorPalette.KPMainColor_v2.starColor
         collectButton.addTarget(self,
                                 action: #selector(handleCollectButtonOnTapped(_:)),
                                 for: .touchUpInside)
@@ -287,36 +287,37 @@ class KPArticleViewController: KPViewController {
     
     @objc func handleScrollContainerOnSwipe(_ sender: UISwipeGestureRecognizer) {
         
-        
-        if sender.direction == .left  {
-            if selectedIndex.row+1 < (explorationViewController?.articleList.count)! {
-                explorationViewController?.currentArticleViewController =
-                    KPArticleViewController((explorationViewController?.articleList[selectedIndex.row+1].articleID)!)
-                explorationViewController?.currentArticleViewController.explorationViewController = explorationViewController
-                explorationViewController?.currentArticleViewController.selectedIndex = IndexPath(row: selectedIndex.row+1, section: 0) as NSIndexPath
-                explorationViewController?.currentArticleViewController.currentArticleItem = explorationViewController?.articleList[selectedIndex.row+1]
-                explorationViewController?.currentArticleViewController.hero.modalAnimationType = .zoomSlide(direction: .left)
-                explorationViewController?.articleCollectionView.scrollToItem(at: IndexPath(row: selectedIndex.row+1, section: 0),
-                                                                              at: UICollectionViewScrollPosition.right,
-                                                                              animated: true)
-                hero.replaceViewController(with: (explorationViewController?.currentArticleViewController)!)
-            } else {
-                KPPopoverView.popoverArticleEndView()
-            }
-        } else if sender.direction == .right {
-            if selectedIndex.row-1 >= 0 {
-                explorationViewController?.currentArticleViewController =
-                    KPArticleViewController((explorationViewController?.articleList[selectedIndex.row-1].articleID)!)
-                explorationViewController?.currentArticleViewController.explorationViewController = explorationViewController
-                explorationViewController?.currentArticleViewController.selectedIndex = IndexPath(row: selectedIndex.row-1, section: 0) as NSIndexPath
-                explorationViewController?.currentArticleViewController.currentArticleItem = explorationViewController?.articleList[selectedIndex.row-1]
-                explorationViewController?.currentArticleViewController.hero.modalAnimationType = .zoomSlide(direction: .right)
-                explorationViewController?.articleCollectionView.scrollToItem(at: IndexPath(row: selectedIndex.row-1, section: 0),
-                                                                              at: UICollectionViewScrollPosition.left,
-                                                                              animated: true)
-                hero.replaceViewController(with: (explorationViewController?.currentArticleViewController)!)
-            } else {
-                handleDismissButtonOnTapped()
+        if explorationViewController != nil {
+            if sender.direction == .left  {
+                if selectedIndex.row+1 < (explorationViewController?.articleList.count)! {
+                    explorationViewController?.currentArticleViewController =
+                        KPArticleViewController((explorationViewController?.articleList[selectedIndex.row+1].articleID)!)
+                    explorationViewController?.currentArticleViewController.explorationViewController = explorationViewController
+                    explorationViewController?.currentArticleViewController.selectedIndex = IndexPath(row: selectedIndex.row+1, section: 0) as NSIndexPath
+                    explorationViewController?.currentArticleViewController.currentArticleItem = explorationViewController?.articleList[selectedIndex.row+1]
+                    explorationViewController?.currentArticleViewController.hero.modalAnimationType = .zoomSlide(direction: .left)
+                    explorationViewController?.articleCollectionView.scrollToItem(at: IndexPath(row: selectedIndex.row+1, section: 0),
+                                                                                  at: UICollectionViewScrollPosition.right,
+                                                                                  animated: true)
+                    hero.replaceViewController(with: (explorationViewController?.currentArticleViewController)!)
+                } else {
+                    KPPopoverView.popoverArticleEndView()
+                }
+            } else if sender.direction == .right {
+                if selectedIndex.row-1 >= 0 {
+                    explorationViewController?.currentArticleViewController =
+                        KPArticleViewController((explorationViewController?.articleList[selectedIndex.row-1].articleID)!)
+                    explorationViewController?.currentArticleViewController.explorationViewController = explorationViewController
+                    explorationViewController?.currentArticleViewController.selectedIndex = IndexPath(row: selectedIndex.row-1, section: 0) as NSIndexPath
+                    explorationViewController?.currentArticleViewController.currentArticleItem = explorationViewController?.articleList[selectedIndex.row-1]
+                    explorationViewController?.currentArticleViewController.hero.modalAnimationType = .zoomSlide(direction: .right)
+                    explorationViewController?.articleCollectionView.scrollToItem(at: IndexPath(row: selectedIndex.row-1, section: 0),
+                                                                                  at: UICollectionViewScrollPosition.left,
+                                                                                  animated: true)
+                    hero.replaceViewController(with: (explorationViewController?.currentArticleViewController)!)
+                } else {
+                    handleDismissButtonOnTapped()
+                }
             }
         }
         

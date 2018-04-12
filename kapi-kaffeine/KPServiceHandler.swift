@@ -1033,7 +1033,7 @@ class KPServiceHandler {
             articleListRequest.perform(nil).then { result -> Void in
                 if let requestResult = result["result"].bool,
                     requestResult == true,
-                    let listResult = result["data"]["article_list"].arrayObject {
+                    let listResult = result["data"].arrayObject {
                     
                     var articleList = [KPArticleItem]()
                     for data in listResult {
@@ -1087,7 +1087,7 @@ class KPServiceHandler {
             explorationRequest.perform().then { result -> Void in
                 if let requestResult = result["result"].bool,
                     requestResult == true,
-                    let listResult = result["data"]["explorer_list"].arrayObject {
+                    let listResult = result["data"].arrayObject {
                     
                     var explorationList = [KPExplorationSection]()
                     for data in listResult {

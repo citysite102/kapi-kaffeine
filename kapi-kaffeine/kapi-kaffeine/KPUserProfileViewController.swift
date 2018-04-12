@@ -71,12 +71,13 @@ KPTabViewDelegate {
     let tabTitles: [(title: String, key: String)] = [("已收藏", "favorites"),
                                                      ("我去過", "visits"),
                                                      ("已評論", "reviews"),
-                                                     ("收藏文章", "favorite_articles")]
+                                                     ("收藏文章", "articles")]
+    let articleTabIndex = 3;
     
     let statusContents:[(icon: UIImage, content: String)] = [(R.image.status_collect()!, "快來收藏你喜愛的店家吧!"),
                                                              (R.image.status_location()!, "你有去過哪些店家呢?"),
                                                              (R.image.status_star()!, "快給你喜愛的店家一些正面的評分吧!"),
-                                                             (R.image.status_comment()!, "快給你喜愛的店家一些正面的評論吧!")]
+                                                             (R.image.status_comment()!, "快來收藏你喜歡的文章吧!")]
     
     lazy var userContainer: UIView = {
         let containerView = UIView()
@@ -143,6 +144,7 @@ KPTabViewDelegate {
     var tableViews: [UITableView] = []
     var statusViews: [KPStatusView] = []
     var displayDataModels: [[KPDataModel]] = []
+    var articleItems: [KPArticleItem] = []
     var scrollView: UIScrollView!
     var scrollContainer: UIView!
     var tabView: KPTabView!
@@ -319,25 +321,6 @@ KPTabViewDelegate {
             
         }
         tableViews.last!.addConstraint(from: "H:[$self]|")
-        
-        
-        if let user = KPUserManager.sharedManager.currentUser {
-            if let photoURL = URL(string: user.photoURL ?? "") {
-                userPhoto.af_setImage(withURL: photoURL)
-            }
-            userNameLabel.text = "Hi, \(user.displayName ?? "")"
-            userBioLabel.text = user.intro ?? "被你看到這個隱藏的內容？！肯定有Bug，快回報給我們吧！"
-            
-            for (index, tabTitle) in tabTitles.enumerated() {
-                
-                if let displayModel = KPUserManager.sharedManager.currentUser?.value(forKey: tabTitle.key) as? [KPDataModel] {
-                    tabView.tabs[index].setTitle("\(tabTitle.title) \(displayModel.count)", for: .normal)
-                }
-            }
-        }
-        
-        view.bringSubview(toFront: tabView)
-        
         NotificationCenter.default.addObserver(self, selector: #selector(userDidChanged(notification:)), name: .KPCurrentUserDidChange, object: nil)
         
     }
@@ -366,6 +349,18 @@ KPTabViewDelegate {
                             })
                         }
                     } else if let articleModels = KPUserManager.sharedManager.currentUser?.value(forKey: tabTitle.key) as? [KPArticleItem] {
+                        self.articleItems = articleModels;
+                        DispatchQueue.main.async {
+                            UIView.animate(withDuration: 0.1,
+                                           animations: {
+                                            self.tableViews[index].alpha = (articleModels.count == 0) ? 0.0 : 1.0
+                                            self.statusViews[index].alpha = (articleModels.count != 0) ? 0.0 : 1.0
+                            }, completion: { (_) in
+                                self.tableViews[index].isHidden = articleModels.count == 0
+                                self.statusViews[index].isHidden = (articleModels.count != 0)
+                            })
+                        }
+                        
                         
                     } else {
                         self.displayDataModels[index] = []
@@ -395,6 +390,7 @@ KPTabViewDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
         if let user = KPUserManager.sharedManager.currentUser {
             isLogin = true
             if let photoURL = URL(string: user.photoURL ?? "") {
@@ -402,9 +398,31 @@ KPTabViewDelegate {
             }
             userNameLabel.text = "Hi, \(user.displayName ?? "")"
             userBioLabel.text = user.intro ?? "被你看到這個隱藏的內容？！肯定有Bug，快回報給我們吧！"
+            
+            for (index, tabTitle) in tabTitles.enumerated() {
+                
+                if let displayModel = KPUserManager.sharedManager.currentUser?.value(forKey: tabTitle.key) as? [KPDataModel] {
+                    tabView.tabs[index].setTitle("\(tabTitle.title) \(displayModel.count)", for: .normal)
+                } else if let articleItem = KPUserManager.sharedManager.currentUser?.value(forKey: tabTitle.key) as? [KPArticleItem] {
+                    tabView.tabs[index].setTitle("\(tabTitle.title) \(articleItem.count)", for: .normal)
+                }
+            }
         } else {
             isLogin = false
         }
+        
+        view.bringSubview(toFront: tabView)
+        
+//        if let user = KPUserManager.sharedManager.currentUser {
+//            isLogin = true
+//            if let photoURL = URL(string: user.photoURL ?? "") {
+//                userPhoto.af_setImage(withURL: photoURL)
+//            }
+//            userNameLabel.text = "Hi, \(user.displayName ?? "")"
+//            userBioLabel.text = user.intro ?? "被你看到這個隱藏的內容？！肯定有Bug，快回報給我們吧！"
+//        } else {
+//            isLogin = false
+//        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -453,26 +471,65 @@ KPTabViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataLoading ? 6 : self.displayDataModels[tableView.tag].count
+        if tableView.tag == articleTabIndex {
+            return self.articleItems.count;
+        } else {
+            return dataLoading ? 6 : self.displayDataModels[tableView.tag].count
+        }
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView,
+                   cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if !dataLoading {
-            
-//            if tableView.tag == 3 {
-//                let cell = tableView.dequeueReusableCell(withIdentifier:"cell_article",
-//                                                         for: indexPath) as! KPListArticleCell
-//                cell.selectionStyle = .none
-//                return cell
-//            } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier:"cell",
-                                                     for: indexPath) as! KPMainListTableViewCell
-            
-            cell.selectionStyle = .none
-            cell.dataModel = self.displayDataModels[tableView.tag][indexPath.row]
-            return cell
-//            }
+            if tableView.tag == articleTabIndex {
+                let cell = tableView.dequeueReusableCell(withIdentifier:"cell_article",
+                                                         for: indexPath) as! KPListArticleCell
+                cell.selectionStyle = .none
+                cell.articleTitleLabel.setText(text: self.articleItems[indexPath.row].title!,
+                                               lineSpacing: 4)
+                cell.articleSubtitleLabel.text = self.articleItems[indexPath.row].articleDescription
+                
+                if let url = self.articleItems[indexPath.row].imageURL_s ?? self.articleItems[indexPath.row].imageURL_l {
+                    cell.articleImageView.af_setImage(withURL: url,
+                                                      placeholderImage: drawImage(image: R.image.icon_loading()!,
+                                                                                  rectSize: CGSize(width: 76,
+                                                                                                   height: 76),
+                                                                                  roundedRadius: 3),
+                                                      filter: nil,
+                                                      progress: nil,
+                                                      progressQueue: DispatchQueue.global(),
+                                                      imageTransition: UIImageView.ImageTransition.crossDissolve(0.2),
+                                                      runImageTransitionIfCached: true,
+                                                      completion: { response in
+                                                        if let responseImage = response.result.value {
+                                                            cell.articleImageView.image =  drawImage(image: responseImage,
+                                                                                                  rectSize: CGSize(width: 76,
+                                                                                                                   height: 76),
+                                                                                                  roundedRadius: 3)
+                                                        } else {
+                                                            cell.articleImageView.image =  drawImage(image: R.image.icon_noImage()!,
+                                                                                                  rectSize: CGSize(width: 76,
+                                                                                                                   height: 76),
+                                                                                                  roundedRadius: 3)
+                                                        }
+                    })
+                } else {
+                    cell.articleImageView.image =  drawImage(image: R.image.icon_noImage()!,
+                                                             rectSize: CGSize(width: 76,
+                                                                              height: 76),
+                                                             roundedRadius: 3)
+                }
+                
+                return cell
+            } else {
+                let cell = tableView.dequeueReusableCell(withIdentifier:"cell",
+                                                         for: indexPath) as! KPMainListTableViewCell
+                
+                cell.selectionStyle = .none
+                cell.dataModel = self.displayDataModels[tableView.tag][indexPath.row]
+                return cell
+            }
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier:"cell_loading",
                                                      for: indexPath) as! KPDefaultLoadingTableCell
@@ -484,15 +541,23 @@ KPTabViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        KPAnalyticManager.sendCellClickEvent(self.displayDataModels[tableView.tag][indexPath.row].name,
-                                             self.displayDataModels[tableView.tag][indexPath.row].averageRate?.stringValue,
-                                             KPAnalyticsEventValue.source.source_profile)
-        
-        let controller = KPInformationViewController()
-        controller.informationDataModel = self.displayDataModels[tableView.tag][indexPath.row]
-        self.present(controller,
-                     animated: true,
-                     completion: nil)
+        if tableView.tag == articleTabIndex {
+            let articleController = KPArticleViewController(self.articleItems[indexPath.row].articleID)
+            articleController.currentArticleItem = self.articleItems[indexPath.row];
+            present(articleController,
+                    animated: true,
+                    completion: nil)
+        } else {
+            KPAnalyticManager.sendCellClickEvent(self.displayDataModels[tableView.tag][indexPath.row].name,
+                                                 self.displayDataModels[tableView.tag][indexPath.row].averageRate?.stringValue,
+                                                 KPAnalyticsEventValue.source.source_profile)
+            
+            let controller = KPInformationViewController()
+            controller.informationDataModel = self.displayDataModels[tableView.tag][indexPath.row]
+            self.present(controller,
+                         animated: true,
+                         completion: nil)
+        }
         
         for tableView in self.tableViews {
             if let indexPath = tableView.indexPathForSelectedRow {

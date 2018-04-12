@@ -142,6 +142,9 @@ final class KPUser: NSObject, Mappable {
         favorites           <-    map["favorites"]
         visitsCount         <-    map["visit_count"]
         visits              <-    map["visits"]
+        articlesCount       <-    map["favorite_article_count"]
+        articles            <-    map["favorite_articles"]
+        
     }
     
 
