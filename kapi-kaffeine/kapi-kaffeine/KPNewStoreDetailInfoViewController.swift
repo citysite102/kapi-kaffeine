@@ -81,7 +81,7 @@ class KPNewStoreDetailInfoViewController: KPNewStoreBasicController {
                                        views: [additionalInfoButton])
         
         scrollContainer.addSubview(menuUploadView)
-        menuUploadView.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|", "V:[$view0]-20-[$self]|"],
+        menuUploadView.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|", "V:[$view0][$self]|"],
                                       views: [photoUploadView])
         
         
@@ -109,9 +109,9 @@ class KPNewStoreDetailInfoViewController: KPNewStoreBasicController {
         // Dispose of any resources that can be recreated.
     }
     
-    @objc func handleBackButtonOnTap(_ sender: UIButton) {
-        navigationController?.popViewController(animated: true)
-    }
+//    @objc func handleBackButtonOnTap(_ sender: UIButton) {
+//        navigationController?.popViewController(animated: true)
+//    }
 
     @objc func handleSubmitButtonOnTap(_ sender: UIButton) {
         

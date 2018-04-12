@@ -8,20 +8,16 @@
 
 import UIKit
 
-class KPBusinessHoursEditorController: KPViewController {
+class KPBusinessHoursEditorController: KPNewStoreBasicController {
 
     weak var uploadData: KPUploadDataModel?
-    
-//    var scrollContainer: UIView!
-//    var scrollView: UIScrollView!
-    var buttonContainer: UIView!
-    
-    let tableView = UITableView()
     
     let addButton = UIButton()
     
     fileprivate var businessHours: [String] = [""]
     
+    fileprivate var editors: [KPBusinessHoursEditor] = []
+    fileprivate var containerHeightConstraint: NSLayoutConstraint!
     
     init(_ data: KPUploadDataModel) {
         uploadData = data
@@ -37,46 +33,25 @@ class KPBusinessHoursEditorController: KPViewController {
         
         view.backgroundColor = UIColor.white
 
-        navigationItem.leftBarButtonItem = nil
+        let barLeftItem = UIBarButtonItem(title: "上一步",
+                                          style: .plain,
+                                          target: self,
+                                          action: #selector(handleBackButtonOnTap(_:)))
+        barLeftItem.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: KPFontSize.mainContent), NSAttributedStringKey.foregroundColor: UIColor.gray],
+                                           for: .normal)
+        
+        navigationItem.leftBarButtonItem = barLeftItem
+        
         navigationItem.title = "店家營業時間"
-
-//        scrollView = UIScrollView()
-//        scrollView.backgroundColor = KPColorPalette.KPMainColor_v2.whiteColor_level1
-//        view.addSubview(scrollView)
-//
-//        scrollView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor).isActive = true
-//        scrollView.addConstraint(from: "H:|[$self]|")
-//
-//        scrollContainer = UIView()
-//        scrollContainer.backgroundColor = KPColorPalette.KPMainColor_v2.whiteColor_level1
-//        scrollView.addSubview(scrollContainer)
-//        scrollContainer.addConstraints(fromStringArray: ["H:|[$self]|", "V:|[$self]|"])
-//        scrollContainer.addConstraintForHavingSameWidth(with: view)
         
-        view.addSubview(tableView)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.topAnchor),
-            tableView.leftAnchor.constraint(equalTo: view.leftAnchor),
-            tableView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
-        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
-        tableView.register(KPBusinessHoursEditor.self, forCellReuseIdentifier: "timeEditorCell")
-        tableView.dataSource = self
-        tableView.delegate = self
+        scrollView.contentInset.bottom = 60
         
-        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frameSize.width - 32, height: 60))
-        
-        footerView.addSubview(addButton)
+        scrollView.addSubview(addButton)
         addButton.translatesAutoresizingMaskIntoConstraints = false
-        let constraint = addButton.rightAnchor.constraint(equalTo: footerView.rightAnchor, constant: -16)
-        constraint.priority = .defaultHigh
         NSLayoutConstraint.activate([
-            addButton.leftAnchor.constraint(equalTo: footerView.leftAnchor, constant: 16),
-            constraint,
-            addButton.topAnchor.constraint(equalTo: footerView.topAnchor, constant: 10),
-            addButton.bottomAnchor.constraint(equalTo: footerView.bottomAnchor, constant: -10),
+            addButton.leftAnchor.constraint(equalTo: scrollContainer.leftAnchor, constant: 20),
+            addButton.rightAnchor.constraint(equalTo: scrollContainer.rightAnchor, constant: -20),
+            addButton.topAnchor.constraint(equalTo: scrollContainer.bottomAnchor, constant: 10),
             addButton.heightAnchor.constraint(equalToConstant: 40)
         ])
         addButton.clipsToBounds = true
@@ -85,27 +60,13 @@ class KPBusinessHoursEditorController: KPViewController {
         addButton.setTitleColor(UIColor.white, for: .normal)
         addButton.setTitle("新增營業時段", for: .normal)
         addButton.addTarget(self, action: #selector(handleAddButtonOnTap(_:)), for: .touchUpInside)
-
-        tableView.tableFooterView = footerView
-        
-        buttonContainer = UIView()
-        buttonContainer.backgroundColor = KPColorPalette.KPMainColor_v2.whiteColor_level1
-        view.addSubview(buttonContainer)
-        buttonContainer.layer.borderColor = KPColorPalette.KPBackgroundColor.grayColor_level6?.cgColor
-        buttonContainer.layer.borderWidth = 1
-        
-        buttonContainer.addConstraints(fromStringArray: ["H:|-(-1)-[$self]-(-1)-|", "V:[$self]|"])
-        buttonContainer.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor).isActive = true
-        
-
         
         
         let submitButton = UIButton(type: .custom)
-//        submitButton.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor_v2.greenColor!), for: .normal)
         submitButton.setTitleColor(UIColor.white, for: .normal)
         submitButton.setTitle("設定完成", for: .normal)
         submitButton.clipsToBounds = true
-    submitButton.setTitleColor(KPColorPalette.KPMainColor_v2.grayColor_level4,
+        submitButton.setTitleColor(KPColorPalette.KPMainColor_v2.grayColor_level4,
                                    for: .disabled)
         submitButton.setTitleColor(KPColorPalette.KPMainColor_v2.mainColor,
                                    for: .normal)
@@ -115,30 +76,30 @@ class KPBusinessHoursEditorController: KPViewController {
         submitButton.layer.borderColor = KPColorPalette.KPMainColor_v2.grayColor_level3?.cgColor
         
         buttonContainer.addSubview(submitButton)
-//        submitButton.addConstraints(fromStringArray: ["H:[$self]-16-|", "V:|-10-[$self]-10-|"])
         submitButton.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
                                                       "V:|-12-[$self(40)]-12-|"])
         submitButton.addTarget(self, action: #selector(KPNewStoreDetailInfoViewController.handleSubmitButtonOnTap(_:)), for: .touchUpInside)
         
-//        let backButton = UIButton(type: .custom)
-//        backButton.setTitleColor(KPColorPalette.KPTextColor_v2.mainColor_description!, for: .normal)
-//        backButton.setTitle("上一步", for: .normal)
-//        buttonContainer.addSubview(backButton)
-//        backButton.addConstraints(fromStringArray: ["H:|-16-[$self]-[$view0]", "V:|-10-[$self]-10-|"],
-//                                  views: [submitButton])
-//        backButton.addConstraintForHavingSameWidth(with: submitButton)
-//        backButton.addTarget(self, action: #selector(KPNewStoreDetailInfoViewController.handleBackButtonOnTap(_:)), for: .touchUpInside)
-        
+        let editor = KPBusinessHoursEditor()
+        editor.delegate = self
+        editor.deleteButton.isEnabled = false
+        scrollContainer.addSubview(editor)
+        editor.translatesAutoresizingMaskIntoConstraints = false
+        containerHeightConstraint = scrollContainer.heightAnchor.constraint(equalTo: editor.heightAnchor, multiplier: 1)
+        NSLayoutConstraint.activate([
+            editor.topAnchor.constraint(equalTo: scrollContainer.topAnchor),
+            editor.leftAnchor.constraint(equalTo: scrollContainer.leftAnchor),
+            editor.rightAnchor.constraint(equalTo: scrollContainer.rightAnchor),
+            containerHeightConstraint
+        ])
+
+        editors.append(editor)
         
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-
-    @objc func handleBackButtonOnTap(_ sender: UIButton) {
-        navigationController?.popViewController(animated: true)
     }
     
     @objc func handleSubmitButtonOnTap(_ sender: UIButton) {
@@ -153,33 +114,93 @@ class KPBusinessHoursEditorController: KPViewController {
     }
     
     @objc func handleAddButtonOnTap(_ sender: UIButton) {
-        businessHours.append("")
-        tableView.insertRows(at: [IndexPath(row: businessHours.count-1, section: 0)], with: UITableViewRowAnimation.automatic)
+        
+        scrollContainer.isUserInteractionEnabled = false
+        
+        let editor = KPBusinessHoursEditor()
+        editor.delegate = self
+        scrollContainer.addSubview(editor)
+        scrollContainer.sendSubview(toBack: editor)
+        editor.translatesAutoresizingMaskIntoConstraints = false
+        var constraint = editor.topAnchor.constraint(equalTo: editors[editors.count-1].topAnchor)
+        NSLayoutConstraint.activate([
+            editor.leftAnchor.constraint(equalTo: scrollContainer.leftAnchor),
+            editor.rightAnchor.constraint(equalTo: scrollContainer.rightAnchor),
+            constraint
+        ])
+        scrollContainer.layoutIfNeeded()
+        
+        UIView.animate(withDuration: 0.25, animations: {
+            NSLayoutConstraint.deactivate([
+                self.containerHeightConstraint,
+                constraint
+            ])
+            self.containerHeightConstraint = self.scrollContainer.heightAnchor.constraint(equalTo: editor.heightAnchor, multiplier: CGFloat(self.editors.count + 1))
+            constraint = editor.topAnchor.constraint(equalTo: self.editors[self.editors.count-1].bottomAnchor)
+            NSLayoutConstraint.activate([
+                self.containerHeightConstraint,
+                constraint
+            ])
+            self.scrollView.layoutIfNeeded()
+        }) { (finished) in
+            self.editors.append(editor)
+            if self.editors.count == 2 {
+                self.editors.first?.deleteButton.isEnabled = true
+            }
+            self.scrollContainer.isUserInteractionEnabled = true
+        }
+        
     }
     
 }
 
-extension KPBusinessHoursEditorController: UITableViewDataSource, UITableViewDelegate, KPBusinessHoursEditorDelegate {
+extension KPBusinessHoursEditorController: KPBusinessHoursEditorDelegate {
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return businessHours.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "timeEditorCell", for: indexPath) as! KPBusinessHoursEditor
-        cell.delegate = self
-        return cell
-    }
+//    func numberOfSections(in tableView: UITableView) -> Int {
+//        return 1
+//    }
+//
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        return businessHours.count
+//    }
+//
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "timeEditorCell", for: indexPath) as! KPBusinessHoursEditor
+//        cell.delegate = self
+//        return cell
+//    }
     
     func deleteHoursEditor(_ editor: KPBusinessHoursEditor) {
-        if let indexPath = tableView.indexPath(for: editor) {
-            businessHours.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
+        
+        guard let deleteIndex = editors.index(of: editor) else {
+            return
         }
+        
+        NSLayoutConstraint.deactivate([
+            containerHeightConstraint
+        ])
+        editor.removeFromSuperview()
+        
+        containerHeightConstraint = scrollContainer.heightAnchor.constraint(equalTo: editors[deleteIndex == 0 ? 1 : 0].heightAnchor, multiplier: CGFloat(editors.count - 1))
+        var constraints: [NSLayoutConstraint] = [containerHeightConstraint]
+        if deleteIndex == 0 {
+            constraints.append(editors[1].topAnchor.constraint(equalTo: scrollContainer.topAnchor))
+        } else if deleteIndex == editors.count - 1 {
+            
+        } else {
+            constraints.append(editors[deleteIndex+1].topAnchor.constraint(equalTo: editors[deleteIndex-1].bottomAnchor))
+        }
+        
+        UIView.animate(withDuration: 0.25, animations: {
+            NSLayoutConstraint.activate(constraints)
+            self.scrollView.layoutIfNeeded()
+        }) { (finished) in
+            self.editors.remove(at: deleteIndex)
+            if self.editors.count == 1 {
+                self.editors.first?.deleteButton.isEnabled = false
+            }
+        }
+        
     }
     
 }

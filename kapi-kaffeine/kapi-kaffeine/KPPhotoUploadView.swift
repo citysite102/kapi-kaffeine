@@ -14,8 +14,6 @@ class KPPhotoUploadView: UIView {
     fileprivate var takePhotoButton: UIButton!
     fileprivate var photoCollectionView: UICollectionView!
     
-    fileprivate var collectionViewHeightConstraint: NSLayoutConstraint!
-    
     var photos: [UIImage] = []
     
     override init(frame: CGRect) {
@@ -33,10 +31,10 @@ class KPPhotoUploadView: UIView {
         takePhotoButton.addConstraints(fromStringArray: ["H:|[$self(80)]", "V:|-2-[$self(80)]"])
         
         let collectionViewFlowLayout = UICollectionViewFlowLayout()
-        collectionViewFlowLayout.itemSize = CGSize(width: 80, height: 120)
+        collectionViewFlowLayout.itemSize = CGSize(width: 80, height: 110)
         collectionViewFlowLayout.minimumLineSpacing = 10
         collectionViewFlowLayout.scrollDirection = .horizontal
-        collectionViewFlowLayout.sectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        collectionViewFlowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20)
         
         photoCollectionView = UICollectionView(frame: CGRect.zero,
                                                collectionViewLayout: collectionViewFlowLayout)
@@ -48,11 +46,9 @@ class KPPhotoUploadView: UIView {
         photoCollectionView.delegate = self
         addSubview(photoCollectionView)
         
-        photoCollectionView.addConstraints(fromStringArray: ["H:|-(-20)-[$self]-(-20)-|", "V:[$view0]-20-[$self]|"],
+        photoCollectionView.addConstraints(fromStringArray: ["H:[$view0]-10-[$self]-(-20)-|", "V:|-2-[$self(110)]-2-|"],
                                            views:[takePhotoButton])
         
-        collectionViewHeightConstraint = photoCollectionView.heightAnchor.constraint(equalToConstant: 0)
-        collectionViewHeightConstraint.isActive = true
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -97,19 +93,12 @@ extension KPPhotoUploadView: ImagePickerDelegate {
     
     func doneButtonDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
         imagePicker.dismiss(animated: true) {
-            UIView.animate(withDuration: 0.25, animations: {
-                if self.photos.count == 0 {
-                    self.collectionViewHeightConstraint.constant = 120
-                }
-                self.photos.append(contentsOf: images)
-                self.layoutIfNeeded()
-            }, completion: { (finished) in
-                var indexPathList: [IndexPath] = []
-                for i in  self.photos.count - images.count ... self.photos.count - 1 {
-                    indexPathList.append(IndexPath.init(row: i, section: 0))
-                }
-                self.photoCollectionView.insertItems(at: indexPathList)
-            })
+            self.photos.append(contentsOf: images)
+            var indexPathList: [IndexPath] = []
+            for i in  self.photos.count - images.count ... self.photos.count - 1 {
+                indexPathList.append(IndexPath.init(row: i, section: 0))
+            }
+            self.photoCollectionView.insertItems(at: indexPathList)
         }
     }
     
@@ -127,12 +116,7 @@ extension KPPhotoUploadView: KPPhotoUploadCollectionViewCellDelegate {
             self.photoCollectionView.performBatchUpdates({
                 self.photoCollectionView.deleteItems(at: [indexPath])
             }, completion: { (finished) in
-                if self.photos.count == 0 {
-                    UIView.animate(withDuration: 0.25, animations: {
-                        self.collectionViewHeightConstraint.constant = 0
-                        self.layoutIfNeeded()
-                    })
-                }
+                
             })
         }
     }

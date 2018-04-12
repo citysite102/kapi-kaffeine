@@ -19,6 +19,17 @@ class KPNewStoreBasicController: KPViewController {
 
         view.backgroundColor = UIColor.white
         
+        let barLeftItem = UIBarButtonItem(title: "上一步",
+                                          style: .plain,
+                                          target: self,
+                                          action: #selector(handleBackButtonOnTap(_:)))
+        barLeftItem.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: KPFontSize.mainContent), NSAttributedStringKey.foregroundColor: UIColor.gray],
+                                           for: .normal)
+        
+        navigationItem.leftBarButtonItem = barLeftItem
+        
+        navigationItem.title = "提供設備"
+        
         scrollView = UIScrollView()
         scrollView.backgroundColor = KPColorPalette.KPMainColor_v2.whiteColor_level1
         view.addSubview(scrollView)
@@ -81,6 +92,10 @@ class KPNewStoreBasicController: KPViewController {
     
     @objc func handleTapGesture(_ gesture: UITapGestureRecognizer) {
         view.endEditing(true)
+    }
+    
+    @objc func handleBackButtonOnTap(_ sender: UIButton) {
+        navigationController?.popViewController(animated: true)
     }
 
 }

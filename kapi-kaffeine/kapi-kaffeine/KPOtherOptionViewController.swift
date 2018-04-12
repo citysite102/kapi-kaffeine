@@ -11,16 +11,16 @@ import UIKit
 class KPOtherOptionViewController: KPNewStoreBasicController {
     
     let wifiEditor = KPTitleEditorView<KPSegmentedControl>("是否提供WIFI",
-                                                           contentViewSetupFunction: { return KPSegmentedControl(["有", "無"]) })
+                                                           contentViewSetupFunction: { return KPSegmentedControl(["沒有", "有"]) })
     
     let timeLimitEditor = KPTitleEditorView<KPSegmentedControl>("有無限時",
-                                                                contentViewSetupFunction: { return KPSegmentedControl(["限時", "不限時", "看狀況"]) })
+                                                                contentViewSetupFunction: { return KPSegmentedControl(["沒有", "有"]) })
     
     let socketEditor = KPTitleEditorView<KPSegmentedControl>("插座數量",
-                                                             contentViewSetupFunction: { return KPSegmentedControl(["無", "很多", "部份座位有"]) })
+                                                             contentViewSetupFunction: { return KPSegmentedControl(["沒有", "有"]) })
     
     let standingDeskEditor = KPTitleEditorView<KPSegmentedControl>("是否有站立桌",
-                                                                   contentViewSetupFunction: { return KPSegmentedControl(["有", "無"]) })
+                                                                   contentViewSetupFunction: { return KPSegmentedControl(["沒有", "有"]) })
     
     weak var uploadData: KPUploadDataModel?
     
@@ -36,9 +36,6 @@ class KPOtherOptionViewController: KPNewStoreBasicController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        navigationItem.leftBarButtonItem = nil
-        navigationItem.title = "提供設備"
         
         let submitButton = UIButton(type: .custom)
         submitButton.setTitleColor(UIColor.white, for: .normal)
@@ -128,10 +125,10 @@ class KPOtherOptionViewController: KPNewStoreBasicController {
     
     
     // MARK: - UI Events
-    
-    @objc func handleBackButtonOnTap(_ sender: UIButton) {
-        navigationController?.popViewController(animated: true)
-    }
+
+//    @objc func handleBackButtonOnTap(_ sender: UIButton) {
+//        navigationController?.popViewController(animated: true)
+//    }
     
     @objc func handleSubmitButtonOnTap(_ sender: UIButton) {
         

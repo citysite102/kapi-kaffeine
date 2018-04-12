@@ -125,6 +125,7 @@ class KPPreferenceSearchViewController: KPViewController {
 //            navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: KPColorPalette.KPTextColor_v2.mainColor_title!,
 //                                                                       NSAttributedStringKey.font: UIFont.systemFont(ofSize: 32)]
 //        }
+        
         navigationController?.navigationBar.shadowImage = UIImage()
         
     

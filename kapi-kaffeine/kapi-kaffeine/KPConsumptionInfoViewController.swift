@@ -30,7 +30,6 @@ class KPConsumptionInfoViewController: KPNewStoreBasicController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.leftBarButtonItem = nil
         navigationItem.title = "消費體驗資訊"
         
         let submitButton = UIButton(type: .custom)
@@ -89,9 +88,9 @@ class KPConsumptionInfoViewController: KPNewStoreBasicController {
         // Dispose of any resources that can be recreated.
     }
     
-    @objc func handleBackButtonOnTap(_ sender: UIButton) {
-        navigationController?.popViewController(animated: true)
-    }
+//    @objc func handleBackButtonOnTap(_ sender: UIButton) {
+//        navigationController?.popViewController(animated: true)
+//    }
     
     @objc func handleSubmitButtonOnTap(_ sender: UIButton) {
         

@@ -23,10 +23,8 @@ class KPDataModel: NSObject, Mappable, GMUClusterItem, Comparable {
     static func <(lhs: KPDataModel, rhs: KPDataModel) -> Bool {
         return lhs.distanceInMeter! < rhs.distanceInMeter!
     }
-
     
-    
-    
+    // Basic Information
     var identifier: String!
     var address: String!
     var name: String!

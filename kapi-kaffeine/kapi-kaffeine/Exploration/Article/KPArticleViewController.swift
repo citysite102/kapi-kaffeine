@@ -219,7 +219,7 @@ class KPArticleViewController: KPViewController {
         collectButton.setImage(R.image.icon_collect()!,
                                for: .selected)
         collectButton.tintColor = UIColor.white
-        collectButton.selectedTintColor = KPColorPalette.KPMainColor_v2.redColor
+        collectButton.selectedTintColor = UIColor.clear
         collectButton.addTarget(self,
                                 action: #selector(handleCollectButtonOnTapped(_:)),
                                 for: .touchUpInside)
