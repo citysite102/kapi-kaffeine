@@ -37,15 +37,16 @@ class KPBusinessHoursEditor: UIView {
     let time1Label = UILabel()
     let time2Label = UILabel()
     
-    let dayButtons = [UIButton]()
-    
+    let mondayButton = dayButtonWithTitle(Day.Monday.rawValue)
+    let tuesdayButton = dayButtonWithTitle(Day.Tuesday.rawValue)
+    let wednesdayButton = dayButtonWithTitle(Day.Wednesday.rawValue)
+    let thursdayButton = dayButtonWithTitle(Day.Thursday.rawValue)
+    let fridayButton = dayButtonWithTitle(Day.Friday.rawValue)
+    let saturdayButton = dayButtonWithTitle(Day.Saturday.rawValue)
+    let sundayButton = dayButtonWithTitle(Day.Sunday.rawValue)
+    let rangeSlider = RangeSlider()
+
     let deleteButton = UIButton()
-    
-    var outputValue: [String] {
-        get {
-            return []
-        }
-    }
     
     var delegate: KPBusinessHoursEditorDelegate?
     
@@ -70,46 +71,39 @@ class KPBusinessHoursEditor: UIView {
         addSubview(titleLabel)
         titleLabel.addConstraints(fromStringArray: ["H:|-20-[$self]", "V:|-20-[$self]"])
         
-        let mondayButton = dayButtonWithTitle(Day.Monday.rawValue)
         addSubview(mondayButton)
         mondayButton.addConstraints(fromStringArray: ["H:|-20-[$self]", "V:[$view0]-16-[$self]"],
                                     views: [titleLabel])
         
-        let tuesdayButton = dayButtonWithTitle(Day.Tuesday.rawValue)
         tuesdayButton.isSelected = true
         addSubview(tuesdayButton)
         tuesdayButton.addConstraints(fromStringArray: ["H:[$view0]-[$self]"],
                                      views: [mondayButton])
         tuesdayButton.addConstraintForCenterAligning(to: mondayButton, in: .vertical)
         
-        let wednesdayButton = dayButtonWithTitle(Day.Wednesday.rawValue)
         wednesdayButton.isSelected = true
         addSubview(wednesdayButton)
         wednesdayButton.addConstraints(fromStringArray: ["H:[$view0]-[$self]"],
                                        views: [tuesdayButton])
         wednesdayButton.addConstraintForCenterAligning(to: mondayButton, in: .vertical)
         
-        let thursdayButton = dayButtonWithTitle(Day.Thursday.rawValue)
         thursdayButton.isSelected = true
         addSubview(thursdayButton)
         thursdayButton.addConstraints(fromStringArray: ["H:[$view0]-[$self]-20-|"],
                                       views: [wednesdayButton])
         thursdayButton.addConstraintForCenterAligning(to: mondayButton, in: .vertical)
         
-        let fridayButton = dayButtonWithTitle(Day.Friday.rawValue)
         fridayButton.isSelected = true
         addSubview(fridayButton)
         fridayButton.addConstraints(fromStringArray: ["H:|-20-[$self]", "V:[$view0]-[$self]"],
                                     views: [mondayButton])
         
-        let saturdayButton = dayButtonWithTitle(Day.Saturday.rawValue)
         saturdayButton.isSelected = true
         addSubview(saturdayButton)
         saturdayButton.addConstraints(fromStringArray: ["H:[$view0]-[$self]"],
                                       views: [fridayButton])
         saturdayButton.addConstraintForCenterAligning(to: fridayButton, in: .vertical)
         
-        let sundayButton = dayButtonWithTitle(Day.Sunday.rawValue)
         sundayButton.isSelected = true
         addSubview(sundayButton)
         sundayButton.addConstraints(fromStringArray: ["H:[$view0]-[$self]"],
@@ -158,7 +152,6 @@ class KPBusinessHoursEditor: UIView {
         time2Label.addConstraintForCenterAligning(to: time1Label, in: .vertical)
 
         
-        let rangeSlider = RangeSlider()
         rangeSlider.maximumValue = 144
         rangeSlider.minimumValue = 0
         rangeSlider.upperValue = 114
@@ -188,7 +181,7 @@ class KPBusinessHoursEditor: UIView {
         deleteButton.addTarget(self, action: #selector(handleDeleteButtonOnTap(_:)), for: .touchUpInside)
     }
     
-    func dayButtonWithTitle(_ title: String) -> UIButton {
+    static func dayButtonWithTitle(_ title: String) -> UIButton {
         let button = UIButton()
         button.setTitle(title, for: .normal)
         button.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor_v2.grayColor_level7!),
@@ -206,11 +199,56 @@ class KPBusinessHoursEditor: UIView {
         return button
     }
     
+    func outputValue(with index: Int) -> [String: String] {
+        
+        var output: [String: String] = [:]
+        
+        let open  = "\(Int(floor(rangeSlider.lowerValue/6))):\(Int(rangeSlider.lowerValue) % 6)0"
+        let close = "\(Int(floor(rangeSlider.upperValue/6))):\(Int(rangeSlider.upperValue) % 6)0"
+        
+        if mondayButton.isSelected {
+            output["mon_\(index)_open"]  = open
+            output["mon_\(index)_close"] = close
+        }
+        
+        if tuesdayButton.isSelected {
+            output["tue_\(index)_open"]  = open
+            output["tue_\(index)_close"] = close
+        }
+        
+        if wednesdayButton.isSelected {
+            output["wed_\(index)_open"]  = open
+            output["wed_\(index)_close"] = close
+        }
+        
+        if thursdayButton.isSelected {
+            output["thu_\(index)_open"]  = open
+            output["thu_\(index)_close"] = close
+        }
+        
+        if fridayButton.isSelected {
+            output["fri_\(index)_open"]  = open
+            output["fri_\(index)_close"] = close
+        }
+        
+        if saturdayButton.isSelected {
+            output["sat_\(index)_open"]  = open
+            output["sat_\(index)_close"] = close
+        }
+        
+        if sundayButton.isSelected {
+            output["sun_\(index)_open"]  = open
+            output["sun_\(index)_close"] = close
+        }
+        
+        return output
+    }
+    
     @objc func rangeSliderValueChanged(_ sender: RangeSlider) {
         timeLabel.text = "從 \(Int(floor(sender.lowerValue/6))):\(Int(sender.lowerValue) % 6)0 營業至 \(Int(floor(sender.upperValue/6))):\(Int(sender.upperValue) % 6)0"
     }
     
-    @objc func dayButtonOnTap(_ sender: UIButton) {
+    @objc static func dayButtonOnTap(_ sender: UIButton) {
         sender.isSelected = !sender.isSelected
     }
     

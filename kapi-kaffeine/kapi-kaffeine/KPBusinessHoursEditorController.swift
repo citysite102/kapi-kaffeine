@@ -108,14 +108,21 @@ class KPBusinessHoursEditorController: KPNewStoreBasicController {
             return
         }
         
-        
+        var businessHour: [String:String] = [:]
+        for (index, editor) in editors.enumerated() {
+            let output = editor.outputValue(with: index + 1)
+            for (key, value) in output {
+                businessHour[key] = value
+            }
+        }
+        print(businessHour)
         
         navigationController?.popViewController(animated: true)
     }
     
     @objc func handleAddButtonOnTap(_ sender: UIButton) {
         
-        scrollContainer.isUserInteractionEnabled = false
+        scrollView.isUserInteractionEnabled = false
         
         let editor = KPBusinessHoursEditor()
         editor.delegate = self
@@ -147,7 +154,7 @@ class KPBusinessHoursEditorController: KPNewStoreBasicController {
             if self.editors.count == 2 {
                 self.editors.first?.deleteButton.isEnabled = true
             }
-            self.scrollContainer.isUserInteractionEnabled = true
+            self.scrollView.isUserInteractionEnabled = true
         }
         
     }
@@ -156,25 +163,13 @@ class KPBusinessHoursEditorController: KPNewStoreBasicController {
 
 extension KPBusinessHoursEditorController: KPBusinessHoursEditorDelegate {
     
-//    func numberOfSections(in tableView: UITableView) -> Int {
-//        return 1
-//    }
-//
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return businessHours.count
-//    }
-//
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "timeEditorCell", for: indexPath) as! KPBusinessHoursEditor
-//        cell.delegate = self
-//        return cell
-//    }
-    
     func deleteHoursEditor(_ editor: KPBusinessHoursEditor) {
         
         guard let deleteIndex = editors.index(of: editor) else {
             return
         }
+        
+        scrollView.isUserInteractionEnabled = false
         
         NSLayoutConstraint.deactivate([
             containerHeightConstraint
@@ -199,6 +194,7 @@ extension KPBusinessHoursEditorController: KPBusinessHoursEditorDelegate {
             if self.editors.count == 1 {
                 self.editors.first?.deleteButton.isEnabled = false
             }
+            self.scrollView.isUserInteractionEnabled = true
         }
         
     }
