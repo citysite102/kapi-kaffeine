@@ -219,6 +219,7 @@
 		C0B21FC81F05079100925A89 /* KPUserProfileEditorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B21FC71F05079100925A89 /* KPUserProfileEditorController.swift */; };
 		C0B3760A2019F25C0095E4C5 /* KPNewStoreDetailInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B376092019F25C0095E4C5 /* KPNewStoreDetailInfoViewController.swift */; };
 		C0B49D971EA13BC100BA95D8 /* KPMainMapViewCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B49D961EA13BC100BA95D8 /* KPMainMapViewCollectionCell.swift */; };
+		C0C0FDB52084FD3A0086F793 /* KPAddNewStoreRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C0FDB42084FD3A0086F793 /* KPAddNewStoreRequest.swift */; };
 		C0CA1139204BC9E900C073AC /* KPExplorationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CA1138204BC9E900C073AC /* KPExplorationRequest.swift */; };
 		C0CA113B204BDEC200C073AC /* KPArticleRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CA113A204BDEC200C073AC /* KPArticleRequest.swift */; };
 		C0CA113D204BE1D000C073AC /* KPArticle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CA113C204BE1D000C073AC /* KPArticle.swift */; };
@@ -504,6 +505,7 @@
 		C0B21FC71F05079100925A89 /* KPUserProfileEditorController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPUserProfileEditorController.swift; sourceTree = "<group>"; };
 		C0B376092019F25C0095E4C5 /* KPNewStoreDetailInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPNewStoreDetailInfoViewController.swift; sourceTree = "<group>"; };
 		C0B49D961EA13BC100BA95D8 /* KPMainMapViewCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPMainMapViewCollectionCell.swift; sourceTree = "<group>"; };
+		C0C0FDB42084FD3A0086F793 /* KPAddNewStoreRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPAddNewStoreRequest.swift; sourceTree = "<group>"; };
 		C0CA1138204BC9E900C073AC /* KPExplorationRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPExplorationRequest.swift; sourceTree = "<group>"; };
 		C0CA113A204BDEC200C073AC /* KPArticleRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPArticleRequest.swift; sourceTree = "<group>"; };
 		C0CA113C204BE1D000C073AC /* KPArticle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPArticle.swift; sourceTree = "<group>"; };
@@ -683,6 +685,7 @@
 				7762E33E1F12017D0006E205 /* KPCafeDetailedInfoRequest.swift */,
 				77421FAF1EB8EE0C00064FF0 /* KPNomadRequest.swift */,
 				7747BE701F9E3C0B006F2C8A /* KPSimpleCafeRequest.swift */,
+				C0C0FDB42084FD3A0086F793 /* KPAddNewStoreRequest.swift */,
 			);
 			name = Request;
 			sourceTree = "<group>";
@@ -1874,6 +1877,7 @@
 				772C538A1ECBFE5600C88798 /* KPViewController.swift in Sources */,
 				77952EF31EFAEC850012445F /* KPAddNewCafeRequest.swift in Sources */,
 				77C0E1081E9D491D00398852 /* KPShopRateInfoView.swift in Sources */,
+				C0C0FDB52084FD3A0086F793 /* KPAddNewStoreRequest.swift in Sources */,
 				77E495611EC9EA1F003B7EBC /* KPSearchViewRecentCell.swift in Sources */,
 				772D68281ECC81140013F802 /* KPSubTitleEditView.swift in Sources */,
 				77CACF4D1F168F2F00093147 /* KPNotificationPopoverContent.swift in Sources */,

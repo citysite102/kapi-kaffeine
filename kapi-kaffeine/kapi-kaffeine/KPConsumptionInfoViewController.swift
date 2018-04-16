@@ -8,7 +8,7 @@
 
 import UIKit
 
-class KPConsumptionInfoViewController: KPNewStoreBasicController {
+class KPConsumptionInfoViewController: KPNewStoreBasicController, KPSharedSettingDelegate {
 
     weak var uploadData: KPUploadDataModel?
     
@@ -71,7 +71,23 @@ class KPConsumptionInfoViewController: KPNewStoreBasicController {
         drinkPriceEditor.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|", "V:[$view0]-20-[$self]"],
                                         views: [commentTitleEditor])
         
+        drinkPriceEditor.textFieldTapAction = { [weak self] in
+            guard let `self` = self else { return }
+            let controller = KPPriceSelectController()
+            controller.tag = 0
+            controller.delegate = self
+            self.present(controller, animated: true, completion: nil)
+        }
+        
         scrollContainer.addSubview(foodPriceEditor)
+        
+        foodPriceEditor.textFieldTapAction = { [weak self] in
+            guard let `self` = self else { return }
+            let controller = KPPriceSelectController()
+            controller.tag = 1
+            controller.delegate = self
+            self.present(controller, animated: true, completion: nil)
+        }
         foodPriceEditor.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|", "V:[$view0]-20-[$self]-20-|"],
                                        views: [drinkPriceEditor])
         
@@ -101,11 +117,27 @@ class KPConsumptionInfoViewController: KPNewStoreBasicController {
         // TODO: Check Data
         uploadData.rating = ratingTitleEditor.contentView.currentRate
         uploadData.comment = commentTitleEditor.contentView.text
-        uploadData.drinkPrice = Int(drinkPriceEditor.contentView.text!)
-        uploadData.foodPrice = Int(foodPriceEditor.contentView.text!)
+        uploadData.drinkPrice = KPPriceSelectController.priceRanges.index(of: drinkPriceEditor.contentView.text!) ?? -1
+        uploadData.foodPrice = KPPriceSelectController.priceRanges.index(of: foodPriceEditor.contentView.text!) ?? -1
         
         
         navigationController?.popViewController(animated: true)
+    }
+    
+    func returnValueSet(_ controller: KPSharedSettingViewController) {
+        
+        guard
+            let controller = controller as? KPPriceSelectController,
+            let tag = controller.tag else {
+            return
+        }
+        
+        if tag == 0 {
+            drinkPriceEditor.contentView.text = controller.returnValue as? String ?? ""
+        } else if tag == 1 {
+            foodPriceEditor.contentView.text = controller.returnValue as? String ?? ""
+        }
+        
     }
     
 }

@@ -221,6 +221,20 @@ class KPNewStoreController: KPNewStoreBasicController, KPSubtitleInputDelegate, 
                                           coordinate,
                                           address)
         
+        // TODO: 所在城市
+        
+        
+        if let phone = phoneEditor.contentView.text,
+            !phone.isEmpty {
+            dataModel.phone = phone
+        }
+        
+        if let url = urlEditor.contentView.text,
+            !url.isEmpty {
+            dataModel.url = url
+        }
+        
+        
         let detailInfoViewController = KPNewStoreDetailInfoViewController(dataModel)
         detailInfoViewController.title = storeNameEditor.contentView.text
         navigationController?.pushViewController(detailInfoViewController, animated: true)

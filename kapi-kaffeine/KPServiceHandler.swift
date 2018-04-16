@@ -161,6 +161,55 @@ class KPServiceHandler {
         }
     }
     
+    func addNewStore(_ data: KPUploadDataModel, _ completion: ((_ successed: Bool) -> Void)?) {
+        
+        let newStoreRequest = KPAddNewStoreRequest()
+        
+        let loadingView = KPLoadingView(("新增中..", "新增成功", "新增失敗"))
+        UIApplication.shared.topViewController.view.addSubview(loadingView)
+        loadingView.addConstraints(fromStringArray: ["V:|[$self]|",
+                                                     "H:|[$self]|"])
+        
+        newStoreRequest.perform(data).then { result -> Void in
+            
+            if let addResult = result["result"].bool {
+                loadingView.state = addResult ? .successed : .failed
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.5,
+                                              execute: {
+                                                loadingView.dismiss()
+                                                completion?(addResult)
+                })
+                
+                if let cafeID = result["data"]["cafe_id"].string {
+                    self.uploadPhotos(data.photos, cafeID, false, { (success) in
+                        // TODO: upload failed error handle
+                    })
+                    self.uploadMenus(data.menuPhotos, cafeID, false, { (success) in
+                        // TODO: upload failed error handle
+                    })
+                }
+            } else {
+                loadingView.state = .failed
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
+                                              execute: {
+                                                loadingView.dismiss()
+                                                completion?(false)
+                })
+            }
+        }.catch { (error) in
+            
+            loadingView.state = .failed
+            print(error)
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0,
+                                          execute: {
+                                            loadingView.dismiss()
+                                            completion?(false)
+            })
+            
+        }
+        
+    }
+    
     func addNewShop(_ name: String,
                     _ address: String,
                     _ country: String,

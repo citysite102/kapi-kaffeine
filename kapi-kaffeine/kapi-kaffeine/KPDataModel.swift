@@ -194,6 +194,9 @@ class KPUploadDataModel {
     var coordinate: CLLocationCoordinate2D
     var address: String
     
+    var phone: String?
+    var url: String?
+    
     // Photos & Menu
     var photos: [UIImage] = []
     var menuPhotos: [UIImage] = []

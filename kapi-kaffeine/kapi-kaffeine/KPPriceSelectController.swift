@@ -9,13 +9,14 @@
 import UIKit
 
 class KPPriceSelectController: KPSharedSettingViewController {
-
+    
     static var priceRanges = ["NT$1-100元 / 人",
                               "NT$101-200元 / 人",
                               "NT$201-300元 / 人",
                               "NT$301-400元 / 人",
                               "大於NT$400元 / 人"]
     var tableView: UITableView!
+    var tag: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
