@@ -103,10 +103,18 @@ class KPOtherOptionViewController: KPNewStoreBasicController {
         
         
         // Setup default value
-        wifiEditor.contentView.selectedSegmentIndex = uploadData?.wifi ?? true ? 0 : 1
-        timeLimitEditor.contentView.selectedSegmentIndex = uploadData?.limitedTime ?? 0
-        socketEditor.contentView.selectedSegmentIndex = uploadData?.socket ?? 0
-        standingDeskEditor.contentView.selectedSegmentIndex = uploadData?.standingDesk ?? true ? 0 : 1
+        if let wifi = uploadData?.wifi {
+            wifiEditor.contentView.selectedSegmentIndex = wifi == 0 ? 0 : 1
+        }
+        if let limitTime = uploadData?.limitedTime {
+            timeLimitEditor.contentView.selectedSegmentIndex = limitTime == 2 ? 0 : 1
+        }
+        if let socket = uploadData?.socket {
+            socketEditor.contentView.selectedSegmentIndex = socket == 5 ? 0 : 1
+        }
+        if let standingDesk = uploadData?.standingDesk {
+            standingDeskEditor.contentView.selectedSegmentIndex = standingDesk == 2 ? 0 : 1
+        }
     }
     
     func titleLabel(withTitle title: String) -> UILabel {
@@ -137,10 +145,18 @@ class KPOtherOptionViewController: KPNewStoreBasicController {
         }
         
         // TODO: Set data
-        uploadData.wifi = wifiEditor.contentView.selectedSegmentIndex == 0
-        uploadData.limitedTime = timeLimitEditor.contentView.selectedSegmentIndex
-        uploadData.socket = socketEditor.contentView.selectedSegmentIndex
-        uploadData.standingDesk = standingDeskEditor.contentView.selectedSegmentIndex == 0
+        if let index = wifiEditor.contentView.selectedSegmentIndex {
+            uploadData.wifi = index  == 0 ? 0 : 5
+        }
+        if let index = timeLimitEditor.contentView.selectedSegmentIndex {
+            uploadData.limitedTime = index == 0 ? 2 : 1
+        }
+        if let index = socketEditor.contentView.selectedSegmentIndex {
+            uploadData.socket = index == 0 ? 5 : 1
+        }
+        if let index = standingDeskEditor.contentView.selectedSegmentIndex {
+            uploadData.standingDesk = index == 0 ? 2 : 1
+        }
         
         navigationController?.popViewController(animated: true)
     }

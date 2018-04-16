@@ -17,8 +17,11 @@ class KPSegmentedControl: UIControl {
     
     private var segments: [UIButton] = []
     
-    var selectedSegmentIndex: Int! {
+    var selectedSegmentIndex: Int? {
         didSet {
+            guard let `selectedSegmentIndex` = selectedSegmentIndex else {
+                return
+            }
             handleSegmentOnTap(segments[selectedSegmentIndex])
         }
         
@@ -102,7 +105,6 @@ class KPSegmentedControl: UIControl {
         
         if segments.count > 0 {
             segments.last!.addConstraint(from: "H:[$self]-4-|")
-            selectedSegmentIndex = 0
         }
         
     }

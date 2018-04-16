@@ -114,8 +114,8 @@ class KPBusinessHoursEditorController: KPNewStoreBasicController {
             for (key, value) in output {
                 businessHour[key] = value
             }
-        }
-        print(businessHour)
+        }        
+        uploadData.businessHour = businessHour
         
         navigationController?.popViewController(animated: true)
     }

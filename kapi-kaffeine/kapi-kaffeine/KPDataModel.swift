@@ -199,11 +199,14 @@ class KPUploadDataModel {
     var menuPhotos: [UIImage] = []
     
     
+    // Time
+    var businessHour: [String: String]?
+    
     // Other Options
-    var wifi: Bool?
-    var limitedTime: Int?
-    var socket: Int?
-    var standingDesk: Bool?
+    var wifi: Int?   //  0 = 沒有, 5 = 有
+    var limitedTime: Int?  // 2 = 不限時,  1 = 有限時
+    var socket: Int?  //  5 = 沒插座,  1 = 有插座
+    var standingDesk: Int?  //  1 = 有,  2 = 沒有
     
     // Comsumption
     var rating: Int?
