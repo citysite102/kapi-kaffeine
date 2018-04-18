@@ -118,7 +118,18 @@ class KPNewStoreDetailInfoViewController: KPNewStoreBasicController {
         uploadData.photos = photoUploadView.contentView.photos
         uploadData.menuPhotos = menuUploadView.contentView.photos
         
-        appModalController()?.dismissControllerWithDefaultDuration()
+        KPServiceHandler.sharedHandler.addNewStore(uploadData) {[weak self] (success) in
+            guard let `self` = self else { return }
+            
+            if success {
+                print("YA!!!!!!!!!!!!!!")
+                self.appModalController()?.dismissControllerWithDefaultDuration()
+            } else {
+                print("WTF?????????????")
+            }
+            
+        }
+        
     }
     
     @objc func handleCancelButtonOnTap(_ sender: UIBarButtonItem) {

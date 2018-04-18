@@ -68,6 +68,7 @@ class KPConsumptionInfoViewController: KPNewStoreBasicController, KPSharedSettin
         ])
         
         scrollContainer.addSubview(drinkPriceEditor)
+        drinkPriceEditor.isTextFieldEditable = false
         drinkPriceEditor.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|", "V:[$view0]-20-[$self]"],
                                         views: [commentTitleEditor])
         
@@ -80,7 +81,7 @@ class KPConsumptionInfoViewController: KPNewStoreBasicController, KPSharedSettin
         }
         
         scrollContainer.addSubview(foodPriceEditor)
-        
+        foodPriceEditor.isTextFieldEditable = false
         foodPriceEditor.textFieldTapAction = { [weak self] in
             guard let `self` = self else { return }
             let controller = KPPriceSelectController()

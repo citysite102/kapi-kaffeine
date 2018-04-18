@@ -36,7 +36,7 @@ class KPPriceSelectController: KPSharedSettingViewController {
         sendButton.setTitle("確認送出", for: .normal)
         sendButton.isHidden = true
         sendButton.addTarget(self,
-                             action: #selector(KPCountrySelectController.handleSendButtonOnTapped),
+                             action: #selector(handleSendButtonOnTapped),
                              for: .touchUpInside)
     }
     
@@ -45,7 +45,7 @@ class KPPriceSelectController: KPSharedSettingViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func handleSendButtonOnTapped() {
+    @objc func handleSendButtonOnTapped() {
         delegate?.returnValueSet(self)
         appModalController()?.dismissControllerWithDefaultDuration()
     }
@@ -65,7 +65,8 @@ extension KPPriceSelectController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         returnValue = KPPriceSelectController.priceRanges[indexPath.row]
         delegate?.returnValueSet(self)
-        appModalController()?.dismissControllerWithDefaultDuration()
+        dismiss(animated: true, completion: nil)
+//        appModalController()?.dismissControllerWithDefaultDuration()
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
