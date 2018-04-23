@@ -50,9 +50,37 @@ class KPExplorationViewController: KPViewController {
         view.backgroundColor = KPColorPalette.KPBackgroundColor.whiteColor
         hero.isEnabled = true
         layoutWithSecondVersion()
+        
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(handleLightStatusBar),
+                                               name: Notification.Name(KPNotification.statusBar.statusBarShouldLight),
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(handleDefaultStatusBar),
+                                               name: Notification.Name(KPNotification.statusBar.statusBarShouldDefault),
+                                               object: nil)
+        
+        
         if articleList.isEmpty {
             refreshData()
         }
+    }
+    
+    @objc func handleLightStatusBar() {
+        shouldShowLightContent = true
+        UIView.animate(withDuration: 0.2,
+                       animations: {
+                        self.setNeedsStatusBarAppearanceUpdate()
+        })
+    }
+    
+    @objc func handleDefaultStatusBar() {
+        shouldShowLightContent = false
+        UIView.animate(withDuration: 0.2,
+                       animations: {
+                        self.setNeedsStatusBarAppearanceUpdate()
+        })
     }
     
     override func viewDidAppear(_ animated: Bool) {

@@ -16,11 +16,6 @@ import ImagePicker
 class KPInformationViewController: KPViewController {
 
     var informationDataModel: KPDataModel!
-//        didSet {
-//            KPServiceHandler.sharedHandler.currentDisplayModel = informationDataModel
-//        }
-//    }
-    
     var detailedInformationDataModel: KPDetailedDataModel! {
         didSet {
          
@@ -28,10 +23,12 @@ class KPInformationViewController: KPViewController {
             DispatchQueue.main.async {
                 self.titleLabel.text = self.detailedInformationDataModel.name
                 if let relatedCount = KPServiceHandler.sharedHandler.relatedDisplayModel?.count  {
+                    self.shopInformationView.separator.isHidden = relatedCount == 0 ? true : false
                     self.recommendInformationView.isHidden = relatedCount == 0 ? true : false
                     self.shopRecommendView.displayDataModels = KPServiceHandler.sharedHandler.relatedDisplayModel
                 } else {
                     self.shopRecommendView.displayDataModels = KPServiceHandler.sharedHandler.relatedDisplayModel
+                    self.shopInformationView.separator.isHidden = true
                     self.recommendInformationView.isHidden = true
                     self.recommendInformationView.removeAllRelatedConstraintsInSuperView()
                     self.shopInformationView.addConstraints(fromStringArray: ["V:[$self]-16-|"],
@@ -101,9 +98,7 @@ class KPInformationViewController: KPViewController {
                 
                 // Card Info
                 
-                self.cardInformationContainer.titleInfoLabel.setText(text: self.detailedInformationDataModel.name,
-                                                                lineSpacing: 7.0)
-                
+                self.cardInformationContainer.titleInfoLabel.text = self.detailedInformationDataModel.name
                 var distName: String = ""
                 
                 if let distIndex = self.detailedInformationDataModel.address.index(of: "區") {
@@ -118,9 +113,7 @@ class KPInformationViewController: KPViewController {
                 self.cardInformationContainer.rateLabel.text = String(format: "%.1f",
                                                                  (self.detailedInformationDataModel.averageRate?.doubleValue) ?? 0)
                 
-                
                 // Comment
-                
                 if let commentCount = self.detailedInformationDataModel.commentCount {
                     self.commentInformationView.infoSupplementLabel.text = "\(commentCount) 人已留言"
                     self.commentInformationView.isEmpty = (commentCount == 0)
@@ -294,6 +287,10 @@ class KPInformationViewController: KPViewController {
                                                      animated: false)
     }
     
+    override open var preferredStatusBarStyle: UIStatusBarStyle {
+        return .default
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -306,9 +303,9 @@ class KPInformationViewController: KPViewController {
         actionController = UIAlertController(title: nil,
                                              message: nil,
                                              preferredStyle: .actionSheet)
-        let editButton = UIAlertAction(title: "編輯店家資料",
-                                       style: .default) {
-                                        [unowned self] (_) in
+//        let editButton = UIAlertAction(title: "編輯店家資料",
+//                                       style: .default) {
+//                                        [unowned self] (_) in
 //                                        let controller = KPModalViewController()
 //                                        controller.edgeInset = UIEdgeInsets(top: 0,
 //                                                                            left: 0,
@@ -321,7 +318,7 @@ class KPInformationViewController: KPViewController {
 //                                            UINavigationController(rootViewController: newStoreController)
 //                                        controller.contentController = navigationController
 //                                        controller.presentModalView()
-        }
+//        }
         
         let reportButton = UIAlertAction(title: "錯誤回報",
                                          style: .default) { (_) in
@@ -345,7 +342,6 @@ class KPInformationViewController: KPViewController {
                                             print("取消")
         }
         
-        actionController.addAction(editButton)
         actionController.addAction(reportButton)
         actionController.addAction(closeButton)
         actionController.addAction(cancelButton)
@@ -434,7 +430,7 @@ class KPInformationViewController: KPViewController {
         photoInformationView.infoSupplementLabel.text = "查看所有照片"
         scrollContainer.addSubview(photoInformationView)
         photoInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
-                                                              "V:[$view0]-16-[$self]"],
+                                                              "V:[$view0]-8-[$self]"],
                                             views: [cardInformationContainer])
         
         let menuInfoView = KPShopPhotoInfoView()
@@ -603,7 +599,7 @@ class KPInformationViewController: KPViewController {
         topBarContainer.alpha = 0
         view.addSubview(topBarContainer)
         topBarContainer.addConstraints(fromStringArray: ["V:|[$self($metric0)]",
-                                                         "H:|[$self]|"], metrics:[KPLayoutConstant.topBar_height])
+                                                         "H:|[$self]|"], metrics:[KPLayoutConstant.topBar_height-4])
         separator_top = UIView()
         separator_top.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
         topBarContainer.addSubview(separator_top)
@@ -631,7 +627,7 @@ class KPInformationViewController: KPViewController {
         titleLabel.addConstraint(from: "H:[$self(<=280)]")
         titleLabel.addConstraintForCenterAligning(to: topBarContainer,
                                                   in: .vertical,
-                                                  constant: 8)
+                                                  constant: 12)
         titleLabel.addConstraintForCenterAligning(to: topBarContainer,
                                                   in: .horizontal,
                                                   constant: 0)
@@ -645,7 +641,7 @@ class KPInformationViewController: KPViewController {
                                                        "H:|-16-[$self($metric0)]"], metrics:[KPLayoutConstant.dismissButton_size])
         dismissButton.addConstraintForCenterAligning(to: topBarContainer,
                                                      in: .vertical,
-                                                     constant: 8)
+                                                     constant: 12)
         dismissButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4)
         dismissButton.addTarget(self,
                                 action: #selector(handleDismissButtonOnTapped), for: .touchUpInside)
@@ -662,7 +658,7 @@ class KPInformationViewController: KPViewController {
                                                     "H:[$self($metric0)]-16-|"], metrics:[KPLayoutConstant.dismissButton_size])
         moreButton.addConstraintForCenterAligning(to: topBarContainer,
                                                      in: .vertical,
-                                                     constant: 8)
+                                                     constant: 12)
         
     }
     // MARK: UI Update
@@ -1227,6 +1223,10 @@ extension KPInformationViewController: UIScrollViewDelegate {
                 moreButton.tintColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
                 moreButton.selectedTintColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
                 titleLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
+                
+                let notification = Notification(name: Notification.Name(KPNotification.statusBar.statusBarShouldDefault))
+                NotificationCenter.default.post(notification)
+                
             } else {
                 topBarContainer.alpha = 0
                 titleLabel.alpha = 0
@@ -1234,6 +1234,10 @@ extension KPInformationViewController: UIScrollViewDelegate {
                 moreButton.tintColor = KPColorPalette.KPTextColor_v2.whiteColor
                 moreButton.selectedTintColor = KPColorPalette.KPTextColor_v2.whiteColor
                 titleLabel.textColor = KPColorPalette.KPTextColor_v2.whiteColor
+                
+                let notification = Notification(name: Notification.Name(KPNotification.statusBar.statusBarShouldLight))
+                NotificationCenter.default.post(notification)
+                
             }
             
             
@@ -1249,10 +1253,8 @@ extension KPInformationViewController: UIScrollViewDelegate {
                 let scaleRatioContainer = 1 - scrollContainer.contentOffset.y/240
                 let oldFrame = informationHeaderView.shopPhotoContainer.frame
                 
-//                animatedHeaderConstraint.constant = 0
                 informationHeaderView.shopPhoto.transform = .identity
                 informationHeaderView.isUserInteractionEnabled = true
-                
                 informationHeaderView.shopPhotoContainer.layer.anchorPoint = CGPoint(x: 0.5, y: 1)
                 informationHeaderView.shopPhotoContainer.frame = oldFrame
                 informationHeaderView.shopPhotoContainer.transform = .identity

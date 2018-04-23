@@ -116,6 +116,11 @@ struct KPNotification {
         static let rateInformation =    "rateInformation"
         static let photoInformation =   "photoInformation"
     }
+    
+    struct statusBar {
+        static let statusBarShouldLight = "statusBarShouldLight"
+        static let statusBarShouldDefault = "statusBarShouldDefault"
+    }
 }
 
 
@@ -129,11 +134,11 @@ struct KPFontSize {
 }
     
 struct KPLayoutConstant {
-    static let topBar_height = 64
+    static let topBar_height = 76
     static let bottomBar_height = 56
     static let separator_height = 1
     
-    static let dismissButton_size = 26
+    static let dismissButton_size = 27
     static let information_horizontal_offset = 18
     static let intro_horizontal_offset = 32
     
