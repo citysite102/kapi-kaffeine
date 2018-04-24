@@ -32,14 +32,6 @@ class KPExplorationViewController: KPViewController {
     var articleCollectionView: UICollectionView!
     var contentTableView: UITableView!
     
-    
-    let demoImages = [R.image.demo_1(),
-                      R.image.demo_2(),
-                      R.image.demo_3(),
-                      R.image.demo_4(),
-                      R.image.demo_5(),
-                      R.image.demo_6()]
-    
     var testData: [KPExplorationSection] = []
     var articleList: [KPArticleItem] = []
     
@@ -397,8 +389,11 @@ class KPExplorationViewController: KPViewController {
                                                 right: 0)
             let locationController = KPLocationSelectViewController()
             let navigationController = UINavigationController(rootViewController: locationController)
-            controller.contentController = navigationController
-            controller.presentModalView()
+//            navigationController.modalPresentationStyle = .fullScreen
+//            navigationController.modalPresentationCapturesStatusBarAppearance = true
+//            controller.contentController = navigationController
+//            controller.presentModalView()
+            present(navigationController, animated: true, completion: nil)
             self.locationSelectView.transform = CGAffineTransform.identity
         }
     }
