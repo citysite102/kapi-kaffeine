@@ -688,9 +688,14 @@ class KPServiceHandler {
         if KPUserManager.sharedManager.currentUser == nil {
             KPPopoverView.popoverLoginView()
         } else {
+            let loadingView = KPLoadingView(("收藏中...", "收藏文章", "收藏失敗"))
+            UIApplication.shared.KPTopViewController().view.addSubview(loadingView)
+            loadingView.addConstraints(fromStringArray: ["V:|[$self]|",
+                                                         "H:|[$self]|"])
             let addRequest = KPCollectRequest()
             addRequest.perform(articleItem.articleID,
                                KPCollectRequest.requestType.add).then { result -> Void in
+                                loadingView.state = result["result"].boolValue ? .successed : .failed
                                 guard let _ = KPUserManager.sharedManager.currentUser?.articles?.first(where: {$0.articleID == articleItem.articleID}) else {
                                     KPUserManager.sharedManager.currentUser?.articles?.append(articleItem)
                                     KPUserManager.sharedManager.storeUserInformation()
@@ -699,6 +704,7 @@ class KPServiceHandler {
                                 completion?(true)
                 }.catch { error in
                     print("Add Collect Article error\(error)")
+                    loadingView.state = .failed
                     completion?(false)
             }
         }
@@ -710,9 +716,14 @@ class KPServiceHandler {
         if KPUserManager.sharedManager.currentUser == nil {
             KPPopoverView.popoverLoginView()
         } else {
+            let loadingView = KPLoadingView(("取消收藏", "取消收藏中", "取消失敗"))
+            UIApplication.shared.KPTopViewController().view.addSubview(loadingView)
+            loadingView.addConstraints(fromStringArray: ["V:|[$self]|",
+                                                         "H:|[$self]|"])
             let removeRequest = KPCollectRequest()
             removeRequest.perform(articleItem.articleID,
                                   KPCollectRequest.requestType.delete).then { result -> Void in
+                                    loadingView.state = result["result"].boolValue ? .successed : .failed
                                     if let foundOffset = KPUserManager.sharedManager.currentUser?.articles?.index(where: {$0.articleID == articleItem.articleID}) {
                                         KPUserManager.sharedManager.currentUser?.articles?.remove(at: foundOffset)
                                     }
@@ -721,6 +732,7 @@ class KPServiceHandler {
                                     print("Result\(result)")
                 }.catch { (error) in
                     print("Remove Collect Article\(error)")
+                    loadingView.state = .failed
                     completion?(false)
             }
         }

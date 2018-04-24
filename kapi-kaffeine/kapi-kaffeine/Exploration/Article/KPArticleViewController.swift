@@ -203,7 +203,7 @@ class KPArticleViewController: KPViewController {
         dismissButton.alpha = 0.0
         view.addSubview(dismissButton)
         dismissButton.addConstraints(fromStringArray: ["V:[$self($metric0)]",
-                                                       "H:|-16-[$self($metric0)]"], metrics:[KPLayoutConstant.dismissButton_size])
+                                                       "H:|-16-[$self($metric0)]"], metrics:[KPLayoutConstant.dismissButton_size-2])
         dismissButton.addConstraintForCenterAligning(to: topBarContainer,
                                                      in: .vertical,
                                                      constant: 14)
@@ -225,22 +225,27 @@ class KPArticleViewController: KPViewController {
         collectButton = UIButton(type: .custom)
         collectButton.setTitle("收藏",
                                for: .normal)
-//        collectButton.setTitle("已收藏",
-//                               for: .selected)
-        collectButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
-        collectButton.setTitleColor(KPColorPalette.KPTextColor_v2.whiteColor,
+        collectButton.setTitle("已收藏",
+                               for: .selected)
+        collectButton.titleLabel?.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
+        collectButton.contentHorizontalAlignment = .right
+        collectButton.setTitleColor(KPColorPalette.KPTextColor_v2.whiteColor_alpha,
                                     for: .normal)
-        collectButton.setTitleColor(KPColorPalette.KPTextColor_v2.mainColor_title,
+        collectButton.setTitleColor(KPColorPalette.KPTextColor_v2.whiteColor,
                                     for: .selected)
-        collectButton.setBackgroundImage(UIImage.kpImageWithColor(color: KPColorPalette.KPBackgroundColor.whiteColor!,
-                                                                  size: CGSize(width: 52,
-                                                                               height: 26)) ,
-                                         for: .selected)
-        collectButton.titleEdgeInsets = UIEdgeInsetsMake(8, 6, 8, 6)
-        collectButton.layer.borderWidth = 1
-        collectButton.layer.cornerRadius = 2.0
-        collectButton.layer.masksToBounds = true
-        collectButton.layer.borderColor = KPColorPalette.KPTextColor_v2.whiteColor?.cgColor;
+//        collectButton.setTitleColor(KPColorPalette.KPTextColor_v2.whiteColor,
+//                                    for: .normal)
+//        collectButton.setTitleColor(KPColorPalette.KPTextColor_v2.mainColor_title,
+//                                    for: .selected)
+//        collectButton.setBackgroundImage(UIImage.kpImageWithColor(color: KPColorPalette.KPBackgroundColor.whiteColor!,
+//                                                                  size: CGSize(width: 52,
+//                                                                               height: 26)) ,
+//                                         for: .selected)
+//        collectButton.titleEdgeInsets = UIEdgeInsetsMake(8, 6, 8, 6)
+//        collectButton.layer.borderWidth = 1
+//        collectButton.layer.cornerRadius = 2.0
+//        collectButton.layer.masksToBounds = true
+//        collectButton.layer.borderColor = KPColorPalette.KPTextColor_v2.whiteColor?.cgColor;
         collectButton.isSelected = KPUserManager.sharedManager.currentUser?.hasCollected(currentArticleItem.articleID) ?? false
         
 //        collectButton = KPBounceButton(type: .custom)
@@ -256,20 +261,13 @@ class KPArticleViewController: KPViewController {
         collectButton.addTarget(self,
                                 action: #selector(handleCollectButtonOnTapped(_:)),
                                 for: .touchUpInside)
-//        collectButton.isSelected = KPUserManager.sharedManager.currentUser?.hasCollected(currentArticleItem.articleID) ?? false
+
         view.addSubview(collectButton)
         collectButton.addConstraintForCenterAligning(to: topBarContainer,
                                                      in: .vertical,
                                                      constant:14)
         collectButton.addConstraints(fromStringArray: ["V:[$self($metric0)]",
-                                                       "H:[$self(48)]-16-|"], metrics:[KPLayoutConstant.dismissButton_size])
-        
-//        collectButton.addConstraintForCenterAligning(to: topBarContainer,
-//                                                     in: .vertical,
-//                                                     constant: 7)
-//        collectButton.addConstraints(fromStringArray: ["V:[$self($metric0)]",
-//                                                       "H:[$self($metric0)]-16-|"], metrics:[KPLayoutConstant.dismissButton_size])
-        
+                                                       "H:[$self(60)]-16-|"], metrics:[KPLayoutConstant.dismissButton_size])
         
         separator = UIView()
         separator.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
@@ -787,25 +785,35 @@ extension KPArticleViewController: UIScrollViewDelegate {
         
         DispatchQueue.main.async {
             if isDefault {
-                self.collectButton.setTitleColor(KPColorPalette.KPTextColor_v2.whiteColor,
-                                                 for: .normal)
-                self.collectButton.setTitleColor(KPColorPalette.KPTextColor_v2.mainColor_title,
-                                                 for: .selected)
-                self.collectButton.setBackgroundImage(UIImage.kpImageWithColor(color: KPColorPalette.KPBackgroundColor.whiteColor!,
-                                                                               size: CGSize(width: 48,
-                                                                                            height: 26)) ,
-                                                      for: .selected)
-                self.collectButton.layer.borderColor = KPColorPalette.KPTextColor_v2.whiteColor?.cgColor;
-            } else {
-                self.collectButton.setTitleColor(KPColorPalette.KPTextColor_v2.mainColor_title,
+                
+                self.collectButton.setTitleColor(KPColorPalette.KPTextColor_v2.whiteColor_alpha,
                                             for: .normal)
                 self.collectButton.setTitleColor(KPColorPalette.KPTextColor_v2.whiteColor,
                                             for: .selected)
-                self.collectButton.setBackgroundImage(UIImage.kpImageWithColor(color: KPColorPalette.KPMainColor_v2.mainColor!,
-                                                                          size: CGSize(width: 48,
-                                                                                       height: 26)) ,
+                
+//                self.collectButton.setTitleColor(KPColorPalette.KPTextColor_v2.whiteColor,
+//                                                 for: .normal)
+//                self.collectButton.setTitleColor(KPColorPalette.KPTextColor_v2.mainColor_title,
+//                                                 for: .selected)
+//                self.collectButton.setBackgroundImage(UIImage.kpImageWithColor(color: KPColorPalette.KPBackgroundColor.whiteColor!,
+//                                                                               size: CGSize(width: 48,
+//                                                                                            height: 26)) ,
+//                                                      for: .selected)
+//                self.collectButton.layer.borderColor = KPColorPalette.KPTextColor_v2.whiteColor?.cgColor;
+            } else {
+                self.collectButton.setTitleColor(KPColorPalette.KPTextColor_v2.mainColor_hint,
+                                                 for: .normal)
+                self.collectButton.setTitleColor(KPColorPalette.KPTextColor_v2.mainColor_subtitle,
                                                  for: .selected)
-                self.collectButton.layer.borderColor = KPColorPalette.KPTextColor_v2.mainColor_title?.cgColor;
+//                self.collectButton.setTitleColor(KPColorPalette.KPTextColor_v2.mainColor_title,
+//                                            for: .normal)
+//                self.collectButton.setTitleColor(KPColorPalette.KPTextColor_v2.whiteColor,
+//                                            for: .selected)
+//                self.collectButton.setBackgroundImage(UIImage.kpImageWithColor(color: KPColorPalette.KPMainColor_v2.mainColor!,
+//                                                                          size: CGSize(width: 48,
+//                                                                                       height: 26)) ,
+//                                                 for: .selected)
+//                self.collectButton.layer.borderColor = KPColorPalette.KPTextColor_v2.mainColor_title?.cgColor;
             }
         }
     }

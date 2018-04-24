@@ -25,7 +25,7 @@ class KPSearchViewRecentCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         recentIcon = UIImageView.init(image: R.image.icon_recent()!)
-        recentIcon.tintColor = KPColorPalette.KPMainColor_v2.mainColor_light
+        recentIcon.tintColor = KPColorPalette.KPMainColor_v2.mainColor
         addSubview(recentIcon)
         recentIcon.addConstraints(fromStringArray: ["H:|-16-[$self(28)]",
                                                     "V:[$self(28)]"],

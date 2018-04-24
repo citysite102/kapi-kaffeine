@@ -113,7 +113,7 @@ class KPSearchViewController: KPViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorColor = UIColor.clear
-        tableView.contentInset = UIEdgeInsetsMake(8, 0, 0, 0)
+        tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
         view.addSubview(tableView)
         tableView.addConstraints(fromStringArray: ["V:|[$self]|",
                                                    "H:|[$self]|"])
