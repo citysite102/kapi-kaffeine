@@ -75,7 +75,7 @@ class KPSearchViewController: KPViewController {
     var initialHeaderContent: [String] = ["最近搜尋紀錄",
                                           "熱門搜尋"]
     var recentSearchModel: [KPDataModel] = [KPDataModel]()
-    var hotSearchModel: [String] = ["Demo1", "Demo2", "Demo3"]
+    var hotSearchModel: [KPDataModel] = [KPDataModel]()
     
     var displayDataModel: [KPDataModel] = [KPDataModel]()
     var filteredDataModel: [KPDataModel] = [KPDataModel]()
@@ -212,7 +212,28 @@ class KPSearchViewController: KPViewController {
         definesPresentationContext = true
     }
     
-    func readSearchData() { ref.child("all_of_user").child("searchHistories").observeSingleEvent(of: .value, with: { (_) in
+    func readSearchData() {
+        
+        
+        ref.child("all_of_user").child("searchHistories").observeSingleEvent(of: .value,
+                                                                             with: { (snapshot) in
+                if let value = snapshot.value as? NSDictionary {
+                    for key in value.allKeys {
+                        if let shopInfo = value[key] as? NSDictionary {
+                            let jsonMap = [
+                                "cafe_id": shopInfo["id"],
+                                "latitude": shopInfo["lat"],
+                                "longitude": shopInfo["lng"],
+                                "name": shopInfo["name"],
+                                "rate_average": shopInfo["rating"] ?? 0
+                            ]
+                            let searchModel: KPDataModel = KPDataModel(JSON: jsonMap)!
+                            self.hotSearchModel.append(searchModel)
+                        }
+                    }
+                }
+                                                                                self.tableView.reloadData()
+                                                                                                    
         }) { (error) in
             print(error.localizedDescription)
         }
@@ -283,6 +304,7 @@ extension KPSearchViewController: UISearchResultsUpdating, UISearchBarDelegate {
         }
         
         searchController.searchBar.resignFirstResponder()
+        
     }
     
     func updateSearchResults(for searchController: UISearchController) {
@@ -339,8 +361,8 @@ extension KPSearchViewController: UITableViewDelegate, UITableViewDataSource {
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier:KPSearchViewController.KPSearchViewControllerDefaultCellReuseIdentifier,
                                                          for: indexPath) as! KPSearchViewDefaultCell
-                cell.shopNameLabel.text = recentSearchModel[indexPath.row].name
-                cell.rateLabel.text = String(format: "%.1f", recentSearchModel[indexPath.row].averageRate?.doubleValue ?? 0.0)
+                cell.shopNameLabel.text = hotSearchModel[indexPath.row].name
+                cell.rateLabel.text = String(format: "%.1f", hotSearchModel[indexPath.row].averageRate?.doubleValue ?? 0.0)
                 return cell
             }
         }
@@ -385,7 +407,7 @@ extension KPSearchViewController: UITableViewDelegate, UITableViewDataSource {
         if shouldShowSearchResults {
             return filteredDataModel.count
         } else {
-            return recentSearchModel.count
+            return section == 0 ? recentSearchModel.count : hotSearchModel.count
         }
     }
     
@@ -413,6 +435,45 @@ extension KPSearchViewController: UITableViewDelegate, UITableViewDataSource {
                 let recentSearch = [filteredDataModel[indexPath.row].toJSON()]
                 KPUserDefaults.recentSearch = recentSearch
             }
+
+            ref.child("all_of_user").child("searchHistories").observeSingleEvent(of: .value,
+                                                                                 with: { (snapshot) in
+                if let value = snapshot.value as? NSDictionary {
+                    let updateValue = value.mutableCopy() as! NSMutableDictionary
+                    if let info = value.object(forKey: self.filteredDataModel[indexPath.row].identifier) as? NSDictionary {
+                        let countInfo = info.mutableCopy() as! NSMutableDictionary
+                        let countNumber = countInfo["count"] as! NSInteger
+                        countInfo["count"] = countNumber+1
+                        updateValue[self.filteredDataModel[indexPath.row].identifier] = countInfo
+                        self.ref.child("all_of_user").child("searchHistories").setValue(updateValue)
+                        
+                    } else {
+                        updateValue[self.filteredDataModel[indexPath.row].identifier] =
+                            ["count": 1,
+                            "countryIndex": 1,
+                            "id": self.filteredDataModel[indexPath.row].identifier,
+                            "lat": self.filteredDataModel[indexPath.row].latitude,
+                            "lng": self.filteredDataModel[indexPath.row].longitude,
+                            "name": self.filteredDataModel[indexPath.row].name,
+                            "rating": self.filteredDataModel[indexPath.row].averageRate ?? 0
+                            ]
+                            
+                        self.ref.child("all_of_user").child("searchHistories").setValue(updateValue)
+                    }
+                } else {
+                    self.ref.child("all_of_user").child("searchHistories").setValue(
+                        [self.filteredDataModel[indexPath.row].identifier:
+                            ["count": 1,
+                             "countryIndex": 1,
+                             "id": self.filteredDataModel[indexPath.row].identifier,
+                             "lat": self.filteredDataModel[indexPath.row].latitude,
+                             "lng": self.filteredDataModel[indexPath.row].longitude,
+                             "name": self.filteredDataModel[indexPath.row].name,
+                             "rating": self.filteredDataModel[indexPath.row].averageRate ?? 0
+                            ]])
+                                                                                    }
+            })
+            
             
             KPAnalyticManager.sendCellClickEvent(filteredDataModel[indexPath.row].name,
                                                  filteredDataModel[indexPath.row].averageRate?.stringValue,
@@ -420,11 +481,14 @@ extension KPSearchViewController: UITableViewDelegate, UITableViewDataSource {
             
             
         } else {
-            infoController.informationDataModel = recentSearchModel[indexPath.row]
+            infoController.informationDataModel =
+                (indexPath.section == 0 ?
+                    recentSearchModel[indexPath.row] :
+                    hotSearchModel[indexPath.row])
             
-            KPAnalyticManager.sendCellClickEvent(recentSearchModel[indexPath.row].name,
-                                                 recentSearchModel[indexPath.row].averageRate?.stringValue,
-                                                 KPAnalyticsEventValue.source.source_search)
+//            KPAnalyticManager.sendCellClickEvent(recentSearchModel[indexPath.row].name,
+//                                                 recentSearchModel[indexPath.row].averageRate?.stringValue,
+//                                                 KPAnalyticsEventValue.source.source_search)
         }
         
         if searchController.searchBar.isFirstResponder {
