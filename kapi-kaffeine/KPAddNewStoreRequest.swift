@@ -25,9 +25,9 @@ class KPAddNewStoreRequest: NetworkRequest {
         parameters["latitude"] = uploadData.coordinate.latitude
         parameters["longitude"] = uploadData.coordinate.longitude
         
-        // TODO:  城市/地區
-//        parameters["country"] = country
-//        parameters["city"] = city
+        parameters["phone"] = uploadData.phone
+        parameters["country"] = uploadData.countryKey
+        parameters["city"] = uploadData.cityKey
         
         if let url = uploadData.url {
             parameters["url"] = url

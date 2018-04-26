@@ -21,6 +21,8 @@ class KPNewStoreController: KPNewStoreBasicController, KPSubtitleInputDelegate, 
     
     // MARK: - Data
     var coordinate: CLLocationCoordinate2D?
+    var city: CityData?
+    var country: CountryData?
     
     override func viewDidLoad() {
         
@@ -60,9 +62,10 @@ class KPNewStoreController: KPNewStoreBasicController, KPSubtitleInputDelegate, 
         locationEditor.isTextFieldEditable = false
         locationEditor.textFieldTapAction = { [weak self] in
             guard let `self` = self else { return }
-            let locationController = KPCountrySelectController()
+            let locationController = KPLocationSelectViewController()
+            let navigationController = UINavigationController(rootViewController: locationController)
             locationController.delegate = self
-            self.present(locationController, animated: true, completion: nil)
+            self.present(navigationController, animated: true, completion: nil)
         }
         locationEditor.contentView.placeholder = "請選擇所在城市"
         scrollContainer.addSubview(locationEditor)
@@ -111,14 +114,13 @@ class KPNewStoreController: KPNewStoreBasicController, KPSubtitleInputDelegate, 
         nextButton.clipsToBounds = true
         nextButton.layer.cornerRadius = 4.0
         nextButton.layer.borderWidth = 1.0
-        nextButton.layer.borderColor = KPColorPalette.KPMainColor_v2.grayColor_level4?.cgColor
+        nextButton.layer.borderColor = KPColorPalette.KPMainColor_v2.mainColor?.cgColor
         nextButton.titleLabel?.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
         buttonContainer.addSubview(nextButton)
         nextButton.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",
                                                     "V:|-12-[$self(40)]-12-|"])
         nextButton.addTarget(self, action: #selector(KPNewStoreController.handleNextButtonOnTap(_:)), for: .touchUpInside)
         
-        nextButton.isEnabled = false
         locationEditor.isHidden = true
         addressEditor.isHidden = true
         phoneEditor.isHidden = true
@@ -132,21 +134,11 @@ class KPNewStoreController: KPNewStoreBasicController, KPSubtitleInputDelegate, 
 
                 storeNameEditor.contentView.text = place.name
                 
-                if let addressComponents = place.addressComponents {
-                    for component in addressComponents {
-                        if component.type == "administrative_area_level_1" {
-                            locationEditor.contentView.text = component.name
-                        }
-                    }
-                }
-                
                 addressEditor.contentView.text = place.formattedAddress
                 phoneEditor.contentView.text = place.phoneNumber
                 urlEditor.contentView.text = place.website?.absoluteString
                 
                 coordinate = place.coordinate
-                nextButton.isEnabled = true
-                nextButton.layer.borderColor = KPColorPalette.KPMainColor_v2.mainColor?.cgColor
                 
                 locationEditor.isHidden = false
                 addressEditor.isHidden = false
@@ -155,19 +147,11 @@ class KPNewStoreController: KPNewStoreBasicController, KPSubtitleInputDelegate, 
                 
             } else if let placeName = controller.outputValue as? String {
                 storeNameEditor.contentView.text = placeName
-                
-                nextButton.isEnabled = placeName.count > 0
-                nextButton.layer.borderColor = placeName.count > 0 ?
-                    KPColorPalette.KPMainColor_v2.mainColor?.cgColor :
-                    KPColorPalette.KPMainColor_v2.grayColor_level4?.cgColor
                 locationEditor.isHidden = !(placeName.count > 0)
                 addressEditor.isHidden = !(placeName.count > 0)
                 phoneEditor.isHidden = !(placeName.count > 0)
                 urlEditor.isHidden = !(placeName.count > 0)
             } else {
-                nextButton.isEnabled = false
-                nextButton.layer.borderColor = KPColorPalette.KPMainColor_v2.grayColor_level4?.cgColor
-                
                 locationEditor.isHidden = true
                 addressEditor.isHidden = true
                 phoneEditor.isHidden = true
@@ -217,9 +201,15 @@ class KPNewStoreController: KPNewStoreBasicController, KPSubtitleInputDelegate, 
             return
         }
         
+        guard let city = city, let country = country else {
+            return
+        }
+                
         let dataModel = KPUploadDataModel(storeName,
                                           coordinate,
-                                          address)
+                                          address,
+                                          city.key,
+                                          country.key)
         
         // TODO: 所在城市
         
@@ -243,5 +233,16 @@ class KPNewStoreController: KPNewStoreBasicController, KPSubtitleInputDelegate, 
     @objc func handleCancelButtonOnTap(_ sender: UIBarButtonItem) {
         appModalController()?.dismissControllerWithDefaultDuration()
     }
+    
+}
 
+extension KPNewStoreController: KPLocationSelectViewControllerDelegate {
+    
+    func locationSelectController(_ controller: KPLocationSelectViewController, selectedCountry: CountryData, selectedCity: CityData) {
+        country = selectedCountry
+        city = selectedCity
+        locationEditor.contentView.text = city?.name
+        dismiss(animated: true, completion: nil)
+    }
+    
 }

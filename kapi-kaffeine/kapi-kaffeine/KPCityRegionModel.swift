@@ -8,17 +8,28 @@
 
 import UIKit
 
-struct CountryData {
-    var name: String
-    var key: String
-    var icon: UIImage
-    var cities: [CityData]
+class CountryData {
+    let name: String
+    let key: String
+    let icon: UIImage
+    let cities: [CityData]
+    init(name: String, key: String, icon: UIImage, cities: [CityData]) {
+        self.name = name
+        self.key = key
+        self.icon = icon
+        self.cities = cities
+    }
 }
 
-struct CityData {
-    var name: String
-    var key: String
-    var coordinate: CLLocationCoordinate2D
+class CityData {
+    let name: String
+    let key: String
+    let coordinate: CLLocationCoordinate2D
+    init(name: String, key: String, coordinate: CLLocationCoordinate2D) {
+        self.name = name
+        self.key = key
+        self.coordinate = coordinate
+    }
 }
 
 struct regionData {

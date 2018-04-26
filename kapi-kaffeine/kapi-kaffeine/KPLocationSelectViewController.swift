@@ -8,15 +8,22 @@
 
 import UIKit
 
+protocol KPLocationSelectViewControllerDelegate: class {
+    func locationSelectController(_ controller: KPLocationSelectViewController, selectedCountry: CountryData, selectedCity: CityData)
+}
+
 class KPLocationSelectViewController: KPViewController {
 
     static let KPCountryCellReuseIdentifier = "countryCell"
     static let KPCityCellReuseIdentifier = "cityCell"
     
+    // MARK: - UI
     var tableView = UITableView()
     
+    // MARK: - Data
     var expandedIndex: Int?
     var cityData: [CountryData] = KPCityDataModel.sharedData
+    weak var delegate: KPLocationSelectViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,10 +55,6 @@ class KPLocationSelectViewController: KPViewController {
                            forCellReuseIdentifier: KPLocationSelectViewController.KPCityCellReuseIdentifier)
         
     }
-    
-//    override open var preferredStatusBarStyle: UIStatusBarStyle {
-//        return .default
-//    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -60,7 +63,6 @@ class KPLocationSelectViewController: KPViewController {
     
     @objc func handleDismissButtonOnTapped() {
         dismiss(animated: true, completion: nil)
-//        appModalController()?.dismissControllerWithDefaultDuration()
     }
 }
 
@@ -151,6 +153,12 @@ extension KPLocationSelectViewController: UITableViewDelegate, UITableViewDataSo
             }
             
             tableView.endUpdates()
+        } else {
+            
+            delegate?.locationSelectController(self,
+                                               selectedCountry: cityData[indexPath.section],
+                                               selectedCity: cityData[indexPath.section].cities[indexPath.row-1])
+            
         }
     }
     

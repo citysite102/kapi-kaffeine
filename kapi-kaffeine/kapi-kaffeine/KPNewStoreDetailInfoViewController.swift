@@ -122,10 +122,9 @@ class KPNewStoreDetailInfoViewController: KPNewStoreBasicController {
             guard let `self` = self else { return }
             
             if success {
-                print("YA!!!!!!!!!!!!!!")
                 self.appModalController()?.dismissControllerWithDefaultDuration()
             } else {
-                print("WTF?????????????")
+                // TODO: Handle Error
             }
             
         }

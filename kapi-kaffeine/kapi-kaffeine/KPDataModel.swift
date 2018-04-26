@@ -193,6 +193,8 @@ class KPUploadDataModel {
     var name: String
     var coordinate: CLLocationCoordinate2D
     var address: String
+    var cityKey: String
+    var countryKey: String
     
     var phone: String?
     var url: String?
@@ -218,10 +220,12 @@ class KPUploadDataModel {
     var foodPrice: Int?
     
     
-    init(_ name: String, _ coordinate: CLLocationCoordinate2D,_ address: String) {
+    init(_ name: String, _ coordinate: CLLocationCoordinate2D,_ address: String,_ cityKey: String,_ countryKey: String) {
         self.name = name
         self.coordinate = coordinate
         self.address = address
+        self.cityKey = cityKey
+        self.countryKey = countryKey
     }
     
 }
