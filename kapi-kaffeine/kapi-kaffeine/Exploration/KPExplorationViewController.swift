@@ -19,6 +19,8 @@ class KPExplorationViewController: KPViewController {
     var searchIcon: UIImageView!
     var searchLabel: UILabel!
     var shouldShowLightContent: Bool = true
+    var currentBgImageIndex = 0
+    var targetPosition: CGPoint!
     
     var filterButton: KPBounceButton!
     var headerView: UIView!
@@ -106,7 +108,7 @@ class KPExplorationViewController: KPViewController {
                 
             })
             
-            UIView.animate(withDuration: 1.4,
+            UIView.animate(withDuration: 1.2,
                            delay: 0.8,
                            options: .curveEaseOut,
                            animations: {
@@ -160,9 +162,9 @@ class KPExplorationViewController: KPViewController {
                                           height: 40))
         let backgroundPath = UIBezierPath()
         backgroundPath.move(to: CGPoint(x: 0, y: 0))
-        backgroundPath.addLine(to: CGPoint(x: view.bounds.width,
+        backgroundPath.addLine(to: CGPoint(x: view.bounds.width+48,
                                            y: 0))
-        backgroundPath.addLine(to: CGPoint(x: view.bounds.width,
+        backgroundPath.addLine(to: CGPoint(x: view.bounds.width+48,
                                            y: 400))
         backgroundPath.addLine(to: CGPoint(x: 0,
                                            y: 480))
@@ -183,13 +185,16 @@ class KPExplorationViewController: KPViewController {
         maskLayer_bg.path = backgroundPath.cgPath
         
         sectionBgImageView = UIImageView(image: R.image.demo_black()?.tint(KPColorPalette.KPMainColor_v2.mainColor_dark!, blendMode: .softLight))
-        sectionBgImageView.contentMode = .scaleAspectFill
+        sectionBgImageView.contentMode = .scaleAspectFit
         sectionBgImageView.layer.mask = maskLayer_bg
+        sectionBgImageView.layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         sectionBgImageView.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
         headerView.addSubview(sectionBgImageView)
         sectionBgImageView.addConstraints(fromStringArray: ["V:|-(-140)-[$self]|",
-                                                            "H:|[$self]|"])
+                                                            "H:|-(-24)-[$self]-(-24)-|"])
         
+//        sectionBgImageView.addConstraints(fromStringArray: ["V:|-(-140)-[$self]|"])
+//        sectionBgImageView.addConstraintForCenterAligningToSuperview(in: .horizontal)
         let longPressGesture_location = UILongPressGestureRecognizer(target: self,
                                                                      action: #selector(handleLocationContainerLongPressed(_:)))
         longPressGesture_location.minimumPressDuration = 0
@@ -266,6 +271,7 @@ class KPExplorationViewController: KPViewController {
         articleCollectionView.decelerationRate = UIScrollViewDecelerationRateFast
         articleCollectionView.dataSource = self
         articleCollectionView.delegate = self
+        articleCollectionView.decelerationRate = UIScrollViewDecelerationRateFast
         articleCollectionView.register(KPArticleCell.self,
                                        forCellWithReuseIdentifier: "ArticleCell")
         articleCollectionView.backgroundColor = UIColor.clear
@@ -454,6 +460,41 @@ extension KPExplorationViewController: UITableViewDataSource, UITableViewDelegat
         return cell
     }
     
+//    func scrollviewdidends
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        if targetPosition.x != -1 {
+            scrollView.setContentOffset(targetPosition,
+                                        animated: true)
+            targetPosition.x = -1
+        }
+    }
+    
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView,
+                                   withVelocity velocity: CGPoint,
+                                   targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        
+
+        if (targetContentOffset.pointee.x < CGFloat((articleList.count-2)*255) + 100) {
+            let currentOffset = targetContentOffset.pointee.x
+            var index = floor(currentOffset/255)
+            if currentOffset - 180 > 255*index || currentOffset + 75 > 255 * (index+1) {
+                index = index+1
+            }
+
+            if velocity.x == 0 {
+                targetContentOffset.pointee.x = index*255
+            } else {
+                if (velocity.x > 0 && index*255 > scrollView.contentOffset.x) ||
+                    (velocity.x < 0 && index*255 < scrollView.contentOffset.x) {
+                        targetContentOffset.pointee.x = index*255
+                } else {
+                    targetPosition = CGPoint(x: index*255, y: 0)
+                }
+            }
+        }
+    }
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView.isKind(of: UITableView.self) && rootTabViewController.exploreAnimationHasPerformed
         {
@@ -474,6 +515,67 @@ extension KPExplorationViewController: UITableViewDataSource, UITableViewDelegat
                                animations: {
                                 self.setNeedsStatusBarAppearanceUpdate()
                 })
+            }
+        } else if (scrollView == self.articleCollectionView) {
+            
+            
+            print(scrollView.contentOffset.x)
+            if scrollView.contentOffset.x < 250 &&
+                currentBgImageIndex != 0 {
+                
+                currentBgImageIndex = 0
+                
+                UIView.animate(withDuration: 0.4,
+                               animations: {
+                                self.sectionBgImageView.alpha = 0
+                                self.sectionBgImageView.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+                }) { (_) in
+                    UIView.animate(withDuration: 0.4,
+                                   animations: {
+                                    self.sectionBgImageView.alpha = 1.0
+                                    self.sectionBgImageView.transform = CGAffineTransform.identity
+                                    self.sectionBgImageView.image = R.image.demo_black()?.tint(KPColorPalette.KPMainColor_v2.mainColor_dark!, blendMode: .softLight)
+                    })
+                }
+                
+                
+            } else if scrollView.contentOffset.x < 500 &&
+                scrollView.contentOffset.x >= 250 &&
+                currentBgImageIndex != 1 {
+                
+                currentBgImageIndex = 1
+                
+                UIView.animate(withDuration: 0.4,
+                               animations: {
+                                self.sectionBgImageView.alpha = 0
+                                self.sectionBgImageView.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+                }) { (_) in
+                    UIView.animate(withDuration: 0.4,
+                                   animations: {
+                                    self.sectionBgImageView.alpha = 1.0
+                                    self.sectionBgImageView.transform = CGAffineTransform.identity
+                                    self.sectionBgImageView.image = R.image.demo_1()?.tint(KPColorPalette.KPMainColor_v2.mainColor_dark!, blendMode: .softLight)
+                    })
+                }
+                
+            } else if scrollView.contentOffset.x < 750 &&
+                scrollView.contentOffset.x >= 500 &&
+                currentBgImageIndex != 2 {
+                
+                currentBgImageIndex = 2
+                
+                UIView.animate(withDuration: 0.4,
+                               animations: {
+                                self.sectionBgImageView.alpha = 0
+                                self.sectionBgImageView.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+                }) { (_) in
+                    UIView.animate(withDuration: 0.4,
+                                   animations: {
+                                    self.sectionBgImageView.alpha = 1.0
+                                    self.sectionBgImageView.transform = CGAffineTransform.identity
+                                    self.sectionBgImageView.image = R.image.demo_2()?.tint(KPColorPalette.KPMainColor_v2.mainColor_dark!, blendMode: .softLight)
+                    })
+                }
             }
         }
     }
@@ -562,7 +664,8 @@ UICollectionViewDelegateFlowLayout {
                       height: 210)
     }
     
-    func collectionView(_ collectionView: UICollectionView, targetContentOffsetForProposedContentOffset proposedContentOffset: CGPoint) -> CGPoint {
+    func collectionView(_ collectionView: UICollectionView,
+                        targetContentOffsetForProposedContentOffset proposedContentOffset: CGPoint) -> CGPoint {
         return CGPoint(x: floor(Double(proposedContentOffset.x/(UIScreen.main.bounds.width/2))*Double(UIScreen.main.bounds.width/2)),
                        y: Double(proposedContentOffset.y))
     }

@@ -58,11 +58,28 @@ class KPMainListViewController:
                 tableView.isHidden = false
                 mapButton.isHidden = false
                 mapButton.isUserInteractionEnabled = true
+                UIView.animate(withDuration: 0.6,
+                               delay: 0.1,
+                               usingSpringWithDamping: 0.8,
+                               initialSpringVelocity: 0.5,
+                               options: .curveEaseOut,
+                               animations: {
+                                self.mapButton.transform = CGAffineTransform.identity
+                }, completion: nil)
             } else if state == .loading {
                 statusContainerView.isHidden = true
                 tableView.isHidden = false
                 mapButton.isHidden = false
                 mapButton.isUserInteractionEnabled = false
+                UIView.animate(withDuration: 0.3,
+                               delay: 0.0,
+                               options: .curveEaseOut,
+                               animations: {
+                                self.mapButton.transform = CGAffineTransform(translationX: 0,
+                                                                             y: 120)
+                }) { (_) in
+                    
+                }
             } else if state == .barLoading {
                 statusContainerView.isHidden = true
                 tableView.isHidden = false
@@ -284,7 +301,9 @@ class KPMainListViewController:
         mapButton.addConstraints(fromStringArray: ["V:[$self(40)]",
                                                    "H:[$self(88)]"])
         mapButton.addConstraintForCenterAligningToSuperview(in: .horizontal)
-        mapButton.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant: -24).isActive = true
+        mapButton.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor,
+                                          constant: -24).isActive = true
+        mapButton.transform = CGAffineTransform(translationX: 0, y: 120)
 
         
         satisficationView = KPSatisficationView()

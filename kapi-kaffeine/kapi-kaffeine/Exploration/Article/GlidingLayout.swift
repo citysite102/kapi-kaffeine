@@ -18,6 +18,35 @@ final class GlidingLayout: UICollectionViewFlowLayout {
   
   var delegate: GlidingLayoutDelegate?
   
+    
+//    override func targetContentOffset(forProposedContentOffset
+//        proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
+//        
+//        
+//        if (proposedContentOffset.x < CGFloat((4-2)*255) + 100) {
+//            let currentOffset = proposedContentOffset.x
+//            var index = floor(currentOffset/255)
+//            if currentOffset - 180 > 255*index || currentOffset + 75 > 255 * (index+1) {
+//                index = index+1
+//            }
+//            
+//            print("Velocity:\(velocity.x)")
+//            print("Pointee:\(proposedContentOffset.x)")
+//            if velocity.x == 0 {
+////                targetContentOffset.pointee.x = index*255
+//                return CGPoint(x: index*255,
+//                               y: 0)
+//            } else {
+//                self .setContentOffset(CGPoint(x: index*255, y: 0),
+//                                            animated: true)
+//                targetContentOffset.pointee.x = index*255
+//            }
+//        } else {
+//            return proposedContentOffset
+//        }
+//        
+//    }
+    
 //  override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
 //
 //    guard let collectionView = self.collectionView else {

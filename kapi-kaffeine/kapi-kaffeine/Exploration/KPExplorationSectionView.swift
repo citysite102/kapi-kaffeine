@@ -120,7 +120,7 @@ extension KPExplorationSectionView: UICollectionViewDataSource, UICollectionView
         cell.collectButton.addTarget(self,
                                      action: #selector(handleShopFavorited(sender:)),
                                      for: UIControlEvents.primaryActionTriggered)
-        if let url = shops[indexPath.row].imageURL_s ?? shops[indexPath.row].imageURL_l {
+        if let url = shops[indexPath.row].imageURL_l ?? shops[indexPath.row].imageURL_s {
             cell.imageView.af_setImage(withURL: url,
                                        placeholderImage: nil,
                                        filter: nil,
@@ -129,7 +129,7 @@ extension KPExplorationSectionView: UICollectionViewDataSource, UICollectionView
                                        imageTransition: UIImageView.ImageTransition.crossDissolve(0.2),
                                        runImageTransitionIfCached: true,
                                        completion: nil)
-        } else if let url = shops[indexPath.row].googleURL_s ?? shops[indexPath.row].googleURL_l {
+        } else if let url = shops[indexPath.row].googleURL_l ?? shops[indexPath.row].googleURL_s {
             cell.imageView.af_setImage(withURL: url,
                                        placeholderImage: nil,
                                        filter: nil,
