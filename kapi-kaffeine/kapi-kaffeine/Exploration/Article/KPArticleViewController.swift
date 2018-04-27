@@ -416,7 +416,8 @@ class KPArticleViewController: KPViewController {
             self.barTitleLabel.text = article.title.value
             self.articleTitleLabel.text = article.title.value
             if article.contents.count > 0 {
-                self.articleSubTitleLabel.text = article.contents[0].value
+                self.articleSubTitleLabel.setText(text: article.contents[0].value,
+                                                  lineSpacing: 6.0)
             }
             if article.contents.count > 1 {
                 self.articleFirstParagraphTextView.text = article.contents[1].value
@@ -455,7 +456,7 @@ class KPArticleViewController: KPViewController {
             
             
             var previousView: UIView = titleLabel
-            var spacing: CGFloat = 24
+            var spacing: CGFloat = 30
             for (index, element) in article.contents.enumerated() {
                 
                 if element.type == .Br {
@@ -468,7 +469,8 @@ class KPArticleViewController: KPViewController {
                 if element.type == .Image {
                     
                     let imageView = UIImageView()
-                    imageView.contentMode = .center
+                    imageView.contentMode = .scaleAspectFit
+                    imageView.clipsToBounds = true
                     if let url = URL(string: element.value) {
                         imageView.af_setImage(withURL: url)
                     }
@@ -501,7 +503,8 @@ class KPArticleViewController: KPViewController {
                         if subContent.type == .Image {
                             
                             let imageView = UIImageView()
-                            imageView.contentMode = .center
+                            imageView.contentMode = .scaleAspectFit
+                            imageView.clipsToBounds = true
                             if let url = URL(string: subContent.value) {
                                 imageView.af_setImage(withURL: url)
                             }
@@ -523,14 +526,24 @@ class KPArticleViewController: KPViewController {
                         
                         self.articleContainer.addSubview(currentSubView)
                         currentSubView.translatesAutoresizingMaskIntoConstraints = false
-                        NSLayoutConstraint.activate([
-                            currentSubView.leftAnchor.constraint(equalTo: self.articleContainer.leftAnchor, constant: 16),
-                            currentSubView.rightAnchor.constraint(equalTo: self.articleContainer.rightAnchor, constant: -16),
-                            currentSubView.topAnchor.constraint(equalTo: previousView.bottomAnchor, constant: spacing)
-                        ])
+                        
+                        if currentSubView.isKind(of: UIImageView.self) {
+                            NSLayoutConstraint.activate([
+                                currentSubView.leftAnchor.constraint(equalTo: self.articleContainer.leftAnchor, constant: 16),
+                                currentSubView.rightAnchor.constraint(equalTo: self.articleContainer.rightAnchor, constant: -16),
+                                currentSubView.topAnchor.constraint(equalTo: previousView.bottomAnchor, constant: spacing),
+                                currentSubView.heightAnchor.constraint(lessThanOrEqualToConstant: 320)
+                                ])
+                        } else {
+                            NSLayoutConstraint.activate([
+                                currentSubView.leftAnchor.constraint(equalTo: self.articleContainer.leftAnchor, constant: 16),
+                                currentSubView.rightAnchor.constraint(equalTo: self.articleContainer.rightAnchor, constant: -16),
+                                currentSubView.topAnchor.constraint(equalTo: previousView.bottomAnchor, constant: spacing)
+                            ])
+                        }
                         
                         previousView = currentSubView
-                        spacing = 24
+                        spacing = 30
                         
                     }
                     
@@ -572,20 +585,34 @@ class KPArticleViewController: KPViewController {
                 
                     self.articleContainer.addSubview(currentView)
                     currentView.translatesAutoresizingMaskIntoConstraints = false
-                    NSLayoutConstraint.activate([
-                        currentView.leftAnchor.constraint(equalTo: self.articleContainer.leftAnchor, constant: 16),
-                        currentView.rightAnchor.constraint(equalTo: self.articleContainer.rightAnchor, constant: -16),
-                        currentView.topAnchor.constraint(equalTo: previousView.bottomAnchor, constant: spacing)
-                    ])
+                    
+                    if currentView.isKind(of: UIImageView.self) {
+                        NSLayoutConstraint.activate([
+                            currentView.leftAnchor.constraint(equalTo: self.articleContainer.leftAnchor, constant: 0),
+                            currentView.rightAnchor.constraint(equalTo: self.articleContainer.rightAnchor, constant: 0),
+                            currentView.topAnchor.constraint(equalTo: previousView.bottomAnchor,
+                                                             constant: 0),
+                            currentView.heightAnchor.constraint(lessThanOrEqualToConstant: 320)
+                            ])
+                    } else {
+                        NSLayoutConstraint.activate([
+                            currentView.leftAnchor.constraint(equalTo: self.articleContainer.leftAnchor, constant: 16),
+                            currentView.rightAnchor.constraint(equalTo: self.articleContainer.rightAnchor, constant: -16),
+                            currentView.topAnchor.constraint(equalTo: previousView.bottomAnchor,
+                                                             constant: previousView.isKind(of: UIImageView.self) ? 0 : spacing)
+                        ])
+                    }
                     
                     previousView = currentView
-                    spacing = 8
+                    spacing = 30
                 }
                 
             }
 
             NSLayoutConstraint.activate([
-                previousView.bottomAnchor.constraint(equalTo: self.articleContainer.bottomAnchor, constant: -24)
+                previousView.bottomAnchor.constraint(equalTo:
+                    self.articleContainer.bottomAnchor,
+                                                     constant: -24)
             ])
             
         }
@@ -619,7 +646,7 @@ class KPArticleViewController: KPViewController {
         
         let contentLabel = UILabel()
         contentLabel.numberOfLines = 0
-        if element.bold {
+        if element.bold || element.fontSize == 40 {
             contentLabel.font = UIFont.boldSystemFont(ofSize: element.fontSize)
         } else {
             contentLabel.font = UIFont.systemFont(ofSize: element.fontSize)

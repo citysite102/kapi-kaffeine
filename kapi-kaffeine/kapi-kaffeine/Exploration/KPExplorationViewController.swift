@@ -610,7 +610,7 @@ UICollectionViewDelegateFlowLayout {
         cell.articleHeroImageView.hero.id = "article-\(indexPath.row)"
         cell.titleLabel.setText(text: articleList[indexPath.row].title!,
                                 lineSpacing: 4.0)
-        cell.subLabel.text = "\(articleList[indexPath.row].peopleRead) 人已收藏"
+        cell.subLabel.text = "\(articleList[indexPath.row].peopleRead) 人已閱讀"
         return cell
     }
     

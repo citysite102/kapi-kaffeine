@@ -131,9 +131,9 @@ class KPNewCommentController: KPViewController {
                                             action: #selector(handleTapGesture(tapGesture:)))
         textFieldContainerView.addGestureRecognizer(tapGesture)
         
-        textFieldContainerView.addSubview(textFieldHeaderLabel)
-        textFieldHeaderLabel.addConstraints(fromStringArray: ["V:|-24-[$self]",
-                                                              "H:|-16-[$self]"])
+//        textFieldContainerView.addSubview(textFieldHeaderLabel)
+//        textFieldHeaderLabel.addConstraints(fromStringArray: ["V:|-24-[$self]",
+//                                                              "H:|-16-[$self]"])
         
         paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 4.0
@@ -142,7 +142,7 @@ class KPNewCommentController: KPViewController {
         inputTextView.delegate = self
         inputTextView.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7
         inputTextView.returnKeyType = .done
-        inputTextView.layer.cornerRadius = 2.0
+        inputTextView.layer.cornerRadius = 4.0
         inputTextView.layer.masksToBounds = true
         inputTextView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
         inputTextView.textContainerInset = UIEdgeInsetsMake(8, 4, 40, 4)
@@ -151,19 +151,19 @@ class KPNewCommentController: KPViewController {
                                           NSAttributedStringKey.foregroundColor.rawValue: KPColorPalette.KPTextColor.grayColor_level2!]
         
         textFieldContainerView.addSubview(inputTextView)
-        inputTextView.addConstraints(fromStringArray: ["V:[$view0]-14-[$self]-24-|",
-                                                       "H:|-12-[$self]-12-|"],
-                                     views: [textFieldHeaderLabel])
-        
+//        inputTextView.addConstraints(fromStringArray: ["V:[$view0]-14-[$self]-24-|",
+//                                                       "H:|-12-[$self]-12-|"],
+//                                     views: [textFieldHeaderLabel])
+        inputTextView.addConstraints(fromStringArray: ["V:|-12-[$self]-24-|",
+                                                       "H:|-16-[$self]-16-|"])
         
         placeholderLabel = UILabel()
         placeholderLabel.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
         placeholderLabel.textColor = KPColorPalette.KPTextColor.grayColor_level4
         placeholderLabel.text = "Ex:東西很好吃，環境也很舒適..."
         textFieldContainerView.addSubview(placeholderLabel)
-        placeholderLabel.addConstraints(fromStringArray: ["V:[$view0]-22-[$self]",
-                                                          "H:|-20-[$self]-16-|"],
-                                        views: [textFieldHeaderLabel])
+        placeholderLabel.addConstraints(fromStringArray: ["V:|-22-[$self]",
+                                                          "H:|-26-[$self]-16-|"])
         
         textFieldContainerView.addSubview(remainingTextLabel)
         remainingTextLabel.addConstraints(fromStringArray: ["V:[$self]-32-|",
@@ -180,7 +180,7 @@ class KPNewCommentController: KPViewController {
         
         ratingHeaderLabel = UILabel()
         ratingHeaderLabel.isHidden = hideRatingViews
-        ratingHeaderLabel.font = UIFont.systemFont(ofSize: KPFontSize.header,
+        ratingHeaderLabel.font = UIFont.systemFont(ofSize: KPFontSize.sub_header,
                                                    weight: UIFont.Weight.regular)
         ratingHeaderLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
         ratingHeaderLabel.text = "為店家評分"
@@ -190,7 +190,7 @@ class KPNewCommentController: KPViewController {
         
         ratingView = KPRatingView()
         ratingContainer.addSubview(ratingView)
-        ratingView.addConstraints(fromStringArray: ["V:[$view0]-12-[$self]-16-|",
+        ratingView.addConstraints(fromStringArray: ["V:[$view0]-12-[$self]-20-|",
                                                     "H:|-14-[$self]-16-|"],
                                   views: [ratingHeaderLabel])
         
