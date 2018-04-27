@@ -33,7 +33,7 @@ class KPExplorationSectionCell: UICollectionViewCell {
         imageView = UIImageView()
         imageView.layer.shouldRasterize = true
         imageView.contentMode = .scaleAspectFill
-        imageView.layer.cornerRadius = 2
+        imageView.layer.cornerRadius = 4
         imageView.clipsToBounds = true
         imageView.backgroundColor = KPColorPalette.KPMainColor_v2.bg_light
         imageView.isUserInteractionEnabled = true

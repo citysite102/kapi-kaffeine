@@ -48,6 +48,7 @@ class KPArticleViewController: KPViewController {
 //    var collectButton: KPBounceButton!
     
     var currentArticleItem: KPArticleItem!
+    var articleContent: KPArticle!
     fileprivate var articleID: String!
     
     init(_ articleID: String) {
@@ -227,7 +228,8 @@ class KPArticleViewController: KPViewController {
                                for: .normal)
         collectButton.setTitle("已收藏",
                                for: .selected)
-        collectButton.titleLabel?.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
+        collectButton.titleLabel?.font = UIFont.systemFont(ofSize: KPFontSize.mainContent,
+                                                           weight: .medium)
         collectButton.contentHorizontalAlignment = .right
         collectButton.setTitleColor(KPColorPalette.KPTextColor_v2.whiteColor_alpha,
                                     for: .normal)
@@ -309,9 +311,13 @@ class KPArticleViewController: KPViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if explorationViewController != nil {
+        if explorationViewController != nil &&
+            self.topBarContainer.alpha < 1.0 {
             explorationViewController?.shouldShowLightContent = true
             hero.modalAnimationType = .auto
+            self.setNeedsStatusBarAppearanceUpdate()
+        } else {
+            explorationViewController?.shouldShowLightContent = false
             self.setNeedsStatusBarAppearanceUpdate()
         }
     }
@@ -387,7 +393,8 @@ class KPArticleViewController: KPViewController {
     }
     
     func loadArticleDataWithID(_ articleID: String) {
-        KPServiceHandler.sharedHandler.fetchArticleCotent(articleID) { [weak self] (article, error) in
+        KPServiceHandler.sharedHandler.fetchArticleCotent(articleID) {
+            [weak self] (article, error) in
             
             guard let `self` = self else { return }
             
@@ -404,6 +411,8 @@ class KPArticleViewController: KPViewController {
                 }
                 return
             }
+            
+            self.articleContent = article
             self.barTitleLabel.text = article.title.value
             self.articleTitleLabel.text = article.title.value
             if article.contents.count > 0 {
@@ -447,7 +456,7 @@ class KPArticleViewController: KPViewController {
             
             var previousView: UIView = titleLabel
             var spacing: CGFloat = 24
-            for element in article.contents {
+            for (index, element) in article.contents.enumerated() {
                 
                 if element.type == .Br {
                     spacing = 40
@@ -536,10 +545,18 @@ class KPArticleViewController: KPViewController {
                         }
                         
                         button.setTitle(buttonElement.value, for: .normal)
-                        button.setTitleColor(buttonElement.color, for: .normal)
+//                        button.setTitleColor(buttonElement.color, for: .normal)
+                        button.setTitleColor(KPColorPalette.KPMainColor_v2.grayColor_level2,
+                                             for: .normal)
+                        button.titleLabel?.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
                         
-                        button.layer.borderColor = buttonElement.color.cgColor
-                        button.layer.borderWidth = 1
+                        button.layer.borderColor = KPColorPalette.KPMainColor_v2.grayColor_level2?.cgColor
+                        button.layer.borderWidth = 1.0
+                        button.layer.cornerRadius = 4.0
+                        button.tag = index
+                        button.addTarget(self,
+                                         action: #selector(self.handleButtonOnTapped(_:)),
+                                         for: UIControlEvents.touchUpInside)
                         
                         currentView = button
                     }
@@ -574,6 +591,29 @@ class KPArticleViewController: KPViewController {
         }
     }
     
+    @objc func handleButtonOnTapped(_ sender: UIButton) {
+        
+        let shopInfo = self.articleContent.contents[sender.tag]
+        
+        let controller = KPModalViewController()
+        controller.edgeInset = UIEdgeInsets(top: 0,
+                                            left: 0,
+                                            bottom: 0,
+                                            right: 0)
+        let jsonMap = [
+            "cafe_id": shopInfo.cafeIdentifier,
+            "name": shopInfo.cafeName,
+            ]
+
+        let dataModel: KPDataModel = KPDataModel(JSON: jsonMap)!
+        let informationController = KPInformationViewController()
+        informationController.informationDataModel = dataModel
+        let navigationController = UINavigationController(rootViewController: informationController)
+        present(navigationController, animated: true, completion: nil)
+//        controller.contentController = navigationController
+//        controller.presentModalView()
+        
+    }
     
     func articleLabel(withElement element: KPArticleElement) -> UILabel {
         
@@ -803,7 +843,7 @@ extension KPArticleViewController: UIScrollViewDelegate {
             } else {
                 self.collectButton.setTitleColor(KPColorPalette.KPTextColor_v2.mainColor_hint,
                                                  for: .normal)
-                self.collectButton.setTitleColor(KPColorPalette.KPTextColor_v2.mainColor_subtitle,
+                self.collectButton.setTitleColor(KPColorPalette.KPMainColor_v2.mainColor,
                                                  for: .selected)
 //                self.collectButton.setTitleColor(KPColorPalette.KPTextColor_v2.mainColor_title,
 //                                            for: .normal)

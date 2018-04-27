@@ -720,11 +720,7 @@ class KPInformationViewController: KPViewController {
                                                                           handler:{
                                                                             [weak self] (infoView) -> () in
                                                                             if let weSelf = self {
-                                                                                if KPUserManager.sharedManager.currentUser == nil {
-                                                                                    KPPopoverView.popoverLoginView()
-                                                                                } else {
-                                                                                    
-                                                                                }
+                                                                                weSelf.photoUpload()
                                                                             }
                             })]
                             
@@ -740,11 +736,7 @@ class KPInformationViewController: KPViewController {
                                                                          handler:{
                                                                             [weak self] (infoView) -> () in
                                                                             if let weSelf = self {
-                                                                                if KPUserManager.sharedManager.currentUser == nil {
-                                                                                    KPPopoverView.popoverLoginView()
-                                                                                } else {
-                                                                                    
-                                                                                }
+                                                                                weSelf.photoUpload()
                                                                             }
                             })]
                         }

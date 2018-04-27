@@ -20,7 +20,7 @@ class KPExplorationViewController: KPViewController {
     var searchLabel: UILabel!
     var shouldShowLightContent: Bool = true
     var currentBgImageIndex = 0
-    var targetPosition: CGPoint!
+    var targetPosition: CGPoint = CGPoint(x: -1, y: 0)
     
     var filterButton: KPBounceButton!
     var headerView: UIView!
@@ -517,9 +517,6 @@ extension KPExplorationViewController: UITableViewDataSource, UITableViewDelegat
                 })
             }
         } else if (scrollView == self.articleCollectionView) {
-            
-            
-            print(scrollView.contentOffset.x)
             if scrollView.contentOffset.x < 250 &&
                 currentBgImageIndex != 0 {
                 

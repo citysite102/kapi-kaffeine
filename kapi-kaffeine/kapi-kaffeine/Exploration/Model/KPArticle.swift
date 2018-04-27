@@ -77,6 +77,14 @@ class KPArticleElement: NSObject, Mappable {
     var underline: Bool = false
     var color: UIColor = UIColor.black
     
+    
+    // For Cafe Format
+    var cafeIdentifier: String = ""
+    var cafeAddress: String = ""
+    var cafeName: String = ""
+    var cafeRate: NSNumber = 1
+    
+    
     var button: KPArticleElement?
     
     required init?(map: Map) {
@@ -92,6 +100,11 @@ class KPArticleElement: NSObject, Mappable {
         values      <-  map["values"]
         content     <-  map["content"]
         button      <-  map["button"]
+        
+        cafeIdentifier  <- map["cafe_id"]
+        cafeAddress     <- map["address"]
+        cafeName        <- map["title"]
+        cafeRate        <- map["rate"]
     }
     
     let colorTransform = TransformOf<UIColor, String>(fromJSON: { (value: String?) -> UIColor in
