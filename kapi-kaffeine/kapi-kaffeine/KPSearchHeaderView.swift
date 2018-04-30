@@ -20,8 +20,8 @@ class KPSearchHeaderView: UIView {
     var searchLabel: UILabel!
     var filterButton: KPBounceButton!
     
-    var searchButton: KPBounceButton!
-    var menuButton: KPBounceButton!
+//    var searchButton: KPBounceButton!
+//    var menuButton: KPBounceButton!
     var styleButton: KPBounceButton!
     
     var searchTagView: KPSearchTagView!

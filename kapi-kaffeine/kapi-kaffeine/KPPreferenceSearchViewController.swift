@@ -24,13 +24,14 @@ class KPPreferenceSearchViewController: KPViewController {
     var scrollView: UIScrollView!
     var containerView: UIView!
     
-    var conditionTitles = ["有 Wifi",
-                           "有插座",
-                           "無時間限制",
-                           "站立工作"]
+    var conditionTitles: [searchTagType] = [.wifi, .socket, .limitTime, .standingDesk]
+//    var conditionTitles = ["有 Wifi",
+//                           "有插座",
+//                           "無時間限制",
+//                           "站立工作"]
     
     var ratingViews = [KPRatingView]()
-    var conditions = [KPItemCheckedView]()
+    var conditions = [searchTagType :KPItemCheckedView]()
     
     var sortTitleLabel: UILabel!
     var priceSettingTitleLabel: UILabel!
@@ -38,7 +39,8 @@ class KPPreferenceSearchViewController: KPViewController {
     var conditionTitleLabel: UILabel!
     var businessHourTitleLabel: UILabel!
     var businessHourResultLabel: UILabel!
-    
+    var fromTime: String = "08:00"
+    var toTime: String = "19:00"
     
     var sortSegmentedControl: KPSegmentedControl!
     var priceSegmentedControl: KPSegmentedControl!
@@ -63,6 +65,7 @@ class KPPreferenceSearchViewController: KPViewController {
     var startSearchTime: String?
     var endSearchTime: String?
     
+    var businessCheckBoxNone: KPCheckView!
     var businessCheckBox: KPCheckView!
     var businessCheckBox_two: KPCheckView!
     var timeSupplementView: KPSpecificTimeSupplementView!
@@ -226,8 +229,9 @@ class KPPreferenceSearchViewController: KPViewController {
         
         for (index, title) in conditionTitles.enumerated() {
             
-            let condition = KPItemCheckedView(title)
-            conditions.append(condition)
+            let condition = KPItemCheckedView(title.rawValue)
+            condition.checkBox.checkState = KPFilter.sharedFilter.selectedTag.contains(title) ? .checked : .unchecked
+            conditions[title] = condition
             containerView.addSubview(condition)
             
             if index == 0 {
@@ -237,14 +241,14 @@ class KPPreferenceSearchViewController: KPViewController {
             } else {
                 condition.addConstraints(fromStringArray: ["H:|-17-[$self]-16-|",
                                                            "V:[$view0]-12-[$self]"],
-                                          views: [conditions[index-1]])
+                                          views: [conditions[conditionTitles[index-1]]!])
             }
         }
         
         containerView.addSubview(separator_two)
         separator_two.addConstraints(fromStringArray: ["H:|[$self]|",
                                                        "V:[$view0]-24-[$self(1)]"],
-                                          views: [conditions.last!])
+                                          views: [conditions[conditionTitles.last!]!])
         
         businessHourTitleLabel = titleLabel("營業時間")
         containerView.addSubview(businessHourTitleLabel)
@@ -252,13 +256,17 @@ class KPPreferenceSearchViewController: KPViewController {
                                                                 "V:[$view0]-24-[$self]"],
                                                 views: [separator_two])
         
-        
+        businessCheckBoxNone = KPCheckView(.checkmark, "不限")
+        containerView.addSubview(businessCheckBoxNone)
+        businessCheckBoxNone.addConstraints(fromStringArray: ["H:|-16-[$self]",
+                                                              "V:[$view0]-24-[$self(24)]"],
+                                            views: [businessHourTitleLabel])
         
         businessCheckBox = KPCheckView(.checkmark, "目前營業中")
         containerView.addSubview(businessCheckBox)
         businessCheckBox.addConstraints(fromStringArray: ["H:|-16-[$self]",
-                                                          "V:[$view0]-24-[$self(24)]"],
-                                        views: [businessHourTitleLabel])
+                                                          "V:[$view0]-16-[$self(24)]"],
+                                        views: [businessCheckBoxNone])
         
         businessCheckBox_two = KPCheckView(.checkmark, "特定時間")
         containerView.addSubview(businessCheckBox_two)
@@ -266,8 +274,9 @@ class KPPreferenceSearchViewController: KPViewController {
                                                               "V:[$view0]-16-[$self(24)]"],
                                             views: [businessCheckBox])
         
-        businessCheckBox.deselectCheckViews = [businessCheckBox_two]
-        businessCheckBox_two.deselectCheckViews = [businessCheckBox]
+        businessCheckBox.deselectCheckViews = [businessCheckBox_two, businessCheckBoxNone]
+        businessCheckBox_two.deselectCheckViews = [businessCheckBox, businessCheckBoxNone]
+        businessCheckBoxNone.deselectCheckViews = [businessCheckBox_two, businessCheckBox]
         businessCheckBox_two.checkBox.addTarget(self,
                                                 action: #selector(handleSpecificCheckBoxOnChanged(_:)),
                                                 for: .valueChanged)
@@ -281,6 +290,8 @@ class KPPreferenceSearchViewController: KPViewController {
         businessHourResultLabel.addConstraints(fromStringArray: ["H:|-16-[$self]",
                                                                 "V:[$view0]-32-[$self]"],
                                               views: [businessCheckBox_two])
+        
+        
         
         slider = RangeSlider()
         slider.maximumValue = 144
@@ -296,9 +307,44 @@ class KPPreferenceSearchViewController: KPViewController {
                          action: #selector(rangeSliderValueChanged(_:)),
                          for: .valueChanged)
         
+        
         businessHourResultLabel.alpha = 0.5
         slider.alpha = 0.5
         slider.isUserInteractionEnabled = false
+        
+        switch KPFilter.sharedFilter.timeFilter {
+        case .None:
+            businessCheckBoxNone.checkBox.checkState = .checked
+            //        case .Opening
+        //            businessCheckBox.checkBox.checkState = .checked
+        case .Open(from: let from, to: let to):
+            businessCheckBox_two.checkBox.checkState = .checked
+            
+            let lowerList = from.components(separatedBy: ":")
+            if let hourString = lowerList.first, let minString = lowerList.last?.first,
+                let hour = Double(hourString), let minute = Double(String(minString)) {
+                slider.lowerValue = hour*6+minute
+            }
+            
+            let upperList = to.components(separatedBy: ":")
+            if let hourString = upperList.first, let minString = upperList.last?.first,
+                let hour = Double(hourString), let minute = Double(String(minString)) {
+                slider.upperValue = hour*6+minute
+            }
+            
+            businessHourResultLabel.alpha = 1
+            slider.alpha = 1
+            slider.isUserInteractionEnabled = true
+            
+            businessHourResultLabel.text = "從 \(from) 營業至 \(to)"
+        }
+        
+        if KPFilter.sharedFilter.selectedTag.contains(.opening) {
+            businessCheckBox.checkBox.checkState = .checked
+        }
+        
+        
+        
 
         searchButtonContainer = UIView()
         searchButtonContainer.backgroundColor = UIColor.white
@@ -354,7 +400,7 @@ class KPPreferenceSearchViewController: KPViewController {
     }
     
     @objc func handleSelectAllButtonOnTapped() {
-        for condition in conditions {
+        for condition in conditions.values {
             condition.checkBox.checkState = .checked
         }
     }
@@ -362,14 +408,16 @@ class KPPreferenceSearchViewController: KPViewController {
     @objc func handleRestoreButtonOnTapped() {
         sortSegmentedControl.selectedSegmentIndex = 0
         priceSegmentedControl.selectedSegmentIndex = 0
-        for condition in conditions {
+        for condition in conditions.values {
             condition.checkBox.checkState = .unchecked
         }
         businessCheckBox.checkBox.checkState = .unchecked
     }
     
     @objc func rangeSliderValueChanged(_ sender: RangeSlider) {
-        businessHourResultLabel.text = "從 \(Int(floor(sender.lowerValue/6))):\(Int(sender.lowerValue) % 6)0 營業至 \(Int(floor(sender.upperValue/6))):\(Int(sender.upperValue) % 6)0"
+        fromTime = "\(Int(floor(sender.lowerValue/6))):\(Int(sender.lowerValue) % 6)0"
+        toTime = "\(Int(floor(sender.upperValue/6))):\(Int(sender.upperValue) % 6)0"
+        businessHourResultLabel.text = "從 \(fromTime) 營業至 \(toTime)"
     }
     
 //    @objc func handleQuickSettingButtonOnTap(_ sender: UIButton) {

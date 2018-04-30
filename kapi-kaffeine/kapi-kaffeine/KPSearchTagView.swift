@@ -9,12 +9,12 @@
 import UIKit
 
 enum searchTagType: String {
-    case wifi       = "Wifi 穩定"
-    case socket     = "插座多"
-    case limitTime  = "不限時"
-    case opening    = "目前營業中"
-    case highRate   = "綜合評分高"
-    case clear      = "清除設定"
+    case wifi         = "有Wifi"
+    case socket       = "有插座"
+    case limitTime    = "無時間限制"
+    case opening      = "營業中"
+    case standingDesk = "站立工作"
+    case highRate     = "評分高"
 }
 
 protocol KPSearchTagViewDelegate: NSObjectProtocol {
@@ -49,26 +49,6 @@ class KPSearchTagView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = KPColorPalette.KPBackgroundColor.whiteColor
-        
-        
-//        preferenceHintButton = KPPreferenceHintButton()
-//        preferenceHintButton.setImage(R.image.icon_filter(),
-//                                           for: .normal)
-//        preferenceHintButton.imageEdgeInsets = UIEdgeInsetsMake(4, 2, 4, 2)
-//        preferenceHintButton.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 4)
-//        preferenceHintButton.imageView?.contentMode = .scaleAspectFit
-//        preferenceHintButton.titleLabel?.font = UIFont.systemFont(ofSize: 13.0)
-//        preferenceHintButton.setTitle("偏好篩選", for: .normal)
-//        preferenceHintButton.setTitleColor(UIColor.white, for: .normal)
-//        preferenceHintButton.setTitleColor(UIColor(hexString: "#888888"), for: .highlighted)
-//        preferenceHintButton.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.mainColor!),
-//                                                     for: .normal)
-//        preferenceHintButton.imageView?.tintColor = UIColor.white
-//        preferenceHintButton.layer.cornerRadius = 3.0
-//        preferenceHintButton.layer.masksToBounds = true
-//        addSubview(preferenceHintButton)
-//        preferenceHintButton.addConstraints(fromStringArray: ["V:|-4-[$self]-4-|",
-//                                                              "H:|-8-[$self(96)]"])
         
         //Collection view
         collectionLayout = UICollectionViewFlowLayout()
@@ -126,41 +106,24 @@ extension KPSearchTagView: UICollectionViewDelegate, UICollectionViewDataSource,
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-//        if indexPath.row == headerTagContents.count-1 {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: KPSearchTagView.KPSearchTagViewButtonCellReuseIdentifier,
-                                                          for: indexPath) as! KPSearchTagButtonCell
-            cell.tagTitle.text = self.headerTagContents[indexPath.row].rawValue
-            return cell
-            
-//        } else {
-//            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: KPSearchTagView.KPSearchTagViewCellReuseIdentifier,
-//                                                          for: indexPath) as! KPSearchTagCell
-//            cell.tagTitle.text = self.headerTagContents[indexPath.row].rawValue
-//            cell.tagIcon.image = self.headerTagImages[indexPath.row]
-//            cell.layer.cornerRadius = 2.0
-//            cell.layer.masksToBounds = true
-//            cell.alpha = cell.isSelected ? 1.0 : 0.4
-//
-//            return cell
-//        }
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: KPSearchTagView.KPSearchTagViewButtonCellReuseIdentifier,
+                                                      for: indexPath) as! KPSearchTagButtonCell
+//        cell.isSelected = KPFilter.sharedFilter.selectedTag.contains(headerTagContents[indexPath.row])
+        cell.tagTitle.text = self.headerTagContents[indexPath.row].rawValue
+        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        if self.headerTagContents[indexPath.row] == .clear {
-            deselectAllSearchTag()
-        }
 //        let cell = collectionView.cellForItem(at: indexPath)
 //        currentSelectTags.append(headerTagContents[indexPath.row])
-//        delegate?.searchTagDidSelect(headerTagContents[indexPath.row])
-//        cell?.alpha = 1.0
+        delegate?.searchTagDidSelect(headerTagContents[indexPath.row])
 //        preferenceHintButton.hintCount = collectionView.indexPathsForSelectedItems?.count ?? 0
 //        preferenceHintButton.hintCount = currentSelectTags.count
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
 //        preferenceHintButton.hintCount = collectionView.indexPathsForSelectedItems?.count ?? 0
-//        delegate?.searchTagDidDeselect(headerTagContents[indexPath.row])
+        delegate?.searchTagDidDeselect(headerTagContents[indexPath.row])
     }
     
 //    func collectionView(_ collectionView: UICollectionView,

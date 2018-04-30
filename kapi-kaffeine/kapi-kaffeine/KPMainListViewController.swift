@@ -244,13 +244,19 @@ class KPMainListViewController:
                                              message: nil,
                                              preferredStyle: .actionSheet)
         let sortDistance = UIAlertAction(title: "依照距離排列",
-                                         style: .default) { (_) in
+                                         style: .default) { [weak self] (_) in
+                                            guard let `self` = self else { return }
                                             self.sortLabel.text = "依照距離排列"
+                                            KPFilter.sharedFilter.sortedby = .distance
+                                            self.displayDataModel = KPFilter.sharedFilter.currentFilterCafeDatas()
         }
         
         let sortRate = UIAlertAction(title: "依照評分排列",
-                                        style: .default) {(_) in
+                                        style: .default) { [weak self] (_) in
+                                            guard let `self` = self else { return }
                                             self.sortLabel.text = "依照評分排列"
+                                            KPFilter.sharedFilter.sortedby = .rates
+                                            self.displayDataModel = KPFilter.sharedFilter.currentFilterCafeDatas()
         }
         
         let cancelButton = UIAlertAction(title: "取消",
