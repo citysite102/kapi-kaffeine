@@ -40,6 +40,8 @@ class KPFilter {
         return formatter
     }()
     
+    let calendar = Calendar.current
+    
     public func currentFilterCafeDatas() -> [KPDataModel] {
         var currentCafeDatas: [KPDataModel] = KPServiceHandler.sharedHandler.currentCafeDatas!
         
@@ -84,10 +86,38 @@ class KPFilter {
             switch timeFilter {
             case .None:
                 break
-    //        case .Opening:
-    //            // 上面search tag就應該處理了
-                break
             case .Open(from: let from, to: let to):
+                
+                guard let fromTime = timeFormatter.date(from: from)?.timeIntervalSince1970,
+                    let toTime = timeFormatter.date(from: to)?.timeIntervalSince1970 else {
+                        break
+                }
+                
+                currentCafeDatas = currentCafeDatas.filter({ (dataModel) -> Bool in
+                    guard let businessTime = dataModel.businessHour?.businessTime else { return false }
+                    
+                    guard let timeList = businessTime[getWeekdayOf(Date())] else { return false }
+                    
+                    var minTimeInterval: Double = Double.greatestFiniteMagnitude
+                    var maxTimeInterval: Double = 0
+                    for timeInfo in timeList {
+                        
+                        if timeInfo.startTimeInterval < minTimeInterval {
+                            minTimeInterval = timeInfo.startTimeInterval
+                        }
+                        
+                        if timeInfo.endTimeInterval > maxTimeInterval {
+                            maxTimeInterval = timeInfo.endTimeInterval
+                        }
+                        
+                    }
+                    
+                    if fromTime > minTimeInterval && toTime < maxTimeInterval {
+                        return true
+                    }
+                    
+                    return false
+                })
                 
                 break
             }
@@ -110,6 +140,28 @@ class KPFilter {
         }
         
         return currentCafeDatas
+    }
+    
+    func getWeekdayOf(_ date: Date) -> KPDay {
+        let component = calendar.component(Calendar.Component.weekday, from: date)
+        switch component {
+        case 0:
+            return .Sunday
+        case 1:
+            return .Monday
+        case 2:
+            return .Tuesday
+        case 3:
+            return .Wednesday
+        case 4:
+            return .Thursday
+        case 5:
+            return .Friday
+        case 6:
+            return .Saturday
+        default:
+            return .Monday
+        }
     }
     
     

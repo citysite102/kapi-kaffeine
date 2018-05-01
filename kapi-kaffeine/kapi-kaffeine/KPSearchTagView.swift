@@ -108,21 +108,21 @@ extension KPSearchTagView: UICollectionViewDelegate, UICollectionViewDataSource,
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: KPSearchTagView.KPSearchTagViewButtonCellReuseIdentifier,
                                                       for: indexPath) as! KPSearchTagButtonCell
-//        cell.isSelected = KPFilter.sharedFilter.selectedTag.contains(headerTagContents[indexPath.row])
+        cell.isSelected = KPFilter.sharedFilter.selectedTag.contains(headerTagContents[indexPath.row])
+        if cell.isSelected {
+            collectionView.selectItem(at: indexPath, animated: false, scrollPosition: UICollectionViewScrollPosition(rawValue: 0))
+        } else {
+            collectionView.deselectItem(at: indexPath, animated: false)
+        }
         cell.tagTitle.text = self.headerTagContents[indexPath.row].rawValue
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        let cell = collectionView.cellForItem(at: indexPath)
-//        currentSelectTags.append(headerTagContents[indexPath.row])
         delegate?.searchTagDidSelect(headerTagContents[indexPath.row])
-//        preferenceHintButton.hintCount = collectionView.indexPathsForSelectedItems?.count ?? 0
-//        preferenceHintButton.hintCount = currentSelectTags.count
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-//        preferenceHintButton.hintCount = collectionView.indexPathsForSelectedItems?.count ?? 0
         delegate?.searchTagDidDeselect(headerTagContents[indexPath.row])
     }
     

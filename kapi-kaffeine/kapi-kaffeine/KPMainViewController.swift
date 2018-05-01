@@ -738,29 +738,9 @@ KPSearchConditionViewControllerDelegate {
         
         mainListViewController?.state = .loading
         mainMapViewController?.state = .loading
-//        mainMapViewController?.showAllButton.isHidden = false
-//        mainListViewController?.tableView.reloadData()
         
         DispatchQueue.global().async {
             KPFilter.sharedFilter.selectedTag.insert(searchTag)
-            
-//            switch searchTag {
-//            case .wifi:
-//                KPFilter.sharedFilter.wifi = true
-//                KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.quick_wifi_button)
-//            case .socket:
-//                KPFilter.sharedFilter.socket = true
-//                KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.quick_socket_button)
-//            case .limitTime:
-//                KPFilter.sharedFilter.limitedTime = true
-//                KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.quick_time_button)
-//            case .opening:
-//                KPFilter.sharedFilter.currentOpening = true
-//                KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.quick_open_button)
-//            case .highRate:
-//                KPFilter.sharedFilter.highRate = true
-//                KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.quick_rate_button)
-//            }
             
             DispatchQueue.main.async {
                 self.setDisplayDataModel(KPFilter.sharedFilter.currentFilterCafeDatas(), true)
@@ -772,23 +752,9 @@ KPSearchConditionViewControllerDelegate {
         
         mainListViewController?.state = .loading
         mainMapViewController?.state = .loading
-//        mainListViewController?.tableView.reloadData()
         
         DispatchQueue.global().async {
             KPFilter.sharedFilter.selectedTag.remove(searchTag)
-            
-//            switch searchTag {
-//            case .wifi:
-//                KPFilter.sharedFilter.wifi = false
-//            case .socket:
-//                KPFilter.sharedFilter.socket = false
-//            case .limitTime:
-//                KPFilter.sharedFilter.limitedTime = false
-//            case .opening:
-//                KPFilter.sharedFilter.currentOpening = false
-//            case .highRate:
-//                KPFilter.sharedFilter.highRate = false
-//            }
             
             let filteredData = KPFilter.sharedFilter.currentFilterCafeDatas()
             
@@ -839,94 +805,6 @@ KPSearchConditionViewControllerDelegate {
         }
         
         searchHeaderView.searchTagView.collectionView.reloadData()
-        
-//        KPFilter.sharedFilter.wifi = searchConditionController.wifi
-//        KPFilter.sharedFilter.wifiRate  = Double(searchConditionController.ratingViews[0].currentRate)
-//        if KPFilter.sharedFilter.wifiRate >= 4, let index = self.searchHeaderView.searchTagView.headerTagContents.index(of: .wifi) {
-//            self.searchHeaderView.searchTagView.collectionView.selectItem(at: IndexPath.init(row: index, section: 0),
-//                                                                          animated: false,
-//                                                                          scrollPosition: [])
-//        } else if let index = self.searchHeaderView.searchTagView.headerTagContents.index(of: .wifi) {
-//            self.searchHeaderView.searchTagView.collectionView.deselectItem(at: IndexPath.init(row: index, section:0),
-//                                                                            animated: false)
-//        }
-        
-//        KPFilter.sharedFilter.quietRate = Double(searchConditionController.ratingViews[1].currentRate)
-//        KPFilter.sharedFilter.cheapRate = Double(searchConditionController.ratingViews[2].currentRate)
-//        KPFilter.sharedFilter.seatRate = Double(searchConditionController.ratingViews[3].currentRate)
-//        KPFilter.sharedFilter.tastyRate = Double(searchConditionController.ratingViews[4].currentRate)
-//        KPFilter.sharedFilter.foodRate = Double(searchConditionController.ratingViews[5].currentRate)
-//        KPFilter.sharedFilter.musicRate = Double(searchConditionController.ratingViews[6].currentRate)
-        
-        
-//        KPFilter.sharedFilter.limited_time = (searchConditionController.timeRadioBoxOne.groupValue as! Int)
-//        KPFilter.sharedFilter.socket = (searchConditionController.socketRadioBoxOne.groupValue as! Int)
-
-        
-//        if let index = self.searchHeaderView.searchTagView.headerTagContents.index(of: .limitTime) {
-//            if KPFilter.sharedFilter.limited_time == 2 {
-//                self.searchHeaderView.searchTagView.collectionView.selectItem(at: IndexPath.init(row: index, section: 0),
-//                                                                              animated: false,
-//                                                                              scrollPosition: [])
-//            } else {
-//                self.searchHeaderView.searchTagView.collectionView.deselectItem(at: IndexPath.init(row: index, section: 0),
-//                                                                                animated: false)
-//            }
-//        }
-//
-//        if let index = self.searchHeaderView.searchTagView.headerTagContents.index(of: .socket) {
-//            if KPFilter.sharedFilter.socket == 1 {
-//                self.searchHeaderView.searchTagView.collectionView.selectItem(at: IndexPath.init(row: index, section: 0),
-//                                                                              animated: false,
-//                                                                              scrollPosition: [])
-//            } else {
-//                self.searchHeaderView.searchTagView.collectionView.deselectItem(at: IndexPath.init(row: index, section: 0),
-//                                                                                animated: false)
-//            }
-//        }
-        
-        
-        // 時間
-//        if searchConditionController.businessCheckBoxOne.checkBox.checkState == .checked {
-//            // 不設定
-//            KPFilter.sharedFilter.currentOpening = false
-//            KPFilter.sharedFilter.searchTime = nil
-//
-//            // 取消 營業中 的tag
-//            if let index = self.searchHeaderView.searchTagView.headerTagContents.index(of: .opening) {
-//                self.searchHeaderView.searchTagView.collectionView.deselectItem(at: IndexPath.init(row: index, section:0),
-//                                                                                animated: false)
-//            }
-//
-//        } else if  searchConditionController.businessCheckBoxThree.checkBox.checkState == .checked {
-//            // 特定時段
-//            KPFilter.sharedFilter.currentOpening = false
-//            if let startTime = searchConditionController.timeSupplementView.startTime,
-//                let endTime = searchConditionController.timeSupplementView.endTime {
-//                KPFilter.sharedFilter.searchTime = "\(startTime)~\(endTime)"
-//            }
-//
-//            // 取消 營業中 的tag
-//            if let index = self.searchHeaderView.searchTagView.headerTagContents.index(of: .opening) {
-//                self.searchHeaderView.searchTagView.collectionView.deselectItem(at: IndexPath.init(row: index, section:0),
-//                                                                                animated: false)
-//            }
-//
-//        } else if searchConditionController.businessCheckBoxTwo.checkBox.checkState == .checked {
-//            // 目前營業中
-//            KPFilter.sharedFilter.currentOpening = true
-//
-//            // 選取 營業中 的tag
-//            if let index = self.searchHeaderView.searchTagView.headerTagContents.index(of: .opening) {
-//                self.searchHeaderView.searchTagView.collectionView.selectItem(at: IndexPath.init(row: index, section: 0),
-//                                                                              animated: false,
-//                                                                              scrollPosition: [])
-//            }
-//        }
-//
-        
-//        KPFilter.sharedFilter.standingDesk = searchConditionController.othersCheckBoxOne.checkBox.checkState == .checked ? true : false
-        
         
         DispatchQueue.global().async {
             let filteredData = KPFilter.sharedFilter.currentFilterCafeDatas()
