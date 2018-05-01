@@ -82,6 +82,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let navigationBarAppearace = UINavigationBar.appearance()
         
         navigationBarAppearace.isTranslucent = false
+        
+        
+        if (KPUserManager.sharedManager.currentUser != nil) {
+            KPUserManager.sharedManager.updateUserInformation()
+        }
+        
 
 //        navigationBarAppearace.tintColor = KPColorPalette.KPTextColor.whiteColor
 //        navigationBarAppearace.barTintColor = KPColorPalette.KPMainColor_v2.mainColor_light

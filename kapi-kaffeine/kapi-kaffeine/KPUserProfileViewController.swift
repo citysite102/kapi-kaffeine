@@ -28,6 +28,23 @@ KPTabViewDelegate {
                     self.tabView.isHidden = false
                     self.scrollView.isHidden = false
                     
+                    if let user = KPUserManager.sharedManager.currentUser {
+                        if let photoURL = URL(string: user.photoURL ?? "") {
+                            self.userPhoto.af_setImage(withURL: photoURL)
+                        }
+                        self.userNameLabel.text = "Hi, \(user.displayName ?? "")"
+                        self.userBioLabel.text = user.intro ?? "被你看到這個隱藏的內容？！肯定有Bug，快回報給我們吧！"
+                        
+                        for (index, tabTitle) in self.tabTitles.enumerated() {
+                            
+                            if let displayModel = KPUserManager.sharedManager.currentUser?.value(forKey: tabTitle.key) as? [KPDataModel] {
+                                self.tabView.tabs[index].setTitle("\(tabTitle.title) \(displayModel.count)", for: .normal)
+                            } else if let articleItem = KPUserManager.sharedManager.currentUser?.value(forKey: tabTitle.key) as? [KPArticleItem] {
+                                self.tabView.tabs[index].setTitle("\(tabTitle.title) \(articleItem.count)", for: .normal)
+                            }
+                        }
+                    }
+                    
                     UIView.animate(withDuration: 0.2,
                                    animations: {
                                     self.userContainer.alpha = 1.0
@@ -42,6 +59,7 @@ KPTabViewDelegate {
                         self.introLabel.isHidden = true
                         self.backgroundImageView.isHidden = true
                         self.facebookLoginButton.isHidden = true
+                        self.loadUserContent()
                     })
                     
                 } else {
@@ -155,7 +173,7 @@ KPTabViewDelegate {
         }
     }
     
-    var dataLoading: Bool = false
+    var dataLoading: Bool = true
     var dataloaded: Bool = false
     
     override func viewDidLoad() {
@@ -327,6 +345,31 @@ KPTabViewDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        loadUserContent()
+    }
+    
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if let user = KPUserManager.sharedManager.currentUser {
+            isLogin = true
+        } else {
+            isLogin = false
+        }
+        view.bringSubview(toFront: tabView)
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    func loadUserContent() {
+        
+        self.dataLoading = true
+        self.dataloaded = false
+        
         if (KPUserManager.sharedManager.currentUser != nil) {
             if !self.dataloaded {
                 self.dataLoading = true
@@ -360,8 +403,6 @@ KPTabViewDelegate {
                                 self.statusViews[index].isHidden = (articleModels.count != 0)
                             })
                         }
-                        
-                        
                     } else {
                         self.displayDataModels[index] = []
                         DispatchQueue.main.async {
@@ -377,57 +418,14 @@ KPTabViewDelegate {
                     }
                 }
                 self.dataLoading = false
+                self.dataloaded = true
                 DispatchQueue.main.async {
                     for tableView in self.tableViews {
                         tableView.reloadData()
                     }
                 }
-                self.dataloaded = true
             })
         }
-    }
-    
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        if let user = KPUserManager.sharedManager.currentUser {
-            isLogin = true
-            if let photoURL = URL(string: user.photoURL ?? "") {
-                userPhoto.af_setImage(withURL: photoURL)
-            }
-            userNameLabel.text = "Hi, \(user.displayName ?? "")"
-            userBioLabel.text = user.intro ?? "被你看到這個隱藏的內容？！肯定有Bug，快回報給我們吧！"
-            
-            for (index, tabTitle) in tabTitles.enumerated() {
-                
-                if let displayModel = KPUserManager.sharedManager.currentUser?.value(forKey: tabTitle.key) as? [KPDataModel] {
-                    tabView.tabs[index].setTitle("\(tabTitle.title) \(displayModel.count)", for: .normal)
-                } else if let articleItem = KPUserManager.sharedManager.currentUser?.value(forKey: tabTitle.key) as? [KPArticleItem] {
-                    tabView.tabs[index].setTitle("\(tabTitle.title) \(articleItem.count)", for: .normal)
-                }
-            }
-        } else {
-            isLogin = false
-        }
-        
-        view.bringSubview(toFront: tabView)
-        
-//        if let user = KPUserManager.sharedManager.currentUser {
-//            isLogin = true
-//            if let photoURL = URL(string: user.photoURL ?? "") {
-//                userPhoto.af_setImage(withURL: photoURL)
-//            }
-//            userNameLabel.text = "Hi, \(user.displayName ?? "")"
-//            userBioLabel.text = user.intro ?? "被你看到這個隱藏的內容？！肯定有Bug，快回報給我們吧！"
-//        } else {
-//            isLogin = false
-//        }
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     func handleDismissButtonOnTapped() {
@@ -481,7 +479,7 @@ KPTabViewDelegate {
     func tableView(_ tableView: UITableView,
                    cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if !dataLoading {
+        if dataloaded {
             if tableView.tag == articleTabIndex {
                 let cell = tableView.dequeueReusableCell(withIdentifier:"cell_article",
                                                          for: indexPath) as! KPListArticleCell

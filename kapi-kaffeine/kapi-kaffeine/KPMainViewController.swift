@@ -310,10 +310,6 @@ class KPMainViewController: KPViewController {
             }
         }
         
-        if (KPUserManager.sharedManager.currentUser != nil) {
-            KPUserManager.sharedManager.updateUserInformation()
-        }
-        
         KPServiceHandler.sharedHandler.fetchTagList()
     }
     

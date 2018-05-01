@@ -57,7 +57,9 @@ public class KPUserManager {
     
     var currentUser: KPUser? {
         didSet {
-            NotificationCenter.default.post(name: NSNotification.Name.KPCurrentUserDidChange, object: nil)
+            if currentUser?.identifier != oldValue?.identifier {
+                NotificationCenter.default.post(name: NSNotification.Name.KPCurrentUserDidChange, object: nil)
+            }
         }
     }
     var loginManager: LoginManager!

@@ -93,9 +93,9 @@ class KPTabView: UIView {
         
         
         self.layer.masksToBounds = false;
-        self.layer.shadowOffset = CGSize(width: 1, height: 1);
-        self.layer.shadowRadius = 1;
-        self.layer.shadowOpacity = 0.2;
+        self.layer.shadowOffset = CGSize(width: 0, height: 1);
+        self.layer.shadowRadius = 0;
+        self.layer.shadowOpacity = 0.15;
         
     }
     
