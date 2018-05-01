@@ -527,6 +527,7 @@ KPTabViewDelegate {
                                                          for: indexPath) as! KPMainListTableViewCell
                 
                 cell.selectionStyle = .none
+                cell.tag = indexPath.row
                 cell.dataModel = self.displayDataModels[tableView.tag][indexPath.row]
                 return cell
             }

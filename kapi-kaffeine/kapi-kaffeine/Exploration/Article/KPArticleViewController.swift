@@ -120,8 +120,8 @@ class KPArticleViewController: KPViewController {
         articleFirstParagraphTextView.textColor = UIColor.white
         articleFirstParagraphTextView.backgroundColor = UIColor.clear
         articleFirstParagraphTextView.isScrollEnabled = false
-        articleFirstParagraphTextView.setText(text: "歐洲的咖啡店風格總是強烈的讓人移不開目光，即使身處在倫敦這樣的忙碌城市裡，竄入鼻腔內的咖啡香，不經意地就能停住路人的快速步伐。",
-                                              lineSpacing: 4.0)
+//        articleFirstParagraphTextView.setText(text: "歐洲的咖啡店風格總是強烈的讓人移不開目光，即使身處在倫敦這樣的忙碌城市裡，竄入鼻腔內的咖啡香，不經意地就能停住路人的快速步伐。",
+//                                              lineSpacing: 4.0)
         heroCoverImageView.addSubview(articleFirstParagraphTextView)
         articleFirstParagraphTextView.addConstraints(fromStringArray: ["V:[$self]-64-|",
                                                                        "H:[$self($metric0)]"],
@@ -134,8 +134,8 @@ class KPArticleViewController: KPViewController {
                                                            y: 36)
         articleSubTitleLabel.font = UIFont.boldSystemFont(ofSize: 18)
         articleSubTitleLabel.textColor = KPColorPalette.KPTextColor_v2.yellow_color
-        articleSubTitleLabel.setText(text: "這絕對是今年喝過最好喝的咖啡！",
-                                     lineSpacing: 4.0)
+//        articleSubTitleLabel.setText(text: "這絕對是今年喝過最好喝的咖啡！",
+//                                     lineSpacing: 4.0)
         articleSubTitleLabel.numberOfLines = 0
         heroCoverImageView.addSubview(articleSubTitleLabel)
         articleSubTitleLabel.addConstraints(fromStringArray: ["V:[$self]-8-[$view0]",
@@ -152,8 +152,8 @@ class KPArticleViewController: KPViewController {
         articleTitleLabel.font = UIFont.boldSystemFont(ofSize: 40)
         articleTitleLabel.textColor = UIColor.white
         articleTitleLabel.numberOfLines = 0
-        articleTitleLabel.setText(text: "一窺東倫敦新興咖啡社群 - Hello Hackney",
-                                  lineSpacing: 4.0)
+//        articleTitleLabel.setText(text: "一窺東倫敦新興咖啡社群 - Hello Hackney",
+//                                  lineSpacing: 4.0)
         heroCoverImageView.addSubview(articleTitleLabel)
         
         articleTitleLabel.addConstraints(fromStringArray: ["V:[$self]-16-[$view0]",
@@ -558,7 +558,6 @@ class KPArticleViewController: KPViewController {
                         }
                         
                         button.setTitle(buttonElement.value, for: .normal)
-//                        button.setTitleColor(buttonElement.color, for: .normal)
                         button.setTitleColor(KPColorPalette.KPMainColor_v2.grayColor_level2,
                                              for: .normal)
                         button.titleLabel?.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
@@ -593,6 +592,14 @@ class KPArticleViewController: KPViewController {
                             currentView.topAnchor.constraint(equalTo: previousView.bottomAnchor,
                                                              constant: 0),
                             currentView.heightAnchor.constraint(lessThanOrEqualToConstant: 320)
+                            ])
+                    } else if currentView.isKind(of: UIButton.self) {
+                        NSLayoutConstraint.activate([
+                            currentView.leftAnchor.constraint(equalTo: self.articleContainer.leftAnchor, constant: 16),
+                            currentView.rightAnchor.constraint(equalTo: self.articleContainer.rightAnchor, constant: -16),
+                            currentView.heightAnchor.constraint(equalToConstant: 40),
+                            currentView.topAnchor.constraint(equalTo: previousView.bottomAnchor,
+                                                             constant: previousView.isKind(of: UIImageView.self) ? 0 : spacing)
                             ])
                     } else {
                         NSLayoutConstraint.activate([

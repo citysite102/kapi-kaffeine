@@ -550,6 +550,7 @@ extension KPMainListViewController: UITableViewDelegate, UITableViewDataSource {
                                                              for: indexPath) as! KPMainListTableViewCell
                     
                     cell.selectionStyle = .none
+                    cell.tag = indexPath.row
                     cell.dataModel = self.displayDataModel[indexPath.row] as! KPDataModel
                     return cell
                 }

@@ -364,6 +364,7 @@ class KPInformationHeaderView: UIView {
         
         
         morePhotoButton = UIButton(type: .custom)
+        morePhotoButton.isHidden = true
         morePhotoButton.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.grayColor_level5!),
                                            for: .normal)
         morePhotoButton.layer.cornerRadius = 4.0

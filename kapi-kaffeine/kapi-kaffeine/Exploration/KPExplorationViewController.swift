@@ -21,6 +21,7 @@ class KPExplorationViewController: KPViewController {
     var shouldShowLightContent: Bool = true
     var currentBgImageIndex = 0
     var targetPosition: CGPoint = CGPoint(x: -1, y: 0)
+    var demoReadCount = [22, 13, 92, 122]
     
     var filterButton: KPBounceButton!
     var headerView: UIView!
@@ -522,16 +523,16 @@ extension KPExplorationViewController: UITableViewDataSource, UITableViewDelegat
                 
                 currentBgImageIndex = 0
                 
-                UIView.animate(withDuration: 0.4,
+                UIView.animate(withDuration: 0.5,
                                animations: {
                                 self.sectionBgImageView.alpha = 0
                                 self.sectionBgImageView.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
                 }) { (_) in
-                    UIView.animate(withDuration: 0.4,
+                    UIView.animate(withDuration: 0.5,
                                    animations: {
                                     self.sectionBgImageView.alpha = 1.0
                                     self.sectionBgImageView.transform = CGAffineTransform.identity
-                                    self.sectionBgImageView.image = R.image.demo_black()?.tint(KPColorPalette.KPMainColor_v2.mainColor_dark!, blendMode: .softLight)
+                                    self.sectionBgImageView.image = R.image.demo_8()?.tint(KPColorPalette.KPMainColor_v2.mainColor_dark!, blendMode: .softLight)
                     })
                 }
                 
@@ -542,35 +543,53 @@ extension KPExplorationViewController: UITableViewDataSource, UITableViewDelegat
                 
                 currentBgImageIndex = 1
                 
-                UIView.animate(withDuration: 0.4,
+                UIView.animate(withDuration: 0.5,
                                animations: {
                                 self.sectionBgImageView.alpha = 0
                                 self.sectionBgImageView.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
                 }) { (_) in
-                    UIView.animate(withDuration: 0.4,
+                    UIView.animate(withDuration: 0.5,
                                    animations: {
                                     self.sectionBgImageView.alpha = 1.0
                                     self.sectionBgImageView.transform = CGAffineTransform.identity
-                                    self.sectionBgImageView.image = R.image.demo_1()?.tint(KPColorPalette.KPMainColor_v2.mainColor_dark!, blendMode: .softLight)
+                                    self.sectionBgImageView.image = R.image.demo_9()?.tint(KPColorPalette.KPMainColor_v2.mainColor_dark!, blendMode: .softLight)
                     })
                 }
                 
-            } else if scrollView.contentOffset.x < 750 &&
+            } else if scrollView.contentOffset.x < 650 &&
                 scrollView.contentOffset.x >= 500 &&
                 currentBgImageIndex != 2 {
                 
                 currentBgImageIndex = 2
                 
-                UIView.animate(withDuration: 0.4,
+                UIView.animate(withDuration: 0.5,
                                animations: {
                                 self.sectionBgImageView.alpha = 0
                                 self.sectionBgImageView.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
                 }) { (_) in
-                    UIView.animate(withDuration: 0.4,
+                    UIView.animate(withDuration: 0.5,
                                    animations: {
                                     self.sectionBgImageView.alpha = 1.0
                                     self.sectionBgImageView.transform = CGAffineTransform.identity
-                                    self.sectionBgImageView.image = R.image.demo_2()?.tint(KPColorPalette.KPMainColor_v2.mainColor_dark!, blendMode: .softLight)
+                                    self.sectionBgImageView.image = R.image.demo_10()?.tint(KPColorPalette.KPMainColor_v2.mainColor_dark!, blendMode: .softLight)
+                    })
+                }
+            } else if scrollView.contentOffset.x < 1000 &&
+                scrollView.contentOffset.x >= 650 &&
+                currentBgImageIndex != 3 {
+                
+                currentBgImageIndex = 3
+                
+                UIView.animate(withDuration: 0.5,
+                               animations: {
+                                self.sectionBgImageView.alpha = 0
+                                self.sectionBgImageView.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+                }) { (_) in
+                    UIView.animate(withDuration: 0.5,
+                                   animations: {
+                                    self.sectionBgImageView.alpha = 1.0
+                                    self.sectionBgImageView.transform = CGAffineTransform.identity
+                                    self.sectionBgImageView.image = R.image.demo_11()?.tint(KPColorPalette.KPMainColor_v2.mainColor_dark!, blendMode: .softLight)
                     })
                 }
             }
@@ -610,7 +629,8 @@ UICollectionViewDelegateFlowLayout {
         cell.articleHeroImageView.hero.id = "article-\(indexPath.row)"
         cell.titleLabel.setText(text: articleList[indexPath.row].title!,
                                 lineSpacing: 4.0)
-        cell.subLabel.text = "\(articleList[indexPath.row].peopleRead) 人已閱讀"
+        let readCount = articleList[indexPath.row].peopleRead + demoReadCount[indexPath.row]
+        cell.subLabel.text = "\(readCount) 人已閱讀"
         return cell
     }
     
