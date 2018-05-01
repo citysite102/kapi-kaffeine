@@ -133,7 +133,7 @@ class KPInformationCardView: UIView {
         rateLabel.isOpaque = true
         rateLabel.layer.masksToBounds = true
         rateContainer.addSubview(rateLabel)
-        rateLabel.addConstraints(fromStringArray: ["H:[$view0]-6-[$self]"],
+        rateLabel.addConstraints(fromStringArray: ["H:[$view0]-6-[$self]|"],
                                  metrics:[KPLayoutConstant.information_horizontal_offset],
                                  views: [starIcons[starIcons.count-1]])
         rateLabel.addConstraintForCenterAligning(to: starIcons[starIcons.count-1],
@@ -146,21 +146,18 @@ class KPInformationCardView: UIView {
         commentCountLabel.text = "(24則)"
         commentCountLabel.isOpaque = true
         commentCountLabel.layer.masksToBounds = true
-        rateContainer.addSubview(commentCountLabel)
-        commentCountLabel.addConstraints(fromStringArray: ["H:[$view0]-2-[$self]|"],
-                                 views: [rateLabel])
-        commentCountLabel.addConstraintForCenterAligning(to: starIcons[starIcons.count-1],
-                                                         in: .vertical,
-                                                         constant: -2)
+//        rateContainer.addSubview(commentCountLabel)
+//        commentCountLabel.addConstraints(fromStringArray: ["H:[$view0]-2-[$self]|"],
+//                                 views: [rateLabel])
+//        commentCountLabel.addConstraintForCenterAligning(to: starIcons[starIcons.count-1],
+//                                                         in: .vertical,
+//                                                         constant: -2)
         
         shopStatusHint = UIView()
         shopStatusHint.backgroundColor = KPColorPalette.KPMainColor_v2.greenColor
         shopStatusHint.layer.cornerRadius = 4.0
         shopStatusHint.isOpaque = true
         container.addSubview(shopStatusHint)
-//        shopStatusHint.addConstraints(fromStringArray: ["H:|-($metric0)-[$self(8)]",
-//                                                        "V:[$view0]-22-[$self(8)]-40-|"],
-
         shopStatusHint.addConstraints(fromStringArray: ["H:[$view0]-($metric0)-[$self(8)]",
                                                         "V:[$self(8)]"],
                                       metrics:[KPLayoutConstant.information_horizontal_offset+4],

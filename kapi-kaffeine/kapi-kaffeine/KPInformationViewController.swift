@@ -466,6 +466,19 @@ class KPInformationViewController: KPViewController {
         
         
         informationView = KPShopInfoView()
+        informationView.otherTimeClosure = { [unowned self] () in
+            let controller = KPModalViewController()
+            let businessTimeViewController = KPBusinessTimeViewController()
+            
+            controller.edgeInset = UIEdgeInsetsMake(0, 0, 0, 0)
+            controller.dismissWhenTouchingOnBackground = true
+            controller.presentationStyle = .popout
+            businessTimeViewController.businessTime = self.detailedInformationDataModel.businessHour
+            businessTimeViewController.titleLabel.setText(text: self.detailedInformationDataModel.name,
+                                                          lineSpacing: 3.0)
+            controller.contentController = businessTimeViewController
+            controller.presentModalView()
+        }
         shopInformationView = KPInformationSharedInfoView()
         shopInformationView.infoView = informationView
         shopInformationView.infoTitleLabel.text = "店家資訊"
@@ -542,6 +555,7 @@ class KPInformationViewController: KPViewController {
         recommendInformationView = KPInformationSharedInfoView()
         recommendInformationView.infoView = shopRecommendView
         recommendInformationView.infoTitleLabel.text = "你可能也會喜歡"
+        recommendInformationView.separator.isHidden = true
         if self.navigationController != nil {
             scrollContainer.addSubview(recommendInformationView)
             recommendInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
@@ -1100,20 +1114,20 @@ class KPInformationViewController: KPViewController {
     }
     
     
-    @objc func handleOtherTimeButtonOnTapped() {
-        
-        let controller = KPModalViewController()
-        let businessTimeViewController = KPBusinessTimeViewController()
-        
-        controller.edgeInset = UIEdgeInsetsMake(0, 0, 0, 0)
-        controller.dismissWhenTouchingOnBackground = true
-        controller.presentationStyle = .popout
-        businessTimeViewController.businessTime = detailedInformationDataModel.businessHour
-        businessTimeViewController.titleLabel.setText(text: detailedInformationDataModel.name,
-                                                      lineSpacing: 3.0)
-        controller.contentController = businessTimeViewController
-        controller.presentModalView()
-    }
+//    @objc func handleOtherTimeButtonOnTapped() {
+//
+//        let controller = KPModalViewController()
+//        let businessTimeViewController = KPBusinessTimeViewController()
+//
+//        controller.edgeInset = UIEdgeInsetsMake(0, 0, 0, 0)
+//        controller.dismissWhenTouchingOnBackground = true
+//        controller.presentationStyle = .popout
+//        businessTimeViewController.businessTime = detailedInformationDataModel.businessHour
+//        businessTimeViewController.titleLabel.setText(text: detailedInformationDataModel.name,
+//                                                      lineSpacing: 3.0)
+//        controller.contentController = businessTimeViewController
+//        controller.presentModalView()
+//    }
     
     @objc func handleDismissButtonOnTapped() {
         if self.navigationController?.viewControllers.first is KPInformationViewController && self.navigationController?.viewControllers.first != self {

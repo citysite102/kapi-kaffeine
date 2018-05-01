@@ -18,15 +18,15 @@ class KPBusinessTimeViewController: UIViewController {
         let label = UILabel()
         label.text = "快跟我們回報錯誤"
         label.numberOfLines = 0
-        label.font = UIFont.systemFont(ofSize: 24.0)
-        label.textColor = KPColorPalette.KPTextColor.mainColor
+        label.font = UIFont.systemFont(ofSize: KPFontSize.header)
+        label.textColor = KPColorPalette.KPMainColor_v2.mainColor
         return label
     }()
     
     lazy var noteLabel: UILabel = {
         let label = UILabel()
         label.text = "*營業資訊以店家官網最新公佈為準"
-        label.font = UIFont.systemFont(ofSize: 14.0)
+        label.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
         label.textColor = KPColorPalette.KPTextColor.grayColor_level4
         return label
     }()
@@ -67,17 +67,17 @@ class KPBusinessTimeViewController: UIViewController {
         shopStatusHint.isOpaque = true
         containerView.addSubview(shopStatusHint)
         shopStatusHint.addConstraints(fromStringArray: ["H:|-24-[$self(6)]",
-                                                        "V:[$view0]-12-[$self(6)]"],
+                                                        "V:[$view0]-14-[$self(6)]"],
                                       views: [titleLabel])
         
         shopStatusLabel = KPLayerLabel()
-        shopStatusLabel.font = UIFont.systemFont(ofSize: 12.0)
+        shopStatusLabel.font = UIFont.systemFont(ofSize: KPFontSize.infoContent)
         shopStatusLabel.textColor = KPColorPalette.KPTextColor.grayColor
         shopStatusLabel.text = "營業時間 未知"
         shopStatusLabel.isOpaque = true
         shopStatusLabel.layer.masksToBounds = true
         containerView.addSubview(shopStatusLabel)
-        shopStatusLabel.addConstraints(fromStringArray: ["H:[$view0]-6-[$self($metric0)]"],
+        shopStatusLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self($metric0)]"],
                                        metrics: [UIScreen.main.bounds.size.width/2],
                                        views: [shopStatusHint])
         shopStatusLabel.addConstraintForCenterAligning(to: shopStatusHint,
@@ -99,6 +99,9 @@ class KPBusinessTimeViewController: UIViewController {
         for (index, content) in dayContents.enumerated() {
             let dayInfoView = KPBusinessTimeInfoView(content, businessTime==nil ?
                 "尚無資料" : businessTime!.getTimeString(withDay: content))
+            dayInfoView.timeLabel.textColor = dayInfoView.timeLabel.text == "休息" ?
+                KPColorPalette.KPTextColor.grayColor_level4 :
+                KPColorPalette.KPMainColor_v2.mainColor
             containerView.addSubview(dayInfoView)
             dayInfoViews.append(dayInfoView)
             if index == 0 {

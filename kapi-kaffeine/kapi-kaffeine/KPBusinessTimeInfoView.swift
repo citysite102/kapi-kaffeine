@@ -24,7 +24,7 @@ class KPBusinessTimeInfoView: UIView {
         let label = UILabel()
         label.text = "11:30-21:30"
         label.font = UIFont.systemFont(ofSize: 16.0)
-        label.textColor = KPColorPalette.KPTextColor.mainColor
+        label.textColor = KPColorPalette.KPMainColor_v2.mainColor
         label.textAlignment = .right
         return label
     }()

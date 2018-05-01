@@ -12,6 +12,7 @@ import GoogleMaps
 class KPShopInfoView: UIView, GMSMapViewDelegate {
 
     var titleLabel: UILabel!
+    var otherTimeClosure: (() -> Void)?
     var informationDataModel: KPDetailedDataModel! {
         didSet {
             
@@ -65,6 +66,27 @@ class KPShopInfoView: UIView, GMSMapViewDelegate {
                                                                               "H:|-($metric0)-[$self]-($metric0)-|"],
                                                             metrics:[KPLayoutConstant.information_horizontal_offset])
                     
+                    self.shopBusinessView = KPShopSubInfoView("營業時間",
+                                                              "9:00 - 19:00",
+                                                              nil,
+                                                              nil,
+                                                              false,
+                                                              { (infoView) in
+                                                                if !infoView.emptyContent {
+                                                                    if self.otherTimeClosure != nil {
+                                                                        self.otherTimeClosure!()
+                                                                    }
+                                                                    
+                                                                }
+                                                                
+                    })
+                    self.addSubview(self.shopBusinessView)
+                    self.shopBusinessView.addConstraints(fromStringArray: ["V:[$view0][$self]",
+                                                                           "H:|-($metric0)-[$self]-($metric0)-|"],
+                                                            metrics:[KPLayoutConstant.information_horizontal_offset],
+                                                            views:[self.shopInfrasInfoView])
+                    
+                    
                     self.shopWebsiteInfoView = KPShopSubInfoView("網站",
                                                                  "尚未開放",
                                                                  nil,
@@ -75,7 +97,7 @@ class KPShopInfoView: UIView, GMSMapViewDelegate {
                     self.shopWebsiteInfoView.addConstraints(fromStringArray: ["V:[$view0][$self]",
                                                                               "H:|-($metric0)-[$self]-($metric0)-|"],
                                                             metrics:[KPLayoutConstant.information_horizontal_offset],
-                                                            views:[self.shopInfrasInfoView])
+                                                            views:[self.shopBusinessView])
                     
                     self.shopPhoneInfoView = KPShopSubInfoView("聯絡電話",
                                                                self.informationDataModel.phone ?? "尚無電話",
@@ -223,6 +245,7 @@ class KPShopInfoView: UIView, GMSMapViewDelegate {
     
     
     var shopInfrasInfoView: KPShopSubInfoView!
+    var shopBusinessView: KPShopSubInfoView!
     var shopWebsiteInfoView: KPShopSubInfoView!
     var shopPhoneInfoView: KPShopSubInfoView!
     var shopFacebookInfoView: KPShopSubInfoView!
@@ -251,6 +274,19 @@ class KPShopInfoView: UIView, GMSMapViewDelegate {
                                                             "H:|-($metric0)-[$self]-($metric0)-|"],
                                            metrics:[KPLayoutConstant.information_horizontal_offset])
         
+        
+        shopBusinessView = KPShopSubInfoView("營業時間",
+                                             "9:00 - 19:00",
+                                             nil,
+                                             nil,
+                                             false,
+                                             nil)
+        addSubview(shopBusinessView)
+        shopBusinessView.addConstraints(fromStringArray: ["V:[$view0][$self]",
+                                                          "H:|-($metric0)-[$self]-($metric0)-|"],
+                                        metrics:[KPLayoutConstant.information_horizontal_offset],
+                                        views:[shopInfrasInfoView])
+        
         shopWebsiteInfoView = KPShopSubInfoView("網站",
                                                 "www.abc.com",
                                                 nil,
@@ -261,7 +297,7 @@ class KPShopInfoView: UIView, GMSMapViewDelegate {
         shopWebsiteInfoView.addConstraints(fromStringArray: ["V:[$view0][$self]",
                                                              "H:|-($metric0)-[$self]-($metric0)-|"],
                                            metrics:[KPLayoutConstant.information_horizontal_offset],
-                                           views:[shopInfrasInfoView])
+                                           views:[shopBusinessView])
         
         shopPhoneInfoView = KPShopSubInfoView("聯絡電話",
                                               informationDataModel.phone ?? "尚無電話",
