@@ -181,6 +181,21 @@ class KPServiceHandler {
                 })
                 
                 if let cafeID = result["data"]["cafe_id"].string {
+                    // Rating & Comment
+                    
+                    if let rating = data.rating {
+                        let rate = NSNumber(value: rating)
+                        self.addRating(rate, rate, rate, rate, rate, rate, rate, { (success) in
+                            // TODO:
+                        })
+                    }
+                    
+                    if let comment = data.comment {
+                        self.addComment(comment, { (success) in
+                            // TODO:
+                        })
+                    }
+                    
                     self.uploadPhotos(data.photos, cafeID, false, { (success) in
                         // TODO: upload failed error handle
                     })
