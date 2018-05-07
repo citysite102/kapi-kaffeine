@@ -144,6 +144,8 @@ class KPOtherOptionViewController: KPNewStoreBasicController {
             return
         }
         
+        delegate?.infoViewControllerDidSubmit(self)
+        
         // TODO: Set data
         if let index = wifiEditor.contentView.selectedSegmentIndex {
             uploadData.wifi = index  == 0 ? 0 : 5

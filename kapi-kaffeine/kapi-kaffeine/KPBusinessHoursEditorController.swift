@@ -108,6 +108,8 @@ class KPBusinessHoursEditorController: KPNewStoreBasicController {
             return
         }
         
+        delegate?.infoViewControllerDidSubmit(self)
+        
         var businessHour: [String:String] = [:]
         for (index, editor) in editors.enumerated() {
             let output = editor.outputValue(with: index + 1)

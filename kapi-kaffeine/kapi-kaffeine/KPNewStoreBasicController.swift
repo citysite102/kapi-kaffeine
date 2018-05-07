@@ -13,7 +13,8 @@ class KPNewStoreBasicController: KPViewController {
     var scrollContainer: UIView!
     var scrollView: UIScrollView!
     var buttonContainer: UIView!
-    
+    var delegate: DetailInfoDelegate?
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
