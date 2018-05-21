@@ -184,7 +184,7 @@ class KPPreferenceSearchViewController: KPViewController {
         priceSettingDescriptionLabel = UILabel()
         priceSettingDescriptionLabel.font = UIFont.systemFont(ofSize: KPFontSize.infoContent)
         priceSettingDescriptionLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_description
-        priceSettingDescriptionLabel.text = "$=低於99元 / $$=100-199元 / $$$=高於200元"
+        priceSettingDescriptionLabel.text = "$=低於99元 / $$=1-199元 / $$$=不限制"
         containerView.addSubview(priceSettingDescriptionLabel)
         priceSettingDescriptionLabel.addConstraints(fromStringArray: ["H:|-18-[$self]-16-|",
                                                                       "V:[$view0]-10-[$self]"],

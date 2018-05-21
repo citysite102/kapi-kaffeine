@@ -339,7 +339,8 @@ KPTabViewDelegate {
             
         }
         tableViews.last!.addConstraint(from: "H:[$self]|")
-        NotificationCenter.default.addObserver(self, selector: #selector(userDidChanged(notification:)), name: .KPCurrentUserDidChange, object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(userDidChanged(notification:)), name: .KPCurrentUserDidChange, object: nil)
         
     }
     

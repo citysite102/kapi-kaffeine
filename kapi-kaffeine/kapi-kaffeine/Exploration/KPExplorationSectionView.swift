@@ -74,6 +74,7 @@ class KPExplorationSectionView: UITableViewCell {
         separatar.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|",
                                                    "V:[$view0]-16-[$self(1)]-8-|"],
                                  views:[collectionView])
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -83,7 +84,9 @@ class KPExplorationSectionView: UITableViewCell {
 }
 
 
-extension KPExplorationSectionView: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+extension KPExplorationSectionView: UICollectionViewDataSource,
+UICollectionViewDelegate,
+UICollectionViewDelegateFlowLayout {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -116,6 +119,7 @@ extension KPExplorationSectionView: UICollectionViewDataSource, UICollectionView
         cell.rateLabel.text = String(format: "%.1f",
                                       (shops[indexPath.row].averageRate?.doubleValue) ?? 0)
         cell.collectButton.tag = indexPath.row
+        cell.collectButton.isAbleToSelect = KPUserManager.sharedManager.currentUser != nil
         cell.collectButton.isSelected = KPUserManager.sharedManager.currentUser?.hasFavorited(shops[indexPath.row].identifier) ?? false
         cell.collectButton.addTarget(self,
                                      action: #selector(handleShopFavorited(sender:)),

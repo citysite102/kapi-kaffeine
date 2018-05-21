@@ -55,11 +55,17 @@ class KPExplorationViewController: KPViewController {
                                                selector: #selector(handleDefaultStatusBar),
                                                name: Notification.Name(KPNotification.statusBar.statusBarShouldDefault),
                                                object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(userDidChanged(notification:)), name: .KPCurrentUserDidChange, object: nil)
         
         
         if articleList.isEmpty {
             refreshData()
         }
+    }
+    
+    @objc func userDidChanged(notification: Notification) {
+        self.contentTableView.reloadData()
     }
     
     @objc func handleLightStatusBar() {
@@ -96,7 +102,6 @@ class KPExplorationViewController: KPViewController {
             
             for cell in self.contentTableView.visibleCells {
                 cell.alpha = 0
-//                cell.transform = CGAffineTransform(translationX: 0, y: 24)
             }
             
             UIView.animate(withDuration: 0.4,

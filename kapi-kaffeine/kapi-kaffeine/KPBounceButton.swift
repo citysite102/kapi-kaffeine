@@ -33,6 +33,7 @@ class KPBounceButton: UIButton {
     var adjustHitOffset: CGSize = CGSize(width: 0, height: 0)
     var rippleView: UIView?
     var backgroundSelectView: UIView?
+    var isAbleToSelect: Bool = true
     
     
     override var tintColor: UIColor! {
@@ -124,7 +125,9 @@ class KPBounceButton: UIButton {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
-        layer.transform = CATransform3DScale(CATransform3DIdentity, 0.85, 0.85, 1.0)
+        if isAbleToSelect {
+            layer.transform = CATransform3DScale(CATransform3DIdentity, 0.85, 0.85, 1.0)
+        }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -167,7 +170,9 @@ class KPBounceButton: UIButton {
         }) { _ in
             
         }
-        if selectedChanged {
+        
+        
+        if selectedChanged && isAbleToSelect {
             self.isSelected = !isSelected
             if self.isSelected && selectedTintColor != nil {
                 self.tintColor = selectedTintColor
