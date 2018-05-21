@@ -19,17 +19,19 @@ class KPMainMapMarkerInfoWindow: UIView {
                                                                      attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: KPFontSize.sub_header)],
                                                                      context: nil)
         
-        let commentRect = NSString(string: "3 則評論").boundingRect(with: CGSize(width: 300,
+        let commentRect = NSString(string: "\(String(describing: detailDataModel.commentCount ?? 0)) 則評論").boundingRect(with: CGSize(width: 300,
                                                                                     height: 38),
                                                                        options: .usesFontLeading,
                                                                        attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: KPFontSize.infoContent)],
                                                                        context: nil)
         
-        let priceRect = NSString(string: "$$$ 100-200").boundingRect(with: CGSize(width: 300,
-                                                                                  height: 38),
-                                                                     options: .usesFontLeading,
-                                                                     attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: KPFontSize.infoContent)],
-                                                                     context: nil)
+        let priceRect = NSString(string:
+            KPMainMapMarkerInfoWindow.priceContent(detailDataModel.priceAverage)).boundingRect(with:
+                CGSize(width: 300,
+                       height: 38),
+                                                                          options: .usesFontLeading,
+                                                                          attributes:   [NSAttributedStringKey.font: UIFont.systemFont(ofSize: KPFontSize.infoContent)],
+                                                                          context: nil)
         
         super.init(frame: CGRect(x: 0,
                                  y: 0,
@@ -76,12 +78,13 @@ class KPMainMapMarkerInfoWindow: UIView {
         
         let commentLabel = UILabel()
         commentLabel.font = UIFont.systemFont(ofSize: KPFontSize.infoContent)
-        commentLabel.text = "3 則評論"
+        commentLabel.text = "\(String(describing: detailDataModel.commentCount ?? 0)) 則評論"
         commentLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_description
         
         let priceLabel = UILabel()
         priceLabel.font = UIFont.systemFont(ofSize: KPFontSize.infoContent)
-        priceLabel.text = "$$$ 100-200"
+        
+        priceLabel.text = KPMainMapMarkerInfoWindow.priceContent(detailDataModel.priceAverage)
         priceLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_description
         
         let mapArrow = UIImageView(image: R.image.map_arrow())
@@ -112,13 +115,13 @@ class KPMainMapMarkerInfoWindow: UIView {
                                                                      attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: KPFontSize.sub_header)],
                                                                      context: nil)
         
-        let commentRect = NSString(string: "3 則評論").boundingRect(with: CGSize(width: 300,
+        let commentRect = NSString(string: "\(String(describing: dataModel.commentCount ?? 0)) 則評論").boundingRect(with: CGSize(width: 300,
                                                                                      height: 38),
                                                                         options: .usesFontLeading,
                                                                         attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: KPFontSize.infoContent)],
                                                                         context: nil)
         
-        let priceRect = NSString(string: "$$$ 100-200").boundingRect(with: CGSize(width: 300,
+        let priceRect = NSString(string: KPMainMapMarkerInfoWindow.priceContent(dataModel.priceAverage)).boundingRect(with: CGSize(width: 300,
                                                                                    height: 38),
                                                                       options: .usesFontLeading,
                                                                       attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: KPFontSize.infoContent)],
@@ -173,21 +176,18 @@ class KPMainMapMarkerInfoWindow: UIView {
         
         let commentLabel = UILabel()
         commentLabel.font = UIFont.systemFont(ofSize: KPFontSize.infoContent)
-        commentLabel.text = "3 則評論"
+        commentLabel.text = "\(String(describing: dataModel.commentCount ?? 0)) 則評論"
         commentLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_description
         
         let priceLabel = UILabel()
         priceLabel.font = UIFont.systemFont(ofSize: KPFontSize.infoContent)
-        priceLabel.text = "$$$ 100-200"
+        priceLabel.text = KPMainMapMarkerInfoWindow.priceContent(dataModel.priceAverage)
         priceLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_description
         
         let mapArrow = UIImageView(image: R.image.map_arrow())
         mapArrow.contentMode = .scaleAspectFit
         
-//        self.contentView.addSubview(imageView)
         self.containerView.addSubview(titleLabel)
-//        self.contentView.addSubview(starImageView)
-//        self.contentView.addSubview(scoreLabel)
         self.containerView.addSubview(commentLabel)
         self.containerView.addSubview(priceLabel)
         self.contentView.addSubview(mapArrow)
@@ -217,16 +217,19 @@ class KPMainMapMarkerInfoWindow: UIView {
                                                   "H:[$self(14)]"])
         mapArrow.addConstraintForCenterAligningToSuperview(in: .horizontal)
         
+    }
+    
+    static func priceContent(_ priveAverage: NSNumber? = -1) -> String {
         
-        
-        NSLayoutConstraint.activate([
-//            imageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-//            starImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
-        ])
-        
-//        scoreLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .horizontal)
-//        titleLabel.setContentCompressionResistancePriority(UILayoutPriority.defaultLow, for: .horizontal)
-        
+        if priveAverage == 0 {
+            return "$ 1-100"
+        } else if priveAverage == 1 {
+            return "$$ 101-200"
+        } else if priveAverage == 2 {
+            return "$$$ 200 以上"
+        } else {
+            return "價格未知"
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -113,6 +113,12 @@ class KPInformationViewController: KPViewController {
                 self.cardInformationContainer.rateLabel.text = String(format: "%.1f",
                                                                  (self.detailedInformationDataModel.averageRate?.doubleValue) ?? 0)
                 
+                var tagLabelContent = ""
+                for case let tagModel in self.detailedInformationDataModel.tags ?? [] {
+                    tagLabelContent.append("#\(tagModel.name) ")
+                }
+                self.cardInformationContainer.hashTagLabel.text = tagLabelContent
+                
                 // Comment
                 if let commentCount = self.detailedInformationDataModel.commentCount {
                     self.commentInformationView.infoSupplementLabel.text = "\(commentCount) 人已留言"

@@ -191,9 +191,9 @@ class KPPreferenceSearchViewController: KPViewController {
                                              views: [priceSettingTitleLabel])
         
         
-        priceSegmentedControl = KPSegmentedControl.init(["$ (3間)",
-                                                         "$$ (25間)",
-                                                         "$$$ (12間)"])
+        priceSegmentedControl = KPSegmentedControl.init(["$",
+                                                         "$$",
+                                                         "$$$"])
         priceSegmentedControl.selectedSegmentIndex = 0
         containerView.addSubview(priceSegmentedControl)
         priceSegmentedControl.addConstraints(fromStringArray: ["H:|-16-[$self]-16-|",

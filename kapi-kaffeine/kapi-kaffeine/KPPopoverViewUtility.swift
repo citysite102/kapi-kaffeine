@@ -16,15 +16,8 @@ extension KPPopoverView {
         
         let content = KPDefaultPopoverContent()
         content.confirmAction = { content in
-            let controller = KPModalViewController()
-            controller.edgeInset = UIEdgeInsets(top: 0,
-                                                left: 0,
-                                                bottom: 0,
-                                                right: 0);
-            let loginController = KPLoginViewController()
-            UIApplication.shared.KPTopViewController().present(loginController,
-                                                               animated: true,
-                                                               completion: nil)
+            KPUserManager.sharedManager.logIn(UIApplication.shared.topViewController)
+            content.popoverView.dismiss()
         }
         content.titleLabel.text = "進階功能"
         content.descriptionLabel.text = "哈囉！加入找咖啡的行列來享受更進階的功能吧!"
