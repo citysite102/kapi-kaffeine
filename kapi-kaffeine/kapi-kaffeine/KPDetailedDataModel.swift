@@ -38,6 +38,14 @@ class KPDetailedDataModel: NSObject, Mappable, GMUClusterItem {
     var visitCount: NSNumber?
     var photoCount: NSNumber?
     
+    var cheapAverage: NSNumber? = 0
+    var foodAverage: NSNumber? = 0
+    var quietAverage: NSNumber? = 0
+    var seatAverage: NSNumber? = 0
+    var tastyAverage: NSNumber? = 0
+    var musicAverage: NSNumber? = 0
+    var wifiAverage: NSNumber? = 0
+    
     var imageURL_s: URL?
     var imageURL_l: URL?
     
@@ -123,6 +131,13 @@ class KPDetailedDataModel: NSObject, Mappable, GMUClusterItem {
         rates               <-    map["rates"]
         visitedMembers      <-    map["visit_members"]
         favoritedMembers    <-    map["favorite_members"]
+        cheapAverage    <-  map["cheap_avg"]
+        foodAverage     <-  map["food_avg"]
+        quietAverage    <-  map["quiet_avg"]
+        seatAverage     <-  map["seat_avg"]
+        tastyAverage    <-  map["tasty_avg"]
+        musicAverage    <-  map["music_avg"]
+        wifiAverage     <-  map["wifi_avg"]
         imageURL_s      <-  (map["covers.kapi_s"], URLTransform())
         imageURL_l      <-  (map["covers.kapi_l"], URLTransform())
         googleURL_s     <-  (map["covers.google_s"], URLTransform())

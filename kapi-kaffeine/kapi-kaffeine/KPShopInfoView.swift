@@ -24,10 +24,10 @@ class KPShopInfoView: UIView, GMSMapViewDelegate {
                     let limitTime = UIImageView(image: R.image.icon_time())
                     let stand = UIImageView(image: R.image.icon_stand_mac())
                     let socket = UIImageView(image: R.image.icon_socket())
-                    wifiImageView.tintColor = KPColorPalette.KPTextColor_v2.mainColor_title
-                    limitTime.tintColor = KPColorPalette.KPTextColor_v2.mainColor_hint_light
-                    stand.tintColor = KPColorPalette.KPTextColor_v2.mainColor_title
-                    socket.tintColor = KPColorPalette.KPTextColor_v2.mainColor_title
+                    wifiImageView.tintColor = self.informationDataModel.wifiAverage?.intValue ?? 0 > 0 ? KPColorPalette.KPTextColor_v2.mainColor_title : KPColorPalette.KPTextColor_v2.mainColor_hint_light
+                    limitTime.tintColor = self.informationDataModel.limitedTime?.intValue ?? 0 > 3 ? KPColorPalette.KPTextColor_v2.mainColor_title : KPColorPalette.KPTextColor_v2.mainColor_hint_light
+                    stand.tintColor = self.informationDataModel.standingDesk?.intValue ?? 0 > 0 ? KPColorPalette.KPTextColor_v2.mainColor_title : KPColorPalette.KPTextColor_v2.mainColor_hint_light
+                    socket.tintColor = self.informationDataModel.socket?.intValue ?? 0 > 0 ? KPColorPalette.KPTextColor_v2.mainColor_title : KPColorPalette.KPTextColor_v2.mainColor_hint_light
                     infraContainer.addSubview(wifiImageView)
                     infraContainer.addSubview(limitTime)
                     infraContainer.addSubview(stand)
