@@ -84,6 +84,7 @@ class KPTitleEditorView<T: UIView>: UIView, UITextFieldDelegate {
         ])
         
         setupForTextField()
+        setupForTextView()
         
     }
     
@@ -124,6 +125,20 @@ class KPTitleEditorView<T: UIView>: UIView, UITextFieldDelegate {
             textFieldTapAction?()
             return false
         }
+    }
+    
+    // MARK: - For UITextView
+    
+    func setupForTextView() {
+        
+        guard let textView = contentView as? UITextView else {
+            return
+        }
+        
+        textView.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7
+        textView.layer.cornerRadius = 5
+        textView.font = UIFont.systemFont(ofSize: 16)
+        textView.textContainerInset = UIEdgeInsets(top: 8, left: 4, bottom: 8, right: 4)
     }
     
 }

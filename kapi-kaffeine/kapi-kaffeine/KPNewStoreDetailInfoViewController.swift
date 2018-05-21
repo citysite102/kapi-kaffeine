@@ -8,7 +8,11 @@
 
 import UIKit
 
-class KPNewStoreDetailInfoViewController: KPNewStoreBasicController {
+protocol DetailInfoDelegate {
+    func infoViewControllerDidSubmit(_ controller: KPNewStoreBasicController)
+}
+
+class KPNewStoreDetailInfoViewController: KPNewStoreBasicController, DetailInfoDelegate {
     
     fileprivate var comsumptionInfoButton: KPNewStoreDetailCheckButton!
     fileprivate var businessTimeButton: KPNewStoreDetailCheckButton!
@@ -108,10 +112,6 @@ class KPNewStoreDetailInfoViewController: KPNewStoreBasicController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-//    @objc func handleBackButtonOnTap(_ sender: UIButton) {
-//        navigationController?.popViewController(animated: true)
-//    }
 
     @objc func handleSubmitButtonOnTap(_ sender: UIButton) {
         
@@ -138,13 +138,29 @@ class KPNewStoreDetailInfoViewController: KPNewStoreBasicController {
     @objc func handleInfoButtonOnTap(_ sender: KPNewStoreDetailCheckButton) {
         if sender == comsumptionInfoButton {
             let consumptionController = KPConsumptionInfoViewController(uploadData)
+            consumptionController.delegate = self
             navigationController?.pushViewController(consumptionController, animated: true)
         } else if sender == businessTimeButton {
             let businessHoursController = KPBusinessHoursEditorController(uploadData)
+            businessHoursController.delegate = self
             navigationController?.pushViewController(businessHoursController, animated: true)
         } else if sender == additionalInfoButton {
             let otherOptionController = KPOtherOptionViewController(uploadData)
+            otherOptionController.delegate = self
             navigationController?.pushViewController(otherOptionController, animated: true)
+        }
+    }
+    
+    func infoViewControllerDidSubmit(_ controller: KPNewStoreBasicController) {
+        if controller is KPConsumptionInfoViewController {
+            comsumptionInfoButton.statusLabel.text = "已填寫"
+            comsumptionInfoButton.statusLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_hint_light
+        } else if controller is KPBusinessHoursEditorController {
+            businessTimeButton.statusLabel.text = "已填寫"
+            businessTimeButton.statusLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_hint_light
+        } else if controller is KPOtherOptionViewController {
+            additionalInfoButton.statusLabel.text = "已填寫"
+            additionalInfoButton.statusLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_hint_light
         }
     }
 

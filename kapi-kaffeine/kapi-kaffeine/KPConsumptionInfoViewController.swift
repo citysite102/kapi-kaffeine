@@ -115,11 +115,13 @@ class KPConsumptionInfoViewController: KPNewStoreBasicController, KPSharedSettin
             return
         }
         
+        delegate?.infoViewControllerDidSubmit(self)
+        
         // TODO: Check Data
         uploadData.rating = ratingTitleEditor.contentView.currentRate
         uploadData.comment = commentTitleEditor.contentView.text
-        uploadData.drinkPrice = KPPriceSelectController.priceRanges.index(of: drinkPriceEditor.contentView.text!) ?? -1
-        uploadData.foodPrice = KPPriceSelectController.priceRanges.index(of: foodPriceEditor.contentView.text!) ?? -1
+        uploadData.drinkPrice = KPPriceSelectController.priceRanges.index(of: drinkPriceEditor.contentView.text!)
+        uploadData.foodPrice = KPPriceSelectController.priceRanges.index(of: foodPriceEditor.contentView.text!)
         
         
         navigationController?.popViewController(animated: true)
