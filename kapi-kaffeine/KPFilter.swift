@@ -167,8 +167,12 @@ class KPFilter {
     func restoreDefaultSettings() {
         sortedby = .distance
         
+        selectedTag = []
+        priceIndex = 2
+        
         currentOpening = false
         searchTime = nil
+        timeFilter = .None
     }
     
     
