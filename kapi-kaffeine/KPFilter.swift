@@ -123,13 +123,12 @@ class KPFilter {
             }
         }
         
-//        currentCafeDatas.filter { (dataModel) -> Bool in
-//            if let price = dataModel.priceAverage?.intValue {
-//                
-//            } else {
-//                return false
-//            }
-//        }
+        
+        if priceIndex == 0 {
+            currentCafeDatas = currentCafeDatas.filter( { $0.priceAverage?.intValue == 0 } )
+        } else if priceIndex == 1 {
+            currentCafeDatas = currentCafeDatas.filter( { $0.priceAverage?.intValue == 0 || $0.priceAverage?.intValue == 1 } )
+        }
         
         currentCafeDatas.sort { (model1, model2) -> Bool in
             if sortedby == .distance {
