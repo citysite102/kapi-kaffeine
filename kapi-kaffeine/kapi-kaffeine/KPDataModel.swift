@@ -26,7 +26,7 @@ class KPDataModel: NSObject, Mappable, GMUClusterItem, Comparable {
     
     // Basic Information
     var identifier: String!
-    var address: String!
+    var address: String?
     var name: String!
     var phone: String?
     var city: String!

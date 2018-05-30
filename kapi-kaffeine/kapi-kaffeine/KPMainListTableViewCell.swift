@@ -26,10 +26,11 @@ class KPMainListTableViewCell: UITableViewCell {
                 
                 var distName: String = ""
                 
-                if let distIndex = self.dataModel.address.index(of: "區") {
-                    let startIndex = self.dataModel.address.index(distIndex, offsetBy:-2)
-                    distName = String(self.dataModel.address[startIndex...distIndex])
+                if let distIndex = self.dataModel.address?.index(of: "區") {
+                    let startIndex = self.dataModel.address!.index(distIndex, offsetBy:-2)
+                    distName = String(self.dataModel.address![startIndex...distIndex])
                 }
+                
                 self.shopLocationLabel.text =  (KPInfoMapping.citiesMapping[self.dataModel.city]
                     ?? "") +
                     (distName != "" ? ", \(distName)" : "")
