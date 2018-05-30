@@ -164,7 +164,7 @@ class KPEditCommentController: KPViewController {
         }
     }
     
-    func handleDismissButtonOnTapped() {
+    @objc func handleDismissButtonOnTapped() {
         navigationController?.popViewController(animated: true)
     }
     

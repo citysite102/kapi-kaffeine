@@ -13,6 +13,7 @@ class KPReportController: KPViewController {
     var scrollContainer: UIScrollView!
     var dismissButton: KPBounceButton!
     var sendButton: UIButton!
+    var sendButtonItem: UIBarButtonItem!
     var textFieldContainerView: UIView!
     var inputTextView: UITextView!
     var placeholderLabel: UILabel!
@@ -26,42 +27,30 @@ class KPReportController: KPViewController {
         view.backgroundColor = UIColor.white
         navigationItem.title = "錯誤回報"
         navigationItem.hidesBackButton = true
-        
-        dismissButton = KPBounceButton(frame: CGRect.zero,
-                                       image: R.image.icon_close()!)
-        dismissButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
-        dismissButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        dismissButton.contentEdgeInsets = UIEdgeInsetsMake(6, 0, 8, 14)
-        dismissButton.tintColor = KPColorPalette.KPTextColor.whiteColor;
-        dismissButton.addTarget(self,
-                                action: #selector(KPNewCommentController.handleDismissButtonOnTapped),
-                                for: .touchUpInside)
-        let barItem = UIBarButtonItem(customView: dismissButton);
-        
-        sendButton = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 24));
-        sendButton.setTitle("送出", for: .normal)
-        sendButton.isEnabled = false
-        sendButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
-        sendButton.tintColor = KPColorPalette.KPMainColor_v2.mainColor
-        sendButton.isEnabled = false
-        sendButton.addTarget(self,
-                             action: #selector(KPNewCommentController.handleSendButtonOnTapped),
-                             for: .touchUpInside)
-        
-        let rightbarItem = UIBarButtonItem(customView: sendButton);
-        let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace,
-                                             target: nil,
-                                             action: nil)
-        
-        let rightNegativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace,
-                                                  target: nil,
-                                                  action: nil)
+        navigationController?.navigationBar.shadowImage = UIImage()
         
         
-        negativeSpacer.width = -5
-        rightNegativeSpacer.width = -8
-        navigationItem.leftBarButtonItems = [negativeSpacer, barItem]
-        navigationItem.rightBarButtonItems = [rightNegativeSpacer, rightbarItem]
+        let backButton = KPBounceButton(frame: CGRect.zero,
+                                        image: R.image.icon_back()!)
+        backButton.widthAnchor.constraint(equalToConstant: CGFloat(KPLayoutConstant.dismissButton_size)).isActive = true
+        backButton.heightAnchor.constraint(equalToConstant: CGFloat(KPLayoutConstant.dismissButton_size)).isActive = true
+        backButton.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4)
+        backButton.tintColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
+        backButton.addTarget(self,
+                             action: #selector(KPReportController.handleDismissButtonOnTapped),
+                             for: UIControlEvents.touchUpInside)
+
+        let barItem = UIBarButtonItem(customView: backButton)
+        navigationItem.leftBarButtonItems = [barItem]
+        
+        sendButtonItem = UIBarButtonItem(title: "送出",
+                                         style: .plain,
+                                         target: self,
+                                         action: #selector(KPReportController.handleSendButtonOnTapped))
+        sendButtonItem.setTitleTextAttributes([NSAttributedStringKey.font:
+            UIFont.systemFont(ofSize: KPFontSize.mainContent)], for: .normal)
+        sendButtonItem.isEnabled = false
+        navigationItem.rightBarButtonItems = [sendButtonItem]
         
         scrollContainer = UIScrollView()
         scrollContainer.delaysContentTouches = true
@@ -121,11 +110,11 @@ class KPReportController: KPViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    func handleDismissButtonOnTapped() {
+    @objc func handleDismissButtonOnTapped() {
         appModalController()?.dismissControllerWithDefaultDuration()
     }
     
-    func handleSendButtonOnTapped() {
+    @objc func handleSendButtonOnTapped() {
         inputTextView.resignFirstResponder()
         KPServiceHandler.sharedHandler.sendReport("送出去啦！！") { (_) in
             self.appModalController()?.dismissControllerWithDefaultDuration()
@@ -173,7 +162,7 @@ extension KPReportController: UITextViewDelegate {
         let newLength = oldLength - rangeLength + replacementLength
         let returnKey = (text as NSString).range(of: "\n").location == NSNotFound
         
-        sendButton.isEnabled = newLength > 0
+        sendButtonItem.isEnabled = newLength > 0
         
         if !returnKey {
             textView.resignFirstResponder()
