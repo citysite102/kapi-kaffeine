@@ -912,11 +912,14 @@ class KPServiceHandler {
         UIApplication.shared.KPTopViewController().view.addSubview(loadingView)
         loadingView.addConstraints(fromStringArray: ["V:|[$self]|",
                                                      "H:|[$self]|"])
-        DispatchQueue.main.asyncAfter(deadline: .now()+1.0) {
-            loadingView.state = .successed
-            DispatchQueue.main.asyncAfter(deadline: .now()+1.0) {
-                completion?(true)
-            }
+        
+        
+        let reportRequest = KPErrorReportRequest()
+        reportRequest.perform(content).then { result -> Void in
+            loadingView.state = result["result"].boolValue ?
+                .successed :
+                .failed
+            completion?(result["result"].boolValue)
         }
     }
     

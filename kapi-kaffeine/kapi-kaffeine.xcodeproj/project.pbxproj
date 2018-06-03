@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4EEB682CBA070A438BA23B29 /* Pods_kapi_kaffeine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 693D5C21ACB83D68DF6CDE6C /* Pods_kapi_kaffeine.framework */; };
+		7704804F20C44CC9008E1322 /* KPErrorReportRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7704804E20C44CC9008E1322 /* KPErrorReportRequest.swift */; };
 		770904321F55C70000A9CCE3 /* KPAnalyticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770904311F55C70000A9CCE3 /* KPAnalyticManager.swift */; };
 		770AB5D31EB70E8E00EE8A3B /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770AB5D21EB70E8E00EE8A3B /* R.generated.swift */; };
 		7712D4E31ED72A200024C176 /* KPUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7712D4E21ED72A200024C176 /* KPUserDefaults.swift */; };
@@ -262,6 +263,7 @@
 		5C9A071EB11610BEDE083D59 /* Pods_kapi_kaffeineUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_kapi_kaffeineUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		605CB2E5F236FDDFFE502CB5 /* Pods-kapi-kaffeine.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kapi-kaffeine.release.xcconfig"; path = "../Pods/Target Support Files/Pods-kapi-kaffeine/Pods-kapi-kaffeine.release.xcconfig"; sourceTree = "<group>"; };
 		693D5C21ACB83D68DF6CDE6C /* Pods_kapi_kaffeine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_kapi_kaffeine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7704804E20C44CC9008E1322 /* KPErrorReportRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPErrorReportRequest.swift; sourceTree = "<group>"; };
 		770904311F55C70000A9CCE3 /* KPAnalyticManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPAnalyticManager.swift; sourceTree = "<group>"; };
 		770AB5D21EB70E8E00EE8A3B /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = SOURCE_ROOT; };
 		7712D4E21ED72A200024C176 /* KPUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPUserDefaults.swift; sourceTree = "<group>"; };
@@ -625,6 +627,7 @@
 				771F90B01EF1976B00D66C14 /* KPFavoriteRequest.swift */,
 				7762E3441F12185C0006E205 /* KPVisitedRequest.swift */,
 				77C4F3F120691AC600F5EA8F /* KPCollectRequest.swift */,
+				7704804E20C44CC9008E1322 /* KPErrorReportRequest.swift */,
 			);
 			name = UserAction;
 			sourceTree = "<group>";
@@ -1790,6 +1793,7 @@
 				77C85EC61F24EF1B00F819E1 /* KPPreferenceHintButton.swift in Sources */,
 				77A980E21F17334B002010EC /* KPLoadingButton.m in Sources */,
 				77C0E1021E9D48E000398852 /* KPShopInfoView.swift in Sources */,
+				7704804F20C44CC9008E1322 /* KPErrorReportRequest.swift in Sources */,
 				77B66FB01EAD17DA008B6652 /* KPSettingViewController.swift in Sources */,
 				7717C549202D5E6A00316CB0 /* KPShopSubInfoView.swift in Sources */,
 				7720D02F1F01403900E00F0B /* KPMainListNativeContentAdCell.swift in Sources */,

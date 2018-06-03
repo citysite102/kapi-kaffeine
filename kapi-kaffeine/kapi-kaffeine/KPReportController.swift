@@ -116,8 +116,11 @@ class KPReportController: KPViewController {
     
     @objc func handleSendButtonOnTapped() {
         inputTextView.resignFirstResponder()
-        KPServiceHandler.sharedHandler.sendReport("送出去啦！！") { (_) in
-            self.appModalController()?.dismissControllerWithDefaultDuration()
+        KPServiceHandler.sharedHandler.sendReport(inputTextView.text) { (_) in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5,
+                                          execute: {
+                                            self.appModalController()?.dismissControllerWithDefaultDuration()
+            })
         }
     }
     
