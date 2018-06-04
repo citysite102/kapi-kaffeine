@@ -20,8 +20,8 @@ class KPMainMapViewCollectionCell: UICollectionViewCell {
             DispatchQueue.main.async {
                 self.shopNameLabel.text = self.dataModel.name ?? "未命名"
                 self.featureContainer.featureContents = self.dataModel.featureContents
-                self.scoreLabel.score = String(format: "%.1f",
-                                               (self.dataModel.averageRate?.doubleValue) ?? 0)
+                self.rateLabel.text = String(format: "%.1f",
+                                             (self.dataModel.averageRate?.doubleValue) ?? 0)
             }
             
             if let photoURL = dataModel.imageURL_s ?? dataModel.googleURL_s {
@@ -71,8 +71,6 @@ class KPMainMapViewCollectionCell: UICollectionViewCell {
     var shopImageView: UIImageView!
     var shopNameLabel: KPLayerLabel!
     var shopDistanceLabel: KPLayerLabel!
-    
-    var scoreLabel: KPMainListCellScoreLabel!
     
     var starIcon: UIImageView!
     var rateLabel: KPLayerLabel!
@@ -210,14 +208,6 @@ class KPMainMapViewCollectionCell: UICollectionViewCell {
         rateLabel.addConstraintForCenterAligning(to: starIcon,
                                                  in: .vertical,
                                                  constant: 0)
-        
-        self.scoreLabel = KPMainListCellScoreLabel()
-//        self.scoreLabel.contentBackgroundColor = KPColorPalette.KPBackgroundColor.mainColor
-//        self.scoreLabel.score = "4.3"
-//        self.addSubview(self.scoreLabel)
-//        self.scoreLabel.addConstraints(fromStringArray: ["H:|-[$self(30)]",
-//                                                         "V:[$self(22)]-|"],
-//                                       views:[shopStatusLabel])
         
         self.featureContainer = KPMainListCellFeatureContainer()
 //        self.featureContainer.featureContents = ["燈光美", "氣氛佳"]
