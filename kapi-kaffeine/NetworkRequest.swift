@@ -95,20 +95,48 @@ extension NetworkRequest where ResponseType: Mappable {
     public var arrayResponseHandler: (Data) throws -> [ResponseType] { return jsonArrayResponseHandler }
     
     private func jsonResponseHandler(_ data: Data) throws -> ResponseType {
-        let json = String(data: data, encoding: String.Encoding.utf8)
         
-        if let response = Mapper<ResponseType>().map(JSONString: json!) {
-            return response
-        } else {
+        
+        do {
+            let json = try JSON(data: data)
+            guard let result = json.dictionaryValue["result"]?.bool else {
+                throw NetworkRequestError.invalidData
+            }
+            
+            if result,
+                let dataJson = json.dictionaryObject?["data"] as? [String: Any],
+                let response = Mapper<ResponseType>().map(JSON: dataJson) {
+                
+                return response
+                
+            } else {
+                throw NetworkRequestError.resultUnavailable
+            }
+            
+        } catch {
             throw NetworkRequestError.invalidData
         }
+        
     }
     
     private func jsonArrayResponseHandler(_ data: Data) throws -> [ResponseType] {
-        let json = String(data: data , encoding: String.Encoding.utf8)
-        if let responses = Mapper<ResponseType>().mapArray(JSONString: json!) {
-            return responses
-        } else {
+        
+        do {
+            let json = try JSON(data: data)
+            guard let result = json.dictionaryValue["result"]?.bool else {
+                throw NetworkRequestError.invalidData
+            }
+            
+            if result,
+                let dataJson = json.dictionaryObject?["data"] as? [[String: Any]] {
+                
+                return Mapper<ResponseType>().mapArray(JSONArray: dataJson)
+                
+            } else {
+                throw NetworkRequestError.resultUnavailable
+            }
+            
+        } catch {
             throw NetworkRequestError.invalidData
         }
     }

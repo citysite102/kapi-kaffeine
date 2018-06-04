@@ -68,7 +68,7 @@ class KPShopInfoView: UIView, GMSMapViewDelegate {
                                                             metrics:[KPLayoutConstant.information_horizontal_offset])
                     
                     self.shopBusinessView = KPShopSubInfoView("營業時間",
-                                                              "9:00 - 19:00",
+                                                              self.informationDataModel.businessHour?.shopStatus.status ?? "尚無資料",
                                                               nil,
                                                               nil,
                                                               false,

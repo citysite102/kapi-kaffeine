@@ -72,8 +72,14 @@ class KPDataBusinessHourModel: NSObject {
                 let currentTime = timeFormatter.date(from: String(format: "%2d:%2d", currentHour, currentMinute))
                 
                 for time in businessTime[KPDataBusinessHourModel.getDayOfWeek()]! {
+                    
+                    var endTimeInterval = time.endTimeInterval
+                    if time.startTimeInterval > time.endTimeInterval {
+                        endTimeInterval = time.endTimeInterval + 86400
+                    }
+                    
                     if currentTime!.timeIntervalSince1970 > time.startTimeInterval &&
-                        currentTime!.timeIntervalSince1970 < time.endTimeInterval {
+                        currentTime!.timeIntervalSince1970 < endTimeInterval {
                         return (true, "營業中: \(time.startHour)~\(time.endHour)")
                     }
                 }
