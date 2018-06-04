@@ -8,6 +8,7 @@
 
 import UIKit
 import GooglePlaces
+import CoreLocation
 
 class KPNewStoreController: KPNewStoreBasicController, KPSubtitleInputDelegate, KPSharedSettingDelegate {
     
@@ -90,6 +91,7 @@ class KPNewStoreController: KPNewStoreBasicController, KPSubtitleInputDelegate, 
         addressEditor.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|",
                                                        "V:[$view0]-20-[$self]"],
                                       views: [locationEditor])
+        addressEditor.contentView.addTarget(self, action: #selector(addressDidChanged(_:)), for: .editingChanged)
         
         phoneEditor = KPTitleEditorView<UITextField>("聯絡電話")
         phoneEditor.contentView.placeholder = "請輸入聯絡電話"
@@ -172,7 +174,6 @@ class KPNewStoreController: KPNewStoreBasicController, KPSubtitleInputDelegate, 
                 locationEditor.contentView.text = region
             }
         }
-        
     }
     
     @objc func handleMapEditButtonOnTap(_ sender: UIButton) {
@@ -190,18 +191,22 @@ class KPNewStoreController: KPNewStoreBasicController, KPSubtitleInputDelegate, 
     @objc func handleNextButtonOnTap(_ sender: UIButton) {
         
         guard let storeName = storeNameEditor.contentView.text, !storeName.isEmpty else {
+            popoverErrorView(storeNameEditor.title)
             return
         }
         
         guard let address = addressEditor.contentView.text, !address.isEmpty else {
+            popoverErrorView(addressEditor.title)
             return
         }
         
         guard let coordinate = coordinate else {
+            popoverErrorView(addressEditor.title)
             return
         }
         
         guard let city = city, let country = country else {
+            popoverErrorView(locationEditor.title)
             return
         }
                 
@@ -232,6 +237,31 @@ class KPNewStoreController: KPNewStoreBasicController, KPSubtitleInputDelegate, 
 
     @objc func handleCancelButtonOnTap(_ sender: UIBarButtonItem) {
         appModalController()?.dismissControllerWithDefaultDuration()
+    }
+    
+    func popoverErrorView(_ editor: String) {
+        let content = KPNotificationPopoverContent()
+        content.titleLabel.text = "\(editor) 尚未填寫"
+        content.descriptionLabel.text = "店家名稱、所在城市、地址為必填選項！"
+        KPPopoverView.sharedPopoverView.contentView = content
+        KPPopoverView.sharedPopoverView.popoverContent()
+    }
+    
+    @objc func addressDidChanged(_ sender: UITextField) {
+        let geoCoder = CLGeocoder()
+        geoCoder.geocodeAddressString(sender.text!) { [weak self] (placemarks, error) in
+            guard
+                let `self` = self,
+                let placemarks = placemarks,
+                let coordinate = placemarks.first?.location?.coordinate
+                else {
+                    // handle no location found
+                    return
+            }
+            // Use your location
+            self.coordinate = coordinate
+
+        }
     }
     
 }
