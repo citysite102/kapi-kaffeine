@@ -109,20 +109,8 @@ class KPServiceHandler {
                                 leftBottom,
                                 searchText).then { result -> Void in
                                     DispatchQueue.global().async {
-                                        var cafeDatas = [KPDataModel]()
-                                        if result["data"].arrayObject != nil {
-                                            for data in (result["data"].arrayObject)! {
-                                                if let cafeData = KPDataModel(JSON: (data as! [String: Any])) {
-                                                    cafeDatas.append(cafeData)
-                                                }
-                                            }
-                                            self.currentCafeDatas = cafeDatas.filter({ (dataModel) -> Bool in
-                                                dataModel.verified == true
-                                            })
-                                            completion?(cafeDatas, nil)
-                                        } else {
-                                            completion?(nil, NetworkRequestError.resultUnavailable)
-                                        }
+                                        self.currentCafeDatas = result.filter( { $0.verified } )
+                                        completion?(result, nil)
                                     }
         }.catch { error in
             DispatchQueue.global().async {

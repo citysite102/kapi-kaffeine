@@ -13,7 +13,7 @@ import Alamofire
 
 class KPCafeRequest: NetworkRequest {
 
-    typealias ResponseType = RawJsonResult
+    typealias ResponseType = KPDataModel
     
     private var limitedTime: NSNumber?
     private var socket: NSNumber?
@@ -68,7 +68,7 @@ class KPCafeRequest: NetworkRequest {
                         _ city: String? = nil,
                         _ rightTop: CLLocationCoordinate2D? = nil,
                         _ leftBottom: CLLocationCoordinate2D? = nil,
-                        _ searchText: String? = nil) -> Promise<(ResponseType)> {
+                        _ searchText: String? = nil) -> Promise<([ResponseType])> {
         self.limitedTime = limitedTime
         self.socket = socket
         self.standingDesk = standingDesk
@@ -77,6 +77,6 @@ class KPCafeRequest: NetworkRequest {
         self.rightTopCoordinate = rightTop
         self.leftBottomCoordinate = leftBottom
         self.searchText = searchText
-        return networkClient.performRequest(self).then(execute: responseHandler)
+        return networkClient.performRequest(self).then(execute: arrayResponseHandler)
     }
 }
