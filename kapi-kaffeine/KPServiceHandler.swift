@@ -843,37 +843,61 @@ class KPServiceHandler {
     }
     
     func addVisitedCafe(_ completion: ((Bool) -> Swift.Void)? = nil) {
-        let addRequest = KPVisitedRequest()
-        addRequest.perform((currentDisplayModel?.identifier)!,
-                           KPVisitedRequest.requestType.add).then { result -> Void in
-                            
-                            guard let _ = KPUserManager.sharedManager.currentUser?.visits?.first(where: {$0.identifier == self.currentDisplayModel?.identifier}) else {
-                                KPUserManager.sharedManager.currentUser?.visits?.append(self.currentDisplayModel!)
-                                KPUserManager.sharedManager.storeUserInformation()
-                                return
-                            }
-                            completion?(true)
-                            print("Result\(result)")
-            }.catch { (error) in
-                print("Remove Visited Cafe error\(error)")
-                completion?(false)
+        
+        if KPUserManager.sharedManager.currentUser == nil {
+            KPPopoverView.popoverLoginView()
+        } else {
+            
+            let loadingView = KPLoadingView(("打卡中...", "打卡成功", "打卡失敗"))
+            UIApplication.shared.KPTopViewController().view.addSubview(loadingView)
+            loadingView.addConstraints(fromStringArray: ["V:|[$self]|",
+                                                         "H:|[$self]|"])
+            
+            let addRequest = KPVisitedRequest()
+            addRequest.perform((currentDisplayModel?.identifier)!,
+                               KPVisitedRequest.requestType.add).then { result -> Void in
+                                
+                                guard let _ = KPUserManager.sharedManager.currentUser?.visits?.first(where: {$0.identifier == self.currentDisplayModel?.identifier}) else {
+                                    KPUserManager.sharedManager.currentUser?.visits?.append(self.currentDisplayModel!)
+                                    KPUserManager.sharedManager.storeUserInformation()
+                                    return
+                                }
+                                loadingView.state = result["result"].boolValue ? .successed : .failed
+                                completion?(true)
+                }.catch { (error) in
+                    print("Remove Visited Cafe error\(error)")
+                    loadingView.state = .failed
+                    completion?(false)
+            }
         }
     }
     
     func removeVisitedCafe(_ cafeID: String,
                            _ completion: ((Bool) -> Swift.Void)? = nil) {
-        let removeRequest = KPVisitedRequest()
-        removeRequest.perform(cafeID,
-                              KPVisitedRequest.requestType.delete).then { result -> Void in
-                                if let foundOffset = KPUserManager.sharedManager.currentUser?.visits?.index(where: {$0.identifier == cafeID}) {
-                                    KPUserManager.sharedManager.currentUser?.visits?.remove(at: foundOffset)
-                                }
-                                KPUserManager.sharedManager.storeUserInformation()
-                                completion?(true)
-                                print("Result\(result)")
-            }.catch { (error) in
-                print("Remove Visited Error \(error)")
-                completion?(false)
+        
+        if KPUserManager.sharedManager.currentUser == nil {
+            KPPopoverView.popoverLoginView()
+        } else {
+            
+            let loadingView = KPLoadingView(("取消中...", "取消打卡", "取消失敗"))
+            UIApplication.shared.KPTopViewController().view.addSubview(loadingView)
+            loadingView.addConstraints(fromStringArray: ["V:|[$self]|",
+                                                         "H:|[$self]|"])
+            
+            let removeRequest = KPVisitedRequest()
+            removeRequest.perform(cafeID,
+                                  KPVisitedRequest.requestType.delete).then { result -> Void in
+                                    if let foundOffset = KPUserManager.sharedManager.currentUser?.visits?.index(where: {$0.identifier == cafeID}) {
+                                        KPUserManager.sharedManager.currentUser?.visits?.remove(at: foundOffset)
+                                    }
+                                    KPUserManager.sharedManager.storeUserInformation()
+                                    loadingView.state = result["result"].boolValue ? .successed : .failed
+                                    completion?(true)
+                }.catch { (error) in
+                    print("Remove Visited Error \(error)")
+                    loadingView.state = .failed
+                    completion?(false)
+            }
         }
     }
     

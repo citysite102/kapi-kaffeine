@@ -90,7 +90,7 @@ class KPMainMapViewCollectionCell: UICollectionViewCell {
 //        backgroundColor = UIColor.white
         
         contentView.backgroundColor = UIColor.white
-        contentView.layer.cornerRadius = 4.0
+        contentView.layer.cornerRadius = KPLayoutConstant.corner_radius
         contentView.layer.masksToBounds = true
         
         layer.shadowColor = KPColorPalette.KPMainColor_v2.shadow_darkColor?.cgColor
@@ -122,7 +122,7 @@ class KPMainMapViewCollectionCell: UICollectionViewCell {
         
         shopStatusHint = UIView()
         shopStatusHint.backgroundColor = KPColorPalette.KPMainColor_v2.greenColor
-        shopStatusHint.layer.cornerRadius = 4.0
+        shopStatusHint.layer.cornerRadius = KPLayoutConstant.corner_radius
         shopStatusHint.isOpaque = true
         contentView.addSubview(shopStatusHint)
         shopStatusHint.addConstraints(fromStringArray: ["H:[$view0]-12-[$self(8)]",

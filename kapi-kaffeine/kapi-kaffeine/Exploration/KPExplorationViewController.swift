@@ -233,7 +233,7 @@ class KPExplorationViewController: KPViewController {
 
         searchContainer = UIView()
         searchContainer.backgroundColor = KPColorPalette.KPBackgroundColor.white_level3
-        searchContainer.layer.cornerRadius = 4.0
+        searchContainer.layer.cornerRadius = KPLayoutConstant.corner_radius
         searchContainer.layer.masksToBounds = true
         searchContainerShadowView.addSubview(searchContainer)
         searchContainer.addGestureRecognizer(longPressGesture)
@@ -634,7 +634,8 @@ UICollectionViewDelegateFlowLayout {
         cell.articleHeroImageView.hero.id = "article-\(indexPath.row)"
         cell.titleLabel.setText(text: articleList[indexPath.row].title!,
                                 lineSpacing: 4.0)
-        let readCount = articleList[indexPath.row].peopleRead + demoReadCount[indexPath.row]
+//        let readCount = articleList[indexPath.row].peopleRead + demoReadCount[indexPath.row]
+        let readCount = 0
         cell.subLabel.text = "\(readCount) 人已閱讀"
         return cell
     }

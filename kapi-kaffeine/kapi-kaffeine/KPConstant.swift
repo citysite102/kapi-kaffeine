@@ -135,8 +135,9 @@ struct KPFontSize {
     
 struct KPLayoutConstant {
     static let topBar_height = 76
-    static let bottomBar_height = 56
+    static let bottomBar_height = 60
     static let separator_height = 1
+    static let corner_radius: CGFloat = 3.0
     
     static let dismissButton_size = 27
     static let information_horizontal_offset = 18

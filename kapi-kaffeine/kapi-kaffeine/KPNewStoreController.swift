@@ -112,7 +112,7 @@ class KPNewStoreController: KPNewStoreBasicController, KPSubtitleInputDelegate, 
                                  for: .normal)
         nextButton.setTitle("下一步", for: .normal)
         nextButton.clipsToBounds = true
-        nextButton.layer.cornerRadius = 4.0
+        nextButton.layer.cornerRadius = KPLayoutConstant.corner_radius
         nextButton.layer.borderWidth = 1.0
         nextButton.layer.borderColor = KPColorPalette.KPMainColor_v2.mainColor?.cgColor
         nextButton.titleLabel?.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)

@@ -27,13 +27,13 @@ class KPExplorationSectionCell: UICollectionViewCell {
         backgroundColor = UIColor.clear
         
         contentView.clipsToBounds = true
-        contentView.layer.cornerRadius = 2
+        contentView.layer.cornerRadius = KPLayoutConstant.corner_radius
         contentView.backgroundColor = UIColor.white
         
         imageView = UIImageView()
         imageView.layer.shouldRasterize = true
         imageView.contentMode = .scaleAspectFill
-        imageView.layer.cornerRadius = 4
+        imageView.layer.cornerRadius = KPLayoutConstant.corner_radius
         imageView.clipsToBounds = true
         imageView.backgroundColor = KPColorPalette.KPMainColor_v2.bg_light
         imageView.isUserInteractionEnabled = true

@@ -51,7 +51,7 @@ class KPDefaultPopoverContent: UIView, PopoverProtocol {
         super.init(frame: frame)
         
         backgroundColor = UIColor.white
-        layer.cornerRadius = 4
+        layer.cornerRadius = KPLayoutConstant.corner_radius
         
         addSubview(titleLabel)
         titleLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
@@ -80,7 +80,7 @@ class KPDefaultPopoverContent: UIView, PopoverProtocol {
         
         cancelButton = UIButton(type: .custom)
         cancelButton.setTitle("取消", for: .normal)
-        cancelButton.layer.cornerRadius = 2.0
+        cancelButton.layer.cornerRadius = KPLayoutConstant.corner_radius
         cancelButton.layer.masksToBounds = true
         cancelButton.titleLabel?.font = UIFont.systemFont(ofSize: UIDevice().isSuperCompact ? 13.0 : 15.0)
         cancelButton.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.grayColor_level5!),
@@ -95,7 +95,7 @@ class KPDefaultPopoverContent: UIView, PopoverProtocol {
         
         confirmButton = UIButton(type: .custom)
         confirmButton.setTitle("確認", for: .normal)
-        confirmButton.layer.cornerRadius = 2.0
+        confirmButton.layer.cornerRadius = KPLayoutConstant.corner_radius
         confirmButton.layer.masksToBounds = true
         confirmButton.titleLabel?.font = UIFont.systemFont(ofSize: 15.0)
         confirmButton.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor_v2.mainColor_light!),

@@ -108,7 +108,7 @@ class KPEditCommentController: KPViewController {
         inputTextView = UITextView()
         inputTextView.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level7
         inputTextView.returnKeyType = .done
-        inputTextView.layer.cornerRadius = 4.0
+        inputTextView.layer.cornerRadius = KPLayoutConstant.corner_radius
         inputTextView.layer.masksToBounds = true
         inputTextView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
         inputTextView.textContainerInset = UIEdgeInsetsMake(8, 4, 40, 4)

@@ -63,7 +63,7 @@ class KPSegmentedControl: UIControl {
             let segment = UIButton(type: .custom)
             segment.setTitleColor(KPColorPalette.KPMainColor_v2.mainColor, for: .normal)
             segment.setTitle(title, for: .normal)
-            segment.layer.cornerRadius = 4.0
+            segment.layer.cornerRadius = KPLayoutConstant.corner_radius
             segment.layer.masksToBounds = true
             
             segment.addTarget(self,

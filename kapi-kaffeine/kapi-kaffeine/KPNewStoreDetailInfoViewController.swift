@@ -97,7 +97,7 @@ class KPNewStoreDetailInfoViewController: KPNewStoreBasicController, DetailInfoD
                                    for: .normal)
         submitButton.setTitle("確認新增", for: .normal)
         submitButton.clipsToBounds = true
-        submitButton.layer.cornerRadius = 4.0
+        submitButton.layer.cornerRadius = KPLayoutConstant.corner_radius
         submitButton.layer.borderWidth = 1.0
         submitButton.layer.borderColor = KPColorPalette.KPMainColor_v2.grayColor_level4?.cgColor
         submitButton.titleLabel?.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)

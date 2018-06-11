@@ -35,7 +35,7 @@ class KPSharedSettingViewController: KPViewController {
         sendButton.setTitleColor(KPColorPalette.KPMainColor_v2.mainColor,
                                  for: .normal)
         sendButton.clipsToBounds = true
-        sendButton.layer.cornerRadius = 4.0
+        sendButton.layer.cornerRadius = KPLayoutConstant.corner_radius
         sendButton.layer.borderWidth = 1.0
         sendButton.layer.borderColor = KPColorPalette.KPMainColor_v2.grayColor_level3?.cgColor
         sendButton.titleLabel?.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)

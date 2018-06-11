@@ -200,7 +200,7 @@ class KPMainListViewController:
         statusErrorButton = KPLoadingButton(image: nil, title: "再試試")
         statusErrorButton.layer.borderWidth = 1.0
         statusErrorButton.layer.borderColor = KPColorPalette.KPMainColor_v2.mainColor?.cgColor
-        statusErrorButton.layer.cornerRadius = 4.0
+        statusErrorButton.layer.cornerRadius = KPLayoutConstant.corner_radius
         statusErrorButton.layer.masksToBounds = true
         statusErrorButton.replaceText = true
         statusErrorButton.titleLabel?.font = UIFont.systemFont(ofSize: KPFontSize.subContent)

@@ -18,7 +18,7 @@ class RangeSliderTrackLayer: CALayer {
         }
         
         // Clip
-        let cornerRadius = 4.0
+        let cornerRadius = KPLayoutConstant.corner_radius
         let path = UIBezierPath(roundedRect: bounds, cornerRadius: CGFloat(cornerRadius))
         ctx.addPath(path.cgPath)
         

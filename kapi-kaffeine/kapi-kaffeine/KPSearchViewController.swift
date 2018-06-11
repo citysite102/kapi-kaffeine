@@ -158,7 +158,7 @@ class KPSearchViewController: KPViewController {
         newStoreButton = UIButton(type: .custom)
         newStoreButton.setTitle("我要新增店家", for: .normal)
         newStoreButton.titleLabel?.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
-        newStoreButton.layer.cornerRadius = 4.0
+        newStoreButton.layer.cornerRadius = KPLayoutConstant.corner_radius
         newStoreButton.layer.masksToBounds = true
         newStoreButton.layer.borderWidth = 1.0
         newStoreButton.layer.borderColor = KPColorPalette.KPMainColor_v2.mainColor?.cgColor

@@ -92,32 +92,18 @@ class KPInformationSharedInfoView: UIView {
             
             actionButtons.removeAll()
             
-//            let separator = UIView()
-//            separator.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
-//            buttonContainer.addSubview(separator)
-//            separator.addConstraints(fromStringArray: ["H:|[$self]|",
-//                                                       "V:|[$self(1)]"])
-            
             for (index, action) in (actions?.enumerated())! {
                 let actionButton = UIButton(type: .custom)
                 actionButton.setTitle(action.title, for: .normal)
                 actionButton.titleLabel?.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
-//                actionButton.setBackgroundImage(UIImage(color: action.color),
-//                                                for: .normal)
-//                if action.icon != nil {
-//                    actionButton.setImage(action.icon, for: .normal)
-//                }
-                
                 actionButton.layer.borderColor = KPColorPalette.KPMainColor_v2.grayColor_level2?.cgColor
                 actionButton.layer.borderWidth = 1.0
-                actionButton.layer.cornerRadius = 4.0
+                actionButton.layer.cornerRadius = KPLayoutConstant.corner_radius
                 actionButton.layer.masksToBounds = true
                 actionButton.tag = index
                 actionButton.addTarget(self, action: #selector(handleButtonOnTapped(button:)), for: .touchUpInside)
                 actionButton.setTitleColor(KPColorPalette.KPMainColor_v2.grayColor_level2,
                                            for: .normal)
-//                actionButton.imageView?.contentMode = .scaleAspectFit
-//                actionButton.imageEdgeInsets = UIEdgeInsets(top: 7, left: 7, bottom: 7, right: 8)
                 actionButtons.append(actionButton)
                 buttonContainer.addSubview(actionButton)
                 

@@ -23,7 +23,7 @@ class KPExpNotificationView: UIView {
         super.init(frame: frame)
         
         layer.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level3?.cgColor
-        layer.cornerRadius = 4.0
+        layer.cornerRadius = KPLayoutConstant.corner_radius
         layer.masksToBounds = true
         
         container = UIView()

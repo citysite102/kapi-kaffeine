@@ -84,15 +84,16 @@ extension KPSubTitlePhotoUploadView: UICollectionViewDataSource, UICollectionVie
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier:
                 KPSubTitlePhotoUploadView.KPSubTitlePhotoUploadViewUploadCellReuseIdentifier,
                                                           for: indexPath)
-            cell.layer.cornerRadius = 4.0
+            cell.layer.cornerRadius = KPLayoutConstant.corner_radius
             cell.layer.masksToBounds = true
             return cell
         }
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier:
             KPSubTitlePhotoUploadView.KPSubTitlePhotoUploadViewCellReuseIdentifier,
                                                       for: indexPath)  as! KPShopPhotoCell
         cell.shopPhoto.image = images[indexPath.row-1]
-        cell.layer.cornerRadius = 4.0
+        cell.layer.cornerRadius = KPLayoutConstant.corner_radius
         cell.layer.masksToBounds = true
         return cell
     }

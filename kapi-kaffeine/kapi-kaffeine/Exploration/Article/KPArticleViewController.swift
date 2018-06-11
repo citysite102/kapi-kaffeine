@@ -564,7 +564,7 @@ class KPArticleViewController: KPViewController {
                         
                         button.layer.borderColor = KPColorPalette.KPMainColor_v2.grayColor_level2?.cgColor
                         button.layer.borderWidth = 1.0
-                        button.layer.cornerRadius = 4.0
+                        button.layer.cornerRadius = KPLayoutConstant.corner_radius
                         button.tag = index
                         button.addTarget(self,
                                          action: #selector(self.handleButtonOnTapped(_:)),

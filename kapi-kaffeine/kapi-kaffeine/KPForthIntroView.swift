@@ -50,7 +50,7 @@ class KPForthIntroView: KPSharedIntroView {
                                                             "H:[$self]-4-|"])
         animateSpeekBox = UIView()
         animateSpeekBox.backgroundColor = UIColor(rgbaHexValue: 0xD4D4D4FF)
-        animateSpeekBox.layer.cornerRadius = 2.0
+        animateSpeekBox.layer.cornerRadius = KPLayoutConstant.corner_radius
         animateSpeekBox.layer.masksToBounds = true
         secondPopImageView.addSubview(animateSpeekBox)
         animateSpeekBox.addConstraints(fromStringArray: ["V:|-14-[$self(7)]",
@@ -58,7 +58,7 @@ class KPForthIntroView: KPSharedIntroView {
         
         animateSpeekBoxTwo = UIView()
         animateSpeekBoxTwo.backgroundColor = UIColor(rgbaHexValue: 0xD4D4D4FF)
-        animateSpeekBoxTwo.layer.cornerRadius = 2.0
+        animateSpeekBoxTwo.layer.cornerRadius = KPLayoutConstant.corner_radius
         animateSpeekBoxTwo.layer.masksToBounds = true
         secondPopImageView.addSubview(animateSpeekBoxTwo)
         animateSpeekBoxTwo.addConstraints(fromStringArray: ["V:|-27-[$self(7)]",
@@ -67,7 +67,7 @@ class KPForthIntroView: KPSharedIntroView {
         
         animateSpeekBoxThree = UIView()
         animateSpeekBoxThree.backgroundColor = UIColor(rgbaHexValue: 0xD4D4D4FF)
-        animateSpeekBoxThree.layer.cornerRadius = 2.0
+        animateSpeekBoxThree.layer.cornerRadius = KPLayoutConstant.corner_radius
         animateSpeekBoxThree.layer.masksToBounds = true
         secondPopImageView.addSubview(animateSpeekBoxThree)
         animateSpeekBoxThree.addConstraints(fromStringArray: ["V:|-40-[$self(7)]",

@@ -51,7 +51,7 @@ class KPNotificationPopoverContent: UIView, PopoverProtocol {
         super.init(frame: frame)
         
         backgroundColor = UIColor.white
-        layer.cornerRadius = 4
+        layer.cornerRadius = KPLayoutConstant.corner_radius
         
         addSubview(titleLabel)
         titleLabel.addConstraintForCenterAligningToSuperview(in: .horizontal)
@@ -79,7 +79,7 @@ class KPNotificationPopoverContent: UIView, PopoverProtocol {
         
         confirmButton = UIButton(type: .custom)
         confirmButton.setTitle("確認", for: .normal)
-        confirmButton.layer.cornerRadius = 2.0
+        confirmButton.layer.cornerRadius = KPLayoutConstant.corner_radius
         confirmButton.layer.masksToBounds = true
         confirmButton.titleLabel?.font = UIFont.systemFont(ofSize: 15.0)
         confirmButton.setBackgroundImage(UIImage(color: KPColorPalette.KPMainColor_v2.mainColor_light!),

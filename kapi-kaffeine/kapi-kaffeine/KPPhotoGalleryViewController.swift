@@ -183,13 +183,13 @@ extension KPPhotoGalleryViewController: UICollectionViewDelegate, UICollectionVi
         if indexPath.row == 0 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: KPPhotoGalleryViewController.KPPhotoGalleryViewControllerCellAddIdentifier,
                                                           for: indexPath) as! KPPhotoAddCell;
-            cell.layer.cornerRadius = 4.0
+            cell.layer.cornerRadius = KPLayoutConstant.corner_radius
             cell.layer.masksToBounds = true
             return cell;
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: KPPhotoGalleryViewController.KPPhotoGalleryViewControllerCellReuseIdentifier,
                                                           for: indexPath) as! KPShopPhotoCell;
-            cell.layer.cornerRadius = 4.0
+            cell.layer.cornerRadius = KPLayoutConstant.corner_radius
             cell.layer.masksToBounds = true
             cell.isUserInteractionEnabled = true
             cell.shopPhoto.af_setImage(withURL: displayedPhotoInformations[indexPath.row-1].imageURL,

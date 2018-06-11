@@ -74,7 +74,7 @@ class KPTimePickerViewController: UIViewController, KPTimePickerDelegate, KPTabV
                 button.setBackgroundImage(UIImage(color: KPColorPalette.KPBackgroundColor.mainColor!),
                                               for: .normal)
             }
-            button.layer.cornerRadius = 4.0
+            button.layer.cornerRadius = KPLayoutConstant.corner_radius
             button.layer.masksToBounds = true
             button.titleLabel?.font = UIFont.systemFont(ofSize: 15.0)
             buttonContainer.addSubview(button)

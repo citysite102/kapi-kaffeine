@@ -50,7 +50,7 @@ class KPIntroViewController: KPViewController {
                                  for: .highlighted)
         skipButton.layer.borderColor = UIColor.white.cgColor
         skipButton.layer.borderWidth = 1.0
-        skipButton.layer.cornerRadius = 2.0
+        skipButton.layer.cornerRadius = KPLayoutConstant.corner_radius
         skipButton.layer.masksToBounds = true
         skipButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         skipButton.addTarget(self, action: #selector(skipButtonOnTapped(_:)),

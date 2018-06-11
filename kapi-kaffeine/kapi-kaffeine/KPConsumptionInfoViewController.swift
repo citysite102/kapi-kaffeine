@@ -40,8 +40,7 @@ class KPConsumptionInfoViewController: KPNewStoreBasicController, KPSharedSettin
                                    for: .disabled)
         submitButton.setTitleColor(KPColorPalette.KPMainColor_v2.mainColor,
                                    for: .normal)
-        submitButton.layer.cornerRadius = 4.0
-        submitButton.layer.cornerRadius = 4.0
+        submitButton.layer.cornerRadius = KPLayoutConstant.corner_radius
         submitButton.layer.borderWidth = 1.0
         submitButton.layer.borderColor = KPColorPalette.KPMainColor_v2.grayColor_level3?.cgColor
         buttonContainer.addSubview(submitButton)
