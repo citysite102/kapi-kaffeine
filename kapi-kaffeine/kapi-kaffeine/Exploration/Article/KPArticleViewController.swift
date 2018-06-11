@@ -469,7 +469,7 @@ class KPArticleViewController: KPViewController {
                 if element.type == .Image {
                     
                     let imageView = UIImageView()
-                    imageView.contentMode = .scaleAspectFit
+                    imageView.contentMode = .scaleAspectFill
                     imageView.clipsToBounds = true
                     if let url = URL(string: element.value) {
                         imageView.af_setImage(withURL: url)
@@ -590,7 +590,7 @@ class KPArticleViewController: KPViewController {
                             currentView.leftAnchor.constraint(equalTo: self.articleContainer.leftAnchor, constant: 0),
                             currentView.rightAnchor.constraint(equalTo: self.articleContainer.rightAnchor, constant: 0),
                             currentView.topAnchor.constraint(equalTo: previousView.bottomAnchor,
-                                                             constant: 0),
+                                                             constant: 16),
                             currentView.heightAnchor.constraint(lessThanOrEqualToConstant: 320)
                             ])
                     } else if currentView.isKind(of: UIButton.self) {
