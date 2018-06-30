@@ -23,6 +23,8 @@ class KPInformationViewController: KPViewController {
                 KPDataModel(JSON: detailedInformationDataModel.toJSON())
             DispatchQueue.main.async {
                 self.titleLabel.text = self.detailedInformationDataModel.name
+                self.cardInformationContainer.shopStatusHint.backgroundColor =  self.detailedInformationDataModel.businessHour?.isOpening ?? false ? KPColorPalette.KPMainColor_v2.greenColor : KPColorPalette.KPMainColor_v2.redColor
+                self.cardInformationContainer.shopStatusLabel.text = self.detailedInformationDataModel.businessHour?.shopStatus.status
                 if let relatedCount = KPServiceHandler.sharedHandler.relatedDisplayModel?.count  {
                     self.shopInformationView.separator.isHidden = relatedCount == 0 ? true : false
                     self.recommendInformationView.isHidden = relatedCount == 0 ? true : false
