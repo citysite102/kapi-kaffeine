@@ -63,7 +63,7 @@ class KPSearchHeaderView: UIView {
         containerView.addSubview(searchContainer)
         searchContainer.addGestureRecognizer(longPressGesture)
         searchContainer.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",
-                                                         "V:|-40-[$self(40)]"],
+                                                         "V:|-40-[$self(40)]-8-|"],
                                        metrics:[KPLayoutConstant.information_horizontal_offset])
         
         searchIcon = UIImageView(image: R.image.icon_search())
