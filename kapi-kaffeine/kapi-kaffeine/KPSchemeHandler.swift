@@ -40,7 +40,7 @@ class KPSchemeHandler: KPMainViewControllerDelegate {
             parameters[item.name] = item.value
         }
         
-        if let identifier = parameters["cafe_id"] as String! {
+        if let identifier = parameters["cafe_id"] as String? {
             KPServiceHandler.sharedHandler.fetchSimpleStoreInformation(identifier, { (result) in
                 if result != nil {
                     self.currentDataModel = result

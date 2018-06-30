@@ -31,8 +31,8 @@ class KPDataModel: NSObject, Mappable, GMUClusterItem, Comparable {
     var phone: String?
     var city: String!
     var place: String?
-    var latitude: Double!
-    var longitude: Double!
+    var latitude: Double = 25.0475
+    var longitude: Double = 121.515
     var standingDesk: NSNumber? = 0
     var socket: NSNumber? = 0
     var limitedTime: NSNumber? = 0

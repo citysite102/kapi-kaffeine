@@ -19,9 +19,6 @@ class KPSearchHeaderView: UIView {
     var searchIcon: UIImageView!
     var searchLabel: UILabel!
     var filterButton: KPBounceButton!
-    
-//    var searchButton: KPBounceButton!
-//    var menuButton: KPBounceButton!
     var styleButton: KPBounceButton!
     
     var searchTagView: KPSearchTagView!
@@ -51,11 +48,11 @@ class KPSearchHeaderView: UIView {
                                                       action: #selector(handleSearchContainerLongPressed(_:)))
         longPressGesture.minimumPressDuration = 0
         
-        locationSelectView = KPLocationSelect()
-        containerView.addSubview(locationSelectView)
-        locationSelectView.addGestureRecognizer(longPressGesture_location)
-        locationSelectView.addConstraints(fromStringArray: ["H:|-20-[$self]",
-                                                            "V:|-40-[$self(36)]-12-|"])
+//        locationSelectView = KPLocationSelect()
+//        containerView.addSubview(locationSelectView)
+//        locationSelectView.addGestureRecognizer(longPressGesture_location)
+//        locationSelectView.addConstraints(fromStringArray: ["H:|-20-[$self]",
+//                                                            "V:|-40-[$self(36)]-12-|"])
         
         searchContainer = UIView()
         searchContainer.backgroundColor = KPColorPalette.KPBackgroundColor.whiteColor
@@ -65,9 +62,9 @@ class KPSearchHeaderView: UIView {
         searchContainer.layer.borderColor = KPColorPalette.KPMainColor_v2.grayColor_level3?.cgColor
         containerView.addSubview(searchContainer)
         searchContainer.addGestureRecognizer(longPressGesture)
-        searchContainer.addConstraints(fromStringArray: ["H:[$view0]-16-[$self]",
-                                                         "V:|-40-[$self(36)]"],
-                                       views:[locationSelectView])
+        searchContainer.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",
+                                                         "V:|-40-[$self(40)]"],
+                                       metrics:[KPLayoutConstant.information_horizontal_offset])
         
         searchIcon = UIImageView(image: R.image.icon_search())
         searchIcon.tintColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle

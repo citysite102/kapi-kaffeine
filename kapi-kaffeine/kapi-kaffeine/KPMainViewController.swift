@@ -379,10 +379,9 @@ class KPMainViewController: KPViewController {
         
         KPAnalyticManager.sendButtonClickEvent(KPAnalyticsEventValue.button.main_switch_mode_button)
         
-        let iconImage = (self.currentController == self.mainListViewController) ?
+        _ = (self.currentController == self.mainListViewController) ?
             R.image.icon_list()!.withRenderingMode(.alwaysTemplate) :
             R.image.icon_map()!.withRenderingMode(.alwaysTemplate)
-//        self.mainListViewController?.snapShotShowing = true
         
         if self.currentController == self.mainListViewController {
             mainListViewController?.view.alpha = 1.0

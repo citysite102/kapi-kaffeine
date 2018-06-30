@@ -449,18 +449,21 @@ class KPArticleViewController: KPViewController {
             self.articleContainer.addSubview(titleLabel)
             titleLabel.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
-                titleLabel.leftAnchor.constraint(equalTo: self.articleContainer.leftAnchor, constant: 16),
-                titleLabel.rightAnchor.constraint(equalTo: self.articleContainer.rightAnchor, constant: -16),
-                titleLabel.topAnchor.constraint(equalTo: self.articleContainer.topAnchor, constant: 24)
+                titleLabel.leftAnchor.constraint(equalTo: self.articleContainer.leftAnchor,
+                                                 constant: CGFloat(KPLayoutConstant.information_horizontal_offset)),
+                titleLabel.rightAnchor.constraint(equalTo: self.articleContainer.rightAnchor,
+                                                  constant: -CGFloat(KPLayoutConstant.information_horizontal_offset)),
+                titleLabel.topAnchor.constraint(equalTo: self.articleContainer.topAnchor,
+                                                constant: 24)
             ])
             
             
             var previousView: UIView = titleLabel
-            var spacing: CGFloat = 30
+            var spacing: CGFloat = 24
             for (index, element) in article.contents.enumerated() {
                 
                 if element.type == .Br {
-                    spacing = 40
+                    spacing = 48
                     continue
                 }
                 
@@ -595,18 +598,18 @@ class KPArticleViewController: KPViewController {
                             ])
                     } else if currentView.isKind(of: UIButton.self) {
                         NSLayoutConstraint.activate([
-                            currentView.leftAnchor.constraint(equalTo: self.articleContainer.leftAnchor, constant: 16),
-                            currentView.rightAnchor.constraint(equalTo: self.articleContainer.rightAnchor, constant: -16),
-                            currentView.heightAnchor.constraint(equalToConstant: 40),
+                            currentView.leftAnchor.constraint(equalTo: self.articleContainer.leftAnchor, constant: CGFloat(KPLayoutConstant.information_horizontal_offset)),
+                            currentView.rightAnchor.constraint(equalTo: self.articleContainer.rightAnchor, constant: CGFloat(-KPLayoutConstant.information_horizontal_offset)),
+                            currentView.heightAnchor.constraint(equalToConstant: 44),
                             currentView.topAnchor.constraint(equalTo: previousView.bottomAnchor,
-                                                             constant: previousView.isKind(of: UIImageView.self) ? 0 : spacing)
+                                                             constant: CGFloat(KPLayoutConstant.information_horizontal_offset))
                             ])
                     } else {
                         NSLayoutConstraint.activate([
-                            currentView.leftAnchor.constraint(equalTo: self.articleContainer.leftAnchor, constant: 16),
-                            currentView.rightAnchor.constraint(equalTo: self.articleContainer.rightAnchor, constant: -16),
+                            currentView.leftAnchor.constraint(equalTo: self.articleContainer.leftAnchor, constant: CGFloat(KPLayoutConstant.information_horizontal_offset)),
+                            currentView.rightAnchor.constraint(equalTo: self.articleContainer.rightAnchor, constant: CGFloat(-KPLayoutConstant.information_horizontal_offset)),
                             currentView.topAnchor.constraint(equalTo: previousView.bottomAnchor,
-                                                             constant: previousView.isKind(of: UIImageView.self) ? 0 : spacing)
+                                                             constant: previousView.isKind(of: UIImageView.self) ? CGFloat(KPLayoutConstant.information_horizontal_offset) : spacing)
                         ])
                     }
                     
@@ -644,9 +647,6 @@ class KPArticleViewController: KPViewController {
         informationController.informationDataModel = dataModel
         let navigationController = UINavigationController(rootViewController: informationController)
         present(navigationController, animated: true, completion: nil)
-//        controller.contentController = navigationController
-//        controller.presentModalView()
-        
     }
     
     func articleLabel(withElement element: KPArticleElement) -> UILabel {

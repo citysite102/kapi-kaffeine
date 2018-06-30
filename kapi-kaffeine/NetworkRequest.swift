@@ -72,8 +72,8 @@ extension NetworkRequest {
     
     public var url: String { return baseURL + endpoint}
 //    public var baseURL: String { return "https://kapi-v2-test.herokuapp.com/api/v2" }
-//    public var baseURL: String { return "https://api.kapi.tw/api/v2" }
-    public var baseURL: String { return "http://35.229.129.112/api/v3" }
+    public var baseURL: String { return "https://api.kapi.tw/api/v3" }
+//    public var baseURL: String { return "http://35.229.129.112/api/v3" }
     public var method: Alamofire.HTTPMethod { return .get }
     public var encoding: Alamofire.ParameterEncoding { return method == .get ?
         URLEncoding.default :

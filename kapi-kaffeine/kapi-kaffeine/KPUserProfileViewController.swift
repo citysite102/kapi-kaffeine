@@ -37,8 +37,9 @@ KPTabViewDelegate {
                         
                         for (index, tabTitle) in self.tabTitles.enumerated() {
                             
-                            if let displayModel = KPUserManager.sharedManager.currentUser?.value(forKey: tabTitle.key) as? [KPDataModel] {
-                                self.tabView.tabs[index].setTitle("\(tabTitle.title) \(displayModel.count)", for: .normal)
+                            if let dataModels =
+                                KPUserManager.sharedManager.currentUser?.value(forKey: tabTitle.key) as? [KPDataModel] {
+                                self.tabView.tabs[index].setTitle("\(tabTitle.title) \(dataModels.count)", for: .normal)
                             } else if let articleItem = KPUserManager.sharedManager.currentUser?.value(forKey: tabTitle.key) as? [KPArticleItem] {
                                 self.tabView.tabs[index].setTitle("\(tabTitle.title) \(articleItem.count)", for: .normal)
                             }
@@ -353,7 +354,7 @@ KPTabViewDelegate {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if let user = KPUserManager.sharedManager.currentUser {
+        if let _ = KPUserManager.sharedManager.currentUser {
             isLogin = true
         } else {
             isLogin = false
@@ -380,16 +381,17 @@ KPTabViewDelegate {
             }
             KPUserManager.sharedManager.updateUserInformation({ (_) in
                 for (index, tabTitle) in self.tabTitles.enumerated() {
-                    if let displayModel = KPUserManager.sharedManager.currentUser?.value(forKey: tabTitle.key) as? [KPDataModel] {
-                        self.displayDataModels[index] = displayModel
+                    if let dataModels =
+                        KPUserManager.sharedManager.currentUser?.value(forKey: tabTitle.key) as? [KPDataModel] {
+                        self.displayDataModels[index] = dataModels
                         DispatchQueue.main.async {
                             UIView.animate(withDuration: 0.1,
                                            animations: {
-                                            self.tableViews[index].alpha = (displayModel.count == 0) ? 0.0 : 1.0
-                                            self.statusViews[index].alpha = (displayModel.count != 0) ? 0.0 : 1.0
+                                            self.tableViews[index].alpha = (dataModels.count == 0) ? 0.0 : 1.0
+                                            self.statusViews[index].alpha = (dataModels.count != 0) ? 0.0 : 1.0
                             }, completion: { (_) in
-                                self.tableViews[index].isHidden = displayModel.count == 0
-                                self.statusViews[index].isHidden = (displayModel.count != 0)
+                                self.tableViews[index].isHidden = dataModels.count == 0
+                                self.statusViews[index].isHidden = (dataModels.count != 0)
                             })
                         }
                     } else if let articleModels = KPUserManager.sharedManager.currentUser?.value(forKey: tabTitle.key) as? [KPArticleItem] {

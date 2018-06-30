@@ -227,11 +227,6 @@ class KPInformationHeaderView: UIView {
     var photoLongPressGesture: UILongPressGestureRecognizer!
     
     var userContainer: UIView!
-    var userProfileImages: [UIImage]! = [R.image.demo_p1()!,
-                                         R.image.demo_p2()!,
-                                         R.image.demo_p3()!,
-                                         R.image.demo_p4()!,
-                                         R.image.demo_p5()!]
     var userProfileImageViews: [UIView]!
     
     var scoreContainer: UIView!

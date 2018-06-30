@@ -532,7 +532,7 @@ class KPInformationViewController: KPViewController {
                     if let weSelf = self {
                         if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
                             UIApplication.shared.open(URL(string:
-                                "comgooglemaps://?center=\(weSelf.informationDataModel.latitude!),\(weSelf.informationDataModel.longitude!)&mapmode=streetview")!,
+                                "comgooglemaps://?center=\(weSelf.informationDataModel.latitude),\(weSelf.informationDataModel.longitude)&mapmode=streetview")!,
                                                       options: [:],
                                                       completionHandler: nil)
                         } else {
@@ -889,7 +889,7 @@ class KPInformationViewController: KPViewController {
                     let transition = CATransition()
                     transition.duration = 0.2
                     transition.type = kCATransitionFade
-                    weSelf.informationHeaderView.shopPhoto.image = R.image.image_noImage()
+                    weSelf.informationHeaderView.shopPhoto.image = R.image.image_first_photo()
                     weSelf.informationHeaderView.shopPhoto.isUserInteractionEnabled = false
                     weSelf.informationHeaderView.shopPhoto.layer.add(transition, forKey: nil)
                     weSelf.informationHeaderView.morePhotoButton.titleLabel?.text = "上傳\n照片"

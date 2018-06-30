@@ -21,7 +21,6 @@ class KPExplorationViewController: KPViewController {
     var shouldShowLightContent: Bool = true
     var currentBgImageIndex = 0
     var targetPosition: CGPoint = CGPoint(x: -1, y: 0)
-    var demoReadCount = [22, 13, 92, 122]
     
     var filterButton: KPBounceButton!
     var headerView: UIView!
@@ -35,7 +34,7 @@ class KPExplorationViewController: KPViewController {
     var articleCollectionView: UICollectionView!
     var contentTableView: UITableView!
     
-    var testData: [KPExplorationSection] = []
+    var exploreData: [KPExplorationSection] = []
     var articleList: [KPArticleItem] = []
     
     // MARK: - Life Cycle
@@ -125,15 +124,7 @@ class KPExplorationViewController: KPViewController {
                 
             })
             
-            for (index, cell) in self.articleCollectionView.visibleCells.enumerated() {
-//                UIView.animate(withDuration: 0.2,
-//                               delay: 0.6+(Double(self.articleCollectionView.visibleCells.count-1)*0.2-Double(index)*0.2),
-//                               options: UIViewAnimationOptions.curveEaseOut,
-//                               animations: {
-//                                cell.alpha = 1.0
-//                }, completion: { (_) in
-//
-//                })
+            for (_, cell) in self.articleCollectionView.visibleCells.enumerated() {
                 UIView.animate(withDuration: 0.2,
                                delay: 0.5,
                                options: UIViewAnimationOptions.curveEaseOut,
@@ -199,8 +190,6 @@ class KPExplorationViewController: KPViewController {
         sectionBgImageView.addConstraints(fromStringArray: ["V:|-(-140)-[$self]|",
                                                             "H:|-(-24)-[$self]-(-24)-|"])
         
-//        sectionBgImageView.addConstraints(fromStringArray: ["V:|-(-140)-[$self]|"])
-//        sectionBgImageView.addConstraintForCenterAligningToSuperview(in: .horizontal)
         let longPressGesture_location = UILongPressGestureRecognizer(target: self,
                                                                      action: #selector(handleLocationContainerLongPressed(_:)))
         longPressGesture_location.minimumPressDuration = 0
@@ -217,20 +206,26 @@ class KPExplorationViewController: KPViewController {
         headerContainer.addConstraints(fromStringArray: ["V:|[$self(104)]",
                                                          "H:|[$self]|"])
         
-        locationSelectView = KPLocationSelect()
-        locationSelectView.locationLabel.textColor = KPColorPalette.KPBackgroundColor.white_level1
-        locationSelectView.dropDownIcon.tintColor = KPColorPalette.KPBackgroundColor.white_level1
-        headerContainer.addSubview(locationSelectView)
-        locationSelectView.addGestureRecognizer(longPressGesture_location)
-        locationSelectView.addConstraints(fromStringArray: ["H:|-20-[$self]",
-                                                            "V:|-40-[$self(36)]"])
+//        locationSelectView = KPLocationSelect()
+//        locationSelectView.locationLabel.textColor = KPColorPalette.KPBackgroundColor.white_level1
+//        locationSelectView.dropDownIcon.tintColor = KPColorPalette.KPBackgroundColor.white_level1
+//        headerContainer.addSubview(locationSelectView)
+//        locationSelectView.addGestureRecognizer(longPressGesture_location)
+//        locationSelectView.addConstraints(fromStringArray: ["H:|-20-[$self]",
+//                                                            "V:|-40-[$self(36)]"])
         
         
+//        searchContainerShadowView = UIView()
+//        headerContainer.addSubview(searchContainerShadowView)
+//        searchContainerShadowView.addConstraints(fromStringArray: ["H:[$view0]-16-[$self]-16-|",
+//                                                                   "V:|-40-[$self(36)]"], views: [locationSelectView])
+
         searchContainerShadowView = UIView()
         headerContainer.addSubview(searchContainerShadowView)
-        searchContainerShadowView.addConstraints(fromStringArray: ["H:[$view0]-16-[$self]-16-|",
-                                                                   "V:|-40-[$self(36)]"], views: [locationSelectView])
-
+        searchContainerShadowView.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]-($metric0)-|",
+                                                                   "V:|-40-[$self(40)]"],
+                                                 metrics: [KPLayoutConstant.information_horizontal_offset])
+        
         searchContainer = UIView()
         searchContainer.backgroundColor = KPColorPalette.KPBackgroundColor.white_level3
         searchContainer.layer.cornerRadius = KPLayoutConstant.corner_radius
@@ -324,7 +319,8 @@ class KPExplorationViewController: KPViewController {
                                         metrics:[KPLayoutConstant.information_horizontal_offset], views:[moreContentIcon])
         moreContentLabel.addConstraintForCenterAligningToSuperview(in: .vertical)
         
-        
+        let footerGesture = UITapGestureRecognizer(target: self, action: #selector(handleFooterOnTapped(_:)))
+        footerView.addGestureRecognizer(footerGesture)
         
         contentTableView.tableHeaderView = headerView
         contentTableView.tableFooterView = footerView
@@ -346,7 +342,8 @@ class KPExplorationViewController: KPViewController {
     
     
     func refreshData() {
-        KPServiceHandler.sharedHandler.fetchExplorationList { [weak self] (explorationList, error) in
+        KPServiceHandler.sharedHandler.fetchExplorationList {
+            [weak self] (explorationList, error) in
             
             guard let this = self else {
                 return
@@ -356,7 +353,7 @@ class KPExplorationViewController: KPViewController {
                 return
             }
             
-            this.testData = explorationList!
+            this.exploreData = explorationList!
             DispatchQueue.main.async {
                 this.contentTableView.reloadData()
                 self?.performAnimation(completion: {
@@ -384,6 +381,18 @@ class KPExplorationViewController: KPViewController {
     
     
     // MARK: - Events
+    
+    @objc func handleFooterOnTapped(_ gesture: UITapGestureRecognizer) {
+        guard let url = URL(string: "https://www.facebook.com/KAPI.tw/?ref=br_rs") else {
+            return
+        }
+        
+        if #available(iOS 10.0, *) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        } else {
+            UIApplication.shared.openURL(url)
+        }
+    }
     
     @objc func handleLocationContainerLongPressed(_ gesture: UILongPressGestureRecognizer) {
         if (gesture.state == .began) {
@@ -451,17 +460,16 @@ extension KPExplorationViewController: UITableViewDataSource, UITableViewDelegat
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection
         section: Int) -> Int {
-        return testData.count
+        return exploreData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell",
                                                  for: indexPath) as! KPExplorationSectionView
-        cell.sectionTitleLabel.text = testData[indexPath.row].title
-        cell.sectionDescriptionLabel.setText(text: testData[indexPath.row].explorationDescription,
-                                             lineSpacing: 4.0)
-        cell.shops = testData[indexPath.row].shops
-//        cell.shouldShowSeparatar = !(indexPath.row == testData.count-1)
+        cell.sectionTitleLabel.text = exploreData[indexPath.row].title
+        cell.sectionDescriptionLabel.setText(text: exploreData[indexPath.row].explorationDescription,
+                                                lineSpacing: 4.0)
+        cell.shops = exploreData[indexPath.row].shops
         
         return cell
     }
@@ -634,9 +642,7 @@ UICollectionViewDelegateFlowLayout {
         cell.articleHeroImageView.hero.id = "article-\(indexPath.row)"
         cell.titleLabel.setText(text: articleList[indexPath.row].title!,
                                 lineSpacing: 4.0)
-//        let readCount = articleList[indexPath.row].peopleRead + demoReadCount[indexPath.row]
-        let readCount = 0
-        cell.subLabel.text = "\(readCount) 人已閱讀"
+        cell.subLabel.text = "\(articleList[indexPath.row].peopleRead) 人已收藏"
         return cell
     }
     
