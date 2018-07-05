@@ -27,7 +27,7 @@ class KPSearchTagButtonCell: UICollectionViewCell {
         super.init(frame: frame)
         
         layer.borderWidth = 1.0
-        layer.borderColor = KPColorPalette.KPTextColor_v2.mainColor_title?.cgColor
+        layer.borderColor = KPColorPalette.KPMainColor_v2.mainColor?.cgColor
         layer.cornerRadius = 16.0
         layer.masksToBounds = true
         

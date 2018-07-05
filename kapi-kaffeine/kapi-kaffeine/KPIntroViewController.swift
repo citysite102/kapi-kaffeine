@@ -27,7 +27,7 @@ class KPIntroViewController: KPViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = UIColor(patternImage: R.image.image_background()!)
+//        view.backgroundColor = UIColor(patternImage: R.image.image_background()!)
         
         scrollView = UIScrollView()
         scrollView.isPagingEnabled = true

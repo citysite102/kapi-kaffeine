@@ -59,7 +59,7 @@ class KPSearchHeaderView: UIView {
         searchContainer.layer.cornerRadius = KPLayoutConstant.corner_radius
         searchContainer.layer.masksToBounds = true
         searchContainer.layer.borderWidth = 1.0
-        searchContainer.layer.borderColor = KPColorPalette.KPMainColor_v2.grayColor_level3?.cgColor
+        searchContainer.layer.borderColor = KPColorPalette.KPMainColor_v2.mainColor?.cgColor
         containerView.addSubview(searchContainer)
         searchContainer.addGestureRecognizer(longPressGesture)
         searchContainer.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",
@@ -67,7 +67,7 @@ class KPSearchHeaderView: UIView {
                                        metrics:[KPLayoutConstant.information_horizontal_offset])
         
         searchIcon = UIImageView(image: R.image.icon_search())
-        searchIcon.tintColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
+        searchIcon.tintColor = KPColorPalette.KPMainColor_v2.mainColor
         searchContainer.addSubview(searchIcon)
         searchIcon.addConstraints(fromStringArray: ["V:[$self(18)]",
                                                     "H:|-10-[$self(18)]"])
@@ -78,7 +78,7 @@ class KPSearchHeaderView: UIView {
         searchLabel = UILabel()
         searchLabel.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
         searchLabel.text = "搜尋店家名稱、標籤..."
-        searchLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
+        searchLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_description
         searchContainer.addSubview(searchLabel)
         searchLabel.addConstraints(fromStringArray: ["H:[$view0]-8-[$self]"],
                                    views:[searchIcon])

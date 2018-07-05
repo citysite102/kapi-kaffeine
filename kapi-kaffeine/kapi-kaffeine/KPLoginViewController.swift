@@ -22,8 +22,7 @@ class KPLoginViewController: KPViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = UIColor(patternImage: R.image.image_background()!)
-        
+//        view.backgroundColor = UIColor(patternImage: R.image.image_background()!)
         
         
         iconImage = UIImageView(image: R.image.image_icon_login())
