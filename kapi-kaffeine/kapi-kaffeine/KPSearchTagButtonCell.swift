@@ -26,15 +26,13 @@ class KPSearchTagButtonCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        layer.borderWidth = 1.0
-        layer.borderColor = KPColorPalette.KPMainColor_v2.mainColor?.cgColor
         layer.cornerRadius = 16.0
         layer.masksToBounds = true
         
-        backgroundColor = KPColorPalette.KPBackgroundColor.whiteColor
+        backgroundColor = KPColorPalette.KPMainColor_v2.grayColor_level7
         tagTitle = UILabel()
         tagTitle.font = UIFont.systemFont(ofSize: 13.0)
-        tagTitle.textColor = KPColorPalette.KPMainColor_v2.mainColor
+        tagTitle.textColor = KPColorPalette.KPMainColor_v2.grayColor_level4
         addSubview(tagTitle)
         tagTitle.addConstraints(fromStringArray: ["H:|-12-[$self]-12-|"])
         tagTitle.addConstraintForCenterAligningToSuperview(in: .vertical)
@@ -57,8 +55,8 @@ class KPSearchTagButtonCell: UICollectionViewCell {
                 backgroundColor = KPColorPalette.KPMainColor_v2.mainColor
                 tagTitle.textColor = KPColorPalette.KPBackgroundColor.whiteColor
             } else {
-                backgroundColor = KPColorPalette.KPBackgroundColor.whiteColor
-                tagTitle.textColor = KPColorPalette.KPMainColor_v2.mainColor
+                backgroundColor = KPColorPalette.KPMainColor_v2.grayColor_level7
+                tagTitle.textColor = KPColorPalette.KPMainColor_v2.grayColor_level4
             }
         }
     }

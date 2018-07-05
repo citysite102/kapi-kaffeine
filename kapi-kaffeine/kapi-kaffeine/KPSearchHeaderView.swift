@@ -56,10 +56,10 @@ class KPSearchHeaderView: UIView {
         
         searchContainer = UIView()
         searchContainer.backgroundColor = KPColorPalette.KPBackgroundColor.whiteColor
-        searchContainer.layer.cornerRadius = KPLayoutConstant.corner_radius
+        searchContainer.layer.cornerRadius = 5
         searchContainer.layer.masksToBounds = true
         searchContainer.layer.borderWidth = 1.0
-        searchContainer.layer.borderColor = KPColorPalette.KPMainColor_v2.mainColor?.cgColor
+        searchContainer.layer.borderColor = KPColorPalette.KPMainColor_v2.grayColor_level4?.cgColor
         containerView.addSubview(searchContainer)
         searchContainer.addGestureRecognizer(longPressGesture)
         searchContainer.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]",
@@ -67,7 +67,7 @@ class KPSearchHeaderView: UIView {
                                        metrics:[KPLayoutConstant.information_horizontal_offset])
         
         searchIcon = UIImageView(image: R.image.icon_search())
-        searchIcon.tintColor = KPColorPalette.KPMainColor_v2.mainColor
+        searchIcon.tintColor = KPColorPalette.KPMainColor_v2.grayColor_level4
         searchContainer.addSubview(searchIcon)
         searchIcon.addConstraints(fromStringArray: ["V:[$self(18)]",
                                                     "H:|-10-[$self(18)]"])
