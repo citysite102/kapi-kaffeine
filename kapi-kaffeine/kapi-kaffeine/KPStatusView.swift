@@ -51,7 +51,7 @@ class KPStatusView: UIView {
         icon.addConstraintForCenterAligningToSuperview(in: .horizontal)
         
         addSubview(descriptionLabel)
-        descriptionLabel.addConstraints(fromStringArray: ["V:[$view0]-16-[$self]",
+        descriptionLabel.addConstraints(fromStringArray: ["V:[$view0]-20-[$self]",
                                                           "H:|-8-[$self]-8-|"],
                                         views: [icon])
         descriptionLabel.setText(text: content,

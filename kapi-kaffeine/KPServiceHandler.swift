@@ -761,9 +761,10 @@ class KPServiceHandler {
                                 guard let _ = KPUserManager.sharedManager.currentUser?.favorites?.first(where: {$0.identifier == (cafe?.identifier ?? self.currentDisplayModel?.identifier)}) else {
                                     KPUserManager.sharedManager.currentUser?.favorites?.append(cafe ?? self.currentDisplayModel!)
                                     KPUserManager.sharedManager.storeUserInformation()
+                                    completion?(true)
                                     return
                                 }
-                                completion?(true)
+                                completion?(false)
                 }.catch { error in
                     print("Add Favorite Cafe error\(error)")
                     loadingView.state = .failed
@@ -774,7 +775,6 @@ class KPServiceHandler {
     
     func removeFavoriteCafe(_ cafe: KPDataModel,
                             _ completion: ((Bool) -> Swift.Void)? = nil) {
-        
         
         if KPUserManager.sharedManager.currentUser == nil {
             KPPopoverView.popoverLoginView()
@@ -788,7 +788,6 @@ class KPServiceHandler {
             removeRequest.perform(cafe.identifier,
                                   KPFavoriteRequest.requestType.delete).then { result -> Void in
                                     loadingView.state = result["result"].boolValue ? .successed : .failed
-                                    //                                if let found = self.currentUser?.favorites?.first(where: {$0.identifier == cafeID}) {
                                     if let foundOffset = KPUserManager.sharedManager.currentUser?.favorites?.index(where: {$0.identifier == cafe.identifier}) {
                                         KPUserManager.sharedManager.currentUser?.favorites?.remove(at: foundOffset)
                                     }
@@ -844,14 +843,14 @@ class KPServiceHandler {
             let addRequest = KPVisitedRequest()
             addRequest.perform((currentDisplayModel?.identifier)!,
                                KPVisitedRequest.requestType.add).then { result -> Void in
-                                
+                                loadingView.state = result["result"].boolValue ? .successed : .failed
                                 guard let _ = KPUserManager.sharedManager.currentUser?.visits?.first(where: {$0.identifier == self.currentDisplayModel?.identifier}) else {
                                     KPUserManager.sharedManager.currentUser?.visits?.append(self.currentDisplayModel!)
                                     KPUserManager.sharedManager.storeUserInformation()
+                                    completion?(true)
                                     return
                                 }
-                                loadingView.state = result["result"].boolValue ? .successed : .failed
-                                completion?(true)
+                                completion?(false)
                 }.catch { (error) in
                     print("Remove Visited Cafe error\(error)")
                     loadingView.state = .failed

@@ -112,9 +112,9 @@ struct KPAnalyticsEventValue {
 
 struct KPNotification {
     struct information {
-        static let commentInformation = "commentInformation"
-        static let rateInformation =    "rateInformation"
-        static let photoInformation =   "photoInformation"
+        static let commentInformation =  "commentInformation"
+        static let rateInformation =     "rateInformation"
+        static let photoInformation =    "photoInformation"
     }
     
     struct statusBar {

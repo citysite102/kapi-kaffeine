@@ -127,7 +127,7 @@ KPTabViewDelegate {
     
     lazy var userPhoto: UIImageView = {
         let imageView = UIImageView()
-        imageView.layer.borderWidth = 1.0
+        imageView.layer.borderWidth = 0.0
         imageView.layer.borderColor = KPColorPalette.KPMainColor_v2.grayColor_level6?.cgColor
         imageView.layer.cornerRadius = 44.0
         imageView.layer.masksToBounds = true
@@ -319,7 +319,7 @@ KPTabViewDelegate {
                                                statusContents[index].content)
             statusView.isHidden = true
             scrollContainer.addSubview(statusView)
-            statusView.addConstraint(from: "V:|-72-[$self]")
+            statusView.addConstraint(from: "V:|-80-[$self]")
             statusView.addConstraint(forWidth: 220)
             statusView.addConstraintForCenterAligning(to: tableView,
                                                       in: .horizontal)

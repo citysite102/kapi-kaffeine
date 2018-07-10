@@ -73,13 +73,13 @@ class KPMainListTableViewCell: UITableViewCell {
                                                                                           rectSize: CGSize(width: self.cellImageWidth, height: self.cellImageWidth),
                                                                                           roundedRadius: self.cellCornerRadius)
                                                 } else {
-                                                    self.shopImageView.image =  drawImage(image: R.image.icon_noImage()!,
+                                                    self.shopImageView.image =  drawImage(image: R.image.image_noPic()!,
                                                                                           rectSize: CGSize(width: self.cellImageWidth, height: self.cellImageWidth),
                                                                                           roundedRadius: self.cellCornerRadius)
                                                 }
                 })
             } else {
-                self.shopImageView.image = drawImage(image: R.image.icon_noImage()!,
+                self.shopImageView.image = drawImage(image: R.image.image_noPic()!,
                                                      rectSize: CGSize(width: self.cellImageWidth,
                                                                       height: self.cellImageWidth),
                                                      roundedRadius: self.cellCornerRadius)

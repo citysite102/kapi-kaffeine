@@ -388,6 +388,7 @@ class KPSideViewController: KPViewController {
             userInfoButton.isHidden = true
         } else {
             userPhoto.af_setImage(withURL: URL(string: user!.photoURL ?? "")!)
+            userPhoto.layer.borderWidth = 1.0
             userNameLabel.text = user!.displayName ?? "你的名字"
             userNameLabel.isHidden = false
             userExpView.isHidden = false

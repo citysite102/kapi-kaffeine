@@ -57,25 +57,6 @@ class KPInformationViewController: KPViewController {
                                                        views: [self.commentInformationView])
                 }
                 
-                let hasVisited = KPUserManager.sharedManager.currentUser?.hasVisited(self.detailedInformationDataModel.identifier) ?? false
-                let hasCollected = KPUserManager.sharedManager.currentUser?.hasFavorited(self.detailedInformationDataModel.identifier) ?? false
-                
-                self.checkInButton.setTitle(hasVisited ? "取消打卡" : "打卡店家",
-                                            for: .normal)
-                
-                self.checkInButton.setTitleColor(
-                    hasVisited ?
-                        KPColorPalette.KPTextColor_v2.whiteColor :
-                        KPColorPalette.KPMainColor_v2.grayColor_level2,
-                    for: .normal)
-                self.checkInButton.setBackgroundImage(
-                    hasVisited ?
-                        UIImage(color: KPColorPalette.KPMainColor_v2.grayColor_level5!) :
-                        UIImage(color: UIColor.clear),
-                    for: .normal)
-                self.collectButton.setTitle(hasCollected ? "取消收藏" : "收藏店家", for: .normal)
-                self.collectButton.isEnabled = true
-                self.checkInButton.isEnabled = true
                 // 實作地圖 Action
                 let googleAction = UIAlertAction(title: "使用Google地圖開啟",
                                                  style: .default) {
@@ -175,14 +156,10 @@ class KPInformationViewController: KPViewController {
                 
                 
                 // Shop Information
-                
+                self.updateCheckInButton()
+                self.updateCollectButton()
                 self.informationView.informationDataModel = self.detailedInformationDataModel
-                
             }
-            
-            
-            
-            
         }
     }
     
@@ -502,16 +479,6 @@ class KPInformationViewController: KPViewController {
         commentInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
                                                                 "V:[$view0]-16-[$self]"],
                                               views: [menuInformationView])
-    
-        
-//        shopRateInfoView = KPShopRateInfoView()
-//        rateInformationView = KPInformationSharedInfoView()
-//        rateInformationView.infoView = shopRateInfoView
-//        scrollContainer.addSubview(rateInformationView)
-//        rateInformationView.addConstraints(fromStringArray: ["H:|[$self]|",
-//                                                             "V:[$view0]-16-[$self]"],
-//                                                views: [commentInformationView])
-        
         
         informationView = KPShopInfoView()
         informationView.otherTimeClosure = { [unowned self] () in
@@ -686,6 +653,8 @@ class KPInformationViewController: KPViewController {
         checkInButton.titleLabel?.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
         checkInButton.layer.cornerRadius = KPLayoutConstant.corner_radius
         checkInButton.layer.masksToBounds = true
+        checkInButton.layer.borderColor = KPColorPalette.KPMainColor_v2.grayColor_level2?.cgColor
+        checkInButton.layer.borderWidth = 1.0
         checkInButton.addTarget(self,
                                 action: #selector(handleCheckInButtonOnTapped(_:)),
                                 for: .touchUpInside)
@@ -781,6 +750,29 @@ class KPInformationViewController: KPViewController {
         }
     }
     
+    @objc func updateCheckInButton() {
+        let hasVisited = KPUserManager.sharedManager.currentUser?.hasVisited(self.detailedInformationDataModel.identifier) ?? false
+        self.checkInButton.setTitle(hasVisited ? "取消打卡" : "打卡店家",
+                                    for: .normal)
+        self.checkInButton.setTitleColor(
+            hasVisited ?
+                KPColorPalette.KPTextColor_v2.whiteColor :
+                KPColorPalette.KPMainColor_v2.grayColor_level2,
+            for: .normal)
+        self.checkInButton.setBackgroundImage(
+            hasVisited ?
+                UIImage(color: KPColorPalette.KPMainColor_v2.grayColor_level5!) :
+                UIImage(color: UIColor.clear),
+            for: .normal)
+        self.checkInButton.layer.borderWidth = hasVisited ? 0.0 : 1.0
+        self.checkInButton.isEnabled = true
+    }
+    
+    @objc func updateCollectButton() {
+        let hasCollected = KPUserManager.sharedManager.currentUser?.hasFavorited(self.detailedInformationDataModel.identifier) ?? false
+        self.collectButton.setTitle(hasCollected ? "取消收藏" : "收藏店家", for: .normal)
+        self.collectButton.isEnabled = true
+    }
     
     func refreshMenu() {
         KPServiceHandler.sharedHandler.getMenus {
@@ -849,9 +841,17 @@ class KPInformationViewController: KPViewController {
         let hasVisited = KPUserManager.sharedManager.currentUser?.hasVisited(self.detailedInformationDataModel.identifier) ?? false
         
         if hasVisited {
-            KPServiceHandler.sharedHandler.removeVisitedCafe(self.detailedInformationDataModel.identifier)
+            KPServiceHandler.sharedHandler.removeVisitedCafe(self.detailedInformationDataModel.identifier) { (success) in
+                if success {
+                    self.updateCheckInButton()
+                }
+            }
         } else {
-            KPServiceHandler.sharedHandler.addVisitedCafe()
+            KPServiceHandler.sharedHandler.addVisitedCafe { (success) in
+                if success {
+                    self.updateCheckInButton()
+                }
+            }
         }
     }
     
@@ -859,9 +859,17 @@ class KPInformationViewController: KPViewController {
         
         let hasCollected = KPUserManager.sharedManager.currentUser?.hasFavorited(self.detailedInformationDataModel.identifier) ?? false
         if hasCollected {
-            KPServiceHandler.sharedHandler.removeFavoriteCafe(self.informationDataModel)
+            KPServiceHandler.sharedHandler.removeFavoriteCafe(self.informationDataModel) { (success) in
+                if success {
+                    self.updateCollectButton()
+                }
+            }
         } else {
-            KPServiceHandler.sharedHandler.addFavoriteCafe(self.informationDataModel)
+            KPServiceHandler.sharedHandler.addFavoriteCafe(self.informationDataModel) { (success) in
+                if success {
+                    self.updateCollectButton()
+                }
+            }
         }
     }
     
