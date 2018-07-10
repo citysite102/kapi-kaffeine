@@ -33,7 +33,8 @@ KPTabViewDelegate {
                             self.userPhoto.af_setImage(withURL: photoURL)
                         }
                         self.userNameLabel.text = "Hi, \(user.displayName ?? "")"
-                        self.userBioLabel.text = user.intro ?? "被你看到這個隱藏的內容？！肯定有Bug，快回報給我們吧！"
+                        self.userBioLabel.setText(text:user.intro ?? "被你看到這個隱藏的內容？！肯定有Bug，快回報給我們吧！肯定有Bug！",
+                                                  lineSpacing: 3.0)
                         
                         for (index, tabTitle) in self.tabTitles.enumerated() {
                             
@@ -240,10 +241,6 @@ KPTabViewDelegate {
                                                       "V:[$view1]-8-[$self]"],
                                           views: [userPhoto,
                                                   userNameLabel])
-        userBioLabel.setText(text:"被你看到這個隱藏的內容？！肯定有Bug，快回報給我們吧！肯定有Bug！",
-                             lineSpacing: 3.0)
-        
-        
         
         logOutButton = KPBounceButton(frame: CGRect.zero)
         logOutButton.setTitle("登出", for: .normal)

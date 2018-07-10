@@ -23,8 +23,27 @@ class KPInformationViewController: KPViewController {
                 KPDataModel(JSON: detailedInformationDataModel.toJSON())
             DispatchQueue.main.async {
                 self.titleLabel.text = self.detailedInformationDataModel.name
-                self.cardInformationContainer.shopStatusHint.backgroundColor =  self.detailedInformationDataModel.businessHour?.isOpening ?? false ? KPColorPalette.KPMainColor_v2.greenColor : KPColorPalette.KPMainColor_v2.redColor
-                self.cardInformationContainer.shopStatusLabel.text = self.detailedInformationDataModel.businessHour?.shopStatus.status
+                
+                if self.informationDataModel.closed {
+                    self.cardInformationContainer.shopStatusHint.backgroundColor = KPColorPalette.KPTextColor.grayColor_level5
+                    self.cardInformationContainer.shopStatusLabel.textColor = KPColorPalette.KPTextColor.grayColor_level5
+                    self.cardInformationContainer.shopStatusLabel.text = "已歇業"
+                } else {
+                    if let isOpening = self.detailedInformationDataModel.businessHour?.isOpening,
+                        let status = self.detailedInformationDataModel.businessHour?.shopStatus.status
+                        {
+                        self.cardInformationContainer.shopStatusHint.backgroundColor =
+                            isOpening ?
+                            KPColorPalette.KPMainColor_v2.greenColor :
+                            KPColorPalette.KPMainColor_v2.redColor
+                        self.cardInformationContainer.shopStatusLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
+                        self.cardInformationContainer.shopStatusLabel.text = status
+                    } else {
+                        self.cardInformationContainer.shopStatusHint.backgroundColor = KPColorPalette.KPTextColor.grayColor_level5
+                        self.cardInformationContainer.shopStatusLabel.textColor = KPColorPalette.KPTextColor.grayColor_level5
+                        self.cardInformationContainer.shopStatusLabel.text = "尚無資料"
+                    }   
+                }
                 if let relatedCount = KPServiceHandler.sharedHandler.relatedDisplayModel?.count  {
                     self.shopInformationView.separator.isHidden = relatedCount == 0 ? true : false
                     self.recommendInformationView.isHidden = relatedCount == 0 ? true : false
@@ -42,7 +61,7 @@ class KPInformationViewController: KPViewController {
                 let hasCollected = KPUserManager.sharedManager.currentUser?.hasFavorited(self.detailedInformationDataModel.identifier) ?? false
                 
                 self.checkInButton.setTitle(hasVisited ? "取消打卡" : "打卡店家",
-                                       for: .normal)
+                                            for: .normal)
                 
                 self.checkInButton.setTitleColor(
                     hasVisited ?
@@ -51,7 +70,7 @@ class KPInformationViewController: KPViewController {
                     for: .normal)
                 self.checkInButton.setBackgroundImage(
                     hasVisited ?
-                        UIImage(color: KPColorPalette.KPMainColor_v2.grayColor_level6!) :
+                        UIImage(color: KPColorPalette.KPMainColor_v2.grayColor_level5!) :
                         UIImage(color: UIColor.clear),
                     for: .normal)
                 self.collectButton.setTitle(hasCollected ? "取消收藏" : "收藏店家", for: .normal)
@@ -665,8 +684,6 @@ class KPInformationViewController: KPViewController {
         
         checkInButton = UIButton(type: .custom)
         checkInButton.titleLabel?.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
-        checkInButton.layer.borderColor = KPColorPalette.KPMainColor_v2.grayColor_level2?.cgColor
-        checkInButton.layer.borderWidth = 1.0
         checkInButton.layer.cornerRadius = KPLayoutConstant.corner_radius
         checkInButton.layer.masksToBounds = true
         checkInButton.addTarget(self,

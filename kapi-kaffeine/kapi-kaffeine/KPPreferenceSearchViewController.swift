@@ -120,17 +120,7 @@ class KPPreferenceSearchViewController: KPViewController {
 
         view.backgroundColor = UIColor.white
         navigationController?.navigationBar.topItem?.title = "偏好篩選"
-        
-//        if #available(iOS 11.0, *) {
-//            navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedStringKey.foregroundColor: KPColorPalette.KPTextColor_v2.mainColor_title!,
-//                                                                            NSAttributedStringKey.font: UIFont.systemFont(ofSize: 32)]
-//        } else {
-//            navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: KPColorPalette.KPTextColor_v2.mainColor_title!,
-//                                                                       NSAttributedStringKey.font: UIFont.systemFont(ofSize: 32)]
-//        }
-        
         navigationController?.navigationBar.shadowImage = UIImage()
-        
     
         let barRightItem = UIBarButtonItem(title: "清除",
                                            style: .plain,

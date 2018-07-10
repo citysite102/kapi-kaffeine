@@ -32,6 +32,8 @@ class KPNewStoreController: KPNewStoreBasicController, KPSubtitleInputDelegate, 
         view.backgroundColor = UIColor.white
         title = "新增店家"
         
+        navigationController?.navigationBar.shadowImage = UIImage()
+        
         let barLeftItem = UIBarButtonItem(title: "取消",
                                           style: .plain,
                                           target: self,
@@ -42,7 +44,7 @@ class KPNewStoreController: KPNewStoreBasicController, KPSubtitleInputDelegate, 
         navigationItem.leftBarButtonItem = barLeftItem
     
         
-        storeNameEditor = KPTitleEditorView<UITextField>("店家名稱")
+        storeNameEditor = KPTitleEditorView<UITextField>("")
         storeNameEditor.contentView.placeholder = "請輸入店家名稱"
         storeNameEditor.isTextFieldEditable = false
         storeNameEditor.textFieldTapAction = { [weak self] in
@@ -55,8 +57,9 @@ class KPNewStoreController: KPNewStoreBasicController, KPSubtitleInputDelegate, 
             self.present(storeNameSearchController, animated: true, completion: nil)
         }
         scrollContainer.addSubview(storeNameEditor)
-        storeNameEditor.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|",
-                                                         "V:|-20-[$self]"])
+        storeNameEditor.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]-($metric0)-|",
+                                                         "V:|[$self]"],
+                                       metrics:[KPLayoutConstant.information_horizontal_offset])
         
         
         locationEditor = KPTitleEditorView<UITextField>("所在城市")
@@ -70,8 +73,9 @@ class KPNewStoreController: KPNewStoreBasicController, KPSubtitleInputDelegate, 
         }
         locationEditor.contentView.placeholder = "請選擇所在城市"
         scrollContainer.addSubview(locationEditor)
-        locationEditor.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|",
+        locationEditor.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]-($metric0)-|",
                                                         "V:[$view0]-20-[$self]"],
+                                      metrics:[KPLayoutConstant.information_horizontal_offset],
                                       views: [storeNameEditor])
         
         addressEditor = KPTitleEditorView<UITextField>("地址")
@@ -88,17 +92,19 @@ class KPNewStoreController: KPNewStoreBasicController, KPSubtitleInputDelegate, 
         mapEditButton.addTarget(self, action: #selector(handleMapEditButtonOnTap(_:)), for: .touchUpInside)
         addressEditor.accessoryView = mapEditButton
         scrollContainer.addSubview(addressEditor)
-        addressEditor.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|",
+        addressEditor.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]-($metric0)-|",
                                                        "V:[$view0]-20-[$self]"],
-                                      views: [locationEditor])
+                                     metrics:[KPLayoutConstant.information_horizontal_offset],
+                                     views: [locationEditor])
         addressEditor.contentView.addTarget(self, action: #selector(addressDidChanged(_:)), for: .editingChanged)
         
         phoneEditor = KPTitleEditorView<UITextField>("聯絡電話")
         phoneEditor.contentView.placeholder = "請輸入聯絡電話"
         scrollContainer.addSubview(phoneEditor)
-        phoneEditor.addConstraints(fromStringArray: ["H:|-20-[$self]-20-|",
+        phoneEditor.addConstraints(fromStringArray: ["H:|-($metric0)-[$self]-($metric0)-|",
                                                      "V:[$view0]-20-[$self]"],
-                                      views: [addressEditor])
+                                   metrics:[KPLayoutConstant.information_horizontal_offset],
+                                   views: [addressEditor])
         
         urlEditor = KPTitleEditorView<UITextField>("網址或Facebook")
         scrollContainer.addSubview(urlEditor)

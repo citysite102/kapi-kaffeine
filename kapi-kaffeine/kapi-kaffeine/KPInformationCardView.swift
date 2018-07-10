@@ -138,15 +138,8 @@ class KPInformationCardView: UIView {
         commentCountLabel = KPLayerLabel()
         commentCountLabel.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
         commentCountLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
-        commentCountLabel.text = "(24則)"
         commentCountLabel.isOpaque = true
         commentCountLabel.layer.masksToBounds = true
-//        rateContainer.addSubview(commentCountLabel)
-//        commentCountLabel.addConstraints(fromStringArray: ["H:[$view0]-2-[$self]|"],
-//                                 views: [rateLabel])
-//        commentCountLabel.addConstraintForCenterAligning(to: starIcons[starIcons.count-1],
-//                                                         in: .vertical,
-//                                                         constant: -2)
         
         shopStatusHint = UIView()
         shopStatusHint.backgroundColor = KPColorPalette.KPMainColor_v2.greenColor

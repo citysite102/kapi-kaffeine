@@ -60,6 +60,24 @@ class KPMainListAddCell: UITableViewCell {
                                                    "H:|-8-[$self]-8-|"])
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        
+        UIView.animate(withDuration: 0.15,
+                       animations: {
+                        self.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+        }) { (_) in
+            UIView.animate(withDuration: 0.15,
+                           delay: 0,
+                           usingSpringWithDamping: 0.7,
+                           initialSpringVelocity: 0.9,
+                           options: .curveLinear,
+                           animations: {
+                            self.transform = CGAffineTransform.identity
+            }, completion: nil)
+        }
+    }
+    
     override func layoutSubviews() {
         super.layoutSubviews()
     }
