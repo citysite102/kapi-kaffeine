@@ -761,7 +761,7 @@ class KPInformationViewController: KPViewController {
             for: .normal)
         self.checkInButton.setBackgroundImage(
             hasVisited ?
-                UIImage(color: KPColorPalette.KPMainColor_v2.grayColor_level5!) :
+                UIImage(color: KPColorPalette.KPMainColor_v2.grayColor_level5_5!) :
                 UIImage(color: UIColor.clear),
             for: .normal)
         self.checkInButton.layer.borderWidth = hasVisited ? 0.0 : 1.0

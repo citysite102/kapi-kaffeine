@@ -120,7 +120,7 @@ class KPMainMapViewCollectionCell: UICollectionViewCell {
         
         shopStatusHint = UIView()
         shopStatusHint.backgroundColor = KPColorPalette.KPMainColor_v2.greenColor
-        shopStatusHint.layer.cornerRadius = KPLayoutConstant.corner_radius
+        shopStatusHint.layer.cornerRadius = 4
         shopStatusHint.isOpaque = true
         contentView.addSubview(shopStatusHint)
         shopStatusHint.addConstraints(fromStringArray: ["H:[$view0]-12-[$self(8)]",
