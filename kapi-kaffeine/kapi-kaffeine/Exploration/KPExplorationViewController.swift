@@ -21,6 +21,7 @@ class KPExplorationViewController: KPViewController {
     var shouldShowLightContent: Bool = true
     var currentBgImageIndex = 0
     var targetPosition: CGPoint = CGPoint(x: -1, y: 0)
+    var imageSources = [UIImage?]()
     
     var filterButton: KPBounceButton!
     var headerView: UIView!
@@ -372,6 +373,9 @@ class KPExplorationViewController: KPViewController {
             }
             
             this.articleList = articleList!
+            for _ in this.articleList {
+                this.imageSources.append(nil)
+            }
             DispatchQueue.main.async {
                 this.articleCollectionView.collectionViewLayout.invalidateLayout()
                 this.articleCollectionView.reloadData()

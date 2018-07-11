@@ -48,7 +48,7 @@ class KPArticleQuoteView: UIView {
         sideHintView.backgroundColor = KPColorPalette.KPMainColor_v2.redColor!
         addSubview(sideHintView)
         sideHintView.addConstraints(fromStringArray: ["V:|[$self]|",
-                                                      "H:|[$self(4)]"])
+                                                      "H:|[$self(6)]"])
         sideHintHeightConstraint = sideHintView.addConstraint(forHeight: 0)
         
         quoteTextView = UITextView()

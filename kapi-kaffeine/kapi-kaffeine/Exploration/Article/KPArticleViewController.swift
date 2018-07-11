@@ -21,6 +21,7 @@ class KPArticleViewController: KPViewController {
     var dismissButton: KPBounceButton!
     var scrollContainer: UIScrollView!
     var imageSource: UIImage?
+    var imageURL: URL?
     var heroCoverImageView: UIImageView!
     var gradientView: UIView!
     var imageMaskLayer: CAGradientLayer!
@@ -32,6 +33,7 @@ class KPArticleViewController: KPViewController {
     var articleSubTitleLabel: UILabel!
     var articleFirstParagraphTextView: UITextView!
     var selectedIndex: NSIndexPath!
+    
     
     var articleContainer: UIView!
     var articleYConstaint: NSLayoutConstraint!
@@ -76,7 +78,14 @@ class KPArticleViewController: KPViewController {
                                                          "H:|[$self]|"])
         scrollContainer.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
         
-        heroCoverImageView = UIImageView(image: imageSource ?? R.image.demo_6())
+        if imageSource != nil {
+            heroCoverImageView = UIImageView(image: imageSource)
+        } else if let image = explorationViewController?.imageSources[selectedIndex.row] {
+            heroCoverImageView = UIImageView(image: image)
+        } else {
+            heroCoverImageView = UIImageView(image: R.image.demo_6())
+        }
+        
         heroCoverImageView.contentMode = .scaleAspectFill
         heroCoverImageView.clipsToBounds = true
         heroCoverImageView.frame = CGRect(x: 0,
@@ -311,6 +320,7 @@ class KPArticleViewController: KPViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        viewIsDimissing = false
         if explorationViewController != nil &&
             self.topBarContainer.alpha < 1.0 {
             explorationViewController?.shouldShowLightContent = true
@@ -319,6 +329,22 @@ class KPArticleViewController: KPViewController {
         } else {
             explorationViewController?.shouldShowLightContent = false
             self.setNeedsStatusBarAppearanceUpdate()
+        }
+        
+        if let imageURL = imageURL,
+            explorationViewController?.imageSources[selectedIndex.row] == nil {
+            heroCoverImageView.af_setImage(withURL: imageURL,
+                                           placeholderImage: R.image.demo_6(),
+                                           filter: nil,
+                                           progress: nil,
+                                           progressQueue: DispatchQueue.main,
+                                           imageTransition: UIImageView.ImageTransition.crossDissolve(1.0),
+                                           runImageTransitionIfCached: true) { (response) in
+                                            if let responseImage = response.result.value {
+                                                self.explorationViewController?.imageSources[self.selectedIndex.row] =
+                                                responseImage
+                                            }
+            }
         }
     }
     
@@ -338,10 +364,14 @@ class KPArticleViewController: KPViewController {
                     explorationViewController?.currentArticleViewController.explorationViewController = explorationViewController
                     explorationViewController?.currentArticleViewController.selectedIndex = IndexPath(row: selectedIndex.row+1, section: 0) as NSIndexPath
                     explorationViewController?.currentArticleViewController.currentArticleItem = explorationViewController?.articleList[selectedIndex.row+1]
-                    explorationViewController?.currentArticleViewController.hero.modalAnimationType = .zoomSlide(direction: .left)
+                    explorationViewController?.currentArticleViewController.hero.modalAnimationType = .slide(direction: .left)
                     explorationViewController?.articleCollectionView.scrollToItem(at: IndexPath(row: selectedIndex.row+1, section: 0),
                                                                                   at: UICollectionViewScrollPosition.right,
                                                                                   animated: true)
+                    if let url = explorationViewController?.articleList[selectedIndex.row+1].imageURL_l {
+                        explorationViewController?.currentArticleViewController.imageURL = url
+                    }
+                    
                     hero.replaceViewController(with: (explorationViewController?.currentArticleViewController)!)
                 } else {
                     KPPopoverView.popoverArticleEndView()
@@ -353,10 +383,14 @@ class KPArticleViewController: KPViewController {
                     explorationViewController?.currentArticleViewController.explorationViewController = explorationViewController
                     explorationViewController?.currentArticleViewController.selectedIndex = IndexPath(row: selectedIndex.row-1, section: 0) as NSIndexPath
                     explorationViewController?.currentArticleViewController.currentArticleItem = explorationViewController?.articleList[selectedIndex.row-1]
-                    explorationViewController?.currentArticleViewController.hero.modalAnimationType = .zoomSlide(direction: .right)
+                    explorationViewController?.currentArticleViewController.hero.modalAnimationType = .slide(direction: .right)
                     explorationViewController?.articleCollectionView.scrollToItem(at: IndexPath(row: selectedIndex.row-1, section: 0),
                                                                                   at: UICollectionViewScrollPosition.left,
                                                                                   animated: true)
+                    
+                    if let url = explorationViewController?.articleList[selectedIndex.row-1].imageURL_l {
+                        explorationViewController?.currentArticleViewController.imageURL = url
+                    }
                     hero.replaceViewController(with: (explorationViewController?.currentArticleViewController)!)
                 } else {
                     handleDismissButtonOnTapped()
@@ -486,9 +520,9 @@ class KPArticleViewController: KPViewController {
                     quoteView.quoteContent = element.values[0].value
                     
                     if element.bold {
-                        quoteView.font = UIFont.boldSystemFont(ofSize: element.fontSize)
+                        quoteView.font = UIFont.boldSystemFont(ofSize: element.fontSize*1.5)
                     } else {
-                        quoteView.font = UIFont.systemFont(ofSize: element.fontSize)
+                        quoteView.font = UIFont.systemFont(ofSize: element.fontSize*1.5)
                     }
                     
                     currentView = quoteView
@@ -593,7 +627,9 @@ class KPArticleViewController: KPViewController {
                             currentView.leftAnchor.constraint(equalTo: self.articleContainer.leftAnchor, constant: 0),
                             currentView.rightAnchor.constraint(equalTo: self.articleContainer.rightAnchor, constant: 0),
                             currentView.topAnchor.constraint(equalTo: previousView.bottomAnchor,
-                                                             constant: 16),
+                                                             constant: previousView.isKind(of: KPArticleQuoteView.self) ?
+                                                                spacing :
+                                16),
                             currentView.heightAnchor.constraint(lessThanOrEqualToConstant: 320)
                             ])
                     } else if currentView.isKind(of: UIButton.self) {
@@ -603,6 +639,13 @@ class KPArticleViewController: KPViewController {
                             currentView.heightAnchor.constraint(equalToConstant: 44),
                             currentView.topAnchor.constraint(equalTo: previousView.bottomAnchor,
                                                              constant: CGFloat(KPLayoutConstant.information_horizontal_offset))
+                            ])
+                    } else if currentView.isKind(of: KPArticleQuoteView.self) {
+                        NSLayoutConstraint.activate([
+                            currentView.leftAnchor.constraint(equalTo: self.articleContainer.leftAnchor, constant: CGFloat(KPLayoutConstant.information_horizontal_offset)),
+                            currentView.rightAnchor.constraint(equalTo: self.articleContainer.rightAnchor, constant: CGFloat(-KPLayoutConstant.information_horizontal_offset)),
+                            currentView.topAnchor.constraint(equalTo: previousView.bottomAnchor,
+                                                             constant: spacing)
                             ])
                     } else {
                         NSLayoutConstraint.activate([
@@ -725,7 +768,9 @@ extension KPArticleViewController: UIScrollViewDelegate {
                        delay: 0,
                        options: .curveEaseIn,
                        animations: {
-                        self.toolBarContainer.transform = scrollView.contentOffset.y > 100 ? CGAffineTransform.identity : CGAffineTransform(translationX: 0, y: 64)
+                        self.toolBarContainer.transform = scrollView.contentOffset.y > 100 ?
+                            CGAffineTransform.identity :
+                            CGAffineTransform(translationX: 0, y: 64)
                         self.scrollDownButton.alpha = (scrollView.contentOffset.y < 10) ? 0.8 : 0
         }, completion: { (_) in
             
