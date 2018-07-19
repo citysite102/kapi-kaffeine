@@ -167,6 +167,8 @@ class KPInformationViewController: KPViewController {
     var showBackButton: Bool = false
     var dismissWithDefaultType: Bool = false
     
+    var previousYOffset: CGFloat = 0
+    
     // 取得相關的所有評分資訊
     var rateDataModel: KPRateDataModel?
     
@@ -655,6 +657,8 @@ class KPInformationViewController: KPViewController {
         checkInButton.layer.masksToBounds = true
         checkInButton.layer.borderColor = KPColorPalette.KPMainColor_v2.grayColor_level2?.cgColor
         checkInButton.layer.borderWidth = 1.0
+        checkInButton.setBackgroundImage(UIImage(color: UIColor.clear), for: .normal)
+
         checkInButton.addTarget(self,
                                 action: #selector(handleCheckInButtonOnTapped(_:)),
                                 for: .touchUpInside)
@@ -756,21 +760,30 @@ class KPInformationViewController: KPViewController {
                                     for: .normal)
         self.checkInButton.setTitleColor(
             hasVisited ?
-                KPColorPalette.KPTextColor_v2.whiteColor :
+                KPColorPalette.KPMainColor_v2.grayColor_level3 :
                 KPColorPalette.KPMainColor_v2.grayColor_level2,
             for: .normal)
-        self.checkInButton.setBackgroundImage(
-            hasVisited ?
-                UIImage(color: KPColorPalette.KPMainColor_v2.grayColor_level5_5!) :
-                UIImage(color: UIColor.clear),
-            for: .normal)
-        self.checkInButton.layer.borderWidth = hasVisited ? 0.0 : 1.0
+        self.checkInButton.layer.borderColor = hasVisited ?
+            KPColorPalette.KPMainColor_v2.grayColor_level5?.cgColor :
+            KPColorPalette.KPMainColor_v2.grayColor_level3?.cgColor
         self.checkInButton.isEnabled = true
     }
     
     @objc func updateCollectButton() {
         let hasCollected = KPUserManager.sharedManager.currentUser?.hasFavorited(self.detailedInformationDataModel.identifier) ?? false
-        self.collectButton.setTitle(hasCollected ? "取消收藏" : "收藏店家", for: .normal)
+        self.collectButton.setTitle(hasCollected ? "取消收藏" : "收藏店家",
+                                    for: .normal)
+        self.collectButton.setBackgroundImage(hasCollected ?
+            UIImage(color: UIColor.clear) :
+            UIImage(color: KPColorPalette.KPMainColor_v2.mainColor_light!),
+                                         for: .normal)
+        self.collectButton.setTitleColor(
+            hasCollected ?
+                KPColorPalette.KPMainColor_v2.grayColor_level3 :
+                UIColor.white,
+            for: .normal)
+        self.collectButton.layer.borderColor = KPColorPalette.KPMainColor_v2.grayColor_level5?.cgColor
+        self.collectButton.layer.borderWidth = hasCollected ? 1.0 : 0.0
         self.collectButton.isEnabled = true
     }
     
@@ -1352,10 +1365,29 @@ extension KPInformationViewController: UIScrollViewDelegate {
                 
                 let notification = Notification(name: Notification.Name(KPNotification.statusBar.statusBarShouldLight))
                 NotificationCenter.default.post(notification)
-                
             }
             
+            if (scrollView.contentOffset.y > 0) {
+                if (scrollView.contentOffset.y > previousYOffset) {
+                    UIView.animate(withDuration: 0.2,
+                                   animations: {
+                                       self.toolBarContainer.transform =
+                                        CGAffineTransform(translationX: 0, y: CGFloat(KPLayoutConstant.bottomBar_height))
+                    }, completion: nil)
+                } else {
+                    UIView.animate(withDuration: 0.2,
+                                   animations: {
+                                    self.toolBarContainer.transform = CGAffineTransform.identity
+                    }, completion: nil)
+                }
+            } else {
+                UIView.animate(withDuration: 0.2,
+                               animations: {
+                                self.toolBarContainer.transform = CGAffineTransform.identity
+                }, completion: nil)
+            }
             
+            previousYOffset = scrollView.contentOffset.y
             
             
             scrollContainer.contentOffset = CGPoint(x: 0,
@@ -1381,7 +1413,6 @@ extension KPInformationViewController: UIScrollViewDelegate {
                 
                 self.view.layoutIfNeeded()
             } else if scrollContainer.contentOffset.y > 0 && scrollContainer.contentOffset.y < 200 {
-//                animatedHeaderConstraint.constant = -scrollContainer.contentOffset.y*9/20
                 informationHeaderView.shopPhoto.transform = CGAffineTransform(translationX: 0,
                                                                               y: scrollContainer.contentOffset.y*9/20)
                 informationHeaderView.isUserInteractionEnabled = false
