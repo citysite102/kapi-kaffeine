@@ -14,6 +14,10 @@ class KPExplorationSectionView: UITableViewCell {
     var sectionDescriptionLabel: UILabel!
     var collectionView: UICollectionView!
     var separatar: UIView!
+    var randomImageSets = [R.image.demo_1(),
+                           R.image.demo_2(),
+                           R.image.demo_3(),
+                           R.image.demo_4()]
     var shouldShowSeparatar: Bool = true {
         didSet {
             self.separatar.isHidden = !shouldShowSeparatar
@@ -125,6 +129,7 @@ UICollectionViewDelegateFlowLayout {
                                      action: #selector(handleShopFavorited(sender:)),
                                      for: UIControlEvents.primaryActionTriggered)
         if let url = shops[indexPath.row].imageURL_l ?? shops[indexPath.row].imageURL_s {
+            cell.imageView.image = nil
             cell.imageView.af_setImage(withURL: url,
                                        placeholderImage: nil,
                                        filter: nil,
@@ -134,6 +139,7 @@ UICollectionViewDelegateFlowLayout {
                                        runImageTransitionIfCached: true,
                                        completion: nil)
         } else if let url = shops[indexPath.row].googleURL_l ?? shops[indexPath.row].googleURL_s {
+            cell.imageView.image = nil
             cell.imageView.af_setImage(withURL: url,
                                        placeholderImage: nil,
                                        filter: nil,
@@ -143,7 +149,14 @@ UICollectionViewDelegateFlowLayout {
                                        runImageTransitionIfCached: true,
                                        completion: nil)
         } else {
-            cell.imageView.image = #imageLiteral(resourceName: "demo_3")
+            
+            if indexPath.row % 3 == 0 {
+                cell.imageView.image = R.image.demo_1()
+            } else if indexPath.row % 3 == 1 {
+                cell.imageView.image = R.image.demo_3()
+            } else if indexPath.row % 3 == 2 {
+                cell.imageView.image = R.image.demo_4()
+            }
         }
         return cell
     }
