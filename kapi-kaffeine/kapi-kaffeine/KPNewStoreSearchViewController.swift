@@ -81,7 +81,7 @@ class KPSubtitleInputController: KPViewController {
         editTextField.text = oldContent ?? ""
         editTextField.addConstraints(fromStringArray: ["V:[$view0]-16-[$self]",
                                                        "H:|-16-[$self]-16-|"],
-                                     views: [dismissButton])
+                                     views: [subTitleLabel])
         
         let bottomBorderView = UIView()
         bottomBorderView.backgroundColor = KPColorPalette.KPBackgroundColor.grayColor_level6
