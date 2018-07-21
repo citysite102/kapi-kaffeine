@@ -93,6 +93,7 @@ KPTabViewDelegate {
                                                      ("已評論", "reviews"),
                                                      ("收藏文章", "articles")]
     let articleTabIndex = 3;
+    var userBioHeightContstraint: NSLayoutConstraint!
     
     let statusContents:[(icon: UIImage, content: String)] = [(R.image.status_collect()!, "快來收藏你喜愛的店家吧!"),
                                                              (R.image.status_location()!, "你有去過哪些店家呢?"),
@@ -140,7 +141,7 @@ KPTabViewDelegate {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 24.0)
         label.textColor = KPColorPalette.KPTextColor_v2.mainColor_title
-        label.text = "Hi, 皮卡丘"
+        label.text = "Hi, Somebody"
         return label
     }()
     
@@ -152,12 +153,15 @@ KPTabViewDelegate {
         return label
     }()
     
-    lazy var userBioLabel: UILabel = {
-        let label = UILabel()
+    lazy var userBioLabel: UITextView = {
+        let label = UITextView()
         label.font = UIFont.systemFont(ofSize: 14.0)
         label.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
-        label.text = "被你看到這個隱藏的內容？！肯定有Bug，快回報給我們吧！"
-        label.numberOfLines = 0
+        label.isUserInteractionEnabled = false
+        label.returnKeyType = .done
+        label.isScrollEnabled = false
+        label.textContainer.lineBreakMode = .byTruncatingTail
+        label.textContainer.maximumNumberOfLines = 2
         return label
     }()
     
@@ -241,6 +245,10 @@ KPTabViewDelegate {
                                                       "V:[$view1]-8-[$self]"],
                                           views: [userPhoto,
                                                   userNameLabel])
+        userBioLabel.delegate = self
+        userBioHeightContstraint = userBioLabel.addConstraint(forHeight: 56)
+        
+        
         
         logOutButton = KPBounceButton(frame: CGRect.zero)
         logOutButton.setTitle("登出", for: .normal)
@@ -252,7 +260,7 @@ KPTabViewDelegate {
         logOutButton.layer.masksToBounds = true
         logOutButton.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         userContainer.addSubview(logOutButton)
-        logOutButton.addConstraints(fromStringArray: ["V:[$view0]-16-[$self(32)]", "H:|-19-[$self(64)]"],
+        logOutButton.addConstraints(fromStringArray: ["V:[$view0]-12-[$self(32)]", "H:|-19-[$self(64)]"],
                                     views: [userBioLabel
             ])
         logOutButton.addTarget(self,
@@ -269,7 +277,7 @@ KPTabViewDelegate {
         editButton.layer.masksToBounds = true
         editButton.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         userContainer.addSubview(editButton)
-        editButton.addConstraints(fromStringArray: ["V:[$view0]-16-[$self(32)]", "H:[$view1]-16-[$self(64)]"],
+        editButton.addConstraints(fromStringArray: ["V:[$view0]-12-[$self(32)]", "H:[$view1]-16-[$self(64)]"],
                                     views: [userBioLabel, logOutButton
             ])
         editButton.addTarget(self,
@@ -436,16 +444,16 @@ KPTabViewDelegate {
         KPUserManager.sharedManager.logOut()
     }
     
-    @objc func handleEditButtonOnTapped(sender: UIButton) {
-        
-    }
-    
     @objc func handleLoginButtonOnTapped(sender: UIButton) {
         KPUserManager.sharedManager.logIn(self)
     }
     
-    @objc func handleEditButtonOnTapped() {
-        self.navigationController?.pushViewController(KPUserProfileEditorController(), animated: true)
+    @objc func handleEditButtonOnTapped(sender: UIButton) {
+        userBioLabel.isUserInteractionEnabled = true
+        userBioLabel.becomeFirstResponder()
+//        self.present(KPUserProfileEditorController(),
+//                     animated: true, completion: nil)
+//        self.navigationController?.pushViewController(KPUserProfileEditorController(), animated: true)
     }
     
     @objc func userDidChanged(notification: Notification) {
@@ -579,5 +587,30 @@ KPTabViewDelegate {
         let screenWidth = UIScreen.main.bounds.width
         tabView.currentIndex = Int((scrollView.contentOffset.x+screenWidth/2)/screenWidth)
     }
+}
 
+extension KPUserProfileViewController: UITextViewDelegate {
+    func textViewDidEndEditing(_ textView: UITextView) {
+        textView.isUserInteractionEnabled = true
+        if let user = KPUserManager.sharedManager.currentUser {
+            user.intro = textView.text
+            KPServiceHandler.sharedHandler.modifyRemoteUserData(user, { (successed) in
+            })
+        }
+    }
+    
+    func textView(_ textView: UITextView,
+                  shouldChangeTextIn range: NSRange,
+                  replacementText text: String) -> Bool {
+        if text == "\n" {
+            textView.resignFirstResponder()
+            return false
+        } else {
+            return true
+        }
+    }
+    
+    func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
+        return true
+    }
 }

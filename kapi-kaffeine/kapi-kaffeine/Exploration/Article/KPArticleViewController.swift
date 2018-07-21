@@ -129,8 +129,6 @@ class KPArticleViewController: KPViewController {
         articleFirstParagraphTextView.textColor = UIColor.white
         articleFirstParagraphTextView.backgroundColor = UIColor.clear
         articleFirstParagraphTextView.isScrollEnabled = false
-//        articleFirstParagraphTextView.setText(text: "歐洲的咖啡店風格總是強烈的讓人移不開目光，即使身處在倫敦這樣的忙碌城市裡，竄入鼻腔內的咖啡香，不經意地就能停住路人的快速步伐。",
-//                                              lineSpacing: 4.0)
         heroCoverImageView.addSubview(articleFirstParagraphTextView)
         articleFirstParagraphTextView.addConstraints(fromStringArray: ["V:[$self]-64-|",
                                                                        "H:[$self($metric0)]"],
@@ -143,8 +141,6 @@ class KPArticleViewController: KPViewController {
                                                            y: 36)
         articleSubTitleLabel.font = UIFont.boldSystemFont(ofSize: 18)
         articleSubTitleLabel.textColor = KPColorPalette.KPTextColor_v2.yellow_color
-//        articleSubTitleLabel.setText(text: "這絕對是今年喝過最好喝的咖啡！",
-//                                     lineSpacing: 4.0)
         articleSubTitleLabel.numberOfLines = 0
         heroCoverImageView.addSubview(articleSubTitleLabel)
         articleSubTitleLabel.addConstraints(fromStringArray: ["V:[$self]-8-[$view0]",
@@ -161,8 +157,6 @@ class KPArticleViewController: KPViewController {
         articleTitleLabel.font = UIFont.boldSystemFont(ofSize: 40)
         articleTitleLabel.textColor = UIColor.white
         articleTitleLabel.numberOfLines = 0
-//        articleTitleLabel.setText(text: "一窺東倫敦新興咖啡社群 - Hello Hackney",
-//                                  lineSpacing: 4.0)
         heroCoverImageView.addSubview(articleTitleLabel)
         
         articleTitleLabel.addConstraints(fromStringArray: ["V:[$self]-16-[$view0]",
@@ -244,31 +238,7 @@ class KPArticleViewController: KPViewController {
                                     for: .normal)
         collectButton.setTitleColor(KPColorPalette.KPTextColor_v2.whiteColor,
                                     for: .selected)
-//        collectButton.setTitleColor(KPColorPalette.KPTextColor_v2.whiteColor,
-//                                    for: .normal)
-//        collectButton.setTitleColor(KPColorPalette.KPTextColor_v2.mainColor_title,
-//                                    for: .selected)
-//        collectButton.setBackgroundImage(UIImage.kpImageWithColor(color: KPColorPalette.KPBackgroundColor.whiteColor!,
-//                                                                  size: CGSize(width: 52,
-//                                                                               height: 26)) ,
-//                                         for: .selected)
-//        collectButton.titleEdgeInsets = UIEdgeInsetsMake(8, 6, 8, 6)
-//        collectButton.layer.borderWidth = 1
-//        collectButton.layer.cornerRadius = 2.0
-//        collectButton.layer.masksToBounds = true
-//        collectButton.layer.borderColor = KPColorPalette.KPTextColor_v2.whiteColor?.cgColor;
         collectButton.isSelected = KPUserManager.sharedManager.currentUser?.hasCollected(currentArticleItem.articleID) ?? false
-        
-//        collectButton = KPBounceButton(type: .custom)
-// collectButton.setTitleColor(KPColorPalette.KPTextColor_v2.mainColor_subtitle,
-//                                    for: .normal)
-//        collectButton.imageEdgeInsets = UIEdgeInsetsMake(2, -2, 0, 2)
-//        collectButton.setImage(R.image.icon_collect_border_bold()!,
-//                               for: .normal)
-//        collectButton.setImage(R.image.icon_collect()!,
-//                               for: .selected)
-//        collectButton.tintColor = UIColor.white
-//        collectButton.selectedTintColor = KPColorPalette.KPMainColor_v2.starColor
         collectButton.addTarget(self,
                                 action: #selector(handleCollectButtonOnTapped(_:)),
                                 for: .touchUpInside)
@@ -293,27 +263,6 @@ class KPArticleViewController: KPViewController {
         toolBarContainer.addSubview(separator)
         separator.addConstraints(fromStringArray: ["H:|[$self]|",
                                                    "V:|[$self($metric0)]"], metrics:[KPLayoutConstant.separator_height])
-        
-//        collectButton = KPBounceButton(type: .custom)
-//        collectButton.setTitle("收藏文章", for: .normal)
-//        collectButton.setTitleColor(KPColorPalette.KPTextColor_v2.mainColor_subtitle,
-//                                    for: .normal)
-//        collectButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
-//        collectButton.imageEdgeInsets = UIEdgeInsetsMake(2, -2, 2, 2)
-//        collectButton.setImage(R.image.icon_collect_border()!,
-//                               for: .normal)
-//        collectButton.setImage(R.image.icon_collect()!,
-//                               for: .selected)
-//        collectButton.tintColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
-//        collectButton.selectedTintColor = KPColorPalette.KPMainColor_v2.redColor
-//        collectButton.addTarget(self,
-//                                action: #selector(handleCollectButtonOnTapped(_:)),
-//                                for: .touchUpInside)
-//        collectButton.isSelected = KPUserManager.sharedManager.currentUser?.hasCollected(currentArticleItem.articleID) ?? false
-//        toolBarContainer.addSubview(collectButton)
-//        collectButton.addConstraintForCenterAligningToSuperview(in: .vertical)
-//        collectButton.addConstraint(from: "H:|-16-[$self]")
-        
         loadArticleDataWithID(articleID)
     }
     
@@ -435,7 +384,7 @@ class KPArticleViewController: KPViewController {
             guard let article = article else {
                 if !self.animationHasPerformed {
                     UIView.animate(withDuration: 0.5,
-                                   delay: 0.2,
+                                   delay: 0,
                                    options: UIViewAnimationOptions.curveEaseOut,
                                    animations: {
                                     self.dismissButton.alpha = 1.0
@@ -459,7 +408,7 @@ class KPArticleViewController: KPViewController {
             
             if !self.animationHasPerformed {
                 UIView.animate(withDuration: 0.5,
-                               delay: 0.2,
+                               delay: 0.1,
                                options: UIViewAnimationOptions.curveEaseOut,
                                animations: {
                                 self.view.backgroundColor = UIColor.white

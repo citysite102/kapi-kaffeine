@@ -20,7 +20,7 @@ extension KPPopoverView {
             content.popoverView.dismiss()
         }
         content.titleLabel.text = "進階功能"
-        content.descriptionLabel.text = "哈囉！加入找咖啡的行列來享受更進階的功能吧!"
+        content.descriptionLabel.text = "哈囉！加入找咖啡來享受更進階的功能吧!"
         content.confirmButton.setTitle("登入",
                                        for: .normal)
         KPPopoverView.sharedPopoverView.contentView = content
@@ -28,11 +28,24 @@ extension KPPopoverView {
     }
     
     class func popoverArticleEndView() {
-        let content = KPNotificationPopoverContent()
+        let content = KPDefaultPopoverContent()
         content.titleLabel.text = "沒有文章囉！"
-        content.descriptionLabel.setText(text: "啊啊啊啊啊，還想要看見閱讀更多優質的文章嗎？到我們的Facebook粉絲團看看吧！",
+        content.descriptionLabel.setText(text: "啊啊啊啊啊，還想要閱讀更多優質的文章嗎？到我們的Facebook粉絲團看看吧！",
                                          lineSpacing: 3.6)
         content.confirmButton.setTitle("前往粉絲團", for: .normal)
+        content.confirmAction = { content in
+            
+            guard let url = URL(string: "https://www.facebook.com/KAPI.tw/?ref=br_rs") else {
+                return
+            }
+            
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            } else {
+                UIApplication.shared.openURL(url)
+            }
+        }
+
         KPPopoverView.sharedPopoverView.contentView = content
         KPPopoverView.sharedPopoverView.popoverContent()
     }
