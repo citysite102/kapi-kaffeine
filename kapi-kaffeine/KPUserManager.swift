@@ -72,7 +72,7 @@ public class KPUserManager {
         
         self.loadingView.state = .loading
         loginManager.loginBehavior = LoginBehavior.native;
-        loginManager.logIn(readPermissions: [.publicProfile],
+        loginManager.logIn(readPermissions: [.publicProfile, .email],
                            viewController: viewController) { (loginResult) in
 
                             viewController.view.addSubview(self.loadingView)
