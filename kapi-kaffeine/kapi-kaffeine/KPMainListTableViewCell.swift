@@ -26,7 +26,8 @@ class KPMainListTableViewCell: UITableViewCell {
                 
                 var distName: String = ""
                 
-                if let distIndex = self.dataModel.address?.index(of: "區") {
+                if let distIndex = self.dataModel.address?.index(of: "區"),
+                    distIndex.encodedOffset > 2 {
                     let startIndex = self.dataModel.address!.index(distIndex, offsetBy:-2)
                     distName = String(self.dataModel.address![startIndex...distIndex])
                 }
