@@ -20,7 +20,7 @@ class KPSubtitleInputController: KPViewController {
         label.text = "店家名稱"
         label.font = UIFont.systemFont(ofSize: KPFontSize.header,
                                        weight: UIFont.Weight.regular)
-        label.isHidden = true
+//        label.isHidden = true
         label.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
         return label
     }()
@@ -74,9 +74,9 @@ class KPSubtitleInputController: KPViewController {
                                                        "V:|-36-[$self($metric0)]"], metrics:[KPLayoutConstant.dismissButton_size])
         
         
-//        subTitleLabel.addConstraints(fromStringArray: ["V:[$view0]-24-[$self]",
-//                                                       "H:|-16-[$self]-16-|"],
-//                                     views: [dismissButton])
+        subTitleLabel.addConstraints(fromStringArray: ["V:[$view0]-24-[$self]",
+                                                       "H:|-16-[$self]-16-|"],
+                                     views: [dismissButton])
         
         view.addSubview(editTextField)
         editTextField.text = oldContent ?? ""
