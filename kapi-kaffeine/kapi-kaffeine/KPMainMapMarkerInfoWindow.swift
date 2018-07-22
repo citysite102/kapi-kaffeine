@@ -35,8 +35,8 @@ class KPMainMapMarkerInfoWindow: UIView {
         
         super.init(frame: CGRect(x: 0,
                                  y: 0,
-                                 width: commentRect.width + priceRect.width + 12 > textRect.width ?
-                                    commentRect.width + priceRect.width + 48 :
+                                 width: commentRect.width + priceRect.width + 36 > textRect.width ?
+                                    commentRect.width + priceRect.width + 72 :
                                     textRect.width + 36,
                                  height: 84))
         
@@ -76,6 +76,10 @@ class KPMainMapMarkerInfoWindow: UIView {
         scoreLabel.text = String(format: "%.1f", detailDataModel.averageRate?.doubleValue ?? 0.0)
         scoreLabel.textColor = KPColorPalette.KPMainColor_v2.starColor
         
+        let commentIcon = UIImageView(image: R.image.icon_comment_border())
+        commentIcon.contentMode = .scaleAspectFit
+        commentIcon.tintColor = KPColorPalette.KPTextColor_v2.mainColor_description
+        
         let commentLabel = UILabel()
         commentLabel.font = UIFont.systemFont(ofSize: KPFontSize.infoContent)
         commentLabel.text = "\(String(describing: detailDataModel.commentCount ?? 0)) 則評論"
@@ -91,14 +95,17 @@ class KPMainMapMarkerInfoWindow: UIView {
         mapArrow.contentMode = .scaleAspectFit
         
         self.containerView.addSubview(titleLabel)
+        self.containerView.addSubview(commentIcon)
         self.containerView.addSubview(commentLabel)
         self.containerView.addSubview(priceLabel)
         self.contentView.addSubview(mapArrow)
         
         titleLabel.addConstraints(fromStringArray: ["V:|-10-[$self]",
                                                     "H:|-12-[$self]-12-|"])
+        commentIcon.addConstraints(fromStringArray: ["V:[$self(18)]-9-|",
+                                                     "H:|-13-[$self(18)]"])
         commentLabel.addConstraints(fromStringArray: ["V:[$self]-10-|",
-                                                      "H:|-12-[$self]"])
+                                                      "H:|-36-[$self]"])
         priceLabel.addConstraints(fromStringArray: ["V:[$self]-10-|",
                                                     "H:[$view0]-12-[$self]"],
                                   views:[commentLabel])
@@ -129,8 +136,8 @@ class KPMainMapMarkerInfoWindow: UIView {
  
         super.init(frame: CGRect(x: 0,
                                  y: 0,
-                                 width: commentRect.width + priceRect.width + 12 > textRect.width ?
-                                    commentRect.width + priceRect.width + 48 :
+                                 width: commentRect.width + priceRect.width + 36 > textRect.width ?
+                                    commentRect.width + priceRect.width + 72 :
                                     textRect.width + 36,
                                  height: 84))
         
@@ -140,22 +147,17 @@ class KPMainMapMarkerInfoWindow: UIView {
                                            height: frame.size.height-20))
 
         contentView.layer.shadowColor = UIColor.black.cgColor;
-        contentView.layer.shadowOpacity = 0.4;
+        contentView.layer.shadowOpacity = 0.3;
         contentView.layer.shadowRadius = 3.0;
-        contentView.layer.shadowOffset = CGSize.init(width: 0, height: 2.0);
+        contentView.layer.shadowOffset = CGSize.init(width: 0, height: 4.0);
         
         addSubview(contentView)
-
-//        let imageView = UIImageView(image: R.image.icon_coffee_cup())
-//        imageView.contentMode = .scaleAspectFit
-        
-        
         containerView = UIView(frame: CGRect(x: 0,
                                              y: 0,
                                              width: frame.size.width-12,
                                              height: frame.size.height-20))
         containerView.backgroundColor = UIColor.white
-        containerView.layer.cornerRadius = 3
+//        containerView.layer.cornerRadius = 3
         containerView.layer.masksToBounds = true
         
         contentView.addSubview(containerView)
@@ -174,6 +176,10 @@ class KPMainMapMarkerInfoWindow: UIView {
         scoreLabel.text = String(format: "%.1f", dataModel.averageRate?.doubleValue ?? 0.0)
         scoreLabel.textColor = KPColorPalette.KPMainColor_v2.starColor
         
+        let commentIcon = UIImageView(image: R.image.icon_comment_border())
+        commentIcon.contentMode = .scaleAspectFit
+        commentIcon.tintColor = KPColorPalette.KPTextColor_v2.mainColor_description
+        
         let commentLabel = UILabel()
         commentLabel.font = UIFont.systemFont(ofSize: KPFontSize.infoContent)
         commentLabel.text = "\(String(describing: dataModel.commentCount ?? 0)) 則評論"
@@ -188,6 +194,7 @@ class KPMainMapMarkerInfoWindow: UIView {
         mapArrow.contentMode = .scaleAspectFit
         
         self.containerView.addSubview(titleLabel)
+        self.containerView.addSubview(commentIcon)
         self.containerView.addSubview(commentLabel)
         self.containerView.addSubview(priceLabel)
         self.contentView.addSubview(mapArrow)
@@ -200,8 +207,10 @@ class KPMainMapMarkerInfoWindow: UIView {
 //                                                  in: .vertical)
         titleLabel.addConstraints(fromStringArray: ["V:|-10-[$self]",
                                                     "H:|-12-[$self]-12-|"])
+        commentIcon.addConstraints(fromStringArray: ["V:[$self(18)]-9-|",
+                                                     "H:|-13-[$self(18)]"])
         commentLabel.addConstraints(fromStringArray: ["V:[$self]-10-|",
-                                                      "H:|-12-[$self]"])
+                                                      "H:|-36-[$self]"])
         priceLabel.addConstraints(fromStringArray: ["V:[$self]-10-|",
                                                     "H:[$view0]-12-[$self]"],
                                   views:[commentLabel])

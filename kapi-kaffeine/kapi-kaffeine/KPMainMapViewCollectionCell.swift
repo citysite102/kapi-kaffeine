@@ -22,6 +22,18 @@ class KPMainMapViewCollectionCell: UICollectionViewCell {
                 self.featureContainer.featureContents = self.dataModel.featureContents
                 self.rateLabel.text = String(format: "%.1f",
                                              (self.dataModel.averageRate?.doubleValue) ?? 0)
+                
+                var distName: String = ""
+                
+                if let distIndex = self.dataModel.address?.index(of: "區"),
+                    distIndex.encodedOffset > 2 {
+                    let startIndex = self.dataModel.address!.index(distIndex, offsetBy:-2)
+                    distName = String(self.dataModel.address![startIndex...distIndex])
+                }
+                
+                self.shopLocationLabel.text =  (KPInfoMapping.citiesMapping[self.dataModel.city]
+                    ?? "") +
+                    (distName != "" ? ", \(distName)" : "")
             }
             
             if let photoURL = dataModel.imageURL_s ?? dataModel.googleURL_s {
@@ -154,7 +166,6 @@ class KPMainMapViewCollectionCell: UICollectionViewCell {
         shopLocationLabel = KPLayerLabel()
         shopLocationLabel.font = UIFont.systemFont(ofSize: KPFontSize.infoContent)
         shopLocationLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
-        shopLocationLabel.text = "台北市, 萬華區"
         shopLocationLabel.isOpaque = true
         shopLocationLabel.layer.masksToBounds = true
         contentView.addSubview(shopLocationLabel)

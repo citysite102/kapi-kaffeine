@@ -191,7 +191,6 @@ class KPMainListTableViewCell: UITableViewCell {
         shopLocationLabel = KPLayerLabel()
         shopLocationLabel.font = UIFont.systemFont(ofSize: KPFontSize.infoContent)
         shopLocationLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_subtitle
-        shopLocationLabel.text = "台北市, 萬華區"
         shopLocationLabel.isOpaque = true
         shopLocationLabel.layer.masksToBounds = true
         contentView.addSubview(shopLocationLabel)
