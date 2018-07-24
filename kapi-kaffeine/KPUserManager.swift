@@ -170,7 +170,9 @@ public class KPUserManager {
             }
             
         }.catch { error in
-            
+            if completion != nil {
+                completion!(false)
+            }
         }
     }
     

@@ -33,7 +33,7 @@ KPTabViewDelegate {
                             self.userPhoto.af_setImage(withURL: photoURL)
                         }
                         self.userNameLabel.text = "Hi, \(user.displayName ?? "")"
-                        self.userBioLabel.setText(text:user.intro ?? "被你看到這個隱藏的內容？！肯定有Bug，快回報給我們吧！肯定有Bug！",
+                        self.userBioLabel.setText(text:user.intro ?? "點擊編輯來修改介紹吧！",
                                                   lineSpacing: 3.0)
                         
                         for (index, tabTitle) in self.tabTitles.enumerated() {

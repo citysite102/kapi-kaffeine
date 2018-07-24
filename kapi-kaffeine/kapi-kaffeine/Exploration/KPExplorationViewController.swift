@@ -229,7 +229,7 @@ class KPExplorationViewController: KPViewController {
         
         searchContainer = UIView()
         searchContainer.backgroundColor = KPColorPalette.KPBackgroundColor.white_level3
-        searchContainer.layer.cornerRadius = KPLayoutConstant.corner_radius
+        searchContainer.layer.cornerRadius = 5
         searchContainer.layer.masksToBounds = true
         searchContainerShadowView.addSubview(searchContainer)
         searchContainer.addGestureRecognizer(longPressGesture)
@@ -239,14 +239,14 @@ class KPExplorationViewController: KPViewController {
         searchIcon = UIImageView(image: R.image.icon_search())
         searchIcon.tintColor = KPColorPalette.KPBackgroundColor.white_level1
         searchContainer.addSubview(searchIcon)
-        searchIcon.addConstraints(fromStringArray: ["V:[$self(18)]",
-                                                    "H:|-10-[$self(18)]"])
+        searchIcon.addConstraints(fromStringArray: ["V:[$self(16)]",
+                                                    "H:|-12-[$self(16)]"])
         searchIcon.addConstraintForCenterAligning(to: searchContainer,
                                                   in: .vertical,
                                                   constant: 0)
         
         searchLabel = UILabel()
-        searchLabel.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
+        searchLabel.font = UIFont.systemFont(ofSize: KPFontSize.infoContent)
         searchLabel.text = "搜尋店家名稱、標籤..."
         searchLabel.textColor = KPColorPalette.KPBackgroundColor.white_level1
         searchContainer.addSubview(searchLabel)

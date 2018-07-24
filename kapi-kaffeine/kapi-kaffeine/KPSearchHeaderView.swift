@@ -69,14 +69,14 @@ class KPSearchHeaderView: UIView {
         searchIcon = UIImageView(image: R.image.icon_search())
         searchIcon.tintColor = KPColorPalette.KPMainColor_v2.grayColor_level4
         searchContainer.addSubview(searchIcon)
-        searchIcon.addConstraints(fromStringArray: ["V:[$self(18)]",
-                                                    "H:|-10-[$self(18)]"])
+        searchIcon.addConstraints(fromStringArray: ["V:[$self(16)]",
+                                                    "H:|-12-[$self(16)]"])
         searchIcon.addConstraintForCenterAligning(to: searchContainer,
                                                   in: .vertical,
                                                   constant: 0)
         
         searchLabel = UILabel()
-        searchLabel.font = UIFont.systemFont(ofSize: KPFontSize.subContent)
+        searchLabel.font = UIFont.systemFont(ofSize: KPFontSize.infoContent)
         searchLabel.text = "搜尋店家名稱、標籤..."
         searchLabel.textColor = KPColorPalette.KPTextColor_v2.mainColor_description
         searchContainer.addSubview(searchLabel)
