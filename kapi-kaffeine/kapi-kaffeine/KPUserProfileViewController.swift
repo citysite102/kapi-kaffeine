@@ -121,7 +121,7 @@ KPTabViewDelegate {
         label.font = UIFont.systemFont(ofSize: KPFontSize.mainContent)
         label.numberOfLines = 0
         label.textColor = KPColorPalette.KPTextColor_v2.mainColor_description
-        label.setText(text: "歡迎加入找咖啡；找咖啡有著各種不一樣、新奇的功能。找咖啡有著各種不一樣、新奇的功能。找咖啡有著各種不一樣、新奇的功能喔。",
+        label.setText(text: "歡迎加入找咖啡的行列！使用「KAPI找咖啡」的便利功能及專欄文章，找到想去的咖啡店，並將珍貴的造訪心得，回饋到咖啡社群去吧！",
                       lineSpacing: 4.0)
         return label
     }()
