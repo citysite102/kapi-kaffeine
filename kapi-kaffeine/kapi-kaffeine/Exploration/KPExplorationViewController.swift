@@ -293,6 +293,7 @@ class KPExplorationViewController: KPViewController {
         contentTableView.delegate = self
         contentTableView.separatorStyle = .none
         contentTableView.allowsSelection = false
+        contentTableView.estimatedRowHeight = 80
         contentTableView.showsVerticalScrollIndicator = false
         contentTableView.register(KPExplorationSectionView.self,
                                   forCellReuseIdentifier: "cell")
