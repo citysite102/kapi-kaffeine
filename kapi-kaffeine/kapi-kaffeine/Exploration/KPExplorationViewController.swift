@@ -183,7 +183,7 @@ class KPExplorationViewController: KPViewController {
         maskLayer_bg.path = backgroundPath.cgPath
         
         sectionBgImageView = UIImageView(image: R.image.demo_black()?.tint(KPColorPalette.KPMainColor_v2.mainColor_dark!, blendMode: .softLight))
-        sectionBgImageView.contentMode = .scaleAspectFit
+        sectionBgImageView.contentMode = .scaleAspectFill
         sectionBgImageView.layer.mask = maskLayer_bg
         sectionBgImageView.layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         sectionBgImageView.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
@@ -329,7 +329,7 @@ class KPExplorationViewController: KPViewController {
         
         footerView.alpha = 0
         headerView.alpha = 0
-        sectionBgImageView.alpha = 0.2
+        sectionBgImageView.alpha = 0.15
         
     }
     
@@ -479,8 +479,6 @@ extension KPExplorationViewController: UITableViewDataSource, UITableViewDelegat
         return cell
     }
     
-//    func scrollviewdidends
-    
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         if targetPosition.x != -1 {
             scrollView.setContentOffset(targetPosition,
@@ -548,7 +546,7 @@ extension KPExplorationViewController: UITableViewDataSource, UITableViewDelegat
                 }) { (_) in
                     UIView.animate(withDuration: 0.5,
                                    animations: {
-                                    self.sectionBgImageView.alpha = 1.0
+                                    self.sectionBgImageView.alpha = 0.9
                                     self.sectionBgImageView.transform = CGAffineTransform.identity
                                     self.sectionBgImageView.image = R.image.demo_8()?.tint(KPColorPalette.KPMainColor_v2.mainColor_dark!, blendMode: .softLight)
                     })
@@ -568,7 +566,7 @@ extension KPExplorationViewController: UITableViewDataSource, UITableViewDelegat
                 }) { (_) in
                     UIView.animate(withDuration: 0.5,
                                    animations: {
-                                    self.sectionBgImageView.alpha = 1.0
+                                    self.sectionBgImageView.alpha = 0.9
                                     self.sectionBgImageView.transform = CGAffineTransform.identity
                                     self.sectionBgImageView.image = R.image.demo_9()?.tint(KPColorPalette.KPMainColor_v2.mainColor_dark!, blendMode: .softLight)
                     })
@@ -587,7 +585,7 @@ extension KPExplorationViewController: UITableViewDataSource, UITableViewDelegat
                 }) { (_) in
                     UIView.animate(withDuration: 0.5,
                                    animations: {
-                                    self.sectionBgImageView.alpha = 1.0
+                                    self.sectionBgImageView.alpha = 0.9
                                     self.sectionBgImageView.transform = CGAffineTransform.identity
                                     self.sectionBgImageView.image = R.image.demo_10()?.tint(KPColorPalette.KPMainColor_v2.mainColor_dark!, blendMode: .softLight)
                     })
@@ -605,7 +603,7 @@ extension KPExplorationViewController: UITableViewDataSource, UITableViewDelegat
                 }) { (_) in
                     UIView.animate(withDuration: 0.5,
                                    animations: {
-                                    self.sectionBgImageView.alpha = 1.0
+                                    self.sectionBgImageView.alpha = 0.9
                                     self.sectionBgImageView.transform = CGAffineTransform.identity
                                     self.sectionBgImageView.image = R.image.demo_11()?.tint(KPColorPalette.KPMainColor_v2.mainColor_dark!, blendMode: .softLight)
                     })
